@@ -2,7 +2,7 @@
   "pair": {
     "title": "Shelly apparaat toevoegen",
     "nosettings": "Vul a.u.b. alle verplichte velden in.",
-    "unauthorized": "Foutmelding 401: deze gebruiker is niet geautoriseerd, zorg ervoor dat de gebruiker via de app is aangemaakt en de details goed zijn overgenomen.",
+    "unauthorized": "Foutmelding 401: gebruikers credentials ontbreken of deze gebruiker is niet geautoriseerd, zorg ervoor dat je de gebruikers credentials goed hebt overgenomen zoals ingevoerd via de Shelly smartphone app of webinterface.",
     "servererror": "Foutmelding 500: interne server fout",
     "timeout": "Timeout foutmelding: zorg ervoor dat je het correcte IP adres hebt ingevoerd en dat het Shelly apparaat online is.",
     "unknownerror": "Onbekende fout, weet je zeker dat je het juist IP adres hebt opgegeven en dat het Shelly apparaat op hetzelfde netwerk zit als Homey? Controleer a.u.b. je instellingen en probeer het nog eens.",
@@ -10,6 +10,7 @@
     "address": "IP adres",
     "username": "Gebruikersnaam",
     "password": "Wachtwoord",
+    "polling": "Polling frequentie",
     "hostname": "Shelly hostname:",
     "mac": "Shelly MAC adres:",
     "test" : "Test connectie",

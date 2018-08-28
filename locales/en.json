@@ -2,7 +2,7 @@
   "pair": {
     "title": "Add Shelly device",
     "nosettings": "Please fill in all the required fields.",
-    "unauthorized": "Error 401: this user is not authorized, make sure you have created the user in the app and entered the correct details.",
+    "unauthorized": "Error 401: user credentials are missing or this user is not authorized, make sure you have copied the correct user credentials as entered in the Shelly smartphone app or Webinterface.",
     "servererror": "Error 500: internal server error",
     "timeout": "Timeout error: make sure you have entered the correct IP address and that the Shelly device is online.",
     "unknownerror": "Unknown error, are you sure you have entered the correct IP address and Homey is on the same network as the Shelly device? Please check your settings and try again.",
@@ -10,6 +10,7 @@
     "address": "IP Address",
     "username": "Username",
     "password": "Password",
+    "polling": "Polling Frequency",
     "hostname": "Shelly Hostname:",
     "mac": "Shelly MAC Address:",
     "test" : "Test Connection",

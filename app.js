@@ -6,7 +6,7 @@ const util = require('/lib/util.js');
 class ShellyApp extends Homey.App {
 
   onInit() {
-    this.log('Initializing Shelly Cloud app ...');
+    this.log('Initializing Shelly App ...');
 
     new Homey.FlowCardAction('flipbackSwitch')
       .register()
