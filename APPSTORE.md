@@ -11,5 +11,5 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/696).
 
 ## Changelog
-### 2018-08-28 - v1.0.0
+### 2018-08-30 - v1.0.0
 * NEW: initial release
