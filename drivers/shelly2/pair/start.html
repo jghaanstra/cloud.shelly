@@ -38,7 +38,7 @@ $(function() {
 				} else if(data) {
 					$('#mac').val(data.device.mac);
 
-					var shellyinfo = "<div class='info-row'><span class='info-label' data-i18n='pair.hostname'>Shelly1 Hostname:</span><span class='info-value'> "+ data.device.hostname +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.mac'>Shelly1 MAC Address:</span><span class='info-value'> "+ data.device.mac +"</span></div>";
+					var shellyinfo = "<div class='info-row'><span class='info-label' data-i18n='pair.hostname'>Shelly2 Hostname:</span><span class='info-value'> "+ data.device.hostname +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.mac'>Shelly2 MAC Address:</span><span class='info-value'> "+ data.device.mac +"</span></div>";
 					$('.shelly-info').show();
 					$('.shelly-info').html(shellyinfo);
 
@@ -77,7 +77,7 @@ $(function() {
 			};
 
 			Homey.addDevice({
-				name	 : 'Shelly 1',
+				name	 : 'Shelly 2',
 				data 	 : device_data,
 				settings : settings
 			}, function(error, result ) {

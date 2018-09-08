@@ -17,5 +17,6 @@
     "testing" : "Connection test succesfull, you can now connect the Shelly device.",
     "connect": "Connect",
     "success": "Shelly device added succesfully"
-  }
+  },
+  "Unreachable": "Unreachable"
 }

@@ -9,7 +9,7 @@
 		"en": [ "Shelly", "shelly1" ],
 		"nl": [ "Shelly", "shelly1" ]
 	},
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"compatibility": "1.x >=1.5.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -110,9 +110,233 @@
 					]
 				}
 			]
+		},
+    {
+			"id": "shelly2",
+			"name": {
+				"en": "Shelly 2",
+				"nl": "Shelly 2"
+			},
+			"images": {
+				"large": "drivers/shelly2/assets/images/large.jpg",
+				"small": "drivers/shelly2/assets/images/small.jpg"
+			},
+			"class": "socket",
+			"capabilities": [
+        "onoff.relay0",
+        "onoff.relay1",
+        "measure_power"
+			],
+      "capabilitiesOptions": {
+        "onoff.relay0": {
+          "title": {
+            "en": "Relay 2.1",
+            "nl": "Relay 2.1"
+          }
+        },
+        "onoff.relay1": {
+          "title": {
+            "en": "Relay 2.2",
+            "nl": "Relay 2.2"
+          }
+        }
+      },
+			"pair": [
+				{
+					"id": "start"
+				}
+			],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly 2 settings",
+						"nl": "Shelly 2 instellingen"
+					},
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+            {
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
+							}
+						},
+            {
+					    "id": "polling",
+					    "type": "number",
+					    "value": 5,
+              "attr": {
+                "min": 5,
+                "max": 3600
+              },
+					    "label": {
+						    "en": "Polling Frequency",
+						    "nl": "Polling frequentie"
+					    }
+				    }
+					]
+				}
+			],
+      "mobile": {
+        "components": [
+          {
+            "id": "icon"
+          },
+          {
+            "id": "toggle",
+            "capabilities": [ "onoff.relay0" ],
+            "options": {
+              "showTitle": true
+            }
+          },
+          {
+            "id": "toggle",
+            "capabilities": [ "onoff.relay1" ],
+            "options": {
+              "showTitle": true
+            }
+          },
+          {
+            "id": "sensor",
+            "capabilities": [ "measure_power" ]
+          }
+        ]
+      }
 		}
 	],
   "flow": {
+    "triggers": [
+      {
+				"id": "relay0OnTrigger",
+				"title": {
+          "en": "Relay 1 is turned on",
+          "nl": "Relay 1 is aangezet"
+				},
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly 2",
+							"nl": "Selecteer Shelly 2"
+						},
+						"filter": "driver_id=shelly2"
+					}
+				]
+			},
+      {
+				"id": "relay1OnTrigger",
+				"title": {
+          "en": "Relay 2 is turned on",
+          "nl": "Relay 2 is aangezet"
+				},
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly 2",
+							"nl": "Selecteer Shelly 2"
+						},
+						"filter": "driver_id=shelly2"
+					}
+				]
+			},
+      {
+				"id": "relay0OffTrigger",
+				"title": {
+          "en": "Relay 1 is turned off",
+          "nl": "Relay 1 is uitgezet"
+				},
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly 2",
+							"nl": "Selecteer Shelly 2"
+						},
+						"filter": "driver_id=shelly2"
+					}
+				]
+			},
+      {
+				"id": "relay1OffTrigger",
+				"title": {
+          "en": "Relay 2 is turned off",
+          "nl": "Relay 2 is uitgezet"
+				},
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly 2",
+							"nl": "Selecteer Shelly 2"
+						},
+						"filter": "driver_id=shelly2"
+					}
+				]
+			}
+    ],
+    "conditions": [
+      {
+				"id": "relay0Powered",
+				"title": {
+          "en": "Relay 1 !{{is|is not}} turned on",
+          "nl": "Relay 1 !{{is|is niet}} aan"
+				},
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly 2",
+							"nl": "Selecteer Shelly 2"
+						},
+						"filter": "driver_id=shelly2"
+					}
+				]
+			},
+      {
+				"id": "relay1Powered",
+				"title": {
+          "en": "Relay 2 !{{is|is not}} turned on",
+          "nl": "Relay 2 !{{is|is niet}} aan"
+				},
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly 2",
+							"nl": "Selecteer Shelly 2"
+						},
+						"filter": "driver_id=shelly2"
+					}
+				]
+			}
+    ],
     "actions": [
       {
 				"id": "flipbackSwitch",
@@ -167,6 +391,158 @@
 							"nl": "Selecteer Shelly 1"
 						},
 						"filter": "driver_id=shelly1"
+          }
+				]
+			},
+      {
+				"id": "relay0OnAction",
+				"title": {
+					"en": "Turn on relay 1",
+					"nl": "Zet relay 1 aan"
+				},
+				"args": [
+          {
+						"name": "device",
+						"type": "device",
+            "placeholder": {
+							"en": "Select Shelly 2",
+							"nl": "Selecteer Shelly 2"
+						},
+						"filter": "driver_id=shelly2"
+          }
+				]
+			},
+      {
+				"id": "relay1OnAction",
+				"title": {
+					"en": "Turn on relay 2",
+					"nl": "Zet relay 2 aan"
+				},
+				"args": [
+          {
+						"name": "device",
+						"type": "device",
+            "placeholder": {
+							"en": "Select Shelly 2",
+							"nl": "Selecteer Shelly 2"
+						},
+						"filter": "driver_id=shelly2"
+          }
+				]
+			},
+      {
+				"id": "relay0OffAction",
+				"title": {
+					"en": "Turn off relay 1",
+					"nl": "Zet relay 1 uit"
+				},
+				"args": [
+          {
+						"name": "device",
+						"type": "device",
+            "placeholder": {
+							"en": "Select Shelly 2",
+							"nl": "Selecteer Shelly 2"
+						},
+						"filter": "driver_id=shelly2"
+          }
+				]
+			},
+      {
+				"id": "relay1OffAction",
+				"title": {
+					"en": "Turn off relay 2",
+					"nl": "Zet relay 2 uit"
+				},
+				"args": [
+          {
+						"name": "device",
+						"type": "device",
+            "placeholder": {
+							"en": "Select Shelly 2",
+							"nl": "Selecteer Shelly 2"
+						},
+						"filter": "driver_id=shelly2"
+          }
+				]
+			},
+      {
+				"id": "flipbackSwitch2",
+				"title": {
+					"en": "Switch state temporary",
+					"nl": "Wijzig status tijdelijk"
+				},
+        "hint": {
+					"en": "Use this card to turn the Shelly 2 ON or OFF but only for the set time in seconds, after the timer it will switch back.",
+					"nl": "Gebruik deze actie om de Shelly 2 AAN of UIT te schakelen voor de ingestelde duur in seconden, na de timer zal hij terugschakelen."
+				},
+				"args": [
+          {
+						"name": "relay",
+						"type": "dropdown",
+            "placeholder": {
+              "en": "Relay",
+              "nl": "Relay"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Relay 1",
+                  "nl": "Relay 1"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Relay 2",
+                  "nl": "Relay 2"
+                }
+              }
+            ]
+          },
+          {
+						"name": "switch",
+						"type": "dropdown",
+            "placeholder": {
+              "en": "Temporary switch",
+              "nl": "Tijdelijk schakelen"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Switch OFF",
+                  "nl": "Uitschakelen"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Switch ON",
+                  "nl": "Inschakelen"
+                }
+              }
+            ]
+          },
+          {
+						"name": "timer",
+						"type": "number",
+            "placeholder": {
+              "en": "Duration in seconds",
+              "nl": "Duur in seconden"
+            },
+            "min": 1,
+            "step": 1
+          },
+          {
+						"name": "device",
+						"type": "device",
+            "placeholder": {
+							"en": "Select Shelly 2",
+							"nl": "Selecteer Shelly 2"
+						},
+						"filter": "driver_id=shelly2"
           }
 				]
 			}

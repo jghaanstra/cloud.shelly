@@ -14,8 +14,9 @@
     "hostname": "Shelly hostname:",
     "mac": "Shelly MAC adres:",
     "test" : "Test connectie",
-    "testing" : "Connectietest succesvol, je kan de Shelly apparaat nu verbinden.",
+    "testing" : "Connectietest succesvol, je kan het Shelly apparaat nu verbinden.",
     "connect": "Verbind",
     "success": "Shelly apparaat succesvol toegevoegd"
-  }
+  },
+  "Unreachable": "Onbereikbaar"
 }
