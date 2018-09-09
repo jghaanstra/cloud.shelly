@@ -13,7 +13,7 @@ For support please use the official support topic on the forum [here](https://co
 ## Changelog
 ### 2018-09-09 - v1.1.0
 * NEW: add support for the Shelly 2
-* REFACTORING: switched from request node module to node-fetch (reduced footprint from 7,5MB to )
+* REFACTORING: switched from request node module to node-fetch (reduced footprint from 7,5MB to 400 kB)
 
 ### 2018-08-30 - v1.0.0
 * NEW: initial release
