@@ -53,7 +53,7 @@ class Shelly1Device extends Homey.Device {
         .then(result => {
           var state0 = result.relays[0].ison;
           var state1 = result.relays[1].ison;
-          var power = result.meters.power;
+          var power = result.meters[0].power;
 
           // capability onoff relay 0
           if (state0 != this.getCapabilityValue('onoff.relay0')) {

@@ -11,9 +11,9 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/696).
 
 ## Changelog
-### 2018-09-xx - v1.1.0
-* NEW: added support for the Shelly2
-* REFACTORING: switched from request node module to node-fetch
+### 2018-09-09 - v1.1.0
+* NEW: add support for the Shelly 2
+* REFACTORING: switched from request node module to node-fetch (reduced footprint from 7,5MB to )
 
 ### 2018-08-30 - v1.0.0
 * NEW: initial release
