@@ -12,7 +12,7 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/696).
 
 ## Changelog
-### 2018-09-13 - v1.1.0
+### 2018-09-13 - v1.1.1
 * FIX: solved a bug with Shelly 2 condition card when Shelly 2 was off
 
 ### 2018-09-09 - v1.1.0
