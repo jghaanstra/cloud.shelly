@@ -1,6 +1,7 @@
 {
 	"id": "cloud.shelly",
 	"sdk": 2,
+  "brandColor": "#4f8dc8",
 	"name": {
 		"en": "Shelly",
 		"nl": "Shelly"
@@ -9,7 +10,7 @@
 		"en": [ "Shelly", "shelly1" ],
 		"nl": [ "Shelly", "shelly1" ]
 	},
-	"version": "1.1.1",
+	"version": "1.2.0",
 	"compatibility": "1.x >=1.5.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -114,8 +115,8 @@
     {
 			"id": "shelly2",
 			"name": {
-				"en": "Shelly 2",
-				"nl": "Shelly 2"
+				"en": "Shelly 2  Relay",
+				"nl": "Shelly 2 Relay"
 			},
 			"images": {
 				"large": "drivers/shelly2/assets/images/large.jpg",
@@ -150,8 +151,120 @@
 				{
 					"type": "group",
 					"label": {
-						"en": "Shelly 2 settings",
-						"nl": "Shelly 2 instellingen"
+						"en": "Shelly 2 Relay settings",
+						"nl": "Shelly 2 Relay instellingen"
+					},
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+            {
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
+							}
+						},
+            {
+					    "id": "polling",
+					    "type": "number",
+					    "value": 5,
+              "attr": {
+                "min": 5,
+                "max": 3600
+              },
+					    "label": {
+						    "en": "Polling Frequency",
+						    "nl": "Polling frequentie"
+					    }
+				    }
+					]
+				}
+			],
+      "mobile": {
+        "components": [
+          {
+            "id": "icon"
+          },
+          {
+            "id": "toggle",
+            "capabilities": [ "onoff.relay0" ],
+            "options": {
+              "showTitle": true
+            }
+          },
+          {
+            "id": "toggle",
+            "capabilities": [ "onoff.relay1" ],
+            "options": {
+              "showTitle": true
+            }
+          },
+          {
+            "id": "sensor",
+            "capabilities": [ "measure_power" ]
+          }
+        ]
+      }
+		},
+    {
+			"id": "shelly2-rollershutter",
+			"name": {
+				"en": "Shelly 2 Roller Shutter",
+				"nl": "Shelly 2 Roller Shutter"
+			},
+			"images": {
+				"large": "drivers/shelly2-rollershutter/assets/images/large.jpg",
+				"small": "drivers/shelly2-rollershutter/assets/images/small.jpg"
+			},
+			"class": "socket",
+			"capabilities": [
+        "onoff.relay0",
+        "onoff.relay1",
+        "measure_power"
+			],
+      "capabilitiesOptions": {
+        "onoff.relay0": {
+          "title": {
+            "en": "Relay 2.1",
+            "nl": "Relay 2.1"
+          }
+        },
+        "onoff.relay1": {
+          "title": {
+            "en": "Relay 2.2",
+            "nl": "Relay 2.2"
+          }
+        }
+      },
+			"pair": [
+				{
+					"id": "start"
+				}
+			],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly 2 Roller Shutter settings",
+						"nl": "Shelly 2 Roller Shutter instellingen"
 					},
 					"children": [
 						{
