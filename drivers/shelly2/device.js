@@ -3,7 +3,7 @@
 const Homey = require('homey');
 const util = require('/lib/util.js');
 
-class Shelly1Device extends Homey.Device {
+class Shelly2Device extends Homey.Device {
 
   onInit() {
     new Homey.FlowCardTriggerDevice('relay0OnTrigger').register();
@@ -110,4 +110,4 @@ class Shelly1Device extends Homey.Device {
 
 }
 
-module.exports = Shelly1Device;
+module.exports = Shelly2Device;

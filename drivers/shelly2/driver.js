@@ -3,7 +3,7 @@
 const Homey = require('homey');
 const util = require('/lib/util.js');
 
-class Shelly1Driver extends Homey.Driver {
+class Shelly2Driver extends Homey.Driver {
 
   onPair(socket) {
     socket.on('testConnection', function(data, callback) {
@@ -19,4 +19,4 @@ class Shelly1Driver extends Homey.Driver {
 
 }
 
-module.exports = Shelly1Driver;
+module.exports = Shelly2Driver;

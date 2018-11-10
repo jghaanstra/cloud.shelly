@@ -234,23 +234,23 @@
 				"large": "drivers/shelly2-rollershutter/assets/images/large.jpg",
 				"small": "drivers/shelly2-rollershutter/assets/images/small.jpg"
 			},
-			"class": "socket",
+			"class": "windowcoverings",
 			"capabilities": [
-        "onoff.relay0",
-        "onoff.relay1",
+        "windowcoverings_state.relay0",
+        "windowcoverings_state.relay1",
         "measure_power"
 			],
       "capabilitiesOptions": {
-        "onoff.relay0": {
+        "windowcoverings_state.relay0": {
           "title": {
-            "en": "Relay 2.1",
-            "nl": "Relay 2.1"
+            "en": "Roller Shutter 2.1",
+            "nl": "Roller Shutter 2.1"
           }
         },
-        "onoff.relay1": {
+        "windowcoverings_state.relay1": {
           "title": {
-            "en": "Relay 2.2",
-            "nl": "Relay 2.2"
+            "en": "Roller Shutter 2.2",
+            "nl": "Roller Shutter 2.2"
           }
         }
       },
@@ -316,15 +316,15 @@
             "id": "icon"
           },
           {
-            "id": "toggle",
-            "capabilities": [ "onoff.relay0" ],
+            "id": "ternary",
+            "capabilities": [ "windowcoverings_state.relay0" ],
             "options": {
               "showTitle": true
             }
           },
           {
-            "id": "toggle",
-            "capabilities": [ "onoff.relay1" ],
+            "id": "ternary",
+            "capabilities": [ "windowcoverings_state.relay1" ],
             "options": {
               "showTitle": true
             }
@@ -656,6 +656,93 @@
 							"nl": "Selecteer Shelly 2"
 						},
 						"filter": "driver_id=shelly2"
+          }
+				]
+			},
+      {
+				"id": "moveRollerShutter",
+				"title": {
+					"en": "Change roller shutter",
+					"nl": "Wijzig roller shutter"
+				},
+        "hint": {
+					"en": "Use this card to open, close or stop your roller shutter for a given time.",
+					"nl": "Gebruik deze actie om de roller shutter te openen, sluiten of stoppen met de opgegeven duur."
+				},
+				"args": [
+          {
+						"name": "rollershutter",
+						"type": "dropdown",
+            "placeholder": {
+              "en": "Roller Shutter",
+              "nl": "Roller shutter"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Roller Shutter 1",
+                  "nl": "Roller shutter 1"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Roller Shutter 2",
+                  "nl": "Roller shutter 2"
+                }
+              }
+            ]
+          },
+          {
+						"name": "direction",
+						"type": "dropdown",
+            "placeholder": {
+              "en": "Direction",
+              "nl": "Richting"
+            },
+            "values": [
+              {
+                "id": "open",
+                "label": {
+                  "en": "Up",
+                  "nl": "Omhoog"
+                }
+              },
+              {
+                "id": "stop",
+                "label": {
+                  "en": "Stop",
+                  "nl": "Stop"
+                }
+              },
+              {
+                "id": "close",
+                "label": {
+                  "en": "Down",
+                  "nl": "Omlaag"
+                }
+              }
+            ]
+          },
+          {
+						"name": "duration",
+						"type": "number",
+            "placeholder": {
+              "en": "Duration in seconds",
+              "nl": "Duur in seconden"
+            },
+            "min": 1,
+            "step": 1
+          },
+          {
+						"name": "device",
+						"type": "device",
+            "placeholder": {
+							"en": "Select Shelly 2",
+							"nl": "Selecteer Shelly 2"
+						},
+						"filter": "driver_id=shelly2-rollershutter"
           }
 				]
 			}

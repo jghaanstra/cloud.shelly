@@ -3,16 +3,12 @@
 const Homey = require('homey');
 const util = require('/lib/util.js');
 
-class Shelly1Device extends Homey.Device {
+class Shelly2RollerShutterDevice extends Homey.Device {
 
   onInit() {
-    new Homey.FlowCardTriggerDevice('relay0OnTrigger').register();
-    new Homey.FlowCardTriggerDevice('relay1OnTrigger').register();
-    new Homey.FlowCardTriggerDevice('relay0OffTrigger').register();
-    new Homey.FlowCardTriggerDevice('relay1OffTrigger').register();
 
-    this.registerCapabilityListener('onoff.relay0', this.onCapabilityOnoff0.bind(this));
-    this.registerCapabilityListener('onoff.relay1', this.onCapabilityOnoff1.bind(this));
+    this.registerCapabilityListener('windowcoverings_state.relay0', this.onCapabilityWindowcoveringsState0.bind(this));
+    this.registerCapabilityListener('windowcoverings_state.relay1', this.onCapabilityWindowcoveringsState1.bind(this));
 
     var interval = this.getSetting('polling') || 5;
 
@@ -24,21 +20,25 @@ class Shelly1Device extends Homey.Device {
   }
 
   // LISTENERS FOR UPDATING CAPABILITIES
-  onCapabilityOnoff0(value, opts, callback) {
-    if (value) {
-      util.sendCommand('/relay/0?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    } else {
-      util.sendCommand('/relay/0?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+  onCapabilityWindowcoveringsState0(value, opts, callback) {
+    if ( value== 'idle') {
+      util.sendCommand('/rollers/0?go=stop', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    } else if (value == 'up') {
+      util.sendCommand('/rollers/0?go=open', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    } else if (value == 'down') {
+      util.sendCommand('/rollers/0?go=close', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     }
     callback(null, value);
   }
 
   // LISTENERS FOR UPDATING CAPABILITIES
-  onCapabilityOnoff1(value, opts, callback) {
-    if (value) {
-      util.sendCommand('/relay/1?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    } else {
-      util.sendCommand('/relay/1?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+  onCapabilityWindowcoveringsState1(value, opts, callback) {
+    if ( value== 'idle') {
+      util.sendCommand('/rollers/1?go=stop', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    } else if (value == 'up') {
+      util.sendCommand('/rollers/1?go=open', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    } else if (value == 'down') {
+      util.sendCommand('/rollers/1?go=close', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     }
     callback(null, value);
   }
@@ -51,30 +51,30 @@ class Shelly1Device extends Homey.Device {
     this.pollingInterval = setInterval(() => {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
-          var state0 = result.relays[0].ison;
-          var state1 = result.relays[1].ison;
+          if ( result.rollers[0].state == 'stop' ) {
+            var state0 = 'idle';
+          } else if ( result.rollers[0].state == 'open' ) {
+            var state0 = 'up';
+          } else if ( result.rollers[0].state == 'close' ) {
+            var state0 = 'down';
+          }
+          if ( result.rollers[1].state == 'stop' ) {
+            var state1 = 'idle';
+          } else if ( result.rollers[1].state == 'open' ) {
+            var state1 = 'up';
+          } else if ( result.rollers[1].state == 'close' ) {
+            var state1 = 'down';
+          }
           var power = result.meters[0].power;
 
-          // capability onoff relay 0
-          if (state0 != this.getCapabilityValue('onoff.relay0')) {
-            this.setCapabilityValue('onoff.relay0', state0);
-
-            if (state0) {
-              Homey.ManagerFlow.getCard('trigger', 'relay0OnTrigger').trigger(this, {}, {})
-            } else {
-              Homey.ManagerFlow.getCard('trigger', 'relay0OffTrigger').trigger(this, {}, {})
-            }
+          // capability windowcoverings_state relay 0
+          if (state0 != this.getCapabilityValue('windowcoverings_state.relay0')) {
+            this.setCapabilityValue('windowcoverings_state.relay0', state0);
           }
 
-          // capability onoff relay 1
-          if (state1 != this.getCapabilityValue('onoff.relay1')) {
-            this.setCapabilityValue('onoff.relay1', state1);
-
-            if (state1) {
-              Homey.ManagerFlow.getCard('trigger', 'relay1OnTrigger').trigger(this, {}, {})
-            } else {
-              Homey.ManagerFlow.getCard('trigger', 'relay1OffTrigger').trigger(this, {}, {})
-            }
+          // capability windowcoverings_state relay 1
+          if (state1 != this.getCapabilityValue('windowcoverings_state.relay1')) {
+            this.setCapabilityValue('windowcoverings_state.relay1', state1);
           }
 
           // capability measure_power
@@ -110,4 +110,4 @@ class Shelly1Device extends Homey.Device {
 
 }
 
-module.exports = Shelly1Device;
+module.exports = Shelly2RollerShutterDevice;
