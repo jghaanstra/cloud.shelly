@@ -236,24 +236,9 @@
 			},
 			"class": "windowcoverings",
 			"capabilities": [
-        "windowcoverings_state.relay0",
-        "windowcoverings_state.relay1",
+        "windowcoverings_state",
         "measure_power"
 			],
-      "capabilitiesOptions": {
-        "windowcoverings_state.relay0": {
-          "title": {
-            "en": "Roller Shutter 2.1",
-            "nl": "Roller Shutter 2.1"
-          }
-        },
-        "windowcoverings_state.relay1": {
-          "title": {
-            "en": "Roller Shutter 2.2",
-            "nl": "Roller Shutter 2.2"
-          }
-        }
-      },
 			"pair": [
 				{
 					"id": "start"
@@ -317,14 +302,7 @@
           },
           {
             "id": "ternary",
-            "capabilities": [ "windowcoverings_state.relay0" ],
-            "options": {
-              "showTitle": true
-            }
-          },
-          {
-            "id": "ternary",
-            "capabilities": [ "windowcoverings_state.relay1" ],
+            "capabilities": [ "windowcoverings_state" ],
             "options": {
               "showTitle": true
             }
