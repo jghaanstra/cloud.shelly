@@ -7,7 +7,7 @@ class Shelly2RollerShutterDevice extends Homey.Device {
 
   onInit() {
 
-    this.registerCapabilityListener('windowcoverings_state.relay0', this.onCapabilityWindowcoveringsState.bind(this));
+    this.registerCapabilityListener('windowcoverings_state', this.onCapabilityWindowcoveringsState.bind(this));
 
     var interval = this.getSetting('polling') || 5;
 
@@ -40,8 +40,6 @@ class Shelly2RollerShutterDevice extends Homey.Device {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
 
-          console.log(result.rollers);
-          console.log('rollers[0].state is: ', result.rollers[0].state);
           if ( result.rollers[0].state == 'stop' ) {
             var state = 'idle';
           } else if ( result.rollers[0].state == 'open' ) {
