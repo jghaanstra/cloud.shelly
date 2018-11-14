@@ -12,6 +12,6 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/696).
 
 ## Changelog
-### 2018-11-xx - v1.2.0
+### 2018-11-14 - v1.2.0
 * NEW: add support for Shelly2 devices that are configured as roller shutter device
 * NEW: added an action card for controling roller shutters for a specified duration

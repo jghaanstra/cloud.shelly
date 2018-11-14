@@ -20,7 +20,6 @@ class Shelly2RollerShutterDevice extends Homey.Device {
 
   // LISTENERS FOR UPDATING CAPABILITIES
   onCapabilityWindowcoveringsState(value, opts, callback) {
-    console.log('windowcoveringstate_capability set to: ', value);
     if (value == 'idle') {
       util.sendCommand('/roller/0?go=stop', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     } else if (value == 'up') {
