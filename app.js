@@ -83,7 +83,7 @@ class ShellyApp extends Homey.App {
     new Homey.FlowCardAction('moveRollerShutter')
       .register()
       .registerRunListener((args, state) => {
-        util.sendCommand('/rollers/'+ args.rollershutter +'?go='+ args.direction +'&duration='+ args.duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         return Promise.resolve(true);
       })
 
