@@ -38,7 +38,7 @@ $(function() {
 				} else if(data) {
 					$('#mac').val(data.device.mac);
 
-					var shellyinfo = "<h3>Shelly2 Roller Shutter</h3><div class='info-row'><span class='info-label' data-i18n='pair.hostname'>Shelly Hostname:</span><span class='info-value'> "+ data.device.hostname +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.mac'>Shelly2 MAC Address:</span><span class='info-value'> "+ data.device.mac +"</span></div>";
+					var shellyinfo = "<div class='info-row'><span class='info-label' data-i18n='pair.hostname'>Shelly Hostname:</span><span class='info-value'> "+ data.device.hostname +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.mac'>Shelly1 MAC Address:</span><span class='info-value'> "+ data.device.mac +"</span></div>";
 					$('.shelly-info').show();
 					$('.shelly-info').html(shellyinfo);
 
@@ -77,7 +77,7 @@ $(function() {
 			};
 
 			Homey.addDevice({
-				name	 : 'Shelly 2 Roller Shutter',
+				name	 : 'Shelly Plug',
 				data 	 : device_data,
 				settings : settings
 			}, function(error, result ) {
@@ -138,7 +138,7 @@ $(function() {
 	}
 </style>
 
-<p data-i18n="pair.intro-rollershutter">Enter the IP address and, if confugured, your username and password for your Shelly device.</p>
+<p data-i18n="pair.intro">Enter the IP address and, if confugured, your username and password for your Shelly device.</p>
 <div class="shelly-pairing">
 	<div class="col1">
 		<div class="form-group">
