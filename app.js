@@ -20,7 +20,7 @@ class ShellyApp extends Homey.App {
         return Promise.resolve(true);
       })
 
-    // SHELLY 2
+    // SHELLY 2 & SHELLY 4 PRO
     new Homey.FlowCardCondition('relay0Powered')
       .register()
       .registerRunListener((args, state) => {
@@ -41,6 +41,26 @@ class ShellyApp extends Homey.App {
         }
       })
 
+    new Homey.FlowCardCondition('relay2Powered')
+      .register()
+      .registerRunListener((args, state) => {
+        if (args.device.getCapabilityValue('onoff.relay2')) {
+          return Promise.resolve(true);
+        } else {
+          return Promise.resolve(false);
+        }
+      })
+
+    new Homey.FlowCardCondition('relay3Powered')
+      .register()
+      .registerRunListener((args, state) => {
+        if (args.device.getCapabilityValue('onoff.relay3')) {
+          return Promise.resolve(true);
+        } else {
+          return Promise.resolve(false);
+        }
+      })
+
     new Homey.FlowCardAction('relay0OnAction')
       .register()
       .registerRunListener((args, state) => {
@@ -52,6 +72,20 @@ class ShellyApp extends Homey.App {
       .register()
       .registerRunListener((args, state) => {
         util.sendCommand('/relay/1?turn=on', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        return Promise.resolve(true);
+      })
+
+    new Homey.FlowCardAction('relay2OnAction')
+      .register()
+      .registerRunListener((args, state) => {
+        util.sendCommand('/relay/2?turn=on', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        return Promise.resolve(true);
+      })
+
+    new Homey.FlowCardAction('relay3OnAction')
+      .register()
+      .registerRunListener((args, state) => {
+        util.sendCommand('/relay/3?turn=on', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         return Promise.resolve(true);
       })
 
@@ -69,7 +103,32 @@ class ShellyApp extends Homey.App {
         return Promise.resolve(true);
       })
 
+    new Homey.FlowCardAction('relay2OffAction')
+      .register()
+      .registerRunListener((args, state) => {
+        util.sendCommand('/relay/2?turn=off', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        return Promise.resolve(true);
+      })
+
+    new Homey.FlowCardAction('relay3OffAction')
+      .register()
+      .registerRunListener((args, state) => {
+        util.sendCommand('/relay/3?turn=off', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        return Promise.resolve(true);
+      })
+
     new Homey.FlowCardAction('flipbackSwitch2')
+      .register()
+      .registerRunListener((args, state) => {
+        if (args.switch === '1') {
+          util.sendCommand('/relay/'+ args.relay +'?turn=on&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } else {
+          util.sendCommand('/relay/'+ args.relay +'?turn=off&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        }
+        return Promise.resolve(true);
+      })
+
+    new Homey.FlowCardAction('flipbackSwitch4')
       .register()
       .registerRunListener((args, state) => {
         if (args.switch === '1') {

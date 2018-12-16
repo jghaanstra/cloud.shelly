@@ -3,14 +3,17 @@ This Homey app allows you to control Shelly devices. The supported Shelly device
 
 ## Supported devices
 * Shelly 1
-* Shelly 2
+* Shelly 2 (Relay and Shutter mode)
+* Shelly Plug
+* Shelly Plug S
+* Shelly 4 Pro
 
 ## Instructions
 Add your Shelly device in Homey just like you would add any other device. Enter the IP address and the polling frequency in the pairing wizard. If you have set a username and password to access your Shelly device you need to enter these during pairing as well. Connect the device and you are good to go.
 
 ## Support topic
-For support please use the official support topic on the forum [here](https://community.athom.com/t/696).
+For support please use the official support topic on the forum [here](https://community.athom.com/t/765).
 
 ## Changelog
-### 2018-11-23 - v1.3.0
-* NEW: add support for Shelly Plug and Shelly Plug S devices
+### v1.4.0 - 2018-12-16
+* NEW: add support for Shelly 4 Pro devices

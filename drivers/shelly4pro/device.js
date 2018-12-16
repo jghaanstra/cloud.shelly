@@ -3,16 +3,22 @@
 const Homey = require('homey');
 const util = require('/lib/util.js');
 
-class Shelly2Device extends Homey.Device {
+class Shelly4ProDevice extends Homey.Device {
 
   onInit() {
     new Homey.FlowCardTriggerDevice('relay0OnTrigger').register();
     new Homey.FlowCardTriggerDevice('relay1OnTrigger').register();
+    new Homey.FlowCardTriggerDevice('relay2OnTrigger').register();
+    new Homey.FlowCardTriggerDevice('relay3OnTrigger').register();
     new Homey.FlowCardTriggerDevice('relay0OffTrigger').register();
     new Homey.FlowCardTriggerDevice('relay1OffTrigger').register();
+    new Homey.FlowCardTriggerDevice('relay2OffTrigger').register();
+    new Homey.FlowCardTriggerDevice('relay3OffTrigger').register();
 
     this.registerCapabilityListener('onoff.relay0', this.onCapabilityOnoff0.bind(this));
     this.registerCapabilityListener('onoff.relay1', this.onCapabilityOnoff1.bind(this));
+    this.registerCapabilityListener('onoff.relay2', this.onCapabilityOnoff1.bind(this));
+    this.registerCapabilityListener('onoff.relay3', this.onCapabilityOnoff1.bind(this));
 
     var interval = this.getSetting('polling') || 5;
 
@@ -42,6 +48,24 @@ class Shelly2Device extends Homey.Device {
     callback(null, value);
   }
 
+  onCapabilityOnoff2(value, opts, callback) {
+    if (value) {
+      util.sendCommand('/relay/2?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    } else {
+      util.sendCommand('/relay/2?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    }
+    callback(null, value);
+  }
+
+  onCapabilityOnoff3(value, opts, callback) {
+    if (value) {
+      util.sendCommand('/relay/3?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    } else {
+      util.sendCommand('/relay/3?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    }
+    callback(null, value);
+  }
+
   // HELPER FUNCTIONS
   pollDevice(interval) {
     clearInterval(this.pollingInterval);
@@ -52,6 +76,8 @@ class Shelly2Device extends Homey.Device {
         .then(result => {
           var state0 = result.relays[0].ison;
           var state1 = result.relays[1].ison;
+          var state2 = result.relays[2].ison;
+          var state3 = result.relays[3].ison;
           var power = result.meters[0].power;
 
           // capability onoff relay 0
@@ -73,6 +99,28 @@ class Shelly2Device extends Homey.Device {
               Homey.ManagerFlow.getCard('trigger', 'relay1OnTrigger').trigger(this, {}, {})
             } else {
               Homey.ManagerFlow.getCard('trigger', 'relay1OffTrigger').trigger(this, {}, {})
+            }
+          }
+
+          // capability onoff relay 2
+          if (state2 != this.getCapabilityValue('onoff.relay2')) {
+            this.setCapabilityValue('onoff.relay2', state2);
+
+            if (state2) {
+              Homey.ManagerFlow.getCard('trigger', 'relay2OnTrigger').trigger(this, {}, {})
+            } else {
+              Homey.ManagerFlow.getCard('trigger', 'relay2OffTrigger').trigger(this, {}, {})
+            }
+          }
+
+          // capability onoff relay 3
+          if (state3 != this.getCapabilityValue('onoff.relay3')) {
+            this.setCapabilityValue('onoff.relay3', state3);
+
+            if (state3) {
+              Homey.ManagerFlow.getCard('trigger', 'relay3OnTrigger').trigger(this, {}, {})
+            } else {
+              Homey.ManagerFlow.getCard('trigger', 'relay3OffTrigger').trigger(this, {}, {})
             }
           }
 
@@ -109,4 +157,4 @@ class Shelly2Device extends Homey.Device {
 
 }
 
-module.exports = Shelly2Device;
+module.exports = Shelly4ProDevice;

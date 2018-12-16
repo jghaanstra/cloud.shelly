@@ -7,7 +7,7 @@ class Shelly2RollerShutterDriver extends Homey.Driver {
 
   onPair(socket) {
     socket.on('testConnection', function(data, callback) {
-      util.sendCommand('/settings', data.address, data.username, data.password)
+      util.sendCommand('/shelly', data.address, data.username, data.password)
         .then(result => {
           callback(false, result);
         })
