@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "shelly1" ],
 		"nl": [ "Shelly", "shelly1" ]
 	},
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"compatibility": ">=1.5.12",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -915,7 +915,7 @@
 							"en": "Select Shelly 2",
 							"nl": "Selecteer Shelly 2"
 						},
-						"filter": "driver_id=shelly2"
+						"filter": "driver_id=shelly2|shelly4pro"
 					}
 				]
 			},
@@ -933,7 +933,43 @@
 							"en": "Select Shelly 2",
 							"nl": "Selecteer Shelly 2"
 						},
-						"filter": "driver_id=shelly2"
+						"filter": "driver_id=shelly2|shelly4pro"
+					}
+				]
+			},
+      {
+				"id": "relay2OnAction",
+				"title": {
+					"en": "Turn on relay 3",
+					"nl": "Zet relay 3 aan"
+				},
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly 4 Pro",
+							"nl": "Selecteer Shelly 4 Pro"
+						},
+						"filter": "driver_id=shelly4pro"
+					}
+				]
+			},
+      {
+				"id": "relay3OnAction",
+				"title": {
+					"en": "Turn on relay 43",
+					"nl": "Zet relay 4 aan"
+				},
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly 4 Pro",
+							"nl": "Selecteer Shelly 4 Pro"
+						},
+						"filter": "driver_id=shelly4pro"
 					}
 				]
 			},
@@ -951,7 +987,7 @@
 							"en": "Select Shelly 2",
 							"nl": "Selecteer Shelly 2"
 						},
-						"filter": "driver_id=shelly2"
+						"filter": "driver_id=shelly2|shelly4pro"
 					}
 				]
 			},
@@ -969,7 +1005,43 @@
 							"en": "Select Shelly 2",
 							"nl": "Selecteer Shelly 2"
 						},
-						"filter": "driver_id=shelly2"
+						"filter": "driver_id=shelly2|shelly4pro"
+					}
+				]
+			},
+      {
+				"id": "relay2OffAction",
+				"title": {
+					"en": "Turn off relay 3",
+					"nl": "Zet relay 3 uit"
+				},
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly 4 Pro",
+							"nl": "Selecteer Shelly 4 Pro"
+						},
+						"filter": "driver_id=shelly4pro"
+					}
+				]
+			},
+      {
+				"id": "relay3OffAction",
+				"title": {
+					"en": "Turn off relay 4",
+					"nl": "Zet relay 4 uit"
+				},
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly 4 Pro",
+							"nl": "Selecteer Shelly 4 Pro"
+						},
+						"filter": "driver_id=shelly4pro"
 					}
 				]
 			},

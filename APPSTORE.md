@@ -15,5 +15,8 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/765).
 
 ## Changelog
+### v1.4.1- 2018-12-17
+* FIX: fix flow card issues for Shelly 4 Pro
+
 ### v1.4.0 - 2018-12-16
 * NEW: add support for Shelly 4 Pro devices
