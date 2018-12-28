@@ -8,6 +8,7 @@ class Shelly2RollerShutterDevice extends Homey.Device {
   onInit() {
 
     this.registerCapabilityListener('windowcoverings_state', this.onCapabilityWindowcoveringsState.bind(this));
+    this.registerCapabilityListener('windowcoverings_state', this.onCapabilityWindowcoveringsSet.bind(this));
 
     var interval = this.getSetting('polling') || 5;
 
@@ -27,6 +28,12 @@ class Shelly2RollerShutterDevice extends Homey.Device {
     } else if (value == 'down') {
       util.sendCommand('/roller/0?go=close', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     }
+    callback(null, value);
+  }
+
+  onCapabilityWindowcoveringsSet(value, opts, callback) {
+    var position = value * 100;
+    util.sendCommand('/roller/0?go=to_pos&roller_pos='+ position, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     callback(null, value);
   }
 

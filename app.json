@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "shelly1" ],
 		"nl": [ "Shelly", "shelly1" ]
 	},
-	"version": "1.4.1",
+	"version": "1.4.2",
 	"compatibility": ">=1.5.12",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -237,6 +237,7 @@
 			"class": "windowcoverings",
 			"capabilities": [
 				"windowcoverings_state",
+        "windowcoverings_set",
 				"measure_power"
 			],
 			"pair": [
@@ -305,6 +306,13 @@
 						"capabilities": [ "windowcoverings_state" ],
 						"options": {
 							"showTitle": true
+						}
+					},
+          {
+						"id": "slider",
+						"capabilities": [ "windowcoverings_set" ],
+						"options": {
+							"showTitle": false
 						}
 					},
 					{
