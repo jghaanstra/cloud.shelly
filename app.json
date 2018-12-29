@@ -310,10 +310,7 @@
 					},
           {
 						"id": "slider",
-						"capabilities": [ "windowcoverings_set" ],
-						"options": {
-							"showTitle": true
-						}
+						"capabilities": [ "windowcoverings_set" ]
 					},
 					{
 						"id": "sensor",

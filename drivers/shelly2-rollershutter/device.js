@@ -8,7 +8,7 @@ class Shelly2RollerShutterDevice extends Homey.Device {
   onInit() {
 
     this.registerCapabilityListener('windowcoverings_state', this.onCapabilityWindowcoveringsState.bind(this));
-    this.registerCapabilityListener('windowcoverings_state', this.onCapabilityWindowcoveringsSet.bind(this));
+    this.registerCapabilityListener('windowcoverings_set', this.onCapabilityWindowcoveringsSet.bind(this));
 
     var interval = this.getSetting('polling') || 5;
 
