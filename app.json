@@ -312,7 +312,7 @@
 						"id": "slider",
 						"capabilities": [ "windowcoverings_set" ],
 						"options": {
-							"showTitle": false
+							"showTitle": true
 						}
 					},
 					{

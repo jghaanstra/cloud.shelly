@@ -54,6 +54,8 @@ class Shelly2RollerShutterDevice extends Homey.Device {
             var state = 'down';
           }
           var power = result.meters[0].power;
+          var position = result.roller[0].current_pos * 100;
+          this.log('current blinds position is ', position);
 
           // capability windowcoverings_state
           if (state != this.getCapabilityValue('windowcoverings_state')) {
@@ -63,6 +65,11 @@ class Shelly2RollerShutterDevice extends Homey.Device {
           // capability measure_power
           if (power != this.getCapabilityValue('measure_power')) {
             this.setCapabilityValue('measure_power', power);
+          }
+
+          // capability windowcoverings_set
+          if (position != this.getCapabilityValue('windowcoverings_set')) {
+            this.setCapabilityValue('windowcoverings_set', position);
           }
 
         })
