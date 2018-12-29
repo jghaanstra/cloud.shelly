@@ -54,7 +54,7 @@ class Shelly2RollerShutterDevice extends Homey.Device {
             var state = 'down';
           }
           var power = result.meters[0].power;
-          var position = result.roller[0].current_pos * 100;
+          var position = result.rollers[0].current_pos * 100;
           this.log('current blinds position is ', position);
 
           // capability windowcoverings_state
