@@ -45,7 +45,7 @@ class Shelly2RollerShutterDevice extends Homey.Device {
     this.pollingInterval = setInterval(() => {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
-
+          console.log(result.rollers[0]);
           if ( result.rollers[0].state == 'stop' ) {
             var state = 'idle';
           } else if ( result.rollers[0].state == 'open' ) {

@@ -82,16 +82,15 @@ $(function() {
 				settings : settings
 			}, function(error, result ) {
 				if (error) {
-          console.log(error);
 					$('.shelly-error').show();
 					$('.shelly-error-msg').html(error.message || error.toString() );
-				}
-        console.log(result);
-				$('.shelly-test').hide();
-				$('.shelly-error').hide();
-				$('.shelly-ok').show();
+				} else {
+          $('.shelly-test').hide();
+  				$('.shelly-error').hide();
+  				$('.shelly-ok').show();
 
-				Homey.done();
+          Homey.done();
+        }
 			})
 
 		} else {
