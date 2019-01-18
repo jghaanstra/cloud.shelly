@@ -143,7 +143,8 @@ class ShellyApp extends Homey.App {
       .register()
       .registerRunListener((args, state) => {
         console.log('changing roller shutter with duration: ', args.duration);
-        util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        console.log(args);
+        util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ Number(args.duration) +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         return Promise.resolve(true);
       })
 

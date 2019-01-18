@@ -237,7 +237,6 @@
 			"class": "windowcoverings",
 			"capabilities": [
 				"windowcoverings_state",
-        "windowcoverings_set",
 				"measure_power"
 			],
 			"pair": [

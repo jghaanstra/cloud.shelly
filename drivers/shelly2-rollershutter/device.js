@@ -8,7 +8,7 @@ class Shelly2RollerShutterDevice extends Homey.Device {
   onInit() {
 
     this.registerCapabilityListener('windowcoverings_state', this.onCapabilityWindowcoveringsState.bind(this));
-    this.registerCapabilityListener('windowcoverings_set', this.onCapabilityWindowcoveringsSet.bind(this));
+    //this.registerCapabilityListener('windowcoverings_set', this.onCapabilityWindowcoveringsSet.bind(this));
 
     var interval = this.getSetting('polling') || 5;
 
@@ -67,9 +67,9 @@ class Shelly2RollerShutterDevice extends Homey.Device {
           }
 
           // capability windowcoverings_set
-          if (position != this.getCapabilityValue('windowcoverings_set')) {
-            this.setCapabilityValue('windowcoverings_set', position);
-          }
+          //if (position != this.getCapabilityValue('windowcoverings_set')) {
+          //  this.setCapabilityValue('windowcoverings_set', position);
+        //  }
 
         })
         .catch(error => {
