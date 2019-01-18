@@ -69,7 +69,7 @@ class Shelly2RollerShutterDevice extends Homey.Device {
           // capability windowcoverings_set
           //if (position != this.getCapabilityValue('windowcoverings_set')) {
           //  this.setCapabilityValue('windowcoverings_set', position);
-        //  }
+          //}
 
         })
         .catch(error => {

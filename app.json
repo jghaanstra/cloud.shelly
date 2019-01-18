@@ -1116,6 +1116,7 @@
 							"nl": "Duur in seconden"
 						},
 						"min": 1,
+            "max": 120,
 						"step": 1
 					},
 					{
