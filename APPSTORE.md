@@ -15,5 +15,5 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/765).
 
 ## Changelog
-### v1.4.2- 2019-01-19
-* NEW: add capability windowcoverings_set for Shelly 2 rollershutter. This requires you to re-pair your Shelly 2 Roller Shutter device!
+### v1.4.3- 2019-02-06
+* FIX: improvements to pairing templates for firmware 2.x

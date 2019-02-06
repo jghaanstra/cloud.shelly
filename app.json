@@ -10,8 +10,8 @@
 		"en": [ "Shelly", "shelly1" ],
 		"nl": [ "Shelly", "shelly1" ]
 	},
-	"version": "1.4.2",
-	"compatibility": ">=1.5.12",
+	"version": "1.4.3",
+	"compatibility": ">=2.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
 		"email": "homey@solidewebservices.com",
@@ -1276,7 +1276,7 @@
 						"placeholder": {
 							"en": "Duration in seconds",
 							"nl": "Duur in seconden"
-						}						
+						}
 					},
 					{
 						"name": "device",

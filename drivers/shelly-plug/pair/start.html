@@ -38,7 +38,7 @@ $(function() {
 				} else if(data) {
 					$('#mac').val(data.mac);
 
-					var shellyinfo = "<h3>Shelly Plug</h3><div class='info-row'><span class='info-label' data-i18n='pair.hostname'>Shelly Hostname:</span><span class='info-value'> "+ data.type +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.mac'>Shelly1 MAC Address:</span><span class='info-value'> "+ data.mac +"</span></div>";
+					var shellyinfo = "<div class='info-row'><span class='info-label' data-i18n='pair.hostname'>Shelly Hostname:</span><span class='info-value'> "+ data.type +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.mac'>Shelly1 MAC Address:</span><span class='info-value'> "+ data.mac +"</span></div>";
 					$('.shelly-info').show();
 					$('.shelly-info').html(shellyinfo);
 
@@ -103,72 +103,69 @@ $(function() {
 </script>
 
 <style type="text/css">
-	.shelly-pairing {
-		display: flex;
-		justify-content: space-between;
-		flex-wrap: wrap;
-	}
-  .shelly-pairing .form-group input[type="text"], .shelly-pairing .form-group input[type="password"], .shelly-pairing .form-group textarea {
-    max-width: 250px;
+  .form-group {
     width: 100%;
+    display: block;
+    margin-bottom: 12px;
   }
-	.shelly-pairing .col1, .shelly-pairing .col2 {
-		width: 48%;
-	}
-	.shelly-status, .shelly-info {
+  .form-group label {
+    display: block;
+  }
+  .shelly-status, .shelly-info {
 		display: none;
 	}
-	.shelly-info {
-		margin-top: 10px;
-		font-size: 12px;
-	}
-	.shelly-info .info-label {
-		min-width: 150px;
-		font-weight: 700;
-	}
-	.buttons, .messages {
-		padding-top: 14px;
-	}
-	.shelly-image {
-		margin: 0 auto;
-	}
-	.shelly-image img {
-		width: 100%;
-		height: auto;
-		display: block;
-	}
+  .shelly-info {
+    margin-top: 10px;
+    font-size: 12px;
+  }
+  .shelly-info .info-row {
+    min-width: 150px;
+    padding-bottom: 4px;
+  }
+  .shelly-info .info-label {
+    display: inline-block;
+    min-width: 100px;
+    font-weight: 700;
+  }
+  .buttons, .messages {
+    padding-top: 14px;
+  }
+  .button:disabled {
+    color: #ccc;
+  }
+  .button:enabled {
+    background-color: #00c139 !important;
+    color: #fff;
+  }
 </style>
 
 <p data-i18n="pair.intro">Enter the IP address and, if confugured, your username and password for your Shelly device.</p>
 <div class="shelly-pairing">
-	<div class="col1">
-		<div class="form-group">
-			<label for="address" data-i18n="pair.address">IP address</label>
-			<input type="text" class="form-control" id="address" placeholder="0.0.0.0">
-		</div>
-		<div class="form-group">
-			<label for="username" data-i18n="pair.username">Username</label>
-			<input type="text" class="form-control" id="username">
-		</div>
-		<div class="form-group">
-			<label for="password" data-i18n="pair.password">Password</label>
-			<input type="password" class="form-control" id="password">
-		</div>
-    <div class="form-group">
-      <label for="polling" data-i18n="pair.polling">Polling Frequency</label>
-      <input type="number" class="form-control" id="polling" min="5" max="3600" placeholder="5">
-    </div>
-		<input type="hidden" id="mac" value="">
-		<div class="form-group buttons">
-			<button id="test-connection" class="button" data-i18n="pair.test">Test Connection</button>
-			<button id="connect" class="button" data-i18n="pair.connect" disabled>Connect</button>
-		</div>
+	<div class="form-group">
+		<label for="address" data-i18n="pair.address">IP address</label>
+		<input type="text" class="form-control" id="address" placeholder="0.0.0.0">
 	</div>
-	<div class="col2">
-		<div class="shelly-image"><img src="data:image/png;base64,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" alt="shelly" border="0" /></div>
-		<div class="shelly-info"></div>
+	<div class="form-group">
+		<label for="username" data-i18n="pair.username">Username</label>
+		<input type="text" class="form-control" id="username">
+	</div>
+	<div class="form-group">
+		<label for="password" data-i18n="pair.password">Password</label>
+		<input type="password" class="form-control" id="password">
+	</div>
+  <div class="form-group">
+    <label for="polling" data-i18n="pair.polling">Polling Frequency</label>
+    <input type="number" class="form-control" id="polling" min="5" max="3600" placeholder="5">
+  </div>
+	<input type="hidden" id="mac" value="">
+	<div class="form-group buttons">
+		<button id="test-connection" class="button" data-i18n="pair.test">Test Connection</button>
+		<button id="connect" class="button" data-i18n="pair.connect" disabled>Connect</button>
 	</div>
 </div>
+
+<div class="shelly-info"></div>
+
 <div class="messages">
 	<p class="shelly-status shelly-test" style="color: #008C23;"><i class="fa fa-check"></i> <span class="shelly-test-msg" data-i18n="pair.testing">Connection test succesfull</span></p>
 	<p class="shelly-status shelly-ok" style="color: #008C23;"><i class="fa fa-check"></i> <span class="shelly-ok-msg" data-i18n="pair.success">Shelly device added succesfully</span></p>
