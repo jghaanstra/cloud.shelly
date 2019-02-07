@@ -6,35 +6,31 @@ const util = require('/lib/util.js');
 class Shelly2RollerShutterDevice extends Homey.Device {
 
   onInit() {
-
-    this.registerCapabilityListener('windowcoverings_state', this.onCapabilityWindowcoveringsState.bind(this));
-    this.registerCapabilityListener('windowcoverings_set', this.onCapabilityWindowcoveringsSet.bind(this));
-
     var interval = this.getSetting('polling') || 5;
-
     this.pollDevice(interval);
+
+    // LISTENERS FOR UPDATING CAPABILITIES
+    this.registerCapabilityListener('windowcoverings_state', (value, opts) => {
+      if (value == 'idle') {
+        return util.sendCommand('/roller/0?go=stop', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      } else if (value == 'up') {
+        return util.sendCommand('/roller/0?go=open', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      } else if (value == 'down') {
+        return util.sendCommand('/roller/0?go=close', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      } else {
+        return Promise.reject('State not recognized ...');
+      }
+    });
+
+    this.registerCapabilityListener('windowcoverings_set', (value, opts) => {
+      var position = value * 100;
+      return util.sendCommand('/roller/0?go=to_pos&roller_pos='+ position, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    });
+
   }
 
   onDeleted() {
     clearInterval(this.pollingInterval);
-  }
-
-  // LISTENERS FOR UPDATING CAPABILITIES
-  onCapabilityWindowcoveringsState(value, opts, callback) {
-    if (value == 'idle') {
-      util.sendCommand('/roller/0?go=stop', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    } else if (value == 'up') {
-      util.sendCommand('/roller/0?go=open', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    } else if (value == 'down') {
-      util.sendCommand('/roller/0?go=close', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    }
-    callback(null, value);
-  }
-
-  onCapabilityWindowcoveringsSet(value, opts, callback) {
-    var position = value * 100;
-    util.sendCommand('/roller/0?go=to_pos&roller_pos='+ position, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    callback(null, value);
   }
 
   // HELPER FUNCTIONS

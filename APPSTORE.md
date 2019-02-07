@@ -15,6 +15,7 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/765).
 
 ## Changelog
-### v1.4.3- 2019-02-07
+### v1.5.0- 2019-02-07
 * FIX: improvements to pairing templates for firmware 2.x
 * FIX: fix percentage for windowcoverings_set capability for rollershutter
+* FIX: code refactoring in drivers (replace callbacks with promises)

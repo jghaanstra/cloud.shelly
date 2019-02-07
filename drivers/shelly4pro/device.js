@@ -15,55 +15,46 @@ class Shelly4ProDevice extends Homey.Device {
     new Homey.FlowCardTriggerDevice('relay2OffTrigger').register();
     new Homey.FlowCardTriggerDevice('relay3OffTrigger').register();
 
-    this.registerCapabilityListener('onoff.relay0', this.onCapabilityOnoff0.bind(this));
-    this.registerCapabilityListener('onoff.relay1', this.onCapabilityOnoff1.bind(this));
-    this.registerCapabilityListener('onoff.relay2', this.onCapabilityOnoff1.bind(this));
-    this.registerCapabilityListener('onoff.relay3', this.onCapabilityOnoff1.bind(this));
-
     var interval = this.getSetting('polling') || 5;
-
     this.pollDevice(interval);
+
+    // LISTENERS FOR UPDATING CAPABILITIES
+    this.registerCapabilityListener('onoff.relay0', (value, opts) => {
+      if (value) {
+        return util.sendCommand('/relay/0?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      } else {
+        return util.sendCommand('/relay/0?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      }
+    });
+
+    this.registerCapabilityListener('onoff.relay1', (value, opts) => {
+      if (value) {
+        return util.sendCommand('/relay/1?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      } else {
+        return util.sendCommand('/relay/1?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      }
+    });
+
+    this.registerCapabilityListener('onoff.relay2', (value, opts) => {
+      if (value) {
+        return util.sendCommand('/relay/2?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      } else {
+        return util.sendCommand('/relay/2?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      }
+    });
+
+    this.registerCapabilityListener('onoff.relay3', (value, opts) => {
+      if (value) {
+        return util.sendCommand('/relay/3?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      } else {
+        return util.sendCommand('/relay/3?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      }
+    });
+
   }
 
   onDeleted() {
     clearInterval(this.pollingInterval);
-  }
-
-  // LISTENERS FOR UPDATING CAPABILITIES
-  onCapabilityOnoff0(value, opts, callback) {
-    if (value) {
-      util.sendCommand('/relay/0?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    } else {
-      util.sendCommand('/relay/0?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    }
-    callback(null, value);
-  }
-
-  onCapabilityOnoff1(value, opts, callback) {
-    if (value) {
-      util.sendCommand('/relay/1?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    } else {
-      util.sendCommand('/relay/1?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    }
-    callback(null, value);
-  }
-
-  onCapabilityOnoff2(value, opts, callback) {
-    if (value) {
-      util.sendCommand('/relay/2?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    } else {
-      util.sendCommand('/relay/2?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    }
-    callback(null, value);
-  }
-
-  onCapabilityOnoff3(value, opts, callback) {
-    if (value) {
-      util.sendCommand('/relay/3?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    } else {
-      util.sendCommand('/relay/3?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    }
-    callback(null, value);
   }
 
   // HELPER FUNCTIONS

@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "shelly1" ],
 		"nl": [ "Shelly", "shelly1" ]
 	},
-	"version": "1.4.3",
+	"version": "1.5.0",
 	"compatibility": ">=2.0.0",
 	"author": {
 		"name": "Jelger Haanstra",

@@ -6,24 +6,21 @@ const util = require('/lib/util.js');
 class ShellyPlugSDevice extends Homey.Device {
 
   onInit() {
-    this.registerCapabilityListener('onoff', this.onCapabilityOnoff.bind(this));
-
     var interval = this.getSetting('polling') || 5;
     this.pollDevice(interval);
+
+    // LISTENERS FOR UPDATING CAPABILITIES
+    this.registerCapabilityListener('onoff', (value, opts) => {
+      if (value) {
+        return util.sendCommand('/relay/0?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      } else {
+        return util.sendCommand('/relay/0?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      }
+    });
   }
 
   onDeleted() {
     clearInterval(this.pollingInterval);
-  }
-
-  // LISTENERS FOR UPDATING CAPABILITIES
-  onCapabilityOnoff(value, opts, callback) {
-    if (value) {
-      util.sendCommand('/relay/0?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    } else {
-      util.sendCommand('/relay/0?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    }
-    callback(null, value);
   }
 
   // HELPER FUNCTIONS

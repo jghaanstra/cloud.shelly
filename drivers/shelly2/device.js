@@ -11,35 +11,29 @@ class Shelly2Device extends Homey.Device {
     new Homey.FlowCardTriggerDevice('relay0OffTrigger').register();
     new Homey.FlowCardTriggerDevice('relay1OffTrigger').register();
 
-    this.registerCapabilityListener('onoff.relay0', this.onCapabilityOnoff0.bind(this));
-    this.registerCapabilityListener('onoff.relay1', this.onCapabilityOnoff1.bind(this));
-
     var interval = this.getSetting('polling') || 5;
-
     this.pollDevice(interval);
+
+    // LISTENERS FOR UPDATING CAPABILITIES
+    this.registerCapabilityListener('onoff.relay0', (value, opts) => {
+      if (value) {
+        return util.sendCommand('/relay/0?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      } else {
+        return util.sendCommand('/relay/0?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      }
+    });
+
+    this.registerCapabilityListener('onoff.relay1', (value, opts) => {
+      if (value) {
+        return util.sendCommand('/relay/1?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      } else {
+        return util.sendCommand('/relay/1?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      }
+    });
   }
 
   onDeleted() {
     clearInterval(this.pollingInterval);
-  }
-
-  // LISTENERS FOR UPDATING CAPABILITIES
-  onCapabilityOnoff0(value, opts, callback) {
-    if (value) {
-      util.sendCommand('/relay/0?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    } else {
-      util.sendCommand('/relay/0?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    }
-    callback(null, value);
-  }
-
-  onCapabilityOnoff1(value, opts, callback) {
-    if (value) {
-      util.sendCommand('/relay/1?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    } else {
-      util.sendCommand('/relay/1?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    }
-    callback(null, value);
   }
 
   // HELPER FUNCTIONS
