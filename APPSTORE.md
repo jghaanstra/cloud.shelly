@@ -4,9 +4,11 @@ This Homey app allows you to control Shelly devices. The supported Shelly device
 ## Supported devices
 * Shelly 1
 * Shelly 2 (Relay and Shutter mode)
+* Shelly 2.5 (Relay and Shutter mode)
 * Shelly Plug
 * Shelly Plug S
 * Shelly 4 Pro
+* Shelly RBGW2
 
 ## Instructions
 Add your Shelly device in Homey just like you would add any other device. Enter the IP address and the polling frequency in the pairing wizard. If you have set a username and password to access your Shelly device you need to enter these during pairing as well. Connect the device and you are good to go.
@@ -15,7 +17,5 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/765).
 
 ## Changelog
-### v1.5.0- 2019-02-07
-* FIX: improvements to pairing templates for firmware 2.x
-* FIX: fix percentage for windowcoverings_set capability for rollershutter
-* FIX: code refactoring in drivers (replace callbacks with promises)
+### v1.6.0- 2019-02-27
+* NEW: add support for Shelly RGBW2 controller in both RGBW color and 4x white mode

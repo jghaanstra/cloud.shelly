@@ -7,10 +7,10 @@
 		"nl": "Shelly"
 	},
 	"tags": {
-		"en": [ "Shelly", "shelly1" ],
-		"nl": [ "Shelly", "shelly1" ]
+		"en": [ "Shelly", "shelly 1", "shelly 2", "shelly plug", "shelly plug s", "shelly 4 pro", "shelly rgbw2" ],
+		"nl": [ "Shelly", "shelly 1", "shelly 2", "shelly plug", "shelly plug s", "shelly 4 pro", "shelly rgbw2"  ]
 	},
-	"version": "1.5.0",
+	"version": "1.6.0",
 	"compatibility": ">=2.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -115,8 +115,8 @@
 		{
 			"id": "shelly2",
 			"name": {
-				"en": "Shelly 2  Relay",
-				"nl": "Shelly 2 Relay"
+				"en": "Shelly 2(.5) Relay",
+				"nl": "Shelly 2(.5) Relay"
 			},
 			"images": {
 				"large": "drivers/shelly2/assets/images/large.jpg",
@@ -197,38 +197,13 @@
 						}
 					]
 				}
-			],
-			"mobile": {
-				"components": [
-					{
-						"id": "icon"
-					},
-					{
-						"id": "toggle",
-						"capabilities": [ "onoff.relay0" ],
-						"options": {
-							"showTitle": true
-						}
-					},
-					{
-						"id": "toggle",
-						"capabilities": [ "onoff.relay1" ],
-						"options": {
-							"showTitle": true
-						}
-					},
-					{
-						"id": "sensor",
-						"capabilities": [ "measure_power" ]
-					}
-				]
-			}
+			]
 		},
 		{
 			"id": "shelly2-rollershutter",
 			"name": {
-				"en": "Shelly 2 Roller Shutter",
-				"nl": "Shelly 2 Roller Shutter"
+				"en": "Shelly 2(.5) Roller Shutter",
+				"nl": "Shelly 2(.5) Roller Shutter"
 			},
 			"images": {
 				"large": "drivers/shelly2-rollershutter/assets/images/large.jpg",
@@ -295,29 +270,7 @@
 						}
 					]
 				}
-			],
-			"mobile": {
-				"components": [
-					{
-						"id": "icon"
-					},
-					{
-						"id": "ternary",
-						"capabilities": [ "windowcoverings_state" ],
-						"options": {
-							"showTitle": true
-						}
-					},
-          {
-						"id": "slider",
-						"capabilities": [ "windowcoverings_set" ]
-					},
-					{
-						"id": "sensor",
-						"capabilities": [ "measure_power" ]
-					}
-				]
-			}
+			]
 		},
     {
 			"id": "shelly-plug",
@@ -389,19 +342,7 @@
 						}
 					]
 				}
-			],
-			"mobile": {
-				"components": [
-					{
-						"id": "icon",
-            "capabilities": [ "onoff" ]
-					},
-					{
-						"id": "sensor",
-						"capabilities": [ "measure_power" ]
-					}
-				]
-			}
+			]
 		},
     {
 			"id": "shelly-plug-s",
@@ -473,19 +414,7 @@
 						}
 					]
 				}
-			],
-			"mobile": {
-				"components": [
-					{
-						"id": "icon",
-            "capabilities": [ "onoff" ]
-					},
-					{
-						"id": "sensor",
-						"capabilities": [ "measure_power" ]
-					}
-				]
-			}
+			]
 		},
     {
 			"id": "shelly4pro",
@@ -586,46 +515,156 @@
 						}
 					]
 				}
+			]
+		},
+    {
+			"id": "shellyrgbw2color",
+			"name": {
+				"en": "Shelly RGBW2 Color Mode",
+				"nl": "Shelly RGBW2 Color Mode"
+			},
+			"images": {
+				"large": "drivers/shellyrgbw2color/assets/images/large.jpg",
+				"small": "drivers/shellyrgbw2color/assets/images/small.jpg"
+			},
+			"class": "light",
+			"capabilities": [
+				"onoff",
+        "dim",
+        "light_temperature",
+        "light_hue",
+        "light_saturation",
+        "measure_power"
 			],
-			"mobile": {
-				"components": [
-					{
-						"id": "icon"
+			"pair": [
+				{
+					"id": "start"
+				}
+			],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly RGBW2 settings",
+						"nl": "Shelly RGBW2 instellingen"
 					},
-					{
-						"id": "toggle",
-						"capabilities": [ "onoff.relay0" ],
-						"options": {
-							"showTitle": true
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+						{
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
+							}
+						},
+						{
+							"id": "polling",
+							"type": "number",
+							"value": 5,
+							"attr": {
+								"min": 5,
+								"max": 3600
+							},
+							"label": {
+								"en": "Polling Frequency",
+								"nl": "Polling frequentie"
+							}
 						}
+					]
+				}
+			]
+		},
+    {
+			"id": "shellyrgbw2white",
+			"name": {
+				"en": "Shelly RGBW2 4x White Mode",
+				"nl": "Shelly RGBW2 4x White Mode"
+			},
+			"images": {
+				"large": "drivers/shellyrgbw2white/assets/images/large.jpg",
+				"small": "drivers/shellyrgbw2white/assets/images/small.jpg"
+			},
+			"class": "light",
+			"capabilities": [
+        "onoff",
+        "dim",
+        "measure_power"
+			],
+			"pair": [
+				{
+					"id": "start"
+				}
+			],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly RGBW2 settings",
+						"nl": "Shelly RGBW2 instellingen"
 					},
-					{
-						"id": "toggle",
-						"capabilities": [ "onoff.relay1" ],
-						"options": {
-							"showTitle": true
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+						{
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
+							}
+						},
+						{
+							"id": "polling",
+							"type": "number",
+							"value": 5,
+							"attr": {
+								"min": 5,
+								"max": 3600
+							},
+							"label": {
+								"en": "Polling Frequency",
+								"nl": "Polling frequentie"
+							}
 						}
-					},
-          {
-						"id": "toggle",
-						"capabilities": [ "onoff.relay2" ],
-						"options": {
-							"showTitle": true
-						}
-					},
-          {
-						"id": "toggle",
-						"capabilities": [ "onoff.relay3" ],
-						"options": {
-							"showTitle": true
-						}
-					},
-					{
-						"id": "sensor",
-						"capabilities": [ "measure_power" ]
-					}
-				]
-			}
+					]
+				}
+			]
 		}
 	],
 	"flow": {
@@ -1286,6 +1325,132 @@
 							"nl": "Selecteer Shelly 2"
 						},
 						"filter": "driver_id=shelly2-rollershutter"
+					}
+				]
+			},
+      {
+				"id": "flipbackSwitchRGBW2Color",
+				"title": {
+					"en": "Switch state temporary",
+					"nl": "Wijzig status tijdelijk"
+				},
+				"hint": {
+					"en": "Use this card to turn the Shelly RGBW2 Color ON or OFF but only for the set time in seconds, after the timer it will switch back.",
+					"nl": "Gebruik deze actie om de Shelly RGBW2 Color AAN of UIT te schakelen voor de ingestelde duur in seconden, na de timer zal hij terugschakelen."
+				},
+				"args": [
+					{
+						"name": "switch",
+						"type": "dropdown",
+						"placeholder": {
+							"en": "Temporary switch",
+							"nl": "Tijdelijk schakelen"
+						},
+						"values": [
+							{
+								"id": "0",
+								"label": {
+									"en": "Switch OFF",
+									"nl": "Uitschakelen"
+								}
+							},
+							{
+								"id": "1",
+								"label": {
+									"en": "Switch ON",
+									"nl": "Inschakelen"
+								}
+							}
+						]
+					},
+					{
+						"name": "timer",
+						"type": "number",
+						"placeholder": {
+							"en": "Duration in seconds",
+							"nl": "Duur in seconden"
+						},
+						"min": 1,
+						"step": 1
+					},
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly RGBW2 Color",
+							"nl": "Selecteer Shelly RGBW2 COlor"
+						},
+						"filter": "driver_id=shellyrgbw2color"
+					}
+				]
+			},
+      {
+				"id": "effectRGBW2Color",
+				"title": {
+					"en": "Set Effect",
+					"nl": "Effect instellen"
+				},
+				"args": [
+					{
+						"name": "effect",
+						"type": "dropdown",
+						"placeholder": {
+							"en": "Effect",
+							"nl": "Effect"
+						},
+						"values": [
+							{
+								"id": "1",
+								"label": {
+									"en": "Meteor shower",
+									"nl": "Meteoriet regen"
+								}
+							},
+							{
+								"id": "2",
+								"label": {
+									"en": "Gradual change",
+									"nl": "Geleidelijk veranderen"
+								}
+							},
+              {
+								"id": "3",
+								"label": {
+									"en": "Breath",
+									"nl": "Ademen"
+								}
+							},
+              {
+								"id": "4",
+								"label": {
+									"en": "Flash",
+									"nl": "Flitsen"
+								}
+							},
+              {
+								"id": "5",
+								"label": {
+									"en": "Gradual On/Off",
+									"nl": "Geleidelijk Aan/Uit"
+								}
+							},
+              {
+								"id": "6",
+								"label": {
+									"en": "Red/Green change",
+									"nl": "Rood/Groen verandering"
+								}
+							}
+						]
+					},
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly RGBW2 Color",
+							"nl": "Selecteer Shelly RGBW2 COlor"
+						},
+						"filter": "driver_id=shellyrgbw2color"
 					}
 				]
 			}
