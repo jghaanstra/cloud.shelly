@@ -17,5 +17,5 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/765).
 
 ## Changelog
-### v1.6.0- 2019-02-27
-* NEW: add support for Shelly RGBW2 controller in both RGBW color and 4x white mode
+### v1.7.0- 2019-05-13
+* NEW: add full support for Shelly 2.5 Relay and Shelly 2.5 Rollershutter
