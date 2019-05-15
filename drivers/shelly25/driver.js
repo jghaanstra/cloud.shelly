@@ -7,6 +7,7 @@ class Shelly25Driver extends Homey.Driver {
 
   onPair(socket) {
     socket.on('testConnection', function(data, callback) {
+      console.log('testing connection');
       util.sendCommand('/shelly', data.address, data.username, data.password)
         .then(result => {
           console.log(result);

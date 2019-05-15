@@ -38,7 +38,7 @@ $(function() {
 				} else if(data) {
 					$('#mac').val(data.mac);
 
-					var shellyinfo = "<div class='info-row'><span class='info-label' data-i18n='pair.hostname'>Shelly Hostname:</span><span class='info-value'> "+ data.type +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.mac'>Shelly2 MAC Address:</span><span class='info-value'> "+ data.mac +"</span></div>";
+					var shellyinfo = "<div class='info-row'><span class='info-label' data-i18n='pair.hostname'>Shelly Hostname:</span><span class='info-value'> "+ data.type +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.mac'>Shelly MAC Address:</span><span class='info-value'> "+ data.mac +"</span></div>";
 					$('.shelly-info').show();
 					$('.shelly-info').html(shellyinfo);
 
