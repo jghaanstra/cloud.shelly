@@ -9,9 +9,11 @@ class Shelly25Driver extends Homey.Driver {
     socket.on('testConnection', function(data, callback) {
       util.sendCommand('/shelly', data.address, data.username, data.password)
         .then(result => {
+          console.log(result);
           callback(false, result);
         })
         .catch(error => {
+          console.log(error);
           callback(error, false);
         })
     });

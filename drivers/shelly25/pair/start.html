@@ -32,6 +32,9 @@ $(function() {
 				} else if(error == 500) {
 					$('.shelly-error').show();
 					$('.shelly-error-msg').html( __('pair.servererror') );
+        } else if(error) {
+					$('.shelly-error').show();
+					$('.shelly-error-msg').html( __(error) );
 				} else if(!error && !data) {
 					$('.shelly-error').show();
 					$('.shelly-error-msg').html( __('pair.unknownerror') );
