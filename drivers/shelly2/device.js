@@ -48,6 +48,9 @@ class Shelly2Device extends Homey.Device {
           var state1 = result.relays[1].ison;
           var power = result.meters[0].power;
 
+          console.log('polling');
+          console.log(result.meters);
+
           // capability onoff relay 0
           if (state0 != this.getCapabilityValue('onoff.relay0')) {
             this.setCapabilityValue('onoff.relay0', state0);
@@ -72,7 +75,7 @@ class Shelly2Device extends Homey.Device {
 
           // capability measure_power
           if (power != this.getCapabilityValue('measure_power')) {
-            this.setCapabilityValue('measure_power', power);
+            this.setCapabilityValue('measure_power', 0);
           }
 
         })
