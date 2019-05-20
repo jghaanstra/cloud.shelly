@@ -17,6 +17,6 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/765).
 
 ## Changelog
-### v1.7.0- 2019-05-13
-* NEW: add full support for Shelly 2.5 Relay and Shelly 2.5 Rollershutter
-* FIX: add extra check for Shelly 2(.5) rollershutter as the Shelly API allows rollershutter percentages above 100
+### v1.7.0- 2019-05-20
+* NEW: add full support for Shelly 2.5 Relay with seperate driver
+* FIX: add extra check for Shelly 2(.5) rollershutter since the Shelly API allows rollershutter percentages above 100
