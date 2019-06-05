@@ -10,12 +10,12 @@
 		"en": [ "Shelly", "shelly 1", "shelly 2", "shelly plug", "shelly plug s", "shelly 4 pro", "shelly rgbw2" ],
 		"nl": [ "Shelly", "shelly 1", "shelly 2", "shelly plug", "shelly plug s", "shelly 4 pro", "shelly rgbw2"  ]
 	},
-	"version": "1.8.0",
+	"version": "1.8.1",
 	"compatibility": ">=2.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
 		"email": "homey@solidewebservices.com",
-		"website": "https://github.com/jghaanstra/shelly.cloud"
+		"website": "https://github.com/jghaanstra/cloud.shelly/"
 	},
 	"contributing": {
 		"donate": {
@@ -25,7 +25,7 @@
 		}
 	},
 	"bugs": {
-		"url": "https://github.com/jghaanstra/shelly.cloud/issues"
+		"url": "https://github.com/jghaanstra/cloud.shelly/issues/"
 	},
 	"homeyCommunityTopicId": 765,
 	"images": {

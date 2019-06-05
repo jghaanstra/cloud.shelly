@@ -18,5 +18,5 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/765).
 
 ## Changelog
-### v1.8.0- 2019-05-25
-* NEW: add support for Shelly 1PM
+### v1.8.1- 2019-06-05
+* FIX: fix power usage for Shelly 2 and Shelly 2.5 in rollershutter mode
