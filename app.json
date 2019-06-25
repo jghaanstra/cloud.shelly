@@ -112,7 +112,7 @@
 				}
 			]
 		},
-    {
+		{
 			"id": "shelly1pm",
 			"name": {
 				"en": "Shelly 1PM",
@@ -125,7 +125,7 @@
 			"class": "socket",
 			"capabilities": [
 				"onoff",
-        "measure_power"
+				"measure_power"
 			],
 			"pair": [
 				{
@@ -284,7 +284,7 @@
 			"class": "windowcoverings",
 			"capabilities": [
 				"windowcoverings_state",
-        "windowcoverings_set",
+				"windowcoverings_set",
 				"measure_power"
 			],
 			"pair": [
@@ -344,7 +344,7 @@
 				}
 			]
 		},
-    {
+		{
 			"id": "shelly25",
 			"name": {
 				"en": "Shelly 2.5 Relay",
@@ -416,7 +416,7 @@
 				}
 			]
 		},
-    {
+		{
 			"id": "shelly-plug",
 			"name": {
 				"en": "Shelly Plug",
@@ -488,7 +488,7 @@
 				}
 			]
 		},
-    {
+		{
 			"id": "shelly-plug-s",
 			"name": {
 				"en": "Shelly Plug S",
@@ -560,7 +560,7 @@
 				}
 			]
 		},
-    {
+		{
 			"id": "shelly4pro",
 			"name": {
 				"en": "Shelly 4 Pro",
@@ -574,8 +574,8 @@
 			"capabilities": [
 				"onoff.relay0",
 				"onoff.relay1",
-        "onoff.relay2",
-        "onoff.relay3",
+				"onoff.relay2",
+				"onoff.relay3",
 				"measure_power"
 			],
 			"capabilitiesOptions": {
@@ -591,13 +591,13 @@
 						"nl": "Relay 4.2"
 					}
 				},
-        "onoff.relay2": {
+				"onoff.relay2": {
 					"title": {
 						"en": "Relay 4.3",
 						"nl": "Relay 4.3"
 					}
 				},
-        "onoff.relay3": {
+				"onoff.relay3": {
 					"title": {
 						"en": "Relay 4.4",
 						"nl": "Relay 4.4"
@@ -661,7 +661,7 @@
 				}
 			]
 		},
-    {
+		{
 			"id": "shellyrgbw2color",
 			"name": {
 				"en": "Shelly RGBW2 Color Mode",
@@ -674,11 +674,11 @@
 			"class": "light",
 			"capabilities": [
 				"onoff",
-        "dim",
-        "light_temperature",
-        "light_hue",
-        "light_saturation",
-        "measure_power"
+				"dim",
+				"light_temperature",
+				"light_hue",
+				"light_saturation",
+				"measure_power"
 			],
 			"pair": [
 				{
@@ -737,7 +737,7 @@
 				}
 			]
 		},
-    {
+		{
 			"id": "shellyrgbw2white",
 			"name": {
 				"en": "Shelly RGBW2 4x White Mode",
@@ -749,9 +749,83 @@
 			},
 			"class": "light",
 			"capabilities": [
-        "onoff",
-        "dim",
-        "measure_power"
+				"onoff",
+				"dim",
+				"measure_power"
+			],
+			"pair": [
+				{
+					"id": "start"
+				}
+			],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly RGBW2 settings",
+						"nl": "Shelly RGBW2 instellingen"
+					},
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+						{
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
+							}
+						},
+						{
+							"id": "polling",
+							"type": "number",
+							"value": 5,
+							"attr": {
+								"min": 5,
+								"max": 3600
+							},
+							"label": {
+								"en": "Polling Frequency",
+								"nl": "Polling frequentie"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "shellyrgbw2cwww",
+			"name": {
+				"en": "Shelly RGBW2 2x CW/WW Mode",
+				"nl": "Shelly RGBW2 2x CW/WW Mode"
+			},
+			"images": {
+				"large": "drivers/shellyrgbw2color/assets/images/large.jpg",
+				"small": "drivers/shellyrgbw2color/assets/images/small.jpg"
+			},
+			"class": "light",
+			"capabilities": [
+				"onoff",
+				"dim",
+				"light_temperature",
+				"measure_power"
 			],
 			"pair": [
 				{
@@ -849,7 +923,7 @@
 					}
 				]
 			},
-      {
+			{
 				"id": "relay2OnTrigger",
 				"title": {
 					"en": "Relay 3 is turned on",
@@ -867,7 +941,7 @@
 					}
 				]
 			},
-      {
+			{
 				"id": "relay3OnTrigger",
 				"title": {
 					"en": "Relay 4 is turned on",
@@ -921,7 +995,7 @@
 					}
 				]
 			},
-      {
+			{
 				"id": "relay2OffTrigger",
 				"title": {
 					"en": "Relay 3 is turned off",
@@ -939,7 +1013,7 @@
 					}
 				]
 			},
-      {
+			{
 				"id": "relay3OffTrigger",
 				"title": {
 					"en": "Relay 4 is turned off",
@@ -995,7 +1069,7 @@
 					}
 				]
 			},
-      {
+			{
 				"id": "relay2Powered",
 				"title": {
 					"en": "Relay 3 !{{is|is not}} turned on",
@@ -1013,7 +1087,7 @@
 					}
 				]
 			},
-      {
+			{
 				"id": "relay3Powered",
 				"title": {
 					"en": "Relay 4 !{{is|is not}} turned on",
@@ -1125,7 +1199,7 @@
 					}
 				]
 			},
-      {
+			{
 				"id": "relay2OnAction",
 				"title": {
 					"en": "Turn on relay 3",
@@ -1143,7 +1217,7 @@
 					}
 				]
 			},
-      {
+			{
 				"id": "relay3OnAction",
 				"title": {
 					"en": "Turn on relay 43",
@@ -1197,7 +1271,7 @@
 					}
 				]
 			},
-      {
+			{
 				"id": "relay2OffAction",
 				"title": {
 					"en": "Turn off relay 3",
@@ -1215,7 +1289,7 @@
 					}
 				]
 			},
-      {
+			{
 				"id": "relay3OffAction",
 				"title": {
 					"en": "Turn off relay 4",
@@ -1300,7 +1374,7 @@
 							"nl": "Duur in seconden"
 						},
 						"min": 1,
-            "max": 120,
+						"max": 120,
 						"step": 1
 					},
 					{
@@ -1314,7 +1388,7 @@
 					}
 				]
 			},
-      {
+			{
 				"id": "flipbackSwitch4",
 				"title": {
 					"en": "Switch state temporary",
@@ -1453,8 +1527,8 @@
 					{
 						"name": "duration",
 						"type": "number",
-            "min": 1,
-            "max": 3600,
+						"min": 1,
+						"max": 3600,
 						"step": 1,
 						"placeholder": {
 							"en": "Duration in seconds",
@@ -1472,7 +1546,7 @@
 					}
 				]
 			},
-      {
+			{
 				"id": "flipbackSwitchRGBW2Color",
 				"title": {
 					"en": "Switch state temporary",
@@ -1528,7 +1602,7 @@
 					}
 				]
 			},
-      {
+			{
 				"id": "effectRGBW2Color",
 				"title": {
 					"en": "Set Effect",
@@ -1557,28 +1631,28 @@
 									"nl": "Geleidelijk veranderen"
 								}
 							},
-              {
+							{
 								"id": "3",
 								"label": {
 									"en": "Breath",
 									"nl": "Ademen"
 								}
 							},
-              {
+							{
 								"id": "4",
 								"label": {
 									"en": "Flash",
 									"nl": "Flitsen"
 								}
 							},
-              {
+							{
 								"id": "5",
 								"label": {
 									"en": "Gradual On/Off",
 									"nl": "Geleidelijk Aan/Uit"
 								}
 							},
-              {
+							{
 								"id": "6",
 								"label": {
 									"en": "Red/Green change",

@@ -20,5 +20,11 @@
     "connect": "Connect",
     "success": "Shelly device added succesfully"
   },
+  "connect": {
+    "intro": "Using the Shelly RGBW2 in CW/WW mode enables you to connect 2 LED strips as follows:",
+    "strip1": "Strip 1: CW pin to R terminal, WW pin to G terminal",
+    "strip2": "Strip 2: CW pin to B terminal, WW pin to W terminal",
+    "warning": "With this setup, controlling the LED strips with the Shelly apps is not practical."
+  },
   "Unreachable": "Unreachable"
 }

@@ -20,5 +20,11 @@
     "connect": "Verbind",
     "success": "Shelly apparaat succesvol toegevoegd"
   },
+  "connect": {
+    "intro": "Als je de Shelly RGBW2 in CW/WW mode gebruikt, kan je als volgt twee LED-strips aansluiten:",
+    "strip1": "Strip 1: CW draad op R pin, WW draad op G pin",
+    "strip2": "Strip 2: CW draad op B pin, WW draad op W pin",
+    "warning": "Met deze setup is het bedienen van de LED-strips via de Shelly apps niet handig te doen."
+  },
   "Unreachable": "Onbereikbaar"
 }
