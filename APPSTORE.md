@@ -9,7 +9,7 @@ This Homey app allows you to control Shelly devices. The supported Shelly device
 * Shelly Plug
 * Shelly Plug S
 * Shelly 4 Pro
-* Shelly RBGW2 (Color, 4x White and CW/WW mode)
+* Shelly RBGW2 (Color, 4x White and 2x CW/WW mode)
 
 ## Instructions
 Add your Shelly device in Homey just like you would add any other device. Enter the IP address and the polling frequency in the pairing wizard. If you have set a username and password to access your Shelly device you need to enter these during pairing as well. Connect the device and you are good to go.

@@ -813,8 +813,8 @@
 		{
 			"id": "shellyrgbw2cwww",
 			"name": {
-				"en": "Shelly RGBW2 CW/WW Mode",
-				"nl": "Shelly RGBW2 CW/WW Mode"
+				"en": "Shelly RGBW2 2x CW/WW Mode",
+				"nl": "Shelly RGBW2 2x CW/WW Mode"
 			},
 			"images": {
 				"large": "drivers/shellyrgbw2color/assets/images/large.jpg",
