@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "shelly 1", "shelly 2", "shelly plug", "shelly plug s", "shelly 4 pro", "shelly rgbw2" ],
 		"nl": [ "Shelly", "shelly 1", "shelly 2", "shelly plug", "shelly plug s", "shelly 4 pro", "shelly rgbw2"  ]
 	},
-	"version": "1.8.1",
+	"version": "1.9.0",
 	"compatibility": ">=2.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -817,8 +817,8 @@
 				"nl": "Shelly RGBW2 2x CW/WW Mode"
 			},
 			"images": {
-				"large": "drivers/shellyrgbw2color/assets/images/large.jpg",
-				"small": "drivers/shellyrgbw2color/assets/images/small.jpg"
+				"large": "drivers/shellyrgbw2cwww/assets/images/large.jpg",
+				"small": "drivers/shellyrgbw2cwww/assets/images/small.jpg"
 			},
 			"class": "light",
 			"capabilities": [
