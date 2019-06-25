@@ -809,6 +809,80 @@
 					]
 				}
 			]
+		},
+		{
+			"id": "shellyrgbw2cwww",
+			"name": {
+				"en": "Shelly RGBW2 CW/WW Mode",
+				"nl": "Shelly RGBW2 CW/WW Mode"
+			},
+			"images": {
+				"large": "drivers/shellyrgbw2color/assets/images/large.jpg",
+				"small": "drivers/shellyrgbw2color/assets/images/small.jpg"
+			},
+			"class": "light",
+			"capabilities": [
+				"onoff",
+				"dim",
+				"light_temperature",
+				"measure_power"
+			],
+			"pair": [
+				{
+					"id": "start"
+				}
+			],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly RGBW2 settings",
+						"nl": "Shelly RGBW2 instellingen"
+					},
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+						{
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
+							}
+						},
+						{
+							"id": "polling",
+							"type": "number",
+							"value": 5,
+							"attr": {
+								"min": 5,
+								"max": 3600
+							},
+							"label": {
+								"en": "Polling Frequency",
+								"nl": "Polling frequentie"
+							}
+						}
+					]
+				}
+			]
 		}
 	],
 	"flow": {
