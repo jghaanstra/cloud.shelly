@@ -12,6 +12,7 @@
     "address": "IP Address",
     "username": "Username",
     "password": "Password",
+    "single": "Use as single device",
     "polling": "Polling Frequency",
     "hostname": "Shelly Hostname:",
     "mac": "Shelly MAC Address:",
@@ -22,6 +23,8 @@
   },
   "connect": {
     "intro": "Using the Shelly RGBW2 in CW/WW mode enables you to connect 2 LED strips as follows:",
+    "single": "If you only attach one LED strip or you want to always keep the two channels in sync, you should check 'Use as single device'.",
+    "device-type": "Set the Device Type in the Shelly app to 'Color'",
     "strip1": "Strip 1: CW pin to R terminal, WW pin to G terminal",
     "strip2": "Strip 2: CW pin to B terminal, WW pin to W terminal",
     "warning": "With this setup, controlling the LED strips with the Shelly apps is not practical."

@@ -4,6 +4,8 @@ const Homey = require('homey');
 const util = require('/lib/util.js');
 const tinycolor = require("tinycolor2");
 
+const queryparams = 'red green blue white gain turn'.split(' ');
+
 class ShellyRGBW2CWWWDevice extends Homey.Device {
 
   onInit() {
@@ -12,24 +14,55 @@ class ShellyRGBW2CWWWDevice extends Homey.Device {
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
-      if (value) {
-        return util.sendCommand('/color/0?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      var params = {};
+      if (this.getStoreValue('single')) {
+        // Single mode: simply switch on/off
+        params.turn = value ? 'on' : 'off';
       } else {
-        return util.sendCommand('/color/0?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        // Dual mode: simulate on/off using RGBW values
+        if (value) {
+          // Get the pre-switch-off values for this channel (or defaults if none)
+          var prev = this.getStoreValue('prev') || {};
+          params = this.getChannelParams(prev.dim || .1, prev.temperature || 0.5);
+        } else {
+          var temperature = this.getCapabilityValue('light_temperature');
+          params = this.getChannelParams(0, temperature);
+          // Store pre-switch-off values for later use
+          this.setStoreValue('prev', { dim: this.getCapabilityValue('dim'), temperature: temperature });
+        }
       }
+      return this.sendCommand(params);
     });
 
     this.registerCapabilityListener('dim', (value, opts) => {
-      var dim = value * 100;
-      return util.sendCommand('/color/0?gain='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      var params;
+      if (this.getStoreValue('single')) {
+        // Single mode: simply use gain. However, gain does not affect white (channel 1 warm),
+        // so take the two-channel mode green (channel 0 warm) value
+        params = {
+          gain: value * 100,
+          white: this.getChannelParams(value, this.getCapabilityValue('light_temperature')).green
+        };
+      } else {
+        // Dual mode: simulate dim using RGBW values
+        params = this.getChannelParams(value, this.getCapabilityValue('light_temperature'));
+      }
+      return this.sendCommand(params);
     });
 
     this.registerCapabilityListener('light_temperature', (value, opts) => {
-      let red = Number(this.denormalize(value, 0, 255));
-      let blue = red;
-      let green = 255 - red;
-      let white = green;
-      return util.sendCommand('/color/0?red='+ red +'&green='+ green +'&blue='+ blue +'&white='+ white +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      var params;
+      // Simulate temperature by mixing R/G and B/W values
+      if (this.getStoreValue('single')) {
+        params = {};
+        params.red = params.blue = this.denormalize(value, 0, 255);
+        params.green = 255 - params.red;
+        // Gain does not affect white, so dim the value
+        params.white = params.green * this.getCapabilityValue('dim');
+      } else {
+        params = this.getChannelParams(this.getCapabilityValue('dim'), value);
+      }
+      return this.sendCommand(params);
     });
 
   }
@@ -39,6 +72,35 @@ class ShellyRGBW2CWWWDevice extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
+
+  // Calculates RGBW values for simulating dim / temperature combinations
+  getChannelParams(dim, temperature) {
+    var cool_normalized = temperature < 0.5 ? 0 : (temperature - 0.5) * 2;
+    var warm_normalized = temperature > 0.5 ? 0 : (0.5 - temperature) * 2;
+
+    var cool = Number((this.denormalize(cool_normalized, 0, 255) * dim).toFixed(0));
+    var warm = Number((this.denormalize(warm_normalized, 0, 255) * dim).toFixed(0));
+
+    var params = { gain: 100 };
+    if (this.getStoreValue('channel') === 0) {
+      params.red = cool;
+      params.green = warm;
+    } else {
+      params.blue = cool;
+      params.white = warm;
+    }
+
+    return params;
+  }
+
+  sendCommand(params) {
+    var querystring = '';
+    queryparams.forEach((p) => {
+      if (typeof params[p] === 'number') querystring += '&' + p + '=' + params[p];
+    });
+    return util.sendCommand('/color/0?' + querystring, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+  }
+
   pollDevice(interval) {
     clearInterval(this.pollingInterval);
     clearInterval(this.pingInterval);
@@ -46,28 +108,48 @@ class ShellyRGBW2CWWWDevice extends Homey.Device {
     this.pollingInterval = setInterval(() => {
       util.sendCommand('/color/0', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
-          let state = result.ison;
-          let dim = result.gain / 100;
-          let temperature = 1 - Number(this.normalize(result.white, 0, 255));
+          var single = this.getStoreValue('single');
+          var channel = this.getStoreValue('channel');
+
+          // Map RGBW values back to Homey capability values
+          var cold = result[single || channel === 0 ? 'red' : 'blue'];
+          var warm = result[single || channel === 0 ? 'green' : 'white'];
+          var max = Math.max(cold, warm);
+          var state;
+          if (single) {
+            state = {
+              ison:         result.ison,
+              dim:          result.gain / 100,
+              temperature:  (((warm - cold) / max) + 1) / 2,
+              power:        result.power
+            };
+          } else {
+            state = {
+              ison:         result.ison ? result.gain > 0 && cold + warm > 0 : false,
+              dim:          (result.gain / 100) * max / 255,
+              temperature:  (((warm - cold) / max) + 1) / 2,
+              power:        ((warm + cold) / (result.red + result.green + result.blue + result.white)) * result.power
+            };
+          }
 
           // capability onoff
-          if (state != this.getCapabilityValue('onoff')) {
-            this.setCapabilityValue('onoff', state);
+          if (state.ison != this.getCapabilityValue('onoff')) {
+            this.setCapabilityValue('onoff', state.ison);
           }
 
           // capability dim
-          if (dim != this.getCapabilityValue('dim')) {
-            this.setCapabilityValue('dim', dim);
+          if (state.dim != this.getCapabilityValue('dim')) {
+            this.setCapabilityValue('dim', state.dim);
           }
 
           // capability light_temperature
-          if (temperature != this.getCapabilityValue('light_temperature')) {
-            this.setCapabilityValue('light_temperature', temperature);
+          if (state.temperature != this.getCapabilityValue('light_temperature')) {
+            this.setCapabilityValue('light_temperature', state.temperature);
           }
 
           // capability measure_power
-          if (result.power != this.getCapabilityValue('measure_power')) {
-            this.setCapabilityValue('measure_power', result.power);
+          if (state.power != this.getCapabilityValue('measure_power')) {
+            this.setCapabilityValue('measure_power', state.power);
           }
 
         })
