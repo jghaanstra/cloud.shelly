@@ -18,5 +18,5 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/765).
 
 ## Changelog
-### v1.9.0- 2019-06-25
-* NEW: add support for RGBW2 in 2x CW/WW mode (which is not supported in the official Shelly app)
+### v1.9.0- 2019-06-27
+* NEW: add support for RGBW2 in 2x CW/WW mode (which is not supported in the official Shelly app) - credits to Chris Brandhorst
