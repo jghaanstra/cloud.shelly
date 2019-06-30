@@ -21,9 +21,9 @@ class ShellyRGBW2CWWWDevice extends Homey.Device {
       } else {
         // Dual mode: simulate on/off using RGBW values
         if (value) {
-          // Get the pre-switch-off values for this channel (or defaults if none)
-          var prev = this.getStoreValue('prev') || {};
-          params = this.getChannelParams(prev.dim || .1, prev.temperature || 0.5);
+          // Get the pre-switch-off values for this channel (or defaults if not available)
+          var prev = this.getStoreValue('prev') || { dim: 0.1, temperature: 0.5 };
+          params = this.getChannelParams(prev.dim, prev.temperature);
         } else {
           var temperature = this.getCapabilityValue('light_temperature');
           params = this.getChannelParams(0, temperature);
@@ -96,7 +96,7 @@ class ShellyRGBW2CWWWDevice extends Homey.Device {
   sendCommand(params) {
     var querystring = '';
     queryparams.forEach((p) => {
-      if (typeof params[p] === 'number') querystring += '&' + p + '=' + params[p];
+      if (typeof params[p] === 'number' || typeof params[p] === 'string') querystring += '&' + p + '=' + params[p];
     });
     return util.sendCommand('/color/0?' + querystring, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
