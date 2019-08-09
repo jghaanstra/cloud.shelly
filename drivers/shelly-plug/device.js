@@ -8,6 +8,7 @@ class ShellyPlugDevice extends Homey.Device {
   onInit() {
     var interval = this.getSetting('polling') || 5;
     this.pollDevice(interval);
+    this.setAvailable();
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {

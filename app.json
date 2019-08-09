@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "shelly 1", "shelly 2", "shelly plug", "shelly plug s", "shelly 4 pro", "shelly rgbw2" ],
 		"nl": [ "Shelly", "shelly 1", "shelly 2", "shelly plug", "shelly plug s", "shelly 4 pro", "shelly rgbw2"  ]
 	},
-	"version": "1.9.0",
+	"version": "1.10.0",
 	"compatibility": ">=2.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -40,9 +40,107 @@
 	"dependencies": {
 		"net": "*"
 	},
+  "discovery": {
+    "shelly-plug": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shellyplug"
+            }
+          }
+        ]
+      ]
+    },
+    "shelly-plug-s": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shellyplug-s"
+            }
+          }
+        ]
+      ]
+    },
+    "shelly1": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shelly1"
+            }
+          }
+        ]
+      ]
+    },
+    "shelly1pm": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shelly1pm"
+            }
+          }
+        ]
+      ]
+    },
+    "shelly2": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shellyswitch"
+            }
+          }
+        ]
+      ]
+    }
+  },
 	"drivers": [
 		{
 			"id": "shelly1",
+      "discovery": "shelly1",
 			"name": {
 				"en": "Shelly 1",
 				"nl": "Shelly 1"
@@ -55,11 +153,31 @@
 			"capabilities": [
 				"onoff"
 			],
-			"pair": [
-				{
-					"id": "start"
-				}
-			],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          },
+          "navigation": {
+            "next": "add_device"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
 			"settings": [
 				{
 					"type": "group",
@@ -114,6 +232,7 @@
 		},
 		{
 			"id": "shelly1pm",
+      "discovery": "shelly1pm",
 			"name": {
 				"en": "Shelly 1PM",
 				"nl": "Shelly 1PM"
@@ -127,11 +246,31 @@
 				"onoff",
 				"measure_power"
 			],
-			"pair": [
-				{
-					"id": "start"
-				}
-			],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          },
+          "navigation": {
+            "next": "add_device"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
 			"settings": [
 				{
 					"type": "group",
@@ -186,6 +325,7 @@
 		},
 		{
 			"id": "shelly2",
+      "discovery": "shelly2",
 			"name": {
 				"en": "Shelly 2 Relay",
 				"nl": "Shelly 2 Relay"
@@ -214,11 +354,31 @@
 					}
 				}
 			},
-			"pair": [
-				{
-					"id": "start"
-				}
-			],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          },
+          "navigation": {
+            "next": "add_device"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
 			"settings": [
 				{
 					"type": "group",
@@ -273,6 +433,7 @@
 		},
 		{
 			"id": "shelly2-rollershutter",
+      "discovery": "shelly2",
 			"name": {
 				"en": "Shelly 2(.5) Roller Shutter",
 				"nl": "Shelly 2(.5) Roller Shutter"
@@ -287,11 +448,31 @@
 				"windowcoverings_set",
 				"measure_power"
 			],
-			"pair": [
-				{
-					"id": "start"
-				}
-			],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          },
+          "navigation": {
+            "next": "add_device"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
 			"settings": [
 				{
 					"type": "group",
@@ -418,6 +599,7 @@
 		},
 		{
 			"id": "shelly-plug",
+      "discovery": "shelly-plug",
 			"name": {
 				"en": "Shelly Plug",
 				"nl": "Shelly Plug"
@@ -431,11 +613,31 @@
 				"onoff",
 				"measure_power"
 			],
-			"pair": [
-				{
-					"id": "start"
-				}
-			],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          },
+          "navigation": {
+            "next": "add_device"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
 			"settings": [
 				{
 					"type": "group",
@@ -490,6 +692,7 @@
 		},
 		{
 			"id": "shelly-plug-s",
+      "discovery": "shelly-plug-s",
 			"name": {
 				"en": "Shelly Plug S",
 				"nl": "Shelly Plug S"
@@ -503,11 +706,31 @@
 				"onoff",
 				"measure_power"
 			],
-			"pair": [
-				{
-					"id": "start"
-				}
-			],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          },
+          "navigation": {
+            "next": "add_device"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
 			"settings": [
 				{
 					"type": "group",
