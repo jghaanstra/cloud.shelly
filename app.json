@@ -11,7 +11,7 @@
 		"nl": [ "Shelly", "shelly 1", "shelly 2", "shelly plug", "shelly plug s", "shelly 4 pro", "shelly rgbw2"  ]
 	},
 	"version": "1.10.0",
-	"compatibility": ">=2.0.0",
+	"compatibility": ">=2.5.1",
 	"author": {
 		"name": "Jelger Haanstra",
 		"email": "homey@solidewebservices.com",
@@ -135,6 +135,44 @@
           }
         ]
       ]
+    },
+    "shelly4pro": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shelly4pro"
+            }
+          }
+        ]
+      ]
+    },
+    "shellyrgbw2": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shellyrgbw2"
+            }
+          }
+        ]
+      ]
     }
   },
 	"drivers": [
@@ -169,9 +207,6 @@
           "template": "login_credentials",
           "options": {
             "logo": "../../../assets/shelly-logo.png"
-          },
-          "navigation": {
-            "next": "add_device"
           }
         },
         {
@@ -262,9 +297,6 @@
           "template": "login_credentials",
           "options": {
             "logo": "../../../assets/shelly-logo.png"
-          },
-          "navigation": {
-            "next": "add_device"
           }
         },
         {
@@ -370,9 +402,6 @@
           "template": "login_credentials",
           "options": {
             "logo": "../../../assets/shelly-logo.png"
-          },
-          "navigation": {
-            "next": "add_device"
           }
         },
         {
@@ -464,9 +493,6 @@
           "template": "login_credentials",
           "options": {
             "logo": "../../../assets/shelly-logo.png"
-          },
-          "navigation": {
-            "next": "add_device"
           }
         },
         {
@@ -527,6 +553,7 @@
 		},
 		{
 			"id": "shelly25",
+      "discovery": "shelly2",
 			"name": {
 				"en": "Shelly 2.5 Relay",
 				"nl": "Shelly 2.5 Relay"
@@ -540,11 +567,28 @@
 				"onoff",
 				"measure_power"
 			],
-			"pair": [
-				{
-					"id": "start"
-				}
-			],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
 			"settings": [
 				{
 					"type": "group",
@@ -629,9 +673,6 @@
           "template": "login_credentials",
           "options": {
             "logo": "../../../assets/shelly-logo.png"
-          },
-          "navigation": {
-            "next": "add_device"
           }
         },
         {
@@ -722,9 +763,6 @@
           "template": "login_credentials",
           "options": {
             "logo": "../../../assets/shelly-logo.png"
-          },
-          "navigation": {
-            "next": "add_device"
           }
         },
         {
@@ -785,6 +823,7 @@
 		},
 		{
 			"id": "shelly4pro",
+      "discovery": "shelly4pro",
 			"name": {
 				"en": "Shelly 4 Pro",
 				"nl": "Shelly 4 Pro"
@@ -827,11 +866,28 @@
 					}
 				}
 			},
-			"pair": [
-				{
-					"id": "start"
-				}
-			],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
 			"settings": [
 				{
 					"type": "group",
@@ -886,6 +942,7 @@
 		},
 		{
 			"id": "shellyrgbw2color",
+      "discovery": "shellyrgbw2",
 			"name": {
 				"en": "Shelly RGBW2 Color Mode",
 				"nl": "Shelly RGBW2 Color Mode"
@@ -903,11 +960,28 @@
 				"light_saturation",
 				"measure_power"
 			],
-			"pair": [
-				{
-					"id": "start"
-				}
-			],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
 			"settings": [
 				{
 					"type": "group",
@@ -962,6 +1036,7 @@
 		},
 		{
 			"id": "shellyrgbw2white",
+      "discovery": "shellyrgbw2",
 			"name": {
 				"en": "Shelly RGBW2 4x White Mode",
 				"nl": "Shelly RGBW2 4x White Mode"
@@ -976,11 +1051,28 @@
 				"dim",
 				"measure_power"
 			],
-			"pair": [
-				{
-					"id": "start"
-				}
-			],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
 			"settings": [
 				{
 					"type": "group",

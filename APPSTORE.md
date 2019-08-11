@@ -18,5 +18,5 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/765).
 
 ## Changelog
-### v1.10.0- 2019-08-xx
+### v1.10.0- 2019-08-11
 * IMPROVEMENT: added device discovery in pair wizard
