@@ -7,10 +7,10 @@
 		"nl": "Shelly"
 	},
 	"tags": {
-		"en": [ "Shelly", "shelly 1", "shelly 2", "shelly plug", "shelly plug s", "shelly 4 pro", "shelly rgbw2" ],
-		"nl": [ "Shelly", "shelly 1", "shelly 2", "shelly plug", "shelly plug s", "shelly 4 pro", "shelly rgbw2"  ]
+		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM" ],
+		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM"  ]
 	},
-	"version": "1.10.0",
+	"version": "1.11.0",
 	"compatibility": ">=2.5.1",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -35,11 +35,58 @@
 	"category": "appliances",
 	"description": {
 		"en": "Control Shelly devices",
-		"nl": "Beheer Shellyapparaten"
+		"nl": "Beheer Shelly apparaten"
 	},
 	"dependencies": {
 		"net": "*"
 	},
+  "capabilities": {
+    "reactive_power": {
+      "type": "number",
+      "title": {
+        "en": "Reactive Power",
+        "nl": "Blind vermogen"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/reactive-power.svg",
+      "units": {
+        "en": "W",
+        "nl": "W"
+      }
+    },
+    "meter_power_consumed": {
+      "type": "number",
+      "title": {
+        "en": "Total Consumed Energy",
+        "nl": "Totaal verbruikte energie"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/meter_power_consumed.svg",
+      "units": {
+        "en": "Wh",
+        "nl": "Wh"
+      }
+    },
+    "meter_power_returned": {
+      "type": "number",
+      "title": {
+        "en": "Total Returned Energy",
+        "nl": "Totaal geretourneerde energie"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/meter_power_returned.svg",
+      "units": {
+        "en": "Wh",
+        "nl": "Wh"
+      }
+    }
+  },
   "discovery": {
     "shelly-plug": {
       "type": "mdns-sd",
@@ -169,6 +216,25 @@
             "match": {
               "type": "regex",
               "value": "^shellyrgbw2"
+            }
+          }
+        ]
+      ]
+    },
+    "shellyem": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shellyem"
             }
           }
         ]
@@ -1153,6 +1219,100 @@
 					"label": {
 						"en": "Shelly RGBW2 settings",
 						"nl": "Shelly RGBW2 instellingen"
+					},
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+						{
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
+							}
+						},
+						{
+							"id": "polling",
+							"type": "number",
+							"value": 5,
+							"attr": {
+								"min": 5,
+								"max": 3600
+							},
+							"label": {
+								"en": "Polling Frequency",
+								"nl": "Polling frequentie"
+							}
+						}
+					]
+				}
+			]
+		},
+    {
+			"id": "shellyem",
+      "discovery": "shellyem",
+			"name": {
+				"en": "Shelly EM",
+				"nl": "Shelly EM"
+			},
+			"images": {
+				"large": "drivers/shellyem/assets/images/large.jpg",
+				"small": "drivers/shellyem/assets/images/small.jpg"
+			},
+			"class": "socket",
+			"capabilities": [
+				"onoff",
+				"measure_power",
+        "reactive_power",
+        "measure_voltage",
+        "meter_power_consumed",
+        "meter_power_returned"
+			],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly EM settings",
+						"nl": "Shelly EM instellingen"
 					},
 					"children": [
 						{

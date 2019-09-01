@@ -1,0 +1,42 @@
+<script type="text/javascript">
+  Homey.emit('get_device', null, function(error, result) {
+    if (error) {
+      Homey.alert(error, null, function() {
+        Homey.done()
+    	});
+    } else {
+      var i;
+      for (i = 0; i < 2; i++) {
+        var deviceid = i + 1;
+
+  			Homey.addDevice({
+  				name: 'Shelly EM Meter ' + deviceid,
+  				data: {
+            id: result.data.id + '-channel-' + i
+          },
+  				settings: {
+            address  : result.settings.address,
+            username : result.settings.username,
+            password : result.settings.password,
+            polling  : 5
+          },
+          store: {
+            channel: i,
+            type: result.store.type,
+            outputs: result.store.outputs
+          }
+  			}, function(error, result ) {
+  				if (error) {
+            Homey.alert(error, null, function() {
+              Homey.done()
+          	});
+  				} else {
+            if (i === 1) {
+              Homey.done();
+            }
+          }
+  			})
+  		}
+    }
+  })
+</script>
