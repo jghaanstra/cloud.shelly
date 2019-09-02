@@ -33,12 +33,12 @@ class ShellyEmDevice extends Homey.Device {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
           let channel = this.getStoreValue('channel');
-          var state = result.relays[0].ison; // check
-          var power = result.emeters[channel].power; // check
-          var reactive_power = result.emeters[channel].reactive; // check
-          var voltage = result.emeters[channel].voltage; // check
-          var total_consumed = result.emeters[channel].total; // check
-          var total_returned = result.emeters[channel].total_returned;
+          let state = result.relays[0].ison;
+          let power = result.emeters[channel].power;
+          let reactive_power = result.emeters[channel].reactive;
+          let voltage = result.emeters[channel].voltage;
+          let total_consumed = result.emeters[channel].total;
+          let total_returned = result.emeters[channel].total_returned;
 
           // capability onoff
           if (state != this.getCapabilityValue('onoff')) {

@@ -35,6 +35,8 @@ class Shelly25Device extends Homey.Device {
           let channel = this.getStoreValue('channel');
           let state = result.relays[channel].ison;
           let power = result.meters[channel].power;
+          let total_consumption = result.meters[channel].total;
+          let temperature = result.temperature;
 
           // capability onoff
           if (state != this.getCapabilityValue('onoff')) {
@@ -44,6 +46,20 @@ class Shelly25Device extends Homey.Device {
           // capability measure_power
           if (power != this.getCapabilityValue('measure_power')) {
             this.setCapabilityValue('measure_power', power);
+          }
+
+          // capability meter_power_wmin
+          if(this.hasCapability('meter_power_wmin')) {
+            if (total_consumption != this.getCapabilityValue('meter_power_wmin')) {
+              this.setCapabilityValue('meter_power_wmin', total_consumption);
+            }
+          }
+
+          // capability measure_temperature
+          if(this.hasCapability('measure_temperature')) {
+            if (temperature != this.getCapabilityValue('measure_temperature')) {
+              this.setCapabilityValue('measure_temperature', temperature);
+            }
           }
 
         })

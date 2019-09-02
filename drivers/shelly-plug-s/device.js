@@ -32,8 +32,10 @@ class ShellyPlugSDevice extends Homey.Device {
     this.pollingInterval = setInterval(() => {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
-          var state = result.relays[0].ison;
-          var power = result.meters[0].power;
+          let state = result.relays[0].ison;
+          let power = result.meters[0].power;
+          let total_consumption = result.meters[0].total;
+          let temperature = result.temperature;
 
           // capability onoff
           if (state != this.getCapabilityValue('onoff')) {
@@ -43,6 +45,20 @@ class ShellyPlugSDevice extends Homey.Device {
           // capability measure_power
           if (power != this.getCapabilityValue('measure_power')) {
             this.setCapabilityValue('measure_power', power);
+          }
+
+          // capability meter_power_wmin
+          if(this.hasCapability('meter_power_wmin')) {
+            if (total_consumption != this.getCapabilityValue('meter_power_wmin')) {
+              this.setCapabilityValue('meter_power_wmin', total_consumption);
+            }
+          }
+
+          // capability measure_temperature
+          if(this.hasCapability('measure_temperature')) {
+            if (temperature != this.getCapabilityValue('measure_temperature')) {
+              this.setCapabilityValue('measure_temperature', temperature);
+            }
           }
 
         })

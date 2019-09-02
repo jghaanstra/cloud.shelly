@@ -85,6 +85,21 @@
         "en": "Wh",
         "nl": "Wh"
       }
+    },
+    "meter_power_wmin": {
+      "type": "number",
+      "title": {
+        "en": "Total Consumed Energy",
+        "nl": "Totaal verbruikte energie"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/meter_power_returned.svg",
+      "units": {
+        "en": "Wmin",
+        "nl": "Wmin"
+      }
     }
   },
   "discovery": {
@@ -345,7 +360,9 @@
 			"class": "socket",
 			"capabilities": [
 				"onoff",
-				"measure_power"
+				"measure_power",
+        "meter_power_wmin",
+        "measure_temperature"
 			],
       "pair": [
         {
@@ -631,7 +648,9 @@
 			"class": "socket",
 			"capabilities": [
 				"onoff",
-				"measure_power"
+				"measure_power",
+        "meter_power_wmin",
+        "measure_temperature"
 			],
       "pair": [
         {
@@ -721,7 +740,8 @@
 			"class": "socket",
 			"capabilities": [
 				"onoff",
-				"measure_power"
+				"measure_power",
+        "meter_power_wmin"
 			],
       "pair": [
         {
@@ -811,7 +831,9 @@
 			"class": "socket",
 			"capabilities": [
 				"onoff",
-				"measure_power"
+				"measure_power",
+        "meter_power_wmin",
+        "measure_temperature"
 			],
       "pair": [
         {
