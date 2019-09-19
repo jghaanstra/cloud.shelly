@@ -236,6 +236,15 @@
         ]
       ]
     },
+    "shellybulb": {
+	"type": "mdns-sd",
+	"mdns-sd": {
+		"name": "http",
+		"protocol": "tcp"
+	},
+	"id": "{{txt.id}}",
+	"conditions": [        [          {            "field": "host",            "match": {              "type": "regex",              "value": "^shellybulb"            }          }        ]      ]
+    },
     "shellyem": {
       "type": "mdns-sd",
       "mdns-sd": {
@@ -1076,6 +1085,99 @@
 					"label": {
 						"en": "Shelly RGBW2 settings",
 						"nl": "Shelly RGBW2 instellingen"
+					},
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+						{
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
+							}
+						},
+						{
+							"id": "polling",
+							"type": "number",
+							"value": 5,
+							"attr": {
+								"min": 5,
+								"max": 3600
+							},
+							"label": {
+								"en": "Polling Frequency",
+								"nl": "Polling frequentie"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "shellybulb",
+      "discovery": "shellybulb",
+			"name": {
+				"en": "Shelly Bulb",
+				"nl": "Shelly Bulb"
+			},
+			"images": {
+				"large": "drivers/shellybulb/assets/images/large.jpg",
+				"small": "drivers/shellybulb/assets/images/small.jpg"
+			},
+			"class": "light",
+			"capabilities": [
+				"onoff",
+				"dim",
+				"light_temperature",
+				"light_hue",
+				"light_saturation"
+			],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly Bulb settings",
+						"nl": "Shelly Bulb instellingen"
 					},
 					"children": [
 						{
