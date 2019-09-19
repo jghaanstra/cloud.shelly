@@ -19,7 +19,5 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/765).
 
 ## Changelog
-### v1.11.0- 2019-09-02
-* NEW: added support for Shelly EM
-* IMPROVEMENT: added total consumption for Shelly 1 PM, Shelly2.5, Shelly Plug and Shelly Plug S (this requires the re-pairing of the device)
-* IMPROVEMENT: added internal temperature for Shelly 1 PM, Shelly2.5 and Shelly Plug S  (this requires the re-pairing of the device)
+### v1.12.0- 2019-09-19
+* NEW: added support for Shelly Bulb (thanx to Stefan Stanisic for PR)

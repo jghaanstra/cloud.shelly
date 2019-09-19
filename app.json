@@ -7,10 +7,10 @@
 		"nl": "Shelly"
 	},
 	"tags": {
-		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM" ],
-		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM"  ]
+		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb" ],
+		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb"  ]
 	},
-	"version": "1.11.0",
+	"version": "1.12.0",
 	"compatibility": ">=2.5.1",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -237,13 +237,23 @@
       ]
     },
     "shellybulb": {
-	"type": "mdns-sd",
-	"mdns-sd": {
-		"name": "http",
-		"protocol": "tcp"
-	},
-	"id": "{{txt.id}}",
-	"conditions": [        [          {            "field": "host",            "match": {              "type": "regex",              "value": "^shellybulb"            }          }        ]      ]
+	    "type": "mdns-sd",
+	    "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shellybulb"
+            }
+          }
+        ]
+      ]
     },
     "shellyem": {
       "type": "mdns-sd",
