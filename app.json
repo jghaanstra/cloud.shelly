@@ -1615,7 +1615,7 @@
 			},
 			"images": {
 				"large": "drivers/shellyflood/assets/images/large.jpg",
-				"small": "drivers/shellydlood/assets/images/small.jpg"
+				"small": "drivers/shellyflood/assets/images/small.jpg"
 			},
 			"class": "sensor",
 			"capabilities": [
