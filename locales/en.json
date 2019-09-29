@@ -19,7 +19,8 @@
     "test" : "Test Connection",
     "testing" : "Connection test succesfull, you can now connect the Shelly device.",
     "connect": "Connect",
-    "success": "Shelly device added succesfully"
+    "success": "Shelly device added succesfully",
+    "htstartpairing": "Press the physical button on your Shelly sensor, wait for the LED inside the sensor to stay on and click the next button below."
   },
   "connect": {
     "intro": "Using the Shelly RGBW2 in CW/WW mode enables you to connect 2 LED strips as follows:",

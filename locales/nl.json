@@ -19,7 +19,8 @@
     "test" : "Test connectie",
     "testing" : "Connectietest succesvol, je kan het Shelly apparaat nu verbinden.",
     "connect": "Verbind",
-    "success": "Shelly apparaat succesvol toegevoegd"
+    "success": "Shelly apparaat succesvol toegevoegd",
+    "htstartpairing": "Druk op de fysieke knop op je Shelly sensor, wacht tot de LED aan blijft en klik dan op de volgende knop hieronder."
   },
   "connect": {
     "intro": "Als je de Shelly RGBW2 in CW/WW mode gebruikt, kan je als volgt twee LED-strips aansluiten:",

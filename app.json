@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb" ],
 		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb"  ]
 	},
-	"version": "1.12.0",
+	"version": "1.13.0",
 	"compatibility": ">=2.5.1",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -269,6 +269,44 @@
             "match": {
               "type": "regex",
               "value": "^shellyem"
+            }
+          }
+        ]
+      ]
+    },
+    "shellyht": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shellyht"
+            }
+          }
+        ]
+      ]
+    },
+    "shellyflood": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shellyflood"
             }
           }
         ]
@@ -1447,6 +1485,182 @@
 					"label": {
 						"en": "Shelly EM settings",
 						"nl": "Shelly EM instellingen"
+					},
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+						{
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
+							}
+						}
+					]
+				}
+			]
+		},
+    {
+			"id": "shellyht",
+      "discovery": "shellyht",
+			"name": {
+				"en": "Shelly Humidity & Temperature",
+				"nl": "Shelly Humidity & Temperature"
+			},
+			"images": {
+				"large": "drivers/shellyht/assets/images/large.jpg",
+				"small": "drivers/shellyht/assets/images/small.jpg"
+			},
+			"class": "sensor",
+			"capabilities": [
+				"measure_humidity",
+        "measure_temperature",
+        "measure_battery",
+        "measure_voltage"
+			],
+      "energy": {
+        "batteries": ["CR123A"]
+      },
+      "pair": [
+        {
+          "id": "start",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly HT settings",
+						"nl": "Shelly HT instellingen"
+					},
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+						{
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
+							}
+						}
+					]
+				}
+			]
+		},
+    {
+			"id": "shellyflood",
+      "discovery": "shellyflood",
+			"name": {
+				"en": "Shelly Flood Sensor",
+				"nl": "Shelly Flood Sensor"
+			},
+			"images": {
+				"large": "drivers/shellyflood/assets/images/large.jpg",
+				"small": "drivers/shellydlood/assets/images/small.jpg"
+			},
+			"class": "sensor",
+			"capabilities": [
+				"alarm_water",
+        "measure_temperature",
+        "measure_battery",
+        "measure_voltage"
+			],
+      "energy": {
+        "batteries": ["CR123A"]
+      },
+      "pair": [
+        {
+          "id": "start",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly Flood Sensor settings",
+						"nl": "Shelly Flood Sensor instellingen"
 					},
 					"children": [
 						{

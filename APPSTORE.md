@@ -19,5 +19,5 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/765).
 
 ## Changelog
-### v1.12.0- 2019-09-19
-* NEW: added support for Shelly Bulb (thanx to Stefan Stanisic for PR)
+### v1.13.0- 2019-09-29
+* NEW: added support for Shelly Humidity & Temperature sensor (thanx to Stefan Rehnberg for loaning the devices)
