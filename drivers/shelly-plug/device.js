@@ -53,6 +53,14 @@ class ShellyPlugDevice extends Homey.Device {
             }
           }
 
+          // capability meter_power
+          if(this.hasCapability('meter_power')) {
+            let meter_power = total_consumption * 0.000017;
+            if (meter_power != this.getCapabilityValue('meter_power')) {
+              this.setCapabilityValue('meter_power', meter_power);
+            }
+          }
+
         })
         .catch(error => {
           this.log(error);

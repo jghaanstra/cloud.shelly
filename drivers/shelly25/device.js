@@ -55,6 +55,14 @@ class Shelly25Device extends Homey.Device {
             }
           }
 
+          // capability meter_power
+          if(this.hasCapability('meter_power')) {
+            let meter_power = total_consumption * 0.000017;
+            if (meter_power != this.getCapabilityValue('meter_power')) {
+              this.setCapabilityValue('meter_power', meter_power);
+            }
+          }
+
           // capability measure_temperature
           if(this.hasCapability('measure_temperature')) {
             if (temperature != this.getCapabilityValue('measure_temperature')) {
