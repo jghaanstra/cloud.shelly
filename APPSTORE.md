@@ -21,6 +21,6 @@ Add your Shelly device in Homey just like you would add any other device. Enter 
 For support please use the official support topic on the forum [here](https://community.athom.com/t/765).
 
 ## Changelog
-### v1.13.1- 2019-10-01
-* IMPROVEMENT: added total power usage in KWh for Shelly 1 PM, Shelly2.5, Shelly Plug and Shelly Plug S (this requires the re-pairing of the device). The value from the Shelly device is in Wmin. The total power usage in KWh is calculated by doing Wmin * 0.000017.
-* FIX: fix for discovery of multiple Shelly Plugs due to deviating implementation of mDNS in Shelly Plugs
+### v1.13.2 - 2019-10-14
+* Changes for Homey Energy Manager (firmware > 3.x)
+* Fix for pairing multiple Shelly 4 Pro devices
