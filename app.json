@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb" ],
 		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb"  ]
 	},
-	"version": "1.13.2",
+	"version": "1.13.3",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -28,14 +28,16 @@
 		"url": "https://github.com/jghaanstra/cloud.shelly/issues/"
 	},
 	"homeyCommunityTopicId": 765,
+  "source": "https://github.com/jghaanstra/cloud.shelly",
+  "homepage": "https://community.athom.com/t/765",
 	"images": {
 		"large": "./assets/images/large.jpg",
 		"small": "./assets/images/small.jpg"
 	},
 	"category": "appliances",
 	"description": {
-		"en": "Control Shelly devices",
-		"nl": "Beheer Shelly apparaten"
+		"en": "Control Shelly devices with Homey",
+		"nl": "Bedien Shelly apparaten via Homey"
 	},
 	"dependencies": {
 		"net": "*"
