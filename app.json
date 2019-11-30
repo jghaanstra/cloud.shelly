@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb" ],
 		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb"  ]
 	},
-	"version": "1.13.3",
+	"version": "1.14.0",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -309,6 +309,25 @@
             "match": {
               "type": "regex",
               "value": "^shellyflood"
+            }
+          }
+        ]
+      ]
+    },
+    "shellydimmer": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shellydimmer"
             }
           }
         ]
@@ -1670,6 +1689,100 @@
 					"label": {
 						"en": "Shelly Flood Sensor settings",
 						"nl": "Shelly Flood Sensor instellingen"
+					},
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+						{
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
+							}
+						},
+						{
+							"id": "polling",
+							"type": "number",
+							"value": 5,
+							"attr": {
+								"min": 5,
+								"max": 3600
+							},
+							"label": {
+								"en": "Polling Frequency",
+								"nl": "Polling frequentie"
+							}
+						}
+					]
+				}
+			]
+		},
+    {
+			"id": "shellydimmer",
+      "discovery": "shellydimmer",
+			"name": {
+				"en": "Shelly Dimmer/SL",
+				"nl": "Shelly Dimmer/SL"
+			},
+			"images": {
+				"large": "drivers/shellydimmer/assets/images/large.jpg",
+				"small": "drivers/shellydimmer/assets/images/small.jpg"
+			},
+			"class": "light",
+			"capabilities": [
+				"onoff",
+        "dim",
+        "measure_power",
+        "meter_power_wmin",
+        "meter_power",
+        "measure_temperature"
+			],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly Dimmer settings",
+						"nl": "Shelly Dimmer instellingen"
 					},
 					"children": [
 						{

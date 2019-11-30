@@ -1,5 +1,8 @@
 {
   "1.13.3": {
     "en": "Moved installation instructions from app store to community support topic."
+  },
+  "1.14.0": {
+    "en": "Added support for Shelly Dimmer/SL (thx to domotica-shop.nl for supplying the device)"
   }
 }
