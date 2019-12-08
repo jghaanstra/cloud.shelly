@@ -4,5 +4,8 @@
   },
   "1.14.0": {
     "en": "Added support for Shelly Dimmer/SL (thx to domotica-shop.nl for supplying the device)"
+  },
+  "1.14.1": {
+    "en": "Skip the login credentials screen during pairing for devices that do not have authentication set up."
   }
 }

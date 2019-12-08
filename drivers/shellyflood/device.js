@@ -13,6 +13,7 @@ class ShellyFloodDevice extends Homey.Device {
 
   onDeleted() {
     clearInterval(this.pollingInterval);
+    clearInterval(this.pingInterval);
   }
 
   // HELPER FUNCTIONS

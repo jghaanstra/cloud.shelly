@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb" ],
 		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb"  ]
 	},
-	"version": "1.14.0",
+	"version": "1.14.1",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -358,6 +358,12 @@
             "singular": true
           },
           "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
+          "navigation": {
             "next": "login_credentials"
           }
         },
@@ -450,6 +456,12 @@
           "options": {
             "singular": true
           },
+          "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
           "navigation": {
             "next": "login_credentials"
           }
@@ -556,6 +568,12 @@
             "singular": true
           },
           "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
+          "navigation": {
             "next": "login_credentials"
           }
         },
@@ -646,6 +664,12 @@
           "options": {
             "singular": true
           },
+          "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
           "navigation": {
             "next": "login_credentials"
           }
@@ -740,6 +764,12 @@
             "singular": true
           },
           "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
+          "navigation": {
             "next": "login_credentials"
           }
         },
@@ -831,6 +861,12 @@
           "options": {
             "singular": true
           },
+          "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
           "navigation": {
             "next": "login_credentials"
           }
@@ -924,6 +960,12 @@
           "options": {
             "singular": true
           },
+          "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
           "navigation": {
             "next": "login_credentials"
           }
@@ -1044,6 +1086,12 @@
             "singular": true
           },
           "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
+          "navigation": {
             "next": "login_credentials"
           }
         },
@@ -1138,6 +1186,12 @@
             "singular": true
           },
           "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
+          "navigation": {
             "next": "login_credentials"
           }
         },
@@ -1231,6 +1285,12 @@
             "singular": true
           },
           "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
+          "navigation": {
             "next": "login_credentials"
           }
         },
@@ -1321,6 +1381,12 @@
           "options": {
             "singular": true
           },
+          "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
           "navigation": {
             "next": "login_credentials"
           }
@@ -1493,6 +1559,12 @@
             "singular": true
           },
           "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
+          "navigation": {
             "next": "login_credentials"
           }
         },
@@ -1581,6 +1653,12 @@
             "singular": true
           },
           "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
+          "navigation": {
             "next": "login_credentials"
           }
         },
@@ -1668,6 +1746,12 @@
           "options": {
             "singular": true
           },
+          "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
           "navigation": {
             "next": "login_credentials"
           }
@@ -1762,6 +1846,12 @@
           "options": {
             "singular": true
           },
+          "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
           "navigation": {
             "next": "login_credentials"
           }

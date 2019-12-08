@@ -56,6 +56,7 @@ class Shelly4ProDevice extends Homey.Device {
 
   onDeleted() {
     clearInterval(this.pollingInterval);
+    clearInterval(this.pingInterval);
   }
 
   // HELPER FUNCTIONS

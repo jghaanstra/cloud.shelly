@@ -22,6 +22,7 @@ class ShellyPlugDevice extends Homey.Device {
 
   onDeleted() {
     clearInterval(this.pollingInterval);
+    clearInterval(this.pingInterval);
   }
 
   // HELPER FUNCTIONS

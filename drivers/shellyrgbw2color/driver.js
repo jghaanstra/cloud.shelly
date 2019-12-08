@@ -28,13 +28,12 @@ class ShellyRGBW2ColorDriver extends Homey.Driver {
       selectedDeviceId = data[0].data.id;
     });
 
-    socket.on('login', (data, callback) => {
+    socket.on('get_device', (data, callback) => {
       const discoveryResult = discoveryResults[selectedDeviceId];
       if(!discoveryResult) return callback(new Error('Something went wrong'));
 
       util.sendCommand('/shelly', discoveryResult.address, data.username, data.password)
         .then(result => {
-          var password = data.password;
           deviceArray = {
             name: 'Shelly RGBW2 Color Mode ['+ discoveryResult.address +']',
             data: {
@@ -42,8 +41,8 @@ class ShellyRGBW2ColorDriver extends Homey.Driver {
             },
             settings: {
               address  : discoveryResult.address,
-              username : data.username,
-              password : data.password,
+              username : '',
+              password : '',
               polling  : 5
             },
             store: {
@@ -51,14 +50,24 @@ class ShellyRGBW2ColorDriver extends Homey.Driver {
               outputs: result.num_outputs
             }
           }
-          callback(null, true);
+          if (result.auth) {
+            socket.nextView();
+          } else {
+            socket.showView('add_device');
+          }
         })
         .catch(error => {
           callback(error, false);
         })
     });
 
-    socket.on('get_device', (data, callback) => {
+    socket.on('login', (data, callback) => {
+      deviceArray.settings.username = data.username;
+      deviceArray.settings.password = data.password;
+      callback(null, true);
+    });
+
+    socket.on('add_device', (data, callback) => {
       callback(false, deviceArray);
     });
 
