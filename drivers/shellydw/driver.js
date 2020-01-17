@@ -3,7 +3,7 @@
 const Homey = require('homey');
 const util = require('/lib/util.js');
 
-class ShellyhtDriver extends Homey.Driver {
+class ShellydwDriver extends Homey.Driver {
 
   onPair(socket) {
     const discoveryStrategy = this.getDiscoveryStrategy();
@@ -14,7 +14,7 @@ class ShellyhtDriver extends Homey.Driver {
     socket.on('list_devices', (data, callback) => {
       const devices = Object.values(discoveryResults).map(discoveryResult => {
         return {
-          name: 'Shelly HT ['+ discoveryResult.address +']',
+          name: 'Shelly DW ['+ discoveryResult.address +']',
           data: {
             id: discoveryResult.id,
           }
@@ -35,7 +35,7 @@ class ShellyhtDriver extends Homey.Driver {
       util.sendCommand('/shelly', discoveryResult.address, data.username, data.password)
         .then(result => {
           deviceArray = {
-            name: 'Shelly HT ['+ discoveryResult.address +']',
+            name: 'Shelly DW ['+ discoveryResult.address +']',
             data: {
               id: discoveryResult.id,
             },
@@ -73,4 +73,4 @@ class ShellyhtDriver extends Homey.Driver {
 
 }
 
-module.exports = ShellyhtDriver;
+module.exports = ShellydwDriver;

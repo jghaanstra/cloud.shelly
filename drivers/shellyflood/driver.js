@@ -45,8 +45,7 @@ class ShellyFloodDriver extends Homey.Driver {
               password : ''
             },
             store: {
-              type: result.type,
-              outputs: result.num_outputs
+              type: result.type
             }
           }
           if (result.auth) {

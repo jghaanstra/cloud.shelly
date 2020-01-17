@@ -7,10 +7,10 @@
 		"nl": "Shelly"
 	},
 	"tags": {
-		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb" ],
-		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb"  ]
+		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Humidity Temperature", "Shelly Door Window", "Shelly Dimmer" ],
+		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Luchtvochtigheid Temperatuur", "Shelly Deur Raam", "Shelly Dimmer" ]
 	},
-	"version": "1.14.2",
+	"version": "1.15.0",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -328,6 +328,25 @@
             "match": {
               "type": "regex",
               "value": "^shellydimmer"
+            }
+          }
+        ]
+      ]
+    },
+    "shellydw": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shellydw"
             }
           }
         ]
@@ -1913,6 +1932,100 @@
 							"label": {
 								"en": "Polling Frequency",
 								"nl": "Polling frequentie"
+							}
+						}
+					]
+				}
+			]
+		},
+    {
+			"id": "shellydw",
+      "discovery": "shellydw",
+			"name": {
+				"en": "Shelly Door/ Window Sensor",
+				"nl": "Shelly Deur Raam Sensor"
+			},
+			"images": {
+				"large": "drivers/shellydw/assets/images/large.jpg",
+				"small": "drivers/shellydw/assets/images/small.jpg"
+			},
+			"class": "sensor",
+			"capabilities": [
+				"alarm_contact",
+        "measure_luminance",
+        "measure_battery",
+        "measure_voltage"
+			],
+      "energy": {
+        "batteries": ["CR123A", "CR123A"]
+      },
+      "pair": [
+        {
+          "id": "start",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device",
+          "navigation": {
+            "next": "login_credentials"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly DW settings",
+						"nl": "Shelly DW instellingen"
+					},
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+						{
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
 							}
 						}
 					]
