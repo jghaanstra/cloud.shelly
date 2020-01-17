@@ -10,5 +10,8 @@
   },
   "1.14.2": {
     "en": "Fixed issue with pairing introduced with previous version (1.14.1)."
+  },
+  "1.15.0": {
+    "en": "Added support for the Shelly Door Window Sensor."
   }
 }

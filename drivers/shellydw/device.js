@@ -23,10 +23,17 @@ class ShellydwDevice extends Homey.Device {
     this.pollingInterval = setInterval(() => {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
-          let alarm = result.sensor.state;
+          let alarm = false;
+          let state = result.sensor.state;
           let lux = result.lux.value;
           let battery = result.bat.value;
           let voltage = result.bat.voltage;
+
+          if (state == 'open') {
+            alarm = true;
+          } else {
+            alarm = false;
+          }
 
           // capability alarm_contact
           if (alarm != this.getCapabilityValue('alarm_contact')) {
