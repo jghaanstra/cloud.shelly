@@ -34,6 +34,8 @@ class Shelly1Driver extends Homey.Driver {
 
       util.sendCommand('/shelly', discoveryResult.address, data.username, data.password)
         .then(result => {
+          console.log('device details retrieved with discoveryresult ID');
+          this.log(result);
           deviceArray = {
             name: 'Shelly1 ['+ discoveryResult.address +']',
             data: {
@@ -51,17 +53,24 @@ class Shelly1Driver extends Homey.Driver {
             }
           }
           if (result.auth) {
+            console.log('auth is needed');
+            this.log(deviceArray);
             socket.nextView();
           } else {
+            console.log('auth is not needed');
+            this.log(deviceArray);
             socket.showView('add_device');
           }
         })
         .catch(error => {
+          this.log(error);
           callback(error, false);
         })
     });
 
     socket.on('login', (data, callback) => {
+      this.log('calling login event');
+      this.log(deviceArray);
       deviceArray.settings.username = data.username;
       deviceArray.settings.password = data.password;
       callback(null, true);
