@@ -5,14 +5,37 @@
         Homey.done()
     	});
     } else {
-      Homey.addDevice(result, function(error, result) {
-        if (error) {
-          Homey.alert(error, null, function() {
-            Homey.done()
-        	});
+      var i;
+      for (i = 0; i < 3; i++) {
+        var deviceid = i + 1;
+        if (i < 2) {
+          Homey.createDevice({
+    				name: 'Shelly 2 Relay ' + deviceid,
+    				data: {
+              id: result.data.id + '-channel-' + i
+            },
+    				settings: {
+              address  : result.settings.address,
+              username : result.settings.username,
+              password : result.settings.password
+            },
+            store: {
+              main_device: result.data.id,
+              channel: i,
+              type: result.store.type,
+              outputs: result.store.outputs
+            }
+    			}, function(error, result ) {
+    				if (error) {
+              Homey.alert(error, null, function() {
+                Homey.done()
+            	});
+    				}
+    			})
+        } else {
+          Homey.done()
         }
-        Homey.done();
-      })
+  		}
     }
   })
 </script>

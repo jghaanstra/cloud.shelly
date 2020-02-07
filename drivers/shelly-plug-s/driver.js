@@ -32,7 +32,7 @@ class ShellyPlugSDriver extends Homey.Driver {
       const discoveryResult = discoveryResults[selectedDeviceId];
       if(!discoveryResult) return callback(new Error('Something went wrong'));
 
-      util.sendCommand('/shelly', discoveryResult.address, data.username, data.password)
+      util.sendCommand('/shelly', discoveryResult.address, '', '')
         .then(result => {
           deviceArray = {
             name: 'Shelly Plug S ['+ discoveryResult.address +']',
