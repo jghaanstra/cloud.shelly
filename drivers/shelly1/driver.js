@@ -45,6 +45,7 @@ class Shelly1Driver extends Homey.Driver {
               password : '',
               polling  : 5
             },
+            capabilities: ['onoff'],
             store: {
               type: result.type,
               outputs: result.num_outputs

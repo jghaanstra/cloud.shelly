@@ -8,6 +8,10 @@ module.exports = [
 		path     : '/shelly/:device/:channel/:action',
 		public   : true,
 		fn: function(args, callback) {
+      console.log(args);
+
+      // todo: built logic to handle incoming updates once Shelly firmware actually supports this.
+      
       callback(false, 'OK');
 		}
 	}

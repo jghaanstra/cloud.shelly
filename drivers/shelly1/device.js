@@ -6,6 +6,9 @@ const util = require('/lib/util.js');
 class Shelly1Device extends Homey.Device {
 
   onInit() {
+    new Homey.FlowCardTriggerDevice('triggerShelly1Temperature2').register();
+    new Homey.FlowCardTriggerDevice('triggerShelly1Temperature3').register();
+
     var interval = this.getSetting('polling') || 5;
     this.pollDevice(interval);
     this.setAvailable();
@@ -38,6 +41,42 @@ class Shelly1Device extends Homey.Device {
           // capability onoff
           if (state != this.getCapabilityValue('onoff')) {
             this.setCapabilityValue('onoff', state);
+          }
+
+          // capability measure_temperature, measure_temperature.2, measure_temperature.3
+          if (Object.entries(result.ext_temperature).length !== 0) {
+
+            // sensor 1
+            if (result.ext_temperature.hasOwnProperty([0]) && !this.hasCapability('measure_temperature')) {
+              this.addCapability('measure_temperature');
+            } else if (result.ext_temperature.hasOwnProperty([0]) && this.hasCapability('measure_temperature')) {
+              var temp1 = result.ext_temperature[0].tC;
+              if (temp1 != this.getCapabilityValue('measure_temperature')) {
+                this.setCapabilityValue('measure_temperature', temp1);
+              }
+            }
+
+            // sensor 2
+            if (result.ext_temperature.hasOwnProperty([1]) && !this.hasCapability('measure_temperature.2')) {
+              this.addCapability('measure_temperature.2');
+            } else if (result.ext_temperature.hasOwnProperty([1]) && this.hasCapability('measure_temperature.2')) {
+              var temp2 = result.ext_temperature[1].tC;
+              if (temp2 != this.getCapabilityValue('measure_temperature.2')) {
+                this.setCapabilityValue('measure_temperature.2', temp2);
+                Homey.ManagerFlow.getCard('trigger', 'triggerShelly1Temperature2').trigger(this, {'temperature': temp2}, {})
+              }
+            }
+
+            // sensor 3
+            if (result.ext_temperature.hasOwnProperty([2]) && !this.hasCapability('measure_temperature.3')) {
+              this.addCapability('measure_temperature.3');
+            } else if (result.ext_temperature.hasOwnProperty([2]) && this.hasCapability('measure_temperature.3')) {
+              var temp3 = result.ext_temperature[2].tC;
+              if (temp3 != this.getCapabilityValue('measure_temperature.3')) {
+                this.setCapabilityValue('measure_temperature.3', temp3);
+                Homey.ManagerFlow.getCard('trigger', 'triggerShelly1Temperature3').trigger(this, {'temperature': temp3}, {})
+              }
+            }
           }
 
         })

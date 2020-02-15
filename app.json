@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Humidity Temperature", "Shelly Door Window", "Shelly Dimmer" ],
 		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Luchtvochtigheid Temperatuur", "Shelly Deur Raam", "Shelly Dimmer" ]
 	},
-	"version": "1.16.0",
+	"version": "1.16.1",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -367,8 +367,31 @@
 			},
 			"class": "socket",
 			"capabilities": [
-				"onoff"
+				"onoff",
+        "measure_temperature",
+        "measure_temperature.2",
+        "measure_temperature.3"
 			],
+      "capabilitiesOptions": {
+				"measure_temperature": {
+					"title": {
+						"en": "Temperature Sensor 1",
+						"nl": "Temperatuursensor 1"
+					}
+				},
+				"measure_temperature.2": {
+					"title": {
+						"en": "Temperature Sensor 2",
+						"nl": "Temperatuursensor 2"
+					}
+				},
+        "measure_temperature.3": {
+					"title": {
+						"en": "Temperature Sensor 3",
+						"nl": "Temperatuursensor 3"
+					}
+				}
+      },
       "pair": [
         {
           "id": "list_devices",
@@ -466,8 +489,31 @@
 				"measure_power",
         "meter_power_wmin",
         "meter_power",
-        "measure_temperature"
+        "measure_temperature",
+        "measure_temperature.1",
+        "measure_temperature.2",
+        "measure_temperature.3"
 			],
+      "capabilitiesOptions": {
+				"measure_temperature.1": {
+					"title": {
+						"en": "Temperature Sensor 1",
+						"nl": "Temperatuursensor 1"
+					}
+				},
+				"measure_temperature.2": {
+					"title": {
+						"en": "Temperature Sensor 2",
+						"nl": "Temperatuursensor 2"
+					}
+				},
+        "measure_temperature.3": {
+					"title": {
+						"en": "Temperature Sensor 3",
+						"nl": "Temperatuursensor 3"
+					}
+				}
+      },
       "pair": [
         {
           "id": "list_devices",
@@ -1993,6 +2039,95 @@
 		}
 	],
 	"flow": {
+    "triggers": [
+      {
+				"id": "triggerShelly1Temperature1",
+				"title": {
+					"en": "Temperature Sensor 1 has changed",
+					"nl": "Temperatuursensor 1 is veranderd"
+				},
+        "tokens": [
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur"
+            },
+            "example": 5
+          }
+        ],
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly",
+							"nl": "Selecteer Shelly"
+						},
+						"filter": "driver_id=shelly1pm&capabilities=measure_temperature.1"
+					}
+				]
+			},
+      {
+				"id": "triggerShelly1Temperature2",
+				"title": {
+					"en": "Temperature Sensor 2 has changed",
+					"nl": "Temperatuursensor 2 is veranderd"
+				},
+        "tokens": [
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur"
+            },
+            "example": 5
+          }
+        ],
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly",
+							"nl": "Selecteer Shelly"
+						},
+						"filter": "driver_id=shelly1|shelly1pm&capabilities=measure_temperature.2"
+					}
+				]
+			},
+      {
+				"id": "triggerShelly1Temperature3",
+				"title": {
+					"en": "Temperature Sensor 3 has changed",
+					"nl": "Temperatuursensor 3 is veranderd"
+				},
+        "tokens": [
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur"
+            },
+            "example": 5
+          }
+        ],
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly",
+							"nl": "Selecteer Shelly"
+						},
+						"filter": "driver_id=shelly1|shelly1pm&capabilities=measure_temperature.3"
+					}
+				]
+			}
+    ],
 		"actions": [
 			{
 				"id": "flipbackSwitch",
