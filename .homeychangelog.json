@@ -19,5 +19,8 @@
   },
   "1.16.1": {
     "en": "BREAKING CHANGES: complete overhaul of the Shelly 2 Relay and Shelly 4 Pro drivers to split them into seperate devices for each channel without polling the device for each channel. This will break current support for these drivers. You will need to re-pair your devices and fix your flows. Sorry for any inconvenience. Also added support for the temperature add-on for the Shelly 1 and Shelly 1PM."
+  },
+  "1.16.2": {
+    "en": "Small fixes for Shelly 2 and Shelly 4 Pro."
   }
 }

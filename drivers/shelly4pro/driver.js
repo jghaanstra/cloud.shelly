@@ -75,6 +75,7 @@ class Shelly4ProDriver extends Homey.Driver {
     });
 
     socket.on('add_device', (data, callback) => {
+      this.pollDevices(5);
       callback(false, deviceArray);
     });
 
@@ -95,16 +96,18 @@ class Shelly4ProDriver extends Homey.Driver {
       try {
         if (added_devices.length > 0) {
           Object.keys(added_devices).forEach((key) => {
-            var device1_id = added_devices[key].getStoreValue('main_device') + "-channel-1";
-            var device2_id = added_devices[key].getStoreValue('main_device') + "-channel-2";
-            var device3_id = added_devices[key].getStoreValue('main_device') + "-channel-3";
 
             if (added_devices[key].getStoreValue("channel") == 0) {
+              var device0_id = added_devices[key].getData().id
+              var device1_id = added_devices[key].getStoreValue('main_device') + "-channel-1";
+              var device2_id = added_devices[key].getStoreValue('main_device') + "-channel-2";
+              var device3_id = added_devices[key].getStoreValue('main_device') + "-channel-3";
+
               util.sendCommand('/status', added_devices[key].getSetting('address'), added_devices[key].getSetting('username'), added_devices[key].getSetting('password'))
                 .then(result => {
 
-                  temp_devices[added_devices[key].getData().id] = {
-                    id: added_devices[key].getData().id,
+                  temp_devices[device0_id] = {
+                    id: device0_id,
                     onoff: result.relays[0].ison,
                     measure_power: result.meters[0].power,
                     meter_power: result.meters[0].total,
@@ -137,10 +140,18 @@ class Shelly4ProDriver extends Homey.Driver {
                 })
                 .catch(error => {
                   this.log(error);
-                  temp_devices[added_devices[key].getData().id].online = false;
-                  temp_devices[device1_id].online = false;
-                  temp_devices[device2_id].online = false;
-                  temp_devices[device3_id].online = false;
+                  if (temp_devices[device0_id].online == true) {
+                    temp_devices[device0_id].online = false;
+                  }
+                  if (temp_devices[device1_id].online == true) {
+                    temp_devices[device1_id].online = false;
+                  }
+                  if (temp_devices[device2_id].online == true) {
+                    temp_devices[device2_id].online = false;
+                  }
+                  if (temp_devices[device3_id].online == true) {
+                    temp_devices[device3_id].online = false;
+                  }
                 })
             }
 
