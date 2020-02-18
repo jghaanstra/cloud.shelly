@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Humidity Temperature", "Shelly Door Window", "Shelly Dimmer" ],
 		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Luchtvochtigheid Temperatuur", "Shelly Deur Raam", "Shelly Dimmer" ]
 	},
-	"version": "1.16.2",
+	"version": "1.16.3",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -118,7 +118,7 @@
             "field": "host",
             "match": {
               "type": "regex",
-              "value": "^shellyplug"
+              "value": "^shellyplug-"
             }
           }
         ]
@@ -137,7 +137,7 @@
             "field": "host",
             "match": {
               "type": "regex",
-              "value": "^shellyplug-s"
+              "value": "^shellyplug-s-"
             }
           }
         ]
@@ -156,7 +156,7 @@
             "field": "host",
             "match": {
               "type": "regex",
-              "value": "^shelly1"
+              "value": "^shelly1-"
             }
           }
         ]
@@ -175,7 +175,7 @@
             "field": "host",
             "match": {
               "type": "regex",
-              "value": "^shelly1pm"
+              "value": "^shelly1pm-"
             }
           }
         ]
@@ -194,7 +194,26 @@
             "field": "host",
             "match": {
               "type": "regex",
-              "value": "^shellyswitch"
+              "value": "^shellyswitch-"
+            }
+          }
+        ]
+      ]
+    },
+    "shelly25": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shellyswitch25-"
             }
           }
         ]
@@ -213,7 +232,7 @@
             "field": "host",
             "match": {
               "type": "regex",
-              "value": "^shelly4pro"
+              "value": "^shelly4pro-"
             }
           }
         ]
@@ -232,7 +251,7 @@
             "field": "host",
             "match": {
               "type": "regex",
-              "value": "^shellyrgbw2"
+              "value": "^shellyrgbw2-"
             }
           }
         ]
@@ -251,7 +270,7 @@
             "field": "host",
             "match": {
               "type": "regex",
-              "value": "^shellybulb"
+              "value": "^shellybulb-"
             }
           }
         ]
@@ -270,7 +289,7 @@
             "field": "host",
             "match": {
               "type": "regex",
-              "value": "^shellyem"
+              "value": "^shellyem-"
             }
           }
         ]
@@ -289,7 +308,7 @@
             "field": "host",
             "match": {
               "type": "regex",
-              "value": "^shellyht"
+              "value": "^shellyht-"
             }
           }
         ]
@@ -308,7 +327,7 @@
             "field": "host",
             "match": {
               "type": "regex",
-              "value": "^shellyflood"
+              "value": "^shellyflood-"
             }
           }
         ]
@@ -327,7 +346,7 @@
             "field": "host",
             "match": {
               "type": "regex",
-              "value": "^shellydimmer"
+              "value": "^shellydimmer-"
             }
           }
         ]
@@ -346,7 +365,7 @@
             "field": "host",
             "match": {
               "type": "regex",
-              "value": "^shellydw"
+              "value": "^shellydw-"
             }
           }
         ]
@@ -791,7 +810,7 @@
 		},
 		{
 			"id": "shelly25",
-      "discovery": "shelly2",
+      "discovery": "shelly25",
 			"name": {
 				"en": "Shelly 2.5 Relay",
 				"nl": "Shelly 2.5 Relay"
