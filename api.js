@@ -5,13 +5,13 @@ module.exports = [
 	{
 		description: 'Shelly App API',
 		method   : 'GET',
-		path     : '/shelly/:device/:channel/:action',
+		path     : '/shelly/:devicetype/:deviceid/:channel/:action',
 		public   : true,
 		fn: function(args, callback) {
       console.log(args);
 
       // todo: built logic to handle incoming updates once Shelly firmware actually supports this.
-      
+
       callback(false, 'OK');
 		}
 	}

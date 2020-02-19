@@ -21,6 +21,14 @@ class Shelly1Device extends Homey.Device {
         return util.sendCommand('/relay/0?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       }
     });
+
+    this.registerCapabilityListener('button.short_long_push', async () => {
+      var homeyip = await util.getHomeyIp();
+      var shortpush_url = 'http://'+ homeyip +'/shelly1/'+ this.getData().id +'/0/shortpush_url/';
+      var longpush_url = 'http://'+ homeyip +'/shelly1/'+ this.getData().id +'/0/longpush_url/';
+
+      return util.sendCommand('settings/relay/0?shortpush_url='+ shortpush_url + '&longpush_url='+ longpush_url +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    });
   }
 
   onDeleted() {

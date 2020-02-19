@@ -49,7 +49,7 @@ class ShellyhtDriver extends Homey.Driver {
             }
           }
           if (result.auth) {
-            socket.nextView();
+            socket.showView('login_credentials');
           } else {
             socket.showView('add_device');
           }

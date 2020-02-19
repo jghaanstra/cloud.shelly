@@ -3,7 +3,7 @@
 const Homey = require('homey');
 const util = require('/lib/util.js');
 
-class ShellydwDriver extends Homey.Driver {
+class Shelly25RollerShutterDriver extends Homey.Driver {
 
   onPair(socket) {
     const discoveryStrategy = this.getDiscoveryStrategy();
@@ -14,7 +14,7 @@ class ShellydwDriver extends Homey.Driver {
     socket.on('list_devices', (data, callback) => {
       const devices = Object.values(discoveryResults).map(discoveryResult => {
         return {
-          name: 'Shelly DW ['+ discoveryResult.address +']',
+          name: 'Shelly 2.5 Roller ['+ discoveryResult.address +']',
           data: {
             id: discoveryResult.id,
           }
@@ -35,17 +35,19 @@ class ShellydwDriver extends Homey.Driver {
       util.sendCommand('/shelly', discoveryResult.address, '', '')
         .then(result => {
           deviceArray = {
-            name: 'Shelly DW ['+ discoveryResult.address +']',
+            name: 'Shelly 2.5 Roller ['+ discoveryResult.address +']',
             data: {
               id: discoveryResult.id,
             },
             settings: {
               address  : discoveryResult.address,
               username : '',
-              password : ''
+              password : '',
+              polling  : 5
             },
             store: {
-              type: result.type
+              type: result.type,
+              outputs: result.num_outputs
             }
           }
           if (result.auth) {
@@ -73,4 +75,4 @@ class ShellydwDriver extends Homey.Driver {
 
 }
 
-module.exports = ShellydwDriver;
+module.exports = Shelly25RollerShutterDriver;

@@ -389,7 +389,8 @@
 				"onoff",
         "measure_temperature",
         "measure_temperature.2",
-        "measure_temperature.3"
+        "measure_temperature.3",
+        "button.short_long_push"
 			],
       "capabilitiesOptions": {
 				"measure_temperature": {
@@ -409,7 +410,18 @@
 						"en": "Temperature Sensor 3",
 						"nl": "Temperatuursensor 3"
 					}
-				}
+				},
+        "button.short_long_push": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Set callback URLs short and long push",
+						"nl": "Instellen callback URL's kort en lang ingedrukt"
+					},
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards to recognize short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards voor het herkennen van kort en lang ingedrukt acties."
+          }
+				},
       },
       "pair": [
         {
@@ -423,10 +435,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -545,10 +554,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -643,10 +649,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -715,8 +718,8 @@
 			"id": "shelly2-rollershutter",
       "discovery": "shelly2",
 			"name": {
-				"en": "Shelly 2(.5) Roller Shutter",
-				"nl": "Shelly 2(.5) Roller Shutter"
+				"en": "Shelly 2 Roller Shutter",
+				"nl": "Shelly 2 Roller Shutter"
 			},
 			"images": {
 				"large": "drivers/shelly2-rollershutter/assets/images/large.jpg",
@@ -740,10 +743,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -762,6 +762,100 @@
 					"label": {
 						"en": "Shelly 2 Roller Shutter settings",
 						"nl": "Shelly 2 Roller Shutter instellingen"
+					},
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+						{
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
+							}
+						},
+						{
+							"id": "polling",
+							"type": "number",
+							"value": 5,
+							"attr": {
+								"min": 5,
+								"max": 3600
+							},
+							"label": {
+								"en": "Polling Frequency",
+								"nl": "Polling frequentie"
+							}
+						}
+					]
+				}
+			]
+		},
+    {
+			"id": "shelly25-rollershutter",
+      "discovery": "shelly25",
+			"name": {
+				"en": "Shelly 2.5 Roller Shutter",
+				"nl": "Shelly 2.5 Roller Shutter"
+			},
+			"images": {
+				"large": "drivers/shelly25-rollershutter/assets/images/large.jpg",
+				"small": "drivers/shelly25-rollershutter/assets/images/small.jpg"
+			},
+			"class": "windowcoverings",
+			"capabilities": [
+				"windowcoverings_state",
+				"windowcoverings_set",
+				"measure_power"
+			],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly 2.5 Roller Shutter settings",
+						"nl": "Shelly 2.5 Roller Shutter instellingen"
 					},
 					"children": [
 						{
@@ -839,10 +933,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -937,10 +1028,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -1036,10 +1124,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -1133,10 +1218,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -1233,10 +1315,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -1332,10 +1411,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -1429,10 +1505,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -1606,10 +1679,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -1700,10 +1770,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -1794,10 +1861,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -1894,10 +1958,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -2001,10 +2062,7 @@
           }
         },
         {
-          "id": "get_device",
-          "navigation": {
-            "next": "login_credentials"
-          }
+          "id": "get_device"
         },
         {
           "id": "login_credentials",
@@ -2439,7 +2497,7 @@
 							"en": "Select Shelly 2",
 							"nl": "Selecteer Shelly 2"
 						},
-						"filter": "driver_id=shelly2-rollershutter"
+						"filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
 					}
 				]
 			},
