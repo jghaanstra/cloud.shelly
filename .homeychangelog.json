@@ -22,5 +22,8 @@
   },
   "1.16.2": {
     "en": "Small fixes for Shelly 2 and Shelly 4 Pro."
+  },
+  "1.16.3": {
+    "en": "Added new driver for Shelly 2.5 Rollershutter, you can re-pair it if you have paired as Shelly 2(.5) Rollershutter. Fixed an issue where devices from another type could show up in the pairing wizard. Small improvement to the pairing wizard which might resolve blank screens and timeouts. Added a new trigger card for Shelly 1 and Shelly1PM which can be triggered using the callback URLs. These need to be set using maintenance actions under the device settings. See the app description on the forum for further instructions."
   }
 }
