@@ -390,7 +390,8 @@
         "measure_temperature",
         "measure_temperature.2",
         "measure_temperature.3",
-        "button.short_long_push"
+        "button.triggers",
+        "button.removetriggers"
 			],
       "capabilitiesOptions": {
 				"measure_temperature": {
@@ -411,17 +412,28 @@
 						"nl": "Temperatuursensor 3"
 					}
 				},
-        "button.short_long_push": {
+        "button.triggers": {
           "maintenanceAction": true,
 					"title": {
-						"en": "Set callback URLs short and long push",
-						"nl": "Instellen callback URL's kort en lang ingedrukt"
+						"en": "Set callback URLs for triggers",
+						"nl": "Instellen callback URL's voor triggers"
 					},
           "desc": {
-            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards to recognize short and long press events.",
-            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards voor het herkennen van kort en lang ingedrukt acties."
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
           }
 				},
+        "button.removetriggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Remove callback URLs for triggers",
+						"nl": "Verwijderen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				}
       },
       "pair": [
         {
@@ -520,7 +532,9 @@
         "measure_temperature",
         "measure_temperature.1",
         "measure_temperature.2",
-        "measure_temperature.3"
+        "measure_temperature.3",
+        "button.triggers",
+        "button.removetriggers"
 			],
       "capabilitiesOptions": {
 				"measure_temperature.1": {
@@ -540,6 +554,28 @@
 						"en": "Temperature Sensor 3",
 						"nl": "Temperatuursensor 3"
 					}
+				},
+        "button.triggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Set callback URLs for triggers",
+						"nl": "Instellen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				},
+        "button.removetriggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Remove callback URLs for triggers",
+						"nl": "Verwijderen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
 				}
       },
       "pair": [
@@ -2201,6 +2237,35 @@
 							"nl": "Selecteer Shelly"
 						},
 						"filter": "driver_id=shelly1|shelly1pm&capabilities=measure_temperature.3"
+					}
+				]
+			},
+      {
+				"id": "triggerBtnAction",
+				"title": {
+					"en": "Button Action",
+					"nl": "Knop actie"
+				},
+        "tokens": [
+          {
+            "name": "action",
+            "type": "string",
+            "title": {
+              "en": "Action",
+              "nl": "Actie"
+            },
+            "example": "longpush"
+          }
+        ],
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly",
+							"nl": "Selecteer Shelly"
+						},
+						"filter": "driver_id=shelly1|shelly1pm&capabilities=button.triggers"
 					}
 				]
 			}

@@ -9,10 +9,19 @@ class Shelly1pmDevice extends Homey.Device {
     new Homey.FlowCardTriggerDevice('triggerShelly1Temperature1').register();
     new Homey.FlowCardTriggerDevice('triggerShelly1Temperature2').register();
     new Homey.FlowCardTriggerDevice('triggerShelly1Temperature3').register();
+    new Homey.FlowCardTriggerDevice('triggerBtnAction').register();
 
     var interval = this.getSetting('polling') || 5;
     this.pollDevice(interval);
     this.setAvailable();
+
+    // ADD MISSING CAPABILITIES
+    if (!this.hasCapability('button.triggers')) {
+      this.addCapability('button.triggers');
+    }
+    if (!this.hasCapability('button.removetriggers')) {
+      this.addCapability('button.removetriggers');
+    }
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
@@ -22,6 +31,50 @@ class Shelly1pmDevice extends Homey.Device {
         return util.sendCommand('/relay/0?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       }
     });
+
+    this.registerCapabilityListener('button.triggers', async () => {
+      var homeyip = await util.getHomeyIp();
+      var btn_on_url = '/settings/relay/0?btn_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/btn_on/';
+      var btn_off_url = '/settings/relay/0?btn_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/btn_off/';
+      var out_on_url = '/settings/relay/0?out_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/out_on/';
+      var out_off_url = '/settings/relay/0?out_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/out_off/';
+      var shortpush_url = '/settings/relay/0?shortpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/shortpush/';
+      var longpush_url = '/settings/relay/0?longpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/longpush/';
+
+      try {
+        await util.sendCommand(btn_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand(btn_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand(out_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand(out_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand(shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand(longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        return;
+      } catch (error) {
+        throw new Error(error);
+      }
+    });
+
+    this.registerCapabilityListener('button.removetriggers', async () => {
+      var btn_on_url = '/settings/relay/0?btn_on_url=null';
+      var btn_off_url = '/settings/relay/0?btn_off_url=null';
+      var out_on_url = '/settings/relay/0?out_on_url=null';
+      var out_off_url = '/settings/relay/0?out_off_url=null';
+      var shortpush_url = '/settings/relay/0?shortpush_url=null';
+      var longpush_url = '/settings/relay/0?longpush_url=null';
+
+      try {
+        await util.sendCommand(btn_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand(btn_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand(out_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand(out_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand(shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand(longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        return;
+      } catch (error) {
+        throw new Error(error);
+      }
+    });
+
   }
 
   onDeleted() {
@@ -134,6 +187,10 @@ class Shelly1pmDevice extends Homey.Device {
           this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
         })
     }, 63000);
+  }
+
+  triggerActions(action) {
+    return Homey.ManagerFlow.getCard('trigger', "triggerBtnAction").trigger(this, {"action": action}, {})
   }
 
 }

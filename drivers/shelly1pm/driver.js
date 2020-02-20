@@ -45,7 +45,7 @@ class Shelly1pmDriver extends Homey.Driver {
               password : '',
               polling  : 5
             },
-            capabilities: ["onoff", "measure_power", "meter_power_wmin", "meter_power", "measure_temperature"],
+            capabilities: ["onoff", "measure_power", "meter_power_wmin", "meter_power", "measure_temperature", "button.triggers", "button.removetriggers"],
             store: {
               type: result.type,
               outputs: result.num_outputs

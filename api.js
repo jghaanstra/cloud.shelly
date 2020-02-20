@@ -3,16 +3,17 @@ const util = require('/lib/util.js');
 
 module.exports = [
 	{
-		description: 'Shelly App API',
+		description: 'Shelly App API Action Callbacks',
 		method   : 'GET',
-		path     : '/shelly/:devicetype/:deviceid/:channel/:action',
+		path     : '/button_actions/:devicetype/:deviceid/:action',
 		public   : true,
 		fn: function(args, callback) {
-      console.log(args);
-
-      // todo: built logic to handle incoming updates once Shelly firmware actually supports this.
-
-      callback(false, 'OK');
+      (async () => {
+        let result = await Homey.ManagerDrivers.getDriver(args.params.devicetype).getDevice({'id': args.params.deviceid}).triggerActions(args.params.action);
+        callback(false, 'OK');
+      })().catch(err => {
+        callback(err, false);
+      });
 		}
 	}
 ]
