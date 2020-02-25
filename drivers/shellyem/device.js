@@ -6,6 +6,9 @@ const util = require('/lib/util.js');
 class ShellyEmDevice extends Homey.Device {
 
   onInit() {
+    new Homey.FlowCardTriggerDevice('triggerMeterPowerConsumed').register();
+    new Homey.FlowCardTriggerDevice('triggerMeterPowerReturned').register();
+
     var interval = this.getSetting('polling') || 5;
     this.pollDevice(interval);
     this.setAvailable();
@@ -64,11 +67,13 @@ class ShellyEmDevice extends Homey.Device {
           // capability meter_power_consumed
           if (total_consumed != this.getCapabilityValue('meter_power_consumed')) {
             this.setCapabilityValue('meter_power_consumed', total_consumed);
+            Homey.ManagerFlow.getCard('trigger', 'triggerMeterPowerConsumed').trigger(this, {'energy': total_consumed}, {})
           }
 
           // capability meter_power_returned
           if (total_returned != this.getCapabilityValue('meter_power_returned')) {
             this.setCapabilityValue('meter_power_returned', total_returned);
+            Homey.ManagerFlow.getCard('trigger', 'triggerMeterPowerReturned').trigger(this, {'energy': total_returned}, {})
           }
 
         })

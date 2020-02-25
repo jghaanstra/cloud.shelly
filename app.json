@@ -7,10 +7,10 @@
 		"nl": "Shelly"
 	},
 	"tags": {
-		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Humidity Temperature", "Shelly Door Window", "Shelly Dimmer" ],
-		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Luchtvochtigheid Temperatuur", "Shelly Deur Raam", "Shelly Dimmer" ]
+		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Humidity Temperature", "Shelly Door Window", "Shelly Dimmer" ],
+		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Luchtvochtigheid Temperatuur", "Shelly Deur Raam", "Shelly Dimmer" ]
 	},
-	"version": "1.16.3",
+	"version": "1.17.0",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -52,6 +52,7 @@
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/assets/reactive-power.svg",
       "units": {
         "en": "W",
@@ -67,6 +68,7 @@
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/assets/meter_power_consumed.svg",
       "units": {
         "en": "Wh",
@@ -82,6 +84,7 @@
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/assets/meter_power_returned.svg",
       "units": {
         "en": "Wh",
@@ -97,10 +100,27 @@
       "getable": true,
       "setable": false,
       "uiComponent": "sensor",
+      "insights": true,
       "icon": "/assets/meter_power_returned.svg",
       "units": {
         "en": "Wmin",
         "nl": "Wmin"
+      }
+    },
+    "meter_power_factor": {
+      "type": "number",
+      "title": {
+        "en": "Power Factor",
+        "nl": "Powerfactor"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/meter_power_returned.svg",
+      "units": {
+        "en": "Pf",
+        "nl": "Pf"
       }
     }
   },
@@ -290,6 +310,25 @@
             "match": {
               "type": "regex",
               "value": "^shellyem-"
+            }
+          }
+        ]
+      ]
+    },
+    "shelly3em": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shelly3em-"
             }
           }
         ]
@@ -1768,6 +1807,94 @@
 			]
 		},
     {
+			"id": "shelly3em",
+      "discovery": "shelly3em",
+			"name": {
+				"en": "Shelly 3EM",
+				"nl": "Shelly 3EM"
+			},
+			"images": {
+				"large": "drivers/shelly3em/assets/images/large.jpg",
+				"small": "drivers/shelly3em/assets/images/small.jpg"
+			},
+			"class": "socket",
+			"capabilities": [
+				"onoff",
+				"measure_power",
+        "meter_power_factor",
+        "measure_current",
+        "measure_voltage",
+        "meter_power_consumed",
+        "meter_power_returned"
+			],
+      "energy": {
+        "cumulative": true
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly 3EM settings",
+						"nl": "Shelly 3EM instellingen"
+					},
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+						{
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
+							}
+						}
+					]
+				}
+			]
+		},
+    {
 			"id": "shellyht",
       "discovery": "shellyht",
 			"name": {
@@ -2237,6 +2364,64 @@
 							"nl": "Selecteer Shelly"
 						},
 						"filter": "driver_id=shelly1|shelly1pm&capabilities=measure_temperature.3"
+					}
+				]
+			},
+      {
+				"id": "triggerMeterPowerConsumed",
+				"title": {
+					"en": "Total Consumed Energy changed",
+					"nl": "Totaal verbruikte energie gewijzigd"
+				},
+        "tokens": [
+          {
+            "name": "energy",
+            "type": "number",
+            "title": {
+              "en": "Energy",
+              "nl": "Energie"
+            },
+            "example": 5
+          }
+        ],
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly",
+							"nl": "Selecteer Shelly"
+						},
+						"filter": "driver_id=shellyem|shelly3em&capabilities=meter_power_consumed"
+					}
+				]
+			},
+      {
+				"id": "triggerMeterPowerReturned",
+				"title": {
+          "en": "Total Returned Energy changed",
+          "nl": "Totaal geretourneerde energie gewijzigd"
+				},
+        "tokens": [
+          {
+            "name": "energy",
+            "type": "number",
+            "title": {
+              "en": "Energy",
+              "nl": "Energie"
+            },
+            "example": 5
+          }
+        ],
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly",
+							"nl": "Selecteer Shelly"
+						},
+						"filter": "driver_id=shellyem|shelly3em&capabilities=meter_power_returned"
 					}
 				]
 			},
