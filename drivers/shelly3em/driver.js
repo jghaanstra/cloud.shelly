@@ -192,6 +192,7 @@ class Shelly3EmDriver extends Homey.Driver {
                 // capability meter_power_factor
                 if (temp_devices[added_devices[key].getData().id].meter_power_factor != added_devices[key].getCapabilityValue('meter_power_factor')) {
                   added_devices[key].setCapabilityValue('meter_power_factor', temp_devices[added_devices[key].getData().id].meter_power_factor);
+                  Homey.ManagerFlow.getCard('trigger', 'triggerMeterPowerFactor').trigger(added_devices[key].getData(), {'pf': temp_devices[added_devices[key].getData().id].meter_power_factor}, {});
                 }
                 // capability measure_current
                 if (temp_devices[added_devices[key].getData().id].measure_current != added_devices[key].getCapabilityValue('measure_current')) {

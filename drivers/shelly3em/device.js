@@ -8,6 +8,7 @@ class Shelly3EmDevice extends Homey.Device {
   onInit() {
     new Homey.FlowCardTriggerDevice('triggerMeterPowerConsumed').register();
     new Homey.FlowCardTriggerDevice('triggerMeterPowerReturned').register();
+    new Homey.FlowCardTriggerDevice('triggerMeterPowerFactor').register();
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
@@ -17,11 +18,6 @@ class Shelly3EmDevice extends Homey.Device {
         return util.sendCommand('/relay/0?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       }
     });
-  }
-
-  onDeleted() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
   }
 
 }

@@ -2378,8 +2378,8 @@
             "name": "energy",
             "type": "number",
             "title": {
-              "en": "Energy",
-              "nl": "Energie"
+              "en": "Wh",
+              "nl": "Wh"
             },
             "example": 5
           }
@@ -2407,8 +2407,8 @@
             "name": "energy",
             "type": "number",
             "title": {
-              "en": "Energy",
-              "nl": "Energie"
+              "en": "Wh",
+              "nl": "Wh"
             },
             "example": 5
           }
@@ -2422,6 +2422,64 @@
 							"nl": "Selecteer Shelly"
 						},
 						"filter": "driver_id=shellyem|shelly3em&capabilities=meter_power_returned"
+					}
+				]
+			},
+      {
+				"id": "triggerMeterPowerFactor",
+				"title": {
+          "en": "Power Factor changed",
+          "nl": "Powerfactor gewijzigd"
+				},
+        "tokens": [
+          {
+            "name": "pf",
+            "type": "number",
+            "title": {
+              "en": "Pf",
+              "nl": "Pf"
+            },
+            "example": 5
+          }
+        ],
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly",
+							"nl": "Selecteer Shelly"
+						},
+						"filter": "driver_id=shelly3em&capabilities=meter_power_factor"
+					}
+				]
+			},
+      {
+				"id": "triggerReactivePower",
+				"title": {
+          "en": "Reactive Power changed",
+          "nl": "Blind vermogen gewijzigd"
+				},
+        "tokens": [
+          {
+            "name": "energy",
+            "type": "number",
+            "title": {
+              "en": "W",
+              "nl": "W"
+            },
+            "example": 5
+          }
+        ],
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly",
+							"nl": "Selecteer Shelly"
+						},
+						"filter": "driver_id=shellyem&capabilities=reactive_power"
 					}
 				]
 			},
