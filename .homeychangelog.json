@@ -28,5 +28,8 @@
   },
   "1.17.0": {
     "en": "BREAKING CHANGES SHELLY EM: the Shelly EM driver has been refactored to avoid double polling. This breaks the current support for these devices and requires you to re-pair your Shelly EM. Sorry for the inconvenience. Als support for the new Shelly 3EM has been added with the release."
+  },
+  "1.17.1": {
+    "en": "Small fix for discovery of Shelly 3EM."
   }
 }
