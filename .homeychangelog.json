@@ -31,5 +31,8 @@
   },
   "1.17.1": {
     "en": "Small fix for discovery of Shelly 3EM."
+  },
+  "1.17.2": {
+    "en": "BREAKING CHANGES Shelly 2.5 Relay: The Shelly 2.5 Relay driver has been refactored to avoid double polling. This breaks the current support for these devices and requires you to re-pair your device. Sorry for the inconvenience. Also other small fixes and improvements."
   }
 }
