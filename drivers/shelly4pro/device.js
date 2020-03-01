@@ -21,6 +21,10 @@ class Shelly4ProDevice extends Homey.Device {
 
   }
 
+  onDeleted() {
+    return Homey.ManagerDrivers.getDriver('shelly4pro').loadDevices();
+  }
+
 }
 
 module.exports = Shelly4ProDevice;

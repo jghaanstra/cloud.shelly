@@ -75,6 +75,7 @@ class ShellyEmDriver extends Homey.Driver {
     });
 
     socket.on('add_device', (data, callback) => {
+      this.loadDevices();
       this.pollDevices(5);
       callback(false, deviceArray);
     });
@@ -160,7 +161,7 @@ class ShellyEmDriver extends Homey.Driver {
               if (temp_devices[added_devices[key].getData().id].online == true) {
 
                 if (!added_devices[key].getAvailable()) {
-                  added_devices[key].setAvailable()
+                  added_devices[key].setAvailable();
                 }
 
                 // capability onoff

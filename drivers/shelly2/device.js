@@ -21,10 +21,6 @@ class Shelly2Device extends Homey.Device {
 
   }
 
-  onAdded() {
-    return Homey.ManagerDrivers.getDriver('shelly2').loadDevices();
-  }
-
   onDeleted() {
     return Homey.ManagerDrivers.getDriver('shelly2').loadDevices();
   }

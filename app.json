@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Humidity Temperature", "Shelly Door Window", "Shelly Dimmer" ],
 		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Luchtvochtigheid Temperatuur", "Shelly Deur Raam", "Shelly Dimmer" ]
 	},
-	"version": "1.17.1",
+	"version": "1.17.2",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -2451,6 +2451,35 @@
 							"nl": "Selecteer Shelly"
 						},
 						"filter": "driver_id=shelly3em&capabilities=meter_power_factor"
+					}
+				]
+			},
+      {
+				"id": "triggerMeterPowerWmin",
+				"title": {
+          "en": "Total consumed energy in Wmin changed",
+          "nl": "Totaal verbruikte energie in Wmin gewijzigd"
+				},
+        "tokens": [
+          {
+            "name": "wmin",
+            "type": "number",
+            "title": {
+              "en": "Wmin",
+              "nl": "Wmin"
+            },
+            "example": 5
+          }
+        ],
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly",
+							"nl": "Selecteer Shelly"
+						},
+						"filter": "driver_id=shelly25&capabilities=meter_power_wmin"
 					}
 				]
 			},

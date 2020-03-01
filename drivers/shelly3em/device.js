@@ -12,12 +12,17 @@ class Shelly3EmDevice extends Homey.Device {
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
+      Homey.ManagerDrivers.getDriver('shelly3em').updateTempDevices(this.getData().id, 'onoff', value);
       if (value) {
         return util.sendCommand('/relay/0?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       } else {
         return util.sendCommand('/relay/0?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       }
     });
+  }
+
+  onDeleted() {
+    return Homey.ManagerDrivers.getDriver('shelly3em').loadDevices();
   }
 
 }
