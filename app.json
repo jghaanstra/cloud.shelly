@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Humidity Temperature", "Shelly Door Window", "Shelly Dimmer" ],
 		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Luchtvochtigheid Temperatuur", "Shelly Deur Raam", "Shelly Dimmer" ]
 	},
-	"version": "1.17.2",
+	"version": "1.17.3",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -1376,8 +1376,18 @@
 				"light_temperature",
 				"light_hue",
 				"light_saturation",
-				"measure_power"
+				"measure_power",
+        "light_mode",
+        "onoff.whitemode"
 			],
+      "capabilitiesOptions": {
+				"onoff.whitemode": {
+					"title": {
+						"en": "Toggle white mode",
+						"nl": "Wit modus schakelen"
+					}
+				}
+      },
       "pair": [
         {
           "id": "list_devices",
@@ -2107,7 +2117,9 @@
         "measure_power",
         "meter_power_wmin",
         "meter_power",
-        "measure_temperature"
+        "measure_temperature",
+        "onoff.input1",
+        "onoff.input2"
 			],
       "pair": [
         {
@@ -2540,7 +2552,81 @@
 						"filter": "driver_id=shelly1|shelly1pm&capabilities=button.triggers"
 					}
 				]
+			},
+      {
+				"id": "triggerDimmerInput1",
+				"title": {
+					"en": "Switch 1 changed",
+					"nl": "Schakelaar 1 gewijzigd"
+				},
+        "tokens": [
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "nl": "Status"
+            },
+            "example": "On"
+          }
+        ],
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly",
+							"nl": "Selecteer Shelly"
+						},
+						"filter": "driver_id=shellydimmer"
+					}
+				]
+			},
+      {
+				"id": "triggerDimmerInput2",
+				"title": {
+					"en": "Switch 2 changed",
+					"nl": "Schakelaar 2 gewijzigd"
+				},
+        "tokens": [
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "nl": "Status"
+            },
+            "example": "On"
+          }
+        ],
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly",
+							"nl": "Selecteer Shelly"
+						},
+						"filter": "driver_id=shellydimmer"
+					}
+				]
 			}
+    ],
+    "conditions": [
+      {
+        "id": "conditionDimmerInput1",
+        "title": {
+          "en": "Switch 1 !{{is|isn't}} on",
+          "nl": "Schakelaar 1 !{{is|is niet}} aan"
+        }
+      },
+      {
+        "id": "conditionDimmerInput2",
+        "title": {
+          "en": "Switch 2 !{{is|isn't}} on",
+          "nl": "Schakelaar 2 !{{is|is niet}} aan"
+        }
+      }
     ],
 		"actions": [
 			{
@@ -2963,7 +3049,43 @@
 						"filter": "driver_id=shellyrgbw2color"
 					}
 				]
-			}
+			},
+			{
+				"id": "actionRGBW2EnableWhiteMode",
+				"title": {
+					"en": "Enable white mode",
+					"nl": "Inschakelen wit modus"
+				},
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly RGBW2 Color",
+							"nl": "Selecteer Shelly RGBW2 Color"
+						},
+						"filter": "driver_id=shellyrgbw2color"
+					}
+        ]
+      },
+			{
+				"id": "actionRGBW2DisableWhiteMode",
+				"title": {
+					"en": "Disable white mode",
+					"nl": "Uitschakelen wit modus"
+				},
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly RGBW2 Color",
+							"nl": "Selecteer Shelly RGBW2 Color"
+						},
+						"filter": "driver_id=shellyrgbw2color"
+					}
+        ]
+      }
 		]
 	}
 }

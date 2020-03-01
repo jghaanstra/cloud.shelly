@@ -6,6 +6,9 @@ const util = require('/lib/util.js');
 class ShellyDimmerDevice extends Homey.Device {
 
   onInit() {
+    new Homey.FlowCardTriggerDevice('triggerDimmerInput1').register();
+    new Homey.FlowCardTriggerDevice('triggerDimmerInput2').register();
+
     var interval = this.getSetting('polling') || 5;
     this.pollDevice(interval);
     this.setAvailable();
@@ -47,6 +50,8 @@ class ShellyDimmerDevice extends Homey.Device {
           let meter_power = total_consumption * 0.000017;
           let dim = Number(result.lights[0].brightness) / 100;
           let temperature = result.tmp.tC;
+          let input1 = result.inputs[0].input == 1 ? true : false;
+          let input2 = result.inputs[1].input == 1 ? true : false;
 
           // capability onoff
           if (state != this.getCapabilityValue('onoff')) {
@@ -76,6 +81,20 @@ class ShellyDimmerDevice extends Homey.Device {
           // capability measure_temperature
           if (temperature != this.getCapabilityValue('measure_temperature')) {
             this.setCapabilityValue('measure_temperature', temperature);
+          }
+
+          // capability onoff.input1
+          if (input1 != this.getCapabilityValue('onoff.input1')) {
+            this.setCapabilityValue('onoff.input1', input1);
+            var status = input1 == true ? "On" : "Off";
+            Homey.ManagerFlow.getCard('trigger', 'triggerDimmerInput1').trigger(this.getData(), {'status': status}, {});
+          }
+
+          // capability onoff.input2
+          if (input2 != this.getCapabilityValue('onoff.input2')) {
+            this.setCapabilityValue('onoff.input2', input2);
+            var status = input2 == true ? "On" : "Off";
+            Homey.ManagerFlow.getCard('trigger', 'triggerDimmerInput2').trigger(this.getData(), {'status': status}, {});
           }
 
         })

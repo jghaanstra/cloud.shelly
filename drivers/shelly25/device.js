@@ -8,6 +8,8 @@ class Shelly25Device extends Homey.Device {
   onInit() {
     new Homey.FlowCardTriggerDevice('triggerMeterPowerFactor').register();
 
+    this.setAvailable();
+
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
       Homey.ManagerDrivers.getDriver('shelly25').updateTempDevices(this.getData().id, 'onoff', value);

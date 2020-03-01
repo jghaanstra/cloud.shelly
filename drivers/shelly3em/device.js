@@ -10,6 +10,8 @@ class Shelly3EmDevice extends Homey.Device {
     new Homey.FlowCardTriggerDevice('triggerMeterPowerReturned').register();
     new Homey.FlowCardTriggerDevice('triggerMeterPowerFactor').register();
 
+    this.setAvailable();
+
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
       Homey.ManagerDrivers.getDriver('shelly3em').updateTempDevices(this.getData().id, 'onoff', value);

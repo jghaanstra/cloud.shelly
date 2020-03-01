@@ -2,8 +2,15 @@
 
 const Homey = require('homey');
 const util = require('/lib/util.js');
+var added_devices = {};
+var temp_devices = {};
 
 class ShellyRGBW2WhiteDriver extends Homey.Driver {
+
+  onInit() {
+    this.loadDevices();
+    this.pollDevices(5);
+  }
 
   onPair(socket) {
     const discoveryStrategy = this.getDiscoveryStrategy();
@@ -68,9 +75,151 @@ class ShellyRGBW2WhiteDriver extends Homey.Driver {
     });
 
     socket.on('add_device', (data, callback) => {
+      this.loadDevices();
+      this.pollDevices(5);
       callback(false, deviceArray);
     });
 
+  }
+
+  // HELPER FUNCTIONS
+  loadDevices() {
+    added_devices = Homey.ManagerDrivers.getDriver('shellyrgbw2white').getDevices();
+    this.updateDevices(2);
+    return true;
+  }
+
+  pollDevices(interval) {
+    clearInterval(this.pollingInterval);
+
+    this.pollingInterval = setInterval(() => {
+
+      try {
+        if (added_devices.length > 0) {
+          Object.keys(added_devices).forEach((key) => {
+
+            if (added_devices[key].getStoreValue("channel") == 0) {
+              var device0_id = added_devices[key].getData().id
+              var device1_id = added_devices[key].getStoreValue('main_device') + "-channel-1";
+              var device2_id = added_devices[key].getStoreValue('main_device') + "-channel-2";
+              var device3_id = added_devices[key].getStoreValue('main_device') + "-channel-3";
+
+              util.sendCommand('/status', added_devices[key].getSetting('address'), added_devices[key].getSetting('username'), added_devices[key].getSetting('password'))
+                .then(result => {
+
+                  var dim0 = result.lights[0].brightness > 100 ? 1 : result.lights[0].brightness / 100;
+                  var dim1 = result.lights[1].brightness > 100 ? 1 : result.lights[1].brightness / 100;
+                  var dim2 = result.lights[2].brightness > 100 ? 1 : result.lights[2].brightness / 100;
+                  var dim3 = result.lights[3].brightness > 100 ? 1 : result.lights[3].brightness / 100;
+
+                  temp_devices[device0_id] = {
+                    id: device0_id,
+                    onoff: result.relays[0].ison,
+                    dim: dim0,
+                    measure_power: result.meters[0].power,
+                    online: true
+                  }
+
+                  temp_devices[device1_id] = {
+                    id: device1_id,
+                    onoff: result.relays[1].ison,
+                    dim: dim1,
+                    measure_power: result.meters[1].power,
+                    online: true
+                  }
+
+                  temp_devices[device2_id] = {
+                    id: device1_id,
+                    onoff: result.relays[2].ison,
+                    dim: dim2,
+                    measure_power: result.meters[2].power,
+                    online: true
+                  }
+
+                  temp_devices[device3_id] = {
+                    id: device1_id,
+                    onoff: result.relays[3].ison,
+                    dim: dim3,
+                    measure_power: result.meters[3].power,
+                    online: true
+                  }
+                })
+                .catch(error => {
+                  this.log(error);
+                  if (temp_devices.length > 0) {
+                    if (temp_devices[device0_id].online == true) {
+                      temp_devices[device0_id].online = false;
+                    }
+                    if (temp_devices[device1_id].online == true) {
+                      temp_devices[device1_id].online = false;
+                    }
+                    if (temp_devices[device2_id].online == true) {
+                      temp_devices[device2_id].online = false;
+                    }
+                    if (temp_devices[device3_id].online == true) {
+                      temp_devices[device3_id].online = false;
+                    }
+                  }
+                })
+            }
+
+          });
+
+        } else {
+          clearInterval(this.pollingInterval);
+        }
+
+      } catch (error) {
+        this.log(error);
+      }
+    }, 1000 * interval);
+  }
+
+  updateDevices(interval) {
+    clearInterval(this.updateInterval);
+    this.updateInterval = setInterval(() => {
+      try {
+        if (added_devices.length > 0) {
+          Object.keys(added_devices).forEach((key) => {
+            if (temp_devices.hasOwnProperty(added_devices[key].getData().id)) {
+              if (temp_devices[added_devices[key].getData().id].online == true) {
+
+                if (!added_devices[key].getAvailable()) {
+                  added_devices[key].setAvailable();
+                }
+
+                // capability onoff
+                if (temp_devices[added_devices[key].getData().id].onoff != added_devices[key].getCapabilityValue('onoff')) {
+                  added_devices[key].setCapabilityValue('onoff', temp_devices[added_devices[key].getData().id].onoff);
+                }
+                // capability dim
+                if (temp_devices[added_devices[key].getData().id].dim != added_devices[key].getCapabilityValue('dim')) {
+                  added_devices[key].setCapabilityValue('dim', temp_devices[added_devices[key].getData().id].dim);
+                }
+                // capability measure_power
+                if (temp_devices[added_devices[key].getData().id].measure_power != added_devices[key].getCapabilityValue('measure_power')) {
+                  added_devices[key].setCapabilityValue('measure_power', temp_devices[added_devices[key].getData().id].measure_power);
+                }
+              } else {
+                added_devices[key].setUnavailable(Homey.__('Unreachable'));
+              }
+
+            }
+          });
+        } else {
+          clearInterval(this.updateInterval);
+        }
+      } catch (error) {
+        this.log(error);
+      }
+
+    }, 1000 * interval);
+  }
+
+  updateTempDevices(device_id, capability, state) {
+    if (temp_devices.hasOwnProperty(device_id)) {
+      temp_devices[device_id][capability] = state;
+    }
   }
 
 }

@@ -6,36 +6,35 @@
     	});
     } else {
       var i;
-      for (i = 0; i < 4; i++) {
+      for (i = 0; i < 5; i++) {
         var deviceid = i + 1;
-
-  			Homey.addDevice({
-  				name: 'Shelly RGBW2 White Channel ' + deviceid,
-  				data: {
-            id: result.data.id + '-channel-' + i
-          },
-  				settings: {
-            address  : result.settings.address,
-            username : result.settings.username,
-            password : result.settings.password,
-            polling  : 5
-          },
-          store: {
-            channel: i,
-            type: result.store.type,
-            outputs: result.store.outputs
-          }
-  			}, function(error, result ) {
-  				if (error) {
-            Homey.alert(error, null, function() {
-              Homey.done()
-          	});
-  				} else {
-            if (i === 3) {
-              Homey.done();
+        if (i < 4) {
+    			Homey.createDevice({
+    				name: 'Shelly RGBW2 White ' + deviceid,
+    				data: {
+              id: result.data.id + '-channel-' + i
+            },
+    				settings: {
+              address  : result.settings.address,
+              username : result.settings.username,
+              password : result.settings.password
+            },
+            store: {
+              main_device: result.data.id,
+              channel: i,
+              type: result.store.type,
+              outputs: result.store.outputs
             }
-          }
-  			})
+    			}, function(error, result ) {
+    				if (error) {
+              Homey.alert(error, null, function() {
+                Homey.done();
+            	});
+    				}
+    			})
+        } else {
+          Homey.done();
+        }
   		}
     }
   })

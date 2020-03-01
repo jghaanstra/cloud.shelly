@@ -63,6 +63,30 @@ class ShellyApp extends Homey.App {
         return util.sendCommand('/color/0?turn=on&effect='+ Number(args.effect) +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
 
+    // SHELLY DIMMER
+    new Homey.FlowCardCondition('conditionDimmerInput1')
+      .register()
+      .registerRunListener((args, state) => {
+        return args.device.getCapability("onoff.input1");
+      })
+
+    new Homey.FlowCardCondition('conditionDimmerInput2')
+      .register()
+      .registerRunListener((args, state) => {
+        return args.device.getCapability("onoff.input2");
+      })
+
+    new Homey.FlowCardAction('actionRGBW2EnableWhiteMode')
+      .register()
+      .registerRunListener((args, state) => {
+        return args.device.triggerCapabilityListener("onoff.whitemode", true);
+      })
+    new Homey.FlowCardAction('actionRGBW2DisableWhiteMode')
+      .register()
+      .registerRunListener((args, state) => {
+        return args.device.triggerCapabilityListener("onoff.whitemode", false);
+      })
+
   }
 
 }

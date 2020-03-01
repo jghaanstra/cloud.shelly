@@ -141,17 +141,19 @@ class Shelly4ProDriver extends Homey.Driver {
                 })
                 .catch(error => {
                   this.log(error);
-                  if (temp_devices[device0_id].online == true) {
-                    temp_devices[device0_id].online = false;
-                  }
-                  if (temp_devices[device1_id].online == true) {
-                    temp_devices[device1_id].online = false;
-                  }
-                  if (temp_devices[device2_id].online == true) {
-                    temp_devices[device2_id].online = false;
-                  }
-                  if (temp_devices[device3_id].online == true) {
-                    temp_devices[device3_id].online = false;
+                  if (temp_devices.length > 0) {
+                    if (temp_devices[device0_id].online == true) {
+                      temp_devices[device0_id].online = false;
+                    }
+                    if (temp_devices[device1_id].online == true) {
+                      temp_devices[device1_id].online = false;
+                    }
+                    if (temp_devices[device2_id].online == true) {
+                      temp_devices[device2_id].online = false;
+                    }
+                    if (temp_devices[device3_id].online == true) {
+                      temp_devices[device3_id].online = false;
+                    }
                   }
                 })
             }
@@ -210,7 +212,9 @@ class Shelly4ProDriver extends Homey.Driver {
   }
 
   updateTempDevices(device_id, capability, state) {
-    temp_devices[device_id][capability] = state;
+    if (temp_devices.hasOwnProperty(device_id)) {
+      temp_devices[device_id][capability] = state;
+    }
   }
 
 }
