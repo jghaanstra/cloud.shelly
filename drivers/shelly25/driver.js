@@ -178,7 +178,7 @@ class Shelly25Driver extends Homey.Driver {
                 // capability meter_power_wmin
                 if (temp_devices[added_devices[key].getData().id].meter_power_wmin != added_devices[key].getCapabilityValue('meter_power_wmin')) {
                   added_devices[key].setCapabilityValue('meter_power_wmin', temp_devices[added_devices[key].getData().id].meter_power_wmin);
-                  Homey.ManagerFlow.getCard('trigger', 'triggerMeterPowerWmin').trigger(added_devices[key].getData(), {'wmin': temp_devices[added_devices[key].getData().id].meter_power_wmin}, {});
+                  Homey.ManagerFlow.getCard('trigger', 'triggerMeterPowerWmin').trigger(added_devices[key], {'wmin': temp_devices[added_devices[key].getData().id].meter_power_wmin}, {});
                 }
                 // capability measure_temperature
                 if (temp_devices[added_devices[key].getData().id].measure_temperature != added_devices[key].getCapabilityValue('measure_temperature')) {

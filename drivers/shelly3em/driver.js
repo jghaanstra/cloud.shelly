@@ -195,7 +195,7 @@ class Shelly3EmDriver extends Homey.Driver {
                 // capability meter_power_factor
                 if (temp_devices[added_devices[key].getData().id].meter_power_factor != added_devices[key].getCapabilityValue('meter_power_factor')) {
                   added_devices[key].setCapabilityValue('meter_power_factor', temp_devices[added_devices[key].getData().id].meter_power_factor);
-                  Homey.ManagerFlow.getCard('trigger', 'triggerMeterPowerFactor').trigger(added_devices[key].getData(), {'pf': temp_devices[added_devices[key].getData().id].meter_power_factor}, {});
+                  Homey.ManagerFlow.getCard('trigger', 'triggerMeterPowerFactor').trigger(added_devices[key], {'pf': temp_devices[added_devices[key].getData().id].meter_power_factor}, {});
                 }
                 // capability measure_current
                 if (temp_devices[added_devices[key].getData().id].measure_current != added_devices[key].getCapabilityValue('measure_current')) {
@@ -208,12 +208,12 @@ class Shelly3EmDriver extends Homey.Driver {
                 // capability meter_power_consumed
                 if (temp_devices[added_devices[key].getData().id].meter_power_consumed != added_devices[key].getCapabilityValue('meter_power_consumed')) {
                   added_devices[key].setCapabilityValue('meter_power_consumed', temp_devices[added_devices[key].getData().id].meter_power_consumed);
-                  Homey.ManagerFlow.getCard('trigger', 'triggerMeterPowerConsumed').trigger(added_devices[key].getData(), {'energy': temp_devices[added_devices[key].getData().id].meter_power_consumed}, {});
+                  Homey.ManagerFlow.getCard('trigger', 'triggerMeterPowerConsumed').trigger(added_devices[key], {'energy': temp_devices[added_devices[key].getData().id].meter_power_consumed}, {});
                 }
                 // capability meter_power_returned
                 if (temp_devices[added_devices[key].getData().id].meter_power_returned != added_devices[key].getCapabilityValue('meter_power_returned')) {
                   added_devices[key].setCapabilityValue('meter_power_returned', temp_devices[added_devices[key].getData().id].meter_power_returned);
-                  Homey.ManagerFlow.getCard('trigger', 'triggerMeterPowerReturned').trigger(added_devices[key].getData(), {'energy': temp_devices[added_devices[key].getData().id].meter_power_returned}, {});
+                  Homey.ManagerFlow.getCard('trigger', 'triggerMeterPowerReturned').trigger(added_devices[key], {'energy': temp_devices[added_devices[key].getData().id].meter_power_returned}, {});
                 }
               } else {
                 added_devices[key].setUnavailable(Homey.__('Unreachable'));

@@ -87,14 +87,14 @@ class ShellyDimmerDevice extends Homey.Device {
           if (input1 != this.getCapabilityValue('onoff.input1')) {
             this.setCapabilityValue('onoff.input1', input1);
             var status = input1 == true ? "On" : "Off";
-            Homey.ManagerFlow.getCard('trigger', 'triggerDimmerInput1').trigger(this.getData(), {'status': status}, {});
+            Homey.ManagerFlow.getCard('trigger', 'triggerDimmerInput1').trigger(this, {'status': status}, {});
           }
 
           // capability onoff.input2
           if (input2 != this.getCapabilityValue('onoff.input2')) {
             this.setCapabilityValue('onoff.input2', input2);
             var status = input2 == true ? "On" : "Off";
-            Homey.ManagerFlow.getCard('trigger', 'triggerDimmerInput2').trigger(this.getData(), {'status': status}, {});
+            Homey.ManagerFlow.getCard('trigger', 'triggerDimmerInput2').trigger(this, {'status': status}, {});
           }
 
         })

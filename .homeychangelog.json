@@ -37,5 +37,8 @@
   },
   "1.17.3": {
     "en": "BREAKING CHANGES RGBW2 4xWHITE: The RGBW2 4xWhite driver has been refactored to avoid double polling. This breaks the current support for these devices and requires you to re-pair your device. Sorry for the inconvenience. Added a toggle button for the RGBW2 Color to switch between white and color mode. Added trigger cards for the Shelly Dimmer to trigger flows based on input 1 and 2."
+  },
+  "1.17.4": {
+    "en": "Fixes for trigger cards that may also cause some devices to appear as offline (like the Shelly Dimmer)."
   }
 }
