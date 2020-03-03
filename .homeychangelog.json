@@ -40,5 +40,8 @@
   },
   "1.17.4": {
     "en": "Fixes for trigger cards that may also cause some devices to appear as offline (like the Shelly Dimmer)."
+  },
+  "1.17.5": {
+    "en": "Fixes for trigger cards and missing capabilities for paired devices that may cause some devices to appear as offline (like the Shelly Dimmer)."
   }
 }

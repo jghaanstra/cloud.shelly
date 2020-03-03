@@ -13,6 +13,14 @@ class ShellyDimmerDevice extends Homey.Device {
     this.pollDevice(interval);
     this.setAvailable();
 
+    // ADD MISSING CAPABILITIES
+    if (!this.hasCapability("onoff.input1")) {
+      this.addCapability("onoff.input1");
+    }
+    if (!this.hasCapability("onoff.input2")) {
+      this.addCapability("onoff.input2");
+    }
+
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
       if (value) {
