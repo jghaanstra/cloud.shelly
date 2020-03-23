@@ -43,5 +43,8 @@
   },
   "1.17.5": {
     "en": "Fixes for trigger cards and missing capabilities for paired devices that may cause some devices to appear as offline (like the Shelly Dimmer)."
+  },
+  "1.17.6": {
+    "en": "Fix issue with incorrect readings for meter_power and meter_power_wmin capabilities for Shelly 2.5"
   }
 }

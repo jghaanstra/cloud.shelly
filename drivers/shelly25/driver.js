@@ -109,8 +109,8 @@ class Shelly25Driver extends Homey.Driver {
                     id: device0_id,
                     onoff: result.relays[0].ison,
                     measure_power: result.meters[0].power,
-                    meter_power: result.meters[0].total,
-                    meter_power_wmin: result.meters[0].total * 0.000017,
+                    meter_power: result.meters[0].total * 0.000017,
+                    meter_power_wmin: result.meters[0].total,
                     measure_temperature: result.temperature,
                     online: true
                   }
@@ -119,8 +119,8 @@ class Shelly25Driver extends Homey.Driver {
                     id: device1_id,
                     onoff: result.relays[1].ison,
                     measure_power: result.meters[1].power,
-                    meter_power: result.meters[1].total,
-                    meter_power_wmin: result.meters[1].total * 0.000017,
+                    meter_power: result.meters[1].total * 0.000017,
+                    meter_power_wmin: result.meters[1].total,
                     measure_temperature: result.temperature,
                     online: true
                   }
