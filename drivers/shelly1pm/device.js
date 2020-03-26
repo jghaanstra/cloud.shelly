@@ -34,12 +34,12 @@ class Shelly1pmDevice extends Homey.Device {
 
     this.registerCapabilityListener('button.triggers', async () => {
       var homeyip = await util.getHomeyIp();
-      var btn_on_url = '/settings/relay/0?btn_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/btn_on/';
-      var btn_off_url = '/settings/relay/0?btn_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/btn_off/';
-      var out_on_url = '/settings/relay/0?out_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/out_on/';
-      var out_off_url = '/settings/relay/0?out_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/out_off/';
-      var shortpush_url = '/settings/relay/0?shortpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/shortpush/';
-      var longpush_url = '/settings/relay/0?longpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/longpush/';
+      var btn_on_url = '/settings/relay/0?btn_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1pm/'+ this.getData().id +'/btn_on/';
+      var btn_off_url = '/settings/relay/0?btn_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1pm/'+ this.getData().id +'/btn_off/';
+      var out_on_url = '/settings/relay/0?out_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1pm/'+ this.getData().id +'/out_on/';
+      var out_off_url = '/settings/relay/0?out_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1pm/'+ this.getData().id +'/out_off/';
+      var shortpush_url = '/settings/relay/0?shortpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1pm/'+ this.getData().id +'/shortpush/';
+      var longpush_url = '/settings/relay/0?longpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1pm/'+ this.getData().id +'/longpush/';
 
       try {
         await util.sendCommand(btn_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));

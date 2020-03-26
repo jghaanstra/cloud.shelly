@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Humidity Temperature", "Shelly Door Window", "Shelly Dimmer" ],
 		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Luchtvochtigheid Temperatuur", "Shelly Deur Raam", "Shelly Dimmer" ]
 	},
-	"version": "1.17.6",
+	"version": "1.17.7",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -710,8 +710,34 @@
 				"onoff",
 				"measure_power",
         "meter_power",
-        "measure_voltage"
+        "measure_voltage",
+        "button.triggers",
+        "button.removetriggers"
 			],
+      "capabilitiesOptions": {
+        "button.triggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Set callback URLs for triggers",
+						"nl": "Instellen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				},
+        "button.removetriggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Remove callback URLs for triggers",
+						"nl": "Verwijderen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				}
+      },
       "pair": [
         {
           "id": "list_devices",
@@ -994,8 +1020,34 @@
 				"measure_power",
         "meter_power_wmin",
         "meter_power",
-        "measure_temperature"
+        "measure_temperature",
+        "button.triggers",
+        "button.removetriggers"
 			],
+      "capabilitiesOptions": {
+        "button.triggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Set callback URLs for triggers",
+						"nl": "Instellen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				},
+        "button.removetriggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Remove callback URLs for triggers",
+						"nl": "Verwijderen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				}
+      },
       "pair": [
         {
           "id": "list_devices",
@@ -1089,8 +1141,34 @@
 				"onoff",
 				"measure_power",
         "meter_power_wmin",
-        "meter_power"
+        "meter_power",
+        "button.triggers",
+        "button.removetriggers"
 			],
+      "capabilitiesOptions": {
+        "button.triggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Set callback URLs for triggers",
+						"nl": "Instellen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				},
+        "button.removetriggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Remove callback URLs for triggers",
+						"nl": "Verwijderen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				}
+      },
       "pair": [
         {
           "id": "list_devices",
@@ -1185,8 +1263,34 @@
 				"measure_power",
         "meter_power_wmin",
         "meter_power",
-        "measure_temperature"
+        "measure_temperature",
+        "button.triggers",
+        "button.removetriggers"
 			],
+      "capabilitiesOptions": {
+        "button.triggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Set callback URLs for triggers",
+						"nl": "Instellen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				},
+        "button.removetriggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Remove callback URLs for triggers",
+						"nl": "Verwijderen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				}
+      },
       "pair": [
         {
           "id": "list_devices",
@@ -1747,8 +1851,34 @@
         "reactive_power",
         "measure_voltage",
         "meter_power_consumed",
-        "meter_power_returned"
+        "meter_power_returned",
+        "button.triggers",
+        "button.removetriggers"
 			],
+      "capabilitiesOptions": {
+        "button.triggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Set callback URLs for triggers",
+						"nl": "Instellen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				},
+        "button.removetriggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Remove callback URLs for triggers",
+						"nl": "Verwijderen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				}
+      },
       "energy": {
         "cumulative": true
       },
@@ -1835,8 +1965,34 @@
         "measure_current",
         "measure_voltage",
         "meter_power_consumed",
-        "meter_power_returned"
+        "meter_power_returned",
+        "button.triggers",
+        "button.removetriggers"
 			],
+      "capabilitiesOptions": {
+        "button.triggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Set callback URLs for triggers",
+						"nl": "Instellen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				},
+        "button.removetriggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Remove callback URLs for triggers",
+						"nl": "Verwijderen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				}
+      },
       "energy": {
         "cumulative": true
       },
@@ -2119,8 +2275,34 @@
         "meter_power",
         "measure_temperature",
         "onoff.input1",
-        "onoff.input2"
+        "onoff.input2",
+        "button.triggers",
+        "button.removetriggers"
 			],
+      "capabilitiesOptions": {
+        "button.triggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Set callback URLs for triggers",
+						"nl": "Instellen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				},
+        "button.removetriggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Remove callback URLs for triggers",
+						"nl": "Verwijderen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				}
+      },
       "pair": [
         {
           "id": "list_devices",
@@ -2549,7 +2731,7 @@
 							"en": "Select Shelly",
 							"nl": "Selecteer Shelly"
 						},
-						"filter": "driver_id=shelly1|shelly1pm&capabilities=button.triggers"
+						"filter": "driver_id=shelly1|shelly1pm|shellydimmer|shelly2|shelly25|shelly-plug|shelly-plug-s|shellyem|shelly3em&capabilities=button.triggers"
 					}
 				]
 			},
