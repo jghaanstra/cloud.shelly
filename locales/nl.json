@@ -22,6 +22,10 @@
     "success": "Shelly apparaat succesvol toegevoegd",
     "startpairing": "Koppel het apparaat eerst met de Shelly smartphone app. Druk daarna op de fysieke knop op in je Shelly sensor om het apparaat wakker te maken. Wacht tot de LED aan blijft, de Shelly is dan verbonden met je WiFi netwerk. Klik vervolgens op de volgende knop hieronder."
   },
+  "icon_select": {
+    "title": "Selecteer en icoon",
+    "intro": "Selecteer welk icoon die je wilt gebruiken voor je Shelly Vintage."
+  },
   "connect": {
     "intro": "Als je de Shelly RGBW2 in CW/WW mode gebruikt, kan je als volgt twee LED-strips aansluiten:",
     "single": "Als je maar één LED strip aansluit of je wil de twee kanalen altijd gesynchroniseerd houden, moet je 'Gebruik als één device' aanvinken.",

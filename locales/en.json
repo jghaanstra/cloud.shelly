@@ -22,6 +22,10 @@
     "success": "Shelly device added succesfully",
     "startpairing": "First pair the device with the Shelly smartphone app. Then press the physical button on your Shelly sensor to wake up the device. The LED inside the sensor stops blinking once it has connected to your WiFi and is then ready for pairing. Then you can click the next button below."
   },
+  "icon_select": {
+    "title": "Select an icon",
+    "intro": "Select which icon you want to use for your Shelly Vintage."
+  },
   "connect": {
     "intro": "Using the Shelly RGBW2 in CW/WW mode enables you to connect 2 LED strips as follows:",
     "single": "If you only attach one LED strip or you want to always keep the two channels in sync, you should check 'Use as single device'.",

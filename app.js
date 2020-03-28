@@ -81,10 +81,26 @@ class ShellyApp extends Homey.App {
       .registerRunListener((args, state) => {
         return args.device.triggerCapabilityListener("onoff.whitemode", true);
       })
+
     new Homey.FlowCardAction('actionRGBW2DisableWhiteMode')
       .register()
       .registerRunListener((args, state) => {
         return args.device.triggerCapabilityListener("onoff.whitemode", false);
+      })
+
+    // SHELLY DUO
+    new Homey.FlowCardAction('actionDuoDimTemperature')
+      .register()
+      .registerRunListener((args, state) => {
+        try {
+          let light_temperature = 1 - Number(util.normalize(args.light_temperature, 2700, 6500));
+
+          args.device.triggerCapabilityListener("dim", args.brightness);
+          args.device.triggerCapabilityListener("light_temperature", light_temperature);
+          return Promise.resolve(true);
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
   }

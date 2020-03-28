@@ -49,5 +49,8 @@
   },
   "1.17.7": {
     "en": "Fixed a bug in the callback trigger card for Shelly1PM. Added the callback trigger card functionality for the Dimmer, Shelly2, Shelly2.5, Plug, Plug-S, ShellyEM and Shelly3EM. These callback URLs need to be set using maintenance actions under the device settings. See the app description on the forum for further instructions. "
+  },
+  "1.18.0": {
+    "en": "Added support for Shelly Duo and Shelly Vintage."
   }
 }

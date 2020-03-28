@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Humidity Temperature", "Shelly Door Window", "Shelly Dimmer" ],
 		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Luchtvochtigheid Temperatuur", "Shelly Deur Raam", "Shelly Dimmer" ]
 	},
-	"version": "1.17.7",
+	"version": "1.18.0",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -291,6 +291,44 @@
             "match": {
               "type": "regex",
               "value": "^shellybulb-"
+            }
+          }
+        ]
+      ]
+    },
+    "shellyduo": {
+	    "type": "mdns-sd",
+	    "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^ShellyBulbDuo-"
+            }
+          }
+        ]
+      ]
+    },
+    "shellyvintage": {
+	    "type": "mdns-sd",
+	    "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^ShellyVintage-"
             }
           }
         ]
@@ -1665,6 +1703,252 @@
 				}
 			]
 		},
+    {
+      "id": "shellyduo",
+      "discovery": "shellyduo",
+      "name": {
+        "en": "Shelly Duo",
+        "nl": "Shelly Duo"
+      },
+      "images": {
+        "large": "drivers/shellyduo/assets/images/large.jpg",
+        "small": "drivers/shellyduo/assets/images/small.jpg"
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff",
+        "dim",
+        "light_temperature",
+        "measure_power",
+        "meter_power",
+        "button.triggers",
+        "button.removetriggers"
+      ],
+      "capabilitiesOptions": {
+        "button.triggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Set callback URLs for triggers",
+						"nl": "Instellen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				},
+        "button.removetriggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Remove callback URLs for triggers",
+						"nl": "Verwijderen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				}
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Shelly Duo settings",
+            "nl": "Shelly Duo instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            },
+            {
+              "id": "polling",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 5,
+                "max": 3600
+              },
+              "label": {
+                "en": "Polling Frequency",
+                "nl": "Polling frequentie"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shellyvintage",
+      "discovery": "shellyvintage",
+      "name": {
+        "en": "Shelly Vintage",
+        "nl": "Shelly Vintage"
+      },
+      "images": {
+        "large": "drivers/shellyvintage/assets/images/large.jpg",
+        "small": "drivers/shellyvintage/assets/images/small.jpg"
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff",
+        "dim",
+        "measure_power",
+        "meter_power",
+        "button.triggers",
+        "button.removetriggers"
+      ],
+      "capabilitiesOptions": {
+        "button.triggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Set callback URLs for triggers",
+						"nl": "Instellen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				},
+        "button.removetriggers": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Remove callback URLs for triggers",
+						"nl": "Verwijderen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				}
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Shelly Vintage settings",
+            "nl": "Shelly Vintage instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            },
+            {
+              "id": "polling",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 5,
+                "max": 3600
+              },
+              "label": {
+                "en": "Polling Frequency",
+                "nl": "Polling frequentie"
+              }
+            }
+          ]
+        }
+      ]
+    },
 		{
 			"id": "shellyrgbw2white",
       "discovery": "shellyrgbw2",
@@ -3265,6 +3549,44 @@
 							"nl": "Selecteer Shelly RGBW2 Color"
 						},
 						"filter": "driver_id=shellyrgbw2color"
+					}
+        ]
+      },
+      {
+				"id": "actionDuoDimTemperature",
+				"title": {
+					"en": "Set dim and color temperature",
+					"nl": "Instellen dim en kleur temperatuur"
+				},
+				"args": [
+          {
+            "name": "brightness",
+            "type": "range",
+            "min": 0,
+            "max": 1,
+            "step": 0.01,
+            "label": "%",
+            "labelMultiplier": 100,
+            "labelDecimals": 0
+          },
+          {
+            "name": "light_temperature",
+            "type": "range",
+            "min": 2700,
+            "max": 6500,
+            "step": 1,
+            "label": "K",
+            "labelMultiplier": 1,
+            "labelDecimals": 0
+          },
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly Duo Color",
+							"nl": "Selecteer Shelly Duo Color"
+						},
+						"filter": "driver_id=shellyduo"
 					}
         ]
       }
