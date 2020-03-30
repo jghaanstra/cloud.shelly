@@ -52,5 +52,8 @@
   },
   "1.18.0": {
     "en": "Added support for Shelly Duo and Shelly Vintage."
+  },
+  "1.18.1": {
+    "en": "Fixed bugs with setting callback URL for various Shelly devices. Added a reboot action card which reboots your Shelly."
   }
 }

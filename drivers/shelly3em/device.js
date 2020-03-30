@@ -25,8 +25,8 @@ class Shelly3EmDevice extends Homey.Device {
 
     this.registerCapabilityListener('button.triggers', async () => {
       var homeyip = await util.getHomeyIp();
-      var out_on_url = '/settings/relay/0?out_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly3em/'+ this.getData().id +'/out_on/';
-      var out_off_url = '/settings/relay/0?out_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly3em/'+ this.getData().id +'/out_off/';
+      var out_on_url = '/settings/relay/'+ this.getStoreValue('channel') +'?out_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly3em/'+ this.getData().id +'/out_on/';
+      var out_off_url = '/settings/relay/'+ this.getStoreValue('channel') +'?out_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly3em/'+ this.getData().id +'/out_off/';
 
       try {
         await util.sendCommand(out_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
@@ -38,8 +38,8 @@ class Shelly3EmDevice extends Homey.Device {
     });
 
     this.registerCapabilityListener('button.removetriggers', async () => {
-      var out_on_url = '/settings/relay/0?out_on_url=null';
-      var out_off_url = '/settings/relay/0?out_off_url=null';
+      var out_on_url = '/settings/relay/'+ this.getStoreValue('channel') +'?out_on_url=null';
+      var out_off_url = '/settings/relay/'+ this.getStoreValue('channel') +'?out_off_url=null';
 
       try {
         await util.sendCommand(out_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));

@@ -47,16 +47,16 @@ class ShellyDimmerDevice extends Homey.Device {
 
     this.registerCapabilityListener('button.triggers', async () => {
       var homeyip = await util.getHomeyIp();
-      var btn1_on_url = '/settings/relay/0?btn1_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn1_on/';
-      var btn1_off_url = '/settings/relay/0?btn1_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn1_off/';
-      var btn2_on_url = '/settings/relay/0?btn2_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn2_on/';
-      var btn2_off_url = '/settings/relay/0?btn2_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn2_off/';
-      var out_on_url = '/settings/relay/0?out_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/out_on/';
-      var out_off_url = '/settings/relay/0?out_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/out_off/';
-      var btn1_shortpush_url = '/settings/relay/0?btn1_shortpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn1_shortpush/';
-      var btn1_longpush_url = '/settings/relay/0?btn1_longpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn1_longpush/';
-      var btn2_shortpush_url = '/settings/relay/0?btn2_shortpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn2_shortpush/';
-      var btn2_longpush_url = '/settings/relay/0?btn2_longpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn2_longpush/';
+      var btn1_on_url = '/settings/light/0?btn1_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn1_on/';
+      var btn1_off_url = '/settings/light/0?btn1_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn1_off/';
+      var btn2_on_url = '/settings/light/0?btn2_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn2_on/';
+      var btn2_off_url = '/settings/light/0?btn2_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn2_off/';
+      var out_on_url = '/settings/light/0?out_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/out_on/';
+      var out_off_url = '/settings/light/0?out_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/out_off/';
+      var btn1_shortpush_url = '/settings/light/0?btn1_shortpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn1_shortpush/';
+      var btn1_longpush_url = '/settings/light/0?btn1_longpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn1_longpush/';
+      var btn2_shortpush_url = '/settings/light/0?btn2_shortpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn2_shortpush/';
+      var btn2_longpush_url = '/settings/light/0?btn2_longpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn2_longpush/';
 
       try {
         await util.sendCommand(btn1_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
@@ -76,16 +76,16 @@ class ShellyDimmerDevice extends Homey.Device {
     });
 
     this.registerCapabilityListener('button.removetriggers', async () => {
-      var btn1_on_url = '/settings/relay/0?btn1_on_url=null';
-      var btn1_off_url = '/settings/relay/0?btn1_off_url=null';
-      var btn2_on_url = '/settings/relay/0?btn2_on_url=null';
-      var btn2_off_url = '/settings/relay/0?btn2_off_url=null';
-      var out_on_url = '/settings/relay/0?out_on_url=null';
-      var out_off_url = '/settings/relay/0?out_off_url=null';
-      var btn1_shortpush_url = '/settings/relay/0?btn1_shortpush_url=null';
-      var btn1_longpush_url = '/settings/relay/0?btn1_longpush_url=null';
-      var btn2_shortpush_url = '/settings/relay/0?btn2_shortpush_url=null';
-      var btn2_longpush_url = '/settings/relay/0?btn2_longpush_url=null';
+      var btn1_on_url = '/settings/light/0?btn1_on_url=null';
+      var btn1_off_url = '/settings/light/0?btn1_off_url=null';
+      var btn2_on_url = '/settings/light/0?btn2_on_url=null';
+      var btn2_off_url = '/settings/light/0?btn2_off_url=null';
+      var out_on_url = '/settings/light/0?out_on_url=null';
+      var out_off_url = '/settings/light/0?out_off_url=null';
+      var btn1_shortpush_url = '/settings/light/0?btn1_shortpush_url=null';
+      var btn1_longpush_url = '/settings/light/0?btn1_longpush_url=null';
+      var btn2_shortpush_url = '/settings/light/0?btn2_shortpush_url=null';
+      var btn2_longpush_url = '/settings/light/0?btn2_longpush_url=null';
 
       try {
         await util.sendCommand(btn1_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
