@@ -8,6 +8,7 @@ class Shelly25Device extends Homey.Device {
   onInit() {
     new Homey.FlowCardTriggerDevice('triggerMeterPowerFactor').register();
     new Homey.FlowCardTriggerDevice('triggerBtnAction').register();
+    new Homey.FlowCardTriggerDevice('triggerMeterPowerWmin').register();
 
     this.setAvailable();
 

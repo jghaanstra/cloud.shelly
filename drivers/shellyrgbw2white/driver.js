@@ -114,7 +114,7 @@ class ShellyRGBW2WhiteDriver extends Homey.Driver {
 
                   temp_devices[device0_id] = {
                     id: device0_id,
-                    onoff: result.relays[0].ison,
+                    onoff: result.lights[0].ison,
                     dim: dim0,
                     measure_power: result.meters[0].power,
                     online: true
@@ -122,7 +122,7 @@ class ShellyRGBW2WhiteDriver extends Homey.Driver {
 
                   temp_devices[device1_id] = {
                     id: device1_id,
-                    onoff: result.relays[1].ison,
+                    onoff: result.lights[1].ison,
                     dim: dim1,
                     measure_power: result.meters[1].power,
                     online: true
@@ -130,7 +130,7 @@ class ShellyRGBW2WhiteDriver extends Homey.Driver {
 
                   temp_devices[device2_id] = {
                     id: device1_id,
-                    onoff: result.relays[2].ison,
+                    onoff: result.lights[2].ison,
                     dim: dim2,
                     measure_power: result.meters[2].power,
                     online: true
@@ -138,7 +138,7 @@ class ShellyRGBW2WhiteDriver extends Homey.Driver {
 
                   temp_devices[device3_id] = {
                     id: device1_id,
-                    onoff: result.relays[3].ison,
+                    onoff: result.lights[3].ison,
                     dim: dim3,
                     measure_power: result.meters[3].power,
                     online: true
