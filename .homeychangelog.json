@@ -58,5 +58,8 @@
   },
   "1.18.2": {
     "en": "Bugfixes for RGBW2 White and the triggercard 'Meter Power in Wmin changed' for Shelly 2.5"
+  },
+  "1.19.0": {
+    "en": "Added support for the Shelly Smoke Detector."
   }
 }
