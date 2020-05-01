@@ -61,5 +61,8 @@
   },
   "1.19.0": {
     "en": "Added support for the Shelly Smoke Detector."
+  },
+  "1.19.1": {
+    "en": "Added the callback trigger card functionality to the Shelly Door/Window sensor. This is more reliable then the current polling implementation. See the documentation on how to use this."
   }
 }
