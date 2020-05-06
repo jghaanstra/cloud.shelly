@@ -105,6 +105,10 @@ class ShellydwDevice extends Homey.Device {
     }, 1000 * interval);
   }
 
+  triggerActions(action) {
+    return Homey.ManagerFlow.getCard('trigger', "triggerBtnAction").trigger(this, {"action": action}, {})
+  }
+
 }
 
 module.exports = ShellydwDevice;
