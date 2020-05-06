@@ -64,5 +64,8 @@
   },
   "1.19.1": {
     "en": "Added the callback trigger card functionality to the Shelly Door/Window sensor. This is more reliable then the current polling implementation. See the documentation on how to use this."
+  },
+  "1.19.2": {
+    "en": "Two fixes for using callback URL's for the Shelly Door/Window sensor."
   }
 }

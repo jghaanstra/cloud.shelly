@@ -10,18 +10,15 @@ module.exports = [
 		fn: function(args, callback) {
       (async () => {
         let device = await Homey.ManagerDrivers.getDriver(args.params.devicetype).getDevice({'id': args.params.deviceid});
-        device.triggerActions(args.params.action);
 
         // EXTRA ACTIONS SHELLY DW
-        if (args.params.devicetype == 'shellydw' && (args.params.action == 'open_dark' || args.params.action == 'open_twilight')) {
-          if (!device.getCapabilityValue('alarm_contact')) {
-            device.setCapabilityValue('alarm_contact', true);
-          }
-        } else if (args.params.devicetype == 'shellydw' && args.params.action == 'close') {
-          if (device.getCapabilityValue('alarm_contact')) {
-            device.setCapabilityValue('alarm_contact', false);
-          }
+        if (args.params.devicetype == 'shellydw' && !device.getCapabilityValue('alarm_contact') && (args.params.action == 'open_dark' || args.params.action == 'open_twilight')) {
+          device.setCapabilityValue('alarm_contact', true);
+        } else if (args.params.devicetype == 'shellydw' && device.getCapabilityValue('alarm_contact') && args.params.action == 'close') {
+          device.setCapabilityValue('alarm_contact', false);
         }
+
+        device.triggerActions(args.params.action);
 
         callback(false, 'OK');
       })().catch(err => {
