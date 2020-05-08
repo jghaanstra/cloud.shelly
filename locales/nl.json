@@ -20,7 +20,12 @@
     "testing" : "Connectietest succesvol, je kan het Shelly apparaat nu verbinden.",
     "connect": "Verbind",
     "success": "Shelly apparaat succesvol toegevoegd",
-    "startpairing": "Koppel het apparaat eerst met de Shelly smartphone app. Druk daarna op de fysieke knop op in je Shelly sensor om het apparaat wakker te maken. Wacht tot de LED aan blijft, de Shelly is dan verbonden met je WiFi netwerk. Klik vervolgens op de volgende knop hieronder."
+    "startpairing": "Koppel het apparaat eerst met de Shelly smartphone app. Druk daarna op de fysieke knop op in je Shelly sensor om het apparaat wakker te maken. Wacht tot de LED aan blijft, de Shelly is dan verbonden met je WiFi netwerk. Klik vervolgens op de volgende knop hieronder.",
+    "titleselection": "Wat wil je doen?",
+    "nodevices": "Geen apparaten gevonden. Je kan het nog een keer proberen of je Shelly handmatig toevoegen als je het IP adres weet.",
+    "again": "Probeer opnieuw",
+    "manual": "Handmatig pairen",
+    "close": "Afsluiten"
   },
   "icon_select": {
     "title": "Selecteer en icoon",

@@ -20,7 +20,11 @@ class Shelly1Driver extends Homey.Driver {
           }
         };
       });
-      callback(null, devices);
+      if (devices.length) {
+        callback(null, devices);
+      } else {
+        socket.showView('select_pairing');
+      }
     });
 
     socket.on('list_devices_selection', (data, callback) => {
@@ -70,6 +74,43 @@ class Shelly1Driver extends Homey.Driver {
 
     socket.on('add_device', (data, callback) => {
       callback(false, deviceArray);
+    });
+
+    socket.on('testConnection', function(data, callback) {
+      util.sendCommand('/shelly', data.address, data.username, data.password)
+        .then(result => {
+          callback(false, result);
+        })
+        .catch(error => {
+          callback(error, false);
+        })
+    });
+
+    socket.on('manual_pairing', (data, callback) => {
+      util.sendCommand('/settings', data.address, data.username, data.password)
+        .then(result => {
+          deviceArray = {
+            name: 'Shelly1 ['+ data.address +']',
+            data: {
+              id: result.device.hostname,
+            },
+            settings: {
+              address  : data.address,
+              username : data.username,
+              password : data.password,
+              polling  : data.polling
+            },
+            capabilities: ['onoff', 'button.triggers', 'button.removetriggers'],
+            store: {
+              type: data.shelly.type,
+              outputs: data.shelly.num_outputs
+            }
+          }
+          socket.showView('add_device');
+        })
+        .catch(error => {
+          callback(error, false);
+        })
     });
 
   }

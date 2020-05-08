@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Humidity Temperature", "Shelly Door Window", "Shelly Dimmer", "Shelly Duo", "Shelly Vintage" ],
 		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Luchtvochtigheid Temperatuur", "Shelly Deur Raam", "Shelly Dimmer", "Shelly Duo", "Shelly Vintage" ]
 	},
-	"version": "1.19.2",
+	"version": "1.20.0",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -554,6 +554,12 @@
         },
         {
           "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
         }
       ],
 			"settings": [
@@ -697,6 +703,12 @@
         },
         {
           "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
         }
       ],
 			"settings": [
