@@ -20,7 +20,11 @@ class ShellyDimmerDriver extends Homey.Driver {
           }
         };
       });
-      callback(null, devices);
+      if (devices.length) {
+        callback(null, devices);
+      } else {
+        socket.showView('select_pairing');
+      }
     });
 
     socket.on('list_devices_selection', (data, callback) => {
@@ -69,6 +73,37 @@ class ShellyDimmerDriver extends Homey.Driver {
 
     socket.on('add_device', (data, callback) => {
       callback(false, deviceArray);
+    });
+
+    socket.on('manual_pairing', function(data, callback) {
+      util.sendCommand('/settings', data.address, data.username, data.password)
+        .then(result => {
+          var hostname = result.device.hostname;
+          if (hostname.startsWith('shellydimmer-')) {
+            deviceArray = {
+              name: 'Shelly Dimmer ['+ data.address +']',
+              data: {
+                id: result.device.hostname,
+              },
+              settings: {
+                address  : data.address,
+                username : data.username,
+                password : data.password,
+                polling  : data.polling
+              },
+              store: {
+                type: result.device.type,
+                outputs: result.device.num_outputs
+              }
+            }
+            callback(null, result);
+          } else {
+            callback(null, 'incorrect device');
+          }
+        })
+        .catch(error => {
+          callback(error, null);
+        })
     });
 
   }

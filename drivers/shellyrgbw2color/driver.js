@@ -14,13 +14,17 @@ class ShellyRGBW2ColorDriver extends Homey.Driver {
     socket.on('list_devices', (data, callback) => {
       const devices = Object.values(discoveryResults).map(discoveryResult => {
         return {
-          name: 'Shelly RGBW2 Color Mode ['+ discoveryResult.address +']',
+          name: 'Shelly RGBW2 Color ['+ discoveryResult.address +']',
           data: {
             id: discoveryResult.id,
           }
         };
       });
-      callback(null, devices);
+      if (devices.length) {
+        callback(null, devices);
+      } else {
+        socket.showView('select_pairing');
+      }
     });
 
     socket.on('list_devices_selection', (data, callback) => {
@@ -35,7 +39,7 @@ class ShellyRGBW2ColorDriver extends Homey.Driver {
       util.sendCommand('/shelly', discoveryResult.address, '', '')
         .then(result => {
           deviceArray = {
-            name: 'Shelly RGBW2 Color Mode ['+ discoveryResult.address +']',
+            name: 'Shelly RGBW2 Color ['+ discoveryResult.address +']',
             data: {
               id: discoveryResult.id,
             },
@@ -69,6 +73,37 @@ class ShellyRGBW2ColorDriver extends Homey.Driver {
 
     socket.on('add_device', (data, callback) => {
       callback(false, deviceArray);
+    });
+
+    socket.on('manual_pairing', function(data, callback) {
+      util.sendCommand('/settings', data.address, data.username, data.password)
+        .then(result => {
+          var hostname = result.device.hostname;
+          if (hostname.startsWith('shellyrgbw2-')) {
+            deviceArray = {
+              name: 'Shelly RGBW2 Color ['+ data.address +']',
+              data: {
+                id: result.device.hostname,
+              },
+              settings: {
+                address  : data.address,
+                username : data.username,
+                password : data.password,
+                polling  : data.polling
+              },
+              store: {
+                type: result.device.type,
+                outputs: result.device.num_outputs
+              }
+            }
+            callback(null, result);
+          } else {
+            callback(null, 'incorrect device');
+          }
+        })
+        .catch(error => {
+          callback(error, null);
+        })
     });
 
   }

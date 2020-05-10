@@ -6,19 +6,27 @@ const util = require('/lib/util.js');
 class ShellydwDevice extends Homey.Device {
 
   onInit() {
+    new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
+
     var interval = 4;
     this.pollDevice(interval);
     this.setAvailable();
 
     // ADD MISSING CAPABILITIES
-    if (!this.hasCapability('button.triggers')) {
-      this.addCapability('button.triggers');
+    if (this.hasCapability('button.triggers')) {
+      this.removeCapability('button.triggers');
     }
-    if (!this.hasCapability('button.removetriggers')) {
-      this.addCapability('button.removetriggers');
+    if (this.hasCapability('button.removetriggers')) {
+      this.removeCapability('button.removetriggers');
+    }
+    if (!this.hasCapability('button.callbackevents')) {
+      this.addCapability('button.callbackevents');
+    }
+    if (!this.hasCapability('button.removecallbackevents')) {
+      this.addCapability('button.removecallbackevents');
     }
 
-    this.registerCapabilityListener('button.triggers', async () => {
+    this.registerCapabilityListener('button.callbackevents', async () => {
       var homeyip = await util.getHomeyIp();
       var dark_url = '/settings?dark_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydw/'+ this.getData().id +'/open_dark/';
       var twilight_url = '/settings?twilight_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydw/'+ this.getData().id +'/open_twilight/';
@@ -36,7 +44,7 @@ class ShellydwDevice extends Homey.Device {
       }
     });
 
-    this.registerCapabilityListener('button.removetriggers', async () => {
+    this.registerCapabilityListener('button.removecallbackevents', async () => {
       var dark_url = '/settings?dark_url=null';
       var twilight_url = '/settings?twilight_url=null';
       var close_url = '/settings?close_url=null';
@@ -105,8 +113,8 @@ class ShellydwDevice extends Homey.Device {
     }, 1000 * interval);
   }
 
-  triggerActions(action) {
-    return Homey.ManagerFlow.getCard('trigger', "triggerBtnAction").trigger(this, {"action": action}, {})
+  triggerCallbackEvents(action) {
+    return Homey.ManagerFlow.getCard('trigger', "triggerCallbackEvents").trigger(this, {"action": action}, {})
   }
 
 }

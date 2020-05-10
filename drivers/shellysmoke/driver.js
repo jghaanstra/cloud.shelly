@@ -20,7 +20,11 @@ class ShellySmokeDriver extends Homey.Driver {
           }
         };
       });
-      callback(null, devices);
+      if (devices.length) {
+        callback(null, devices);
+      } else {
+        socket.showView('select_pairing');
+      }
     });
 
     socket.on('list_devices_selection', (data, callback) => {
@@ -67,6 +71,35 @@ class ShellySmokeDriver extends Homey.Driver {
 
     socket.on('add_device', (data, callback) => {
       callback(false, deviceArray);
+    });
+
+    socket.on('manual_pairing', function(data, callback) {
+      util.sendCommand('/settings', data.address, data.username, data.password)
+        .then(result => {
+          var hostname = result.device.hostname;
+          if (hostname.startsWith('shellysmoke-')) {
+            deviceArray = {
+              name: 'Shelly Smoke Detector ['+ data.address +']',
+              data: {
+                id: result.device.hostname,
+              },
+              settings: {
+                address  : data.address,
+                username : data.username,
+                password : data.password
+              },
+              store: {
+                type: result.device.type
+              }
+            }
+            callback(null, result);
+          } else {
+            callback(null, 'incorrect device');
+          }
+        })
+        .catch(error => {
+          callback(error, null);
+        })
     });
 
   }

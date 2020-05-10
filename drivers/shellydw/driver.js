@@ -14,13 +14,17 @@ class ShellydwDriver extends Homey.Driver {
     socket.on('list_devices', (data, callback) => {
       const devices = Object.values(discoveryResults).map(discoveryResult => {
         return {
-          name: 'Shelly DW ['+ discoveryResult.address +']',
+          name: 'Shelly DW Sensor ['+ discoveryResult.address +']',
           data: {
             id: discoveryResult.id,
           }
         };
       });
-      callback(null, devices);
+      if (devices.length) {
+        callback(null, devices);
+      } else {
+        socket.showView('select_pairing');
+      }
     });
 
     socket.on('list_devices_selection', (data, callback) => {
@@ -35,7 +39,7 @@ class ShellydwDriver extends Homey.Driver {
       util.sendCommand('/shelly', discoveryResult.address, '', '')
         .then(result => {
           deviceArray = {
-            name: 'Shelly DW ['+ discoveryResult.address +']',
+            name: 'Shelly DW Sensor ['+ discoveryResult.address +']',
             data: {
               id: discoveryResult.id,
             },
@@ -67,6 +71,35 @@ class ShellydwDriver extends Homey.Driver {
 
     socket.on('add_device', (data, callback) => {
       callback(false, deviceArray);
+    });
+
+    socket.on('manual_pairing', function(data, callback) {
+      util.sendCommand('/settings', data.address, data.username, data.password)
+        .then(result => {
+          var hostname = result.device.hostname;
+          if (hostname.startsWith('shellydw-')) {
+            deviceArray = {
+              name: 'Shelly DW Sensor ['+ data.address +']',
+              data: {
+                id: result.device.hostname,
+              },
+              settings: {
+                address  : data.address,
+                username : data.username,
+                password : data.password
+              },
+              store: {
+                type: result.device.type
+              }
+            }
+            callback(null, result);
+          } else {
+            callback(null, 'incorrect device');
+          }
+        })
+        .catch(error => {
+          callback(error, null);
+        })
     });
 
   }

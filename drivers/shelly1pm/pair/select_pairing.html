@@ -13,41 +13,6 @@ $(function() {
     Homey.showView('manual_pairing');
 	});
 
-  $('#close').click(function() {
-    Homey.done();
-	});
-
-	$('#connect').click(function() {
-		var inputaddress = $('#address').val();
-		var inputusername = $('#username').val();
-		var inputpassword = $('#password').val();
-    var inputpolling = Number($('#polling').val()) || 5;
-
-		if (inputaddress != '' && inputpolling != '') {
-
-      var data = {
-        address: inputaddress,
-				username: inputusername,
-				password: inputpassword,
-        polling: inputpolling,
-        shelly: shelly
-      }
-
-      Homey.emit('manual_pairing', data, function(error, result) {
-        if (result) {
-          Homey.nextView()
-        } else if (error) {
-          return Homey.alert(error);
-          Homey.done();
-        }
-      });
-
-		} else {
-			$('.shelly-error').show();
-			$('.shelly-error-msg').html( __('pair.nosettings') );
-		}
-
-	});
 })
 </script>
 
@@ -63,8 +28,8 @@ $(function() {
   }
   .button {
     display: block;
-    min-width: 80%;
-    margin-bottom: 6px !important;
+    min-width: 100%;
+    margin-bottom: 8px !important;
   }
 </style>
 
@@ -73,6 +38,5 @@ $(function() {
 	<div class="form-group buttons">
 		<button id="again" class="button" data-i18n="pair.again">Try Again</button>
 		<button id="manual" class="button" data-i18n="pair.manual">Manual</button>
-    <button id="close" class="button" data-i18n="pair.close">Close</button>
 	</div>
 </div>

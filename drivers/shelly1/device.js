@@ -8,14 +8,20 @@ class Shelly1Device extends Homey.Device {
   onInit() {
     new Homey.FlowCardTriggerDevice('triggerShelly1Temperature2').register();
     new Homey.FlowCardTriggerDevice('triggerShelly1Temperature3').register();
-    new Homey.FlowCardTriggerDevice('triggerBtnAction').register();
+    new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
 
     // ADD MISSING CAPABILITIES
-    if (!this.hasCapability('button.triggers')) {
-      this.addCapability('button.triggers');
+    if (this.hasCapability('button.triggers')) {
+      this.removeCapability('button.triggers');
     }
-    if (!this.hasCapability('button.removetriggers')) {
-      this.addCapability('button.removetriggers');
+    if (this.hasCapability('button.removetriggers')) {
+      this.removeCapability('button.removetriggers');
+    }
+    if (!this.hasCapability('button.callbackevents')) {
+      this.addCapability('button.callbackevents');
+    }
+    if (!this.hasCapability('button.removecallbackevents')) {
+      this.addCapability('button.removecallbackevents');
     }
 
     var interval = this.getSetting('polling') || 5;
@@ -31,7 +37,7 @@ class Shelly1Device extends Homey.Device {
       }
     });
 
-    this.registerCapabilityListener('button.triggers', async () => {
+    this.registerCapabilityListener('button.callbackevents', async () => {
       var homeyip = await util.getHomeyIp();
       var btn_on_url = '/settings/relay/0?btn_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/btn_on/';
       var btn_off_url = '/settings/relay/0?btn_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/btn_off/';
@@ -53,7 +59,7 @@ class Shelly1Device extends Homey.Device {
       }
     });
 
-    this.registerCapabilityListener('button.removetriggers', async () => {
+    this.registerCapabilityListener('button.removecallbackevents', async () => {
       var btn_on_url = '/settings/relay/0?btn_on_url=null';
       var btn_off_url = '/settings/relay/0?btn_off_url=null';
       var out_on_url = '/settings/relay/0?out_on_url=null';
@@ -158,8 +164,8 @@ class Shelly1Device extends Homey.Device {
     }, 63000);
   }
 
-  triggerActions(action) {
-    return Homey.ManagerFlow.getCard('trigger', "triggerBtnAction").trigger(this, {"action": action}, {})
+  triggerCallbackEvents(action) {
+    return Homey.ManagerFlow.getCard('trigger', "triggerCallbackEvents").trigger(this, {"action": action}, {})
   }
 
 }

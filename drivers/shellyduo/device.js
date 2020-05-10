@@ -6,11 +6,25 @@ const util = require('/lib/util.js');
 class ShellyDuoDevice extends Homey.Device {
 
   onInit() {
-    new Homey.FlowCardTriggerDevice('triggerBtnAction').register();
+    new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
 
     var interval = this.getSetting('polling') || 5;
     this.pollDevice(interval);
     this.setAvailable();
+
+    // ADD MISSING CAPABILITIES
+    if (this.hasCapability('button.triggers')) {
+      this.removeCapability('button.triggers');
+    }
+    if (this.hasCapability('button.removetriggers')) {
+      this.removeCapability('button.removetriggers');
+    }
+    if (!this.hasCapability('button.callbackevents')) {
+      this.addCapability('button.callbackevents');
+    }
+    if (!this.hasCapability('button.removecallbackevents')) {
+      this.addCapability('button.removecallbackevents');
+    }
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
@@ -31,7 +45,7 @@ class ShellyDuoDevice extends Homey.Device {
       return util.sendCommand('/light/0?white='+ white +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
-    this.registerCapabilityListener('button.triggers', async () => {
+    this.registerCapabilityListener('button.callbackevents', async () => {
       var homeyip = await util.getHomeyIp();
       var out_on_url = '/settings/light/0?out_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellyduo/'+ this.getData().id +'/out_on/';
       var out_off_url = '/settings/light/0?out_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellyduo/'+ this.getData().id +'/out_off/';
@@ -45,7 +59,7 @@ class ShellyDuoDevice extends Homey.Device {
       }
     });
 
-    this.registerCapabilityListener('button.removetriggers', async () => {
+    this.registerCapabilityListener('button.removecallbackevents', async () => {
       var out_on_url = '/settings/light/0?out_on_url=null';
       var out_off_url = '/settings/light/0?out_off_url=null';
 
@@ -128,6 +142,10 @@ class ShellyDuoDevice extends Homey.Device {
           this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
         })
     }, 63000);
+  }
+
+  triggerCallbackEvents(action) {
+    return Homey.ManagerFlow.getCard('trigger', "triggerCallbackEvents").trigger(this, {"action": action}, {})
   }
 
 }

@@ -9,9 +9,23 @@ class Shelly3EmDevice extends Homey.Device {
     new Homey.FlowCardTriggerDevice('triggerMeterPowerConsumed').register();
     new Homey.FlowCardTriggerDevice('triggerMeterPowerReturned').register();
     new Homey.FlowCardTriggerDevice('triggerMeterPowerFactor').register();
-    new Homey.FlowCardTriggerDevice('triggerBtnAction').register();
+    new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
 
     this.setAvailable();
+
+    // ADD MISSING CAPABILITIES
+    if (this.hasCapability('button.triggers')) {
+      this.removeCapability('button.triggers');
+    }
+    if (this.hasCapability('button.removetriggers')) {
+      this.removeCapability('button.removetriggers');
+    }
+    if (!this.hasCapability('button.callbackevents')) {
+      this.addCapability('button.callbackevents');
+    }
+    if (!this.hasCapability('button.removecallbackevents')) {
+      this.addCapability('button.removecallbackevents');
+    }
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
@@ -23,7 +37,7 @@ class Shelly3EmDevice extends Homey.Device {
       }
     });
 
-    this.registerCapabilityListener('button.triggers', async () => {
+    this.registerCapabilityListener('button.callbackevents', async () => {
       var homeyip = await util.getHomeyIp();
       var out_on_url = '/settings/relay/'+ this.getStoreValue('channel') +'?out_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly3em/'+ this.getData().id +'/out_on/';
       var out_off_url = '/settings/relay/'+ this.getStoreValue('channel') +'?out_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly3em/'+ this.getData().id +'/out_off/';
@@ -37,7 +51,7 @@ class Shelly3EmDevice extends Homey.Device {
       }
     });
 
-    this.registerCapabilityListener('button.removetriggers', async () => {
+    this.registerCapabilityListener('button.removecallbackevents', async () => {
       var out_on_url = '/settings/relay/'+ this.getStoreValue('channel') +'?out_on_url=null';
       var out_off_url = '/settings/relay/'+ this.getStoreValue('channel') +'?out_off_url=null';
 
@@ -56,8 +70,8 @@ class Shelly3EmDevice extends Homey.Device {
     return Homey.ManagerDrivers.getDriver('shelly3em').loadDevices();
   }
 
-  triggerActions(action) {
-    return Homey.ManagerFlow.getCard('trigger', "triggerBtnAction").trigger(this, {"action": action}, {})
+  triggerCallbackEvents(action) {
+    return Homey.ManagerFlow.getCard('trigger', "triggerCallbackEvents").trigger(this, {"action": action}, {})
   }
 
 }

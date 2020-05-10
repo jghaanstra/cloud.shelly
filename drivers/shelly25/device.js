@@ -7,19 +7,25 @@ class Shelly25Device extends Homey.Device {
 
   onInit() {
     new Homey.FlowCardTriggerDevice('triggerMeterPowerFactor').register();
-    new Homey.FlowCardTriggerDevice('triggerBtnAction').register();
     new Homey.FlowCardTriggerDevice('triggerMeterPowerWmin').register();
+    new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
 
     this.setAvailable();
 
     // ADD MISSING CAPABILITIES
-    if (!this.hasCapability('button.triggers')) {
-      this.addCapability('button.triggers');
+    if (this.hasCapability('button.triggers')) {
+      this.removeCapability('button.triggers');
     }
-    if (!this.hasCapability('button.removetriggers')) {
-      this.addCapability('button.removetriggers');
+    if (this.hasCapability('button.removetriggers')) {
+      this.removeCapability('button.removetriggers');
     }
-
+    if (!this.hasCapability('button.callbackevents')) {
+      this.addCapability('button.callbackevents');
+    }
+    if (!this.hasCapability('button.removecallbackevents')) {
+      this.addCapability('button.removecallbackevents');
+    }
+    
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
       Homey.ManagerDrivers.getDriver('shelly25').updateTempDevices(this.getData().id, 'onoff', value);
@@ -30,7 +36,7 @@ class Shelly25Device extends Homey.Device {
       }
     });
 
-    this.registerCapabilityListener('button.triggers', async () => {
+    this.registerCapabilityListener('button.callbackevents', async () => {
       var homeyip = await util.getHomeyIp();
       var btn_on_url = '/settings/relay/'+ this.getStoreValue('channel') +'?btn_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly25/'+ this.getData().id +'/btn_on/';
       var btn_off_url = '/settings/relay/'+ this.getStoreValue('channel') +'?btn_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly25/'+ this.getData().id +'/btn_off/';
@@ -52,7 +58,7 @@ class Shelly25Device extends Homey.Device {
       }
     });
 
-    this.registerCapabilityListener('button.removetriggers', async () => {
+    this.registerCapabilityListener('button.removecallbackevents', async () => {
       var btn_on_url = '/settings/relay/'+ this.getStoreValue('channel') +'?btn_on_url=null';
       var btn_off_url = '/settings/relay/'+ this.getStoreValue('channel') +'?btn_off_url=null';
       var out_on_url = '/settings/relay/'+ this.getStoreValue('channel') +'?out_on_url=null';
@@ -79,8 +85,8 @@ class Shelly25Device extends Homey.Device {
     return Homey.ManagerDrivers.getDriver('shelly25').loadDevices();
   }
 
-  triggerActions(action) {
-    return Homey.ManagerFlow.getCard('trigger', "triggerBtnAction").trigger(this, {"action": action}, {})
+  triggerCallbackEvents(action) {
+    return Homey.ManagerFlow.getCard('trigger', "triggerCallbackEvents").trigger(this, {"action": action}, {})
   }
 
 }

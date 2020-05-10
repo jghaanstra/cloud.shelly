@@ -49,7 +49,7 @@ class Shelly1Driver extends Homey.Driver {
               password : '',
               polling  : 5
             },
-            capabilities: ['onoff', 'button.triggers', 'button.removetriggers'],
+            capabilities: ['onoff', 'button.callbackevents', 'button.removecallbackevents'],
             store: {
               type: result.type,
               outputs: result.num_outputs
@@ -76,40 +76,35 @@ class Shelly1Driver extends Homey.Driver {
       callback(false, deviceArray);
     });
 
-    socket.on('testConnection', function(data, callback) {
-      util.sendCommand('/shelly', data.address, data.username, data.password)
-        .then(result => {
-          callback(false, result);
-        })
-        .catch(error => {
-          callback(error, false);
-        })
-    });
-
-    socket.on('manual_pairing', (data, callback) => {
+    socket.on('manual_pairing', function(data, callback) {
       util.sendCommand('/settings', data.address, data.username, data.password)
         .then(result => {
-          deviceArray = {
-            name: 'Shelly1 ['+ data.address +']',
-            data: {
-              id: result.device.hostname,
-            },
-            settings: {
-              address  : data.address,
-              username : data.username,
-              password : data.password,
-              polling  : data.polling
-            },
-            capabilities: ['onoff', 'button.triggers', 'button.removetriggers'],
-            store: {
-              type: data.shelly.type,
-              outputs: data.shelly.num_outputs
+          var hostname = result.device.hostname;
+          if (hostname.startsWith('shelly1-')) {
+            deviceArray = {
+              name: 'Shelly1 ['+ data.address +']',
+              data: {
+                id: result.device.hostname,
+              },
+              settings: {
+                address  : data.address,
+                username : data.username,
+                password : data.password,
+                polling  : data.polling
+              },
+              capabilities: ['onoff', 'button.callbackevents', 'button.removecallbackevents'],
+              store: {
+                type: result.device.type,
+                outputs: result.device.num_outputs
+              }
             }
+            callback(null, result);
+          } else {
+            callback(null, 'incorrect device');
           }
-          socket.showView('add_device');
         })
         .catch(error => {
-          callback(error, false);
+          callback(error, null);
         })
     });
 
