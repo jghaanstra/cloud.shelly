@@ -25,7 +25,7 @@ class Shelly25Device extends Homey.Device {
     if (!this.hasCapability('button.removecallbackevents')) {
       this.addCapability('button.removecallbackevents');
     }
-    
+
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
       Homey.ManagerDrivers.getDriver('shelly25').updateTempDevices(this.getData().id, 'onoff', value);
@@ -52,6 +52,7 @@ class Shelly25Device extends Homey.Device {
         await util.sendCommand(out_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         await util.sendCommand(shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         await util.sendCommand(longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand('/reboot', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         return;
       } catch (error) {
         throw new Error(error);

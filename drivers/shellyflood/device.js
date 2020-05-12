@@ -42,6 +42,7 @@ class ShellyFloodDevice extends Homey.Device {
       try {
         await util.sendCommand(flood_detected_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         await util.sendCommand(flood_gone_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand('/reboot', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         return;
       } catch (error) {
         throw new Error(error);
@@ -62,7 +63,7 @@ class ShellyFloodDevice extends Homey.Device {
   }
 
   onDeleted() {
-    
+
   }
 
   // HELPER FUNCTIONS

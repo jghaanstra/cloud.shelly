@@ -77,6 +77,7 @@ class ShellyDimmerDevice extends Homey.Device {
         await util.sendCommand(btn1_longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         await util.sendCommand(btn2_shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         await util.sendCommand(btn2_longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand('/reboot', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         return;
       } catch (error) {
         throw new Error(error);

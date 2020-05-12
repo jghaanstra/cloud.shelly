@@ -9,7 +9,7 @@ class ShellyApp extends Homey.App {
     this.log('Initializing Shelly App ...');
 
     // GENERIC
-    new Homey.FlowCardAction('flipbackSwitch')
+    new Homey.FlowCardAction('actionReboot')
       .register()
       .registerRunListener((args, state) => {
         return util.sendCommand('/reboot', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));

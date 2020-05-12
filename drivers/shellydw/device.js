@@ -38,6 +38,7 @@ class ShellydwDevice extends Homey.Device {
         await util.sendCommand(twilight_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         await util.sendCommand(close_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         await util.sendCommand(vibration_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand('/reboot', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         return;
       } catch (error) {
         throw new Error(error);

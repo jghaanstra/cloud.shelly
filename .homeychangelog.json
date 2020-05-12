@@ -70,5 +70,8 @@
   },
   "1.20.0": {
     "en": "Breaking changes: The recently added triggercard for button action callbacks will break because it is replaced by a more generic Action URL card, please update your flows. Polling for the Shelly Flood has been removed and is replaced by report callbacks from the device itself as this is much more reliable. If you have a paired Shelly Flood, please perform the URL callbacks maintenance action to set the callback urls (see the support topic for further instructions). Added manual pairing fallback for all drivers, this is handy for those with segmented networks where auto discovery does not work. And there are some small fixes in various drivers in this release as well."
+  },
+  "1.20.1": {
+    "en": "Fix for reboot action card and small improvement for setting callback URL's (appearently the Shelly needs a reboot for these to become active)."
   }
 }
