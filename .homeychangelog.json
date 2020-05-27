@@ -73,5 +73,8 @@
   },
   "1.20.1": {
     "en": "Fix for reboot action card and small improvement for setting callback URL's (appearently the Shelly needs a reboot for these to become active)."
+  },
+  "1.20.2": {
+    "en": "Fixed issue with duration in the \"Change roller shutter\" action card."
   }
 }
