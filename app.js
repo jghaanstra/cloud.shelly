@@ -50,9 +50,7 @@ class ShellyApp extends Homey.App {
     new Homey.FlowCardAction('moveRollerShutter')
       .register()
       .registerRunListener((args, state) => {
-        console.log(args);
-        console.log('path: ', '/roller/0?go='+ args.direction +'&duration='+ args.duration +'');
-        return util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        return util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.move_duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
 
     // SHELLY RGBW2 COLOR
