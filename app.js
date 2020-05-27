@@ -50,6 +50,8 @@ class ShellyApp extends Homey.App {
     new Homey.FlowCardAction('moveRollerShutter')
       .register()
       .registerRunListener((args, state) => {
+        console.log(args);
+        console.log('path: ', '/roller/0?go='+ args.direction +'&duration='+ args.duration +'');
         return util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
 
@@ -74,13 +76,21 @@ class ShellyApp extends Homey.App {
     new Homey.FlowCardCondition('conditionDimmerInput1')
       .register()
       .registerRunListener((args, state) => {
-        return args.device.getCapability("onoff.input1");
+        if (args.device) {
+          return args.device.getCapability("onoff.input1");
+        } else {
+          return false;
+        }
       })
 
     new Homey.FlowCardCondition('conditionDimmerInput2')
       .register()
       .registerRunListener((args, state) => {
-        return args.device.getCapability("onoff.input2");
+        if (args.device) {
+          return args.device.getCapability("onoff.input2");
+        } else {
+          return false;
+        }
       })
 
     new Homey.FlowCardAction('actionRGBW2EnableWhiteMode')
