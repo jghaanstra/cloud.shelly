@@ -144,6 +144,7 @@ class Shelly1pmDevice extends Homey.Device {
               var temp1 = result.ext_temperature[0].tC;
               if (temp1 != this.getCapabilityValue('measure_temperature.1')) {
                 this.setCapabilityValue('measure_temperature.1', temp1);
+                Homey.ManagerFlow.getCard('trigger', 'triggerShelly1Temperature1').trigger(this, {'temperature': temp1}, {})
               }
             }
 
