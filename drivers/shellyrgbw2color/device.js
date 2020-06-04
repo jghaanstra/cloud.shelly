@@ -35,10 +35,8 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
 
     this.registerCapabilityListener('light_temperature', (value, opts) => {
       let white = Number(this.denormalize(value, 0, 255));
-      let color = tinycolor.fromRatio({ h: this.getCapabilityValue('light_hue'), s: this.getCapabilityValue('light_saturation'), v: this.getCapabilityValue('dim') });
-      let rgbcolor = color.toRgb();
       this.setCapabilityValue("light_mode", 'temperature');
-      return util.sendCommand('/color/0?red='+ Number(rgbcolor.r) +'&green='+ Number(rgbcolor.g) +'&blue='+ Number(rgbcolor.b) +'&white='+ white +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      return util.sendCommand('/color/0?white='+ white, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerMultipleCapabilityListener(['light_hue', 'light_saturation' ], ( valueObj, optsObj ) => {
@@ -83,7 +81,6 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
     this.pollingInterval = setInterval(() => {
       util.sendCommand('/color/0', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
-          this.log(result);
           let state = result.ison;
           let dim = result.gain / 100;
           let white = 1 - Number(this.normalize(result.white, 0, 255));
@@ -122,11 +119,11 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
           }
 
           //capability light_mode
-          if (white > 0.9 && this.getCapabilityValue('light_mode') == 'color') {
-            this.setCapabilityValue('light_mode', 'temperature');
+          if (Number(result.white) > 220 && !this.getCapabilityValue('onoff.whitemode')) {
+            this.setCapabilityValue('onoff.whitemode', true);
           }
-          if (Number(result.gain) > 10 && white < 0.9 && this.getCapabilityValue('light_mode') == 'temperature') {
-            this.setCapabilityValue('light_mode', 'color');
+          if (Number(result.gain) > 10 && Number(result.white) <= 220 && this.getCapabilityValue('onoff.whitemode')) {
+            this.setCapabilityValue('onoff.whitemode', false);
           }
 
         })

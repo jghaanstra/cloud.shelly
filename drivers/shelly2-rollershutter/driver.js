@@ -47,7 +47,8 @@ class Shelly2RollerShutterDriver extends Homey.Driver {
               address  : discoveryResult.address,
               username : '',
               password : '',
-              polling  : 5
+              polling  : 5,
+              halfway: 50
             },
             store: {
               type: result.type,
@@ -89,7 +90,8 @@ class Shelly2RollerShutterDriver extends Homey.Driver {
                 address  : data.address,
                 username : data.username,
                 password : data.password,
-                polling  : data.polling
+                polling  : data.polling,
+                halfway: 50
               },
               store: {
                 type: result.device.type,
