@@ -79,5 +79,8 @@
   },
   "1.20.3": {
     "en": "Fix for triggercard for temperature sensor Shelly 1PM."
+  },
+  "1.20.4": {
+    "en": "Fix for setting white channel on Shelly RGBW2."
   }
 }
