@@ -23,9 +23,10 @@ class Shelly2RollerShutterDevice extends Homey.Device {
     });
 
     this.registerCapabilityListener('windowcoverings_set', (value, opts) => {
+      console.log('requested position:', value);
       if (this.getSetting('halfway') != 0.5) {
         var position = (((1 - (2 * Math.abs(0.5 - value))) * ((this.getSetting('halfway') - 50 ) / 100)) * 100);
-        console.log('calculated position:', position);
+        console.log('newly calculated position based on optical middle:', position);
       } else {
         var position = value * 100;
       }
@@ -110,6 +111,7 @@ class Shelly2RollerShutterDevice extends Homey.Device {
     util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
       .then(result => {
         var position = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
+        console.log('setting optical middle to:', position);
         this.setSetting({'halfway':  position});
         return true;
       })
