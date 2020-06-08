@@ -26,6 +26,13 @@ class ShellyApp extends Homey.App {
         }
       })
 
+    // SHELLY 2(.5) ROLLER SHUTTER
+    new Homey.FlowCardAction('rollerShutterHalfway')
+      .register()
+      .registerRunListener((args, state) => {
+        return args.device.setHalfwayPosition();
+      })
+
     // SHELLY 2 & SHELLY 4 PRO
     new Homey.FlowCardAction('flipbackSwitch2')
       .register()

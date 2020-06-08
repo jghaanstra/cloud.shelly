@@ -7,10 +7,10 @@
 		"nl": "Shelly"
 	},
 	"tags": {
-		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Humidity Temperature", "Shelly Door Window", "Shelly Dimmer", "Shelly Duo", "Shelly Vintage" ],
-		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Luchtvochtigheid Temperatuur", "Shelly Deur Raam", "Shelly Dimmer", "Shelly Duo", "Shelly Vintage" ]
+		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Humidity Temperature", "Shelly Door Window", "Shelly Dimmer", "Shelly Duo", "Shelly Vintage", "Shelly i3" ],
+		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Luchtvochtigheid Temperatuur", "Shelly Deur Raam", "Shelly Dimmer", "Shelly Duo", "Shelly Vintage", "Shelly i3" ]
 	},
-	"version": "1.21.0",
+	"version": "1.21.1",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -1043,6 +1043,19 @@
                 "en": "Minutes offline notification trigger",
                 "nl": "Minuten offline notificatie trigger"
               }
+            },
+            {
+              "id": "halfway",
+              "type": "number",
+              "value": 50,
+              "attr": {
+                "min": 1,
+                "max": 99
+              },
+              "label": {
+                "en": "Percentage representing optical middle",
+                "nl": "Percentage overeenkomende het optische midden"
+              }
             }
 					]
 				}
@@ -1283,6 +1296,19 @@
               "label": {
                 "en": "Minutes offline notification trigger",
                 "nl": "Minuten offline notificatie trigger"
+              }
+            },
+            {
+              "id": "halfway",
+              "type": "number",
+              "value": 50,
+              "attr": {
+                "min": 1,
+                "max": 99
+              },
+              "label": {
+                "en": "Percentage representing optical middle",
+                "nl": "Percentage overeenkomende het optische midden"
               }
             }
 					]
@@ -4029,6 +4055,28 @@
 							"nl": "Duur in seconden"
 						}
 					},
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly 2",
+							"nl": "Selecteer Shelly 2"
+						},
+						"filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
+					}
+				]
+			},
+      {
+				"id": "rollerShutterHalfway",
+				"title": {
+					"en": "Set the optical middle percentage",
+					"nl": "Instellen percentage optische midden"
+				},
+				"hint": {
+					"en": "Use this card if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action card to save this position.",
+					"nl": "Gebruik deze actie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie card uit om de positie op te slaan."
+				},
+				"args": [
 					{
 						"name": "device",
 						"type": "device",

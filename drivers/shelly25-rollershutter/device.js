@@ -23,7 +23,13 @@ class Shelly25RollerShutterDevice extends Homey.Device {
     });
 
     this.registerCapabilityListener('windowcoverings_set', (value, opts) => {
-      var position = value * 100;
+      if (this.getSetting('halfway') != 0.5) {
+        var position = (((1 - (2 * Math.abs(0.5 - value))) * ((this.getSetting('halfway') - 50 ) / 100)) * 100);
+        console.log('calculated position:', position);
+      } else {
+        var position = value * 100;
+      }
+
       return util.sendCommand('/roller/0?go=to_pos&roller_pos='+ position, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
@@ -43,7 +49,7 @@ class Shelly25RollerShutterDevice extends Homey.Device {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
           clearTimeout(this.offlineTimeout);
-          
+
           if ( result.rollers[0].state == 'stop' ) {
             var state = 'idle';
           } else if ( result.rollers[0].state == 'open' ) {
@@ -98,6 +104,19 @@ class Shelly25RollerShutterDevice extends Homey.Device {
           this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
         })
     }, 63000);
+  }
+
+  setHalfwayPosition() {
+    util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
+      .then(result => {
+        var position = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
+        this.setSetting({'halfway':  position});
+        return true;
+      })
+      .catch(error => {
+        this.log(error);
+        return false;
+      })
   }
 
 }
