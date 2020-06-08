@@ -8,7 +8,7 @@ module.exports = [
 		path     : '/button_actions/:devicetype/:deviceid/:action',
 		public   : true,
 		fn: function(args, callback) {
-      (async () => {    
+      (async () => {
         let device = await Homey.ManagerDrivers.getDriver(args.params.devicetype).getDevice({'id': args.params.deviceid});
 
         // EXTRA ACTIONS SHELLY DW
@@ -25,7 +25,11 @@ module.exports = [
           device.setCapabilityValue('alarm_water', false);
         }
 
+        // TODO: DEPRECATED, WILL BE REMOVED IN NEXT MAJOR RELEASE
         device.triggerCallbackEvents(args.params.action);
+
+        let callbackTrigger = new Homey.FlowCardTrigger('triggerCallbacks');
+        callbackTrigger.register().trigger({"device": device.getName(), "action": args.params.action});
 
         callback(false, 'OK');
       })().catch(err => {

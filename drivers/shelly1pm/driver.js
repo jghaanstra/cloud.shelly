@@ -51,8 +51,7 @@ class Shelly1pmDriver extends Homey.Driver {
             },
             capabilities: ["onoff", "measure_power", "meter_power_wmin", "meter_power", "measure_temperature", "button.callbackevents", "button.removecallbackevents"],
             store: {
-              type: result.type,
-              outputs: result.num_outputs
+              type: result.type
             }
           }
           if (result.auth) {
@@ -90,12 +89,11 @@ class Shelly1pmDriver extends Homey.Driver {
                 address  : data.address,
                 username : data.username,
                 password : data.password,
-                polling  : data.polling
+                polling  : 5
               },
               capabilities: ["onoff", "measure_power", "meter_power_wmin", "meter_power", "measure_temperature", "button.callbackevents", "button.removecallbackevents"],
               store: {
-                type: result.device.type,
-                outputs: result.device.num_outputs
+                type: result.device.type
               }
             }
             callback(null, result);

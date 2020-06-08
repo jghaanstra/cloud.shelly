@@ -82,5 +82,8 @@
   },
   "1.20.4": {
     "en": "Fix for setting white channel on Shelly RGBW2."
+  },
+  "1.21.0": {
+    "en": "BREAKING CHANGES: Deprecated the device \"Action event\" triggercard and replaced it with a generic \"Action event\" card which is not device specific but contains the device name as token. This is easier to maintain. Please update your flows by replacing the device specific card with the triggercard from the app. The functionality for the device specific card will be removed with the next major release. Also added support for the new Shelly i3 which was released two days ago, thanx to domotica-shop.nl for sending me a device. Also added a new triggercard that can trigger a flow when a device is unreachable for a specified number of minutes (under device settings). This is only available for non-battery operated devices that are being polled for their status. And also lots a code refactoring for easier maintenance. "
   }
 }

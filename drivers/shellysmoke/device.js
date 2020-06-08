@@ -6,24 +6,21 @@ const util = require('/lib/util.js');
 class ShellySmokeDevice extends Homey.Device {
 
   onInit() {
-    var interval = 4;
-    this.pollDevice(interval);
+    this.pollDevice();
     this.setAvailable();
   }
 
   onDeleted() {
     clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
   }
 
   // HELPER FUNCTIONS
-  pollDevice(interval) {
+  pollDevice() {
     clearInterval(this.pollingInterval);
 
     this.pollingInterval = setInterval(() => {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
-          console.log(result);
           let alarm = result.smoke;
           let temperature = result.tmp.value;
           let battery = result.bat.value;
@@ -53,7 +50,7 @@ class ShellySmokeDevice extends Homey.Device {
         .catch(error => {
           this.log('Device asleep or disconnected');
         })
-    }, 1000 * interval);
+    }, 4000);
   }
 
 }

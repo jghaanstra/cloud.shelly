@@ -3,7 +3,7 @@
 const Homey = require('homey');
 const util = require('/lib/util.js');
 
-class ShellyPlugDriver extends Homey.Driver {
+class Shellyi3Driver extends Homey.Driver {
 
   onPair(socket) {
     const discoveryStrategy = this.getDiscoveryStrategy();
@@ -14,7 +14,7 @@ class ShellyPlugDriver extends Homey.Driver {
     socket.on('list_devices', (data, callback) => {
       const devices = Object.values(discoveryResults).map(discoveryResult => {
         return {
-          name: 'Shelly Plug ['+ discoveryResult.address +']',
+          name: 'Shelly i3 ['+ discoveryResult.address +']',
           data: {
             id: discoveryResult.id,
           }
@@ -39,15 +39,14 @@ class ShellyPlugDriver extends Homey.Driver {
       util.sendCommand('/shelly', discoveryResult.address, '', '')
         .then(result => {
           deviceArray = {
-            name: 'Shelly Plug ['+ discoveryResult.address +']',
+            name: 'Shelly i3 ['+ discoveryResult.address +']',
             data: {
               id: discoveryResult.id,
             },
             settings: {
               address  : discoveryResult.address,
               username : '',
-              password : '',
-              polling  : 5
+              password : ''
             },
             store: {
               type: result.type
@@ -78,17 +77,16 @@ class ShellyPlugDriver extends Homey.Driver {
       util.sendCommand('/settings', data.address, data.username, data.password)
         .then(result => {
           var hostname = result.device.hostname;
-          if (hostname.startsWith('shellyplug-')) {
+          if (hostname.startsWith('shelly1-')) {
             deviceArray = {
-              name: 'Shelly Plug ['+ data.address +']',
+              name: 'Shelly i3 ['+ data.address +']',
               data: {
                 id: result.device.hostname,
               },
               settings: {
                 address  : data.address,
                 username : data.username,
-                password : data.password,
-                polling  : 5
+                password : data.password
               },
               store: {
                 type: result.device.type
@@ -108,4 +106,4 @@ class ShellyPlugDriver extends Homey.Driver {
 
 }
 
-module.exports = ShellyPlugDriver;
+module.exports = Shellyi3Driver;

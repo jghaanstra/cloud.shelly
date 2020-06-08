@@ -8,17 +8,10 @@ class ShellydwDevice extends Homey.Device {
   onInit() {
     new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
 
-    var interval = 4;
-    this.pollDevice(interval);
+    this.pollDevice();
     this.setAvailable();
 
     // ADD MISSING CAPABILITIES
-    if (this.hasCapability('button.triggers')) {
-      this.removeCapability('button.triggers');
-    }
-    if (this.hasCapability('button.removetriggers')) {
-      this.removeCapability('button.removetriggers');
-    }
     if (!this.hasCapability('button.callbackevents')) {
       this.addCapability('button.callbackevents');
     }
@@ -65,11 +58,10 @@ class ShellydwDevice extends Homey.Device {
 
   onDeleted() {
     clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
   }
 
   // HELPER FUNCTIONS
-  pollDevice(interval) {
+  pollDevice() {
     clearInterval(this.pollingInterval);
 
     this.pollingInterval = setInterval(() => {
@@ -111,7 +103,7 @@ class ShellydwDevice extends Homey.Device {
         .catch(error => {
           this.log('Device asleep or disconnected');
         })
-    }, 1000 * interval);
+    }, 4000);
   }
 
   triggerCallbackEvents(action) {

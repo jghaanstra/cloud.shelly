@@ -10,23 +10,16 @@ class Shelly1Device extends Homey.Device {
     new Homey.FlowCardTriggerDevice('triggerShelly1Temperature3').register();
     new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
 
+    this.pollDevice();
+    this.setAvailable();
+
     // ADD MISSING CAPABILITIES
-    if (this.hasCapability('button.triggers')) {
-      this.removeCapability('button.triggers');
-    }
-    if (this.hasCapability('button.removetriggers')) {
-      this.removeCapability('button.removetriggers');
-    }
     if (!this.hasCapability('button.callbackevents')) {
       this.addCapability('button.callbackevents');
     }
     if (!this.hasCapability('button.removecallbackevents')) {
       this.addCapability('button.removecallbackevents');
     }
-
-    var interval = this.getSetting('polling') || 5;
-    this.pollDevice(interval);
-    this.setAvailable();
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
@@ -89,13 +82,15 @@ class Shelly1Device extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
-  pollDevice(interval) {
+  pollDevice() {
     clearInterval(this.pollingInterval);
     clearInterval(this.pingInterval);
 
     this.pollingInterval = setInterval(() => {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
+          clearTimeout(this.offlineTimeout);
+
           var state = result.relays[0].ison;
 
           // capability onoff
@@ -144,8 +139,15 @@ class Shelly1Device extends Homey.Device {
           this.log(error);
           this.setUnavailable(Homey.__('Unreachable'));
           this.pingDevice();
+
+          this.offlineTimeout = setTimeout(() => {
+            let offlineTrigger = new Homey.FlowCardTrigger('triggerDeviceOffline');
+            offlineTrigger.register().trigger({"device": this.getName(), "device_error": error.toString() });
+            return;
+          }, 60000 * this.getSetting('offline'));
+
         })
-    }, 1000 * interval);
+    }, 1000 * this.getSetting('polling'));
   }
 
   pingDevice() {
@@ -156,8 +158,7 @@ class Shelly1Device extends Homey.Device {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
           this.setAvailable();
-          var interval = this.getSetting('polling') || 5;
-          this.pollDevice(interval);
+          this.pollDevice();
         })
         .catch(error => {
           this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
@@ -166,7 +167,7 @@ class Shelly1Device extends Homey.Device {
   }
 
   triggerCallbackEvents(action) {
-    return Homey.ManagerFlow.getCard('trigger', "triggerCallbackEvents").trigger(this, {"action": action}, {})
+    return Homey.ManagerFlow.getCard('trigger', "triggerCallbackEvents").trigger(this, {"action": action}, {});
   }
 
 }

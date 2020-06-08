@@ -47,12 +47,10 @@ class Shelly25RollerShutterDriver extends Homey.Driver {
               address  : discoveryResult.address,
               username : '',
               password : '',
-              polling  : 5,
-              halfway: 50
+              polling  : 5
             },
             store: {
-              type: result.type,
-              outputs: result.num_outputs
+              type: result.type
             }
           }
           if (result.auth) {
@@ -90,13 +88,11 @@ class Shelly25RollerShutterDriver extends Homey.Driver {
                 address  : data.address,
                 username : data.username,
                 password : data.password,
-                polling  : data.polling,
-                halfway: 50
+                polling  : 5
               },
               capabilities: ['onoff', 'button.triggers', 'button.removetriggers'],
               store: {
-                type: result.device.type,
-                outputs: result.device.num_outputs
+                type: result.device.type
               }
             }
             callback(null, result);

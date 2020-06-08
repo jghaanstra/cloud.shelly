@@ -9,7 +9,7 @@ class Shelly3EmDriver extends Homey.Driver {
 
   onInit() {
     this.loadDevices();
-    this.pollDevices(5);
+    this.pollDevices();
   }
 
   onPair(socket) {
@@ -53,12 +53,10 @@ class Shelly3EmDriver extends Homey.Driver {
             settings: {
               address  : discoveryResult.address,
               username : '',
-              password : '',
-              polling  : 5
+              password : ''
             },
             store: {
-              type: result.type,
-              outputs: result.num_outputs
+              type: result.type
             }
           }
           if (result.auth) {
@@ -80,7 +78,7 @@ class Shelly3EmDriver extends Homey.Driver {
 
     socket.on('add_device', (data, callback) => {
       this.loadDevices();
-      this.pollDevices(5);
+      this.pollDevices();
       callback(false, deviceArray);
     });
 
@@ -97,12 +95,10 @@ class Shelly3EmDriver extends Homey.Driver {
               settings: {
                 address  : data.address,
                 username : data.username,
-                password : data.password,
-                polling  : data.polling
+                password : data.password
               },
               store: {
-                type: result.device.type,
-                outputs: result.device.num_outputs
+                type: result.device.type
               }
             }
             callback(null, result);
@@ -120,11 +116,11 @@ class Shelly3EmDriver extends Homey.Driver {
   // HELPER FUNCTIONS
   loadDevices() {
     added_devices = Homey.ManagerDrivers.getDriver('shelly3em').getDevices();
-    this.updateDevices(2);
+    this.updateDevices();
     return true;
   }
 
-  pollDevices(interval) {
+  pollDevices() {
     clearInterval(this.pollingInterval);
 
     this.pollingInterval = setInterval(() => {
@@ -140,6 +136,7 @@ class Shelly3EmDriver extends Homey.Driver {
 
               util.sendCommand('/status', added_devices[key].getSetting('address'), added_devices[key].getSetting('username'), added_devices[key].getSetting('password'))
                 .then(result => {
+                  clearTimeout(this.offlineTimeout);
 
                   temp_devices[device0_id] = {
                     id: device0_id,
@@ -191,6 +188,12 @@ class Shelly3EmDriver extends Homey.Driver {
                       temp_devices[device2_id].online = false;
                     }
                   }
+
+                  this.offlineTimeout = setTimeout(() => {
+                    let offlineTrigger = new Homey.FlowCardTrigger('triggerDeviceOffline');
+                    offlineTrigger.register().trigger({"device": added_devices[key].getName(), "device_error": error.toString() });
+                    return;
+                  }, 60000 * added_devices[key].getSetting('offline'));
                 })
             }
 
@@ -203,10 +206,10 @@ class Shelly3EmDriver extends Homey.Driver {
       } catch (error) {
         this.log(error);
       }
-    }, 1000 * interval);
+    }, 5000);
   }
 
-  updateDevices(interval) {
+  updateDevices() {
     clearInterval(this.updateInterval);
     this.updateInterval = setInterval(() => {
       try {
@@ -263,7 +266,7 @@ class Shelly3EmDriver extends Homey.Driver {
         this.log(error);
       }
 
-    }, 1000 * interval);
+    }, 2000);
   }
 
   updateTempDevices(device_id, capability, state) {

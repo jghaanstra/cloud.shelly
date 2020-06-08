@@ -10,7 +10,7 @@
 		"en": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Humidity Temperature", "Shelly Door Window", "Shelly Dimmer", "Shelly Duo", "Shelly Vintage" ],
 		"nl": [ "Shelly", "Shelly 1", "Shelly 2", "Shelly Plug", "Shelly Plug S", "Shelly 4 Pro", "Shelly RGBW2", "Shelly EM", "Shelly 3EM", "Shelly Bulb", "Shelly Flood Sensor", "Shelly Luchtvochtigheid Temperatuur", "Shelly Deur Raam", "Shelly Dimmer", "Shelly Duo", "Shelly Vintage" ]
 	},
-	"version": "1.20.4",
+	"version": "1.21.0",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -466,6 +466,25 @@
           }
         ]
       ]
+    },
+    "shellyi3": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shellyix3-"
+            }
+          }
+        ]
+      ]
     }
   },
 	"drivers": [
@@ -608,6 +627,19 @@
 							"label": {
 								"en": "Polling Frequency",
 								"nl": "Polling frequentie"
+							}
+						},
+            {
+							"id": "offline",
+							"type": "number",
+							"value": 5,
+							"attr": {
+								"min": 2,
+								"max": 3600
+							},
+							"label": {
+								"en": "Minutes offline notification trigger",
+								"nl": "Minuten offline notificatie trigger"
 							}
 						}
 					]
@@ -758,7 +790,20 @@
 								"en": "Polling Frequency",
 								"nl": "Polling frequentie"
 							}
-						}
+            },
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
 					]
 				}
 			]
@@ -873,19 +918,19 @@
 								"nl": "Wachtwoord"
 							}
 						},
-						{
-							"id": "polling",
-							"type": "number",
-							"value": 5,
-							"attr": {
-								"min": 5,
-								"max": 3600
-							},
-							"label": {
-								"en": "Polling Frequency",
-								"nl": "Polling frequentie"
-							}
-						}
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
 					]
 				}
 			]
@@ -987,18 +1032,18 @@
 							}
 						},
             {
-							"id": "halfway",
-							"type": "number",
-							"value": 50,
-							"attr": {
-								"min": 1,
-								"max": 100
-							},
-							"label": {
-								"en": "Halfway Shutter Position",
-								"nl": "Halverwege shutter positie"
-							}
-						}
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
 					]
 				}
 			]
@@ -1114,19 +1159,19 @@
 								"nl": "Wachtwoord"
 							}
 						},
-						{
-							"id": "polling",
-							"type": "number",
-							"value": 5,
-							"attr": {
-								"min": 5,
-								"max": 3600
-							},
-							"label": {
-								"en": "Polling Frequency",
-								"nl": "Polling frequentie"
-							}
-						}
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
 					]
 				}
 			]
@@ -1228,18 +1273,18 @@
 							}
 						},
             {
-							"id": "halfway",
-							"type": "number",
-							"value": 50,
-							"attr": {
-								"min": 1,
-								"max": 100
-							},
-							"label": {
-								"en": "Halfway Shutter Position",
-								"nl": "Halverwege shutter positie"
-							}
-						}
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
 					]
 				}
 			]
@@ -1366,7 +1411,20 @@
 								"en": "Polling Frequency",
 								"nl": "Polling frequentie"
 							}
-						}
+						},
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
 					]
 				}
 			]
@@ -1494,7 +1552,20 @@
 								"en": "Polling Frequency",
 								"nl": "Polling frequentie"
 							}
-						}
+						},
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
 					]
 				}
 			]
@@ -1582,19 +1653,19 @@
 								"nl": "Wachtwoord"
 							}
 						},
-						{
-							"id": "polling",
-							"type": "number",
-							"value": 5,
-							"attr": {
-								"min": 5,
-								"max": 3600
-							},
-							"label": {
-								"en": "Polling Frequency",
-								"nl": "Polling frequentie"
-							}
-						}
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
 					]
 				}
 			]
@@ -1707,7 +1778,20 @@
 								"en": "Polling Frequency",
 								"nl": "Polling frequentie"
 							}
-						}
+						},
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
 					]
 				}
 			]
@@ -1764,8 +1848,8 @@
 				{
 					"type": "group",
 					"label": {
-						"en": "Shelly RGBW2 settings",
-						"nl": "Shelly RGBW2 instellingen"
+						"en": "Shelly RGBW2 White settings",
+						"nl": "Shelly RGBW2 White instellingen"
 					},
 					"children": [
 						{
@@ -1795,19 +1879,19 @@
 								"nl": "Wachtwoord"
 							}
 						},
-						{
-							"id": "polling",
-							"type": "number",
-							"value": 5,
-							"attr": {
-								"min": 5,
-								"max": 3600
-							},
-							"label": {
-								"en": "Polling Frequency",
-								"nl": "Polling frequentie"
-							}
-						}
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
 					]
 				}
 			]
@@ -1983,7 +2067,20 @@
 								"en": "Polling Frequency",
 								"nl": "Polling frequentie"
 							}
-						}
+						},
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
 					]
 				}
 			]
@@ -2110,6 +2207,19 @@
               "label": {
                 "en": "Polling Frequency",
                 "nl": "Polling frequentie"
+              }
+            },
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
               }
             }
           ]
@@ -2241,6 +2351,19 @@
                 "en": "Polling Frequency",
                 "nl": "Polling frequentie"
               }
+            },
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
             }
           ]
         }
@@ -2360,7 +2483,20 @@
 								"en": "Password",
 								"nl": "Wachtwoord"
 							}
-						}
+						},
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
 					]
 				}
 			]
@@ -2480,7 +2616,20 @@
 								"en": "Password",
 								"nl": "Wachtwoord"
 							}
-						}
+						},
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
 					]
 				}
 			]
@@ -2928,7 +3077,20 @@
 								"en": "Polling Frequency",
 								"nl": "Polling frequentie"
 							}
-						}
+						},
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
 					]
 				}
 			]
@@ -3023,6 +3185,116 @@
 					"label": {
 						"en": "Shelly DW settings",
 						"nl": "Shelly DW instellingen"
+					},
+					"children": [
+						{
+							"id": "address",
+							"type": "text",
+							"value": "0.0.0.0",
+							"label": {
+								"en": "IP Address",
+								"nl": "IP adres"
+							}
+						},
+						{
+							"id": "username",
+							"type": "text",
+							"value": "",
+							"label": {
+								"en": "Username",
+								"nl": "Gebruikersnaam"
+							}
+						},
+						{
+							"id": "password",
+							"type": "password",
+							"value": "",
+							"label": {
+								"en": "Password",
+								"nl": "Wachtwoord"
+							}
+						}
+					]
+				}
+			]
+		},
+    {
+			"id": "shellyi3",
+      "discovery": "shellyi3",
+			"name": {
+				"en": "Shelly i3",
+				"nl": "Shelly i3"
+			},
+			"images": {
+				"large": "drivers/shellyi3/assets/images/large.jpg",
+				"small": "drivers/shellyi3/assets/images/small.jpg"
+			},
+			"class": "other",
+			"capabilities": [
+        "button.callbackevents",
+        "button.removecallbackevents"
+			],
+      "capabilitiesOptions": {
+        "button.callbackevents": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Set URLs for callbacks",
+						"nl": "Instellen URL's voor callbacks"
+					},
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				},
+        "button.removecallbackevents": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Remove callback URLs for triggers",
+						"nl": "Verwijderen callback URL's voor triggers"
+					},
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+				}
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+			"settings": [
+				{
+					"type": "group",
+					"label": {
+						"en": "Shelly i3 settings",
+						"nl": "Shelly i3 instellingen"
 					},
 					"children": [
 						{
@@ -3292,7 +3564,66 @@
 				]
 			},
       {
+        "id": "triggerDimmerInput1",
+        "title": {
+          "en": "Switch 1 changed",
+          "nl": "Schakelaar 1 gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "nl": "Status"
+            },
+            "example": "On"
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellydimmer"
+          }
+        ]
+      },
+      {
+        "id": "triggerDimmerInput2",
+        "title": {
+          "en": "Switch 2 changed",
+          "nl": "Schakelaar 2 gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "nl": "Status"
+            },
+            "example": "On"
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellydimmer"
+          }
+        ]
+      },
+      {
 				"id": "triggerCallbackEvents",
+        "deprecated": true,
 				"title": {
 					"en": "Action event",
 					"nl": "Actie gebeurtenis"
@@ -3316,67 +3647,63 @@
 							"en": "Select Shelly",
 							"nl": "Selecteer Shelly"
 						},
-						"filter": "driver_id=shelly1|shelly1pm|shellydimmer|shelly2|shelly25|shelly-plug|shelly-plug-s|shellyem|shelly3em|shellydw|shellyduo|shellyflood&capabilities=button.callbackevents"
+						"filter": "driver_id=shelly1|shelly1pm|shellydimmer|shelly2|shelly25|shelly-plug|shelly-plug-s|shellyem|shelly3em|shellydw|shellyduo|shellyflood|shellyi3&capabilities=button.callbackevents"
 					}
 				]
 			},
       {
-				"id": "triggerDimmerInput1",
+				"id": "triggerCallbacks",
 				"title": {
-					"en": "Switch 1 changed",
-					"nl": "Schakelaar 1 gewijzigd"
+					"en": "Action event",
+					"nl": "Actie gebeurtenis"
 				},
         "tokens": [
           {
-            "name": "status",
+            "name": "device",
             "type": "string",
             "title": {
-              "en": "Status",
-              "nl": "Status"
+              "en": "Device",
+              "nl": "Apparaat"
             },
-            "example": "On"
+            "example": "Shelly 1"
+          },
+          {
+            "name": "action",
+            "type": "string",
+            "title": {
+              "en": "Action",
+              "nl": "Actie"
+            },
+            "example": "longpush"
           }
-        ],
-				"args": [
-					{
-						"name": "device",
-						"type": "device",
-						"placeholder": {
-							"en": "Select Shelly",
-							"nl": "Selecteer Shelly"
-						},
-						"filter": "driver_id=shellydimmer"
-					}
-				]
+        ]
 			},
       {
-				"id": "triggerDimmerInput2",
+				"id": "triggerDeviceOffline",
 				"title": {
-					"en": "Switch 2 changed",
-					"nl": "Schakelaar 2 gewijzigd"
+					"en": "Device not reachable",
+					"nl": "Apparaat is niet bereikbaar"
 				},
         "tokens": [
           {
-            "name": "status",
+            "name": "device",
             "type": "string",
             "title": {
-              "en": "Status",
-              "nl": "Status"
+              "en": "Device",
+              "nl": "Apparaat"
             },
-            "example": "On"
+            "example": "Kitchen light"
+          },
+          {
+            "name": "device_error",
+            "type": "string",
+            "title": {
+              "en": "Error",
+              "nl": "Fout"
+            },
+            "example": "Error 401: not authenticated"
           }
-        ],
-				"args": [
-					{
-						"name": "device",
-						"type": "device",
-						"placeholder": {
-							"en": "Select Shelly",
-							"nl": "Selecteer Shelly"
-						},
-						"filter": "driver_id=shellydimmer"
-					}
-				]
+        ]
 			}
     ],
     "conditions": [
@@ -3927,7 +4254,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyvintage"
+            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyvintage|shellyi3"
           }
         ]
       }

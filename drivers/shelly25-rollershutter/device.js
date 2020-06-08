@@ -6,8 +6,7 @@ const util = require('/lib/util.js');
 class Shelly25RollerShutterDevice extends Homey.Device {
 
   onInit() {
-    var interval = this.getSetting('polling') || 5;
-    this.pollDevice(interval);
+    this.pollDevice();
     this.setAvailable();
 
     // LISTENERS FOR UPDATING CAPABILITIES
@@ -36,13 +35,15 @@ class Shelly25RollerShutterDevice extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
-  pollDevice(interval) {
+  pollDevice() {
     clearInterval(this.pollingInterval);
     clearInterval(this.pingInterval);
 
     this.pollingInterval = setInterval(() => {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
+          clearTimeout(this.offlineTimeout);
+          
           if ( result.rollers[0].state == 'stop' ) {
             var state = 'idle';
           } else if ( result.rollers[0].state == 'open' ) {
@@ -73,8 +74,14 @@ class Shelly25RollerShutterDevice extends Homey.Device {
           this.log(error);
           this.setUnavailable(Homey.__('Unreachable'));
           this.pingDevice();
+
+          this.offlineTimeout = setTimeout(() => {
+            let offlineTrigger = new Homey.FlowCardTrigger('triggerDeviceOffline');
+            offlineTrigger.register().trigger({"device": this.getName(), "device_error": error.toString() });
+            return;
+          }, 60000 * this.getSetting('offline'));
         })
-    }, 1000 * interval);
+    }, 1000 * this.getSetting('polling'));
   }
 
   pingDevice() {
@@ -85,8 +92,7 @@ class Shelly25RollerShutterDevice extends Homey.Device {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
           this.setAvailable();
-          var interval = this.getSetting('polling') || 5;
-          this.pollDevice(interval);
+          this.pollDevice();
         })
         .catch(error => {
           this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');

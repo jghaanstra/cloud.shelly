@@ -8,17 +8,10 @@ class ShellyPlugDevice extends Homey.Device {
   onInit() {
     new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
 
-    var interval = this.getSetting('polling') || 5;
-    this.pollDevice(interval);
+    this.pollDevice();
     this.setAvailable();
 
     // ADD MISSING CAPABILITIES
-    if (this.hasCapability('button.triggers')) {
-      this.removeCapability('button.triggers');
-    }
-    if (this.hasCapability('button.removetriggers')) {
-      this.removeCapability('button.removetriggers');
-    }
     if (!this.hasCapability('button.callbackevents')) {
       this.addCapability('button.callbackevents');
     }
@@ -75,13 +68,15 @@ class ShellyPlugDevice extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
-  pollDevice(interval) {
+  pollDevice() {
     clearInterval(this.pollingInterval);
     clearInterval(this.pingInterval);
 
     this.pollingInterval = setInterval(() => {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
+          clearTimeout(this.offlineTimeout);
+
           let state = result.relays[0].ison;
           let power = result.meters[0].power;
           let total_consumption = result.meters[0].total;
@@ -116,8 +111,14 @@ class ShellyPlugDevice extends Homey.Device {
           this.log(error);
           this.setUnavailable(Homey.__('Unreachable'));
           this.pingDevice();
+
+          this.offlineTimeout = setTimeout(() => {
+            let offlineTrigger = new Homey.FlowCardTrigger('triggerDeviceOffline');
+            offlineTrigger.register().trigger({"device": this.getName(), "device_error": error.toString() });
+            return;
+          }, 60000 * this.getSetting('offline'));
         })
-    }, 1000 * interval);
+    }, 1000 * this.getSetting('polling'));
   }
 
   pingDevice() {
@@ -128,8 +129,7 @@ class ShellyPlugDevice extends Homey.Device {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
           this.setAvailable();
-          var interval = this.getSetting('polling') || 5;
-          this.pollDevice(interval);
+          this.pollDevice();
         })
         .catch(error => {
           this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');

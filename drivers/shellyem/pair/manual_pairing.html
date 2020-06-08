@@ -13,14 +13,12 @@ $(function() {
 		var inputaddress = $('#address').val();
 		var inputusername = $('#username').val();
 		var inputpassword = $('#password').val();
-    var inputpolling = Number($('#polling').val()) || 5;
 
 		if (inputaddress != '') {
 			var data = {
 				address: inputaddress,
 				username: inputusername,
-				password: inputpassword,
-        polling: inputpolling
+				password: inputpassword
 			};
 
 			Homey.emit('manual_pairing', data, function (error, result) {
@@ -108,10 +106,6 @@ $(function() {
 		<label for="password" data-i18n="pair.password">Password</label>
 		<input type="password" class="form-control" id="password">
 	</div>
-  <div class="form-group">
-    <label for="polling" data-i18n="pair.polling">Polling Frequency</label>
-    <input type="number" class="form-control" id="polling" min="5" max="3600" placeholder="5">
-  </div>
 	<div class="form-group buttons">
 		<button id="test-connection" class="button" data-i18n="pair.test">Test Connection</button>
 		<button id="connect" class="button" data-i18n="pair.connect" disabled>Connect</button>

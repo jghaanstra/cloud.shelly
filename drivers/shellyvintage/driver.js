@@ -51,8 +51,7 @@ class ShellyVintageDriver extends Homey.Driver {
               polling  : 5
             },
             store: {
-              type: result.type,
-              outputs: result.num_outputs
+              type: result.type
             },
             icon: deviceIcon
           }
@@ -96,11 +95,10 @@ class ShellyVintageDriver extends Homey.Driver {
                 address  : data.address,
                 username : data.username,
                 password : data.password,
-                polling  : data.polling
+                polling  : 5
               },
               store: {
-                type: result.device.type,
-                outputs: result.device.num_outputs
+                type: result.device.type
               },
               icon: deviceIcon
             }
