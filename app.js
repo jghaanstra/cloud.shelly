@@ -77,6 +77,21 @@ class ShellyApp extends Homey.App {
         return util.sendCommand('/roller/0?go='+ args.direction +'&offset='+ args.offset +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
 
+    new Homey.FlowCardAction('rollerShutterIntelligentAction')
+      .register()
+      .registerRunListener((args, state) => {
+        if (args.device.getCapabilityValue('windowcoverings_state') !== 'idle') {
+          return util.sendCommand('/roller/0?go=stop', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } else if (args.device.getStoreValue('last_action') == 'up') {
+          return util.sendCommand('/roller/0?go=close', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } else if (args.device.getStoreValue('last_action') == 'down') {
+          return util.sendCommand('/roller/0?go=open', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } else {
+          return false;
+        }
+
+      })
+
     // SHELLY DIMMER
     new Homey.FlowCardCondition('conditionDimmerInput1')
       .register()
