@@ -28,23 +28,23 @@ class Shelly2RollerShutterDevice extends Homey.Device {
     });
 
     this.registerCapabilityListener('windowcoverings_set', (value, opts) => {
-      console.log('requested position:', value);
-      console.log('saved halfway setting:', this.getSetting('halfway'));
-      if (this.getSetting('halfway') != 0.5) {
-        var position = (((1 - (2 * Math.abs(0.5 - value))) * ((this.getSetting('halfway') - 50 ) / 100)) * 100);
-        console.log('newly calculated position based on optical middle:', position);
+      if (this.getSetting('halfway') == 0.5) {
+        var position = value;
       } else {
-        var position = value * 100;
+        if (value > 0.5) {
+          var position = -2 * value * this.getSetting('halfway') + 2 * value + 2 * this.getSetting('halfway') - 1;
+        } else {
+          var position = 2 * value * this.getSetting('halfway');
+        };
       }
 
-      return util.sendCommand('/roller/0?go=to_pos&roller_pos='+ position, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      return util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerCapabilityListener('button.sethalfwayposition', async () => {
       util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
         .then(result => {
           var position = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
-          console.log('setting optical middle to:', position);
           this.setSettings({'halfway':  position});
           return true;
         })
@@ -80,6 +80,14 @@ class Shelly2RollerShutterDevice extends Homey.Device {
           }
           var power = result.rollers[0].power;
           var position = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
+
+          if (this.getSetting('halfway') !== 0.5) {
+            if (position < this.getSetting('halfway')) {
+              var position = 0.5 * position / this.getSetting('halfway');
+            } else {
+              var position = position - (1 - (position-this.getSetting('halfway')) * (1 / (1 - this.getSetting('halfway')))) * (this.getSetting('halfway') - 0.5);
+            };
+          };
 
           // capability windowcoverings_state
           if (state != this.getCapabilityValue('windowcoverings_state')) {

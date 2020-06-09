@@ -4093,6 +4093,62 @@
 						"filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
 					}
 				]
+			},{
+				"id": "moveRollerShutterOffset",
+				"title": {
+					"en": "Change roller shutter with offset",
+					"nl": "Wijzig roller shutter met offset"
+				},
+				"hint": {
+					"en": "Use this card to open or close your roller shutter with a given offset.",
+					"nl": "Gebruik deze actie om de roller shutter te openen of stoppen met de opgegeven offset."
+				},
+				"args": [
+					{
+						"name": "direction",
+						"type": "dropdown",
+						"placeholder": {
+							"en": "Direction",
+							"nl": "Richting"
+						},
+						"values": [
+							{
+								"id": "open",
+								"label": {
+									"en": "Up",
+									"nl": "Omhoog"
+								}
+							},
+							{
+								"id": "close",
+								"label": {
+									"en": "Down",
+									"nl": "Omlaag"
+								}
+							}
+						]
+					},
+					{
+						"name": "offset",
+						"type": "number",
+						"min": 1,
+						"max": 100,
+						"step": 1,
+						"placeholder": {
+							"en": "Offset",
+							"nl": "Offset"
+						}
+					},
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Shelly 2",
+							"nl": "Selecteer Shelly 2"
+						},
+						"filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
+					}
+				]
 			},
 			{
 				"id": "flipbackSwitchRGBW2Color",

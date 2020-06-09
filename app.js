@@ -47,12 +47,6 @@ class ShellyApp extends Homey.App {
         }
       })
 
-    new Homey.FlowCardAction('moveRollerShutter')
-      .register()
-      .registerRunListener((args, state) => {
-        return util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.move_duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-      })
-
     // SHELLY RGBW2 COLOR
     new Homey.FlowCardAction('flipbackSwitchRGBW2Color')
       .register()
@@ -68,6 +62,19 @@ class ShellyApp extends Homey.App {
       .register()
       .registerRunListener((args, state) => {
         return util.sendCommand('/color/0?turn=on&effect='+ Number(args.effect) +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+      })
+
+    // SHELLY 2(.5) ROLLER SHUTTER
+    new Homey.FlowCardAction('moveRollerShutter')
+      .register()
+      .registerRunListener((args, state) => {
+        return util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.move_duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+      })
+
+    new Homey.FlowCardAction('moveRollerShutterOffset')
+      .register()
+      .registerRunListener((args, state) => {
+        return util.sendCommand('/roller/0?go='+ args.direction +'&offset='+ args.offset +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
 
     // SHELLY DIMMER
