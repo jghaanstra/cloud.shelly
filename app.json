@@ -131,11 +131,11 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{host}}",
+      "id": "{{txt.id}}",
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shellyplug-"
@@ -150,11 +150,11 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{host}}",
+      "id": "{{txt.id}}",
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shellyplug-s-"
@@ -173,7 +173,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shelly1-"
@@ -192,7 +192,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shelly1pm-"
@@ -211,7 +211,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shellyswitch-"
@@ -230,7 +230,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shellyswitch25-"
@@ -245,11 +245,11 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{host}}",
+      "id": "{{txt.id}}",
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shelly4pro-"
@@ -268,7 +268,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shellyrgbw2-"
@@ -287,7 +287,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shellybulb-"
@@ -306,7 +306,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^ShellyBulbDuo-"
@@ -325,7 +325,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^ShellyVintage-"
@@ -344,7 +344,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shellyem-"
@@ -363,7 +363,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shellyem3-"
@@ -382,7 +382,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shellyht-"
@@ -401,7 +401,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shellyflood-"
@@ -420,7 +420,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shellydimmer-"
@@ -439,7 +439,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shellydw-"
@@ -458,7 +458,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shellysmoke-"
@@ -477,7 +477,7 @@
       "conditions": [
         [
           {
-            "field": "host",
+            "field": "txt.id",
             "match": {
               "type": "regex",
               "value": "^shellyix3-"
@@ -950,8 +950,22 @@
 			"capabilities": [
 				"windowcoverings_state",
 				"windowcoverings_set",
-				"measure_power"
+				"measure_power",
+        "button.sethalfwayposition"
 			],
+      "capabilitiesOptions": {
+        "button.sethalfwayposition": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Set the optical middle percentage",
+						"nl": "Instellen percentage optische midden"
+					},
+          "desc": {
+  					"en": "Use this card if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action card to save this position.",
+  					"nl": "Gebruik deze actie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie card uit om de positie op te slaan."
+  				},
+				}
+      },
       "pair": [
         {
           "id": "list_devices",
@@ -1047,10 +1061,10 @@
             {
               "id": "halfway",
               "type": "number",
-              "value": 50,
+              "value": 0.5,
               "attr": {
-                "min": 1,
-                "max": 99
+                "min": 0.01,
+                "max": 0.99
               },
               "label": {
                 "en": "Percentage representing optical middle",
@@ -1204,8 +1218,22 @@
 			"capabilities": [
 				"windowcoverings_state",
 				"windowcoverings_set",
-				"measure_power"
+				"measure_power",
+        "button.sethalfwayposition"
 			],
+      "capabilitiesOptions": {
+        "button.sethalfwayposition": {
+          "maintenanceAction": true,
+					"title": {
+						"en": "Set the optical middle percentage",
+						"nl": "Instellen percentage optische midden"
+					},
+          "desc": {
+  					"en": "Use this card if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action card to save this position.",
+  					"nl": "Gebruik deze actie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie card uit om de positie op te slaan."
+  				},
+				}
+      },
       "pair": [
         {
           "id": "list_devices",
@@ -1301,10 +1329,10 @@
             {
               "id": "halfway",
               "type": "number",
-              "value": 50,
+              "value": 0.5,
               "attr": {
-                "min": 1,
-                "max": 99
+                "min": 0.01,
+                "max": 0.99
               },
               "label": {
                 "en": "Percentage representing optical middle",
@@ -4055,28 +4083,6 @@
 							"nl": "Duur in seconden"
 						}
 					},
-					{
-						"name": "device",
-						"type": "device",
-						"placeholder": {
-							"en": "Select Shelly 2",
-							"nl": "Selecteer Shelly 2"
-						},
-						"filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
-					}
-				]
-			},
-      {
-				"id": "rollerShutterHalfway",
-				"title": {
-					"en": "Set the optical middle percentage",
-					"nl": "Instellen percentage optische midden"
-				},
-				"hint": {
-					"en": "Use this card if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action card to save this position.",
-					"nl": "Gebruik deze actie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie card uit om de positie op te slaan."
-				},
-				"args": [
 					{
 						"name": "device",
 						"type": "device",

@@ -12,12 +12,6 @@ class ShellyPlugSDevice extends Homey.Device {
     this.setAvailable();
 
     // ADD MISSING CAPABILITIES
-    if (this.hasCapability('button.triggers')) {
-      this.removeCapability('button.triggers');
-    }
-    if (this.hasCapability('button.removetriggers')) {
-      this.removeCapability('button.removetriggers');
-    }
     if (!this.hasCapability('button.callbackevents')) {
       this.addCapability('button.callbackevents');
     }

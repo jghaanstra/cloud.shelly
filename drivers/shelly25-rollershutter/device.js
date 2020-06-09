@@ -9,6 +9,11 @@ class Shelly25RollerShutterDevice extends Homey.Device {
     this.pollDevice();
     this.setAvailable();
 
+    // ADD MISSING CAPABILITIES
+    if (!this.hasCapability('button.sethalfwayposition')) {
+      this.addCapability('button.sethalfwayposition');
+    }
+
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('windowcoverings_state', (value, opts) => {
       if (value == 'idle') {
@@ -24,6 +29,7 @@ class Shelly25RollerShutterDevice extends Homey.Device {
 
     this.registerCapabilityListener('windowcoverings_set', (value, opts) => {
       console.log('requested position:', value);
+      console.log('saved halfway setting:', this.getSetting('halfway'));
       if (this.getSetting('halfway') != 0.5) {
         var position = (((1 - (2 * Math.abs(0.5 - value))) * ((this.getSetting('halfway') - 50 ) / 100)) * 100);
         console.log('newly calculated position based on optical middle:', position);
@@ -32,6 +38,20 @@ class Shelly25RollerShutterDevice extends Homey.Device {
       }
 
       return util.sendCommand('/roller/0?go=to_pos&roller_pos='+ position, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    });
+
+    this.registerCapabilityListener('button.sethalfwayposition', async () => {
+      util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
+        .then(result => {
+          var position = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
+          console.log('setting optical middle to:', position);
+          this.setSettings({'halfway':  position});
+          return true;
+        })
+        .catch(error => {
+          this.log(error);
+          return false;
+        })
     });
 
   }
@@ -105,20 +125,6 @@ class Shelly25RollerShutterDevice extends Homey.Device {
           this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
         })
     }, 63000);
-  }
-
-  setHalfwayPosition() {
-    util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
-      .then(result => {
-        var position = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
-        console.log('setting optical middle to:', position);
-        this.setSetting({'halfway':  position});
-        return true;
-      })
-      .catch(error => {
-        this.log(error);
-        return false;
-      })
   }
 
 }
