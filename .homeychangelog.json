@@ -85,5 +85,8 @@
   },
   "1.21.0": {
     "en": "BREAKING CHANGES: Deprecated the device \"Action event\" triggercard and replaced it with a generic \"Action event\" card which is not device specific but contains the device name as token. This is easier to maintain. Please update your flows by replacing the device specific card with the triggercard from the app. The functionality for the device specific card will be removed with the next major release. Also added support for the new Shelly i3 which was released two days ago, thanx to domotica-shop.nl for sending me a device. Also added a new triggercard that can trigger a flow when a device is unreachable for a specified number of minutes (under device settings). This is only available for non-battery operated devices that are being polled for their status. And also lots a code refactoring for easier maintenance. "
+  },
+  "1.21.1": {
+    "en": "Added a parameter for the Shelly 2(.5) Roller Shutter which allows you to configure the optical middle as 50%. Useful for roller shutters that do not move the blinds linear and where 50% is not the optical middle. The optical middle can be set under the device maintenance actions. Also added an action card for the Shelly 2(.5) for moving the blinds with an offset percentage. And added an action card for the Shelly 2(.5) for which fires and intelligent action, it will stop the roller shutter when it's moving, opens it if closed and closes it if opened."
   }
 }

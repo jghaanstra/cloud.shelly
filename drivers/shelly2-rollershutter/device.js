@@ -17,7 +17,7 @@ class Shelly2RollerShutterDevice extends Homey.Device {
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('windowcoverings_state', (value, opts) => {
       if (value !== 'idle' && value !== this.getStoreValue('last_action')) {
-        this.setStoreValue('last_action', state);
+        this.setStoreValue('last_action', value);
       }
 
       if (value == 'idle') {
