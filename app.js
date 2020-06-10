@@ -68,12 +68,26 @@ class ShellyApp extends Homey.App {
     new Homey.FlowCardAction('moveRollerShutter')
       .register()
       .registerRunListener((args, state) => {
+        if (args.direction == 'open') {
+          args.device.setStoreValue('last_action', 'up');
+          args.device.setCapabilityValue('windowcoverings_state','up');
+        } else if (args.direction == 'close') {
+          args.device.setStoreValue('last_action', 'down');
+          args.device.setCapabilityValue('windowcoverings_state','down');
+        }
         return util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.move_duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
 
     new Homey.FlowCardAction('moveRollerShutterOffset')
       .register()
       .registerRunListener((args, state) => {
+        if (args.direction == 'open') {
+          args.device.setStoreValue('last_action', 'up');
+          args.device.setCapabilityValue('windowcoverings_state','up');
+        } else if (args.direction == 'close') {
+          args.device.setStoreValue('last_action', 'down');
+          args.device.setCapabilityValue('windowcoverings_state','down');
+        }
         return util.sendCommand('/roller/0?go='+ args.direction +'&offset='+ args.offset +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
 
@@ -81,10 +95,15 @@ class ShellyApp extends Homey.App {
       .register()
       .registerRunListener((args, state) => {
         if (args.device.getCapabilityValue('windowcoverings_state') !== 'idle') {
+          args.device.setCapabilityValue('windowcoverings_state','idle');
           return util.sendCommand('/roller/0?go=stop', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         } else if (args.device.getStoreValue('last_action') == 'up') {
+          args.device.setStoreValue('last_action', 'down');
+          args.device.setCapabilityValue('windowcoverings_state','down');
           return util.sendCommand('/roller/0?go=close', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         } else if (args.device.getStoreValue('last_action') == 'down') {
+          args.device.setStoreValue('last_action', 'up');
+          args.device.setCapabilityValue('windowcoverings_state','up');
           return util.sendCommand('/roller/0?go=open', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         } else {
           return false;
