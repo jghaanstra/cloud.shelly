@@ -13,6 +13,12 @@ class Shelly2RollerShutterDevice extends Homey.Device {
     if (!this.hasCapability('button.sethalfwayposition')) {
       this.addCapability('button.sethalfwayposition');
     }
+	if (!this.hasCapability('button.callbackevents')) {
+      this.addCapability('button.callbackevents');
+    }
+    if (!this.hasCapability('button.removecallbackevents')) {
+      this.addCapability('button.removecallbackevents');
+    }
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('windowcoverings_state', (value, opts) => {
@@ -56,6 +62,37 @@ class Shelly2RollerShutterDevice extends Homey.Device {
           this.log(error);
           return false;
         })
+    });
+	
+	this.registerCapabilityListener('button.callbackevents', async () => {
+      var homeyip = await util.getHomeyIp();
+      var roller_open_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_open_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly25/'+ this.getData().id +'/roller_open/';
+      var roller_close_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_close_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly25/'+ this.getData().id +'/roller_close/';
+      var roller_stop_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_stop_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly25/'+ this.getData().id +'/roller_stop/';
+      
+      try {
+        await util.sendCommand(roller_open_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand(roller_close_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand(roller_stop_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        return;
+      } catch (error) {
+        throw new Error(error);
+      }
+    });
+
+    this.registerCapabilityListener('button.removecallbackevents', async () => {
+      var roller_open_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_open_url=null';
+      var roller_close_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_close_url=null';
+      var roller_stop_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_stop_url=null';
+
+      try {
+        await util.sendCommand(roller_open_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand(roller_close_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await util.sendCommand(roller_stop_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        return;
+      } catch (error) {
+        throw new Error(error);
+      }
     });
 
   }
