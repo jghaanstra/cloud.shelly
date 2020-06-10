@@ -82,6 +82,9 @@ class Shelly25RollerShutterDevice extends Homey.Device {
           } else if ( result.rollers[0].state == 'close' ) {
             var state = 'down';
           }
+          if (state !== 'idle' && state !== this.getStoreValue('last_action')) {
+            this.setStoreValue('last_action', state);
+          }
 
           var power = result.rollers[0].power;
           var position = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
