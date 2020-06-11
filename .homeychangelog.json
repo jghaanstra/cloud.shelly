@@ -91,5 +91,8 @@
   },
   "1.22.0": {
     "en": "Added a parameter for the Shelly 2(.5) Roller Shutter which allows you to configure the optical middle as 50%. Useful for roller shutters that do not move the blinds linear and where 50% is not the optical middle. The optical middle can be set under the device maintenance actions. Also added an action card for the Shelly 2(.5) for moving the blinds with an offset percentage. And added an action card for the Shelly 2(.5) for which fires and intelligent action, it will stop the roller shutter when it's moving, opens it if closed and closes it if opened."
+  },
+  "1.22.1": {
+    "en": "Added callback events for the Shelly 2(.5) Roller Shutter."
   }
 }

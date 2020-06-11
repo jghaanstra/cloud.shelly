@@ -13,7 +13,7 @@ class Shelly2RollerShutterDevice extends Homey.Device {
     if (!this.hasCapability('button.sethalfwayposition')) {
       this.addCapability('button.sethalfwayposition');
     }
-	if (!this.hasCapability('button.callbackevents')) {
+	  if (!this.hasCapability('button.callbackevents')) {
       this.addCapability('button.callbackevents');
     }
     if (!this.hasCapability('button.removecallbackevents')) {
@@ -63,13 +63,13 @@ class Shelly2RollerShutterDevice extends Homey.Device {
           return false;
         })
     });
-	
+
 	this.registerCapabilityListener('button.callbackevents', async () => {
       var homeyip = await util.getHomeyIp();
       var roller_open_url = '/settings/roller/'+ this.getStoreValue('channel') +'?roller_open_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly25/'+ this.getData().id +'/roller_open/';
       var roller_close_url = '/settings/roller/'+ this.getStoreValue('channel') +'?roller_close_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly25/'+ this.getData().id +'/roller_close/';
       var roller_stop_url = '/settings/roller/'+ this.getStoreValue('channel') +'?roller_stop_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly25/'+ this.getData().id +'/roller_stop/';
-      
+
       try {
         await util.sendCommand(roller_open_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         await util.sendCommand(roller_close_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
