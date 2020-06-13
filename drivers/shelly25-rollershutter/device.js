@@ -9,6 +9,11 @@ class Shelly25RollerShutterDevice extends Homey.Device {
     this.pollDevice();
     this.setAvailable();
 
+    // FIX FOR INCORRECT HALFWAY SETTING
+    if (this.getSetting('halfway') == 50) {
+      this.setSettings({'halfway': 0.5});
+    }
+
     // ADD MISSING CAPABILITIES
     if (!this.hasCapability('button.sethalfwayposition')) {
       this.addCapability('button.sethalfwayposition');
@@ -69,7 +74,7 @@ class Shelly25RollerShutterDevice extends Homey.Device {
       var roller_open_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_open_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly25/'+ this.getData().id +'/roller_open/';
       var roller_close_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_close_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly25/'+ this.getData().id +'/roller_close/';
       var roller_stop_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_stop_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly25/'+ this.getData().id +'/roller_stop/';
-      
+
       try {
         await util.sendCommand(roller_open_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         await util.sendCommand(roller_close_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));

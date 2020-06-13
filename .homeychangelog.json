@@ -94,5 +94,8 @@
   },
   "1.22.1": {
     "en": "Added callback events for the Shelly 2(.5) Roller Shutter."
+  },
+  "1.22.2": {
+    "en": "Fix for Shelly 2(.5) where setting position returns an error due to incorrect device settings."
   }
 }

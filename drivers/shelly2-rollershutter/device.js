@@ -9,6 +9,11 @@ class Shelly2RollerShutterDevice extends Homey.Device {
     this.pollDevice();
     this.setAvailable();
 
+    // FIX FOR INCORRECT HALFWAY SETTING
+    if (this.getSetting('halfway') == 50) {
+      this.setSettings({'halfway': 0.5});
+    }
+
     // ADD MISSING CAPABILITIES
     if (!this.hasCapability('button.sethalfwayposition')) {
       this.addCapability('button.sethalfwayposition');
