@@ -466,7 +466,7 @@
             "field": "txt.id",
             "match": {
               "type": "regex",
-              "value": "^shellydimmer-|shellydimmer2"
+              "value": "^shellydimmer2?-"
             }
           }
         ]
