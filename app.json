@@ -46,7 +46,7 @@
       "Shelly i3"
     ]
   },
-  "version": "1.22.2",
+  "version": "1.22.3",
   "compatibility": ">=3.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -466,7 +466,7 @@
             "field": "txt.id",
             "match": {
               "type": "regex",
-              "value": "^shellydimmer-"
+              "value": "^shellydimmer-|shellydimmer2"
             }
           }
         ]
@@ -3106,8 +3106,8 @@
       "id": "shellydimmer",
       "discovery": "shellydimmer",
       "name": {
-        "en": "Shelly Dimmer/SL",
-        "nl": "Shelly Dimmer/SL"
+        "en": "Shelly Dimmer (2)",
+        "nl": "Shelly Dimmer (2)"
       },
       "images": {
         "large": "drivers/shellydimmer/assets/images/large.jpg",

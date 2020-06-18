@@ -97,5 +97,8 @@
   },
   "1.22.2": {
     "en": "Fix for Shelly 2(.5) where setting position returns an error due to incorrect device settings."
+  },
+  "1.22.3": {
+    "en": "Add support for Shelly Dimmer 2"
   }
 }
