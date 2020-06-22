@@ -25,11 +25,8 @@ module.exports = [
           device.setCapabilityValue('alarm_water', false);
         }
 
-        // TODO: DEPRECATED, WILL BE REMOVED IN NEXT MAJOR RELEASE
-        device.triggerCallbackEvents(args.params.action);
-
         let callbackTrigger = new Homey.FlowCardTrigger('triggerCallbacks');
-        callbackTrigger.register().trigger({"device": device.getName(), "action": args.params.action});
+        callbackTrigger.register().trigger({"id": args.params.deviceid, "device": device.getName(), "action": args.params.action});
 
         callback(false, 'OK');
       })().catch(err => {
@@ -44,7 +41,7 @@ module.exports = [
 		public   : true,
 		fn: function(args, callback) {
       (async () => {
-        console.log(args);
+        console.log(args); // leave this in for sending debug reports
         let device = await Homey.ManagerDrivers.getDriver(args.params.devicetype).getDevice({'id': args.params.deviceid});
         await device.updateReportStatus(device, args.query);
         callback(false, 'OK');

@@ -6,8 +6,6 @@ const util = require('/lib/util.js');
 class ShellydwDevice extends Homey.Device {
 
   onInit() {
-    new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
-
     this.pollDevice();
     this.setAvailable();
 
@@ -104,10 +102,6 @@ class ShellydwDevice extends Homey.Device {
           this.log('Device asleep or disconnected');
         })
     }, 4000);
-  }
-
-  triggerCallbackEvents(action) {
-    return Homey.ManagerFlow.getCard('trigger', "triggerCallbackEvents").trigger(this, {"action": action}, {})
   }
 
 }

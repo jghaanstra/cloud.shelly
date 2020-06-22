@@ -6,8 +6,6 @@ const util = require('/lib/util.js');
 class Shelly2Device extends Homey.Device {
 
   onInit() {
-    new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
-
     this.setAvailable();
 
     // ADD MISSING CAPABILITIES
@@ -76,10 +74,6 @@ class Shelly2Device extends Homey.Device {
 
   onDeleted() {
     return Homey.ManagerDrivers.getDriver('shelly2').loadDevices();
-  }
-
-  triggerCallbackEvents(action) {
-    return Homey.ManagerFlow.getCard('trigger', "triggerCallbackEvents").trigger(this, {"action": action}, {})
   }
 
 }

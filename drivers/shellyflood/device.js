@@ -6,8 +6,6 @@ const util = require('/lib/util.js');
 class ShellyFloodDevice extends Homey.Device {
 
   onInit() {
-    new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
-
     this.setAvailable();
 
     // ADD MISSING CAPABILITIES
@@ -67,10 +65,6 @@ class ShellyFloodDevice extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
-  triggerCallbackEvents(action) {
-    return Homey.ManagerFlow.getCard('trigger', "triggerCallbackEvents").trigger(this, {"action": action}, {})
-  }
-
   updateReportStatus(device, status) {
     var alarm = Number(status.flood) == 0 ? false : true;
 

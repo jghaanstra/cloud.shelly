@@ -6,7 +6,6 @@ const util = require('/lib/util.js');
 class ShellyRGBW2WhiteDevice extends Homey.Device {
 
   onInit() {
-
     this.setAvailable();
 
     // LISTENERS FOR UPDATING CAPABILITIES

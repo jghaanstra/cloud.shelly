@@ -100,5 +100,8 @@
   },
   "1.22.3": {
     "en": "Add support for Shelly Dimmer 2"
+  },
+  "1.23.0": {
+    "en": "Added device ID to callback trigger card and removed the old button events card which was deprecated since the last couple of app versions."
   }
 }

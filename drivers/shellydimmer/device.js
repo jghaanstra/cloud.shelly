@@ -8,7 +8,6 @@ class ShellyDimmerDevice extends Homey.Device {
   onInit() {
     new Homey.FlowCardTriggerDevice('triggerDimmerInput1').register();
     new Homey.FlowCardTriggerDevice('triggerDimmerInput2').register();
-    new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
 
     this.pollDevice();
     this.setAvailable();
@@ -211,10 +210,6 @@ class ShellyDimmerDevice extends Homey.Device {
           this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
         })
     }, 63000);
-  }
-
-  triggerCallbackEvents(action) {
-    return Homey.ManagerFlow.getCard('trigger', "triggerCallbackEvents").trigger(this, {"action": action}, {})
   }
 
 }

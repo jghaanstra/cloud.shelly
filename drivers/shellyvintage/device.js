@@ -6,8 +6,6 @@ const util = require('/lib/util.js');
 class ShellyVintageDevice extends Homey.Device {
 
   onInit() {
-    new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
-
     this.pollDevice();
     this.setAvailable();
 
@@ -132,10 +130,6 @@ class ShellyVintageDevice extends Homey.Device {
           this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
         })
     }, 63000);
-  }
-
-  triggerCallbackEvents(action) {
-    return Homey.ManagerFlow.getCard('trigger', "triggerCallbackEvents").trigger(this, {"action": action}, {})
   }
 
 }

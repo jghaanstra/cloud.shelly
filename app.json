@@ -46,7 +46,7 @@
       "Shelly i3"
     ]
   },
-  "version": "1.22.3",
+  "version": "1.23.0",
   "compatibility": ">=3.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -3776,36 +3776,6 @@
         ]
       },
       {
-        "id": "triggerCallbackEvents",
-        "deprecated": true,
-        "title": {
-          "en": "Action event",
-          "nl": "Actie gebeurtenis"
-        },
-        "tokens": [
-          {
-            "name": "action",
-            "type": "string",
-            "title": {
-              "en": "Action",
-              "nl": "Actie"
-            },
-            "example": "longpush"
-          }
-        ],
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
-            "filter": "driver_id=shelly1|shelly1pm|shellydimmer|shelly2|shelly25|shelly-plug|shelly-plug-s|shellyem|shelly3em|shellydw|shellyduo|shellyflood|shellyi3&capabilities=button.callbackevents"
-          }
-        ]
-      },
-      {
         "id": "triggerCallbacks",
         "title": {
           "en": "Action event",
@@ -3813,11 +3783,20 @@
         },
         "tokens": [
           {
+            "name": "id",
+            "type": "string",
+            "title": {
+              "en": "Device ID",
+              "nl": "Apparaat ID"
+            },
+            "example": "shelly1-8D4C25"
+          },
+          {
             "name": "device",
             "type": "string",
             "title": {
-              "en": "Device",
-              "nl": "Apparaat"
+              "en": "Name",
+              "nl": "Naam"
             },
             "example": "Shelly 1"
           },

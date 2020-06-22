@@ -9,7 +9,6 @@ class Shelly3EmDevice extends Homey.Device {
     new Homey.FlowCardTriggerDevice('triggerMeterPowerConsumed').register();
     new Homey.FlowCardTriggerDevice('triggerMeterPowerReturned').register();
     new Homey.FlowCardTriggerDevice('triggerMeterPowerFactor').register();
-    new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
 
     this.setAvailable();
 
@@ -63,10 +62,6 @@ class Shelly3EmDevice extends Homey.Device {
 
   onDeleted() {
     return Homey.ManagerDrivers.getDriver('shelly3em').loadDevices();
-  }
-
-  triggerCallbackEvents(action) {
-    return Homey.ManagerFlow.getCard('trigger', "triggerCallbackEvents").trigger(this, {"action": action}, {})
   }
 
 }

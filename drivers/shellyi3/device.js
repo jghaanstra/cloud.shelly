@@ -6,8 +6,6 @@ const util = require('/lib/util.js');
 class Shellyi3Device extends Homey.Device {
 
   onInit() {
-    new Homey.FlowCardTriggerDevice('triggerCallbackEvents').register();
-
     this.registerCapabilityListener('button.callbackevents', async () => {
       this.addCallbackUrls();
     });
@@ -167,10 +165,6 @@ class Shellyi3Device extends Homey.Device {
     } catch (error) {
       throw new Error(error);
     }
-  }
-
-  triggerCallbackEvents(action) {
-    return Homey.ManagerFlow.getCard('trigger', "triggerCallbackEvents").trigger(this, {"action": action}, {})
   }
 
 }
