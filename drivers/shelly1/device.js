@@ -82,7 +82,9 @@ class Shelly1Device extends Homey.Device {
 
     const iconpath = "/userdata/" + this.getData().id +".svg";
     try {
-      fs.unlinkSync(iconpath)
+      if (fs.existsSync(iconpath)) {
+        fs.unlinkSync(iconpath);
+      }
     } catch (error) {
       this.log(error)
     }
