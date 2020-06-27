@@ -103,5 +103,8 @@
   },
   "1.23.0": {
     "en": "Added device ID to callback trigger card and removed the old button events card which was deprecated since the last couple of app versions."
+  },
+  "1.24.0": {
+    "en": "Added support for Shelly Gas and Shelly Button 1. Also added the option to add a custom device icon (.svg) during pairing for the Shelly Gas, Shelly Button 1, Shelly Plug, Shelly Plug-S, Shelly1 and Shelly 2. More devices will follow. If you want to use a custom icon for an existing devices re-pairing is required. It cant be changed after pairing."
   }
 }

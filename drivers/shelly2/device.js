@@ -74,6 +74,12 @@ class Shelly2Device extends Homey.Device {
 
   onDeleted() {
     return Homey.ManagerDrivers.getDriver('shelly2').loadDevices();
+
+    const iconpath = "/userdata/" + this.getData().id +".svg";
+    util.removeIcon(iconpath)
+      .catch(error => {
+        this.log(error);
+      });
   }
 
 }

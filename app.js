@@ -159,6 +159,31 @@ class ShellyApp extends Homey.App {
         }
       })
 
+    // SHELLY GAS
+    new Homey.FlowCardAction('actionGasSetVolume')
+      .register()
+      .registerRunListener((args, state) => {
+        return util.sendCommand('/settings/?set_volume='+ args.volume +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+      })
+
+    new Homey.FlowCardAction('actionGasMute')
+      .register()
+      .registerRunListener((args, state) => {
+        return util.sendCommand('/mute', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+      })
+
+    new Homey.FlowCardAction('actionGasUnmute')
+      .register()
+      .registerRunListener((args, state) => {
+        return util.sendCommand('/unmute', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+      })
+
+    new Homey.FlowCardAction('actionGasTest')
+      .register()
+      .registerRunListener((args, state) => {
+        return util.sendCommand('/self_test', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+      })
+
   }
 
 }

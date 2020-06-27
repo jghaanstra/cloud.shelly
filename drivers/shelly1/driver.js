@@ -96,8 +96,7 @@ class Shelly1Driver extends Homey.Driver {
               capabilities: ['onoff', 'button.callbackevents', 'button.removecallbackevents'],
               store: {
                 type: result.device.type
-              },
-              icon: deviceIcon
+              }
             }
             callback(null, result);
           } else {

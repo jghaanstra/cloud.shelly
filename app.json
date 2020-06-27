@@ -46,7 +46,7 @@
       "Shelly i3"
     ]
   },
-  "version": "1.23.0",
+  "version": "1.24.0",
   "compatibility": ">=3.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -164,6 +164,22 @@
       "units": {
         "en": "Pf",
         "nl": "Pf"
+      }
+    },
+    "gas_concentration": {
+      "type": "number",
+      "title": {
+        "en": "Gas Concentration",
+        "nl": "Gas concentratie"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/gas_concentration.svg",
+      "units": {
+        "en": "ppm",
+        "nl": "ppm"
       }
     }
   },
@@ -339,6 +355,25 @@
         ]
       ]
     },
+    "shellybutton1": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "txt.id",
+            "match": {
+              "type": "regex",
+              "value": "^shellybutton1-"
+            }
+          }
+        ]
+      ]
+    },
     "shellyduo": {
       "type": "mdns-sd",
       "mdns-sd": {
@@ -448,6 +483,25 @@
             "match": {
               "type": "regex",
               "value": "^shellyflood-"
+            }
+          }
+        ]
+      ]
+    },
+    "shellygas": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "txt.id",
+            "match": {
+              "type": "regex",
+              "value": "^shellygas-"
             }
           }
         ]
@@ -583,8 +637,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "get_device"
+            "next": "icon_select"
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -724,8 +781,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "get_device"
+            "next": "icon_select"
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -1047,8 +1107,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "get_device"
+            "next": "icon_select"
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -1187,8 +1250,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "get_device"
+            "next": "icon_select"
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -2234,6 +2300,132 @@
       ]
     },
     {
+      "id": "shellybutton1",
+      "discovery": "shellybutton1",
+      "name": {
+        "en": "Shelly Button 1",
+        "nl": "Shelly Button 1"
+      },
+      "images": {
+        "large": "drivers/shellybutton1/assets/images/large.jpg",
+        "small": "drivers/shellybutton1/assets/images/small.jpg"
+      },
+      "class": "button",
+      "capabilities": [
+        "measure_battery",
+        "measure_voltage",
+        "button.callbackevents",
+        "button.removecallbackevents"
+      ],
+      "capabilitiesOptions": {
+        "button.callbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Set URLs for callbacks",
+            "nl": "Instellen URL's voor callbacks"
+          },
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        },
+        "button.removecallbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Remove callback URLs for triggers",
+            "nl": "Verwijderen callback URL's voor triggers"
+          },
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        }
+      },
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ]
+      },
+      "pair": [
+        {
+          "id": "start",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Shelly Button1 settings",
+            "nl": "Shelly Button1 instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "shellyduo",
       "discovery": "shellyduo",
       "name": {
@@ -2987,6 +3179,147 @@
               "label": {
                 "en": "Polling Frequency",
                 "nl": "Polling frequentie"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shellygas",
+      "discovery": "shellygas",
+      "name": {
+        "en": "Shelly Gas",
+        "nl": "Shelly Gas"
+      },
+      "images": {
+        "large": "drivers/shellygas/assets/images/large.jpg",
+        "small": "drivers/shellygas/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_smoke",
+        "gas_concentration",
+        "button.callbackevents",
+        "button.removecallbackevents"
+      ],
+      "capabilitiesOptions": {
+        "button.callbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Set URLs for callbacks",
+            "nl": "Instellen URL's voor callbacks"
+          },
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        },
+        "button.removecallbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Remove callback URLs for triggers",
+            "nl": "Verwijderen callback URL's voor triggers"
+          },
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Shelly Gas settings",
+            "nl": "Shelly Gas instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            },
+            {
+              "id": "polling",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 5,
+                "max": 3600
+              },
+              "label": {
+                "en": "Polling Frequency",
+                "nl": "Polling frequentie"
+              }
+            },
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
               }
             }
           ]
@@ -3840,6 +4173,35 @@
             "example": "Error 401: not authenticated"
           }
         ]
+      },
+      {
+        "id": "triggerGasConcentration",
+        "title": {
+          "en": "Gas concentration changed",
+          "nl": "Gas concentratie gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "ppm",
+            "type": "number",
+            "title": {
+              "en": "Parts per million",
+              "nl": "Delen per miljoen"
+            },
+            "example": 3452
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellygas"
+          }
+        ]
       }
     ],
     "conditions": [
@@ -4470,6 +4832,85 @@
               "nl": "Selecteer Shelly"
             },
             "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyvintage|shellyi3"
+          }
+        ]
+      },
+      {
+        "id": "actionGasSetVolume",
+        "title": {
+          "en": "Set alarm volume",
+          "nl": "Instellen alarm volume"
+        },
+        "args": [
+          {
+            "name": "volume",
+            "type": "range",
+            "min": 0,
+            "max": 11,
+            "step": 1
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellygas"
+          }
+        ]
+      },
+      {
+        "id": "actionGasMute",
+        "title": {
+          "en": "Mute alarm",
+          "nl": "Dempen alarm"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellygas"
+          }
+        ]
+      },
+      {
+        "id": "actionGasUnmute",
+        "title": {
+          "en": "Unmute alarm",
+          "nl": "Dempen alarm uitschakelen"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellygas"
+          }
+        ]
+      },
+      {
+        "id": "actionGasTest",
+        "title": {
+          "en": "Test alarm",
+          "nl": "Alarm testen"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellygas"
           }
         ]
       }

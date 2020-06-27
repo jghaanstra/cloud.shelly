@@ -3,7 +3,7 @@
 const Homey = require('homey');
 const util = require('/lib/util.js');
 
-class Shelly1pmDriver extends Homey.Driver {
+class ShellyButton1Driver extends Homey.Driver {
 
   onPair(socket) {
     const discoveryStrategy = this.getDiscoveryStrategy();
@@ -15,7 +15,7 @@ class Shelly1pmDriver extends Homey.Driver {
     socket.on('list_devices', (data, callback) => {
       const devices = Object.values(discoveryResults).map(discoveryResult => {
         return {
-          name: 'Shelly1PM ['+ discoveryResult.address +']',
+          name: 'Shelly Button 1 ['+ discoveryResult.address +']',
           data: {
             id: discoveryResult.id,
           }
@@ -40,17 +40,15 @@ class Shelly1pmDriver extends Homey.Driver {
       util.sendCommand('/shelly', discoveryResult.address, '', '')
         .then(result => {
           deviceArray = {
-            name: 'Shelly1PM ['+ discoveryResult.address +']',
+            name: 'Shelly Button 1 ['+ discoveryResult.address +']',
             data: {
               id: discoveryResult.id,
             },
             settings: {
               address  : discoveryResult.address,
               username : '',
-              password : '',
-              polling  : 5
+              password : ''
             },
-            capabilities: ["onoff", "measure_power", "meter_power_wmin", "meter_power", "measure_temperature", "button.callbackevents", "button.removecallbackevents"],
             store: {
               type: result.type
             },
@@ -81,19 +79,17 @@ class Shelly1pmDriver extends Homey.Driver {
       util.sendCommand('/settings', data.address, data.username, data.password)
         .then(result => {
           var hostname = result.device.hostname;
-          if (hostname.startsWith('shelly1pm-')) {
+          if (hostname.startsWith('shellybutton1-')) {
             deviceArray = {
-              name: 'Shelly1PM ['+ data.address +']',
+              name: 'Shelly Button 1 ['+ data.address +']',
               data: {
                 id: result.device.hostname,
               },
               settings: {
                 address  : data.address,
                 username : data.username,
-                password : data.password,
-                polling  : 5
+                password : data.password
               },
-              capabilities: ["onoff", "measure_power", "meter_power_wmin", "meter_power", "measure_temperature", "button.callbackevents", "button.removecallbackevents"],
               store: {
                 type: result.device.type
               }
@@ -123,4 +119,4 @@ class Shelly1pmDriver extends Homey.Driver {
 
 }
 
-module.exports = Shelly1pmDriver;
+module.exports = ShellyButton1Driver;

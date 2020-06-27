@@ -21,6 +21,7 @@
     "connect": "Connect",
     "success": "Shelly device added succesfully",
     "startpairing": "First pair the device with the Shelly smartphone app. Then press the physical button on your Shelly sensor to wake up the device. The LED inside the sensor stops blinking once it has connected to your WiFi and is then ready for pairing. Then you can click the next button below.",
+    "startpairingbutton": "First pair the device with the Shelly smartphone app. Connect a USB cable to the button to ensure it's powered and connected with your WiFi before continuing.",
     "titleselection": "What do you want to do?",
     "nodevices": "No devices have been discovered. You can try again or use manual pairing if you know the IP address of your Shelly device.",
     "again": "Try Again",

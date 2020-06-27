@@ -10,6 +10,7 @@ class ShellyPlugDriver extends Homey.Driver {
     const discoveryResults = discoveryStrategy.getDiscoveryResults();
     let selectedDeviceId;
     let deviceArray = {};
+    let deviceIcon = 'icon.svg';
 
     socket.on('list_devices', (data, callback) => {
       const devices = Object.values(discoveryResults).map(discoveryResult => {
@@ -51,7 +52,8 @@ class ShellyPlugDriver extends Homey.Driver {
             },
             store: {
               type: result.type
-            }
+            },
+            icon: deviceIcon
           }
           if (result.auth) {
             socket.showView('login_credentials');
@@ -98,6 +100,17 @@ class ShellyPlugDriver extends Homey.Driver {
           } else {
             callback(null, 'incorrect device');
           }
+        })
+        .catch(error => {
+          callback(error, null);
+        })
+    });
+
+    socket.on('save_icon', (data, callback) => {
+      util.uploadIcon(data, selectedDeviceId)
+        .then(result => {
+          deviceIcon = "../../../userdata/"+ selectedDeviceId +".svg";
+          callback(null, 'success');
         })
         .catch(error => {
           callback(error, null);
