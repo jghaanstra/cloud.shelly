@@ -532,6 +532,287 @@
   },
   "drivers": [
     {
+      "id": "shelly-plug",
+      "discovery": "shelly-plug",
+      "name": {
+        "en": "Shelly Plug",
+        "nl": "Shelly Plug"
+      },
+      "images": {
+        "large": "drivers/shelly-plug/assets/images/large.jpg",
+        "small": "drivers/shelly-plug/assets/images/small.jpg"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power_wmin",
+        "meter_power",
+        "button.callbackevents",
+        "button.removecallbackevents"
+      ],
+      "capabilitiesOptions": {
+        "button.callbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Set URLs for callbacks",
+            "nl": "Instellen URL's voor callbacks"
+          },
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        },
+        "button.removecallbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Remove callback URLs for triggers",
+            "nl": "Verwijderen callback URL's voor triggers"
+          },
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Shelly Plug settings",
+            "nl": "Shelly Plug instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            },
+            {
+              "id": "polling",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 5,
+                "max": 3600
+              },
+              "label": {
+                "en": "Polling Frequency",
+                "nl": "Polling frequentie"
+              }
+            },
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shelly-plug-s",
+      "discovery": "shelly-plug-s",
+      "name": {
+        "en": "Shelly Plug S",
+        "nl": "Shelly Plug S"
+      },
+      "images": {
+        "large": "drivers/shelly-plug-s/assets/images/large.jpg",
+        "small": "drivers/shelly-plug-s/assets/images/small.jpg"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power_wmin",
+        "meter_power",
+        "measure_temperature",
+        "button.callbackevents",
+        "button.removecallbackevents"
+      ],
+      "capabilitiesOptions": {
+        "button.callbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Set URLs for callbacks",
+            "nl": "Instellen URL's voor callbacks"
+          },
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        },
+        "button.removecallbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Remove callback URLs for triggers",
+            "nl": "Verwijderen callback URL's voor triggers"
+          },
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "get_device"
+          }
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Shelly Plug S settings",
+            "nl": "Shelly Plug S instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            },
+            {
+              "id": "polling",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 5,
+                "max": 3600
+              },
+              "label": {
+                "en": "Polling Frequency",
+                "nl": "Polling frequentie"
+              }
+            },
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "shelly1",
       "discovery": "shelly1",
       "name": {
@@ -601,8 +882,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "get_device"
+            "next": "icon_select"
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -1428,287 +1712,6 @@
               "label": {
                 "en": "Percentage representing optical middle",
                 "nl": "Percentage overeenkomende het optische midden"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "shelly-plug",
-      "discovery": "shelly-plug",
-      "name": {
-        "en": "Shelly Plug",
-        "nl": "Shelly Plug"
-      },
-      "images": {
-        "large": "drivers/shelly-plug/assets/images/large.jpg",
-        "small": "drivers/shelly-plug/assets/images/small.jpg"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff",
-        "measure_power",
-        "meter_power_wmin",
-        "meter_power",
-        "button.callbackevents",
-        "button.removecallbackevents"
-      ],
-      "capabilitiesOptions": {
-        "button.callbackevents": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Set URLs for callbacks",
-            "nl": "Instellen URL's voor callbacks"
-          },
-          "desc": {
-            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
-            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
-          }
-        },
-        "button.removecallbackevents": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Remove callback URLs for triggers",
-            "nl": "Verwijderen callback URL's voor triggers"
-          },
-          "desc": {
-            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
-            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
-          }
-        }
-      },
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "get_device"
-          }
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Shelly Plug settings",
-            "nl": "Shelly Plug instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            },
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "shelly-plug-s",
-      "discovery": "shelly-plug-s",
-      "name": {
-        "en": "Shelly Plug S",
-        "nl": "Shelly Plug S"
-      },
-      "images": {
-        "large": "drivers/shelly-plug-s/assets/images/large.jpg",
-        "small": "drivers/shelly-plug-s/assets/images/small.jpg"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff",
-        "measure_power",
-        "meter_power_wmin",
-        "meter_power",
-        "measure_temperature",
-        "button.callbackevents",
-        "button.removecallbackevents"
-      ],
-      "capabilitiesOptions": {
-        "button.callbackevents": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Set URLs for callbacks",
-            "nl": "Instellen URL's voor callbacks"
-          },
-          "desc": {
-            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
-            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
-          }
-        },
-        "button.removecallbackevents": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Remove callback URLs for triggers",
-            "nl": "Verwijderen callback URL's voor triggers"
-          },
-          "desc": {
-            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
-            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
-          }
-        }
-      },
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "get_device"
-          }
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Shelly Plug S settings",
-            "nl": "Shelly Plug S instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            },
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
               }
             }
           ]

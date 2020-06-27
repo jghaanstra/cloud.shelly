@@ -28,8 +28,11 @@
     "wrongdevice": "Het Shelly apparaat dat je probeert te koppelen komt niet overeen met het gekozen Shelly apparaat in het apparaten toevoegscherm."
   },
   "icon_select": {
-    "title": "Selecteer en icoon",
-    "intro": "Selecteer welk icoon die je wilt gebruiken voor je Shelly Vintage."
+    "title": "Selecteer icoon",
+    "intro": "Selecteer welk icoon die je wilt gebruiken voor je Shelly Vintage.",
+    "intro_upload": "Als je een eigen icoon voor je apparaat wilt gebruiken kan je deze hier uploaden. Het icoon moet in .svg format zijn.",
+    "default": "Gebruik standaard",
+    "save": "Opslaan"
   },
   "connect": {
     "intro": "Als je de Shelly RGBW2 in CW/WW mode gebruikt, kan je als volgt twee LED-strips aansluiten:",

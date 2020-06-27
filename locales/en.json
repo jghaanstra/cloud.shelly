@@ -28,8 +28,11 @@
     "wrongdevice": "The Shelly device you are trying to pair does not match with the selected Shelly device in the pairing wizard."
   },
   "icon_select": {
-    "title": "Select an icon",
-    "intro": "Select which icon you want to use for your Shelly Vintage."
+    "title": "Select icon",
+    "intro": "Select which icon you want to use for your Shelly Vintage.",
+    "intro_upload": "If you wish to use a custom icon for your device you can upload it here. The icon needs to be in .svg format.",
+    "default": "Use default",
+    "save": "Save"
   },
   "connect": {
     "intro": "Using the Shelly RGBW2 in CW/WW mode enables you to connect 2 LED strips as follows:",

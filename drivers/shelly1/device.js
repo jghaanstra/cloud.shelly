@@ -2,6 +2,7 @@
 
 const Homey = require('homey');
 const util = require('/lib/util.js');
+const fs = require('fs');
 
 class Shelly1Device extends Homey.Device {
 
@@ -78,6 +79,13 @@ class Shelly1Device extends Homey.Device {
   onDeleted() {
     clearInterval(this.pollingInterval);
     clearInterval(this.pingInterval);
+
+    const iconpath = "/userdata/" + this.getData().id +".svg";
+    try {
+      fs.unlinkSync(iconpath)
+    } catch (error) {
+      this.log(error)
+    }
   }
 
   // HELPER FUNCTIONS
