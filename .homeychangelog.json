@@ -106,5 +106,8 @@
   },
   "1.24.0": {
     "en": "Added support for Shelly Gas and Shelly Button 1. Also added the option to add a custom device icon (.svg) during pairing for the Shelly Gas, Shelly Button 1, Shelly Plug, Shelly Plug-S, Shelly1 and Shelly 2. More devices will follow. If you want to use a custom icon for an existing devices re-pairing is required. It cant be changed after pairing."
+  },
+  "1.25.0": {
+    "en": "Added the option for custom device icons (.svg) for all devices. If you want to use a custom icon for an existing devices re-pairing is required. It cant be changed after pairing. Also optimized the way the action events / callbacks work. For the Shelly Door/Window sensor this means the events open_dark and open_twilight have changed to dark and twilight. And replaced the polling of the Shelly H&T sensor to using the report url callback functionality. Also reduced lines of code by re-using templates."
   }
 }

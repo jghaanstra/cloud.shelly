@@ -23,6 +23,14 @@ class Shelly4ProDevice extends Homey.Device {
 
   onDeleted() {
     return Homey.ManagerDrivers.getDriver('shelly4pro').loadDevices();
+
+    if (this.getStoreValue('channel') == 0) {
+      const iconpath = "/userdata/" + this.getData().id +".svg";
+      util.removeIcon(iconpath)
+        .catch(error => {
+          this.log(error);
+        });
+    }
   }
 
 }

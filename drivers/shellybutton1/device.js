@@ -2,6 +2,12 @@
 
 const Homey = require('homey');
 const util = require('/lib/util.js');
+const callbacks = [
+  'shortpush',
+  'double_shortpush',
+  'triple_shortpush',
+  'longpush'
+];
 
 class ShellyButton1Device extends Homey.Device {
 
@@ -10,40 +16,31 @@ class ShellyButton1Device extends Homey.Device {
     this.setAvailable();
 
     this.registerCapabilityListener('button.callbackevents', async () => {
-      this.addCallbackUrls();
+      return await util.addCallbackEvents('/settings/input/0?', callbacks, 'shellybutton1', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerCapabilityListener('button.removecallbackevents', async () => {
-      var shortpush_url = '/settings/input/0?shortpush_url=null';
-      var double_shortpush_url = '/settings/input/0?double_shortpush_url=null';
-      var triple_shortpush_url = '/settings/input/0?triple_shortpush_url=null';
-      var longpush_url = '/settings/input/0?longpush_url=null';
-
-      try {
-        await util.sendCommand(shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(double_shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(triple_shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-
-        return;
-      } catch (error) {
-        throw new Error(error);
-      }
+      return await util.removeCallbackEvents('/settings/input/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
+
   }
 
   onAdded() {
-    this.addCallbackUrls();
+    return await util.addCallbackEvents('/settings/input/0?', callbacks, 'shellybutton1', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
-  onDeleted() {
-    clearInterval(this.pollingInterval);
-
-    const iconpath = "/userdata/" + this.getData().id +".svg";
-    util.removeIcon(iconpath)
-      .catch(error => {
-        this.log(error);
-      });
+  async onDeleted() {
+    try {
+      clearInterval(this.pollingInterval);
+      clearInterval(this.pingInterval);
+      const iconpath = "/userdata/" + this.getData().id +".svg";
+      await util.removeCallbackEvents('/settings/input/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      await util.removeIcon(iconpath);
+      return;
+    } catch (error) {
+      throw new Error(error);
+      this.log(error);
+    }
   }
 
   // HELPER FUNCTIONS
@@ -71,28 +68,6 @@ class ShellyButton1Device extends Homey.Device {
           this.log('Device asleep or disconnected');
         })
     }, 4000);
-  }
-
-  async addCallbackUrls() {
-    var homeyip = await util.getHomeyIp();
-
-    var shortpush_url = '/settings/input/0?shortpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellybutton1/'+ this.getData().id +'/shortpush/';
-    var double_shortpush_url = '/settings/input/0?double_shortpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellybutton1/'+ this.getData().id +'/double_shortpush/';
-    var triple_shortpush_url = '/settings/input/0?triple_shortpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellybutton1/'+ this.getData().id +'/triple_shortpush/';
-    var longpush_url = '/settings/input/0?longpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellybutton1/'+ this.getData().id +'/longpush/';
-
-    try {
-      await util.sendCommand(shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      await util.sendCommand(double_shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      await util.sendCommand(triple_shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      await util.sendCommand(longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-
-      await util.sendCommand('/reboot', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-
-      return;
-    } catch (error) {
-      throw new Error(error);
-    }
   }
 
 }

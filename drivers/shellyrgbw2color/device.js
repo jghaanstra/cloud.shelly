@@ -10,14 +10,6 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
     this.pollDevice();
     this.setAvailable();
 
-    // ADD MISSING CAPABILITIES
-    if (!this.hasCapability('light_mode')) {
-      this.addCapability('light_mode');
-    }
-    if (!this.hasCapability('onoff.whitemode')) {
-      this.addCapability('onoff.whitemode');
-    }
-
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
       if (value) {
@@ -70,6 +62,12 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
   onDeleted() {
     clearInterval(this.pollingInterval);
     clearInterval(this.pingInterval);
+
+    const iconpath = "/userdata/" + this.getData().id +".svg";
+    util.removeIcon(iconpath)
+      .catch(error => {
+        this.log(error);
+      });
   }
 
   // HELPER FUNCTIONS

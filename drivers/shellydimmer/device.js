@@ -2,6 +2,18 @@
 
 const Homey = require('homey');
 const util = require('/lib/util.js');
+const callbacks = [
+  'btn1_on',
+  'btn1_off',
+  'btn2_on',
+  'btn2_off',
+  'out_on',
+  'out_off',
+  'btn1_shortpush',
+  'btn1_longpush',
+  'btn2_shortpush',
+  'btn2_longpush'
+];
 
 class ShellyDimmerDevice extends Homey.Device {
 
@@ -11,28 +23,6 @@ class ShellyDimmerDevice extends Homey.Device {
 
     this.pollDevice();
     this.setAvailable();
-
-    // REMOVE DEPRECATED CAPABILITIES
-    if (this.hasCapability('button.triggers')) {
-      this.removeCapability('button.triggers');
-    }
-    if (this.hasCapability('button.removetriggers')) {
-      this.removeCapability('button.removetriggers');
-    }
-
-    // ADD MISSING CAPABILITIES
-    if (!this.hasCapability("onoff.input1")) {
-      this.addCapability("onoff.input1");
-    }
-    if (!this.hasCapability("onoff.input2")) {
-      this.addCapability("onoff.input2");
-    }
-    if (!this.hasCapability('button.callbackevents')) {
-      this.addCapability('button.callbackevents');
-    }
-    if (!this.hasCapability('button.removecallbackevents')) {
-      this.addCapability('button.removecallbackevents');
-    }
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
@@ -52,70 +42,27 @@ class ShellyDimmerDevice extends Homey.Device {
     });
 
     this.registerCapabilityListener('button.callbackevents', async () => {
-      var homeyip = await util.getHomeyIp();
-      var btn1_on_url = '/settings/light/0?btn1_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn1_on/';
-      var btn1_off_url = '/settings/light/0?btn1_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn1_off/';
-      var btn2_on_url = '/settings/light/0?btn2_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn2_on/';
-      var btn2_off_url = '/settings/light/0?btn2_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn2_off/';
-      var out_on_url = '/settings/light/0?out_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/out_on/';
-      var out_off_url = '/settings/light/0?out_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/out_off/';
-      var btn1_shortpush_url = '/settings/light/0?btn1_shortpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn1_shortpush/';
-      var btn1_longpush_url = '/settings/light/0?btn1_longpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn1_longpush/';
-      var btn2_shortpush_url = '/settings/light/0?btn2_shortpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn2_shortpush/';
-      var btn2_longpush_url = '/settings/light/0?btn2_longpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellydimmer/'+ this.getData().id +'/btn2_longpush/';
-
-      try {
-        await util.sendCommand(btn1_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn1_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn2_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn2_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(out_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(out_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn1_shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn1_longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn2_shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn2_longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand('/reboot', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        return;
-      } catch (error) {
-        throw new Error(error);
-      }
+      return await util.addCallbackEvents('/settings/light/0?', callbacks, 'shellydimmer', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerCapabilityListener('button.removecallbackevents', async () => {
-      var btn1_on_url = '/settings/light/0?btn1_on_url=null';
-      var btn1_off_url = '/settings/light/0?btn1_off_url=null';
-      var btn2_on_url = '/settings/light/0?btn2_on_url=null';
-      var btn2_off_url = '/settings/light/0?btn2_off_url=null';
-      var out_on_url = '/settings/light/0?out_on_url=null';
-      var out_off_url = '/settings/light/0?out_off_url=null';
-      var btn1_shortpush_url = '/settings/light/0?btn1_shortpush_url=null';
-      var btn1_longpush_url = '/settings/light/0?btn1_longpush_url=null';
-      var btn2_shortpush_url = '/settings/light/0?btn2_shortpush_url=null';
-      var btn2_longpush_url = '/settings/light/0?btn2_longpush_url=null';
-
-      try {
-        await util.sendCommand(btn1_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn1_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn2_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn2_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(out_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(out_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn1_shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn1_longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn2_shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn2_longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        return;
-      } catch (error) {
-        throw new Error(error);
-      }
+      return await util.removeCallbackEvents('/settings/light/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
   }
 
-  onDeleted() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
+  async onDeleted() {
+    try {
+      clearInterval(this.pollingInterval);
+      clearInterval(this.pingInterval);
+      const iconpath = "/userdata/" + this.getData().id +".svg";
+      await util.removeCallbackEvents('/settings/light/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      await util.removeIcon(iconpath);
+      return;
+    } catch (error) {
+      throw new Error(error);
+      this.log(error);
+    }
   }
 
   // HELPER FUNCTIONS

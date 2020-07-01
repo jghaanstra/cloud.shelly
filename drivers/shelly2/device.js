@@ -2,19 +2,19 @@
 
 const Homey = require('homey');
 const util = require('/lib/util.js');
+const callbacks = [
+  'btn_on',
+  'btn_off',
+  'out_on',
+  'out_off',
+  'shortpush',
+  'longpush'
+];
 
 class Shelly2Device extends Homey.Device {
 
   onInit() {
     this.setAvailable();
-
-    // ADD MISSING CAPABILITIES
-    if (!this.hasCapability('button.callbackevents')) {
-      this.addCapability('button.callbackevents');
-    }
-    if (!this.hasCapability('button.removecallbackevents')) {
-      this.addCapability('button.removecallbackevents');
-    }
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
@@ -27,59 +27,68 @@ class Shelly2Device extends Homey.Device {
     });
 
     this.registerCapabilityListener('button.callbackevents', async () => {
-      var homeyip = await util.getHomeyIp();
-      var btn_on_url = '/settings/relay/'+ this.getStoreValue('channel') +'?btn_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly2/'+ this.getData().id +'/btn_on/';
-      var btn_off_url = '/settings/relay/'+ this.getStoreValue('channel') +'?btn_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly2/'+ this.getData().id +'/btn_off/';
-      var out_on_url = '/settings/relay/'+ this.getStoreValue('channel') +'?out_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly2/'+ this.getData().id +'/out_on/';
-      var out_off_url = '/settings/relay/'+ this.getStoreValue('channel') +'?out_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly2/'+ this.getData().id +'/out_off/';
-      var shortpush_url = '/settings/relay/'+ this.getStoreValue('channel') +'?shortpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly2/'+ this.getData().id +'/shortpush/';
-      var longpush_url = '/settings/relay/'+ this.getStoreValue('channel') +'?longpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly2/'+ this.getData().id +'/longpush/';
-
-      try {
-        await util.sendCommand(btn_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(out_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(out_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand('/reboot', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        return;
-      } catch (error) {
-        throw new Error(error);
-      }
+      util.addCallbackEvents('/settings/relay/'+ this.getStoreValue("channel") +'?', callbacks, 'shelly2', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
+        .then(result => {
+          return;
+        })
+        .catch(error => {
+          throw new Error(error);
+          this.log(error);
+        });
     });
 
     this.registerCapabilityListener('button.removecallbackevents', async () => {
-      var btn_on_url = '/settings/relay/'+ this.getStoreValue('channel') +'?btn_on_url=null';
-      var btn_off_url = '/settings/relay/'+ this.getStoreValue('channel') +'?btn_off_url=null';
-      var out_on_url = '/settings/relay/'+ this.getStoreValue('channel') +'?out_on_url=null';
-      var out_off_url = '/settings/relay/'+ this.getStoreValue('channel') +'?out_off_url=null';
-      var shortpush_url = '/settings/relay/'+ this.getStoreValue('channel') +'?shortpush_url=null';
-      var longpush_url = '/settings/relay/'+ this.getStoreValue('channel') +'?longpush_url=null';
+      util.removeCallbackEvents('/settings/relay/'+ this.getStoreValue("channel") +'?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
+        .then(result => {
+          return;
+        })
+        .catch(error => {
+          throw new Error(error);
+          this.log(error);
+        });
+    });
 
-      try {
-        await util.sendCommand(btn_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(out_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(out_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        return;
-      } catch (error) {
-        throw new Error(error);
-      }
+    this.registerCapabilityListener('button.callbackevents', async () => {
+      return await util.addCallbackEvents('/settings/relay/'+ this.getStoreValue("channel") +'?', callbacks, 'shelly2', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    });
+
+    this.registerCapabilityListener('button.removecallbackevents', async () => {
+      await util.removeCallbackEvents('/settings/relay/'+ this.getStoreValue("channel") +'?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
   }
 
-  onDeleted() {
-    return Homey.ManagerDrivers.getDriver('shelly2').loadDevices();
+  async onDeleted() {
+    try {
+      await util.removeCallbackEvents('/settings/relay/'+ this.getStoreValue("channel") +'?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      if (this.getStoreValue('channel') == 0) {
+        const iconpath = "/userdata/" + this.getData().id +".svg";
+        await util.removeIcon(iconpath);
+      }
+      Homey.ManagerDrivers.getDriver('shelly2').loadDevices();
+      return;
+    } catch (error) {
+      throw new Error(error);
+      this.log(error);
+    }
+  }
 
-    const iconpath = "/userdata/" + this.getData().id +".svg";
-    util.removeIcon(iconpath)
-      .catch(error => {
-        this.log(error);
-      });
+  async addCallbackUrls(path, devicetype) {
+    try {
+      return await util.addCallbackEvents(path, callbacks, devicetype, this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    } catch (error) {
+      throw new Error(error);
+      this.log(error);
+    }
+  }
+
+  async removeCallbackUrls(path) {
+    try {
+      return await util.removeCallbackEvents(path, callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    } catch (error) {
+      throw new Error(error);
+      this.log(error);
+    }
   }
 
 }

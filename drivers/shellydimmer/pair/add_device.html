@@ -1,18 +1,1 @@
-<script type="text/javascript">
-  Homey.emit('add_device', null, function(error, result) {
-    if (error) {
-      Homey.alert(error, null, function() {
-        Homey.done()
-    	});
-    } else {
-      Homey.addDevice(result, function(error, result) {
-        if (error) {
-          Homey.alert(error, null, function() {
-            Homey.done()
-        	});
-        }
-        Homey.done();
-      })
-    }
-  })
-</script>
+../../../pair_templates/add_device.html

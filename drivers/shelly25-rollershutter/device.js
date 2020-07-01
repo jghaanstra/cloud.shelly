@@ -2,28 +2,17 @@
 
 const Homey = require('homey');
 const util = require('/lib/util.js');
+const callbacks = [
+  'roller_open',
+  'roller_close',
+  'roller_stop'
+];
 
 class Shelly25RollerShutterDevice extends Homey.Device {
 
   onInit() {
     this.pollDevice();
     this.setAvailable();
-
-    // FIX FOR INCORRECT HALFWAY SETTING
-    if (this.getSetting('halfway') == 50) {
-      this.setSettings({'halfway': 0.5});
-    }
-
-    // ADD MISSING CAPABILITIES
-    if (!this.hasCapability('button.sethalfwayposition')) {
-      this.addCapability('button.sethalfwayposition');
-    }
-    if (!this.hasCapability('button.callbackevents')) {
-      this.addCapability('button.callbackevents');
-    }
-    if (!this.hasCapability('button.removecallbackevents')) {
-      this.addCapability('button.removecallbackevents');
-    }
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('windowcoverings_state', (value, opts) => {
@@ -70,41 +59,26 @@ class Shelly25RollerShutterDevice extends Homey.Device {
     });
 
     this.registerCapabilityListener('button.callbackevents', async () => {
-      var homeyip = await util.getHomeyIp();
-      var roller_open_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_open_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly25/'+ this.getData().id +'/roller_open/';
-      var roller_close_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_close_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly25/'+ this.getData().id +'/roller_close/';
-      var roller_stop_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_stop_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly25/'+ this.getData().id +'/roller_stop/';
-
-      try {
-        await util.sendCommand(roller_open_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(roller_close_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(roller_stop_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        return;
-      } catch (error) {
-        throw new Error(error);
-      }
+      return await util.addCallbackEvents('/settings/roller/0?', callbacks, 'shelly25-rollershutter', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerCapabilityListener('button.removecallbackevents', async () => {
-      var roller_open_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_open_url=null';
-      var roller_close_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_close_url=null';
-      var roller_stop_url = '/settings/relay/'+ this.getStoreValue('channel') +'?roller_stop_url=null';
-
-      try {
-        await util.sendCommand(roller_open_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(roller_close_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(roller_stop_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        return;
-      } catch (error) {
-        throw new Error(error);
-      }
+      return await util.removeCallbackEvents('/settings/roller/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
-
   }
 
-  onDeleted() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
+  async onDeleted() {
+    try {
+      clearInterval(this.pollingInterval);
+      clearInterval(this.pingInterval);
+      const iconpath = "/userdata/" + this.getData().id +".svg";
+      await util.removeCallbackEvents('/settings/roller/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      await util.removeIcon(iconpath);
+      return;
+    } catch (error) {
+      throw new Error(error);
+      this.log(error);
+    }
   }
 
   // HELPER FUNCTIONS
@@ -183,6 +157,24 @@ class Shelly25RollerShutterDevice extends Homey.Device {
           this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
         })
     }, 63000);
+  }
+
+  async addCallbackUrls(path, devicetype) {
+    try {
+      return await util.addCallbackEvents(path, callbacks, devicetype, this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    } catch (error) {
+      throw new Error(error);
+      this.log(error);
+    }
+  }
+
+  async removeCallbackUrls(path) {
+    try {
+      return await util.removeCallbackEvents(path, callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    } catch (error) {
+      throw new Error(error);
+      this.log(error);
+    }
   }
 
 }

@@ -2,6 +2,11 @@
 
 const Homey = require('homey');
 const util = require('/lib/util.js');
+const callbacks = [
+  'alarm_off',
+  'alarm_mild',
+  'alarm_heavy'
+];
 
 class ShellyGasDevice extends Homey.Device {
 
@@ -13,47 +18,27 @@ class ShellyGasDevice extends Homey.Device {
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('button.callbackevents', async () => {
-      var homeyip = await util.getHomeyIp();
-      var alarm_off_url = '/settings/alarm_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellygas/'+ this.getData().id +'/alarm_off/';
-      var alarm_mild_url = '/settings/alarm_mild_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellygas/'+ this.getData().id +'/alarm_mild/';
-      var alarm_heavy_url = '/settings/alarm_heavy_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellygas/'+ this.getData().id +'/alarm_heavy/';
-
-      try {
-        await util.sendCommand(alarm_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(alarm_mild_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(alarm_heavy_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        return;
-      } catch (error) {
-        throw new Error(error);
-      }
+      return await util.addCallbackEvents('/settings?', callbacks, 'shellygas', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerCapabilityListener('button.removecallbackevents', async () => {
-      var alarm_off_url = '/settings/alarm_off_url=null';
-      var alarm_mild_url = '/settings/alarm_mild_url=null';
-      var alarm_heavy_url = '/settings/alarm_heavy_url=null';
-
-      try {
-        await util.sendCommand(alarm_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(alarm_mild_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(alarm_heavy_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        return;
-      } catch (error) {
-        throw new Error(error);
-      }
+      return await util.removeCallbackEvents('/settings?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
   }
 
-  onDeleted() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
-
-    const iconpath = "/userdata/" + this.getData().id +".svg";
-    util.removeIcon(iconpath)
-      .catch(error => {
-        this.log(error);
-      });
+  async onDeleted() {
+    try {
+      clearInterval(this.pollingInterval);
+      clearInterval(this.pingInterval);
+      const iconpath = "/userdata/" + this.getData().id +".svg";
+      await util.removeCallbackEvents('/settings?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      await util.removeIcon(iconpath);
+      return;
+    } catch (error) {
+      throw new Error(error);
+      this.log(error);
+    }
   }
 
   // HELPER FUNCTIONS

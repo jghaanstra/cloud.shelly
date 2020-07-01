@@ -24,7 +24,9 @@
       "Shelly Dimmer",
       "Shelly Duo",
       "Shelly Vintage",
-      "Shelly i3"
+      "Shelly i3",
+      "Shelly Gas",
+      "Shelly Button"
     ],
     "nl": [
       "Shelly",
@@ -43,10 +45,12 @@
       "Shelly Dimmer",
       "Shelly Duo",
       "Shelly Vintage",
-      "Shelly i3"
+      "Shelly i3",
+      "Shelly Gas",
+      "Shelly Button"
     ]
   },
-  "version": "1.24.0",
+  "version": "1.25.0",
   "compatibility": ">=3.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -279,7 +283,7 @@
         ]
       ]
     },
-    "shelly25": {
+    "shelly3em": {
       "type": "mdns-sd",
       "mdns-sd": {
         "name": "http",
@@ -292,7 +296,7 @@
             "field": "txt.id",
             "match": {
               "type": "regex",
-              "value": "^shellyswitch25-"
+              "value": "^shellyem3-"
             }
           }
         ]
@@ -317,7 +321,7 @@
         ]
       ]
     },
-    "shellyrgbw2": {
+    "shelly25": {
       "type": "mdns-sd",
       "mdns-sd": {
         "name": "http",
@@ -330,7 +334,7 @@
             "field": "txt.id",
             "match": {
               "type": "regex",
-              "value": "^shellyrgbw2-"
+              "value": "^shellyswitch25-"
             }
           }
         ]
@@ -374,6 +378,25 @@
         ]
       ]
     },
+    "shellydimmer": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "txt.id",
+            "match": {
+              "type": "regex",
+              "value": "^shellydimmer2?-"
+            }
+          }
+        ]
+      ]
+    },
     "shellyduo": {
       "type": "mdns-sd",
       "mdns-sd": {
@@ -393,7 +416,7 @@
         ]
       ]
     },
-    "shellyvintage": {
+    "shellydw": {
       "type": "mdns-sd",
       "mdns-sd": {
         "name": "http",
@@ -406,7 +429,7 @@
             "field": "txt.id",
             "match": {
               "type": "regex",
-              "value": "^ShellyVintage-"
+              "value": "^shellydw-"
             }
           }
         ]
@@ -426,44 +449,6 @@
             "match": {
               "type": "regex",
               "value": "^shellyem-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly3em": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{txt.id}}",
-      "conditions": [
-        [
-          {
-            "field": "txt.id",
-            "match": {
-              "type": "regex",
-              "value": "^shellyem3-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellyht": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{txt.id}}",
-      "conditions": [
-        [
-          {
-            "field": "txt.id",
-            "match": {
-              "type": "regex",
-              "value": "^shellyht-"
             }
           }
         ]
@@ -507,7 +492,7 @@
         ]
       ]
     },
-    "shellydimmer": {
+    "shellyht": {
       "type": "mdns-sd",
       "mdns-sd": {
         "name": "http",
@@ -520,13 +505,13 @@
             "field": "txt.id",
             "match": {
               "type": "regex",
-              "value": "^shellydimmer2?-"
+              "value": "^shellyht-"
             }
           }
         ]
       ]
     },
-    "shellydw": {
+    "shellyi3": {
       "type": "mdns-sd",
       "mdns-sd": {
         "name": "http",
@@ -539,7 +524,26 @@
             "field": "txt.id",
             "match": {
               "type": "regex",
-              "value": "^shellydw-"
+              "value": "^shellyix3-"
+            }
+          }
+        ]
+      ]
+    },
+    "shellyrgbw2": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "txt.id",
+            "match": {
+              "type": "regex",
+              "value": "^shellyrgbw2-"
             }
           }
         ]
@@ -564,7 +568,7 @@
         ]
       ]
     },
-    "shellyi3": {
+    "shellyvintage": {
       "type": "mdns-sd",
       "mdns-sd": {
         "name": "http",
@@ -577,7 +581,7 @@
             "field": "txt.id",
             "match": {
               "type": "regex",
-              "value": "^shellyix3-"
+              "value": "^ShellyVintage-"
             }
           }
         ]
@@ -1391,8 +1395,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "get_device"
+            "next": "icon_select"
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -1493,6 +1500,245 @@
       ]
     },
     {
+      "id": "shelly3em",
+      "discovery": "shelly3em",
+      "name": {
+        "en": "Shelly 3EM",
+        "nl": "Shelly 3EM"
+      },
+      "images": {
+        "large": "drivers/shelly3em/assets/images/large.jpg",
+        "small": "drivers/shelly3em/assets/images/small.jpg"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power_factor",
+        "measure_current",
+        "measure_voltage",
+        "meter_power_consumed",
+        "meter_power_returned",
+        "button.callbackevents",
+        "button.removecallbackevents"
+      ],
+      "capabilitiesOptions": {
+        "button.callbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Set URLs for callbacks",
+            "nl": "Instellen URL's voor callbacks"
+          },
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        },
+        "button.removecallbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Remove callback URLs for triggers",
+            "nl": "Verwijderen callback URL's voor triggers"
+          },
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        }
+      },
+      "energy": {
+        "cumulative": true
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Shelly 3EM settings",
+            "nl": "Shelly 3EM instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            },
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shelly4pro",
+      "discovery": "shelly4pro",
+      "name": {
+        "en": "Shelly 4 Pro",
+        "nl": "Shelly 4 Pro"
+      },
+      "images": {
+        "large": "drivers/shelly4pro/assets/images/large.jpg",
+        "small": "drivers/shelly4pro/assets/images/small.jpg"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Shelly 4 Pro settings",
+            "nl": "Shelly 4 Pro instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            },
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "shelly25",
       "discovery": "shelly25",
       "name": {
@@ -1545,8 +1791,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "get_device"
+            "next": "icon_select"
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -1683,8 +1932,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "get_device"
+            "next": "icon_select"
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -1785,406 +2037,6 @@
       ]
     },
     {
-      "id": "shelly4pro",
-      "discovery": "shelly4pro",
-      "name": {
-        "en": "Shelly 4 Pro",
-        "nl": "Shelly 4 Pro"
-      },
-      "images": {
-        "large": "drivers/shelly4pro/assets/images/large.jpg",
-        "small": "drivers/shelly4pro/assets/images/small.jpg"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff",
-        "measure_power",
-        "meter_power"
-      ],
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "get_device"
-          }
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Shelly 4 Pro settings",
-            "nl": "Shelly 4 Pro instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "shellyrgbw2color",
-      "discovery": "shellyrgbw2",
-      "name": {
-        "en": "Shelly RGBW2 Color Mode",
-        "nl": "Shelly RGBW2 Color Mode"
-      },
-      "images": {
-        "large": "drivers/shellyrgbw2color/assets/images/large.jpg",
-        "small": "drivers/shellyrgbw2color/assets/images/small.jpg"
-      },
-      "class": "light",
-      "capabilities": [
-        "onoff",
-        "dim",
-        "light_temperature",
-        "light_hue",
-        "light_saturation",
-        "measure_power",
-        "light_mode",
-        "onoff.whitemode"
-      ],
-      "capabilitiesOptions": {
-        "onoff.whitemode": {
-          "title": {
-            "en": "Toggle white mode",
-            "nl": "Wit modus schakelen"
-          }
-        }
-      },
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "get_device"
-          }
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Shelly RGBW2 settings",
-            "nl": "Shelly RGBW2 instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            },
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "shellyrgbw2white",
-      "discovery": "shellyrgbw2",
-      "name": {
-        "en": "Shelly RGBW2 4x White Mode",
-        "nl": "Shelly RGBW2 4x White Mode"
-      },
-      "images": {
-        "large": "drivers/shellyrgbw2white/assets/images/large.jpg",
-        "small": "drivers/shellyrgbw2white/assets/images/small.jpg"
-      },
-      "class": "light",
-      "capabilities": [
-        "onoff",
-        "dim",
-        "measure_power"
-      ],
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "get_device"
-          }
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Shelly RGBW2 White settings",
-            "nl": "Shelly RGBW2 White instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "shellyrgbw2cwww",
-      "name": {
-        "en": "Shelly RGBW2 2x CW/WW Mode",
-        "nl": "Shelly RGBW2 2x CW/WW Mode"
-      },
-      "images": {
-        "large": "drivers/shellyrgbw2cwww/assets/images/large.jpg",
-        "small": "drivers/shellyrgbw2cwww/assets/images/small.jpg"
-      },
-      "class": "light",
-      "capabilities": [
-        "onoff",
-        "dim",
-        "light_temperature",
-        "measure_power"
-      ],
-      "pair": [
-        {
-          "id": "start"
-        }
-      ],
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Shelly RGBW2 settings",
-            "nl": "Shelly RGBW2 instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "shellybulb",
       "discovery": "shellybulb",
       "name": {
@@ -2211,8 +2063,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "get_device"
+            "next": "icon_select"
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -2426,6 +2281,153 @@
       ]
     },
     {
+      "id": "shellydimmer",
+      "discovery": "shellydimmer",
+      "name": {
+        "en": "Shelly Dimmer (2)",
+        "nl": "Shelly Dimmer (2)"
+      },
+      "images": {
+        "large": "drivers/shellydimmer/assets/images/large.jpg",
+        "small": "drivers/shellydimmer/assets/images/small.jpg"
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff",
+        "dim",
+        "measure_power",
+        "meter_power_wmin",
+        "meter_power",
+        "measure_temperature",
+        "onoff.input1",
+        "onoff.input2",
+        "button.callbackevents",
+        "button.removecallbackevents"
+      ],
+      "capabilitiesOptions": {
+        "button.callbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Set URLs for callbacks",
+            "nl": "Instellen URL's voor callbacks"
+          },
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        },
+        "button.removecallbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Remove callback URLs for triggers",
+            "nl": "Verwijderen callback URL's voor triggers"
+          },
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Shelly Dimmer settings",
+            "nl": "Shelly Dimmer instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            },
+            {
+              "id": "polling",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 5,
+                "max": 3600
+              },
+              "label": {
+                "en": "Polling Frequency",
+                "nl": "Polling frequentie"
+              }
+            },
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "shellyduo",
       "discovery": "shellyduo",
       "name": {
@@ -2478,8 +2480,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "get_device"
+            "next": "icon_select"
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -2567,22 +2572,22 @@
       ]
     },
     {
-      "id": "shellyvintage",
-      "discovery": "shellyvintage",
+      "id": "shellydw",
+      "discovery": "shellydw",
       "name": {
-        "en": "Shelly Vintage",
-        "nl": "Shelly Vintage"
+        "en": "Shelly Door/ Window Sensor",
+        "nl": "Shelly Deur Raam Sensor"
       },
       "images": {
-        "large": "drivers/shellyvintage/assets/images/large.jpg",
-        "small": "drivers/shellyvintage/assets/images/small.jpg"
+        "large": "drivers/shellydw/assets/images/large.jpg",
+        "small": "drivers/shellydw/assets/images/small.jpg"
       },
-      "class": "light",
+      "class": "sensor",
       "capabilities": [
-        "onoff",
-        "dim",
-        "measure_power",
-        "meter_power",
+        "alarm_contact",
+        "measure_luminance",
+        "measure_battery",
+        "measure_voltage",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
@@ -2610,7 +2615,19 @@
           }
         }
       },
+      "energy": {
+        "batteries": [
+          "CR123A",
+          "CR123A"
+        ]
+      },
       "pair": [
+        {
+          "id": "start",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
         {
           "id": "list_devices",
           "template": "list_devices",
@@ -2648,8 +2665,8 @@
         {
           "type": "group",
           "label": {
-            "en": "Shelly Vintage settings",
-            "nl": "Shelly Vintage instellingen"
+            "en": "Shelly DW settings",
+            "nl": "Shelly DW instellingen"
           },
           "children": [
             {
@@ -2677,32 +2694,6 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            },
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
               }
             }
           ]
@@ -2766,8 +2757,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "get_device"
+            "next": "icon_select"
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -2842,238 +2836,6 @@
       ]
     },
     {
-      "id": "shelly3em",
-      "discovery": "shelly3em",
-      "name": {
-        "en": "Shelly 3EM",
-        "nl": "Shelly 3EM"
-      },
-      "images": {
-        "large": "drivers/shelly3em/assets/images/large.jpg",
-        "small": "drivers/shelly3em/assets/images/small.jpg"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff",
-        "measure_power",
-        "meter_power_factor",
-        "measure_current",
-        "measure_voltage",
-        "meter_power_consumed",
-        "meter_power_returned",
-        "button.callbackevents",
-        "button.removecallbackevents"
-      ],
-      "capabilitiesOptions": {
-        "button.callbackevents": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Set URLs for callbacks",
-            "nl": "Instellen URL's voor callbacks"
-          },
-          "desc": {
-            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
-            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
-          }
-        },
-        "button.removecallbackevents": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Remove callback URLs for triggers",
-            "nl": "Verwijderen callback URL's voor triggers"
-          },
-          "desc": {
-            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
-            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
-          }
-        }
-      },
-      "energy": {
-        "cumulative": true
-      },
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "get_device"
-          }
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Shelly 3EM settings",
-            "nl": "Shelly 3EM instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "shellyht",
-      "discovery": "shellyht",
-      "name": {
-        "en": "Shelly Humidity & Temperature",
-        "nl": "Shelly Humidity & Temperature"
-      },
-      "images": {
-        "large": "drivers/shellyht/assets/images/large.jpg",
-        "small": "drivers/shellyht/assets/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "measure_humidity",
-        "measure_temperature",
-        "measure_battery",
-        "measure_voltage"
-      ],
-      "energy": {
-        "batteries": [
-          "CR123A"
-        ]
-      },
-      "pair": [
-        {
-          "id": "start",
-          "navigation": {
-            "next": "list_devices"
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "get_device"
-          }
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Shelly HT settings",
-            "nl": "Shelly HT instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "shellyflood",
       "discovery": "shellyflood",
       "name": {
@@ -3110,8 +2872,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "get_device"
+            "next": "icon_select"
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -3327,308 +3092,27 @@
       ]
     },
     {
-      "id": "shellysmoke",
-      "discovery": "shellysmoke",
+      "id": "shellyht",
+      "discovery": "shellyht",
       "name": {
-        "en": "Shelly Smoke Detector",
-        "nl": "Shelly Rook Detector"
+        "en": "Shelly Humidity & Temperature",
+        "nl": "Shelly Humidity & Temperature"
       },
       "images": {
-        "large": "drivers/shellysmoke/assets/images/large.jpg",
-        "small": "drivers/shellysmoke/assets/images/small.jpg"
+        "large": "drivers/shellyht/assets/images/large.jpg",
+        "small": "drivers/shellyht/assets/images/small.jpg"
       },
       "class": "sensor",
       "capabilities": [
-        "alarm_smoke",
+        "measure_humidity",
         "measure_temperature",
-        "measure_battery",
-        "measure_voltage"
-      ],
-      "energy": {
-        "batteries": [
-          "AA"
-        ]
-      },
-      "pair": [
-        {
-          "id": "start",
-          "navigation": {
-            "next": "list_devices"
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "get_device"
-          }
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Shelly Smoke Detector settings",
-            "nl": "Shelly Smoke Detector instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "shellydimmer",
-      "discovery": "shellydimmer",
-      "name": {
-        "en": "Shelly Dimmer (2)",
-        "nl": "Shelly Dimmer (2)"
-      },
-      "images": {
-        "large": "drivers/shellydimmer/assets/images/large.jpg",
-        "small": "drivers/shellydimmer/assets/images/small.jpg"
-      },
-      "class": "light",
-      "capabilities": [
-        "onoff",
-        "dim",
-        "measure_power",
-        "meter_power_wmin",
-        "meter_power",
-        "measure_temperature",
-        "onoff.input1",
-        "onoff.input2",
-        "button.callbackevents",
-        "button.removecallbackevents"
-      ],
-      "capabilitiesOptions": {
-        "button.callbackevents": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Set URLs for callbacks",
-            "nl": "Instellen URL's voor callbacks"
-          },
-          "desc": {
-            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
-            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
-          }
-        },
-        "button.removecallbackevents": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Remove callback URLs for triggers",
-            "nl": "Verwijderen callback URL's voor triggers"
-          },
-          "desc": {
-            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
-            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
-          }
-        }
-      },
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "get_device"
-          }
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Shelly Dimmer settings",
-            "nl": "Shelly Dimmer instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            },
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "shellydw",
-      "discovery": "shellydw",
-      "name": {
-        "en": "Shelly Door/ Window Sensor",
-        "nl": "Shelly Deur Raam Sensor"
-      },
-      "images": {
-        "large": "drivers/shellydw/assets/images/large.jpg",
-        "small": "drivers/shellydw/assets/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "alarm_contact",
-        "measure_luminance",
         "measure_battery",
         "measure_voltage",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
-      "capabilitiesOptions": {
-        "button.callbackevents": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Set URLs for callbacks",
-            "nl": "Instellen URL's voor callbacks"
-          },
-          "desc": {
-            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
-            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
-          }
-        },
-        "button.removecallbackevents": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Remove callback URLs for triggers",
-            "nl": "Verwijderen callback URL's voor triggers"
-          },
-          "desc": {
-            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
-            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
-          }
-        }
-      },
       "energy": {
         "batteries": [
-          "CR123A",
           "CR123A"
         ]
       },
@@ -3646,8 +3130,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "get_device"
+            "next": "icon_select"
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -3673,8 +3160,8 @@
         {
           "type": "group",
           "label": {
-            "en": "Shelly DW settings",
-            "nl": "Shelly DW instellingen"
+            "en": "Shelly HT settings",
+            "nl": "Shelly HT instellingen"
           },
           "children": [
             {
@@ -3756,8 +3243,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "get_device"
+            "next": "icon_select"
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -3812,6 +3302,570 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shellyrgbw2color",
+      "discovery": "shellyrgbw2",
+      "name": {
+        "en": "Shelly RGBW2 Color Mode",
+        "nl": "Shelly RGBW2 Color Mode"
+      },
+      "images": {
+        "large": "drivers/shellyrgbw2color/assets/images/large.jpg",
+        "small": "drivers/shellyrgbw2color/assets/images/small.jpg"
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff",
+        "dim",
+        "light_temperature",
+        "light_hue",
+        "light_saturation",
+        "measure_power",
+        "light_mode",
+        "onoff.whitemode"
+      ],
+      "capabilitiesOptions": {
+        "onoff.whitemode": {
+          "title": {
+            "en": "Toggle white mode",
+            "nl": "Wit modus schakelen"
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Shelly RGBW2 settings",
+            "nl": "Shelly RGBW2 instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            },
+            {
+              "id": "polling",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 5,
+                "max": 3600
+              },
+              "label": {
+                "en": "Polling Frequency",
+                "nl": "Polling frequentie"
+              }
+            },
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shellyrgbw2cwww",
+      "name": {
+        "en": "Shelly RGBW2 2x CW/WW Mode",
+        "nl": "Shelly RGBW2 2x CW/WW Mode"
+      },
+      "images": {
+        "large": "drivers/shellyrgbw2cwww/assets/images/large.jpg",
+        "small": "drivers/shellyrgbw2cwww/assets/images/small.jpg"
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff",
+        "dim",
+        "light_temperature",
+        "measure_power"
+      ],
+      "pair": [
+        {
+          "id": "start"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Shelly RGBW2 settings",
+            "nl": "Shelly RGBW2 instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            },
+            {
+              "id": "polling",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 5,
+                "max": 3600
+              },
+              "label": {
+                "en": "Polling Frequency",
+                "nl": "Polling frequentie"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shellyrgbw2white",
+      "discovery": "shellyrgbw2",
+      "name": {
+        "en": "Shelly RGBW2 4x White Mode",
+        "nl": "Shelly RGBW2 4x White Mode"
+      },
+      "images": {
+        "large": "drivers/shellyrgbw2white/assets/images/large.jpg",
+        "small": "drivers/shellyrgbw2white/assets/images/small.jpg"
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff",
+        "dim",
+        "measure_power"
+      ],
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Shelly RGBW2 White settings",
+            "nl": "Shelly RGBW2 White instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            },
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shellysmoke",
+      "discovery": "shellysmoke",
+      "name": {
+        "en": "Shelly Smoke Detector",
+        "nl": "Shelly Rook Detector"
+      },
+      "images": {
+        "large": "drivers/shellysmoke/assets/images/large.jpg",
+        "small": "drivers/shellysmoke/assets/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_smoke",
+        "measure_temperature",
+        "measure_battery",
+        "measure_voltage"
+      ],
+      "energy": {
+        "batteries": [
+          "AA"
+        ]
+      },
+      "pair": [
+        {
+          "id": "start",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Shelly Smoke Detector settings",
+            "nl": "Shelly Smoke Detector instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            },
+            {
+              "id": "polling",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 5,
+                "max": 3600
+              },
+              "label": {
+                "en": "Polling Frequency",
+                "nl": "Polling frequentie"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shellyvintage",
+      "discovery": "shellyvintage",
+      "name": {
+        "en": "Shelly Vintage",
+        "nl": "Shelly Vintage"
+      },
+      "images": {
+        "large": "drivers/shellyvintage/assets/images/large.jpg",
+        "small": "drivers/shellyvintage/assets/images/small.jpg"
+      },
+      "class": "light",
+      "capabilities": [
+        "onoff",
+        "dim",
+        "measure_power",
+        "meter_power",
+        "button.callbackevents",
+        "button.removecallbackevents"
+      ],
+      "capabilitiesOptions": {
+        "button.callbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Set URLs for callbacks",
+            "nl": "Instellen URL's voor callbacks"
+          },
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        },
+        "button.removecallbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Remove callback URLs for triggers",
+            "nl": "Verwijderen callback URL's voor triggers"
+          },
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Shelly Vintage settings",
+            "nl": "Shelly Vintage instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            },
+            {
+              "id": "polling",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 5,
+                "max": 3600
+              },
+              "label": {
+                "en": "Polling Frequency",
+                "nl": "Polling frequentie"
+              }
+            },
+            {
+              "id": "offline",
+              "type": "number",
+              "value": 5,
+              "attr": {
+                "min": 2,
+                "max": 3600
+              },
+              "label": {
+                "en": "Minutes offline notification trigger",
+                "nl": "Minuten offline notificatie trigger"
               }
             }
           ]

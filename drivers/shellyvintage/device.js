@@ -2,20 +2,16 @@
 
 const Homey = require('homey');
 const util = require('/lib/util.js');
+const callbacks = [
+  'out_on',
+  'out_off'
+];
 
 class ShellyVintageDevice extends Homey.Device {
 
   onInit() {
     this.pollDevice();
     this.setAvailable();
-
-    // ADD MISSING CAPABILITIES
-    if (!this.hasCapability('button.callbackevents')) {
-      this.addCapability('button.callbackevents');
-    }
-    if (!this.hasCapability('button.removecallbackevents')) {
-      this.addCapability('button.removecallbackevents');
-    }
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
@@ -32,38 +28,25 @@ class ShellyVintageDevice extends Homey.Device {
     });
 
     this.registerCapabilityListener('button.callbackevents', async () => {
-      var homeyip = await util.getHomeyIp();
-      var out_on_url = '/settings/light/0?out_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellyduo/'+ this.getData().id +'/out_on/';
-      var out_off_url = '/settings/light/0?out_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shellyduo/'+ this.getData().id +'/out_off/';
-
-      try {
-        await util.sendCommand(out_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(out_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand('/reboot', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        return;
-      } catch (error) {
-        throw new Error(error);
-      }
+      return await util.addCallbackEvents('/settings/light/0?', callbacks, 'shellyvintage', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerCapabilityListener('button.removecallbackevents', async () => {
-      var out_on_url = '/settings/light/0?out_on_url=null';
-      var out_off_url = '/settings/light/0?out_off_url=null';
-
-      try {
-        await util.sendCommand(out_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(out_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        return;
-      } catch (error) {
-        throw new Error(error);
-      }
+      return await util.removeCallbackEvents('/settings/light/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
   }
 
-  onDeleted() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
+  async onDeleted() {
+    try {
+      clearInterval(this.pollingInterval);
+      clearInterval(this.pingInterval);
+      await util.removeCallbackEvents('/settings/light/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      return;
+    } catch (error) {
+      throw new Error(error);
+      this.log(error);
+    }
   }
 
   // HELPER FUNCTIONS

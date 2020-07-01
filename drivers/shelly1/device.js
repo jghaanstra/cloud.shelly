@@ -2,6 +2,14 @@
 
 const Homey = require('homey');
 const util = require('/lib/util.js');
+const callbacks = [
+  'btn_on',
+  'btn_off',
+  'out_on',
+  'out_off',
+  'shortpush',
+  'longpush'
+];
 
 class Shelly1Device extends Homey.Device {
 
@@ -11,14 +19,6 @@ class Shelly1Device extends Homey.Device {
 
     this.pollDevice();
     this.setAvailable();
-
-    // ADD MISSING CAPABILITIES
-    if (!this.hasCapability('button.callbackevents')) {
-      this.addCapability('button.callbackevents');
-    }
-    if (!this.hasCapability('button.removecallbackevents')) {
-      this.addCapability('button.removecallbackevents');
-    }
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', (value, opts) => {
@@ -30,60 +30,27 @@ class Shelly1Device extends Homey.Device {
     });
 
     this.registerCapabilityListener('button.callbackevents', async () => {
-      var homeyip = await util.getHomeyIp();
-      var btn_on_url = '/settings/relay/0?btn_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/btn_on/';
-      var btn_off_url = '/settings/relay/0?btn_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/btn_off/';
-      var out_on_url = '/settings/relay/0?out_on_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/out_on/';
-      var out_off_url = '/settings/relay/0?out_off_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/out_off/';
-      var shortpush_url = '/settings/relay/0?shortpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/shortpush/';
-      var longpush_url = '/settings/relay/0?longpush_url=http://'+ homeyip +'/api/app/cloud.shelly/button_actions/shelly1/'+ this.getData().id +'/longpush/';
-
-      try {
-        await util.sendCommand(btn_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(out_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(out_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand('/reboot', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        return;
-      } catch (error) {
-        throw new Error(error);
-      }
+      return await util.addCallbackEvents('/settings/relay/0?', callbacks, 'shelly1', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerCapabilityListener('button.removecallbackevents', async () => {
-      var btn_on_url = '/settings/relay/0?btn_on_url=null';
-      var btn_off_url = '/settings/relay/0?btn_off_url=null';
-      var out_on_url = '/settings/relay/0?out_on_url=null';
-      var out_off_url = '/settings/relay/0?out_off_url=null';
-      var shortpush_url = '/settings/relay/0?shortpush_url=null';
-      var longpush_url = '/settings/relay/0?longpush_url=null';
-
-      try {
-        await util.sendCommand(btn_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(btn_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(out_on_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(out_off_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(shortpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await util.sendCommand(longpush_url, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        return;
-      } catch (error) {
-        throw new Error(error);
-      }
+      return await util.removeCallbackEvents('/settings/relay/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
   }
 
-  onDeleted() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
-
-    const iconpath = "/userdata/" + this.getData().id +".svg";
-    util.removeIcon(iconpath)
-      .catch(error => {
-        this.log(error);
-      });
+  async onDeleted() {
+    try {
+      clearInterval(this.pollingInterval);
+      clearInterval(this.pingInterval);
+      const iconpath = "/userdata/" + this.getData().id +".svg";
+      await util.removeCallbackEvents('/settings/relay/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      await util.removeIcon(iconpath);
+      return;
+    } catch (error) {
+      throw new Error(error);
+      this.log(error);
+    }
   }
 
   // HELPER FUNCTIONS

@@ -28,6 +28,14 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
 
   onDeleted() {
     return Homey.ManagerDrivers.getDriver('shellyrgbw2white').loadDevices();
+
+    if (this.getStoreValue('channel') == 0) {
+      const iconpath = "/userdata/" + this.getData().id +".svg";
+      util.removeIcon(iconpath)
+        .catch(error => {
+          this.log(error);
+        });
+    }
   }
 
 }

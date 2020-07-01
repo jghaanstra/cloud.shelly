@@ -52,6 +52,12 @@ class ShellyBulbDevice extends Homey.Device {
   onDeleted() {
     clearInterval(this.pollingInterval);
     clearInterval(this.pingInterval);
+
+    const iconpath = "/userdata/" + this.getData().id +".svg";
+    util.removeIcon(iconpath)
+      .catch(error => {
+        this.log(error);
+      });
   }
 
   // HELPER FUNCTIONS
