@@ -25,7 +25,7 @@ class ShellyButton1Device extends Homey.Device {
 
   }
 
-  onAdded() {
+  async onAdded() {
     return await util.addCallbackEvents('/settings/input/0?', callbacks, 'shellybutton1', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 

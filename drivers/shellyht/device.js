@@ -10,11 +10,12 @@ class ShellyhtDevice extends Homey.Device {
 
   onInit() {
     this.setAvailable();
+    util.addCallbackEvents('/settings?', callbacks, 'shellyht', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
 
     // ADD MISSING CAPABILITIES
     if (!this.hasCapability('button.callbackevents')) {
       this.addCapability('button.callbackevents');
-      this.addCallbackUrls();
+      util.addCallbackEvents('/settings?', callbacks, 'shellyht', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     }
     if (!this.hasCapability('button.removecallbackevents')) {
       this.addCapability('button.removecallbackevents');
