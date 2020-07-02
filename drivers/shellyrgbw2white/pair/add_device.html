@@ -23,7 +23,8 @@
               main_device: result.data.id,
               channel: i,
               type: result.store.type
-            }
+            },
+            icon: result.icon
     			}, function(error, result ) {
     				if (error) {
               Homey.alert(error, null, function() {
