@@ -79,7 +79,7 @@ class ShellydwDriver extends Homey.Driver {
       util.sendCommand('/settings', data.address, data.username, data.password)
         .then(result => {
           var hostname = result.device.hostname;
-          if (hostname.startsWith('shellydw-')) {
+          if (hostname.startsWith('shellydw-') || hostname.startsWith('shellydw2-')) {
             deviceArray = {
               name: 'Shelly DW Sensor ['+ data.address +']',
               data: {

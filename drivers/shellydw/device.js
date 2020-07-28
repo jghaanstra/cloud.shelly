@@ -15,6 +15,11 @@ class ShellydwDevice extends Homey.Device {
     this.pollDevice();
     this.setAvailable();
 
+    // ADD MISSING CAPABILITIES
+    if (!this.hasCapability('alarm_tamper')) {
+      this.addCapability('alarm_tamper');
+    }
+
     this.registerCapabilityListener('button.callbackevents', async () => {
       return await util.addCallbackEvents('/settings?', callbacks, 'shellydw', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
@@ -50,6 +55,7 @@ class ShellydwDevice extends Homey.Device {
           let lux = result.lux.value;
           let battery = result.bat.value;
           let voltage = result.bat.voltage;
+          let tamper = result.accel.vibration == 1 ? true : false;
 
           if (state == 'open') {
             alarm = true;
@@ -75,6 +81,11 @@ class ShellydwDevice extends Homey.Device {
           // capability measure_voltage
           if (voltage != this.getCapabilityValue('measure_voltage')) {
             this.setCapabilityValue('measure_voltage', voltage);
+          }
+
+          // capability alarm_tamper
+          if (tamper != this.getCapabilityValue('alarm_tamper')) {
+            this.setCapabilityValue('alarm_tamper', tamper);
           }
 
         })

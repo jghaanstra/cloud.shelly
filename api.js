@@ -12,10 +12,15 @@ module.exports = [
         let device = await Homey.ManagerDrivers.getDriver(args.params.devicetype).getDevice({'id': args.params.deviceid});
 
         // EXTRA ACTIONS SHELLY DW
-        if (args.params.devicetype == 'shellydw' && !device.getCapabilityValue('alarm_contact') && (args.params.action == 'open_dark' || args.params.action == 'open_twilight')) {
-          device.setCapabilityValue('alarm_contact', true);
-        } else if (args.params.devicetype == 'shellydw' && device.getCapabilityValue('alarm_contact') && args.params.action == 'close') {
-          device.setCapabilityValue('alarm_contact', false);
+        if (args.params.devicetype == 'shellydw') {
+          if (!device.getCapabilityValue('alarm_contact') && (args.params.action == 'open_dark' || args.params.action == 'open_twilight')) {
+            device.setCapabilityValue('alarm_contact', true);
+          } else if (device.getCapabilityValue('alarm_contact') && args.params.action == 'close') {
+            device.setCapabilityValue('alarm_contact', false);
+          } else if (args.params.action == 'vibration') {
+            device.setCapabilityValue('alarm_tamper', true);
+            setTimeout(() => { device.setCapabilityValue('alarm_tamper', false) }, 5000);
+          }
         }
 
         // EXTRA ACTIONS SHELLY FLOOD

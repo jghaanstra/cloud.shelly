@@ -118,5 +118,8 @@
   },
   "1.25.3": {
     "en": "Fix for Shelly HT and Shelly Button 1 crashes and fix for custom device icon for devices with multiple device instance upon pairing."
+  },
+  "1.25.4": {
+    "en": "Added support for Shelly Door/Window sensor 2 and added the tamper capability to the Door/Window sensor (2)."
   }
 }

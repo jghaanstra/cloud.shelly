@@ -50,7 +50,7 @@
       "Shelly Button"
     ]
   },
-  "version": "1.25.3",
+  "version": "1.25.4",
   "compatibility": ">=3.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -429,7 +429,7 @@
             "field": "txt.id",
             "match": {
               "type": "regex",
-              "value": "^shellydw-"
+              "value": "^shellydw2?-"
             }
           }
         ]
@@ -2575,8 +2575,8 @@
       "id": "shellydw",
       "discovery": "shellydw",
       "name": {
-        "en": "Shelly Door/ Window Sensor",
-        "nl": "Shelly Deur Raam Sensor"
+        "en": "Shelly Door/Window Sensor (2)",
+        "nl": "Shelly Deur/Raam Sensor (2)"
       },
       "images": {
         "large": "drivers/shellydw/assets/images/large.jpg",
@@ -2588,6 +2588,7 @@
         "measure_luminance",
         "measure_battery",
         "measure_voltage",
+        "alarm_tamper",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
