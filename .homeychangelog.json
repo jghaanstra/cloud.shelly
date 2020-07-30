@@ -121,5 +121,8 @@
   },
   "1.25.4": {
     "en": "Added support for Shelly Door/Window sensor 2 and added the tamper capability to the Door/Window sensor (2)."
+  },
+  "1.25.5": {
+    "en": "Fix issue with pairing devices introduced with version 1.25.4."
   }
 }
