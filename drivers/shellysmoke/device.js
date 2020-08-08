@@ -25,7 +25,7 @@ class ShellySmokeDevice extends Homey.Device {
     clearInterval(this.pollingInterval);
 
     this.pollingInterval = setInterval(() => {
-      util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
+      util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling')
         .then(result => {
           let alarm = result.smoke;
           let temperature = result.tmp.value;
@@ -54,7 +54,7 @@ class ShellySmokeDevice extends Homey.Device {
 
         })
         .catch(error => {
-          this.log('Device asleep or disconnected');
+          this.log('Shelly Smoke is asleep and disconnected');
         })
     }, 4000);
   }

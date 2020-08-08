@@ -50,7 +50,7 @@
       "Shelly Button"
     ]
   },
-  "version": "1.25.5",
+  "version": "1.25.6",
   "compatibility": ">=3.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -184,6 +184,22 @@
       "units": {
         "en": "ppm",
         "nl": "ppm"
+      }
+    },
+    "tilt": {
+      "type": "number",
+      "title": {
+        "en": "Tilt",
+        "nl": "Kanteling"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/tilt.svg",
+      "units": {
+        "en": "°",
+        "nl": "°"
       }
     }
   },
@@ -2588,7 +2604,9 @@
         "measure_luminance",
         "measure_battery",
         "measure_voltage",
+        "measure_temperature",
         "alarm_tamper",
+        "tilt",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
@@ -4255,6 +4273,35 @@
               "nl": "Selecteer Shelly"
             },
             "filter": "driver_id=shellygas"
+          }
+        ]
+      },
+      {
+        "id": "triggerTilt",
+        "title": {
+          "en": "Tilt changed",
+          "nl": "Kanteling gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "tilt",
+            "type": "number",
+            "title": {
+              "en": "°",
+              "nl": "°"
+            },
+            "example": 170
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellydw"
           }
         ]
       }

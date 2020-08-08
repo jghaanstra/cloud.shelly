@@ -48,7 +48,7 @@ class ShellyButton1Device extends Homey.Device {
     clearInterval(this.pollingInterval);
 
     this.pollingInterval = setInterval(() => {
-      util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
+      util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling')
         .then(result => {
           let battery = result.bat.value;
           let voltage = result.bat.voltage;
@@ -65,7 +65,7 @@ class ShellyButton1Device extends Homey.Device {
 
         })
         .catch(error => {
-          this.log('Device asleep or disconnected');
+          this.log('Shelly Button 1 is asleep and disconnected');
         })
     }, 4000);
   }

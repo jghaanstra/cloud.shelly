@@ -124,5 +124,8 @@
   },
   "1.25.5": {
     "en": "Fix issue with pairing devices introduced with version 1.25.4."
+  },
+  "1.25.6": {
+    "en": "Added temperature and tilt capability to the Shelly Door/Window (2) sensor and some other minor improvements."
   }
 }

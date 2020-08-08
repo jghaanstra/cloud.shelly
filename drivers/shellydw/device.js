@@ -6,18 +6,25 @@ const callbacks = [
   'dark',
   'twilight',
   'close',
-  'vibration'
+  'vibration',
+  'temp_over',
+  'temp_under'
 ];
 
 class ShellydwDevice extends Homey.Device {
 
   onInit() {
+    new Homey.FlowCardTriggerDevice('triggerTilt').register();
+
     this.pollDevice();
     this.setAvailable();
 
     // ADD MISSING CAPABILITIES
     if (!this.hasCapability('alarm_tamper')) {
       this.addCapability('alarm_tamper');
+    }
+    if (!this.hasCapability('tilt')) {
+      this.addCapability('tilt');
     }
 
     this.registerCapabilityListener('button.callbackevents', async () => {
@@ -28,6 +35,10 @@ class ShellydwDevice extends Homey.Device {
       return await util.removeCallbackEvents('/settings?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
+  }
+
+  async onAdded() {
+    return await util.addCallbackEvents('/settings?', callbacks, 'shellydw', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
   async onDeleted() {
@@ -48,51 +59,73 @@ class ShellydwDevice extends Homey.Device {
     clearInterval(this.pollingInterval);
 
     this.pollingInterval = setInterval(() => {
-      util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
-        .then(result => {
-          let alarm = false;
-          let state = result.sensor.state;
-          let lux = result.lux.value;
-          let battery = result.bat.value;
-          let voltage = result.bat.voltage;
-          let tamper = result.accel.vibration == 1 ? true : false;
-
-          if (state == 'open') {
-            alarm = true;
-          } else {
-            alarm = false;
-          }
-
-          // capability alarm_contact
-          if (alarm != this.getCapabilityValue('alarm_contact')) {
-            this.setCapabilityValue('alarm_contact', alarm);
-          }
-
-          // capability measure_luminance
-          if (lux != this.getCapabilityValue('measure_luminance')) {
-            this.setCapabilityValue('measure_luminance', lux);
-          }
-
-          // capability measure_power
-          if (battery != this.getCapabilityValue('measure_battery')) {
-            this.setCapabilityValue('measure_battery', battery);
-          }
-
-          // capability measure_voltage
-          if (voltage != this.getCapabilityValue('measure_voltage')) {
-            this.setCapabilityValue('measure_voltage', voltage);
-          }
-
-          // capability alarm_tamper
-          if (tamper != this.getCapabilityValue('alarm_tamper')) {
-            this.setCapabilityValue('alarm_tamper', tamper);
-          }
-
-        })
-        .catch(error => {
-          this.log('Device asleep or disconnected');
-        })
+      this.updateReportStatus();
     }, 4000);
+  }
+
+  updateReportStatus() {
+    util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling')
+      .then(result => {
+        let alarm = false;
+        let state = result.sensor.state;
+        let lux = result.lux.value;
+        let battery = result.bat.value;
+        let voltage = result.bat.voltage;
+        let tamper = result.accel.vibration == 1 ? true : false;
+        let tilt = result.accel.tilt;
+
+        if (state == 'open') {
+          alarm = true;
+        } else {
+          alarm = false;
+        }
+
+        // capability alarm_contact
+        if (alarm != this.getCapabilityValue('alarm_contact')) {
+          this.setCapabilityValue('alarm_contact', alarm);
+        }
+
+        // capability measure_luminance
+        if (lux != this.getCapabilityValue('measure_luminance')) {
+          this.setCapabilityValue('measure_luminance', lux);
+        }
+
+        // capability measure_power
+        if (battery != this.getCapabilityValue('measure_battery')) {
+          this.setCapabilityValue('measure_battery', battery);
+        }
+
+        // capability measure_temperature (only for DW2)
+        if (result.tmp.value) {
+          // TODO: remove adding the capability at some point
+          if (!this.hasCapability('measure_temperature')) {
+            this.addCapability('measure_temperature');
+          }
+          if (Number(result.tmp.value) != this.getCapabilityValue('measure_temperature')) {
+            this.setCapabilityValue('measure_temperature', Number(result.tmp.value));
+          }
+        }
+
+        // capability tilt
+        if (tilt != this.getCapabilityValue('tilt')) {
+          this.setCapabilityValue('tilt', tilt);
+          Homey.ManagerFlow.getCard('trigger', 'triggerTilt').trigger(this, {'tilt': tilt}, {})
+        }
+
+        // capability measure_voltage
+        if (voltage != this.getCapabilityValue('measure_voltage')) {
+          this.setCapabilityValue('measure_voltage', voltage);
+        }
+
+        // capability alarm_tamper
+        if (tamper != this.getCapabilityValue('alarm_tamper')) {
+          this.setCapabilityValue('alarm_tamper', tamper);
+        }
+
+      })
+      .catch(error => {
+        this.log('Shelly Door/Window (2) is asleep and disconnected');
+      })
   }
 
 }
