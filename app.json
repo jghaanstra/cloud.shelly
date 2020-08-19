@@ -4778,8 +4778,8 @@
       {
         "id": "effectRGBW2Color",
         "title": {
-          "en": "Set Effect",
-          "nl": "Effect instellen"
+          "en": "Switch Effect On/Off",
+          "nl": "Effect in- of uitschakelen"
         },
         "args": [
           {
@@ -4790,6 +4790,13 @@
               "nl": "Effect"
             },
             "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Turn Effect Off",
+                  "nl": "Uitschakelen effect"
+                }
+              },
               {
                 "id": "1",
                 "label": {
