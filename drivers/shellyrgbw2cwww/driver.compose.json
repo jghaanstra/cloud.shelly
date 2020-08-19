@@ -1,0 +1,21 @@
+{
+  "name": {
+    "en": "Shelly RGBW2 2x CW/WW Mode",
+    "nl": "Shelly RGBW2 2x CW/WW Mode"
+  },
+  "class": "light",
+  "$extends": [
+    "defaultsnoactions"
+  ],
+  "capabilities": [
+    "onoff",
+    "dim",
+    "light_temperature",
+    "measure_power"
+  ],
+  "pair": [
+    {
+      "id": "start"
+    }
+  ]
+}

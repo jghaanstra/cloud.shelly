@@ -1,0 +1,29 @@
+{
+  "id": "triggerShelly1Temperature3",
+  "title": {
+    "en": "Temperature Sensor 3 has changed",
+    "nl": "Temperatuursensor 3 is veranderd"
+  },
+  "tokens": [
+    {
+      "name": "temperature",
+      "type": "number",
+      "title": {
+        "en": "Temperature",
+        "nl": "Temperatuur"
+      },
+      "example": 5
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly1|shelly1pm&capabilities=measure_temperature.3"
+    }
+  ]
+}

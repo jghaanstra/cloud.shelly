@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Power Factor",
+    "nl": "Powerfactor"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "icon": "/assets/meter_power_returned.svg",
+  "units": {
+    "en": "Pf",
+    "nl": "Pf"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": {
+    "en": "Shelly Gas Sensor",
+    "nl": "Shelly Gas Sensor"
+  },
+  "class": "sensor",
+  "discovery": "shellygas",
+  "$extends": [
+    "defaults"
+  ],
+  "capabilities": [
+    "alarm_smoke",
+    "gas_concentration",
+    "button.callbackevents",
+    "button.removecallbackevents"
+  ]
+}

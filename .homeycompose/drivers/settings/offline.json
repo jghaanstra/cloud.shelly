@@ -1,0 +1,13 @@
+{
+  "id": "offline",
+  "type": "number",
+  "value": 5,
+  "attr": {
+    "min": 2,
+    "max": 3600
+  },
+  "label": {
+    "en": "Minutes offline notification trigger",
+    "nl": "Minuten offline notificatie trigger"
+  }
+}

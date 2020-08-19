@@ -1,0 +1,13 @@
+{
+  "id": "halfway",
+  "type": "number",
+  "value": 0.5,
+  "attr": {
+    "min": 0.01,
+    "max": 0.99
+  },
+  "label": {
+    "en": "Percentage representing optical middle",
+    "nl": "Percentage overeenkomende het optische midden"
+  }
+}

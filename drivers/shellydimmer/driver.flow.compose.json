@@ -1,0 +1,40 @@
+{
+  "conditions": [
+    {
+      "id": "conditionDimmerInput1",
+      "title": {
+        "en": "Switch 1 !{{is|isn't}} on",
+        "nl": "Schakelaar 1 !{{is|is niet}} aan"
+      },
+      "args": [
+        {
+          "name": "device",
+          "type": "device",
+          "placeholder": {
+            "en": "Select Shelly",
+            "nl": "Selecteer Shelly"
+          },
+          "filter": "driver_id=shellydimmer"
+        }
+      ]
+    },
+    {
+      "id": "conditionDimmerInput2",
+      "title": {
+        "en": "Switch 2 !{{is|isn't}} on",
+        "nl": "Schakelaar 2 !{{is|is niet}} aan"
+      },
+      "args": [
+        {
+          "name": "device",
+          "type": "device",
+          "placeholder": {
+            "en": "Select Shelly",
+            "nl": "Selecteer Shelly"
+          },
+          "filter": "driver_id=shellydimmer"
+        }
+      ]
+    }
+  ]
+}

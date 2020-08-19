@@ -1,0 +1,135 @@
+{
+  "actions": [
+    {
+      "id": "actionRGBW2DisableWhiteMode",
+      "title": {
+        "en": "Disable white mode",
+        "nl": "Uitschakelen wit modus"
+      },
+      "args": []
+    },
+    {
+      "id": "actionRGBW2EnableWhiteMode",
+      "title": {
+        "en": "Enable white mode",
+        "nl": "Inschakelen wit modus"
+      },
+      "args": []
+    },
+    {
+      "id": "effectRGBW2Color",
+      "title": {
+        "en": "Switch Effect On/Off",
+        "nl": "Effect in- of uitschakelen"
+      },
+      "args": [
+        {
+          "name": "effect",
+          "type": "dropdown",
+          "placeholder": {
+            "en": "Effect",
+            "nl": "Effect"
+          },
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Turn Effect Off",
+                "nl": "Uitschakelen effect"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Meteor shower",
+                "nl": "Meteoriet regen"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Gradual change",
+                "nl": "Geleidelijk veranderen"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "Breath",
+                "nl": "Ademen"
+              }
+            },
+            {
+              "id": "4",
+              "label": {
+                "en": "Flash",
+                "nl": "Flitsen"
+              }
+            },
+            {
+              "id": "5",
+              "label": {
+                "en": "Gradual On/Off",
+                "nl": "Geleidelijk Aan/Uit"
+              }
+            },
+            {
+              "id": "6",
+              "label": {
+                "en": "Red/Green change",
+                "nl": "Rood/Groen verandering"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flipbackSwitchRGBW2Color",
+      "title": {
+        "en": "Switch state temporary",
+        "nl": "Wijzig status tijdelijk"
+      },
+      "hint": {
+        "en": "Use this card to turn the Shelly RGBW2 Color ON or OFF but only for the set time in seconds, after the timer it will switch back.",
+        "nl": "Gebruik deze actie om de Shelly RGBW2 Color AAN of UIT te schakelen voor de ingestelde duur in seconden, na de timer zal hij terugschakelen."
+      },
+      "args": [
+        {
+          "name": "switch",
+          "type": "dropdown",
+          "placeholder": {
+            "en": "Temporary switch",
+            "nl": "Tijdelijk schakelen"
+          },
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Switch OFF",
+                "nl": "Uitschakelen"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Switch ON",
+                "nl": "Inschakelen"
+              }
+            }
+          ]
+        },
+        {
+          "name": "timer",
+          "type": "number",
+          "placeholder": {
+            "en": "Duration in seconds",
+            "nl": "Duur in seconden"
+          },
+          "min": 1,
+          "step": 1
+        }
+      ]
+    }
+  ]
+}

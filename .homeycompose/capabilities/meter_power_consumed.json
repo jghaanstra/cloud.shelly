@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Total Consumed Energy",
+    "nl": "Totaal verbruikte energie"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "icon": "/assets/meter_power_consumed.svg",
+  "units": {
+    "en": "Wh",
+    "nl": "Wh"
+  }
+}

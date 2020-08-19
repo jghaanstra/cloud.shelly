@@ -1,0 +1,19 @@
+{
+  "name": {
+    "en": "Shelly Plug",
+    "nl": "Shelly Plug"
+  },
+  "class": "socket",
+  "discovery": "shelly-plug",
+  "$extends": [
+    "defaults"
+  ],
+  "capabilities": [
+    "onoff",
+    "measure_power",
+    "meter_power_wmin",
+    "meter_power",
+    "button.callbackevents",
+    "button.removecallbackevents"
+  ]
+}

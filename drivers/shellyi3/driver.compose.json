@@ -1,0 +1,15 @@
+{
+  "name": {
+    "en": "Shelly i3",
+    "nl": "Shelly i3"
+  },
+  "class": "other",
+  "discovery": "shelly-plug",
+  "$extends": [
+    "defaults"
+  ],
+  "capabilities": [
+    "button.callbackevents",
+    "button.removecallbackevents"
+  ]
+}

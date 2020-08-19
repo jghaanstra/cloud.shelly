@@ -1,0 +1,33 @@
+{
+  "actions": [
+    {
+      "id": "actionDuoDimTemperature",
+      "title": {
+        "en": "Set dim and color temperature",
+        "nl": "Instellen dim en kleur temperatuur"
+      },
+      "args": [
+        {
+          "name": "brightness",
+          "type": "range",
+          "min": 0,
+          "max": 1,
+          "step": 0.01,
+          "label": "%",
+          "labelMultiplier": 100,
+          "labelDecimals": 0
+        },
+        {
+          "name": "light_temperature",
+          "type": "range",
+          "min": 2700,
+          "max": 6500,
+          "step": 1,
+          "label": "K",
+          "labelMultiplier": 1,
+          "labelDecimals": 0
+        }
+      ]
+    }
+  ]
+}

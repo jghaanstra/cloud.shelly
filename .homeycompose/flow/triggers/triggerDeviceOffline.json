@@ -1,0 +1,27 @@
+{
+  "id": "triggerDeviceOffline",
+  "title": {
+    "en": "Device not reachable",
+    "nl": "Apparaat is niet bereikbaar"
+  },
+  "tokens": [
+    {
+      "name": "device",
+      "type": "string",
+      "title": {
+        "en": "Device",
+        "nl": "Apparaat"
+      },
+      "example": "Kitchen light"
+    },
+    {
+      "name": "device_error",
+      "type": "string",
+      "title": {
+        "en": "Error",
+        "nl": "Fout"
+      },
+      "example": "Error 401: not authenticated"
+    }
+  ]
+}

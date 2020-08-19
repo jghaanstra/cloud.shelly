@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Total Returned Energy",
+    "nl": "Totaal geretourneerde energie"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "icon": "/assets/meter_power_returned.svg",
+  "units": {
+    "en": "Wh",
+    "nl": "Wh"
+  }
+}

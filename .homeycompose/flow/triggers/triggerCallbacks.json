@@ -1,0 +1,36 @@
+{
+  "id": "triggerCallbacks",
+  "title": {
+    "en": "Action event",
+    "nl": "Actie gebeurtenis"
+  },
+  "tokens": [
+    {
+      "name": "id",
+      "type": "string",
+      "title": {
+        "en": "Device ID",
+        "nl": "Apparaat ID"
+      },
+      "example": "shelly1-8D4C25"
+    },
+    {
+      "name": "device",
+      "type": "string",
+      "title": {
+        "en": "Name",
+        "nl": "Naam"
+      },
+      "example": "Shelly 1"
+    },
+    {
+      "name": "action",
+      "type": "string",
+      "title": {
+        "en": "Action",
+        "nl": "Actie"
+      },
+      "example": "longpush"
+    }
+  ]
+}

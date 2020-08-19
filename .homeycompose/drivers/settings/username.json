@@ -1,0 +1,9 @@
+{
+  "id": "username",
+  "type": "text",
+  "value": "",
+  "label": {
+    "en": "Username",
+    "nl": "Gebruikersnaam"
+  }
+}

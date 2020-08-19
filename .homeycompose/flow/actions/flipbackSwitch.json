@@ -1,0 +1,56 @@
+{
+  "id": "flipbackSwitch",
+  "title": {
+    "en": "Switch state temporary",
+    "nl": "Wijzig status tijdelijk"
+  },
+  "hint": {
+    "en": "Use this card to turn Shelly ON or OFF but only for the set time in seconds, after the timer it will switch back.",
+    "nl": "Gebruik deze actie om Shelly AAN of UIT te schakelen voor de ingestelde duur in seconden, na de timer zal hij terugschakelen."
+  },
+  "args": [
+    {
+      "name": "switch",
+      "type": "dropdown",
+      "placeholder": {
+        "en": "Temporary switch",
+        "nl": "Tijdelijk schakelen"
+      },
+      "values": [
+        {
+          "id": "0",
+          "label": {
+            "en": "Switch OFF",
+            "nl": "Uitschakelen"
+          }
+        },
+        {
+          "id": "1",
+          "label": {
+            "en": "Switch ON",
+            "nl": "Inschakelen"
+          }
+        }
+      ]
+    },
+    {
+      "name": "timer",
+      "type": "number",
+      "placeholder": {
+        "en": "Duration in seconds",
+        "nl": "Duur in seconden"
+      },
+      "min": 1,
+      "step": 1
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly1|shelly-plug|shelly-plug-s"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Device Settings",
+      "nl": "Apparaat instellingen"
+    },
+    "children": [
+      {
+        "id": "address",
+        "$extends": "address"
+      },
+      {
+        "id": "username",
+        "$extends": "username"
+      },
+      {
+        "id": "password",
+        "$extends": "password"
+      },
+      {
+        "id": "polling",
+        "$extends": "polling"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "User Settings",
+      "nl": "Gebruikersinstellingen"
+    },
+    "children": [
+      {
+        "id": "halfway",
+        "$extends": "halfway"
+      },
+      {
+        "id": "offline",
+        "$extends": "offline"
+      }
+    ]
+  }
+]

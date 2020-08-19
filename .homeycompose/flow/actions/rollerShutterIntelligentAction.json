@@ -1,0 +1,22 @@
+{
+  "id": "rollerShutterIntelligentAction",
+  "title": {
+    "en": "Intelligent action",
+    "nl": "Slimme actie"
+  },
+  "hint": {
+    "en": "Use this card to open, close or stop your roller shutter based on it's current state. It will stop when it's moving, opens if closed and closes if opened.",
+    "nl": "Gebruik deze actie om de roller shutter te openen, sluiten of stoppen gebaseerd op de huidige status. Hij stopt als hij beweegt, opent indien gesloten en sluit indien geopend."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly 2",
+        "nl": "Selecteer Shelly 2"
+      },
+      "filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
+    }
+  ]
+}

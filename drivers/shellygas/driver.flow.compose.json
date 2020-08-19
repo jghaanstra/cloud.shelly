@@ -1,0 +1,65 @@
+{
+  "triggers": [
+    {
+      "id": "triggerGasConcentration",
+      "title": {
+        "en": "Gas concentration changed",
+        "nl": "Gas concentratie gewijzigd"
+      },
+      "tokens": [
+        {
+          "name": "ppm",
+          "type": "number",
+          "title": {
+            "en": "Parts per million",
+            "nl": "Delen per miljoen"
+          },
+          "example": 3452
+        }
+      ],
+      "args": []
+    }
+  ],
+  "actions": [
+    {
+      "id": "actionGasMute",
+      "title": {
+        "en": "Mute alarm",
+        "nl": "Dempen alarm"
+      },
+      "args": []
+    },
+    {
+      "id": "actionGasSetVolume",
+      "title": {
+        "en": "Set alarm volume",
+        "nl": "Instellen alarm volume"
+      },
+      "args": [
+        {
+          "name": "volume",
+          "type": "range",
+          "min": 0,
+          "max": 11,
+          "step": 1
+        }
+      ]
+    },
+    {
+      "id": "actionGasTest",
+      "title": {
+        "en": "Test alarm",
+        "nl": "Alarm testen"
+      },
+      "args": []
+    },
+    {
+      "id": "actionGasUnmute",
+      "title": {
+        "en": "Unmute alarm",
+        "nl": "Dempen alarm uitschakelen"
+      },
+      "args": []
+    }
+  ]
+}

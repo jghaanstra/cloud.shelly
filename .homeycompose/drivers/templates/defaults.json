@@ -1,0 +1,70 @@
+{
+  "images": {
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "small": "{{driverAssetsPath}}/images/small.png"
+  },
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "capabilitiesOptions": {
+    "button.callbackevents": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Set URLs for callbacks",
+        "nl": "Instellen URL's voor callbacks"
+      },
+      "desc": {
+        "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+        "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+      }
+    },
+    "button.removecallbackevents": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Remove callback URLs for triggers",
+        "nl": "Verwijderen callback URL's voor triggers"
+      },
+      "desc": {
+        "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+        "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+      }
+    }
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "options": {
+        "singular": true
+      },
+      "navigation": {
+        "next": "icon_select"
+      }
+    },
+    {
+      "id": "icon_select",
+      "$template": "icon_select"
+    },
+    {
+      "id": "get_device",
+      "$template": "get_device"
+    },
+    {
+      "id": "login_credentials",
+      "template": "login_credentials",
+      "options": {
+        "logo": "../../../assets/shelly-logo.png"
+      }
+    },
+    {
+      "id": "add_device",
+      "$template": "add_device"
+    },
+    {
+      "id": "select_pairing",
+      "$template": "select_pairing"
+    },
+    {
+      "id": "manual_pairing",
+      "$template": "manual_pairing"
+    }
+  ]
+}

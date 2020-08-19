@@ -1,0 +1,92 @@
+{
+  "id": "cloud.shelly",
+  "sdk": 2,
+  "brandColor": "#4f8dc8",
+  "name": {
+    "en": "Shelly",
+    "nl": "Shelly"
+  },
+  "tags": {
+    "en": [
+      "Shelly",
+      "Shelly 1",
+      "Shelly 2",
+      "Shelly Plug",
+      "Shelly Plug S",
+      "Shelly 4 Pro",
+      "Shelly RGBW2",
+      "Shelly EM",
+      "Shelly 3EM",
+      "Shelly Bulb",
+      "Shelly Flood Sensor",
+      "Shelly Humidity Temperature",
+      "Shelly Door Window",
+      "Shelly Dimmer",
+      "Shelly Duo",
+      "Shelly Vintage",
+      "Shelly i3",
+      "Shelly Gas",
+      "Shelly Button"
+    ],
+    "nl": [
+      "Shelly",
+      "Shelly 1",
+      "Shelly 2",
+      "Shelly Plug",
+      "Shelly Plug S",
+      "Shelly 4 Pro",
+      "Shelly RGBW2",
+      "Shelly EM",
+      "Shelly 3EM",
+      "Shelly Bulb",
+      "Shelly Flood Sensor",
+      "Shelly Luchtvochtigheid Temperatuur",
+      "Shelly Deur Raam",
+      "Shelly Dimmer",
+      "Shelly Duo",
+      "Shelly Vintage",
+      "Shelly i3",
+      "Shelly Gas",
+      "Shelly Button"
+    ]
+  },
+  "version": "3.0.0",
+  "compatibility": ">=5.0.0",
+  "author": {
+    "name": "Jelger Haanstra",
+    "email": "homey@solidewebservices.com",
+    "website": "https://github.com/jghaanstra/cloud.shelly/"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Sebastian Lotz"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "jghaanstra"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/jghaanstra/cloud.shelly/issues/"
+  },
+  "homeyCommunityTopicId": 765,
+  "source": "https://github.com/jghaanstra/cloud.shelly",
+  "homepage": "https://community.athom.com/t/765",
+  "images": {
+    "large": "./assets/images/large.jpg",
+    "small": "./assets/images/small.jpg"
+  },
+  "category": "appliances",
+  "description": {
+    "en": "Control Shelly devices with Homey",
+    "nl": "Bedien Shelly apparaten via Homey"
+  },
+  "dependencies": {
+    "net": "*"
+  }
+}

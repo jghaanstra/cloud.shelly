@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Gas Concentration",
+    "nl": "Gas concentratie"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "icon": "/assets/gas_concentration.svg",
+  "units": {
+    "en": "ppm",
+    "nl": "ppm"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "actions": [
+    {
+      "id": "flipbackSwitch4",
+      "title": {
+        "en": "Switch state temporary",
+        "nl": "Wijzig status tijdelijk"
+      },
+      "hint": {
+        "en": "Use this card to turn the Shelly 4 Pro ON or OFF but only for the set time in seconds, after the timer it will switch back.",
+        "nl": "Gebruik deze actie om de Shelly 4 Pro AAN of UIT te schakelen voor de ingestelde duur in seconden, na de timer zal hij terugschakelen."
+      },
+      "args": [
+        {
+          "name": "relay",
+          "type": "dropdown",
+          "placeholder": {
+            "en": "Relay",
+            "nl": "Relay"
+          },
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Relay 1",
+                "nl": "Relay 1"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Relay 2",
+                "nl": "Relay 2"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Relay 3",
+                "nl": "Relay 3"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "Relay 4",
+                "nl": "Relay 4"
+              }
+            }
+          ]
+        },
+        {
+          "name": "switch",
+          "type": "dropdown",
+          "placeholder": {
+            "en": "Temporary switch",
+            "nl": "Tijdelijk schakelen"
+          },
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Switch OFF",
+                "nl": "Uitschakelen"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Switch ON",
+                "nl": "Inschakelen"
+              }
+            }
+          ]
+        },
+        {
+          "name": "timer",
+          "type": "number",
+          "placeholder": {
+            "en": "Duration in seconds",
+            "nl": "Duur in seconden"
+          },
+          "min": 1,
+          "step": 1
+        },
+        {
+          "name": "device",
+          "type": "device",
+          "placeholder": {
+            "en": "Select Shelly 4 Pro",
+            "nl": "Selecteer Shelly 4 Pro"
+          },
+          "filter": "driver_id=shelly4pro"
+        }
+      ]
+    }
+  ]
+}

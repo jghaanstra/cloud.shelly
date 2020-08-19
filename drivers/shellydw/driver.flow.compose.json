@@ -1,0 +1,23 @@
+{
+  "conditions": [
+    {
+      "id": "triggerTilt",
+      "title": {
+        "en": "Tilt changed",
+        "nl": "Kanteling gewijzigd"
+      },
+      "tokens": [
+        {
+          "name": "tilt",
+          "type": "number",
+          "title": {
+            "en": "°",
+            "nl": "°"
+          },
+          "example": 170
+        }
+      ],
+      "args": []
+    }
+  ]
+}

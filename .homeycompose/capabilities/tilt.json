@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Tilt",
+    "nl": "Kanteling"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "icon": "/assets/tilt.svg",
+  "units": {
+    "en": "°",
+    "nl": "°"
+  }
+}

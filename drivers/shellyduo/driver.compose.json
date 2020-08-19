@@ -1,0 +1,20 @@
+{
+  "name": {
+    "en": "Shelly Duo",
+    "nl": "Shelly Duo"
+  },
+  "class": "light",
+  "discovery": "shellyduo",
+  "$extends": [
+    "defaults"
+  ],
+  "capabilities": [
+    "onoff",
+    "dim",
+    "light_temperature",
+    "measure_power",
+    "meter_power",
+    "button.callbackevents",
+    "button.removecallbackevents"
+  ]
+}
