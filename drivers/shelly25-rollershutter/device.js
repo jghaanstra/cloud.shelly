@@ -42,6 +42,7 @@ class Shelly25RollerShutterDevice extends Homey.Device {
         };
       }
 
+	  this.PreviousPosition = this.getCapabilityValue('windowcoverings_set');																		  
       return util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 

@@ -90,6 +90,30 @@ class ShellyApp extends Homey.App {
         }
         return util.sendCommand('/roller/0?go='+ args.direction +'&offset='+ args.offset +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
+	  
+	new Homey.FlowCardAction('moveRollerShutterPreviousPosition')
+      .register()
+      .registerRunListener((args, state) => {
+		  
+		  console.log('previous', args.device.PreviousPosition, 'actual', args.device.getCapabilityValue('windowcoverings_set') );
+		  let position = args.device.PreviousPosition;
+		  
+		  if ( position == undefined ) {
+			  return false;
+		  } else {
+			  args.device.PreviousPosition = args.device.getCapabilityValue('windowcoverings_set');
+			  
+			  if (args.device.getSetting('halfway') != 0.5) {
+				if (position > 0.5) {
+                  position = -2 * position * args.device.getSetting('halfway') + 2 * position + 2 * args.device.getSetting('halfway') - 1;
+                } else {
+                  position = 2 * position * args.device.getSetting('halfway');
+                };
+		      args.device.setCapabilityValue('windowcoverings_set', position);
+		      return util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+		      }
+		  }
+	  })
 
     new Homey.FlowCardAction('rollerShutterIntelligentAction')
       .register()
