@@ -1,6 +1,6 @@
 {
   "id": "cloud.shelly",
-  "sdk": 2,
+  "sdk": 3,
   "brandColor": "#4f8dc8",
   "name": {
     "en": "Shelly",
@@ -88,5 +88,17 @@
   },
   "dependencies": {
     "net": "*"
+  },
+  "api": {
+    "buttonActionTrigger": {
+      "method": "get",
+      "path": "/button_actions/:devicetype/:deviceid/:action",
+      "public": true
+    },
+    "reportStatusEvent": {
+      "method": "get",
+      "path": "/report_status/:devicetype/:deviceid",
+      "public": true
+    }
   }
 }

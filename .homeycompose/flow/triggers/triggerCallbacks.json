@@ -32,5 +32,23 @@
       },
       "example": "longpush"
     }
+  ],
+  "args": [
+    {
+      "name": "shelly",
+      "type": "autocomplete",
+      "placeholder": {
+        "en": "Select your Shelly ...",
+        "nl": "Selecteer je Shelly ..."
+      }
+    },
+    {
+      "name": "action",
+      "type": "autocomplete",
+      "placeholder": {
+        "en": "Select Action ...",
+        "nl": "Selecteer actie ..."
+      }
+    }
   ]
 }

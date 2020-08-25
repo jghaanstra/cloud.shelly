@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const util = require('/lib/util.js');
+const Util = require('/lib/util.js');
 const callbacks = [
   'roller_open',
   'roller_close',
@@ -11,27 +11,29 @@ const callbacks = [
 class Shelly2RollerShutterDevice extends Homey.Device {
 
   onInit() {
+    if (!this.util) this.util = new Util({homey: this.homey});
+
     this.pollDevice();
     this.setAvailable();
 
     // LISTENERS FOR UPDATING CAPABILITIES
-    this.registerCapabilityListener('windowcoverings_state', (value, opts) => {
+    this.registerCapabilityListener('windowcoverings_state', async (value) => {
       if (value !== 'idle' && value !== this.getStoreValue('last_action')) {
         this.setStoreValue('last_action', value);
       }
 
       if (value == 'idle') {
-        return util.sendCommand('/roller/0?go=stop', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        return await this.util.sendCommand('/roller/0?go=stop', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       } else if (value == 'up') {
-        return util.sendCommand('/roller/0?go=open', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        return await this.util.sendCommand('/roller/0?go=open', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       } else if (value == 'down') {
-        return util.sendCommand('/roller/0?go=close', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        return await this.util.sendCommand('/roller/0?go=close', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       } else {
         return Promise.reject('State not recognized ...');
       }
     });
 
-    this.registerCapabilityListener('windowcoverings_set', (value, opts) => {
+    this.registerCapabilityListener('windowcoverings_set', async (value) => {
       if (this.getSetting('halfway') == 0.5) {
         var position = value;
       } else {
@@ -41,43 +43,45 @@ class Shelly2RollerShutterDevice extends Homey.Device {
           var position = 2 * value * this.getSetting('halfway');
         };
       }
-
-      return util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
+      return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerCapabilityListener('button.sethalfwayposition', async () => {
-      util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
-        .then(result => {
-          var position = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
-          this.setSettings({'halfway':  position});
-          return true;
-        })
-        .catch(error => {
-          this.log(error);
-          return false;
-        })
+      try {
+        let result = this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        let position = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
+        this.setSettings({'halfway':  position});
+        return Promise.resolve(true);
+      } catch (error) {
+        this.log(error);
+        return Promise.reject(error);
+      }
     });
 
     this.registerCapabilityListener('button.callbackevents', async () => {
-      return await util.addCallbackEvents('/settings/roller/0?', callbacks, 'shelly2-rollershutter', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      return await this.util.addCallbackEvents('/settings/roller/0?', callbacks, 'shelly2-rollershutter', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerCapabilityListener('button.removecallbackevents', async () => {
-      return await util.removeCallbackEvents('/settings/roller/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      return await this.util.removeCallbackEvents('/settings/roller/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
   }
+
+  /*async onAdded() {
+    return await this.util.addCallbackEvents('/settings/roller/0?', callbacks, 'shelly2-rollershutter', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+  }*/
 
   async onDeleted() {
     try {
       clearInterval(this.pollingInterval);
       clearInterval(this.pingInterval);
       const iconpath = "/userdata/" + this.getData().id +".svg";
-      await util.removeCallbackEvents('/settings/roller/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      await util.removeIcon(iconpath);
+      await this.util.removeCallbackEvents('/settings/roller/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      await this.util.removeIcon(iconpath);
       return;
     } catch (error) {
-      throw new Error(error);
       this.log(error);
     }
   }
@@ -87,60 +91,58 @@ class Shelly2RollerShutterDevice extends Homey.Device {
     clearInterval(this.pollingInterval);
     clearInterval(this.pingInterval);
 
-    this.pollingInterval = setInterval(() => {
-      util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
-        .then(result => {
-          clearTimeout(this.offlineTimeout);
+    this.pollingInterval = setInterval(async () => {
+      try {
+        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
+        clearTimeout(this.offlineTimeout);
 
-          if ( result.rollers[0].state == 'stop' ) {
-            var state = 'idle';
-          } else if ( result.rollers[0].state == 'open' ) {
-            var state = 'up';
-          } else if ( result.rollers[0].state == 'close' ) {
-            var state = 'down';
-          }
-          if (state !== 'idle' && state !== this.getStoreValue('last_action')) {
-            this.setStoreValue('last_action', state);
-          }
+        if ( result.rollers[0].state == 'stop' ) {
+          var state = 'idle';
+        } else if ( result.rollers[0].state == 'open' ) {
+          var state = 'up';
+        } else if ( result.rollers[0].state == 'close' ) {
+          var state = 'down';
+        }
+        if (state !== 'idle' && state !== this.getStoreValue('last_action')) {
+          this.setStoreValue('last_action', state);
+        }
 
-          var power = result.rollers[0].power;
-          var position = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
+        var power = result.rollers[0].power;
+        var position = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
 
-          if (this.getSetting('halfway') !== 0.5) {
-            if (position < this.getSetting('halfway')) {
-              var position = 0.5 * position / this.getSetting('halfway');
-            } else {
-              var position = position - (1 - (position-this.getSetting('halfway')) * (1 / (1 - this.getSetting('halfway')))) * (this.getSetting('halfway') - 0.5);
-            };
+        if (this.getSetting('halfway') !== 0.5) {
+          if (position < this.getSetting('halfway')) {
+            var position = 0.5 * position / this.getSetting('halfway');
+          } else {
+            var position = position - (1 - (position-this.getSetting('halfway')) * (1 / (1 - this.getSetting('halfway')))) * (this.getSetting('halfway') - 0.5);
           };
+        };
 
-          // capability windowcoverings_state
-          if (state != this.getCapabilityValue('windowcoverings_state')) {
-            this.setCapabilityValue('windowcoverings_state', state);
-          }
+        // capability windowcoverings_state
+        if (state != this.getCapabilityValue('windowcoverings_state')) {
+          this.setCapabilityValue('windowcoverings_state', state);
+        }
 
-          // capability measure_power
-          if (power != this.getCapabilityValue('measure_power')) {
-            this.setCapabilityValue('measure_power', power);
-          }
+        // capability measure_power
+        if (power != this.getCapabilityValue('measure_power')) {
+          this.setCapabilityValue('measure_power', power);
+        }
 
-          // capability windowcoverings_set
-          if (position != this.getCapabilityValue('windowcoverings_set')) {
-            this.setCapabilityValue('windowcoverings_set', position);
-          }
+        // capability windowcoverings_set
+        if (position != this.getCapabilityValue('windowcoverings_set')) {
+          this.setCapabilityValue('windowcoverings_set', position);
+        }
 
-        })
-        .catch(error => {
-          this.log(error);
-          this.setUnavailable(Homey.__('Unreachable'));
-          this.pingDevice();
+      } catch (error) {
+        this.log(error);
+        this.setUnavailable(this.homey.__('device.unreachable') + error.message);
+        this.pingDevice();
 
-          this.offlineTimeout = setTimeout(() => {
-            let offlineTrigger = new Homey.FlowCardTrigger('triggerDeviceOffline');
-            offlineTrigger.register().trigger({"device": this.getName(), "device_error": error.toString() });
-            return;
-          }, 60000 * this.getSetting('offline'));
-        })
+        this.offlineTimeout = setTimeout(() => {
+          this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.toString()});
+        }, 60000 * this.getSetting('offline'));
+      }
+
     }, 1000 * this.getSetting('polling'));
   }
 
@@ -148,16 +150,19 @@ class Shelly2RollerShutterDevice extends Homey.Device {
     clearInterval(this.pollingInterval);
     clearInterval(this.pingInterval);
 
-    this.pingInterval = setInterval(() => {
-      util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'))
-        .then(result => {
-          this.setAvailable();
-          this.pollDevice();
-        })
-        .catch(error => {
-          this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
-        })
+    this.pingInterval = setInterval(async () => {
+      try {
+        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
+        this.setAvailable();
+        this.pollDevice();
+      } catch (error) {
+        this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
+      }
     }, 63000);
+  }
+
+  getCallbacks() {
+    return callbacks;
   }
 
 }

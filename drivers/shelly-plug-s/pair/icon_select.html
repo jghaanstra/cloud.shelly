@@ -1,5 +1,5 @@
 <script type="text/javascript">
-  Homey.setTitle( Homey.__('icon_select.title') );
+  Homey.setTitle(Homey.__('pair.title_icon_select'));
 
   var imgBase64 = '';
 
@@ -23,13 +23,14 @@
   });
 
   $('#save-icon').click(function() {
-    Homey.emit('save_icon', imgBase64, function (error, result) {
-      if (error) {
-				Homey.alert(error.message, 'error');
-			} else {
-				Homey.nextView();
-			}
-    });
+    Homey.emit('save_icon', imgBase64)
+      .then(result => {
+        Homey.nextView();
+      })
+      .catch(error => {
+        Homey.alert(error.message, 'error');
+        Homey.done()
+      });
   });
 
 </script>
@@ -74,7 +75,7 @@
   }
 </style>
 
-<p data-i18n="icon_select.intro_upload">If you wish to use a custom icon for your device you can upload it here. The icon needs to be in .svg format.</p>
+<p data-i18n="pair.intro_upload">If you wish to use a custom icon for your device you can upload it here. The icon needs to be in .svg format.</p>
 <div class="form-group">
 	<input id="icon" type="file" accept=".svg" name="image" onchange="loadIcon(event)">
 </div>
@@ -84,6 +85,6 @@
   </div>
 </div>
 <div class="form-group buttons">
-  <button id="default-icon" class="button" data-i18n="icon_select.default">Use default icon</button>
-  <button id="save-icon" class="button" data-i18n="icon_select.save" disabled>Save</button>
+  <button id="default-icon" class="button" data-i18n="pair.default_icon">Use default icon</button>
+  <button id="save-icon" class="button" data-i18n="pair.save" disabled>Save</button>
 </div>

@@ -2,13 +2,9 @@
   "pair": {
     "title": "Shelly apparaat toevoegen",
     "nosettings": "Vul a.u.b. alle verplichte velden in.",
-    "unauthorized": "Foutmelding 401: gebruikers credentials ontbreken of deze gebruiker is niet geautoriseerd, zorg ervoor dat je de gebruikers credentials goed hebt overgenomen zoals ingevoerd via de Shelly smartphone app of webinterface.",
-    "servererror": "Foutmelding 500: interne server fout",
-    "timeout": "Timeout foutmelding: zorg ervoor dat je het correcte IP adres hebt ingevoerd en dat het Shelly apparaat online is.",
-    "unknownerror": "Onbekende fout, weet je zeker dat je het juist IP adres hebt opgegeven en dat het Shelly apparaat op hetzelfde netwerk zit als Homey? Controleer a.u.b. je instellingen en probeer het nog eens.",
     "intro": "Voer het IP adres en eventuele gebruikersnaam en wachtwoord van je Shelly apparaat in.",
-    "intro-relay": "Koppel je Shelly 2 device als een device met twee relay knoppen (dit kan worden ingesteld in de Shelly smartphone app). Voer het IP adres en eventuele gebruikersnaam en wachtwoord van je Shelly2 apparaat in.",
-    "intro-rollershutter": "Koppel je Shelly 2 device als een device met twee roller shutter knoppen  (dit kan worden ingesteld in de Shelly smartphone app). Voer het IP adres en eventuele gebruikersnaam en wachtwoord van je Shelly2 apparaat in.",
+    "intro-relay": "Koppel je Shelly 2(.5) device als een device met twee relay knoppen (dit kan worden ingesteld in de Shelly smartphone app). Voer het IP adres en eventuele gebruikersnaam en wachtwoord van je Shelly2 apparaat in.",
+    "intro-rollershutter": "Koppel je Shelly 2(.5) device als een device met twee roller shutter knoppen  (dit kan worden ingesteld in de Shelly smartphone app). Voer het IP adres en eventuele gebruikersnaam en wachtwoord van je Shelly2 apparaat in.",
     "address": "IP adres",
     "username": "Gebruikersnaam",
     "password": "Wachtwoord",
@@ -26,14 +22,17 @@
     "nodevices": "Geen apparaten gevonden. Je kan het nog een keer proberen of je Shelly handmatig toevoegen als je het IP adres weet.",
     "again": "Probeer opnieuw",
     "manual": "Handmatig koppelen",
-    "wrongdevice": "Het Shelly apparaat dat je probeert te koppelen komt niet overeen met het gekozen Shelly apparaat in het apparaten toevoegscherm."
-  },
-  "icon_select": {
-    "title": "Selecteer icoon",
-    "intro": "Selecteer welk icoon die je wilt gebruiken voor je Shelly Vintage.",
+    "title_icon_select": "Selecteer icoon",
     "intro_upload": "Als je een eigen icoon voor je apparaat wilt gebruiken kan je deze hier uploaden. Het icoon moet in .svg format zijn.",
-    "default": "Gebruik standaard",
-    "save": "Opslaan"
+    "default_icon": "Gebruik standaard",
+    "save": "Opslaan",
+    "intro_vintage_icon": "Selecteer welk icoon die je wilt gebruiken voor je Shelly Vintage."
+  },
+  "util": {
+    "401": "Foutmelding 401: gebruikers credentials ontbreken of deze gebruiker is niet geautoriseerd, zorg ervoor dat je de gebruikers credentials goed hebt overgenomen zoals ingevoerd via de Shelly smartphone app of webinterface.",
+    "502": "Timeout foutmelding: zorg ervoor dat je het correcte IP adres hebt ingevoerd en dat het Shelly apparaat online is.",
+    "500": "Foutmelding 500: interne server fout",
+    "unknownerror": "Onbekende fout, weet je zeker dat je het juist IP adres hebt opgegeven en dat het Shelly apparaat op hetzelfde netwerk zit als Homey? Controleer a.u.b. je instellingen en probeer het nog eens."
   },
   "connect": {
     "intro": "Als je de Shelly RGBW2 in CW/WW mode gebruikt, kan je als volgt twee LED-strips aansluiten:",
@@ -43,5 +42,10 @@
     "strip2": "Strip 2: CW draad op B pin, WW draad op W pin",
     "warning": "Met deze setup is het bedienen van de LED-strips via de Shelly apps niet handig te doen."
   },
-  "Unreachable": "Onbereikbaar"
+  "device": {
+    "unreachable": "Apparaat is onbereikbaar: "
+  },
+  "driver": {
+    "wrongdevice": "Het Shelly apparaat dat je probeert te koppelen komt niet overeen met het gekozen Shelly apparaat in het apparaten toevoegscherm."
+  }
 }

@@ -1,18 +1,22 @@
-"use strict";
+'use strict';
 
 const Homey = require('homey');
-const util = require('/lib/util.js');
+const Util = require('/lib/util.js');
 
 class ShellyDimmerDriver extends Homey.Driver {
 
-  onPair(socket) {
+  onInit() {
+    if (!this.util) this.util = new Util({homey: this.homey});
+  }
+
+  onPair(session) {
     const discoveryStrategy = this.getDiscoveryStrategy();
     const discoveryResults = discoveryStrategy.getDiscoveryResults();
     let selectedDeviceId;
     let deviceArray = {};
     let deviceIcon = 'icon.svg';
 
-    socket.on('list_devices', (data, callback) => {
+    session.setHandler('list_devices', async (data) => {
       const devices = Object.values(discoveryResults).map(discoveryResult => {
         return {
           name: 'Shelly Dimmer ['+ discoveryResult.address +']',
@@ -22,99 +26,94 @@ class ShellyDimmerDriver extends Homey.Driver {
         };
       });
       if (devices.length) {
-        callback(null, devices);
+        return devices;
       } else {
-        socket.showView('select_pairing');
+        session.showView('select_pairing');
       }
     });
 
-    socket.on('list_devices_selection', (data, callback) => {
-      callback();
-      selectedDeviceId = data[0].data.id;
+    session.setHandler('get_device', async (data) => {
+      try {
+        const discoveryResult = discoveryResults[selectedDeviceId];
+        if(!discoveryResult) return callback(new Error('Something went wrong'));
+
+        const result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
+        deviceArray = {
+          name: 'Shelly Dimmer ['+ discoveryResult.address +']',
+          data: {
+            id: discoveryResult.id,
+          },
+          settings: {
+            address  : discoveryResult.address,
+            username : '',
+            password : '',
+            polling  : 5
+          },
+          store: {
+            type: result.type
+          },
+          icon: deviceIcon
+        }
+        if (result.auth) {
+          session.showView('login_credentials');
+        } else {
+          session.showView('add_device');
+        }
+      } catch (error) {
+        return Promise.reject(error);
+      }
     });
 
-    socket.on('get_device', (data, callback) => {
-      const discoveryResult = discoveryResults[selectedDeviceId];
-      if(!discoveryResult) return callback(new Error('Something went wrong'));
-
-      util.sendCommand('/shelly', discoveryResult.address, '', '')
-        .then(result => {
+    session.setHandler('manual_pairing', async (data) => {
+      try {
+        const result = await this.util.sendCommand('/settings', data.address, data.username, data.password);
+        const hostname = result.device.hostname;
+        if (hostname.startsWith('shellydimmer-')) {
           deviceArray = {
-            name: 'Shelly Dimmer ['+ discoveryResult.address +']',
+            name: 'Shelly Dimmer ['+ data.address +']',
             data: {
-              id: discoveryResult.id,
+              id: result.device.hostname,
             },
             settings: {
-              address  : discoveryResult.address,
-              username : '',
-              password : '',
+              address  : data.address,
+              username : data.username,
+              password : data.password,
               polling  : 5
             },
             store: {
-              type: result.type
-            },
-            icon: deviceIcon
+              type: result.device.type
+            }
           }
-          if (result.auth) {
-            socket.showView('login_credentials');
-          } else {
-            socket.showView('add_device');
-          }
-        })
-        .catch(error => {
-          callback(error, false);
-        })
+        } else {
+          return Promise.reject(this.homey.__('driver.wrongdevice'));
+        }
+      } catch (error) {
+        return Promise.reject(error);
+      }
     });
 
-    socket.on('login', (data, callback) => {
+    session.setHandler('list_devices_selection', async (data) => {
+      return selectedDeviceId = data[0].data.id;
+    });
+
+    session.setHandler('login', async (data) => {
       deviceArray.settings.username = data.username;
       deviceArray.settings.password = data.password;
-      callback(null, true);
+      return Promise.resolve(true);
     });
 
-    socket.on('add_device', (data, callback) => {
-      callback(false, deviceArray);
+    session.setHandler('add_device', async (data) => {
+      return Promise.resolve(deviceArray);
     });
 
-    socket.on('manual_pairing', function(data, callback) {
-      util.sendCommand('/settings', data.address, data.username, data.password)
-        .then(result => {
-          var hostname = result.device.hostname;
-          if (hostname.startsWith('shellydimmer-')) {
-            deviceArray = {
-              name: 'Shelly Dimmer ['+ data.address +']',
-              data: {
-                id: result.device.hostname,
-              },
-              settings: {
-                address  : data.address,
-                username : data.username,
-                password : data.password,
-                polling  : 5
-              },
-              store: {
-                type: result.device.type
-              }
-            }
-            callback(null, result);
-          } else {
-            callback(null, 'incorrect device');
-          }
-        })
-        .catch(error => {
-          callback(error, null);
-        })
-    });
-
-    socket.on('save_icon', (data, callback) => {
-      util.uploadIcon(data, selectedDeviceId)
-        .then(result => {
-          deviceIcon = "../../../userdata/"+ selectedDeviceId +".svg";
-          callback(null, 'success');
-        })
-        .catch(error => {
-          callback(error, null);
-        })
+    session.setHandler('save_icon', async (data) => {
+      try {
+        const result = await this.util.uploadIcon(data, selectedDeviceId);
+        deviceIcon = "../../../userdata/"+ selectedDeviceId +".svg";
+        return Promise.resolve(true);
+      } catch (error) {
+        return Promise.reject(error);
+      }
     });
 
   }

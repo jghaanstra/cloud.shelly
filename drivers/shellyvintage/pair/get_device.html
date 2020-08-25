@@ -1,9 +1,7 @@
 <script type="text/javascript">
-  Homey.emit('get_device', null, function(error, result) {
-    if (error) {
-      Homey.alert(error, null, function() {
-        Homey.done()
-    	});
-    }
-  })
+  Homey.emit('get_device', {})
+    .catch(error => {
+      Homey.alert(error);
+      Homey.done()
+    });
 </script>

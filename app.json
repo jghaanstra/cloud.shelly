@@ -1,6 +1,6 @@
 {
   "id": "cloud.shelly",
-  "sdk": 2,
+  "sdk": 3,
   "brandColor": "#4f8dc8",
   "name": {
     "en": "Shelly",
@@ -89,6 +89,18 @@
   "dependencies": {
     "net": "*"
   },
+  "api": {
+    "buttonActionTrigger": {
+      "method": "get",
+      "path": "/button_actions/:devicetype/:deviceid/:action",
+      "public": true
+    },
+    "reportStatusEvent": {
+      "method": "get",
+      "path": "/report_status/:devicetype/:deviceid",
+      "public": true
+    }
+  },
   "flow": {
     "triggers": [
       {
@@ -125,6 +137,24 @@
             },
             "example": "longpush"
           }
+        ],
+        "args": [
+          {
+            "name": "shelly",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Select your Shelly ...",
+              "nl": "Selecteer je Shelly ..."
+            }
+          },
+          {
+            "name": "action",
+            "type": "autocomplete",
+            "placeholder": {
+              "en": "Select Action ...",
+              "nl": "Selecteer actie ..."
+            }
+          }
         ]
       },
       {
@@ -151,35 +181,6 @@
               "nl": "Fout"
             },
             "example": "Error 401: not authenticated"
-          }
-        ]
-      },
-      {
-        "id": "triggerGasConcentration",
-        "title": {
-          "en": "Gas concentration changed",
-          "nl": "Gas concentratie gewijzigd"
-        },
-        "tokens": [
-          {
-            "name": "ppm",
-            "type": "number",
-            "title": {
-              "en": "Parts per million",
-              "nl": "Delen per miljoen"
-            },
-            "example": 3452
-          }
-        ],
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
-            "filter": "driver_id=shellygas"
           }
         ]
       },
@@ -300,31 +301,27 @@
         ]
       },
       {
-        "id": "triggerTilt",
+        "id": "triggerGasConcentration",
         "title": {
-          "en": "Tilt changed",
-          "nl": "Kanteling gewijzigd"
+          "en": "Gas concentration changed",
+          "nl": "Gas concentratie gewijzigd"
         },
         "tokens": [
           {
-            "name": "tilt",
+            "name": "ppm",
             "type": "number",
             "title": {
-              "en": "°",
-              "nl": "°"
+              "en": "Parts per million",
+              "nl": "Delen per miljoen"
             },
-            "example": 170
+            "example": 3452
           }
         ],
         "args": [
           {
-            "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
-            "filter": "driver_id=shellydw"
+            "name": "device",
+            "filter": "driver_id=shellygas"
           }
         ]
       }
@@ -514,6 +511,28 @@
               "nl": "Offset"
             }
           },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly 2",
+              "nl": "Selecteer Shelly 2"
+            },
+            "filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
+          }
+        ]
+      },
+      {
+        "id": "moveRollerShutterPreviousPosition",
+        "title": {
+          "en": "Move to previous position",
+          "nl": "Ga naar de vorige positie"
+        },
+        "hint": {
+          "en": "Use this map to move your shutter to the previous position. This is useful if someone comes home and the shutters have been closed before.",
+          "nl": "Gebruik deze actie om uw sluiter naar de vorige positie te verplaatsen. Dit is handig als er iemand thuiskomt en de luiken al eens eerder gesloten zijn geweest."
+        },
+        "args": [
           {
             "name": "device",
             "type": "device",
@@ -1020,6 +1039,31 @@
             "filter": "driver_id=shellydimmer"
           }
         ]
+      },
+      {
+        "id": "triggerTilt",
+        "title": {
+          "en": "Tilt changed",
+          "nl": "Kanteling gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "tilt",
+            "type": "number",
+            "title": {
+              "en": "°",
+              "nl": "°"
+            },
+            "example": 170
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=shellydw"
+          }
+        ]
       }
     ]
   },
@@ -1332,12 +1376,11 @@
       ]
     },
     {
-      "name": {
-        "en": "Shelly 1",
-        "nl": "Shelly 1"
+      "images": {
+        "large": "/drivers/shelly1/assets/images/large.png",
+        "small": "/drivers/shelly1/assets/images/small.png"
       },
-      "class": "socket",
-      "discovery": "shelly1",
+      "icon": "/drivers/shelly1/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_temperature",
@@ -1346,6 +1389,88 @@
         "button.callbackevents",
         "button.removecallbackevents"
       ],
+      "capabilitiesOptions": {
+        "measure_temperature.1": {
+          "title": {
+            "en": "Temperature Sensor 1",
+            "nl": "Temperatuursensor 1"
+          }
+        },
+        "measure_temperature.2": {
+          "title": {
+            "en": "Temperature Sensor 2",
+            "nl": "Temperatuursensor 2"
+          }
+        },
+        "measure_temperature.3": {
+          "title": {
+            "en": "Temperature Sensor 3",
+            "nl": "Temperatuursensor 3"
+          }
+        },
+        "button.callbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Set URLs for callbacks",
+            "nl": "Instellen URL's voor callbacks"
+          },
+          "desc": {
+            "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        },
+        "button.removecallbackevents": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Remove callback URLs for triggers",
+            "nl": "Verwijderen callback URL's voor triggers"
+          },
+          "desc": {
+            "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+            "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "name": {
+        "en": "Shelly 1",
+        "nl": "Shelly 1"
+      },
+      "class": "socket",
+      "discovery": "shelly1",
       "id": "shelly1",
       "settings": [
         {

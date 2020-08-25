@@ -1,0 +1,22 @@
+{
+  "id": "moveRollerShutterPreviousPosition",
+  "title": {
+    "en": "Move to previous position",
+    "nl": "Ga naar de vorige positie"
+  },
+  "hint": {
+    "en": "Use this map to move your shutter to the previous position. This is useful if someone comes home and the shutters have been closed before.",
+    "nl": "Gebruik deze actie om uw sluiter naar de vorige positie te verplaatsen. Dit is handig als er iemand thuiskomt en de luiken al eens eerder gesloten zijn geweest."
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly 2",
+        "nl": "Selecteer Shelly 2"
+      },
+      "filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
+    }
+  ]
+}

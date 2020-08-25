@@ -2,13 +2,9 @@
   "pair": {
     "title": "Add Shelly device",
     "nosettings": "Please fill in all the required fields.",
-    "unauthorized": "Error 401: user credentials are missing or this user is not authorized, make sure you have copied the correct user credentials as entered in the Shelly smartphone app or Webinterface.",
-    "servererror": "Error 500: internal server error",
-    "timeout": "Timeout error: make sure you have entered the correct IP address and that the Shelly device is online.",
-    "unknownerror": "Unknown error, are you sure you have entered the correct IP address and Homey is on the same network as the Shelly device? Please check your settings and try again.",
     "intro": "Enter the IP address and, if configured, your username and password for your Shelly device.",
-    "intro-relay": "Pair your Shelly2 device as a device with two relay buttons (this can be configured in the Shelly smartphone app). Enter the IP address and, if configured, your username and password for your Shelly 2 device.",
-    "intro-rollershutter": "Pair your Shelly2 device as a device with two roller shuttter buttons (this can be configured in the Shelly smartphone app). Enter the IP address and, if configured, your username and password for your Shelly 2 device.",
+    "intro-relay": "Pair your Shelly2(.5) device as a device with two relay buttons (this can be configured in the Shelly smartphone app). Enter the IP address and, if configured, your username and password for your Shelly 2 device.",
+    "intro-rollershutter": "Pair your Shelly2(.5) device as a device with two roller shuttter buttons (this can be configured in the Shelly smartphone app). Enter the IP address and, if configured, your username and password for your Shelly 2 device.",
     "address": "IP Address",
     "username": "Username",
     "password": "Password",
@@ -26,14 +22,17 @@
     "nodevices": "No devices have been discovered. You can try again or use manual pairing if you know the IP address of your Shelly device.",
     "again": "Try Again",
     "manual": "Manual Pairing",
-    "wrongdevice": "The Shelly device you are trying to pair does not match with the selected Shelly device in the pairing wizard."
-  },
-  "icon_select": {
-    "title": "Select icon",
-    "intro": "Select which icon you want to use for your Shelly Vintage.",
+    "title_icon_select": "Select icon",
     "intro_upload": "If you wish to use a custom icon for your device you can upload it here. The icon needs to be in .svg format.",
-    "default": "Use default",
-    "save": "Save"
+    "default_icon": "Use default",
+    "save": "Save",
+    "intro_vintage_icon": "Select which icon you want to use for your Shelly Vintage."
+  },
+  "util": {
+    "401": "Error 401: user credentials are missing or this user is not authorized, make sure you have copied the correct user credentials as entered in the Shelly smartphone app or Webinterface.",
+    "502": "Timeout error: make sure you have entered the correct IP address and that the Shelly device is online.",
+    "500": "Error 500: internal server error",
+    "unknownerror": "Unknown error, are you sure you have entered the correct IP address and Homey is on the same network as the Shelly device? Please check your settings and try again."
   },
   "connect": {
     "intro": "Using the Shelly RGBW2 in CW/WW mode enables you to connect 2 LED strips as follows:",
@@ -43,5 +42,10 @@
     "strip2": "Strip 2: CW pin to B terminal, WW pin to W terminal",
     "warning": "With this setup, controlling the LED strips with the Shelly apps is not practical."
   },
-  "Unreachable": "Unreachable"
+  "device": {
+    "unreachable": "Device is unreachable: "
+  },
+  "driver": {
+    "wrongdevice": "The Shelly device you are trying to pair does not match with the selected Shelly device in the pairing wizard."
+  }
 }

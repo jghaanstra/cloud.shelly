@@ -1,59 +1,49 @@
-const Homey = require('homey');
-const util = require('/lib/util.js');
+'use strict';
 
-module.exports = [
-	{
-		description: 'Shelly App API Callback Events',
-		method   : 'GET',
-		path     : '/button_actions/:devicetype/:deviceid/:action',
-		public   : true,
-		fn: function(args, callback) {
-      (async () => {
-        let device = await Homey.ManagerDrivers.getDriver(args.params.devicetype).getDevice({'id': args.params.deviceid});
+const Util = require('/lib/util.js');
 
-        // EXTRA ACTIONS SHELLY DW
-        if (args.params.devicetype == 'shellydw') {
-          if (!device.getCapabilityValue('alarm_contact') && (args.params.action == 'open_dark' || args.params.action == 'open_twilight')) {
-            device.setCapabilityValue('alarm_contact', true);
-          } else if (device.getCapabilityValue('alarm_contact') && args.params.action == 'close') {
-            device.setCapabilityValue('alarm_contact', false);
-          } else if (args.params.action == 'vibration') {
-            device.setCapabilityValue('alarm_tamper', true);
-            setTimeout(() => { device.setCapabilityValue('alarm_tamper', false) }, 5000);
-          }
-          await device.updateReportStatus();
-        }
+module.exports = {
+  async buttonActionTrigger({homey, params}) {
+    try {
+      const util = new Util({homey: homey});
+      let device = await homey.drivers.getDriver(params.devicetype).getDevice({'id': params.deviceid});
 
-        // EXTRA ACTIONS SHELLY FLOOD
-        if (args.params.devicetype == 'shellyflood' && !device.getCapabilityValue('alarm_water') && args.params.action == 'flood_detected') {
+      // EXTRA ACTIONS SHELLY DW
+      if (params.devicetype == 'shellydw') {
+        if (!device.getCapabilityValue('alarm_contact') && (params.action == 'open_dark' || params.action == 'open_twilight')) {
           device.setCapabilityValue('alarm_contact', true);
-        } else if (args.params.devicetype == 'shellyflood' && device.getCapabilityValue('alarm_water') && args.params.action == 'flood_gone') {
-          device.setCapabilityValue('alarm_water', false);
+        } else if (device.getCapabilityValue('alarm_contact') && params.action == 'close') {
+          device.setCapabilityValue('alarm_contact', false);
+        } else if (params.action == 'vibration') {
+          device.setCapabilityValue('alarm_tamper', true);
+          setTimeout(() => { device.setCapabilityValue('alarm_tamper', false) }, 5000);
         }
+        await device.updateReportStatus();
+      }
 
-        let callbackTrigger = new Homey.FlowCardTrigger('triggerCallbacks');
-        callbackTrigger.register().trigger({"id": args.params.deviceid, "device": device.getName(), "action": args.params.action});
+      // EXTRA ACTIONS SHELLY FLOOD
+      if (params.devicetype == 'shellyflood' && !device.getCapabilityValue('alarm_water') && params.action == 'flood_detected') {
+        device.setCapabilityValue('alarm_contact', true);
+      } else if (params.devicetype == 'shellyflood' && device.getCapabilityValue('alarm_water') && params.action == 'flood_gone') {
+        device.setCapabilityValue('alarm_water', false);
+      }
 
-        callback(false, 'OK');
-      })().catch(err => {
-        callback(err, false);
-      });
-		}
-	},
-  {
-		description: 'Shelly App API Status Callbacks',
-		method   : 'GET',
-		path     : '/report_status/:devicetype/:deviceid',
-		public   : true,
-		fn: function(args, callback) {
-      (async () => {
-        console.log(args); // leave this in for sending debug reports
-        let device = await Homey.ManagerDrivers.getDriver(args.params.devicetype).getDevice({'id': args.params.deviceid});
-        await device.updateReportStatus(device, args.query);
-        callback(false, 'OK');
-      })().catch(err => {
-        callback(err, false);
-      });
-		}
-	}
-]
+      const result = await homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": params.deviceid, "device": device.getName(), "action": params.action}, {"id": params.deviceid, "device": device.getName(), "action": params.action});
+      return result;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
+  async reportStatusEvent({homey, params, query}) {
+    try {
+      const util = new Util({homey: homey});
+      const shelly = await homey.drivers.getDriver(params.devicetype).getDevice({'id': params.deviceid});
+      const result = await shelly.updateReportStatus(device, query);
+      return result;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+}

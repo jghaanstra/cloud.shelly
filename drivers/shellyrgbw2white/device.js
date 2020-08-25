@@ -1,40 +1,40 @@
 'use strict';
 
 const Homey = require('homey');
-const util = require('/lib/util.js');
+const Util = require('/lib/util.js');
 
 class ShellyRGBW2WhiteDevice extends Homey.Device {
 
   onInit() {
+    if (!this.util) this.util = new Util({homey: this.homey});
+
     this.setAvailable();
 
     // LISTENERS FOR UPDATING CAPABILITIES
-    this.registerCapabilityListener('onoff', (value, opts) => {
-      Homey.ManagerDrivers.getDriver('shellyrgbw2white').updateTempDevices(this.getData().id, 'onoff', value);
-      if (value) {
-        return util.sendCommand('/white/'+ this.getStoreValue('channel') +'?turn=on', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      } else {
-        return util.sendCommand('/white/'+ this.getStoreValue('channel') +'?turn=off', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      }
+    this.registerCapabilityListener('onoff', async (value) => {
+      this.homey.drivers.getDriver('shellyrgbw2white').updateTempDevices(this.getData().id, 'onoff', value);
+      const path = value ? '/white/'+ this.getStoreValue("channel") +'?turn=on' : '/white/'+ this.getStoreValue("channel") +'?turn=off';
+      return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
-    this.registerCapabilityListener('dim', (value, opts) => {
-      var dim = value * 100;
-      Homey.ManagerDrivers.getDriver('shellyrgbw2white').updateTempDevices(this.getData().id, 'dim', value);
-      return util.sendCommand('/white/'+ this.getStoreValue('channel') +'?brightness='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    this.registerCapabilityListener('dim', async (value) => {
+      this.homey.drivers.getDriver('shellyrgbw2white').updateTempDevices(this.getData().id, 'dim', value);
+      const dim = value * 100;
+      return await this.util.sendCommand('/white/'+ this.getStoreValue('channel') +'?brightness='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
   }
 
-  onDeleted() {
-    return Homey.ManagerDrivers.getDriver('shellyrgbw2white').loadDevices();
-
-    if (this.getStoreValue('channel') == 0) {
-      const iconpath = "/userdata/" + this.getData().id +".svg";
-      util.removeIcon(iconpath)
-        .catch(error => {
-          this.log(error);
-        });
+  async onDeleted() {
+    try {
+      if (this.getStoreValue('channel') == 0) {
+        const iconpath = "/userdata/" + this.getData().id +".svg";
+        await this.util.removeIcon(iconpath);
+      }
+      this.homey.drivers.getDriver('shellyrgbw2white').loadDevices();
+      return;
+    } catch (error) {
+      this.log(error);
     }
   }
 

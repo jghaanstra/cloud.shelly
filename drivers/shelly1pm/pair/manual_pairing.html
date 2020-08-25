@@ -1,6 +1,6 @@
 <script type="text/javascript">
 
-Homey.setTitle( Homey.__('pair.title') );
+Homey.setTitle(Homey.__('pair.title'));
 
 $(function() {
 
@@ -21,27 +21,18 @@ $(function() {
 				password: inputpassword
 			};
 
-			Homey.emit('manual_pairing', data, function (error, result) {
-				if (error) {
-					$('.shelly-error').show();
+      Homey.emit('manual_pairing', data)
+        .then(result => {
+          var shellyinfo = "<div class='info-row'><span class='info-label' data-i18n='pair.hostname'>Shelly Hostname:</span><span class='info-value'> "+ result.device.type +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.mac'>Shelly MAC Address:</span><span class='info-value'> "+ result.device.mac +"</span></div>";
+          $('.shelly-info').show();
+          $('.shelly-info').html(shellyinfo);
+          $('.shelly-test').show();
+          $('#connect').prop('disabled', false);
+        })
+        .catch(error => {
+          $('.shelly-error').show();
 					$('.shelly-error-msg').html(error);
-				} else if (result) {
-          if (result == 'incorrect device') {
-            $('.shelly-error').show();
-  					$('.shelly-error-msg').html( Homey.__('pair.wrongdevice') );
-          } else {
-            var shellyinfo = "<div class='info-row'><span class='info-label' data-i18n='pair.hostname'>Shelly Hostname:</span><span class='info-value'> "+ result.device.type +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.mac'>Shelly MAC Address:</span><span class='info-value'> "+ result.device.mac +"</span></div>";
-  					$('.shelly-info').show();
-  					$('.shelly-info').html(shellyinfo);
-            $('.shelly-test').show();
-  					$('#connect').prop('disabled', false);
-          }
-        } else {
-					$('.shelly-error').show();
-					$('.shelly-error-msg').html( Homey.__('pair.unknownerror') );
-				}
-			});
-
+        });
 		} else {
 			$('.shelly-error').show();
 			$('.shelly-error-msg').html( Homey.__('pair.nosettings') );
