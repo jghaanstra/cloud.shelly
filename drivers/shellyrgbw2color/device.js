@@ -46,7 +46,7 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
       return await this.util.sendCommand('/color/0?red='+ Number(rgbcolor.r) +'&green='+ Number(rgbcolor.g) +'&blue='+ Number(rgbcolor.b) +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     }, 500);
 
-    this.registerCapabilityListener('onoff.whitemode', (value, opts) => {
+    this.registerCapabilityListener('onoff.whitemode', async (value) => {
       if (value) {
         this.setCapabilityValue("light_mode", 'temperature');
         return await this.util.sendCommand('/color/0?gain=0&white=255', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));

@@ -10,7 +10,7 @@ class ShellyRGBW2CWWWDriver extends Homey.Driver {
   }
 
   onPair(session) {
-    session.on('testConnection', async (data) => {
+    session.setHandler('testConnection', async (data) => {
       this.util.sendCommand('/shelly', data.address, data.username, data.password)
         .then(result => {
           callback(false, result);
