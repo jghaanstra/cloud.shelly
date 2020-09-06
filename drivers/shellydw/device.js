@@ -5,6 +5,7 @@ const Util = require('/lib/util.js');
 const callbacks = [
   'dark',
   'twilight',
+  'open',
   'close',
   'vibration',
   'temp_over',
