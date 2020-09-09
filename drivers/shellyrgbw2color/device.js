@@ -3,6 +3,14 @@
 const Homey = require('homey');
 const Util = require('/lib/util.js');
 const tinycolor = require("tinycolor2");
+const callbacks = [
+  'btn_on',
+  'btn_off',
+  'btn_longpush',
+  'btn_shortpush',
+  'out_on',
+  'out_off'
+];
 
 class ShellyRGBW2ColorDevice extends Homey.Device {
 
@@ -54,6 +62,14 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
         this.setCapabilityValue("light_mode", 'color');
         return await this.util.sendCommand('/color/0?gain=100&white=0', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       }
+    });
+
+    this.registerCapabilityListener('button.callbackevents', async () => {
+      return await this.util.addCallbackEvents('/settings/color/0?', callbacks, 'shellyrgbw2color', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    });
+
+    this.registerCapabilityListener('button.removecallbackevents', async () => {
+      return await this.util.removeCallbackEvents('/settings/color/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
   }
@@ -150,6 +166,10 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
         this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
       }
     }, 63000);
+  }
+
+  getCallbacks() {
+    return callbacks;
   }
 
 }
