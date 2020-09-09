@@ -32,9 +32,9 @@ class ShellydwDevice extends Homey.Device {
 
   }
 
-  async onAdded() {
+  /*async onAdded() {
     return await this.util.addCallbackEvents('/settings?', callbacks, 'shellydw', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-  }
+  }*/
 
   async onDeleted() {
     try {
