@@ -11,7 +11,9 @@
   "capabilities": [
     "onoff",
     "dim",
-    "measure_power"
+    "measure_power",
+    "button.callbackevents",
+    "button.removecallbackevents"
   ],
   "pair": [
     {
