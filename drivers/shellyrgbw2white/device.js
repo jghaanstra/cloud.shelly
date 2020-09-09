@@ -2,6 +2,10 @@
 
 const Homey = require('homey');
 const Util = require('/lib/util.js');
+const callbacks = [
+  'out_on',
+  'out_off'
+];
 
 class ShellyRGBW2WhiteDevice extends Homey.Device {
 
@@ -9,6 +13,15 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.setAvailable();
+
+    // ADD MISSING CAPABILITIES
+    // TODO: REMOVE ON RELEASE 3.1.0
+    if (!this.hasCapability('button.callbackevents')) {
+      this.addCapability('button.callbackevents');
+    }
+    if (!this.hasCapability('button.removecallbackevents')) {
+      this.addCapability('button.removecallbackevents');
+    }
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {
@@ -21,6 +34,14 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
       this.homey.drivers.getDriver('shellyrgbw2white').updateTempDevices(this.getData().id, 'dim', value);
       const dim = value * 100;
       return await this.util.sendCommand('/white/'+ this.getStoreValue('channel') +'?brightness='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    });
+
+    this.registerCapabilityListener('button.callbackevents', async () => {
+      return await this.util.addCallbackEvents('/settings/white/'+ this.getStoreValue("channel") +'?', callbacks, 'shellyrgbw2white', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    });
+
+    this.registerCapabilityListener('button.removecallbackevents', async () => {
+      return await this.util.removeCallbackEvents('/settings/white/'+ this.getStoreValue("channel") +'?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
   }
@@ -36,6 +57,10 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
     } catch (error) {
       this.log(error);
     }
+  }
+
+  getCallbacks() {
+    return callbacks;
   }
 
 }

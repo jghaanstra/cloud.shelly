@@ -20,6 +20,15 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
     this.pollDevice();
     this.setAvailable();
 
+    // ADD MISSING CAPABILITIES
+    // TODO: REMOVE ON RELEASE 3.1.0
+    if (!this.hasCapability('button.callbackevents')) {
+      this.addCapability('button.callbackevents');
+    }
+    if (!this.hasCapability('button.removecallbackevents')) {
+      this.addCapability('button.removecallbackevents');
+    }
+
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {
       const path = value ? '/color/0?turn=on' : '/color/0?turn=off';
