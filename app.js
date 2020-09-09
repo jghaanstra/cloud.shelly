@@ -2,6 +2,8 @@
 
 const Homey = require('homey');
 const Util = require('/lib/util.js');
+const shellies = require('shellies');
+let shellyDevices = {};
 
 class ShellyApp extends Homey.App {
 
@@ -9,6 +11,31 @@ class ShellyApp extends Homey.App {
     this.log('Initializing Shelly App ...');
 
     if (!this.util) this.util = new Util({homey: this.homey});
+
+    // START COAP LISTENER FOR RECEIVING STATUS UPDATES
+    // TODO: laden van shellyDevices iets robuster maken
+    // TODO: bij toevoegen van een nieuw apparaat de shellyDevices collectie updaten
+    setTimeout(async () => {
+      shellyDevices = await this.util.getShellies();
+      shellies.start();
+    }, 10000);
+
+
+    shellies.on('discover', device => {
+      this.log('Discovered device with ID', device.id, 'and type', device.type);
+
+      device.on('change', async (prop, newValue, oldValue) => {
+        await this.util.processDeviceChange(shellyDevices, device.id, prop, newValue, oldValue);
+      })
+
+      device.on('offline', () => {
+        const shelly = shellyDevices.filter(obj => Object.keys(obj).some(key => obj[key].includes(device.id)));
+        if (shelly.length > 0) {
+          const device = this.homey.drivers.getDriver(shelly[0].driver).getDevice({id: shelly[0].id});
+          this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": 'Device is offline'});
+        }
+      })
+    });
 
     // REGISTER GENERIC FLOWCARDS
     this.homey.flow.getTriggerCard('triggerDeviceOffline');

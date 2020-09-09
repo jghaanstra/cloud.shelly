@@ -20,6 +20,7 @@ class ShellyBulbDevice extends Homey.Device {
     });
 
     this.registerCapabilityListener('dim', async (value) => {
+      // TODO: FIX GAIN VS BRIGHTNESS IN COLOR VS WHITE MODE
       const dim = value * 100;
       return await this.util.sendCommand('/color/0?gain='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
@@ -77,6 +78,8 @@ class ShellyBulbDevice extends Homey.Device {
         let color = tinycolor({ r: result.red, g: result.green, b: result.blue });
         let hsv = color.toHsv();
         let hue = Number((hsv.h / 360).toFixed(2));
+
+        // TODO: FIX GAIN VS BRIGHTNESS IN COLOR VS WHITE MODE
 
         // capability onoff
         if (state != this.getCapabilityValue('onoff')) {

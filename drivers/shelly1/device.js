@@ -22,6 +22,8 @@ class Shelly1Device extends Homey.Device {
     this.pollDevice();
     this.setAvailable();
 
+    this.log(this.getData().id);
+
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {
       const path = value ? '/relay/0?turn=on' : '/relay/0?turn=off';
