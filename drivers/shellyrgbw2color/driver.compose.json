@@ -16,7 +16,9 @@
     "light_saturation",
     "measure_power",
     "light_mode",
-    "onoff.whitemode"
+    "onoff.whitemode",
+    "button.callbackevents",
+    "button.removecallbackevents"
   ],
   "capabilitiesOptions": {
     "onoff.whitemode": {
