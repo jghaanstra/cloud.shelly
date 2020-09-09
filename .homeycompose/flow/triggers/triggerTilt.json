@@ -1,0 +1,29 @@
+{
+  "id": "triggerTilt",
+  "title": {
+    "en": "Tilt changed",
+    "nl": "Tilt gewijzigd"
+  },
+  "tokens": [
+    {
+      "name": "degrees",
+      "type": "number",
+      "title": {
+        "en": "°",
+        "nl": "°"
+      },
+      "example": 5
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shellydw"
+    }
+  ]
+}
