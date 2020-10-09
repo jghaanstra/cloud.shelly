@@ -20,7 +20,7 @@
   },
   "homepage": "https://apps.athom.com/app/cloud.shelly",
   "dependencies": {
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "shellies": "^1.0.2",
     "tinycolor2": "^1.4.1"
   }

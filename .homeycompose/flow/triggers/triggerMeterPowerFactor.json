@@ -1,16 +1,16 @@
 {
-  "id": "triggerMeterPowerConsumed",
+  "id": "triggerMeterPowerFactor",
   "title": {
-    "en": "Total Consumed Energy changed",
-    "nl": "Totaal verbruikte energie gewijzigd"
+    "en": "Reactive power changed",
+    "nl": "Reactive power gewijzigd"
   },
   "tokens": [
     {
-      "name": "energy",
+      "name": "pf",
       "type": "number",
       "title": {
-        "en": "Wh",
-        "nl": "Wh"
+        "en": "W",
+        "nl": "W"
       },
       "example": 5
     }
@@ -23,7 +23,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shellyem|shelly3em&capabilities=meter_power_consumed"
+      "filter": "driver_id=shellyem|shelly3em&capabilities=reactive_power"
     }
   ]
 }

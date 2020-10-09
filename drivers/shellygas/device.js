@@ -15,8 +15,10 @@ class ShellyGasDevice extends Homey.Device {
 
     this.homey.flow.getDeviceTriggerCard('triggerGasConcentration');
 
-    this.pollDevice();
     this.setAvailable();
+
+    // UPDATE INITIAL STATE
+    this.initialStateUpdate();
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('button.callbackevents', async () => {
@@ -30,16 +32,17 @@ class ShellyGasDevice extends Homey.Device {
   }
 
   async onAdded() {
-    return await this.util.addCallbackEvents('/settings?', callbacks, 'shellygas', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    await this.homey.app.updateShellyCollection();
+    await this.util.addCallbackEvents('/settings?', callbacks, 'shellygas', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    return;
   }
 
   async onDeleted() {
     try {
-      clearInterval(this.pollingInterval);
-      clearInterval(this.pingInterval);
       const iconpath = "/userdata/" + this.getData().id +".svg";
       await this.util.removeCallbackEvents('/settings?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       await this.util.removeIcon(iconpath);
+      await this.homey.app.updateShellyCollection();
       return;
     } catch (error) {
       this.log(error);
@@ -47,58 +50,62 @@ class ShellyGasDevice extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
-  pollDevice() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
+  async initialStateUpdate() {
+    try {
+      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      if (!this.getAvailable()) { this.setAvailable(); }
 
-    this.pollingInterval = setInterval(async () => {
-      try {
-        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        clearTimeout(this.offlineTimeout);
+      if (result.gas_sensor.alarm_state == 'mild' || result.gas_sensor.alarm_state == 'heavy') {
+        let alarm = true;
+      } else {
+        let alarm = false;
+      }
+      let gas_concentration = Number(result.concentration.ppm);
 
-        if (result.gas_sensor.alarm_state == 'mild' || result.gas_sensor.alarm_state == 'heavy') {
-          let alarm = true;
-        } else {
-          let alarm = false;
-        }
-        let gas_concentration = Number(result.concentration.ppm);
-
-        // capability alarm_smoke
-        if (alarm != this.getCapabilityValue('alarm_smoke')) {
-          this.setCapabilityValue('alarm_smoke', alarm);
-        }
-
-        // capability gas_concentration
-        if (gas_concentration != this.getCapabilityValue('gas_concentration')) {
-          this.setCapabilityValue('gas_concentration', gas_concentration);
-          this.homey.flow.getDeviceTriggerCard('triggerGasConcentration').trigger(this, {'ppm': gas_concentration}, {})
-        }
-      } catch (error) {
-        this.log(error);
-        this.setUnavailable(this.homey.__('device.unreachable') + error.message);
-        this.pingDevice();
-
-        this.offlineTimeout = setTimeout(() => {
-          this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.toString()});
-        }, 60000 * this.getSetting('offline'));
+      // capability alarm_smoke
+      if (alarm != this.getCapabilityValue('alarm_smoke')) {
+        this.setCapabilityValue('alarm_smoke', alarm);
       }
 
-    }, 1000 * this.getSetting('polling'));
+      // capability gas_concentration
+      if (gas_concentration != this.getCapabilityValue('gas_concentration')) {
+        this.setCapabilityValue('gas_concentration', gas_concentration);
+      }
+    } catch (error) {
+      this.setUnavailable(this.homey.__('device.unreachable') + error.message);
+      this.log(error);
+    }
   }
 
-  pingDevice() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
-
-    this.pingInterval = setInterval(async () => {
-      try {
-        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
-        this.setAvailable();
-        this.pollDevice();
-      } catch (error) {
-        this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
+  async deviceCoapReport(capability, value) {
+    try {
+      if (!this.getAvailable()) { this.setAvailable(); }
+      
+      switch(capability) {
+        case 'gas':
+          if (value === 'mild' || value === 'heavy') {
+            var alarm = true;
+          } else {
+            var alarm = false;
+          }
+          if (alarm != this.getCapabilityValue('alarm_smoke')) {
+            this.setCapabilityValue('alarm_smoke', alarm);
+          }
+          break;
+        case 'concentration':
+          if (value != this.getCapabilityValue('gas_concentration')) {
+            this.setCapabilityValue('gas_concentration', value);
+            this.homey.flow.getDeviceTriggerCard('triggerGasConcentration').trigger(this, {'ppm': value}, {})
+          }
+          break;
+        default:
+          this.log('Device does not support reported capability.');
       }
-    }, 63000);
+      return Promise.resolve(true);
+    } catch(error) {
+      this.log(error);
+      return Promise.reject(error);
+    }
   }
 
   getCallbacks() {

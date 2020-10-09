@@ -1,0 +1,18 @@
+{
+  "id": "conditionInput2",
+  "title": {
+    "en": "SW terminal 3 !{{is|isn't}} on",
+    "nl": "SW terminal 3 !{{is|is niet}} aan"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shellyi3&capabilities=alarm_generic.2"
+    }
+  ]
+}

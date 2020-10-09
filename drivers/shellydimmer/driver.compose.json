@@ -12,11 +12,10 @@
     "onoff",
     "dim",
     "measure_power",
-    "meter_power_wmin",
     "meter_power",
     "measure_temperature",
-    "onoff.input1",
-    "onoff.input2",
+    "alarm_generic",
+    "alarm_generic.1",
     "button.callbackevents",
     "button.removecallbackevents"
   ]

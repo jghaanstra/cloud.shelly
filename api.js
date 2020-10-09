@@ -18,7 +18,6 @@ module.exports = {
           device.setCapabilityValue('alarm_tamper', true);
           setTimeout(() => { device.setCapabilityValue('alarm_tamper', false) }, 5000);
         }
-        await device.updateReportStatus();
       }
 
       // EXTRA ACTIONS SHELLY FLOOD

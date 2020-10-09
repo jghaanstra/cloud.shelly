@@ -46,8 +46,7 @@ class ShellyDimmerDriver extends Homey.Driver {
           settings: {
             address  : discoveryResult.address,
             username : '',
-            password : '',
-            polling  : 5
+            password : ''
           },
           store: {
             type: result.type
@@ -77,8 +76,7 @@ class ShellyDimmerDriver extends Homey.Driver {
             settings: {
               address  : data.address,
               username : data.username,
-              password : data.password,
-              polling  : 5
+              password : data.password
             },
             store: {
               type: result.device.type

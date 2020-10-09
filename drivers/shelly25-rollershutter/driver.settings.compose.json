@@ -17,10 +17,6 @@
       {
         "id": "password",
         "$extends": "password"
-      },
-      {
-        "id": "polling",
-        "$extends": "polling"
       }
     ]
   },
@@ -34,10 +30,6 @@
       {
         "id": "halfway",
         "$extends": "halfway"
-      },
-      {
-        "id": "offline",
-        "$extends": "offline"
       }
     ]
   }

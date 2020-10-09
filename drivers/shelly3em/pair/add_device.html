@@ -6,6 +6,30 @@
         for (i = 0; i < 4; i++) {
           var deviceid = i + 1;
           if (i < 3) {
+            if (i === 0) {
+              var capabilities = [
+                "onoff",
+                "measure_power",
+                "meter_power_factor",
+                "measure_current",
+                "measure_voltage",
+                "meter_power_consumed",
+                "meter_power",
+                "button.callbackevents",
+                "button.removecallbackevents"
+              ]
+            } else {
+              var capabilities = [
+                "measure_power",
+                "meter_power_factor",
+                "measure_current",
+                "measure_voltage",
+                "meter_power_consumed",
+                "meter_power",
+                "button.callbackevents",
+                "button.removecallbackevents"
+              ]
+            }
             Homey.createDevice({
               name: 'Shelly 3EM ' + deviceid,
       				data: {
@@ -16,6 +40,7 @@
                 username : result.settings.username,
                 password : result.settings.password
               },
+              capabilities: capabilities,
               store: {
                 main_device: result.data.id,
                 channel: i,

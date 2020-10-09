@@ -12,7 +12,6 @@
     "alarm_contact",
     "measure_luminance",
     "measure_battery",
-    "measure_voltage",
     "measure_temperature",
     "alarm_tamper",
     "tilt",

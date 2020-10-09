@@ -1,0 +1,29 @@
+{
+  "id": "triggerInput1",
+  "title": {
+    "en": "State of SW terminal 2",
+    "nl": "Status van SW terminal 2"
+  },
+  "tokens": [
+    {
+      "name": "status",
+      "type": "string",
+      "title": {
+        "en": "Status",
+        "nl": "Status"
+      },
+      "example": "On"
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shellyi3|shellydimmer&capabilities=alarm_generic.1"
+    }
+  ]
+}

@@ -46,10 +46,9 @@ class Shelly1Driver extends Homey.Driver {
           settings: {
             address  : discoveryResult.address,
             username : '',
-            password : '',
-            polling  : 5
+            password : ''
           },
-          capabilities: ['onoff', 'button.callbackevents', 'button.removecallbackevents'],
+          capabilities: ['onoff', 'alarm_generic', 'button.callbackevents', 'button.removecallbackevents'],
           store: {
             type: result.type
           },
@@ -78,10 +77,9 @@ class Shelly1Driver extends Homey.Driver {
             settings: {
               address  : data.address,
               username : data.username,
-              password : data.password,
-              polling  : 5
+              password : data.password
             },
-            capabilities: ['onoff', 'button.callbackevents', 'button.removecallbackevents'],
+            capabilities: ['onoff', 'alarm_generic', 'button.callbackevents', 'button.removecallbackevents'],
             store: {
               type: result.device.type
             }

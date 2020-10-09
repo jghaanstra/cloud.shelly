@@ -19,18 +19,5 @@
         "$extends": "password"
       }
     ]
-  },
-  {
-    "type": "group",
-    "label": {
-      "en": "User Settings",
-      "nl": "Gebruikersinstellingen"
-    },
-    "children": [
-      {
-        "id": "offline",
-        "$extends": "offline"
-      }
-    ]
   }
 ]

@@ -6,7 +6,7 @@
   "class": "light",
   "discovery": "shellyrgbw2",
   "$extends": [
-    "defaultsnoactions"
+    "defaultswithalarmgeneric"
   ],
   "capabilities": [
     "onoff",
@@ -15,8 +15,10 @@
     "light_hue",
     "light_saturation",
     "measure_power",
+    "meter_power",
     "light_mode",
     "onoff.whitemode",
+    "alarm_generic",
     "button.callbackevents",
     "button.removecallbackevents"
   ],

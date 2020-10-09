@@ -19,10 +19,16 @@ class Shelly1Device extends Homey.Device {
     this.homey.flow.getDeviceTriggerCard('triggerShelly1Temperature2');
     this.homey.flow.getDeviceTriggerCard('triggerShelly1Temperature3');
 
-    this.pollDevice();
     this.setAvailable();
 
-    this.log(this.getData().id);
+    // ADD AND REMOVE CAPABILITIES
+    // TODO: REMOVE AFTER 3.1.0
+    if (!this.hasCapability('alarm_generic')) {
+      this.addCapability('alarm_generic');
+    }
+
+    // UPDATE INITIAL STATE
+    this.initialStateUpdate();
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {
@@ -40,17 +46,18 @@ class Shelly1Device extends Homey.Device {
 
   }
 
-  /*async onAdded() {
-    return await this.util.addCallbackEvents('/settings/relay/0?', callbacks, 'shelly1', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-  }*/
+  async onAdded() {
+    await this.homey.app.updateShellyCollection();
+    /*await this.util.addCallbackEvents('/settings/relay/0?', callbacks, 'shelly1', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));*/
+    return;
+  }
 
   async onDeleted() {
     try {
-      clearInterval(this.pollingInterval);
-      clearInterval(this.pingInterval);
       const iconpath = "/userdata/" + this.getData().id +".svg";
       await this.util.removeCallbackEvents('/settings/relay/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       await this.util.removeIcon(iconpath);
+      await this.homey.app.updateShellyCollection();
       return;
     } catch (error) {
       this.log(error);
@@ -58,84 +65,111 @@ class Shelly1Device extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
-  pollDevice() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
+  async initialStateUpdate() {
+    try {
+      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
+      if (!this.getAvailable()) { this.setAvailable(); }
 
-    this.pollingInterval = setInterval(async () => {
-      try {
-        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
-        clearTimeout(this.offlineTimeout);
+      let onoff = result.relays[0].ison;
 
-        let state = result.relays[0].ison;
-
-        // capability onoff
-        if (state != this.getCapabilityValue('onoff')) {
-          this.setCapabilityValue('onoff', state);
-        }
-
-        // capability measure_temperature, measure_temperature.2, measure_temperature.3
-        if (Object.entries(result.ext_temperature).length !== 0) {
-
-          // sensor 1
-          if (result.ext_temperature.hasOwnProperty([0]) && !this.hasCapability('measure_temperature')) {
-            this.addCapability('measure_temperature');
-          } else if (result.ext_temperature.hasOwnProperty([0]) && this.hasCapability('measure_temperature')) {
-            let temp1 = result.ext_temperature[0].tC;
-            if (temp1 != this.getCapabilityValue('measure_temperature')) {
-              this.setCapabilityValue('measure_temperature', temp1);
-            }
-          }
-
-          // sensor 2
-          if (result.ext_temperature.hasOwnProperty([1]) && !this.hasCapability('measure_temperature.2')) {
-            this.addCapability('measure_temperature.2');
-          } else if (result.ext_temperature.hasOwnProperty([1]) && this.hasCapability('measure_temperature.2')) {
-            let temp2 = result.ext_temperature[1].tC;
-            if (temp2 != this.getCapabilityValue('measure_temperature.2')) {
-              this.setCapabilityValue('measure_temperature.2', temp2);
-              this.homey.flow.getDeviceTriggerCard('triggerShelly1Temperature2').trigger(this, {'temperature': temp2}, {})
-            }
-          }
-
-          // sensor 3
-          if (result.ext_temperature.hasOwnProperty([2]) && !this.hasCapability('measure_temperature.3')) {
-            this.addCapability('measure_temperature.3');
-          } else if (result.ext_temperature.hasOwnProperty([2]) && this.hasCapability('measure_temperature.3')) {
-            let temp3 = result.ext_temperature[2].tC;
-            if (temp3 != this.getCapabilityValue('measure_temperature.3')) {
-              this.setCapabilityValue('measure_temperature.3', temp3);
-              this.homey.flow.getDeviceTriggerCard('triggerShelly1Temperature3').trigger(this, {'temperature': temp3}, {})
-            }
-          }
-        }
-
-      } catch (error) {
-        this.log(error);
-        this.setUnavailable(this.homey.__('device.unreachable') + error.message);
-        this.pingDevice();
-
-        this.offlineTimeout = setTimeout(() => {
-          this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.toString()});
-        }, 60000 * this.getSetting('offline'));
+      // capability onoff
+      if (onoff != this.getCapabilityValue('onoff')) {
+        this.setCapabilityValue('onoff', onoff);
       }
 
-    }, 1000 * this.getSetting('polling'));
+      // capability measure_temperature, measure_temperature.2, measure_temperature.3
+      if (Object.entries(result.ext_temperature).length !== 0) {
+
+        // sensor 1
+        if (result.ext_temperature.hasOwnProperty([0]) && !this.hasCapability('measure_temperature')) {
+          this.addCapability('measure_temperature');
+        } else if (result.ext_temperature.hasOwnProperty([0]) && this.hasCapability('measure_temperature')) {
+          let temp1 = result.ext_temperature[0].tC;
+          if (temp1 != this.getCapabilityValue('measure_temperature')) {
+            this.setCapabilityValue('measure_temperature', temp1);
+          }
+        }
+
+        // sensor 2
+        if (result.ext_temperature.hasOwnProperty([1]) && !this.hasCapability('measure_temperature.2')) {
+          this.addCapability('measure_temperature.2');
+        } else if (result.ext_temperature.hasOwnProperty([1]) && this.hasCapability('measure_temperature.2')) {
+          let temp2 = result.ext_temperature[1].tC;
+          if (temp2 != this.getCapabilityValue('measure_temperature.2')) {
+            this.setCapabilityValue('measure_temperature.2', temp2);
+          }
+        }
+
+        // sensor 3
+        if (result.ext_temperature.hasOwnProperty([2]) && !this.hasCapability('measure_temperature.3')) {
+          this.addCapability('measure_temperature.3');
+        } else if (result.ext_temperature.hasOwnProperty([2]) && this.hasCapability('measure_temperature.3')) {
+          let temp3 = result.ext_temperature[2].tC;
+          if (temp3 != this.getCapabilityValue('measure_temperature.3')) {
+            this.setCapabilityValue('measure_temperature.3', temp3);
+          }
+        }
+      }
+
+      // capability measure_humidity, measure_humidity.2, measure_humidity.3
+      if (Object.entries(result.ext_humidity).length !== 0) {
+        if (result.ext_humidity.hasOwnProperty([0]) && !this.hasCapability('measure_humidity')) {
+          this.addCapability('measure_humidity');
+        }
+      }
+
+    } catch (error) {
+      this.setUnavailable(this.homey.__('device.unreachable') + error.message);
+      this.log(error);
+    }
   }
 
-  pingDevice() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
-
-    this.pingInterval = setInterval(async () => {
-      try {
-        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
-        this.setAvailable();
-        this.pollDevice();
-      } catch (error) {
-        this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
+  async deviceCoapReport(capability, value) {
+    try {
+      if (!this.getAvailable()) { this.setAvailable(); }
+      
+      switch(capability) {
+        case 'relay0':
+          if (value != this.getCapabilityValue('onoff')) {
+            this.setCapabilityValue('onoff', value);
+          }
+          break;
+        case 'externalTemperature0':
+          if (value != this.getCapabilityValue('measure_temperature')) {
+            this.setCapabilityValue('measure_temperature', value);
+          }
+          break;
+        case 'externalTemperature1':
+          if (value != this.getCapabilityValue('measure_temperature.2')) {
+            this.setCapabilityValue('measure_temperature.2', value);
+            this.homey.flow.getDeviceTriggerCard('triggerShelly1Temperature2').trigger(this, {'temperature': value}, {})
+          }
+          break;
+        case 'externalTemperature2':
+          if (value != this.getCapabilityValue('measure_temperature.3')) {
+            this.setCapabilityValue('measure_temperature.3', value);
+            this.homey.flow.getDeviceTriggerCard('triggerShelly1Temperature3').trigger(this, {'temperature': value}, {})
+          }
+          break;
+        case 'externalHumidity':
+          if (value != this.getCapabilityValue('measure_humidity')) {
+            this.setCapabilityValue('measure_humidity', value);
+          }
+          break;
+        case 'input0':
+          let alarm = value === 0 ? false : true;
+          if (alarm != this.getCapabilityValue('alarm_generic')) {
+            this.setCapabilityValue('alarm_generic', alarm);
+          }
+          break;
+        default:
+          this.log('Device does not support reported capability.');
       }
-    }, 63000);
+      return Promise.resolve(true);
+    } catch(error) {
+      this.log(error);
+      return Promise.reject(error);
+    }
   }
 
   getCallbacks() {

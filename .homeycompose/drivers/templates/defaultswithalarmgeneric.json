@@ -4,37 +4,11 @@
     "small": "{{driverAssetsPath}}/images/small.png"
   },
   "icon": "{{driverAssetsPath}}/icon.svg",
-  "capabilities": [
-    "onoff",
-    "measure_temperature",
-    "measure_temperature.2",
-    "measure_temperature.3",
-    "button.callbackevents",
-    "button.removecallbackevents"
-  ],
   "capabilitiesOptions": {
-    "measure_temperature.1": {
-      "title": {
-        "en": "Temperature Sensor 1",
-        "nl": "Temperatuursensor 1"
-      }
-    },
-    "measure_temperature.2": {
-      "title": {
-        "en": "Temperature Sensor 2",
-        "nl": "Temperatuursensor 2"
-      }
-    },
-    "measure_temperature.3": {
-      "title": {
-        "en": "Temperature Sensor 3",
-        "nl": "Temperatuursensor 3"
-      }
-    },
     "alarm_generic": {
       "title": {
-        "en": "State of SW terminal",
-        "nl": "Status van SW terminal"
+        "en": "State of SW terminal 1",
+        "nl": "Status van SW terminal 1"
       }
     },
     "button.callbackevents": {

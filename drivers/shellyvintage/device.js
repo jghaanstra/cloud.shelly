@@ -12,8 +12,10 @@ class ShellyVintageDevice extends Homey.Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    this.pollDevice();
     this.setAvailable();
+
+    // UPDATE INITIAL STATE
+    this.initialStateUpdate();
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {
@@ -36,15 +38,15 @@ class ShellyVintageDevice extends Homey.Device {
 
   }
 
-  /*async onAdded() {
-    return await this.util.addCallbackEvents('/settings/light/0?', callbacks, 'shellyvintage', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-  }*/
+  async onAdded() {
+    /*await this.util.addCallbackEvents('/settings/light/0?', callbacks, 'shellyvintage', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));*/
+    return await this.homey.app.updateShellyCollection();
+  }
 
   async onDeleted() {
     try {
-      clearInterval(this.pollingInterval);
-      clearInterval(this.pingInterval);
       await this.util.removeCallbackEvents('/settings/relay/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      await this.homey.app.updateShellyCollection();
       return;
     } catch (error) {
       this.log(error);
@@ -52,65 +54,77 @@ class ShellyVintageDevice extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
-  pollDevice() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
+  async initialStateUpdate() {
+    try {
+      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      if (!this.getAvailable()) { this.setAvailable(); }
 
-    this.pollingInterval = setInterval(async () => {
-      try {
-        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        clearTimeout(this.offlineTimeout);
+      let onoff = result.lights[0].ison;
+      let dim = result.lights[0].brightness > 100 ? 1 : result.lights[0].brightness / 100;
+      let measure_power = result.meters[0].power;
+      let meter_power = result.meters[0].total * 0.000017;
 
-        let state = result.lights[0].ison;
-        let dim = result.lights[0].brightness / 100;
-        let measure_power = result.meters[0].power;
-        let meter_power = result.meters[0].total * 0.000017;
-
-        // capability onoff
-        if (state != this.getCapabilityValue('onoff')) {
-          this.setCapabilityValue('onoff', state);
-        }
-
-        // capability dim
-        if (dim != this.getCapabilityValue('dim')) {
-          this.setCapabilityValue('dim', dim);
-        }
-
-        // capability measure_power
-        if (measure_power != this.getCapabilityValue('measure_power')) {
-          this.setCapabilityValue('measure_power', measure_power);
-        }
-
-        // capability measure_power
-        if (meter_power != this.getCapabilityValue('meter_power')) {
-          this.setCapabilityValue('meter_power', meter_power);
-        }
-      } catch (error) {
-        this.log(error);
-        this.setUnavailable(this.homey.__('device.unreachable') + error.message);
-        this.pingDevice();
-
-        this.offlineTimeout = setTimeout(() => {
-          this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.toString()});
-        }, 60000 * this.getSetting('offline'));
+      // capability onoff
+      if (onoff != this.getCapabilityValue('onoff')) {
+        this.setCapabilityValue('onoff', onoff);
       }
 
-    }, 1000 * this.getSetting('polling'));
+      // capability dim
+      if (dim != this.getCapabilityValue('dim')) {
+        this.setCapabilityValue('dim', dim);
+      }
+
+      // capability measure_power
+      if (measure_power != this.getCapabilityValue('measure_power')) {
+        this.setCapabilityValue('measure_power', measure_power);
+      }
+
+      // capability meter_power
+      if (meter_power != this.getCapabilityValue('meter_power')) {
+        this.setCapabilityValue('meter_power', meter_power);
+      }
+
+    } catch (error) {
+      this.setUnavailable(this.homey.__('device.unreachable') + error.message);
+      this.log(error);
+    }
   }
 
-  pingDevice() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
-
-    this.pingInterval = setInterval(async () => {
-      try {
-        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
-        this.setAvailable();
-        this.pollDevice();
-      } catch (error) {
-        this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
+  async deviceCoapReport(capability, value) {
+    try {
+      if (!this.getAvailable()) { this.setAvailable(); }
+      
+      switch(capability) {
+        case 'switch':
+          if (value != this.getCapabilityValue('onoff')) {
+            this.setCapabilityValue('onoff', value);
+          }
+          break;
+        case 'brightness':
+          let dim = value >= 100 ? 1 : value / 100;
+          if (dim != this.getCapabilityValue('dim')) {
+            this.setCapabilityValue('dim', dim);
+          }
+          break;
+        case 'power0':
+          if (value != this.getCapabilityValue('measure_power')) {
+            this.setCapabilityValue('measure_power', value);
+          }
+          break;
+        case 'energyCounter0':
+          let meter_power = value * 0.000017;
+          if (meter_power != this.getCapabilityValue('meter_power')) {
+            this.setCapabilityValue('meter_power', meter_power);
+          }
+          break;
+        default:
+          this.log('Device does not support reported capability.');
       }
-    }, 63000);
+      return Promise.resolve(true);
+    } catch(error) {
+      this.log(error);
+      return Promise.reject(error);
+    }
   }
 
   getCallbacks() {

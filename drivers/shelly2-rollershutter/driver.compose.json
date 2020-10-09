@@ -6,17 +6,25 @@
   "class": "windowcoverings",
   "discovery": "shelly2",
   "$extends": [
-    "defaults"
+    "defaultswithalarmgeneric"
   ],
   "capabilities": [
     "windowcoverings_state",
     "windowcoverings_set",
     "measure_power",
+    "meter_power",
+    "alarm_generic",
     "button.sethalfwayposition",
     "button.callbackevents",
     "button.removecallbackevents"
   ],
   "capabilitiesOptions": {
+    "alarm_generic": {
+      "title": {
+        "en": "State of SW terminal",
+        "nl": "Status van SW terminal"
+      }
+    },
     "button.sethalfwayposition": {
       "maintenanceAction": true,
       "title": {

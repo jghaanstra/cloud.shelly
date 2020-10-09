@@ -12,32 +12,48 @@ class ShellyApp extends Homey.App {
 
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    // START COAP LISTENER FOR RECEIVING STATUS UPDATES
-    // TODO: laden van shellyDevices iets robuster maken
-    // TODO: bij toevoegen van een nieuw apparaat de shellyDevices collectie updaten
+    // UPDATE SHELLY COLLECTION AND START COAP LISTENER FOR RECEIVING STATUS UPDATES
     setTimeout(async () => {
-      shellyDevices = await this.util.getShellies();
+      await this.updateShellyCollection();
       shellies.start();
     }, 10000);
 
-
+    // COAP DISCOVERY AND MESSAGES
     shellies.on('discover', device => {
       this.log('Discovered device with ID', device.id, 'and type', device.type);
 
-      device.on('change', async (prop, newValue, oldValue) => {
-        await this.util.processDeviceChange(shellyDevices, device.id, prop, newValue, oldValue);
+      device.on('change', (prop, newValue, oldValue) => {
+        if (shellyDevices.length > 0) {
+          const filteredShellies = shellyDevices.filter(obj => Object.keys(obj).some(key => obj[key].includes(device.id)));
+          if (filteredShellies.length > 0) {
+            if (filteredShellies.length === 1) {
+              var deviceid = filteredShellies[0].id;
+            } else {
+              const channel = prop.slice(prop.length - 1);
+              var deviceid = filteredShellies[0].main_device+'-channel-'+channel;
+            }
+            const device = this.homey.drivers.getDriver(filteredShellies[0].driver).getDevice({id: deviceid});
+            return device.deviceCoapReport(prop, newValue);
+          } else {
+            this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'but this device has not been added to Homey yet.');
+          }
+        } else {
+          this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'but no Shelly devices have been added to Homey yet.');
+        }
       })
 
       device.on('offline', () => {
-        const shelly = shellyDevices.filter(obj => Object.keys(obj).some(key => obj[key].includes(device.id)));
-        if (shelly.length > 0) {
-          const device = this.homey.drivers.getDriver(shelly[0].driver).getDevice({id: shelly[0].id});
-          this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": 'Device is offline'});
+        const offlineShellies = shellyDevices.filter(obj => Object.keys(obj).some(key => obj[key].includes(device.id)));
+        if (offlineShellies.length > 0) {
+          Object.keys(offlineShellies).forEach(key => {
+            const device = this.homey.drivers.getDriver(offlineShellies[key].driver).getDevice({id: offlineShellies[key].id});
+            this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": 'Device is offline'});
+          });
         }
       })
     });
 
-    // REGISTER GENERIC FLOWCARDS
+    // GENERIC FLOWCARDS
     this.homey.flow.getTriggerCard('triggerDeviceOffline');
 
     const listenerCallbacks = this.homey.flow.getTriggerCard('triggerCallbacks').registerRunListener(async (args, state) => {
@@ -48,16 +64,33 @@ class ShellyApp extends Homey.App {
       }
     });
     listenerCallbacks.getArgument('shelly').registerAutocompleteListener(async (query, args) => {
-      return await this.util.getShellies();
+      return await this.util.getShellies('actions');
     });
     listenerCallbacks.getArgument('action').registerAutocompleteListener(async (query, args) => {
       return await this.util.getActions(args.shelly.actions);
     });
 
-    // GENERIC
     this.homey.flow.getActionCard('actionReboot')
       .registerRunListener(async (args) => {
         return await this.util.sendCommand('/reboot', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+      })
+
+    this.homey.flow.getConditionCard('conditionInput1')
+      .registerRunListener(async (args) => {
+        if (args.device) {
+          return args.device.getCapability("alarm_generic.1");
+        } else {
+          return false;
+        }
+      })
+
+    this.homey.flow.getConditionCard('conditionInput2')
+      .registerRunListener(async (args) => {
+        if (args.device) {
+          return args.device.getCapability("alarm_generic.2");
+        } else {
+          return false;
+        }
       })
 
     // SHELLY 1
@@ -89,7 +122,7 @@ class ShellyApp extends Homey.App {
         }
       })
 
-    // SHELLY RGBW2 COLOR
+    // SHELLY RGBW2
     this.homey.flow.getActionCard('flipbackSwitchRGBW2Color')
       .registerRunListener(async (args) => {
         if (args.switch === '1') {
@@ -102,6 +135,16 @@ class ShellyApp extends Homey.App {
     this.homey.flow.getActionCard('effectRGBW2Color')
       .registerRunListener(async (args) => {
         return await this.util.sendCommand('/color/0?turn=on&effect='+ Number(args.effect) +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+      })
+
+    this.homey.flow.getActionCard('actionRGBW2EnableWhiteMode')
+      .registerRunListener(async (args) => {
+        return args.device.triggerCapabilityListener("onoff.whitemode", true);
+      })
+
+    this.homey.flow.getActionCard('actionRGBW2DisableWhiteMode')
+      .registerRunListener(async (args) => {
+        return args.device.triggerCapabilityListener("onoff.whitemode", false);
       })
 
     // SHELLY 2(.5) ROLLER SHUTTER
@@ -169,35 +212,6 @@ class ShellyApp extends Homey.App {
           }
     	  })
 
-    // SHELLY DIMMER
-    this.homey.flow.getConditionCard('conditionDimmerInput1')
-      .registerRunListener(async (args) => {
-        if (args.device) {
-          return args.device.getCapability("onoff.input1");
-        } else {
-          return false;
-        }
-      })
-
-    this.homey.flow.getConditionCard('conditionDimmerInput2')
-      .registerRunListener(async (args) => {
-        if (args.device) {
-          return args.device.getCapability("onoff.input2");
-        } else {
-          return false;
-        }
-      })
-
-    this.homey.flow.getActionCard('actionRGBW2EnableWhiteMode')
-      .registerRunListener(async (args) => {
-        return args.device.triggerCapabilityListener("onoff.whitemode", true);
-      })
-
-    this.homey.flow.getActionCard('actionRGBW2DisableWhiteMode')
-      .registerRunListener(async (args) => {
-        return args.device.triggerCapabilityListener("onoff.whitemode", false);
-      })
-
     // SHELLY DUO
     this.homey.flow.getActionCard('actionDuoDimTemperature')
       .registerRunListener(async (args) => {
@@ -233,6 +247,15 @@ class ShellyApp extends Homey.App {
         return await this.util.sendCommand('/self_test', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
 
+  }
+
+  async updateShellyCollection() {
+    try {
+      shellyDevices = await this.util.getShellies();
+      return Promise.resolve(true);
+    } catch(error) {
+      return Promise.reject(error);
+    }
   }
 
 }

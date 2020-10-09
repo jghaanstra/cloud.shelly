@@ -6,12 +6,14 @@
   "class": "light",
   "discovery": "shellyrgbw2",
   "$extends": [
-    "defaults"
+    "defaultswithalarmgeneric"
   ],
   "capabilities": [
     "onoff",
     "dim",
     "measure_power",
+    "meter_power",
+    "alarm_generic",
     "button.callbackevents",
     "button.removecallbackevents"
   ],

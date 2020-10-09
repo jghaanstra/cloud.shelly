@@ -4,12 +4,57 @@
     "nl": "Shelly i3"
   },
   "class": "other",
-  "discovery": "shelly-plug",
+  "discovery": "shellyi3",
   "$extends": [
-    "defaults"
+    "defaultswithalarmgeneric"
   ],
   "capabilities": [
+    "alarm_generic",
+    "alarm_generic.1",
+    "alarm_generic.2",
     "button.callbackevents",
     "button.removecallbackevents"
-  ]
+  ],
+  "capabilitiesOptions": {
+    "alarm_generic": {
+      "title": {
+        "en": "State of SW terminal 1",
+        "nl": "Status van SW terminal 1"
+      }
+    },
+    "alarm_generic.1": {
+      "title": {
+        "en": "State of SW terminal 2",
+        "nl": "Status van SW terminal 2"
+      }
+    },
+    "alarm_generic.2": {
+      "title": {
+        "en": "State of SW terminal 3",
+        "nl": "Status van SW terminal 3"
+      }
+    },
+    "button.callbackevents": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Set URLs for callbacks",
+        "nl": "Instellen URL's voor callbacks"
+      },
+      "desc": {
+        "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
+        "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+      }
+    },
+    "button.removecallbackevents": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Remove callback URLs for triggers",
+        "nl": "Verwijderen callback URL's voor triggers"
+      },
+      "desc": {
+        "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
+        "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+      }
+    }
+  }
 }

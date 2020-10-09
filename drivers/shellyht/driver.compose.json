@@ -12,7 +12,6 @@
     "measure_humidity",
     "measure_temperature",
     "measure_battery",
-    "measure_voltage",
     "button.callbackevents",
     "button.removecallbackevents"
   ],

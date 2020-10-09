@@ -11,9 +11,9 @@
   "capabilities": [
     "onoff",
     "measure_power",
-    "reactive_power",
     "measure_voltage",
-    "meter_power_consumed",
+    "reactive_power",
+    "meter_power",
     "meter_power_returned",
     "button.callbackevents",
     "button.removecallbackevents"

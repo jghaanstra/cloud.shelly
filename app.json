@@ -1,4 +1,5 @@
 {
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "cloud.shelly",
   "sdk": 3,
   "brandColor": "#4f8dc8",
@@ -185,18 +186,76 @@
         ]
       },
       {
-        "id": "triggerMeterPowerConsumed",
+        "id": "triggerInput1",
         "title": {
-          "en": "Total Consumed Energy changed",
-          "nl": "Totaal verbruikte energie gewijzigd"
+          "en": "State of SW terminal 2",
+          "nl": "Status van SW terminal 2"
         },
         "tokens": [
           {
-            "name": "energy",
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "nl": "Status"
+            },
+            "example": "On"
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellyi3|shellydimmer&capabilities=alarm_generic.1"
+          }
+        ]
+      },
+      {
+        "id": "triggerInput2",
+        "title": {
+          "en": "State of SW terminal 3",
+          "nl": "Status van SW terminal 3"
+        },
+        "tokens": [
+          {
+            "name": "status",
+            "type": "string",
+            "title": {
+              "en": "Status",
+              "nl": "Status"
+            },
+            "example": "On"
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellyi3&capabilities=alarm_generic.2"
+          }
+        ]
+      },
+      {
+        "id": "triggerMeterPowerFactor",
+        "title": {
+          "en": "Reactive power changed",
+          "nl": "Reactive power gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "pf",
             "type": "number",
             "title": {
-              "en": "Wh",
-              "nl": "Wh"
+              "en": "W",
+              "nl": "W"
             },
             "example": 5
           }
@@ -209,7 +268,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyem|shelly3em&capabilities=meter_power_consumed"
+            "filter": "driver_id=shellyem|shelly3em&capabilities=reactive_power"
           }
         ]
       },
@@ -301,6 +360,35 @@
         ]
       },
       {
+        "id": "triggerTilt",
+        "title": {
+          "en": "Tilt changed",
+          "nl": "Tilt gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "degrees",
+            "type": "number",
+            "title": {
+              "en": "°",
+              "nl": "°"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellydw"
+          }
+        ]
+      },
+      {
         "id": "triggerGasConcentration",
         "title": {
           "en": "Gas concentration changed",
@@ -322,6 +410,69 @@
             "type": "device",
             "name": "device",
             "filter": "driver_id=shellygas"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "conditionInput1",
+        "title": {
+          "en": "SW terminal 2 !{{is|isn't}} on",
+          "nl": "SW terminal 2 !{{is|is niet}} aan"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellyi3|shellydimmer&capabilities=alarm_generic.1"
+          }
+        ]
+      },
+      {
+        "id": "conditionInput2",
+        "title": {
+          "en": "SW terminal 3 !{{is|isn't}} on",
+          "nl": "SW terminal 3 !{{is|is niet}} aan"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellyi3&capabilities=alarm_generic.2"
+          }
+        ]
+      },
+      {
+        "id": "triggerTilt",
+        "title": {
+          "en": "Tilt changed",
+          "nl": "Kanteling gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "tilt",
+            "type": "number",
+            "title": {
+              "en": "°",
+              "nl": "°"
+            },
+            "example": 170
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=shellydw"
           }
         ]
       }
@@ -992,79 +1143,6 @@
           }
         ]
       }
-    ],
-    "conditions": [
-      {
-        "id": "conditionDimmerInput1",
-        "title": {
-          "en": "Switch 1 !{{is|isn't}} on",
-          "nl": "Schakelaar 1 !{{is|is niet}} aan"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shellydimmer"
-          },
-          {
-            "name": "device",
-            "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
-            "filter": "driver_id=shellydimmer"
-          }
-        ]
-      },
-      {
-        "id": "conditionDimmerInput2",
-        "title": {
-          "en": "Switch 2 !{{is|isn't}} on",
-          "nl": "Schakelaar 2 !{{is|is niet}} aan"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shellydimmer"
-          },
-          {
-            "name": "device",
-            "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
-            "filter": "driver_id=shellydimmer"
-          }
-        ]
-      },
-      {
-        "id": "triggerTilt",
-        "title": {
-          "en": "Tilt changed",
-          "nl": "Kanteling gewijzigd"
-        },
-        "tokens": [
-          {
-            "name": "tilt",
-            "type": "number",
-            "title": {
-              "en": "°",
-              "nl": "°"
-            },
-            "example": 170
-          }
-        ],
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shellydw"
-          }
-        ]
-      }
     ]
   },
   "drivers": [
@@ -1141,7 +1219,6 @@
       "capabilities": [
         "onoff",
         "measure_power",
-        "meter_power_wmin",
         "meter_power",
         "button.callbackevents",
         "button.removecallbackevents"
@@ -1180,41 +1257,6 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
               }
             }
           ]
@@ -1294,7 +1336,6 @@
       "capabilities": [
         "onoff",
         "measure_power",
-        "meter_power_wmin",
         "meter_power",
         "measure_temperature",
         "button.callbackevents",
@@ -1335,41 +1376,6 @@
                 "en": "Password",
                 "nl": "Wachtwoord"
               }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
             }
           ]
         }
@@ -1386,6 +1392,8 @@
         "measure_temperature",
         "measure_temperature.2",
         "measure_temperature.3",
+        "measure_humidity",
+        "alarm_generic",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
@@ -1406,6 +1414,12 @@
           "title": {
             "en": "Temperature Sensor 3",
             "nl": "Temperatuursensor 3"
+          }
+        },
+        "alarm_generic": {
+          "title": {
+            "en": "State of SW terminal",
+            "nl": "Status van SW terminal"
           }
         },
         "button.callbackevents": {
@@ -1506,41 +1520,6 @@
                 "en": "Password",
                 "nl": "Wachtwoord"
               }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
             }
           ]
         }
@@ -1555,12 +1534,13 @@
       "capabilities": [
         "onoff",
         "measure_power",
-        "meter_power_wmin",
         "meter_power",
         "measure_temperature",
         "measure_temperature.1",
         "measure_temperature.2",
         "measure_temperature.3",
+        "measure_humidity",
+        "alarm_generic",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
@@ -1581,6 +1561,12 @@
           "title": {
             "en": "Temperature Sensor 3",
             "nl": "Temperatuursensor 3"
+          }
+        },
+        "alarm_generic": {
+          "title": {
+            "en": "State of SW terminal",
+            "nl": "Status van SW terminal"
           }
         },
         "button.callbackevents": {
@@ -1681,41 +1667,6 @@
                 "en": "Password",
                 "nl": "Wachtwoord"
               }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
             }
           ]
         }
@@ -1728,6 +1679,12 @@
       },
       "icon": "/drivers/shelly2/assets/icon.svg",
       "capabilitiesOptions": {
+        "alarm_generic": {
+          "title": {
+            "en": "State of SW terminal 1",
+            "nl": "Status van SW terminal 1"
+          }
+        },
         "button.callbackevents": {
           "maintenanceAction": true,
           "title": {
@@ -1795,7 +1752,7 @@
         "onoff",
         "measure_power",
         "meter_power",
-        "measure_voltage",
+        "alarm_generic",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
@@ -1836,28 +1793,6 @@
               }
             }
           ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
-            }
-          ]
         }
       ]
     },
@@ -1868,6 +1803,12 @@
       },
       "icon": "/drivers/shelly2-rollershutter/assets/icon.svg",
       "capabilitiesOptions": {
+        "alarm_generic": {
+          "title": {
+            "en": "State of SW terminal",
+            "nl": "Status van SW terminal"
+          }
+        },
         "button.sethalfwayposition": {
           "maintenanceAction": true,
           "title": {
@@ -1946,6 +1887,8 @@
         "windowcoverings_state",
         "windowcoverings_set",
         "measure_power",
+        "meter_power",
+        "alarm_generic",
         "button.sethalfwayposition",
         "button.callbackevents",
         "button.removecallbackevents"
@@ -1985,19 +1928,6 @@
                 "en": "Password",
                 "nl": "Wachtwoord"
               }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
             }
           ]
         },
@@ -2020,19 +1950,6 @@
                 "en": "Percentage representing optical middle",
                 "nl": "Percentage overeenkomende het optische midden"
               }
-            },
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
             }
           ]
         }
@@ -2045,6 +1962,12 @@
       },
       "icon": "/drivers/shelly25/assets/icon.svg",
       "capabilitiesOptions": {
+        "alarm_generic": {
+          "title": {
+            "en": "State of SW terminal 1",
+            "nl": "Status van SW terminal 1"
+          }
+        },
         "button.callbackevents": {
           "maintenanceAction": true,
           "title": {
@@ -2111,9 +2034,9 @@
       "capabilities": [
         "onoff",
         "measure_power",
-        "meter_power_wmin",
         "meter_power",
         "measure_temperature",
+        "alarm_generic",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
@@ -2154,28 +2077,6 @@
               }
             }
           ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
-            }
-          ]
         }
       ]
     },
@@ -2186,6 +2087,12 @@
       },
       "icon": "/drivers/shelly25-rollershutter/assets/icon.svg",
       "capabilitiesOptions": {
+        "alarm_generic": {
+          "title": {
+            "en": "State of SW terminal",
+            "nl": "Status van SW terminal"
+          }
+        },
         "button.sethalfwayposition": {
           "maintenanceAction": true,
           "title": {
@@ -2264,6 +2171,8 @@
         "windowcoverings_state",
         "windowcoverings_set",
         "measure_power",
+        "meter_power",
+        "alarm_generic",
         "button.sethalfwayposition",
         "button.callbackevents",
         "button.removecallbackevents"
@@ -2303,19 +2212,6 @@
                 "en": "Password",
                 "nl": "Wachtwoord"
               }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
             }
           ]
         },
@@ -2337,19 +2233,6 @@
               "label": {
                 "en": "Percentage representing optical middle",
                 "nl": "Percentage overeenkomende het optische midden"
-              }
-            },
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
               }
             }
           ]
@@ -2432,7 +2315,7 @@
         "meter_power_factor",
         "measure_current",
         "measure_voltage",
-        "meter_power_consumed",
+        "meter_power",
         "meter_power_returned",
         "button.callbackevents",
         "button.removecallbackevents"
@@ -2474,28 +2357,6 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
               }
             }
           ]
@@ -2590,28 +2451,6 @@
               }
             }
           ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
-            }
-          ]
         }
       ]
     },
@@ -2666,7 +2505,8 @@
         "dim",
         "light_temperature",
         "light_hue",
-        "light_saturation"
+        "light_saturation",
+        "light_mode"
       ],
       "id": "shellybulb",
       "settings": [
@@ -2703,41 +2543,6 @@
                 "en": "Password",
                 "nl": "Wachtwoord"
               }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
             }
           ]
         }
@@ -2750,6 +2555,12 @@
       },
       "icon": "/drivers/shellybutton1/assets/icon.svg",
       "capabilitiesOptions": {
+        "alarm_generic": {
+          "title": {
+            "en": "State of SW terminal 1",
+            "nl": "Status van SW terminal 1"
+          }
+        },
         "button.callbackevents": {
           "maintenanceAction": true,
           "title": {
@@ -2821,7 +2632,7 @@
       "discovery": "shellybutton1",
       "capabilities": [
         "measure_battery",
-        "measure_voltage",
+        "alarm_generic",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
@@ -2944,11 +2755,10 @@
         "onoff",
         "dim",
         "measure_power",
-        "meter_power_wmin",
         "meter_power",
         "measure_temperature",
-        "onoff.input1",
-        "onoff.input2",
+        "alarm_generic",
+        "alarm_generic.1",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
@@ -2986,41 +2796,6 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
               }
             }
           ]
@@ -3103,6 +2878,7 @@
         "light_temperature",
         "measure_power",
         "meter_power",
+        "meter_power_wmin",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
@@ -3140,41 +2916,6 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
               }
             }
           ]
@@ -3261,7 +3002,6 @@
         "alarm_contact",
         "measure_luminance",
         "measure_battery",
-        "measure_voltage",
         "measure_temperature",
         "alarm_tamper",
         "tilt",
@@ -3387,9 +3127,9 @@
       "capabilities": [
         "onoff",
         "measure_power",
-        "reactive_power",
         "measure_voltage",
-        "meter_power_consumed",
+        "reactive_power",
+        "meter_power",
         "meter_power_returned",
         "button.callbackevents",
         "button.removecallbackevents"
@@ -3492,8 +3232,7 @@
       "capabilities": [
         "alarm_water",
         "measure_temperature",
-        "measure_battery",
-        "measure_voltage"
+        "measure_battery"
       ],
       "energy": {
         "batteries": [
@@ -3651,41 +3390,6 @@
                 "en": "Password",
                 "nl": "Wachtwoord"
               }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
-              }
             }
           ]
         }
@@ -3771,7 +3475,6 @@
         "measure_humidity",
         "measure_temperature",
         "measure_battery",
-        "measure_voltage",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
@@ -3827,6 +3530,24 @@
       },
       "icon": "/drivers/shellyi3/assets/icon.svg",
       "capabilitiesOptions": {
+        "alarm_generic": {
+          "title": {
+            "en": "State of SW terminal 1",
+            "nl": "Status van SW terminal 1"
+          }
+        },
+        "alarm_generic.1": {
+          "title": {
+            "en": "State of SW terminal 2",
+            "nl": "Status van SW terminal 2"
+          }
+        },
+        "alarm_generic.2": {
+          "title": {
+            "en": "State of SW terminal 3",
+            "nl": "Status van SW terminal 3"
+          }
+        },
         "button.callbackevents": {
           "maintenanceAction": true,
           "title": {
@@ -3889,8 +3610,11 @@
         "nl": "Shelly i3"
       },
       "class": "other",
-      "discovery": "shelly-plug",
+      "discovery": "shellyi3",
       "capabilities": [
+        "alarm_generic",
+        "alarm_generic.1",
+        "alarm_generic.2",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
@@ -3940,6 +3664,14 @@
         "small": "/drivers/shellyrgbw2color/assets/images/small.png"
       },
       "icon": "/drivers/shellyrgbw2color/assets/icon.svg",
+      "capabilitiesOptions": {
+        "onoff.whitemode": {
+          "title": {
+            "en": "Toggle white mode",
+            "nl": "Wit modus schakelen"
+          }
+        }
+      },
       "pair": [
         {
           "id": "list_devices",
@@ -3987,19 +3719,13 @@
         "light_hue",
         "light_saturation",
         "measure_power",
+        "meter_power",
         "light_mode",
         "onoff.whitemode",
+        "alarm_generic",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
-      "capabilitiesOptions": {
-        "onoff.whitemode": {
-          "title": {
-            "en": "Toggle white mode",
-            "nl": "Wit modus schakelen"
-          }
-        }
-      },
       "id": "shellyrgbw2color",
       "settings": [
         {
@@ -4034,41 +3760,6 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
               }
             }
           ]
@@ -4157,6 +3848,12 @@
       },
       "icon": "/drivers/shellyrgbw2white/assets/icon.svg",
       "capabilitiesOptions": {
+        "alarm_generic": {
+          "title": {
+            "en": "State of SW terminal 1",
+            "nl": "Status van SW terminal 1"
+          }
+        },
         "button.callbackevents": {
           "maintenanceAction": true,
           "title": {
@@ -4224,6 +3921,8 @@
         "onoff",
         "dim",
         "measure_power",
+        "meter_power",
+        "alarm_generic",
         "button.callbackevents",
         "button.removecallbackevents"
       ],
@@ -4261,28 +3960,6 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
               }
             }
           ]
@@ -4344,8 +4021,7 @@
       "capabilities": [
         "alarm_smoke",
         "measure_temperature",
-        "measure_battery",
-        "measure_voltage"
+        "measure_battery"
       ],
       "energy": {
         "batteries": [
@@ -4504,41 +4180,6 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
-              }
-            },
-            {
-              "id": "polling",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 5,
-                "max": 3600
-              },
-              "label": {
-                "en": "Polling Frequency",
-                "nl": "Polling frequentie"
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "offline",
-              "type": "number",
-              "value": 5,
-              "attr": {
-                "min": 2,
-                "max": 3600
-              },
-              "label": {
-                "en": "Minutes offline notification trigger",
-                "nl": "Minuten offline notificatie trigger"
               }
             }
           ]

@@ -9,15 +9,27 @@ class ShellySmokeDevice extends Homey.Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    this.pollDevice();
     this.setAvailable();
+
+    // REMOVE CAPABILITIES
+    // TODO: REMOVE AFTER 3.1.0
+    if (this.hasCapability('measure_voltage')) {
+      this.removeCapability('measure_voltage');
+    }
+
+    // UPDATE INITIAL STATE
+    this.initialStateUpdate();
+  }
+
+  async onAdded() {
+    return await this.homey.app.updateShellyCollection();
   }
 
   async onDeleted() {
     try {
-      clearInterval(this.pollingInterval);
       const iconpath = "/userdata/" + this.getData().id +".svg";
       await this.util.removeIcon(iconpath);
+      await this.homey.app.updateShellyCollection();
       return;
     } catch (error) {
       this.log(error);
@@ -25,41 +37,64 @@ class ShellySmokeDevice extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
-  pollDevice() {
-    clearInterval(this.pollingInterval);
+  async initialStateUpdate() {
+    try {
+      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
+      if (!this.getAvailable()) { this.setAvailable(); }
 
-    this.pollingInterval = setInterval(async () => {
-      try {
-        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
-        let alarm = result.smoke;
-        let temperature = result.tmp.value;
-        let battery = result.bat.value;
-        let voltage = result.bat.voltage;
+      let alarm_smoke = result.smoke;
+      let measure_temperature = result.tmp.value;
+      let measure_battery = result.bat.value;
 
-        // capability alarm_smoke
-        if (alarm != this.getCapabilityValue('alarm_smoke')) {
-          this.setCapabilityValue('alarm_smoke', alarm);
-        }
-
-        // capability measure_temperature
-        if (temperature != this.getCapabilityValue('measure_temperature')) {
-          this.setCapabilityValue('measure_temperature', temperature);
-        }
-
-        // capability measure_power
-        if (battery != this.getCapabilityValue('measure_battery')) {
-          this.setCapabilityValue('measure_battery', battery);
-        }
-
-        // capability measure_voltage
-        if (voltage != this.getCapabilityValue('measure_voltage')) {
-          this.setCapabilityValue('measure_voltage', voltage);
-        }
-      } catch (error) {
-        this.log('Shelly Smoke is probably asleep and disconnected'+ error);
-        return Promise.resolve(true);
+      // capability alarm_smoke
+      if (alarm_smoke != this.getCapabilityValue('alarm_smoke')) {
+        this.setCapabilityValue('alarm_smoke', alarm_smoke);
       }
-    }, 4000);
+
+      // capability measure_temperature
+      if (measure_temperature != this.getCapabilityValue('measure_temperature')) {
+        this.setCapabilityValue('measure_temperature', measure_temperature);
+      }
+
+      // capability measure_battery
+      if (measure_battery != this.getCapabilityValue('measure_battery')) {
+        this.setCapabilityValue('measure_battery', measure_battery);
+      }
+
+    } catch (error) {
+      this.log('Shelly Smoke is probably asleep and disconnected'+ error);
+      return Promise.resolve(true);
+    }
+  }
+
+  async deviceCoapReport(capability, value) {
+    try {
+      if (!this.getAvailable()) { this.setAvailable(); }
+      
+      switch(capability) {
+        case 'smoke':
+          if (value != this.getCapabilityValue('alarm_smoke')) {
+            this.setCapabilityValue('alarm_smoke', value);
+          }
+          break;
+        case 'temperature':
+          if (value != this.getCapabilityValue('measure_temperature')) {
+            this.setCapabilityValue('measure_temperature', value);
+          }
+          break;
+        case 'battery':
+          if (value != this.getCapabilityValue('measure_battery')) {
+            this.setCapabilityValue('measure_battery', value);
+          }
+          break;
+        default:
+          this.log('Device does not support reported capability.');
+      }
+      return Promise.resolve(true);
+    } catch(error) {
+      this.log(error);
+      return Promise.reject(error);
+    }
   }
 
   getCallbacks() {

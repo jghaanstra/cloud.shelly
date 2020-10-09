@@ -17,23 +17,6 @@
       {
         "id": "password",
         "$extends": "password"
-      },
-      {
-        "id": "polling",
-        "$extends": "polling"
-      }
-    ]
-  },
-  {
-    "type": "group",
-    "label": {
-      "en": "User Settings",
-      "nl": "Gebruikersinstellingen"
-    },
-    "children": [
-      {
-        "id": "offline",
-        "$extends": "offline"
       }
     ]
   }

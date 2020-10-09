@@ -11,8 +11,7 @@
   "capabilities": [
     "alarm_water",
     "measure_temperature",
-    "measure_battery",
-    "measure_voltage"
+    "measure_battery"
   ],
   "pair": [
     {

@@ -6,11 +6,11 @@
   "class": "button",
   "discovery": "shellybutton1",
   "$extends": [
-    "defaults"
+    "defaultswithalarmgeneric"
   ],
   "capabilities": [
     "measure_battery",
-    "measure_voltage",
+    "alarm_generic",
     "button.callbackevents",
     "button.removecallbackevents"
   ],

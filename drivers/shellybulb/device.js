@@ -10,8 +10,15 @@ class ShellyBulbDevice extends Homey.Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    this.pollDevice();
     this.setAvailable();
+
+    // TODO: REMOVE AFTER 3.1.0
+    if (!this.hasCapability('light_mode')) {
+      this.addCapability('light_mode');
+    }
+
+    // UPDATE INITIAL STATE
+    this.initialStateUpdate();
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {
@@ -20,16 +27,18 @@ class ShellyBulbDevice extends Homey.Device {
     });
 
     this.registerCapabilityListener('dim', async (value) => {
-      // TODO: FIX GAIN VS BRIGHTNESS IN COLOR VS WHITE MODE
       const dim = value * 100;
-      return await this.util.sendCommand('/color/0?gain='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      if (this.getCapabilityValue('light_mode') === 'color') {
+        return await this.util.sendCommand('/color/0?gain='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      } else {
+        return await this.util.sendCommand('/color/0?brightness='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      }
     });
 
     this.registerCapabilityListener('light_temperature', async (value) => {
-      const white = Number(this.util.denormalize(value, 0, 255));
-      const color = tinycolor.fromRatio({ h: this.getCapabilityValue('light_hue'), s: this.getCapabilityValue('light_saturation'), v: this.getCapabilityValue('dim') });
-      const rgbcolor = color.toRgb();
-      return await this.util.sendCommand('/color/0?red='+ Number(rgbcolor.r) +'&green='+ Number(rgbcolor.g) +'&blue='+ Number(rgbcolor.b) +'&white='+ white +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      const light_temperature = Number(this.util.denormalize(value, 3000, 6500));
+      await this.util.sendCommand('/color/0?temp='+ light_temperature +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      return await this.setCapabilityValue('light_mode', 'temperature');
     });
 
     this.registerMultipleCapabilityListener(['light_hue', 'light_saturation' ], async ( valueObj, optsObj ) => {
@@ -45,17 +54,21 @@ class ShellyBulbDevice extends Homey.Device {
       }
       const color = tinycolor.fromRatio({ h: hue_value, s: saturation_value, v: this.getCapabilityValue('dim') });
       const rgbcolor = color.toRgb();
-      return await this.util.sendCommand('/color/0?red='+ Number(rgbcolor.r) +'&green='+ Number(rgbcolor.g) +'&blue='+ Number(rgbcolor.b) +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      await this.util.sendCommand('/color/0?red='+ Number(rgbcolor.r) +'&green='+ Number(rgbcolor.g) +'&blue='+ Number(rgbcolor.b) +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      return await this.setCapabilityValue('light_mode', 'color');
     }, 500);
 
   }
 
+  async onAdded() {
+    return await this.homey.app.updateShellyCollection();
+  }
+
   async onDeleted() {
     try {
-      clearInterval(this.pollingInterval);
-      clearInterval(this.pingInterval);
       const iconpath = "/userdata/" + this.getData().id +".svg";
       await this.util.removeIcon(iconpath);
+      await this.homey.app.updateShellyCollection();
       return;
     } catch (error) {
       this.log(error);
@@ -63,79 +76,128 @@ class ShellyBulbDevice extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
-  pollDevice() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
+  async initialStateUpdate() {
+    try {
+      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
+      if (!this.getAvailable()) { this.setAvailable(); }
 
-    this.pollingInterval = setInterval(async () => {
-      try {
-        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
-        clearTimeout(this.offlineTimeout);
+      this.setStoreValue('red', result.lights[0].red);
+      this.setStoreValue('green', result.lights[0].green);
+      this.setStoreValue('blue', result.lights[0].blue);
 
-        let state = result.ison;
-        let dim = result.gain / 100;
-        let white = 1 - Number(this.util.normalize(result.white, 0, 255));
-        let color = tinycolor({ r: result.red, g: result.green, b: result.blue });
-        let hsv = color.toHsv();
-        let hue = Number((hsv.h / 360).toFixed(2));
-
-        // TODO: FIX GAIN VS BRIGHTNESS IN COLOR VS WHITE MODE
-
-        // capability onoff
-        if (state != this.getCapabilityValue('onoff')) {
-          this.setCapabilityValue('onoff', state);
-        }
-
-        // capability dim
-        if (dim != this.getCapabilityValue('dim')) {
-          this.setCapabilityValue('dim', dim);
-        }
-
-        // capability light_temperature
-        if (white != this.getCapabilityValue('light_temperature')) {
-          this.setCapabilityValue('light_temperature', white);
-        }
-
-        // capability light_hue
-        if (hue != this.getCapabilityValue('light_hue')) {
-          this.setCapabilityValue('light_hue', hue);
-        }
-
-        // capability light_saturation
-        if (hsv.s != this.getCapabilityValue('light_saturation')) {
-          this.setCapabilityValue('light_saturation', hsv.s);
-        }
-
-        // capability measure_power
-        if (result.power != this.getCapabilityValue('measure_power')) {
-          this.setCapabilityValue('measure_power', result.power);
-        }
-
-      } catch (error) {
-        this.log(error);
-        this.setUnavailable(this.homey.__('device.unreachable') + error.message);
-        this.pingDevice();
-
-        this.offlineTimeout = setTimeout(() => {
-          this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.toString()});
-        }, 60000 * this.getSetting('offline'));
+      let onoff = result.lights[0].ison;
+      let light_temperature = 1 - Number(this.util.normalize(result.lights[0].temp, 3000, 6500));
+      let color = tinycolor({ r: result.lights[0].red, g: result.lights[0].green, b: result.lights[0].blue });
+      let hsv = color.toHsv();
+      let light_hue = Number((hsv.h / 360).toFixed(2));
+      let light_mode = result.mode === 'white' ? 'temperature' : 'color';
+      if (light_mode === 'color') {
+        var dim = result.lights[0].gain / 100;
+      } else {
+        var dim = result.lights[0].brightness / 100;
       }
-    }, 1000 * this.getSetting('polling'));
+
+      // capability onoff
+      if (onoff != this.getCapabilityValue('onoff')) {
+        this.setCapabilityValue('onoff', onoff);
+      }
+
+      // capability dim
+      if (dim != this.getCapabilityValue('dim')) {
+        this.setCapabilityValue('dim', dim);
+      }
+
+      // capability light_temperature
+      if (light_temperature != this.getCapabilityValue('light_temperature')) {
+        this.setCapabilityValue('light_temperature', light_temperature);
+      }
+
+      // capability light_hue
+      if (light_hue != this.getCapabilityValue('light_hue')) {
+        this.setCapabilityValue('light_hue', light_hue);
+      }
+
+      // capability light_saturation
+      if (hsv.s != this.getCapabilityValue('light_saturation')) {
+        this.setCapabilityValue('light_saturation', hsv.s);
+      }
+
+      // capability light_mode
+      if (light_mode != this.getCapabilityValue('light_mode')) {
+        this.setCapabilityValue('light_mode', light_mode);
+      }
+
+    } catch (error) {
+      this.setUnavailable(this.homey.__('device.unreachable') + error.message);
+      this.log(error);
+    }
   }
 
-  pingDevice() {
-    clearInterval(this.pollingInterval);
-    clearInterval(this.pingInterval);
-
-    this.pingInterval = setInterval(async () => {
-      try {
-        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
-        this.setAvailable();
-        this.pollDevice();
-      } catch (error) {
-        this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
+  async deviceCoapReport(capability, value) {
+    try {
+      if (!this.getAvailable()) { this.setAvailable(); }
+      
+      switch(capability) {
+        case 'switch':
+          if (value != this.getCapabilityValue('onoff')) {
+            this.setCapabilityValue('onoff', value);
+          }
+          break;
+        case 'colorTemperature':
+          let light_temperature = 1 - Number(this.util.normalize(value, 3000, 6500));
+          if (light_temperature != this.getCapabilityValue('light_temperature')) {
+            this.setCapabilityValue('light_temperature', light_temperature);
+          }
+          break;
+        case 'gain':
+        case 'brightness':
+          let dim = value >= 100 ? 1 : value / 100;
+          if (dim != this.getCapabilityValue('dim')) {
+            this.setCapabilityValue('dim', dim);
+          }
+          break;
+        case 'red':
+          this.setStoreValue('red', value);
+          this.updateDeviceRgb();
+          break;
+        case 'green':
+          this.setStoreValue('green', value);
+          this.updateDeviceRgb();
+          break;
+        case 'blue':
+          this.setStoreValue('blue', value);
+          this.updateDeviceRgb();
+          break;
+        case 'mode':
+          let light_mode = value === 'white' ? 'temperature' : 'color';
+          if (light_mode != this.getCapabilityValue('light_mode')) {
+            this.setCapabilityValue('light_mode', light_mode);
+          }
+          break;
+        default:
+          this.log('Device does not support reported capability.');
       }
-    }, 63000);
+      return Promise.resolve(true);
+    } catch(error) {
+      this.log(error);
+      return Promise.reject(error);
+    }
+  }
+
+  updateDeviceRgb() {
+    clearTimeout(this.updateDeviceRgbTimeout);
+
+    this.updateDeviceRgbTimeout = setTimeout(() => {
+      let color = tinycolor({ r: this.getStoreValue('red'), g: this.getStoreValue('green'), b: this.getStoreValue('blue') });
+      let hsv = color.toHsv();
+      let light_hue = Number((hsv.h / 360).toFixed(2));
+      if (light_hue !== this.getCapabilityValue('light_hue')) {
+        this.setCapabilityValue('light_hue', light_hue);
+      }
+      if (hsv.v !== this.getCapabilityValue('light_saturation')) {
+        this.setCapabilityValue('light_saturation', hsv.v);
+      }
+    }, 2000);
   }
 
   getCallbacks() {

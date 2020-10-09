@@ -6,13 +6,13 @@
   "class": "socket",
   "discovery": "shelly2",
   "$extends": [
-    "defaults"
+    "defaultswithalarmgeneric"
   ],
   "capabilities": [
     "onoff",
     "measure_power",
     "meter_power",
-    "measure_voltage",
+    "alarm_generic",
     "button.callbackevents",
     "button.removecallbackevents"
   ],
