@@ -51,7 +51,7 @@
       "Shelly Button"
     ]
   },
-  "version": "3.0.0",
+  "version": "3.0.1",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -298,6 +298,35 @@
               "nl": "Selecteer Shelly"
             },
             "filter": "driver_id=shellyem|shelly3em&capabilities=meter_power_returned"
+          }
+        ]
+      },
+      {
+        "id": "triggerShelly1Temperature1",
+        "title": {
+          "en": "Temperature Sensor 1 has changed",
+          "nl": "Temperatuursensor 1 is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly1pm&capabilities=measure_temperature.1"
           }
         ]
       },
@@ -4288,8 +4317,8 @@
       "insights": true,
       "icon": "/assets/meter_power_returned.svg",
       "units": {
-        "en": "Wh",
-        "nl": "Wh"
+        "en": "kWh",
+        "nl": "kWh"
       }
     },
     "meter_power_wmin": {

@@ -10,7 +10,7 @@
   "insights": true,
   "icon": "/assets/meter_power_returned.svg",
   "units": {
-    "en": "Wh",
-    "nl": "Wh"
+    "en": "kWh",
+    "nl": "kWh"
   }
 }

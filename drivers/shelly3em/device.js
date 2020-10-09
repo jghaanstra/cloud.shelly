@@ -84,8 +84,8 @@ class Shelly3EmDevice extends Homey.Device {
       let meter_power_factor = result.emeters[channel].pf;
       let measure_current = result.emeters[channel].current;
       let measure_voltage = result.emeters[channel].voltage;
-      let meter_power = result.emeters[channel].total;
-      let meter_power_returned = result.emeters[channel].total_returned;
+      let meter_power = result.emeters[channel].total / 1000;
+      let meter_power_returned = result.emeters[channel].total_returned / 1000;
 
       // capability measure_power
       if (measure_power != this.getCapabilityValue('measure_power')) {
@@ -135,7 +135,7 @@ class Shelly3EmDevice extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'relay0':
           if (value != this.getCapabilityValue('onoff')) {
@@ -152,16 +152,18 @@ class Shelly3EmDevice extends Homey.Device {
         case 'energyCounter0':
         case 'energyCounter1':
         case 'energyCounter2':
-          if (value != this.getCapabilityValue('meter_power')) {
-            this.setCapabilityValue('meter_power', value);
+          let meter_power = value / 1000;
+          if (meter_power != this.getCapabilityValue('meter_power')) {
+            this.setCapabilityValue('meter_power', meter_power);
           }
           break;
         case 'energyReturned0':
         case 'energyReturned1':
         case 'energyReturned2':
-          if (value != this.getCapabilityValue('meter_power_returned')) {
-            this.setCapabilityValue('meter_power_returned', value);
-            this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned').trigger(this, {'energy': value}, {});
+          let meter_power_returned = value / 1000;
+          if (meter_power_returned != this.getCapabilityValue('meter_power_returned')) {
+            this.setCapabilityValue('meter_power_returned', meter_power_returned);
+            this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned').trigger(this, {'energy': meter_power_returned}, {});
           }
           break;
         case 'powerFactor0':
