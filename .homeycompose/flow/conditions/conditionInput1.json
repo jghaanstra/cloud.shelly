@@ -1,8 +1,8 @@
 {
   "id": "conditionInput1",
   "title": {
-    "en": "SW terminal 2 !{{is|isn't}} on",
-    "nl": "SW terminal 2 !{{is|is niet}} aan"
+    "en": "Input 2 !{{is|isn't}} on",
+    "nl": "Input 2 !{{is|is niet}} aan"
   },
   "args": [
     {

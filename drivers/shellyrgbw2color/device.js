@@ -111,15 +111,16 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
     try {
       let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
       if (!this.getAvailable()) { this.setAvailable(); }
-      let onoff = result.ison;
-      let dim = result.gain / 100;
-      let light_temperature = 1 - Number(this.util.normalize(result.white, 0, 255));
-      let color = tinycolor({r: result.red, g: result.green, b: result.blue});
+
+      let onoff = result.lights[0].ison;
+      let dim = result.lights[0].gain / 100;
+      let light_temperature = 1 - Number(this.util.normalize(result.lights[0].white, 0, 255));
+      let color = tinycolor({r: result.lights[0].red, g: result.lights[0].green, b: result.lights[0].blue});
       let hsv = color.toHsv();
       let light_hue = Number((hsv.h / 360).toFixed(2));
       let measure_power = result.meters[0].power;
       let meter_power = result.meters[0].total * 0.000017;
-      let alarm_generic = results.inputs[0].input === 1 ? true : false;
+      let alarm_generic = result.inputs[0].input === 1 ? true : false;
 
       // capability onoff
       if (onoff != this.getCapabilityValue('onoff')) {
@@ -151,7 +152,7 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
         this.setCapabilityValue('measure_power', measure_power);
       }
 
-      // capability measure_power
+      // capability meter_power
       if (meter_power != this.getCapabilityValue('meter_power')) {
         this.setCapabilityValue('meter_power', meter_power);
       }
@@ -164,8 +165,10 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
       //capability white_mode
       if (Number(result.white) > 220 && !this.getCapabilityValue('onoff.whitemode')) {
         this.setCapabilityValue('onoff.whitemode', true);
-      } else if (Number(result.gain) > 10 && Number(result.white) <= 220 && this.getCapabilityValue('onoff.whitemode')) {
+        this.setCapabilityValue('light_mode', 'temperature');
+      } else if (Number(result.gain) >= 0 && Number(result.white) <= 220 && this.getCapabilityValue('onoff.whitemode')) {
         this.setCapabilityValue('onoff.whitemode', false);
+        this.setCapabilityValue('light_mode', 'color');
       }
 
     } catch (error) {
@@ -177,7 +180,7 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'switch':
           if (value != this.getCapabilityValue('onoff')) {
@@ -191,8 +194,10 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
           }
           if (value > 220 && !this.getCapabilityValue('onoff.whitemode')) {
             this.setCapabilityValue('onoff.whitemode', true);
-          } else if (value > 10 && value <= 220 && this.getCapabilityValue('onoff.whitemode')) {
+            this.setCapabilityValue('light_mode', 'temperature');
+          } else if (value >= 0 && value <= 220 && this.getCapabilityValue('onoff.whitemode')) {
             this.setCapabilityValue('onoff.whitemode', false);
+            this.setCapabilityValue('light_mode', 'color');
           }
           break;
         case 'gain':
@@ -237,7 +242,7 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
           }
           break;
         default:
-          this.log('Device does not support reported capability.');
+          this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {

@@ -7,8 +7,8 @@
   "capabilitiesOptions": {
     "alarm_generic": {
       "title": {
-        "en": "State of SW terminal 1",
-        "nl": "Status van SW terminal 1"
+        "en": "State of Input 1",
+        "nl": "Status van Input 1"
       }
     },
     "button.callbackevents": {

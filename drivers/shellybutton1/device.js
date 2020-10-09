@@ -77,7 +77,7 @@ class ShellyButton1Device extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'battery':
           if (value != this.getCapabilityValue('measure_battery')) {
@@ -90,8 +90,10 @@ class ShellyButton1Device extends Homey.Device {
             this.setCapabilityValue('alarm_generic', alarm);
           }
           break;
+        case 'wakeUpEvent':
+          break;
         default:
-          this.log('Device does not support reported capability.');
+          this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {

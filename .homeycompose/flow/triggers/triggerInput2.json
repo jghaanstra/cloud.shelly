@@ -1,8 +1,8 @@
 {
   "id": "triggerInput2",
   "title": {
-    "en": "State of SW terminal 3",
-    "nl": "Status van SW terminal 3"
+    "en": "State of Input 3",
+    "nl": "Status van Input 3"
   },
   "tokens": [
     {

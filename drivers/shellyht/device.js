@@ -74,7 +74,7 @@ class ShellyhtDevice extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'humidity':
           if (value != this.getCapabilityValue('measure_humidity')) {
@@ -91,8 +91,10 @@ class ShellyhtDevice extends Homey.Device {
             this.setCapabilityValue('measure_battery', value);
           }
           break;
+        case 'wakeUpEvent':
+          break;
         default:
-          this.log('Device does not support reported capability.');
+          this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {

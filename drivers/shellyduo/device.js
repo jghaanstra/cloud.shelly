@@ -45,7 +45,7 @@ class ShellyDuoDevice extends Homey.Device {
 
   async onAdded() {
     /*return await this.util.addCallbackEvents('/settings/light/0?', callbacks, 'shellyduo', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));*/
-    return await.this.homey.app.updateShellyCollection();
+    return await this.homey.app.updateShellyCollection();
   }
 
   async onDeleted() {
@@ -107,7 +107,7 @@ class ShellyDuoDevice extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'switch':
           if (value != this.getCapabilityValue('onoff')) {
@@ -138,7 +138,7 @@ class ShellyDuoDevice extends Homey.Device {
           }
           break;
         default:
-          this.log('Device does not support reported capability.');
+          this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {

@@ -41,7 +41,7 @@ class ShellydwDevice extends Homey.Device {
   }
 
   async onAdded() {
-    await.this.homey.app.updateShellyCollection();
+    await this.homey.app.updateShellyCollection();
     await this.util.addCallbackEvents('/settings?', callbacks, 'shellydw', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     return;
   }
@@ -109,7 +109,7 @@ class ShellydwDevice extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'state':
           if (value != this.getCapabilityValue('alarm_contact')) {
@@ -142,8 +142,10 @@ class ShellydwDevice extends Homey.Device {
             this.setCapabilityValue('measure_battery', value);
           }
           break;
+        case 'wakeUpEvent':
+          break;
         default:
-          this.log('Device does not support reported capability.');
+          this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {

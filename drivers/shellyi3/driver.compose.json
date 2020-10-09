@@ -18,20 +18,20 @@
   "capabilitiesOptions": {
     "alarm_generic": {
       "title": {
-        "en": "State of SW terminal 1",
-        "nl": "Status van SW terminal 1"
+        "en": "State of Input 1",
+        "nl": "Status van Input 1"
       }
     },
     "alarm_generic.1": {
       "title": {
-        "en": "State of SW terminal 2",
-        "nl": "Status van SW terminal 2"
+        "en": "State of Input 2",
+        "nl": "Status van Input 2"
       }
     },
     "alarm_generic.2": {
       "title": {
-        "en": "State of SW terminal 3",
-        "nl": "Status van SW terminal 3"
+        "en": "State of Input 3",
+        "nl": "Status van Input 3"
       }
     },
     "button.callbackevents": {

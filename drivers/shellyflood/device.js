@@ -75,7 +75,7 @@ class ShellyFloodDevice extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'flood':
           if (value != this.getCapabilityValue('alarm_water')) {
@@ -92,8 +92,10 @@ class ShellyFloodDevice extends Homey.Device {
             this.setCapabilityValue('measure_battery', value);
           }
           break;
+        case 'wakeUpEvent':
+          break;
         default:
-          this.log('Device does not support reported capability.');
+          this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {

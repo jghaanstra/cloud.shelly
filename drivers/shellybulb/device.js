@@ -175,7 +175,7 @@ class ShellyBulbDevice extends Homey.Device {
           }
           break;
         default:
-          this.log('Device does not support reported capability.');
+          this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {

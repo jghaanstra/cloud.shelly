@@ -23,27 +23,31 @@ class ShellyApp extends Homey.App {
       this.log('Discovered device with ID', device.id, 'and type', device.type);
 
       device.on('change', (prop, newValue, oldValue) => {
-        if (shellyDevices.length > 0) {
-          const filteredShellies = shellyDevices.filter(obj => Object.keys(obj).some(key => obj[key].includes(device.id)));
-          if (filteredShellies.length > 0) {
-            if (filteredShellies.length === 1) {
-              var deviceid = filteredShellies[0].id;
+        try {
+          if (shellyDevices.length > 0) {
+            const filteredShellies = shellyDevices.filter(shelly => shelly.id.includes(device.id));
+            if (filteredShellies.length > 0) {
+              if (filteredShellies.length === 1) {
+                var deviceid = filteredShellies[0].id;
+              } else {
+                const channel = prop.slice(prop.length - 1);
+                var deviceid = filteredShellies[0].main_device+'-channel-'+channel;
+              }
+              const device = this.homey.drivers.getDriver(filteredShellies[0].driver).getDevice({id: deviceid});
+              return device.deviceCoapReport(prop, newValue);
             } else {
-              const channel = prop.slice(prop.length - 1);
-              var deviceid = filteredShellies[0].main_device+'-channel-'+channel;
+              this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'but this device has not been added to Homey yet.');
             }
-            const device = this.homey.drivers.getDriver(filteredShellies[0].driver).getDevice({id: deviceid});
-            return device.deviceCoapReport(prop, newValue);
           } else {
-            this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'but this device has not been added to Homey yet.');
+            this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'but no Shelly devices have been added to Homey yet.');
           }
-        } else {
-          this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'but no Shelly devices have been added to Homey yet.');
+        } catch (error) {
+          this.log(error);
         }
       })
 
       device.on('offline', () => {
-        const offlineShellies = shellyDevices.filter(obj => Object.keys(obj).some(key => obj[key].includes(device.id)));
+        const offlineShellies = shellyDevices.filter(shelly => shelly.id.includes(device.id));
         if (offlineShellies.length > 0) {
           Object.keys(offlineShellies).forEach(key => {
             const device = this.homey.drivers.getDriver(offlineShellies[key].driver).getDevice({id: offlineShellies[key].id});

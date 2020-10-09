@@ -94,7 +94,7 @@ class ShellyDimmerDevice extends Homey.Device {
 
       let onoff = result.lights[0].ison;
       let measure_power = result.meters[0].power;
-      let meter_power = total_consumption * 0.000017;
+      let meter_power = result.meters[0].total * 0.000017;
       let dim = Number(result.lights[0].brightness) / 100;
       let measure_temperature = result.tmp.tC;
       let alarm_generic = result.inputs[0].input == 1 ? true : false;
@@ -143,7 +143,7 @@ class ShellyDimmerDevice extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'switch':
           if (value != this.getCapabilityValue('onoff')) {
@@ -173,22 +173,21 @@ class ShellyDimmerDevice extends Homey.Device {
           }
           break;
         case 'input0':
-          let alarm = value === 0 ? false : true;
-          if (alarm != this.getCapabilityValue('alarm_generic')) {
-            this.setCapabilityValue('alarm_generic', alarm);
+          let alarm_generic = value === 0 ? false : true;
+          if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
+            this.setCapabilityValue('alarm_generic', alarm_generic);
           }
           break;
         case 'input1':
-          // TODO: hoe deze coap naar het juist dimmer device routeren, er is geen tweede kanaal terwijl de input op 1 eindigt
-          let alarm = value === 0 ? false : true;
-          if (alarm != this.getCapabilityValue('alarm_generic.1')) {
+          let alarm_generic_1 = value === 0 ? false : true;
+          if (alarm_generic_1 != this.getCapabilityValue('alarm_generic.1')) {
             let status = value === 1 ? "On" : "Off";
-            this.setCapabilityValue('alarm_generic.1', alarm);
+            this.setCapabilityValue('alarm_generic.1', alarm_generic_1);
             this.homey.flow.getDeviceTriggerCard('triggerInput1').trigger(this, {'status': status}, {});
           }
           break;
         default:
-          this.log('Device does not support reported capability.');
+          this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {

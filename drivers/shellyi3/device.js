@@ -37,6 +37,9 @@ class Shellyi3Device extends Homey.Device {
       this.addCapability('alarm_generic.2');
     }
 
+    // UPDATE INITIAL STATE
+    this.initialStateUpdate();
+
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('button.callbackevents', async () => {
       try {
@@ -92,37 +95,66 @@ class Shellyi3Device extends Homey.Device {
     }
   }
 
+  // HELPER FUNCTIONS
+  async initialStateUpdate() {
+    try {
+      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      if (!this.getAvailable()) { this.setAvailable(); }
+
+      let alarm_generic = result.inputs[0].input == 1 ? true : false;
+      let alarm_generic_1 = result.inputs[1].input == 1 ? true : false;
+      let alarm_generic_2 = result.inputs[2].input == 1 ? true : false;
+
+      // capability alarm_generic
+      if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
+        this.setCapabilityValue('alarm_generic', alarm_generic);
+      }
+
+      // capability alarm_generic.1
+      if (alarm_generic_1 != this.getCapabilityValue('alarm_generic.1')) {
+        this.setCapabilityValue('alarm_generic.1', alarm_generic_1);
+      }
+
+      // capability alarm_generic.2
+      if (alarm_generic_2 != this.getCapabilityValue('alarm_generic.2')) {
+        this.setCapabilityValue('alarm_generic.2', alarm_generic_2);
+      }
+
+    } catch (error) {
+      this.setUnavailable(this.homey.__('device.unreachable') + error.message);
+      this.log(error);
+    }
+  }
+
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'input0':
-          let alarm = value === 0 ? false : true;
-          if (alarm != this.getCapabilityValue('alarm_generic')) {
-            this.setCapabilityValue('alarm_generic', alarm);
+          let alarm_generic = value === 0 ? false : true;
+          if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
+            this.setCapabilityValue('alarm_generic', alarm_generic);
           }
           break;
         case 'input1':
-          // TODO: hoe deze coap naar het juist i3 device routeren, er is geen tweede kanaal terwijl de input op 1 eindigt
-          let alarm = value === 0 ? false : true;
-          if (alarm != this.getCapabilityValue('alarm_generic.1')) {
-            this.setCapabilityValue('alarm_generic.1', alarm);
+          let alarm_generic_1 = value === 0 ? false : true;
+          if (alarm_generic_1 != this.getCapabilityValue('alarm_generic.1')) {
+            this.setCapabilityValue('alarm_generic.1', alarm_generic_1);
             let status = value === 1 ? "On" : "Off";
             this.homey.flow.getDeviceTriggerCard('triggerInput1').trigger(this, {'status': status}, {});
           }
           break;
         case 'input2':
-          // TODO: hoe deze coap naar het juist i3 device routeren, er is geen tweede kanaal terwijl de input op 1 eindigt
-          let alarm = value === 0 ? false : true;
-          if (alarm != this.getCapabilityValue('alarm_generic.2')) {
-            this.setCapabilityValue('alarm_generic.2', alarm);
+          let alarm_generic_2 = value === 0 ? false : true;
+          if (alarm_generic_2 != this.getCapabilityValue('alarm_generic.2')) {
+            this.setCapabilityValue('alarm_generic.2', alarm_generic_2);
             let status = value === 1 ? "On" : "Off";
             this.homey.flow.getDeviceTriggerCard('triggerInput2').trigger(this, {'status': status}, {});
           }
           break;
         default:
-          this.log('Device does not support reported capability.');
+          this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {
