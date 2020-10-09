@@ -1148,8 +1148,8 @@
   "drivers": [
     {
       "images": {
-        "large": "/drivers/shelly-plug/assets/images/large.png",
-        "small": "/drivers/shelly-plug/assets/images/small.png"
+        "large": "/drivers/shelly-plug/assets/images/large.jpg",
+        "small": "/drivers/shelly-plug/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly-plug/assets/icon.svg",
       "capabilitiesOptions": {
@@ -1265,8 +1265,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shelly-plug-s/assets/images/large.png",
-        "small": "/drivers/shelly-plug-s/assets/images/small.png"
+        "large": "/drivers/shelly-plug-s/assets/images/large.jpg",
+        "small": "/drivers/shelly-plug-s/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly-plug-s/assets/icon.svg",
       "capabilitiesOptions": {
@@ -1383,8 +1383,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shelly1/assets/images/large.png",
-        "small": "/drivers/shelly1/assets/images/small.png"
+        "large": "/drivers/shelly1/assets/images/large.jpg",
+        "small": "/drivers/shelly1/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly1/assets/icon.svg",
       "capabilities": [
@@ -1527,8 +1527,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shelly1pm/assets/images/large.png",
-        "small": "/drivers/shelly1pm/assets/images/small.png"
+        "large": "/drivers/shelly1pm/assets/images/large.jpg",
+        "small": "/drivers/shelly1pm/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly1pm/assets/icon.svg",
       "capabilities": [
@@ -1674,8 +1674,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shelly2/assets/images/large.png",
-        "small": "/drivers/shelly2/assets/images/small.png"
+        "large": "/drivers/shelly2/assets/images/large.jpg",
+        "small": "/drivers/shelly2/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly2/assets/icon.svg",
       "capabilitiesOptions": {
@@ -1798,8 +1798,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shelly2-rollershutter/assets/images/large.png",
-        "small": "/drivers/shelly2-rollershutter/assets/images/small.png"
+        "large": "/drivers/shelly2-rollershutter/assets/images/large.jpg",
+        "small": "/drivers/shelly2-rollershutter/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly2-rollershutter/assets/icon.svg",
       "capabilitiesOptions": {
@@ -1957,8 +1957,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shelly25/assets/images/large.png",
-        "small": "/drivers/shelly25/assets/images/small.png"
+        "large": "/drivers/shelly25/assets/images/large.jpg",
+        "small": "/drivers/shelly25/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly25/assets/icon.svg",
       "capabilitiesOptions": {
@@ -2082,8 +2082,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shelly25-rollershutter/assets/images/large.png",
-        "small": "/drivers/shelly25-rollershutter/assets/images/small.png"
+        "large": "/drivers/shelly25-rollershutter/assets/images/large.jpg",
+        "small": "/drivers/shelly25-rollershutter/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly25-rollershutter/assets/icon.svg",
       "capabilitiesOptions": {
@@ -2241,8 +2241,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shelly3em/assets/images/large.png",
-        "small": "/drivers/shelly3em/assets/images/small.png"
+        "large": "/drivers/shelly3em/assets/images/large.jpg",
+        "small": "/drivers/shelly3em/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly3em/assets/icon.svg",
       "capabilitiesOptions": {
@@ -2365,8 +2365,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shelly4pro/assets/images/large.png",
-        "small": "/drivers/shelly4pro/assets/images/small.png"
+        "large": "/drivers/shelly4pro/assets/images/large.jpg",
+        "small": "/drivers/shelly4pro/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly4pro/assets/icon.svg",
       "pair": [
@@ -2456,8 +2456,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellybulb/assets/images/large.png",
-        "small": "/drivers/shellybulb/assets/images/small.png"
+        "large": "/drivers/shellybulb/assets/images/large.jpg",
+        "small": "/drivers/shellybulb/assets/images/small.jpg"
       },
       "icon": "/drivers/shellybulb/assets/icon.svg",
       "pair": [
@@ -2550,8 +2550,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellybutton1/assets/images/large.png",
-        "small": "/drivers/shellybutton1/assets/images/small.png"
+        "large": "/drivers/shellybutton1/assets/images/large.jpg",
+        "small": "/drivers/shellybutton1/assets/images/small.jpg"
       },
       "icon": "/drivers/shellybutton1/assets/icon.svg",
       "capabilitiesOptions": {
@@ -2683,8 +2683,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellydimmer/assets/images/large.png",
-        "small": "/drivers/shellydimmer/assets/images/small.png"
+        "large": "/drivers/shellydimmer/assets/images/large.jpg",
+        "small": "/drivers/shellydimmer/assets/images/small.jpg"
       },
       "icon": "/drivers/shellydimmer/assets/icon.svg",
       "capabilitiesOptions": {
@@ -2816,8 +2816,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellyduo/assets/images/large.png",
-        "small": "/drivers/shellyduo/assets/images/small.png"
+        "large": "/drivers/shellyduo/assets/images/large.jpg",
+        "small": "/drivers/shellyduo/assets/images/small.jpg"
       },
       "icon": "/drivers/shellyduo/assets/icon.svg",
       "capabilitiesOptions": {
@@ -2936,8 +2936,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellydw/assets/images/large.png",
-        "small": "/drivers/shellydw/assets/images/small.png"
+        "large": "/drivers/shellydw/assets/images/large.jpg",
+        "small": "/drivers/shellydw/assets/images/small.jpg"
       },
       "icon": "/drivers/shellydw/assets/icon.svg",
       "capabilitiesOptions": {
@@ -3068,8 +3068,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellyem/assets/images/large.png",
-        "small": "/drivers/shellyem/assets/images/small.png"
+        "large": "/drivers/shellyem/assets/images/large.jpg",
+        "small": "/drivers/shellyem/assets/images/small.jpg"
       },
       "icon": "/drivers/shellyem/assets/icon.svg",
       "capabilitiesOptions": {
@@ -3191,8 +3191,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellyflood/assets/images/large.png",
-        "small": "/drivers/shellyflood/assets/images/small.png"
+        "large": "/drivers/shellyflood/assets/images/large.jpg",
+        "small": "/drivers/shellyflood/assets/images/small.jpg"
       },
       "icon": "/drivers/shellyflood/assets/icon.svg",
       "pair": [
@@ -3293,8 +3293,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellygas/assets/images/large.png",
-        "small": "/drivers/shellygas/assets/images/small.png"
+        "large": "/drivers/shellygas/assets/images/large.jpg",
+        "small": "/drivers/shellygas/assets/images/small.jpg"
       },
       "icon": "/drivers/shellygas/assets/icon.svg",
       "capabilitiesOptions": {
@@ -3409,8 +3409,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellyht/assets/images/large.png",
-        "small": "/drivers/shellyht/assets/images/small.png"
+        "large": "/drivers/shellyht/assets/images/large.jpg",
+        "small": "/drivers/shellyht/assets/images/small.jpg"
       },
       "icon": "/drivers/shellyht/assets/icon.svg",
       "capabilitiesOptions": {
@@ -3537,8 +3537,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellyi3/assets/images/large.png",
-        "small": "/drivers/shellyi3/assets/images/small.png"
+        "large": "/drivers/shellyi3/assets/images/large.jpg",
+        "small": "/drivers/shellyi3/assets/images/small.jpg"
       },
       "icon": "/drivers/shellyi3/assets/icon.svg",
       "capabilitiesOptions": {
@@ -3672,8 +3672,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellyrgbw2color/assets/images/large.png",
-        "small": "/drivers/shellyrgbw2color/assets/images/small.png"
+        "large": "/drivers/shellyrgbw2color/assets/images/large.jpg",
+        "small": "/drivers/shellyrgbw2color/assets/images/small.jpg"
       },
       "icon": "/drivers/shellyrgbw2color/assets/icon.svg",
       "capabilitiesOptions": {
@@ -3808,8 +3808,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellyrgbw2cwww/assets/images/large.png",
-        "small": "/drivers/shellyrgbw2cwww/assets/images/small.png"
+        "large": "/drivers/shellyrgbw2cwww/assets/images/large.jpg",
+        "small": "/drivers/shellyrgbw2cwww/assets/images/small.jpg"
       },
       "icon": "/drivers/shellyrgbw2cwww/assets/icon.svg",
       "pair": [
@@ -3883,8 +3883,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellyrgbw2white/assets/images/large.png",
-        "small": "/drivers/shellyrgbw2white/assets/images/small.png"
+        "large": "/drivers/shellyrgbw2white/assets/images/large.jpg",
+        "small": "/drivers/shellyrgbw2white/assets/images/small.jpg"
       },
       "icon": "/drivers/shellyrgbw2white/assets/icon.svg",
       "capabilitiesOptions": {
@@ -4008,8 +4008,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellysmoke/assets/images/large.png",
-        "small": "/drivers/shellysmoke/assets/images/small.png"
+        "large": "/drivers/shellysmoke/assets/images/large.jpg",
+        "small": "/drivers/shellysmoke/assets/images/small.jpg"
       },
       "icon": "/drivers/shellysmoke/assets/icon.svg",
       "pair": [
@@ -4110,8 +4110,8 @@
     },
     {
       "images": {
-        "large": "/drivers/shellyvintage/assets/images/large.png",
-        "small": "/drivers/shellyvintage/assets/images/small.png"
+        "large": "/drivers/shellyvintage/assets/images/large.jpg",
+        "small": "/drivers/shellyvintage/assets/images/small.jpg"
       },
       "icon": "/drivers/shellyvintage/assets/icon.svg",
       "capabilitiesOptions": {
