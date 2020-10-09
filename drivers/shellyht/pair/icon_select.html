@@ -1,0 +1,90 @@
+<script type="text/javascript">
+  Homey.setTitle(Homey.__('pair.title_icon_select'));
+
+  var imgBase64 = '';
+
+  function loadIcon(event) {
+    const img = event.target.files[0];
+    const preview = document.getElementById('preview');
+    const reader = new FileReader();
+    reader.readAsDataURL(img);
+    reader.onload = () => {
+  		imgBase64 = reader.result;
+  		preview.src = imgBase64;
+  		if (imgBase64.length > 1048000) return Homey.alert('Image size is too large', 'error');
+      $("#preview-outerframe").show();
+      $('#save-icon').prop('disabled', false);
+  		return;
+  	};
+  }
+
+  $('#default-icon').click(function() {
+    Homey.nextView();
+  });
+
+  $('#save-icon').click(function() {
+    Homey.emit('save_icon', imgBase64)
+      .then(result => {
+        Homey.nextView();
+      })
+      .catch(error => {
+        Homey.alert(error.message, 'error');
+        Homey.done()
+      });
+  });
+
+</script>
+<style type="text/css">
+  .form-group {
+    width: 100%;
+    display: block;
+    margin-bottom: 12px;
+  }
+  #preview-outerframe {
+    display: none;
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  #preview-innerframe {
+    width: 200px;
+    height: 200px;
+    border: 2px solid #333;
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  #preview-innerframe img {
+    width: 100%;
+    max-width: 160px;
+    height: auto;
+    padding: 20px;
+  }
+  .buttons {
+    position: absolute;
+    bottom: 0;
+    text-align: right;
+  }
+  .button:disabled {
+    color: #ccc;
+  }
+  .button:enabled {
+    background-color: #00c139 !important;
+    color: #fff;
+  }
+</style>
+
+<p data-i18n="pair.intro_upload">If you wish to use a custom icon for your device you can upload it here. The icon needs to be in .svg format.</p>
+<div class="form-group">
+	<input id="icon" type="file" accept=".svg" name="image" onchange="loadIcon(event)">
+</div>
+<div id="preview-outerframe">
+  <div id="preview-innerframe">
+    <img id="preview" />
+  </div>
+</div>
+<div class="form-group buttons">
+  <button id="default-icon" class="button" data-i18n="pair.default_icon">Use default icon</button>
+  <button id="save-icon" class="button" data-i18n="pair.save" disabled>Save</button>
+</div>
