@@ -12,11 +12,20 @@ class ShellyApp extends Homey.App {
 
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    // UPDATE SHELLY COLLECTION AND START COAP LISTENER FOR RECEIVING STATUS UPDATES
+    // INITIALLY UPDATE THE SHELLY COLLECTION
     setTimeout(async () => {
       await this.updateShellyCollection();
+    }, 30000);
+
+    // START COAP LISTENER FOR RECEIVING STATUS UPDATES
+    setTimeout(async () => {
       shellies.start();
-    }, 10000);
+    }, 40000);
+
+    // UPDATE THE SHELLY COLLECTION REGULARLY
+    setInterval(async () => {
+      await this.updateShellyCollection();
+    }, 300000);
 
     // COAP DISCOVERY AND MESSAGES
     shellies.on('discover', device => {
