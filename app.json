@@ -51,7 +51,7 @@
       "Shelly Button"
     ]
   },
-  "version": "3.0.1",
+  "version": "3.0.2",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -1918,6 +1918,7 @@
         "measure_power",
         "meter_power",
         "alarm_generic",
+        "alarm_generic.1",
         "button.sethalfwayposition",
         "button.callbackevents",
         "button.removecallbackevents"
@@ -2202,6 +2203,7 @@
         "measure_power",
         "meter_power",
         "alarm_generic",
+        "alarm_generic.1",
         "button.sethalfwayposition",
         "button.callbackevents",
         "button.removecallbackevents"

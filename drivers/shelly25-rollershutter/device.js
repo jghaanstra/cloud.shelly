@@ -23,6 +23,9 @@ class Shelly25RollerShutterDevice extends Homey.Device {
     if (!this.hasCapability('alarm_generic')) {
       this.addCapability('alarm_generic');
     }
+    if (!this.hasCapability('alarm_generic.1')) {
+      this.addCapability('alarm_generic.1');
+    }
 
     // UPDATE INITIAL STATE
     this.initialStateUpdate();
@@ -104,6 +107,8 @@ class Shelly25RollerShutterDevice extends Homey.Device {
 
       let measure_power = result.meters[0].power;
       let meter_power = result.meters[0].total * 0.000017;
+      let alarm_generic = result.inputs[0].input == 1 ? true : false;
+      let alarm_generic_1 = result.inputs[1].input == 1 ? true : false;
       var windowcoverings_set = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
 
       if ( result.rollers[0].state == 'stop' ) {
@@ -145,6 +150,16 @@ class Shelly25RollerShutterDevice extends Homey.Device {
         this.setCapabilityValue('meter_power', meter_power);
       }
 
+      // capability alarm_generic
+      if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
+        this.setCapabilityValue('alarm_generic', alarm_generic);
+      }
+
+      // capability alarm_generic.1
+      if (alarm_generic_1 != this.getCapabilityValue('alarm_generic.1')) {
+        this.setCapabilityValue('alarm_generic.1', alarm_generic_1);
+      }
+
     } catch {
       this.setUnavailable(this.homey.__('device.unreachable') + error.message);
       this.log(error);
@@ -154,7 +169,7 @@ class Shelly25RollerShutterDevice extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'rollerState':
           switch(value) {
@@ -204,10 +219,15 @@ class Shelly25RollerShutterDevice extends Homey.Device {
           }
           break;
         case 'input0':
+          let alarm_generic = value === 0 ? false : true;
+          if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
+            this.setCapabilityValue('alarm_generic', alarm_generic);
+          }
+          break;
         case 'input1':
-          let alarm = value === 0 ? false : true;
-          if (alarm != this.getCapabilityValue('alarm_generic')) {
-            this.setCapabilityValue('alarm_generic', alarm);
+          let alarm_generic_1 = value === 0 ? false : true;
+          if (alarm_generic_1 != this.getCapabilityValue('alarm_generic.1')) {
+            this.setCapabilityValue('alarm_generic.1', alarm_generic_1);
           }
           break;
         default:

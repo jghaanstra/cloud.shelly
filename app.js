@@ -33,8 +33,8 @@ class ShellyApp extends Homey.App {
                 const channel = prop.slice(prop.length - 1);
                 var deviceid = filteredShellies[0].main_device+'-channel-'+channel;
               }
-              const device = this.homey.drivers.getDriver(filteredShellies[0].driver).getDevice({id: deviceid});
-              return device.deviceCoapReport(prop, newValue);
+              const homeydevice = this.homey.drivers.getDriver(filteredShellies[0].driver).getDevice({id: deviceid});
+              return homeydevice.deviceCoapReport(prop, newValue);
             } else {
               this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'but this device has not been added to Homey yet.');
             }

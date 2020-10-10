@@ -88,10 +88,16 @@ class Shelly2Device extends Homey.Device {
 
       let channel = this.getStoreValue('channel');
       let onoff = result.relays[channel].ison;
+      let alarm_generic = result.inputs[channel].input == 1 ? true : false;
 
       // capability onoff
       if (onoff != this.getCapabilityValue('onoff')) {
         this.setCapabilityValue('onoff', onoff);
+      }
+
+      // capability alarm_generic
+      if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
+        this.setCapabilityValue('alarm_generic', alarm_generic);
       }
 
       // update measure_power and meter_power only for channel 0
@@ -119,7 +125,7 @@ class Shelly2Device extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'relay0':
         case 'relay1':

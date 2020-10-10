@@ -81,6 +81,7 @@ class Shelly25Device extends Homey.Device {
       let measure_power = result.meters[channel].power;
       let meter_power = result.meters[channel].total * 0.000017;
       let measure_temperature = result.temperature;
+      let alarm_generic = result.inputs[channel].input == 1 ? true : false;
 
       // capability onoff
       if (onoff != this.getCapabilityValue('onoff')) {
@@ -102,6 +103,11 @@ class Shelly25Device extends Homey.Device {
         this.setCapabilityValue('measure_temperature', measure_temperature);
       }
 
+      // capability alarm_generic
+      if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
+        this.setCapabilityValue('alarm_generic', alarm_generic);
+      }
+
     } catch (error) {
       this.setUnavailable(this.homey.__('device.unreachable') + error.message);
       this.log(error);
@@ -111,7 +117,7 @@ class Shelly25Device extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'relay0':
         case 'relay1':

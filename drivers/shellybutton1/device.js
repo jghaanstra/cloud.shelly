@@ -63,10 +63,16 @@ class ShellyButton1Device extends Homey.Device {
       if (!this.getAvailable()) { this.setAvailable(); }
 
       let measure_battery = result.bat.value;
+      let alarm_generic = result.inputs[0].input == 1 ? true : false;
 
       // capability measure_power
       if (measure_battery != this.getCapabilityValue('measure_battery')) {
         this.setCapabilityValue('measure_battery', measure_battery);
+      }
+
+      // capability alarm_generic
+      if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
+        this.setCapabilityValue('alarm_generic', alarm_generic);
       }
 
     } catch (error) {

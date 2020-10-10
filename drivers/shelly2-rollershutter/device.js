@@ -20,6 +20,12 @@ class Shelly2RollerShutterDevice extends Homey.Device {
     if (!this.hasCapability('meter_power')) {
       this.addCapability('meter_power');
     }
+    if (!this.hasCapability('alarm_generic')) {
+      this.addCapability('alarm_generic');
+    }
+    if (!this.hasCapability('alarm_generic.1')) {
+      this.addCapability('alarm_generic.1');
+    }
 
     // UPDATE INITIAL STATE
     this.initialStateUpdate();
@@ -100,6 +106,12 @@ class Shelly2RollerShutterDevice extends Homey.Device {
       let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
       if (!this.getAvailable()) { this.setAvailable(); }
 
+      let measure_power = result.meters[0].power;
+      let meter_power = result.meters[0].total * 0.000017;
+      let alarm_generic = result.inputs[0].input == 1 ? true : false;
+      let alarm_generic_1 = result.inputs[1].input == 1 ? true : false;
+      var windowcoverings_set = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
+
       if ( result.rollers[0].state == 'stop' ) {
         var windowcoverings_state = 'idle';
       } else if ( result.rollers[0].state == 'open' ) {
@@ -110,10 +122,6 @@ class Shelly2RollerShutterDevice extends Homey.Device {
       if (windowcoverings_state !== 'idle' && windowcoverings_state !== this.getStoreValue('last_action')) {
         this.setStoreValue('last_action', windowcoverings_state);
       }
-
-      let measure_power = result.meters[0].power;
-      let meter_power = result.meters[0].total * 0.000017;
-      var windowcoverings_set = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
 
       if (this.getSetting('halfway') !== 0.5) {
         if (windowcoverings_set < this.getSetting('halfway')) {
@@ -143,6 +151,15 @@ class Shelly2RollerShutterDevice extends Homey.Device {
         this.setCapabilityValue('windowcoverings_set', windowcoverings_set);
       }
 
+      // capability alarm_generic
+      if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
+        this.setCapabilityValue('alarm_generic', alarm_generic);
+      }
+      // capability alarm_generic.1
+      if (alarm_generic_1 != this.getCapabilityValue('alarm_generic.1')) {
+        this.setCapabilityValue('alarm_generic.1', alarm_generic_1);
+      }
+
     } catch (error) {
       this.setUnavailable(this.homey.__('device.unreachable') + error.message);
       this.log(error);
@@ -152,7 +169,7 @@ class Shelly2RollerShutterDevice extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'rollerState':
           switch(value) {
@@ -200,10 +217,15 @@ class Shelly2RollerShutterDevice extends Homey.Device {
           }
           break;
         case 'input0':
+          let alarm_generic = value === 0 ? false : true;
+          if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
+            this.setCapabilityValue('alarm_generic', alarm_generic);
+          }
+          break;
         case 'input1':
-          let alarm = value === 0 ? false : true;
-          if (alarm != this.getCapabilityValue('alarm_generic')) {
-            this.setCapabilityValue('alarm_generic', alarm);
+          let alarm_generic_1 = value === 0 ? false : true;
+          if (alarm_generic_1 != this.getCapabilityValue('alarm_generic.1')) {
+            this.setCapabilityValue('alarm_generic.1', alarm_generic_1);
           }
           break;
         default:
