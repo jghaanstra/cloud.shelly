@@ -16,9 +16,9 @@ class Shelly1pmDevice extends Homey.Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    this.homey.flow.getDeviceTriggerCard('triggerShelly1Temperature1');
-    this.homey.flow.getDeviceTriggerCard('triggerShelly1Temperature2');
-    this.homey.flow.getDeviceTriggerCard('triggerShelly1Temperature3');
+    this.homey.flow.getDeviceTriggerCard('triggerTemperature1');
+    this.homey.flow.getDeviceTriggerCard('triggerTemperature2');
+    this.homey.flow.getDeviceTriggerCard('triggerTemperature3');
 
     this.setAvailable();
 
@@ -181,18 +181,19 @@ class Shelly1pmDevice extends Homey.Device {
         case 'externalTemperature0':
           if (value != this.getCapabilityValue('measure_temperature.1')) {
             this.setCapabilityValue('measure_temperature.1', value);
+            this.homey.flow.getDeviceTriggerCard('triggerTemperature1').trigger(this, {'temperature': value}, {});
           }
           break;
         case 'externalTemperature1':
           if (value != this.getCapabilityValue('measure_temperature.2')) {
             this.setCapabilityValue('measure_temperature.2', value);
-            this.homey.flow.getDeviceTriggerCard('triggerShelly1Temperature2').trigger(this, {'temperature': value}, {});
+            this.homey.flow.getDeviceTriggerCard('triggerTemperature2').trigger(this, {'temperature': value}, {});
           }
           break;
         case 'externalTemperature2':
           if (value != this.getCapabilityValue('measure_temperature.3')) {
             this.setCapabilityValue('measure_temperature.3', value);
-            this.homey.flow.getDeviceTriggerCard('triggerShelly1Temperature3').trigger(this, {'temperature': value}, {});
+            this.homey.flow.getDeviceTriggerCard('triggerTemperature3').trigger(this, {'temperature': value}, {});
           }
           break;
         case 'externalHumidity':

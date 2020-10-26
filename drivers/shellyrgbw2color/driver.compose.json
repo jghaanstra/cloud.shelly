@@ -42,8 +42,8 @@
         "nl": "Instellen URL's voor callbacks"
       },
       "desc": {
-        "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events.",
-        "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+        "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events. Disable any unused callbacks in the Shelly webinterface.",
+        "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties. Schakel ongebruikte callbacks uit in de Shelly webinterface."
       }
     },
     "button.removecallbackevents": {

@@ -32,7 +32,9 @@
     "401": "Error 401: user credentials are missing or this user is not authorized, make sure you have copied the correct user credentials as entered in the Shelly smartphone app or Webinterface.",
     "502": "Timeout error: make sure you have entered the correct IP address and that the Shelly device is online.",
     "500": "Error 500: internal server error",
-    "unknownerror": "Unknown error, are you sure you have entered the correct IP address and Homey is on the same network as the Shelly device? Please check your settings and try again."
+    "unknownerror": "Unknown error, are you sure you have entered the correct IP address and Homey is on the same network as the Shelly device? Please check your settings and try again.",
+    "any_device": "With Any Device",
+    "any_action": "With Any Action"
   },
   "connect": {
     "intro": "Using the Shelly RGBW2 in CW/WW mode enables you to connect 2 LED strips as follows:",

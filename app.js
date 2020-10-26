@@ -27,53 +27,18 @@ class ShellyApp extends Homey.App {
       await this.updateShellyCollection();
     }, 300000);
 
-    // COAP DISCOVERY AND MESSAGES
-    shellies.on('discover', device => {
-      this.log('Discovered device with ID', device.id, 'and type', device.type);
-
-      device.on('change', (prop, newValue, oldValue) => {
-        try {
-          if (shellyDevices.length > 0) {
-            const filteredShellies = shellyDevices.filter(shelly => shelly.id.includes(device.id));
-            if (filteredShellies.length > 0) {
-              if (filteredShellies.length === 1) {
-                var deviceid = filteredShellies[0].id;
-              } else {
-                const channel = prop.slice(prop.length - 1);
-                var deviceid = filteredShellies[0].main_device+'-channel-'+channel;
-              }
-              const homeydevice = this.homey.drivers.getDriver(filteredShellies[0].driver).getDevice({id: deviceid});
-              return homeydevice.deviceCoapReport(prop, newValue);
-            } else {
-              this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'but this device has not been added to Homey yet.');
-            }
-          } else {
-            this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'but no Shelly devices have been added to Homey yet.');
-          }
-        } catch (error) {
-          this.log(error);
-        }
-      })
-
-      device.on('offline', () => {
-        const offlineShellies = shellyDevices.filter(shelly => shelly.id.includes(device.id));
-        if (offlineShellies.length > 0) {
-          Object.keys(offlineShellies).forEach(key => {
-            const device = this.homey.drivers.getDriver(offlineShellies[key].driver).getDevice({id: offlineShellies[key].id});
-            this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": 'Device is offline'});
-          });
-        }
-      })
-    });
-
     // GENERIC FLOWCARDS
     this.homey.flow.getTriggerCard('triggerDeviceOffline');
 
     const listenerCallbacks = this.homey.flow.getTriggerCard('triggerCallbacks').registerRunListener(async (args, state) => {
-      if ((state.id == args.shelly.id || args.shelly == undefined) && (state.action == args.action.name || args.action == undefined)) {
-        return true;
-      } else {
-        return false;
+      try {
+        if ((state.id == args.shelly.id && args.action.id === 999) || (args.shelly.id === 'all' && state.action == args.action.name) || (args.shelly.id === 'all' && args.action.id === 999) || ((state.id == args.shelly.id || args.shelly == undefined) && (state.action == args.action.name || args.action == undefined))) {
+          return Promise.resolve(true);
+        } else {
+          return Promise.resolve(false);
+        }
+      } catch (error) {
+        return Promise.reject(error);
       }
     });
     listenerCallbacks.getArgument('shelly').registerAutocompleteListener(async (query, args) => {
@@ -259,6 +224,49 @@ class ShellyApp extends Homey.App {
       .registerRunListener(async (args) => {
         return await this.util.sendCommand('/self_test', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
+
+    // COAP DISCOVERY AND MESSAGES
+    shellies.on('discover', device => {
+      this.log('Discovered device with ID', device.id, 'and type', device.type);
+
+      device.on('change', (prop, newValue, oldValue) => {
+        try {
+          if (shellyDevices.length > 0) {
+            const filteredShellies = shellyDevices.filter(shelly => shelly.id.includes(device.id));
+            if (filteredShellies.length > 0) {
+              if (filteredShellies.length === 1) {
+                var deviceid = filteredShellies[0].id;
+              } else {
+                const channel = prop.slice(prop.length - 1);
+                var deviceid = filteredShellies[0].main_device+'-channel-'+channel;
+              }
+              const homeydevice = this.homey.drivers.getDriver(filteredShellies[0].driver).getDevice({id: deviceid});
+              homeydevice.deviceCoapReport(prop, newValue);
+              if (homeydevice.getSetting('address') !== device.host) {
+                homeydevice.setSettings({address: device.host});
+              }
+              return;
+            } else {
+              this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'but this device has not been added to Homey yet.');
+            }
+          } else {
+            this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'but no Shelly devices have been added to Homey yet.');
+          }
+        } catch (error) {
+          this.log(error);
+        }
+      })
+
+      device.on('offline', () => {
+        const offlineShellies = shellyDevices.filter(shelly => shelly.id.includes(device.id));
+        if (offlineShellies.length > 0) {
+          Object.keys(offlineShellies).forEach(key => {
+            const device = this.homey.drivers.getDriver(offlineShellies[key].driver).getDevice({id: offlineShellies[key].id});
+            this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": 'Device is offline'});
+          });
+        }
+      })
+    });
 
   }
 

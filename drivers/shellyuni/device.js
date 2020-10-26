@@ -11,7 +11,7 @@ const callbacks = [
   'longpush'
 ];
 
-class Shelly1Device extends Homey.Device {
+class ShellyUniDevice extends Homey.Device {
 
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
@@ -32,31 +32,33 @@ class Shelly1Device extends Homey.Device {
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {
-      const path = value ? '/relay/0?turn=on' : '/relay/0?turn=off';
+      const path = value ? '/relay/'+ this.getStoreValue("channel") +'?turn=on' : '/relay/'+ this.getStoreValue("channel") +'?turn=off';
       return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerCapabilityListener('button.callbackevents', async () => {
-      return await this.util.addCallbackEvents('/settings/relay/0?', callbacks, 'shelly1', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      return await this.util.addCallbackEvents('/settings/relay/'+ this.getStoreValue("channel") +'?', callbacks, 'shellyuni', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerCapabilityListener('button.removecallbackevents', async () => {
-      return await this.util.removeCallbackEvents('/settings/relay/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      return await this.util.removeCallbackEvents('/settings/relay/'+ this.getStoreValue("channel") +'?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
   }
 
   async onAdded() {
     await this.homey.app.updateShellyCollection();
-    /*await this.util.addCallbackEvents('/settings/relay/0?', callbacks, 'shelly1', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));*/
+    /*await this.util.addCallbackEvents('/settings/relay/'+ this.getStoreValue("channel") +'?', callbacks, 'shellyuni', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));*/
     return;
   }
 
   async onDeleted() {
     try {
-      const iconpath = "/userdata/" + this.getData().id +".svg";
-      await this.util.removeCallbackEvents('/settings/relay/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      await this.util.removeIcon(iconpath);
+      await this.util.removeCallbackEvents('/settings/relay/'+ this.getStoreValue("channel") +'?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      if (this.getStoreValue('channel') === 0) {
+        const iconpath = "/userdata/" + this.getData().id +".svg";
+        await this.util.removeIcon(iconpath);
+      }
       await this.homey.app.updateShellyCollection();
       return;
     } catch (error) {
@@ -70,8 +72,9 @@ class Shelly1Device extends Homey.Device {
       let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
       if (!this.getAvailable()) { this.setAvailable(); }
 
-      let onoff = result.relays[0].ison;
-      let alarm_generic = result.inputs[0].input == 1 ? true : false;
+      let channel = this.getStoreValue('channel');
+      let onoff = result.relays[channel].ison;
+      let alarm_generic = result.inputs[channel].input == 1 ? true : false;
 
       // capability onoff
       if (onoff != this.getCapabilityValue('onoff')) {
@@ -83,44 +86,47 @@ class Shelly1Device extends Homey.Device {
         this.setCapabilityValue('alarm_generic', alarm_generic);
       }
 
-      // capability measure_temperature, measure_temperature.2, measure_temperature.3
-      if (Object.entries(result.ext_temperature).length !== 0) {
+      // add optional capabilities only for channel 0
+      if (this.getStoreValue('channel') === 0) {
+        // capability measure_temperature, measure_temperature.2, measure_temperature.3
+        if (Object.entries(result.ext_temperature).length !== 0) {
 
-        // sensor 1
-        if (result.ext_temperature.hasOwnProperty([0]) && !this.hasCapability('measure_temperature')) {
-          this.addCapability('measure_temperature');
-        } else if (result.ext_temperature.hasOwnProperty([0]) && this.hasCapability('measure_temperature')) {
-          let temp1 = result.ext_temperature[0].tC;
-          if (temp1 != this.getCapabilityValue('measure_temperature')) {
-            this.setCapabilityValue('measure_temperature', temp1);
+          // sensor 1
+          if (result.ext_temperature.hasOwnProperty([0]) && !this.hasCapability('measure_temperature')) {
+            this.addCapability('measure_temperature');
+          } else if (result.ext_temperature.hasOwnProperty([0]) && this.hasCapability('measure_temperature')) {
+            let temp1 = result.ext_temperature[0].tC;
+            if (temp1 != this.getCapabilityValue('measure_temperature')) {
+              this.setCapabilityValue('measure_temperature', temp1);
+            }
+          }
+
+          // sensor 2
+          if (result.ext_temperature.hasOwnProperty([1]) && !this.hasCapability('measure_temperature.2')) {
+            this.addCapability('measure_temperature.2');
+          } else if (result.ext_temperature.hasOwnProperty([1]) && this.hasCapability('measure_temperature.2')) {
+            let temp2 = result.ext_temperature[1].tC;
+            if (temp2 != this.getCapabilityValue('measure_temperature.2')) {
+              this.setCapabilityValue('measure_temperature.2', temp2);
+            }
+          }
+
+          // sensor 3
+          if (result.ext_temperature.hasOwnProperty([2]) && !this.hasCapability('measure_temperature.3')) {
+            this.addCapability('measure_temperature.3');
+          } else if (result.ext_temperature.hasOwnProperty([2]) && this.hasCapability('measure_temperature.3')) {
+            let temp3 = result.ext_temperature[2].tC;
+            if (temp3 != this.getCapabilityValue('measure_temperature.3')) {
+              this.setCapabilityValue('measure_temperature.3', temp3);
+            }
           }
         }
 
-        // sensor 2
-        if (result.ext_temperature.hasOwnProperty([1]) && !this.hasCapability('measure_temperature.2')) {
-          this.addCapability('measure_temperature.2');
-        } else if (result.ext_temperature.hasOwnProperty([1]) && this.hasCapability('measure_temperature.2')) {
-          let temp2 = result.ext_temperature[1].tC;
-          if (temp2 != this.getCapabilityValue('measure_temperature.2')) {
-            this.setCapabilityValue('measure_temperature.2', temp2);
+        // capability measure_humidity, measure_humidity.2, measure_humidity.3
+        if (Object.entries(result.ext_humidity).length !== 0) {
+          if (result.ext_humidity.hasOwnProperty([0]) && !this.hasCapability('measure_humidity')) {
+            this.addCapability('measure_humidity');
           }
-        }
-
-        // sensor 3
-        if (result.ext_temperature.hasOwnProperty([2]) && !this.hasCapability('measure_temperature.3')) {
-          this.addCapability('measure_temperature.3');
-        } else if (result.ext_temperature.hasOwnProperty([2]) && this.hasCapability('measure_temperature.3')) {
-          let temp3 = result.ext_temperature[2].tC;
-          if (temp3 != this.getCapabilityValue('measure_temperature.3')) {
-            this.setCapabilityValue('measure_temperature.3', temp3);
-          }
-        }
-      }
-
-      // capability measure_humidity, measure_humidity.2, measure_humidity.3
-      if (Object.entries(result.ext_humidity).length !== 0) {
-        if (result.ext_humidity.hasOwnProperty([0]) && !this.hasCapability('measure_humidity')) {
-          this.addCapability('measure_humidity');
         }
       }
 
@@ -136,6 +142,7 @@ class Shelly1Device extends Homey.Device {
 
       switch(capability) {
         case 'relay0':
+        case 'relay1':
           if (value != this.getCapabilityValue('onoff')) {
             this.setCapabilityValue('onoff', value);
           }
@@ -163,6 +170,7 @@ class Shelly1Device extends Homey.Device {
           }
           break;
         case 'input0':
+        case 'input1':
           let alarm = value === 0 ? false : true;
           if (alarm != this.getCapabilityValue('alarm_generic')) {
             this.setCapabilityValue('alarm_generic', alarm);
@@ -184,4 +192,4 @@ class Shelly1Device extends Homey.Device {
 
 }
 
-module.exports = Shelly1Device;
+module.exports = ShellyUniDevice;

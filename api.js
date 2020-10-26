@@ -28,7 +28,7 @@ module.exports = {
       }
 
       const result = await homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": params.deviceid, "device": device.getName(), "action": params.action}, {"id": params.deviceid, "device": device.getName(), "action": params.action});
-      return result;
+      return 'OK';
     } catch (error) {
       console.log(error);
       return error;
@@ -39,7 +39,7 @@ module.exports = {
       const util = new Util({homey: homey});
       const shelly = await homey.drivers.getDriver(params.devicetype).getDevice({'id': params.deviceid});
       const result = await shelly.updateReportStatus(device, query);
-      return result;
+      return 'OK';
     } catch (error) {
       console.log(error);
       return error;
