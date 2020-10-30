@@ -228,6 +228,8 @@ class Shelly2RollerShutterDevice extends Homey.Device {
             this.setCapabilityValue('alarm_generic.1', alarm_generic_1);
           }
           break;
+        case 'rollerStopReason':
+          break;
         default:
           this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }

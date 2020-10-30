@@ -26,6 +26,9 @@ class Shelly25RollerShutterDevice extends Homey.Device {
     if (!this.hasCapability('alarm_generic.1')) {
       this.addCapability('alarm_generic.1');
     }
+    if (!this.hasCapability('measure_temperature')) {
+      this.addCapability('measure_temperature');
+    }
 
     // UPDATE INITIAL STATE
     this.initialStateUpdate();
@@ -107,6 +110,7 @@ class Shelly25RollerShutterDevice extends Homey.Device {
 
       let measure_power = result.meters[0].power;
       let meter_power = result.meters[0].total * 0.000017;
+      let measure_temperature = result.temperature;
       let alarm_generic = result.inputs[0].input == 1 ? true : false;
       let alarm_generic_1 = result.inputs[1].input == 1 ? true : false;
       var windowcoverings_set = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
@@ -148,6 +152,11 @@ class Shelly25RollerShutterDevice extends Homey.Device {
       // capability meter_power
       if (meter_power != this.getCapabilityValue('meter_power')) {
         this.setCapabilityValue('meter_power', meter_power);
+      }
+
+      // capability measure_temperature
+      if (measure_temperature != this.getCapabilityValue('measure_temperature')) {
+        this.setCapabilityValue('measure_temperature', measure_temperature);
       }
 
       // capability alarm_generic
@@ -218,6 +227,11 @@ class Shelly25RollerShutterDevice extends Homey.Device {
             this.setCapabilityValue('meter_power', meter_power);
           }
           break;
+        case 'deviceTemperature':
+          if (value != this.getCapabilityValue('measure_temperature')) {
+            this.setCapabilityValue('measure_temperature', value);
+          }
+          break;
         case 'input0':
           let alarm_generic = value === 0 ? false : true;
           if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
@@ -229,6 +243,8 @@ class Shelly25RollerShutterDevice extends Homey.Device {
           if (alarm_generic_1 != this.getCapabilityValue('alarm_generic.1')) {
             this.setCapabilityValue('alarm_generic.1', alarm_generic_1);
           }
+          break;
+        case 'rollerStopReason':
           break;
         default:
           this.log('Device does not support reported capability '+ capability +' with value '+ value);
