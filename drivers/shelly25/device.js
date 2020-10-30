@@ -26,6 +26,11 @@ class Shelly25Device extends Homey.Device {
     if (!this.hasCapability('alarm_generic')) {
       this.addCapability('alarm_generic');
     }
+    if (this.getStoreValue("channel") === 1) {
+      if (this.hasCapability('measure_temperature')) {
+        this.removeCapability('measure_temperature');
+      }
+    }
 
     // UPDATE INITIAL STATE
     setTimeout(() => {
@@ -80,7 +85,6 @@ class Shelly25Device extends Homey.Device {
       let onoff = result.relays[channel].ison;
       let measure_power = result.meters[channel].power;
       let meter_power = result.meters[channel].total * 0.000017;
-      let measure_temperature = result.temperature;
       let alarm_generic = result.inputs[channel].input == 1 ? true : false;
 
       // capability onoff
@@ -97,15 +101,19 @@ class Shelly25Device extends Homey.Device {
       if (meter_power != this.getCapabilityValue('meter_power')) {
         this.setCapabilityValue('meter_power', meter_power);
       }
-
-      // capability measure_temperature
-      if (measure_temperature != this.getCapabilityValue('measure_temperature')) {
-        this.setCapabilityValue('measure_temperature', measure_temperature);
-      }
-
+      
       // capability alarm_generic
       if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
         this.setCapabilityValue('alarm_generic', alarm_generic);
+      }
+
+      // update measure_temperature only for channel 0
+      if (this.getStoreValue('channel') === 0) {
+        // capability measure_temperature
+        let measure_temperature = result.temperature;
+        if (measure_temperature != this.getCapabilityValue('measure_temperature')) {
+          this.setCapabilityValue('measure_temperature', measure_temperature);
+        }
       }
 
     } catch (error) {

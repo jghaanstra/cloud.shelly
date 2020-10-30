@@ -6,6 +6,26 @@
         for (i = 0; i < 3; i++) {
           var deviceid = i + 1;
           if (i < 2) {
+            if (i === 0) {
+              var capabilities = [
+                "onoff",
+                "measure_power",
+                "meter_power",
+                "measure_temperature",
+                "alarm_generic",
+                "button.callbackevents",
+                "button.removecallbackevents"
+              ]
+            } else {
+              var capabilities = [
+                "onoff",
+                "measure_power",
+                "meter_power",
+                "alarm_generic",
+                "button.callbackevents",
+                "button.removecallbackevents"
+              ]
+            }
             Homey.createDevice({
       				name: 'Shelly 2.5 Relay ' + deviceid,
       				data: {
@@ -16,6 +36,7 @@
                 username : result.settings.username,
                 password : result.settings.password
               },
+              capabilities: capabilities,
               store: {
                 main_device: result.data.id,
                 channel: i,
