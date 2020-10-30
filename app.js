@@ -253,6 +253,7 @@ class ShellyApp extends Homey.App {
             this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'but no Shelly devices have been added to Homey yet.');
           }
         } catch (error) {
+          this.log('Error occured when processing CoAP message for device', device.id, 'with type', device.type, 'for capability', prop, 'with old value', oldValue, 'to new value', newValue);
           this.log(error);
         }
       })
