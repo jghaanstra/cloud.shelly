@@ -238,7 +238,11 @@ class ShellyApp extends Homey.App {
                 var deviceid = filteredShellies[0].id;
               } else {
                 const channel = prop.slice(prop.length - 1);
-                var deviceid = filteredShellies[0].main_device+'-channel-'+channel;
+                if(isNaN(channel)) {
+                  var deviceid = filteredShellies[0].main_device+'-channel-0';
+                } else {
+                  var deviceid = filteredShellies[0].main_device+'-channel-'+channel;
+                }
               }
               const homeydevice = this.homey.drivers.getDriver(filteredShellies[0].driver).getDevice({id: deviceid});
               homeydevice.deviceCoapReport(prop, newValue);
