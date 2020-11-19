@@ -21,11 +21,11 @@ class Shelly1Device extends Homey.Device {
 
     this.setAvailable();
 
-    // ADD AND REMOVE CAPABILITIES
-    // TODO: REMOVE AFTER 3.1.0
+    // TODO: ADD AND REMOVE STUFF - REMOVE CODE AFTER 3.1.0
     if (!this.hasCapability('alarm_generic')) {
       this.addCapability('alarm_generic');
     }
+    this.util.removeCallbackEvents('/settings/relay/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
 
     // UPDATE INITIAL STATE
     this.initialStateUpdate();
@@ -168,7 +168,11 @@ class Shelly1Device extends Homey.Device {
             this.setCapabilityValue('alarm_generic', alarm);
           }
           break;
-        default:
+        case 'inputEvent0':
+          let actionEvent = this.util.getActionEventDescription(value);
+          this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": actionEvent}, {"id": this.getData().id, "device": this.getName(), "action": actionEvent});
+          break;
+      default:
           this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);

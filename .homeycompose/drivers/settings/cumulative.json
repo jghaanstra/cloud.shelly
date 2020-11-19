@@ -1,0 +1,9 @@
+{
+	"id": "cumulative",
+	"type": "checkbox",
+	"label": {
+		"en": "Make cumulative",
+		"nl": "Maak cumulatief"
+	},
+	"value": true
+}

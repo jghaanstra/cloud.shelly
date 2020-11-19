@@ -54,6 +54,10 @@ class ShellyEmDevice extends Homey.Device {
     }, this.getStoreValue('channel') * 2000);
   }
 
+  async onSettings({ oldSettings, newSettings, changedKeys }) {
+    this.setEnergy({ cumulative: newSettings.cumulative });
+  }
+
   async onDeleted() {
     try {
       if (this.getStoreValue('channel') === 0) {

@@ -8,11 +8,35 @@ const callbacks = [
   'shortpush',
   'longpush',
   'double_shortpush',
-  'double_longpush',
   'triple_shortpush',
-  'triple_longpush',
   'shortpush_longpush',
   'longpush_shortpush'
+];
+const callbacks_triggers = [
+  'btn_on_1',
+  'btn_off_1',
+  'shortpush_1',
+  'longpush_1',
+  'double_shortpush_1',
+  'triple_shortpush_1',
+  'shortpush_longpush_1',
+  'longpush_shortpush_1',
+  'btn_on_2',
+  'btn_off_2',
+  'shortpush_2',
+  'longpush_2',
+  'double_shortpush_2',
+  'triple_shortpush_2',
+  'shortpush_longpush_2',
+  'longpush_shortpush_2',
+  'btn_on_3',
+  'btn_off_3',
+  'shortpush_3',
+  'longpush_3',
+  'double_shortpush_3',
+  'triple_shortpush_3',
+  'shortpush_longpush_3',
+  'longpush_shortpush_3'
 ];
 
 class Shellyi3Device extends Homey.Device {
@@ -164,7 +188,7 @@ class Shellyi3Device extends Homey.Device {
   }
 
   getCallbacks() {
-    return callbacks;
+    return callbacks_triggers;
   }
 
 }

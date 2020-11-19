@@ -19,5 +19,18 @@
         "$extends": "password"
       }
     ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "User Settings",
+      "nl": "Gebruikersinstellingen"
+    },
+    "children": [
+      {
+        "id": "cumulative",
+        "$extends": "cumulative"
+      }
+    ]
   }
 ]
