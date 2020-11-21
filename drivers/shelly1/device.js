@@ -134,8 +134,6 @@ class Shelly1Device extends Homey.Device {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
 
-      this.log('registered '+ capability +' with value '+ value);
-
       switch(capability) {
         case 'relay0':
           if (value != this.getCapabilityValue('onoff')) {
@@ -171,12 +169,12 @@ class Shelly1Device extends Homey.Device {
           }
           break;
         case 'inputEvent0':
-          this.log('matched '+ capability +' with value '+ value + ' in switch case');
-          let actionEvent = this.util.getActionEventDescription(value);
-          this.log(value +' translated to '+ actionEvent +', going to trigger flow card now');
-          this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": actionEvent}, {"id": this.getData().id, "device": this.getName(), "action": actionEvent});
+          this.setStoreValue('actionEvent', value);
           break;
         case 'inputEventCounter0':
+          let actionEvent = this.util.getActionEventDescription(this.getStoreValue('actionEvent'));
+          this.log('triggering flow with ', actionEvent);
+          this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": actionEvent}, {"id": this.getData().id, "device": this.getName(), "action": actionEvent});
           break;
       default:
           this.log('Device does not support reported capability '+ capability +' with value '+ value);

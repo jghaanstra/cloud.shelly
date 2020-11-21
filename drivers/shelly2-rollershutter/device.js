@@ -2,11 +2,7 @@
 
 const Homey = require('homey');
 const Util = require('/lib/util.js');
-const callbacks = [
-  'roller_open',
-  'roller_close',
-  'roller_stop'
-];
+const callbacks = [];
 
 class Shelly2RollerShutterDevice extends Homey.Device {
 
