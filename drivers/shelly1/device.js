@@ -169,12 +169,12 @@ class Shelly1Device extends Homey.Device {
           }
           break;
         case 'inputEvent0':
-          this.setStoreValue('actionEvent', value);
+          let actionEvent = this.util.getActionEventDescription(value);
+          this.setStoreValue('actionEvent', actionEvent);
           break;
         case 'inputEventCounter0':
-          let actionEvent = this.util.getActionEventDescription(this.getStoreValue('actionEvent'));
-          this.log('triggering flow with ', actionEvent);
-          this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": actionEvent}, {"id": this.getData().id, "device": this.getName(), "action": actionEvent});
+          this.log('triggering flow with ', this.getStoreValue('actionEvent'));
+          this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')});
           break;
       default:
           this.log('Device does not support reported capability '+ capability +' with value '+ value);
