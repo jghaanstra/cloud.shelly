@@ -14,9 +14,7 @@
     "measure_battery",
     "measure_temperature",
     "alarm_tamper",
-    "tilt",
-    "button.callbackevents",
-    "button.removecallbackevents"
+    "tilt"
   ],
   "pair": [
     {

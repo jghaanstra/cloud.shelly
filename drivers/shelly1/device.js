@@ -3,6 +3,11 @@
 const Homey = require('homey');
 const Util = require('/lib/util.js');
 const callbacks = [
+  'shortpush',
+  'longpush'
+];
+// TODO: REMOVE AFTER 3.1.0
+const temp_callbacks = [
   'btn_on',
   'btn_off',
   'out_on',
@@ -25,7 +30,12 @@ class Shelly1Device extends Homey.Device {
     if (!this.hasCapability('alarm_generic')) {
       this.addCapability('alarm_generic');
     }
-    this.util.removeCallbackEvents('/settings/relay/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    if (this.hasCapability('button.callbackevents')) {
+      this.removeCapability('button.callbackevents');
+    }
+    if (this.hasCapability('button.removecallbackevents')) {
+      this.removeCapability('button.removecallbackevents');
+    }
 
     // UPDATE INITIAL STATE
     this.initialStateUpdate();
@@ -36,26 +46,16 @@ class Shelly1Device extends Homey.Device {
       return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
-    this.registerCapabilityListener('button.callbackevents', async () => {
-      return await this.util.addCallbackEvents('/settings/relay/0?', callbacks, 'shelly1', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
-
-    this.registerCapabilityListener('button.removecallbackevents', async () => {
-      return await this.util.removeCallbackEvents('/settings/relay/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
-
   }
 
   async onAdded() {
     await this.homey.app.updateShellyCollection();
-    /*await this.util.addCallbackEvents('/settings/relay/0?', callbacks, 'shelly1', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));*/
     return;
   }
 
   async onDeleted() {
     try {
       const iconpath = "/userdata/" + this.getData().id +".svg";
-      await this.util.removeCallbackEvents('/settings/relay/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       await this.util.removeIcon(iconpath);
       await this.homey.app.updateShellyCollection();
       return;
@@ -173,11 +173,10 @@ class Shelly1Device extends Homey.Device {
           this.setStoreValue('actionEvent', actionEvent);
           break;
         case 'inputEventCounter0':
-          this.log('triggering flow with ', this.getStoreValue('actionEvent'));
           this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')});
           break;
-      default:
-          this.log('Device does not support reported capability '+ capability +' with value '+ value);
+        default:
+          //this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {
@@ -188,6 +187,11 @@ class Shelly1Device extends Homey.Device {
 
   getCallbacks() {
     return callbacks;
+  }
+
+  // TODO: REMOVE AFTER 3.1.0
+  async removeCallbacks() {
+    return await this.util.removeCallbackEvents('/settings/relay/0?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

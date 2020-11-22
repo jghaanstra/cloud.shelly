@@ -2,7 +2,9 @@
 
 const Homey = require('homey');
 const Util = require('/lib/util.js');
-const callbacks = [
+const callbacks = [];
+// TODO: REMOVE AFTER 3.1.0
+const temp_callbacks = [
   'alarm_off',
   'alarm_mild',
   'alarm_heavy'
@@ -17,30 +19,26 @@ class ShellyGasDevice extends Homey.Device {
 
     this.setAvailable();
 
+    // TODO: ADD AND REMOVE STUFF - REMOVE CODE AFTER 3.1.0
+    if (this.hasCapability('button.callbackevents')) {
+      this.removeCapability('button.callbackevents');
+    }
+    if (this.hasCapability('button.removecallbackevents')) {
+      this.removeCapability('button.removecallbackevents');
+    }
+
     // UPDATE INITIAL STATE
     this.initialStateUpdate();
-
-    // LISTENERS FOR UPDATING CAPABILITIES
-    this.registerCapabilityListener('button.callbackevents', async () => {
-      return await this.util.addCallbackEvents('/settings?', callbacks, 'shellygas', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
-
-    this.registerCapabilityListener('button.removecallbackevents', async () => {
-      return await this.util.removeCallbackEvents('/settings?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
 
   }
 
   async onAdded() {
-    await this.homey.app.updateShellyCollection();
-    await this.util.addCallbackEvents('/settings?', callbacks, 'shellygas', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    return;
+    return await this.homey.app.updateShellyCollection();
   }
 
   async onDeleted() {
     try {
       const iconpath = "/userdata/" + this.getData().id +".svg";
-      await this.util.removeCallbackEvents('/settings?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       await this.util.removeIcon(iconpath);
       await this.homey.app.updateShellyCollection();
       return;
@@ -80,7 +78,7 @@ class ShellyGasDevice extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'gas':
           if (value === 'mild' || value === 'heavy') {
@@ -99,7 +97,7 @@ class ShellyGasDevice extends Homey.Device {
           }
           break;
         default:
-          this.log('Device does not support reported capability '+ capability +' with value '+ value);
+          //this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {
@@ -110,6 +108,11 @@ class ShellyGasDevice extends Homey.Device {
 
   getCallbacks() {
     return callbacks;
+  }
+
+  // TODO: REMOVE AFTER 3.1.0
+  async removeCallbacks() {
+    return await this.util.removeCallbackEvents('/settings?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

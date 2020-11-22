@@ -4,6 +4,11 @@ const Homey = require('homey');
 const Util = require('/lib/util.js');
 const tinycolor = require("tinycolor2");
 const callbacks = [
+  'longpush',
+  'shortpush'
+];
+// TODO: REMOVE AFTER 3.1.0
+const temp_callbacks = [
   'btn_on',
   'btn_off',
   'btn_longpush',
@@ -21,17 +26,17 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
 
     // ADD OR REMOVE CAPABILITIES
     // TODO: REMOVE AFTER 3.1.0
-    if (!this.hasCapability('button.callbackevents')) {
-      this.addCapability('button.callbackevents');
-    }
-    if (!this.hasCapability('button.removecallbackevents')) {
-      this.addCapability('button.removecallbackevents');
-    }
     if (!this.hasCapability('meter_power')) {
       this.addCapability('meter_power');
     }
     if (!this.hasCapability('alarm_generic')) {
       this.addCapability('alarm_generic');
+    }
+    if (this.hasCapability('button.callbackevents')) {
+      this.removeCapability('button.callbackevents');
+    }
+    if (this.hasCapability('button.removecallbackevents')) {
+      this.removeCapability('button.removecallbackevents');
     }
 
     // UPDATE INITIAL STATE
@@ -79,14 +84,6 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
         this.setCapabilityValue("light_mode", 'color');
         return await this.util.sendCommand('/color/0?gain=100&white=0', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       }
-    });
-
-    this.registerCapabilityListener('button.callbackevents', async () => {
-      return await this.util.addCallbackEvents('/settings/color/0?', callbacks, 'shellyrgbw2color', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
-
-    this.registerCapabilityListener('button.removecallbackevents', async () => {
-      return await this.util.removeCallbackEvents('/settings/color/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
   }
@@ -241,8 +238,15 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
             this.setCapabilityValue('alarm_generic', alarm);
           }
           break;
+        case 'inputEvent0':
+          let actionEvent = this.util.getActionEventDescription(value);
+          this.setStoreValue('actionEvent', actionEvent);
+          break;
+        case 'inputEventCounter0':
+          this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')});
+          break;
         default:
-          this.log('Device does not support reported capability '+ capability +' with value '+ value);
+          //this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {
@@ -269,6 +273,11 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
 
   getCallbacks() {
     return callbacks;
+  }
+
+  // TODO: REMOVE AFTER 3.1.0
+  async removeCallbacks() {
+    return await this.util.removeCallbackEvents('/settings/color/0?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

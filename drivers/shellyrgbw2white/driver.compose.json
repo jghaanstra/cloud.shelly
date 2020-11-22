@@ -13,9 +13,7 @@
     "dim",
     "measure_power",
     "meter_power",
-    "alarm_generic",
-    "button.callbackevents",
-    "button.removecallbackevents"
+    "alarm_generic"
   ],
   "pair": [
     {

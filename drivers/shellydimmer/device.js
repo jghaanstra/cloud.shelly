@@ -3,6 +3,17 @@
 const Homey = require('homey');
 const Util = require('/lib/util.js');
 const callbacks = [
+  'shortpush',
+  'longpush'
+];
+const callbacks_triggers = [
+  'shortpush_1',
+  'longpush_1',
+  'shortpush_2',
+  'longpush_2'
+];
+// TODO: REMOVE AFTER 3.1.0
+const temp_callbacks = [
   'btn1_on',
   'btn1_off',
   'btn2_on',
@@ -41,6 +52,12 @@ class ShellyDimmerDevice extends Homey.Device {
     if (!this.hasCapability('alarm_generic.1')) {
       this.addCapability('alarm_generic.1');
     }
+    if (this.hasCapability('button.callbackevents')) {
+      this.removeCapability('button.callbackevents');
+    }
+    if (this.hasCapability('button.removecallbackevents')) {
+      this.removeCapability('button.removecallbackevents');
+    }
 
     // UPDATE INITIAL STATE
     this.initialStateUpdate();
@@ -59,25 +76,15 @@ class ShellyDimmerDevice extends Homey.Device {
       return await this.util.sendCommand('/light/0?brightness='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
-    this.registerCapabilityListener('button.callbackevents', async () => {
-      return await this.util.addCallbackEvents('/settings/light/0?', callbacks, 'shellydimmer', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
-
-    this.registerCapabilityListener('button.removecallbackevents', async () => {
-      return await this.util.removeCallbackEvents('/settings/light/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
-
   }
 
   async onAdded() {
-    /*await this.util.addCallbackEvents('/settings/light/0?', callbacks, 'shellydimmer', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));*/
     return await this.homey.app.updateShellyCollection();
   }
 
   async onDeleted() {
     try {
       const iconpath = "/userdata/" + this.getData().id +".svg";
-      await this.util.removeCallbackEvents('/settings/light/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       await this.util.removeIcon(iconpath);
       await this.homey.app.updateShellyCollection();
       return;
@@ -186,8 +193,22 @@ class ShellyDimmerDevice extends Homey.Device {
             this.homey.flow.getDeviceTriggerCard('triggerInput1').trigger(this, {'status': status}, {});
           }
           break;
+        case 'inputEvent0':
+          let actionEvent1 = this.util.getActionEventDescription(value) + '_1';
+          this.setStoreValue('actionEvent1', actionEvent1);
+          break;
+        case 'inputEvent1':
+          let actionEvent2 = this.util.getActionEventDescription(value) + '_2';
+          this.setStoreValue('actionEvent2', actionEvent2);
+          break;
+        case 'inputEventCounter0':
+          this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent1')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent1')});
+          break;
+        case 'inputEventCounter1':
+          this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent2')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent2')});
+          break;
         default:
-          this.log('Device does not support reported capability '+ capability +' with value '+ value);
+          //this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {
@@ -197,7 +218,12 @@ class ShellyDimmerDevice extends Homey.Device {
   }
 
   getCallbacks() {
-    return callbacks;
+    return callbacks_triggers;
+  }
+
+  // TODO: REMOVE AFTER 3.1.0
+  async removeCallbacks() {
+    return await this.util.removeCallbackEvents('/settings/light/0?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

@@ -3,6 +3,12 @@
 const Homey = require('homey');
 const Util = require('/lib/util.js');
 const callbacks = [];
+// TODO: REMOVE AFTER 3.1.0
+const temp_callbacks = [
+  'roller_open',
+  'roller_close',
+  'roller_stop'
+];
 
 class Shelly2RollerShutterDevice extends Homey.Device {
 
@@ -21,6 +27,12 @@ class Shelly2RollerShutterDevice extends Homey.Device {
     }
     if (!this.hasCapability('alarm_generic.1')) {
       this.addCapability('alarm_generic.1');
+    }
+    if (this.hasCapability('button.callbackevents')) {
+      this.removeCapability('button.callbackevents');
+    }
+    if (this.hasCapability('button.removecallbackevents')) {
+      this.removeCapability('button.removecallbackevents');
     }
 
     // UPDATE INITIAL STATE
@@ -69,25 +81,15 @@ class Shelly2RollerShutterDevice extends Homey.Device {
       }
     });
 
-    this.registerCapabilityListener('button.callbackevents', async () => {
-      return await this.util.addCallbackEvents('/settings/roller/0?', callbacks, 'shelly2-rollershutter', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
-
-    this.registerCapabilityListener('button.removecallbackevents', async () => {
-      return await this.util.removeCallbackEvents('/settings/roller/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
-
   }
 
   async onAdded() {
-    /*await this.util.addCallbackEvents('/settings/roller/0?', callbacks, 'shelly2-rollershutter', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));*/
     return await this.homey.app.updateShellyCollection();
   }
 
   async onDeleted() {
     try {
       const iconpath = "/userdata/" + this.getData().id +".svg";
-      await this.util.removeCallbackEvents('/settings/roller/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       await this.util.removeIcon(iconpath);
       await this.homey.app.updateShellyCollection();
       return;
@@ -227,7 +229,7 @@ class Shelly2RollerShutterDevice extends Homey.Device {
         case 'rollerStopReason':
           break;
         default:
-          this.log('Device does not support reported capability '+ capability +' with value '+ value);
+          //this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {
@@ -238,6 +240,11 @@ class Shelly2RollerShutterDevice extends Homey.Device {
 
   getCallbacks() {
     return callbacks;
+  }
+
+  // TODO: REMOVE AFTER 3.1.0
+  async removeCallbacks() {
+    return await this.util.removeCallbackEvents('/settings/roller/0?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

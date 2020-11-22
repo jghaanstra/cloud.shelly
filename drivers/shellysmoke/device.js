@@ -90,7 +90,7 @@ class ShellySmokeDevice extends Homey.Device {
         case 'wakeUpEvent':
           break;
         default:
-          this.log('Device does not support reported capability '+ capability +' with value '+ value);
+          //this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {

@@ -6,7 +6,7 @@
   "class": "sensor",
   "discovery": "shellyflood",
   "$extends": [
-    "defaultsnoactions"
+    "defaults"
   ],
   "capabilities": [
     "alarm_water",

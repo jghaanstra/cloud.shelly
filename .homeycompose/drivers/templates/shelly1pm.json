@@ -8,9 +8,7 @@
     "onoff",
     "measure_temperature",
     "measure_temperature.2",
-    "measure_temperature.3",
-    "button.callbackevents",
-    "button.removecallbackevents"
+    "measure_temperature.3"
   ],
   "capabilitiesOptions": {
     "measure_temperature.1": {
@@ -33,30 +31,8 @@
     },
     "alarm_generic": {
       "title": {
-        "en": "State of SW terminal",
-        "nl": "Status van SW terminal"
-      }
-    },
-    "button.callbackevents": {
-      "maintenanceAction": true,
-      "title": {
-        "en": "Set URLs for callbacks",
-        "nl": "Instellen URL's voor callbacks"
-      },
-      "desc": {
-        "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events. Disable any unused callbacks in the Shelly webinterface.",
-        "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties. Schakel ongebruikte callbacks uit in de Shelly webinterface."
-      }
-    },
-    "button.removecallbackevents": {
-      "maintenanceAction": true,
-      "title": {
-        "en": "Remove callback URLs for triggers",
-        "nl": "Verwijderen callback URL's voor triggers"
-      },
-      "desc": {
-        "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
-        "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
+        "en": "State of Input 1",
+        "nl": "Status van Input 1"
       }
     }
   },

@@ -15,9 +15,7 @@
     "measure_current",
     "measure_voltage",
     "meter_power",
-    "meter_power_returned",
-    "button.callbackevents",
-    "button.removecallbackevents"
+    "meter_power_returned"
   ],
   "pair": [
     {

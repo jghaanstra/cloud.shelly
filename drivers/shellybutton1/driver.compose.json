@@ -10,9 +10,7 @@
   ],
   "capabilities": [
     "measure_battery",
-    "alarm_generic",
-    "button.callbackevents",
-    "button.removecallbackevents"
+    "alarm_generic"
   ],
   "energy": {
     "batteries": [

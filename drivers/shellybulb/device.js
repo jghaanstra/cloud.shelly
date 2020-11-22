@@ -136,7 +136,7 @@ class ShellyBulbDevice extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'switch':
           if (value != this.getCapabilityValue('onoff')) {
@@ -175,7 +175,7 @@ class ShellyBulbDevice extends Homey.Device {
           }
           break;
         default:
-          this.log('Device does not support reported capability '+ capability +' with value '+ value);
+          //this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {

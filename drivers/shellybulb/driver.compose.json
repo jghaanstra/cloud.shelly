@@ -6,7 +6,7 @@
   "class": "light",
   "discovery": "shellybulb",
   "$extends": [
-    "defaultsnoactions"
+    "defaults"
   ],
   "capabilities": [
     "onoff",

@@ -2,7 +2,9 @@
 
 const Homey = require('homey');
 const Util = require('/lib/util.js');
-const callbacks = [
+const callbacks = [];
+// TODO: REMOVE AFTER 3.1.0
+const temp_callbacks = [
   'out_on',
   'out_off'
 ];
@@ -19,14 +21,14 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
     if (!this.hasCapability('meter_power')) {
       this.addCapability('meter_power');
     }
-    if (!this.hasCapability('button.callbackevents')) {
-      this.addCapability('button.callbackevents');
-    }
-    if (!this.hasCapability('button.removecallbackevents')) {
-      this.addCapability('button.removecallbackevents');
-    }
     if (!this.hasCapability('alarm_generic')) {
       this.addCapability('alarm_generic');
+    }
+    if (this.hasCapability('button.callbackevents')) {
+      this.removeCapability('button.callbackevents');
+    }
+    if (this.hasCapability('button.removecallbackevents')) {
+      this.removeCapability('button.removecallbackevents');
     }
 
     // UPDATE INITIAL STATE
@@ -45,26 +47,16 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
       return await this.util.sendCommand('/white/'+ this.getStoreValue('channel') +'?brightness='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
-    this.registerCapabilityListener('button.callbackevents', async () => {
-      return await this.util.addCallbackEvents('/settings/white/'+ this.getStoreValue("channel") +'?', callbacks, 'shellyrgbw2white', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
-
-    this.registerCapabilityListener('button.removecallbackevents', async () => {
-      return await this.util.removeCallbackEvents('/settings/white/'+ this.getStoreValue("channel") +'?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
-
   }
 
   async onAdded() {
     setTimeout(async () => {
-      /*await this.util.addCallbackEvents('/settings/white/'+ this.getStoreValue("channel") +'?', callbacks, 'shellyrgbw2white', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));*/
-      return await this.homey.app.updateShellyCollection();
+    return await this.homey.app.updateShellyCollection();
     }, this.getStoreValue('channel') * 2000);
   }
 
   async onDeleted() {
     try {
-      await this.util.removeCallbackEvents('/settings/white/'+ this.getStoreValue("channel") +'?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       if (this.getStoreValue('channel') == 0) {
         const iconpath = "/userdata/" + this.getData().id +".svg";
         await this.util.removeIcon(iconpath);
@@ -123,7 +115,7 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-      
+
       switch(capability) {
         case 'switch0':
         case 'switch1':
@@ -166,7 +158,7 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
           }
           break;
         default:
-          this.log('Device does not support reported capability '+ capability +' with value '+ value);
+          //this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {
@@ -177,6 +169,11 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
 
   getCallbacks() {
     return callbacks;
+  }
+
+  // TODO: REMOVE AFTER 3.1.0
+  async removeCallbacks() {
+    return await this.util.removeCallbackEvents('/settings/white/'+ this.getStoreValue("channel") +'?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

@@ -19,7 +19,7 @@ class Shelly1pmDriver extends Homey.Driver {
     session.setHandler('list_devices', async (data) => {
       const devices = Object.values(discoveryResults).map(discoveryResult => {
         return {
-          name: 'Shelly1PM ['+ discoveryResult.address +']',
+          name: 'Shelly 1PM / 1L ['+ discoveryResult.address +']',
           data: {
             id: discoveryResult.id,
           }
@@ -39,7 +39,7 @@ class Shelly1pmDriver extends Homey.Driver {
 
         const result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
         deviceArray = {
-          name: 'Shelly1PM ['+ discoveryResult.address +']',
+          name: 'Shelly 1PM / 1L ['+ discoveryResult.address +']',
           data: {
             id: discoveryResult.id,
           },
@@ -48,7 +48,7 @@ class Shelly1pmDriver extends Homey.Driver {
             username : '',
             password : ''
           },
-          capabilities: ["onoff", "measure_power", "meter_power", "measure_temperature", "alarm_generic", "button.callbackevents", "button.removecallbackevents"],
+          capabilities: ["onoff", "measure_power", "meter_power", "measure_temperature", "alarm_generic"],
           store: {
             type: result.type
           },
@@ -68,9 +68,9 @@ class Shelly1pmDriver extends Homey.Driver {
       try {
         const result = await this.util.sendCommand('/settings', data.address, data.username, data.password);
         const hostname = result.device.hostname;
-        if (hostname.startsWith('shelly1pm-')) {
+        if (hostname.startsWith('shelly1pm-') || hostname.startsWith('shelly1l-')) {
           deviceArray = {
-            name: 'Shelly1PM ['+ data.address +']',
+            name: 'Shelly 1PM / 1L ['+ data.address +']',
             data: {
               id: result.device.hostname,
             },
@@ -79,7 +79,7 @@ class Shelly1pmDriver extends Homey.Driver {
               username : data.username,
               password : data.password
             },
-            capabilities: ["onoff", "measure_power", "meter_power", "measure_temperature", "alarm_generic", "button.callbackevents", "button.removecallbackevents"],
+            capabilities: ["onoff", "measure_power", "meter_power", "measure_temperature", "alarm_generic"],
             store: {
               type: result.device.type
             }

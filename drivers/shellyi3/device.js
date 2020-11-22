@@ -3,8 +3,6 @@
 const Homey = require('homey');
 const Util = require('/lib/util.js');
 const callbacks = [
-  'btn_on',
-  'btn_off',
   'shortpush',
   'longpush',
   'double_shortpush',
@@ -13,30 +11,35 @@ const callbacks = [
   'longpush_shortpush'
 ];
 const callbacks_triggers = [
-  'btn_on_1',
-  'btn_off_1',
   'shortpush_1',
   'longpush_1',
   'double_shortpush_1',
   'triple_shortpush_1',
   'shortpush_longpush_1',
   'longpush_shortpush_1',
-  'btn_on_2',
-  'btn_off_2',
   'shortpush_2',
   'longpush_2',
   'double_shortpush_2',
   'triple_shortpush_2',
   'shortpush_longpush_2',
   'longpush_shortpush_2',
-  'btn_on_3',
-  'btn_off_3',
   'shortpush_3',
   'longpush_3',
   'double_shortpush_3',
   'triple_shortpush_3',
   'shortpush_longpush_3',
   'longpush_shortpush_3'
+];
+// TODO: REMOVE AFTER 3.1.0
+const temp_callbacks = [
+  'btn_on',
+  'btn_off',
+  'shortpush',
+  'longpush',
+  'double_shortpush',
+  'triple_shortpush',
+  'shortpush_longpush',
+  'longpush_shortpush'
 ];
 
 class Shellyi3Device extends Homey.Device {
@@ -60,44 +63,21 @@ class Shellyi3Device extends Homey.Device {
     if (!this.hasCapability('alarm_generic.2')) {
       this.addCapability('alarm_generic.2');
     }
+    if (this.hasCapability('button.callbackevents')) {
+      this.removeCapability('button.callbackevents');
+    }
+    if (this.hasCapability('button.removecallbackevents')) {
+      this.removeCapability('button.removecallbackevents');
+    }
 
     // UPDATE INITIAL STATE
     this.initialStateUpdate();
-
-    // LISTENERS FOR UPDATING CAPABILITIES
-    this.registerCapabilityListener('button.callbackevents', async () => {
-      try {
-        await this.util.addCallbackEvents('/settings/input/0?', callbacks, 'shellyi3', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 1);
-        await this.util.addCallbackEvents('/settings/input/1?', callbacks, 'shellyi3', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 2);
-        await this.util.addCallbackEvents('/settings/input/2?', callbacks, 'shellyi3', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 3);
-        return Promise.resolve(true);
-      } catch (error) {
-        this.log(error);
-        return Promise.resolve(error);
-      }
-    });
-
-    this.registerCapabilityListener('button.removecallbackevents', async () => {
-      try {
-        await this.util.removeCallbackEvents('/settings/input/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await this.util.removeCallbackEvents('/settings/input/1?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await this.util.removeCallbackEvents('/settings/input/2?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        return Promise.resolve(true);
-      } catch (error) {
-        this.log(error);
-        return Promise.resolve(error);
-      }
-    });
 
   }
 
   async onAdded() {
     try {
-      await this.util.addCallbackEvents('/settings/input/0?', callbacks, 'shellyi3', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 1);
-      await this.util.addCallbackEvents('/settings/input/1?', callbacks, 'shellyi3', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 2);
-      await this.util.addCallbackEvents('/settings/input/2?', callbacks, 'shellyi3', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 3);
-      await this.homey.app.updateShellyCollection();
-      return Promise.resolve(true);
+      return await this.homey.app.updateShellyCollection();
     } catch (error) {
       this.log(error);
       return Promise.resolve(error);
@@ -107,9 +87,6 @@ class Shellyi3Device extends Homey.Device {
   async onDeleted() {
     try {
       const iconpath = "/userdata/" + this.getData().id +".svg";
-      await this.util.removeCallbackEvents('/settings/input/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      await this.util.removeCallbackEvents('/settings/input/1?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      await this.util.removeCallbackEvents('/settings/input/2?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       await this.util.removeIcon(iconpath);
       await this.homey.app.updateShellyCollection();
       return Promise.resolve(true);
@@ -177,8 +154,29 @@ class Shellyi3Device extends Homey.Device {
             this.homey.flow.getDeviceTriggerCard('triggerInput2').trigger(this, {'status': status}, {});
           }
           break;
+        case 'inputEvent0':
+          let actionEvent1 = this.util.getActionEventDescription(value) + '_1';
+          this.setStoreValue('actionEvent1', actionEvent1);
+          break;
+        case 'inputEvent1':
+          let actionEvent2 = this.util.getActionEventDescription(value) + '_2';
+          this.setStoreValue('actionEvent2', actionEvent2);
+          break;
+        case 'inputEvent2':
+          let actionEvent3 = this.util.getActionEventDescription(value) + '_3';
+          this.setStoreValue('actionEvent3', actionEvent3);
+          break;
+        case 'inputEventCounter0':
+          this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent1')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent1')});
+          break;
+        case 'inputEventCounter1':
+          this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent2')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent2')});
+          break;
+        case 'inputEventCounter2':
+          this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent3')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent3')});
+          break;
         default:
-          this.log('Device does not support reported capability '+ capability +' with value '+ value);
+          //this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {
@@ -189,6 +187,14 @@ class Shellyi3Device extends Homey.Device {
 
   getCallbacks() {
     return callbacks_triggers;
+  }
+
+  // TODO: REMOVE AFTER 3.1.0
+  async removeCallbacks() {
+    await this.util.removeCallbackEvents('/settings/input/0?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    await this.util.removeCallbackEvents('/settings/input/1?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    await this.util.removeCallbackEvents('/settings/input/2?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    return Promise.resolve(true);
   }
 
 }

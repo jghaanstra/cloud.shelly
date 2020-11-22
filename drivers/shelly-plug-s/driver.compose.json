@@ -12,8 +12,6 @@
     "onoff",
     "measure_power",
     "meter_power",
-    "measure_temperature",
-    "button.callbackevents",
-    "button.removecallbackevents"
+    "measure_temperature"
   ]
 }

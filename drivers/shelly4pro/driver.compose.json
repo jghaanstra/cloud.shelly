@@ -6,7 +6,7 @@
   "class": "socket",
   "discovery": "shelly4pro",
   "$extends": [
-    "defaultsnoactions"
+    "defaults"
   ],
   "capabilities": [
     "onoff",

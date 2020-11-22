@@ -2,7 +2,9 @@
 
 const Homey = require('homey');
 const Util = require('/lib/util.js');
-const callbacks = [
+const callbacks = [];
+// TODO: REMOVE AFTER 3.1.0
+const temp_callbacks = [
   'flood_detected',
   'flood_gone',
   'report'
@@ -20,28 +22,22 @@ class ShellyFloodDevice extends Homey.Device {
     if (this.hasCapability('measure_voltage')) {
       this.removeCapability('measure_voltage');
     }
-
-    // LISTENERS FOR UPDATING CAPABILITIES
-    this.registerCapabilityListener('button.callbackevents', async () => {
-      return await this.util.addCallbackEvents('/settings?', callbacks, 'shellyflood', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
-
-    this.registerCapabilityListener('button.removecallbackevents', async () => {
-      return await this.util.removeCallbackEvents('/settings?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
+    if (this.hasCapability('button.callbackevents')) {
+      this.removeCapability('button.callbackevents');
+    }
+    if (this.hasCapability('button.removecallbackevents')) {
+      this.removeCapability('button.removecallbackevents');
+    }
 
   }
 
   async onAdded() {
-    await this.homey.app.updateShellyCollection();
-    await this.util.addCallbackEvents('/settings?', callbacks, 'shellyflood', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    return;
+    return await this.homey.app.updateShellyCollection();
   }
 
   async onDeleted() {
     try {
       const iconpath = "/userdata/" + this.getData().id +".svg";
-      await this.util.removeCallbackEvents('/settings?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       await this.util.removeIcon(iconpath);
       await this.homey.app.updateShellyCollection();
       return;
@@ -51,6 +47,8 @@ class ShellyFloodDevice extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
+
+  // TODO: REMOVE AFTER 3.1.0
   async updateReportStatus(device, status) {
     try {
       let alarm = Number(status.flood) == 0 ? false : true;
@@ -95,7 +93,7 @@ class ShellyFloodDevice extends Homey.Device {
         case 'wakeUpEvent':
           break;
         default:
-          this.log('Device does not support reported capability '+ capability +' with value '+ value);
+          //this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {
@@ -106,6 +104,11 @@ class ShellyFloodDevice extends Homey.Device {
 
   getCallbacks() {
     return callbacks;
+  }
+
+  // TODO: REMOVE AFTER 3.1.0
+  async removeCallbacks() {
+    return await this.util.removeCallbackEvents('/settings?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

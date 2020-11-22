@@ -12,9 +12,7 @@
     "onoff",
     "dim",
     "measure_power",
-    "meter_power",
-    "button.callbackevents",
-    "button.removecallbackevents"
+    "meter_power"
   ],
   "pair": [
     {

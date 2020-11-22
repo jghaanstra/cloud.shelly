@@ -15,15 +15,19 @@
     "meter_power",
     "alarm_generic",
     "alarm_generic.1",
-    "button.sethalfwayposition",
-    "button.callbackevents",
-    "button.removecallbackevents"
+    "button.sethalfwayposition"
   ],
   "capabilitiesOptions": {
     "alarm_generic": {
       "title": {
-        "en": "State of SW terminal",
-        "nl": "Status van SW terminal"
+        "en": "State of Input 1",
+        "nl": "State of Input 1"
+      }
+    },
+    "alarm_generic.1": {
+      "title": {
+        "en": "State of Input 2",
+        "nl": "State of Input 2"
       }
     },
     "button.sethalfwayposition": {
@@ -35,28 +39,6 @@
       "desc": {
         "en": "Use this card if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action card to save this position.",
         "nl": "Gebruik deze actie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie card uit om de positie op te slaan."
-      }
-    },
-    "button.callbackevents": {
-      "maintenanceAction": true,
-      "title": {
-        "en": "Set URLs for callbacks",
-        "nl": "Instellen URL's voor callbacks"
-      },
-      "desc": {
-        "en": "Use this option to add callback URLs to your Shelly for use with trigger cards like short and long press events. Disable any unused callbacks in the Shelly webinterface.",
-        "nl": "Gebruik deze optie om callback URL's toe te voegen aan jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties. Schakel ongebruikte callbacks uit in de Shelly webinterface."
-      }
-    },
-    "button.removecallbackevents": {
-      "maintenanceAction": true,
-      "title": {
-        "en": "Remove callback URLs for triggers",
-        "nl": "Verwijderen callback URL's voor triggers"
-      },
-      "desc": {
-        "en": "Use this option to remove callback URLs to your Shelly which are used with trigger cards like short and long press events.",
-        "nl": "Gebruik deze optie om callback URL's te verwijderen voor jouw Shelly, deze worden gebruikt voor trigger cards zoals kort en lang ingedrukt acties."
       }
     }
   }

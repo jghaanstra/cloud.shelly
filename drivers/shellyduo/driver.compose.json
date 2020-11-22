@@ -14,8 +14,6 @@
     "light_temperature",
     "measure_power",
     "meter_power",
-    "meter_power_wmin",
-    "button.callbackevents",
-    "button.removecallbackevents"
+    "meter_power_wmin"
   ]
 }

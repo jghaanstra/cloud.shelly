@@ -10,8 +10,6 @@
   ],
   "capabilities": [
     "alarm_smoke",
-    "gas_concentration",
-    "button.callbackevents",
-    "button.removecallbackevents"
+    "gas_concentration"
   ]
 }

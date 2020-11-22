@@ -14,9 +14,7 @@
     "measure_temperature.2",
     "measure_temperature.3",
     "measure_humidity",
-    "alarm_generic",
-    "button.callbackevents",
-    "button.removecallbackevents"
+    "alarm_generic"
   ],
   "pair": [
     {

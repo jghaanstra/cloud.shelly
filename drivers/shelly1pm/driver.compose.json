@@ -1,7 +1,7 @@
 {
   "name": {
-    "en": "Shelly 1PM",
-    "nl": "Shelly 1PM"
+    "en": "Shelly 1PM / 1L",
+    "nl": "Shelly 1PM / 1L"
   },
   "class": "socket",
   "discovery": "shelly1pm",
@@ -17,8 +17,6 @@
     "measure_temperature.2",
     "measure_temperature.3",
     "measure_humidity",
-    "alarm_generic",
-    "button.callbackevents",
-    "button.removecallbackevents"
+    "alarm_generic"
   ]
 }

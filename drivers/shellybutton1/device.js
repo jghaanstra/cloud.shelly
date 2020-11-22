@@ -8,6 +8,13 @@ const callbacks = [
   'triple_shortpush',
   'longpush'
 ];
+// TODO: REMOVE AFTER 3.1.0
+const temp_callbacks = [
+  'shortpush',
+  'double_shortpush',
+  'triple_shortpush',
+  'longpush'
+];
 
 class ShellyButton1Device extends Homey.Device {
 
@@ -24,30 +31,25 @@ class ShellyButton1Device extends Homey.Device {
     if (!this.hasCapability('alarm_generic')) {
       this.addCapability('alarm_generic');
     }
+    if (this.hasCapability('button.callbackevents')) {
+      this.removeCapability('button.callbackevents');
+    }
+    if (this.hasCapability('button.removecallbackevents')) {
+      this.removeCapability('button.removecallbackevents');
+    }
 
     // UPDATE INITIAL STATE
     this.initialStateUpdate();
 
-    this.registerCapabilityListener('button.callbackevents', async () => {
-      return await this.util.addCallbackEvents('/settings/input/0?', callbacks, 'shellybutton1', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
-
-    this.registerCapabilityListener('button.removecallbackevents', async () => {
-      return await this.util.removeCallbackEvents('/settings/input/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
-
   }
 
   async onAdded() {
-    await this.homey.app.updateShellyCollection();
-    await this.util.addCallbackEvents('/settings/input/0?', callbacks, 'shellybutton1', this.getData().id, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    return;
+    return await this.homey.app.updateShellyCollection();
   }
 
   async onDeleted() {
     try {
       const iconpath = "/userdata/" + this.getData().id +".svg";
-      await this.util.removeCallbackEvents('/settings/input/0?', callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       await this.util.removeIcon(iconpath);
       await this.homey.app.updateShellyCollection();
       return;
@@ -98,8 +100,15 @@ class ShellyButton1Device extends Homey.Device {
           break;
         case 'wakeUpEvent':
           break;
+        case 'inputEvent0':
+          let actionEvent = this.util.getActionEventDescription(value);
+          this.setStoreValue('actionEvent', actionEvent);
+          break;
+        case 'inputEventCounter0':
+          this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')});
+          break;
         default:
-          this.log('Device does not support reported capability '+ capability +' with value '+ value);
+          //this.log('Device does not support reported capability '+ capability +' with value '+ value);
       }
       return Promise.resolve(true);
     } catch(error) {
@@ -110,6 +119,11 @@ class ShellyButton1Device extends Homey.Device {
 
   getCallbacks() {
     return callbacks;
+  }
+
+  // TODO: REMOVE AFTER 3.1.0
+  async removeCallbacks() {
+    return await this.util.removeCallbackEvents('/settings/input/0?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

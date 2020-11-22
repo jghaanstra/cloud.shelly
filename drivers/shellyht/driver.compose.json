@@ -11,9 +11,7 @@
   "capabilities": [
     "measure_humidity",
     "measure_temperature",
-    "measure_battery",
-    "button.callbackevents",
-    "button.removecallbackevents"
+    "measure_battery"
   ],
   "pair": [
     {
