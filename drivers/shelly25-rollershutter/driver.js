@@ -67,7 +67,7 @@ class Shelly25RollerShutterDriver extends Homey.Driver {
       try {
         const result = await this.util.sendCommand('/settings', data.address, data.username, data.password);
         const hostname = result.device.hostname;
-        if (hostname.startsWith('shelly25-')) {
+        if (hostname.startsWith('shellyswitch25-')) {
           deviceArray = {
             name: 'Shelly 2.5 Roller ['+ data.address +']',
             data: {
