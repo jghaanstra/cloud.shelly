@@ -5,7 +5,7 @@
   },
   "class": "light",
   "$extends": [
-    "defaultsnoactions"
+    "defaults"
   ],
   "capabilities": [
     "onoff",

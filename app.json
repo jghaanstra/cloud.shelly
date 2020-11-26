@@ -3438,6 +3438,16 @@
       ]
     },
     {
+      "images": {
+        "large": "/drivers/shellyrgbw2cwww/assets/images/large.jpg",
+        "small": "/drivers/shellyrgbw2cwww/assets/images/small.jpg"
+      },
+      "icon": "/drivers/shellyrgbw2cwww/assets/icon.svg",
+      "pair": [
+        {
+          "id": "start"
+        }
+      ],
       "name": {
         "en": "Shelly RGBW2 2x CW/WW Mode",
         "nl": "Shelly RGBW2 2x CW/WW Mode"
@@ -3448,11 +3458,6 @@
         "dim",
         "light_temperature",
         "measure_power"
-      ],
-      "pair": [
-        {
-          "id": "start"
-        }
       ],
       "id": "shellyrgbw2cwww",
       "settings": [
