@@ -243,7 +243,9 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
           this.setStoreValue('actionEvent', actionEvent);
           break;
         case 'inputEventCounter0':
-          this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')});
+          if (value > 0) {
+            this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')});
+          }
           break;
         default:
           //this.log('Device does not support reported capability '+ capability +' with value '+ value);
@@ -277,7 +279,7 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
 
   // TODO: REMOVE AFTER 3.1.0
   async removeCallbacks() {
-    return await this.util.removeCallbackEvents('/settings/color/0?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    return await this.util.removeCallbackEvents('/settings/actions?index=0&name=', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

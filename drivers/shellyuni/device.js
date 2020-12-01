@@ -182,7 +182,9 @@ class ShellyUniDevice extends Homey.Device {
           break;
         case 'inputEventCounter0':
         case 'inputEventCounter1':
-          this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')});
+          if (value > 0) {
+            this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')});
+          }
           break;
         default:
           //this.log('Device does not support reported capability '+ capability +' with value '+ value);
@@ -200,7 +202,7 @@ class ShellyUniDevice extends Homey.Device {
 
   // TODO: REMOVE AFTER 3.1.0
   async removeCallbacks() {
-    return await this.util.removeCallbackEvents('/settings/relay/'+ this.getStoreValue("channel") +'?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    return await this.util.removeCallbackEvents('/settings/actions?index='+ this.getStoreValue("channel") +'&name=', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

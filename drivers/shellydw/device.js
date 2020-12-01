@@ -157,7 +157,9 @@ class ShellydwDevice extends Homey.Device {
 
   // TODO: REMOVE AFTER 3.1.0
   async removeCallbacks() {
-    return await this.util.removeCallbackEvents('/settings?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    await this.util.removeCallbackEvents('/settings?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    await this.util.removeCallbackEvents('/settings/actions?index=0&name=', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    return Promise.resolve(true);
   }
 
 }

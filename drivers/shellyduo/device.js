@@ -153,7 +153,7 @@ class ShellyDuoDevice extends Homey.Device {
 
   // TODO: REMOVE AFTER 3.1.0
   async removeCallbacks() {
-    return await this.util.removeCallbackEvents('/settings/light/0?', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    return await this.util.removeCallbackEvents('/settings/actions?index=0&name=', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }
