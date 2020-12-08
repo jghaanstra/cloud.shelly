@@ -67,7 +67,7 @@ class ShellyBulbDriver extends Homey.Driver {
       try {
         const result = await this.util.sendCommand('/settings', data.address, data.username, data.password);
         const hostname = result.device.hostname;
-        if (hostname.startsWith('shellybulb-')) {
+        if (hostname.startsWith('shellybulb-') || hostname.startsWith('shellycolorbulb-')) {
           deviceArray = {
             name: 'Shelly Bulb ['+ data.address +']',
             data: {
