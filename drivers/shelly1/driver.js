@@ -70,7 +70,7 @@ class Shelly1Driver extends Homey.Driver {
         const hostname = result.device.hostname;
         if (hostname.startsWith('shelly1-')) {
           deviceArray = {
-            name: 'Shelly1 ['+ data.address +']',
+            name: 'Shelly1 test ['+ data.address +']',
             data: {
               id: result.device.hostname,
             },
@@ -84,6 +84,7 @@ class Shelly1Driver extends Homey.Driver {
               type: result.device.type
             }
           }
+          return Promise.resolve(deviceArray);
         } else {
           return Promise.reject(this.homey.__('driver.wrongdevice'));
         }

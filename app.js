@@ -48,11 +48,6 @@ class ShellyApp extends Homey.App {
       return await this.util.getActions(args.shelly.actions);
     });
 
-    this.homey.flow.getActionCard('actionReboot')
-      .registerRunListener(async (args) => {
-        return await this.util.sendCommand('/reboot', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-      })
-
     this.homey.flow.getConditionCard('conditionInput1')
       .registerRunListener(async (args) => {
         if (args.device) {
@@ -69,6 +64,30 @@ class ShellyApp extends Homey.App {
         } else {
           return false;
         }
+      })
+
+    this.homey.flow.getConditionCard('conditionFW')
+      .registerRunListener(async (args) => {
+        try {
+          const result = await this.util.sendCommand('/ota', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          if (result.has_update) {
+            return Promise.resolve(true);
+          } else {
+            return Promise.resolve(false);
+          }
+        } catch (error) {
+          return Promise.reject(error);
+        }
+      })
+
+    this.homey.flow.getActionCard('actionReboot')
+      .registerRunListener(async (args) => {
+        return await this.util.sendCommand('/reboot', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+      })
+
+    this.homey.flow.getActionCard('actionOTAUpdate')
+      .registerRunListener(async (args) => {
+        return await this.util.sendCommand('/ota?update=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
 
     // SHELLY 1

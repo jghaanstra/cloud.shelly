@@ -23,7 +23,7 @@ $(function() {
 
       Homey.emit('manual_pairing', data)
         .then(result => {
-          var shellyinfo = "<div class='info-row'><span class='info-label' data-i18n='pair.hostname'>Shelly Hostname:</span><span class='info-value'> "+ result.device.type +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.mac'>Shelly MAC Address:</span><span class='info-value'> "+ result.device.mac +"</span></div>";
+          var shellyinfo = "<div class='info-row'><span class='info-label' data-i18n='pair.hostname'>Shelly Hostname:</span><span class='info-value'> "+ result.data.id +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.type'>Shelly Device Type:</span><span class='info-value'> "+ result.store.type +"</span></div>";
           $('.shelly-info').show();
           $('.shelly-info').html(shellyinfo);
           $('.shelly-test').show();

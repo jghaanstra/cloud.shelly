@@ -1,0 +1,18 @@
+{
+  "id": "conditionFW",
+  "title": {
+    "en": "New firmware !{{is|isn't}} available",
+    "nl": "Nieuwe firmware !{{is|is niet}} beschikbaar"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyvintage|shellyi3|shellymotion"
+    }
+  ]
+}

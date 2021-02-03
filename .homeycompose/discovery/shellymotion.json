@@ -1,0 +1,19 @@
+{
+  "type": "mdns-sd",
+  "mdns-sd": {
+    "name": "http",
+    "protocol": "tcp"
+  },
+  "id": "{{txt.id}}",
+  "conditions": [
+    [
+      {
+        "field": "txt.id",
+        "match": {
+          "type": "regex",
+          "value": "^shellymotionsensor-"
+        }
+      }
+    ]
+  ]
+}

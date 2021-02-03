@@ -50,7 +50,7 @@
       "Shelly Button"
     ]
   },
-  "version": "3.0.7",
+  "version": "3.0.9",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -78,8 +78,8 @@
   "source": "https://github.com/jghaanstra/cloud.shelly",
   "homepage": "https://community.athom.com/t/765",
   "images": {
-    "large": "./assets/images/large.jpg",
-    "small": "./assets/images/small.jpg"
+    "small": "./assets/images/small.jpg",
+    "large": "./assets/images/large.jpg"
   },
   "category": "appliances",
   "description": {

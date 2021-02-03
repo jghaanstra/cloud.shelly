@@ -82,6 +82,7 @@ class ShellyBulbDriver extends Homey.Driver {
               type: result.device.type
             }
           }
+          return Promise.resolve(deviceArray);
         } else {
           return Promise.reject(this.homey.__('driver.wrongdevice'));
         }
