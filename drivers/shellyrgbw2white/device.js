@@ -14,6 +14,8 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
+    this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
+
     this.setAvailable();
 
     // ADD MISSING CAPABILITIES
@@ -155,6 +157,11 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
           let alarm = value === 0 ? false : true;
           if (alarm != this.getCapabilityValue('alarm_generic')) {
             this.setCapabilityValue('alarm_generic', alarm);
+          }
+          break;
+        case 'overPower':
+          if (value) {
+            this.homey.flow.getDeviceTriggerCard('triggerOverpowered').trigger(this, {}, {});
           }
           break;
         default:

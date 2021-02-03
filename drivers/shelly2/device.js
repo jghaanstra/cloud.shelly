@@ -21,6 +21,8 @@ class Shelly2Device extends Homey.Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
+    this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
+
     this.setAvailable();
 
     // ADD AND REMOVE CAPABILITIES
@@ -159,6 +161,12 @@ class Shelly2Device extends Homey.Device {
         case 'inputEventCounter1':
           if (value > 0) {
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')});
+          }
+          break;
+        case 'overPower0':
+        case 'overPower1':
+          if (value) {
+            this.homey.flow.getDeviceTriggerCard('triggerOverpowered').trigger(this, {}, {});
           }
           break;
         default:

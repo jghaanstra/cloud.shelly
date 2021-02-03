@@ -24,6 +24,7 @@ class Shelly1pmDevice extends Homey.Device {
     this.homey.flow.getDeviceTriggerCard('triggerTemperature1');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature2');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature3');
+    this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
 
     this.setAvailable();
 
@@ -215,6 +216,11 @@ class Shelly1pmDevice extends Homey.Device {
         case 'inputEventCounter0':
           if (value > 0) {
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')});
+          }
+          break;
+        case 'overPower':
+          if (value) {
+            this.homey.flow.getDeviceTriggerCard('triggerOverpowered').trigger(this, {}, {});
           }
           break;
         default:

@@ -32,6 +32,7 @@ class ShellyDimmerDevice extends Homey.Device {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1');
+    this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
 
     this.setAvailable();
 
@@ -209,6 +210,11 @@ class ShellyDimmerDevice extends Homey.Device {
         case 'inputEventCounter1':
           if (value > 0) {
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent2')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent2')});
+          }
+          break;
+        case 'overPower':
+          if (value) {
+            this.homey.flow.getDeviceTriggerCard('triggerOverpowered').trigger(this, {}, {});
           }
           break;
         default:

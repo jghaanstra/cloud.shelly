@@ -15,6 +15,8 @@ class ShellyPlugSDevice extends Homey.Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
+    this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
+
     this.setAvailable();
 
     // REMOVE CAPABILITIES
@@ -118,6 +120,11 @@ class ShellyPlugSDevice extends Homey.Device {
         case 'deviceTemperature':
           if (value != this.getCapabilityValue('measure_temperature')) {
             this.setCapabilityValue('measure_temperature', value);
+          }
+          break;
+        case 'overPower':
+          if (value) {
+            this.homey.flow.getDeviceTriggerCard('triggerOverpowered').trigger(this, {}, {});
           }
           break;
         default:

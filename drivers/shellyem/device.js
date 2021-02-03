@@ -16,6 +16,7 @@ class ShellyEmDevice extends Homey.Device {
 
     this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned');
     this.homey.flow.getDeviceTriggerCard('triggerReactivePower');
+    this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
 
     this.setAvailable();
 
@@ -164,6 +165,11 @@ class ShellyEmDevice extends Homey.Device {
         case 'voltage1':
           if (value != this.getCapabilityValue('measure_voltage')) {
             this.setCapabilityValue('measure_voltage', value);
+          }
+          break;
+        case 'overPower':
+          if (value) {
+            this.homey.flow.getDeviceTriggerCard('triggerOverpowered').trigger(this, {}, {});
           }
           break;
         default:

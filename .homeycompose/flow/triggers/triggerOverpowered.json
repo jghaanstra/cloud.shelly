@@ -1,0 +1,18 @@
+{
+  "id": "triggerOverpowered",
+  "title": {
+    "en": "Overpowered",
+    "nl": "Overbelast"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1pm|shelly2|shelly25|shellydimmer|shelly3em|shellyem|shellyrgbw2color|shellyrgbw2white"
+    }
+  ]
+}
