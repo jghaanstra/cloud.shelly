@@ -22,22 +22,22 @@ class ShellyBulbDevice extends Homey.Device {
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {
-      const path = value ? '/color/0?turn=on' : '/color/0?turn=off';
+      const path = value ? '/light/0?turn=on' : '/light/0?turn=off';
       return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerCapabilityListener('dim', async (value) => {
       const dim = value * 100;
       if (this.getCapabilityValue('light_mode') === 'color') {
-        return await this.util.sendCommand('/color/0?gain='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        return await this.util.sendCommand('/light/0?gain='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       } else {
-        return await this.util.sendCommand('/color/0?brightness='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        return await this.util.sendCommand('/light/0?brightness='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       }
     });
 
     this.registerCapabilityListener('light_temperature', async (value) => {
       const light_temperature = Number(this.util.denormalize(value, 3000, 6500));
-      await this.util.sendCommand('/color/0?temp='+ light_temperature +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      await this.util.sendCommand('/light/0?temp='+ light_temperature +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       return await this.setCapabilityValue('light_mode', 'temperature');
     });
 
@@ -54,9 +54,14 @@ class ShellyBulbDevice extends Homey.Device {
       }
       const color = tinycolor.fromRatio({ h: hue_value, s: saturation_value, v: this.getCapabilityValue('dim') });
       const rgbcolor = color.toRgb();
-      await this.util.sendCommand('/color/0?red='+ Number(rgbcolor.r) +'&green='+ Number(rgbcolor.g) +'&blue='+ Number(rgbcolor.b) +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      await this.util.sendCommand('/light/0?red='+ Number(rgbcolor.r) +'&green='+ Number(rgbcolor.g) +'&blue='+ Number(rgbcolor.b) +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       return await this.setCapabilityValue('light_mode', 'color');
     }, 500);
+
+    this.registerCapabilityListener('light_mode', async (value) => {
+      const light_mode = value === 'temperature' ? 'white' : 'color';
+      return await this.util.sendCommand('/settings/?mode='+ light_mode +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    });
 
   }
 

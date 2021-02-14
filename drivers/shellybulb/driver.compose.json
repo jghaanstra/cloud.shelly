@@ -1,7 +1,7 @@
 {
   "name": {
-    "en": "Shelly Bulb",
-    "nl": "Shelly Bulb"
+    "en": "Shelly Bulb (RGBW)",
+    "nl": "Shelly Bulb (RGBW)"
   },
   "class": "light",
   "discovery": "shellybulb",

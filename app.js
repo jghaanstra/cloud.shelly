@@ -246,7 +246,7 @@ class ShellyApp extends Homey.App {
 
     // COAP DISCOVERY AND MESSAGES
     shellies.on('discover', device => {
-      this.log('Discovered device with ID', device.id, 'and type', device.type);
+      this.log('Discovered device with ID', device.id, 'and type', device.type, 'on IP address', device.host);
 
       device.on('change', (prop, newValue, oldValue) => {
         try {
