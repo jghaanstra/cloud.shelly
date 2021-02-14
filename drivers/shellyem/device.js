@@ -81,7 +81,7 @@ class ShellyEmDevice extends Homey.Device {
 
       let channel = this.getStoreValue('channel');
       let onoff = result.relays[0].ison;
-      let measure_power = result.meters[channel].power;
+      let measure_power = result.emeters[channel].power;
       let measure_voltage = result.emeters[channel].voltage;
       let meter_power = result.emeters[channel].total / 1000;
       let meter_power_returned = result.emeters[channel].total_returned / 1000;
