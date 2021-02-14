@@ -51,7 +51,7 @@
       "Shelly Button"
     ]
   },
-  "version": "3.0.11",
+  "version": "3.0.12",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -1534,6 +1534,118 @@
     },
     {
       "images": {
+        "large": "/drivers/shelly1L/assets/images/large.jpg",
+        "small": "/drivers/shelly1L/assets/images/small.jpg"
+      },
+      "icon": "/drivers/shelly1L/assets/icon.svg",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power",
+        "measure_temperature",
+        "measure_temperature.1",
+        "measure_temperature.2",
+        "measure_temperature.3",
+        "measure_humidity",
+        "alarm_generic",
+        "alarm_generic.1"
+      ],
+      "capabilitiesOptions": {
+        "alarm_generic": {
+          "title": {
+            "en": "State of Input 1",
+            "nl": "Status van Input 1"
+          }
+        },
+        "alarm_generic.1": {
+          "title": {
+            "en": "State of Input 2",
+            "nl": "Status van Input 2"
+          }
+        }
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "name": {
+        "en": "Shelly 1L",
+        "nl": "Shelly 1L"
+      },
+      "class": "socket",
+      "discovery": "shelly1l",
+      "id": "shelly1L",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "images": {
         "large": "/drivers/shelly1pm/assets/images/large.jpg",
         "small": "/drivers/shelly1pm/assets/images/small.jpg"
       },
@@ -1610,8 +1722,8 @@
         }
       ],
       "name": {
-        "en": "Shelly 1PM / 1L",
-        "nl": "Shelly 1PM / 1L"
+        "en": "Shelly 1PM",
+        "nl": "Shelly 1PM"
       },
       "class": "socket",
       "discovery": "shelly1pm",
@@ -2909,7 +3021,6 @@
         "onoff",
         "measure_power",
         "measure_voltage",
-        "reactive_power",
         "meter_power",
         "meter_power_returned"
       ],
@@ -4257,6 +4368,25 @@
         ]
       ]
     },
+    "shelly1l": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{txt.id}}",
+      "conditions": [
+        [
+          {
+            "field": "txt.id",
+            "match": {
+              "type": "regex",
+              "value": "^shelly1l-"
+            }
+          }
+        ]
+      ]
+    },
     "shelly1pm": {
       "type": "mdns-sd",
       "mdns-sd": {
@@ -4270,7 +4400,7 @@
             "field": "txt.id",
             "match": {
               "type": "regex",
-              "value": "^shelly1?l-|pm-"
+              "value": "^shelly1pm-"
             }
           }
         ]

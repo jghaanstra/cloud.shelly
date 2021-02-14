@@ -11,7 +11,7 @@
         "field": "txt.id",
         "match": {
           "type": "regex",
-          "value": "^shelly1pm-"
+          "value": "^shelly1l-"
         }
       }
     ]

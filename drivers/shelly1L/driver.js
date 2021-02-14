@@ -3,7 +3,7 @@
 const Homey = require('homey');
 const Util = require('/lib/util.js');
 
-class Shelly1pmDriver extends Homey.Driver {
+class Shelly1lDriver extends Homey.Driver {
 
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
@@ -19,7 +19,7 @@ class Shelly1pmDriver extends Homey.Driver {
     session.setHandler('list_devices', async (data) => {
       const devices = Object.values(discoveryResults).map(discoveryResult => {
         return {
-          name: 'Shelly 1PM ['+ discoveryResult.address +']',
+          name: 'Shelly 1L ['+ discoveryResult.address +']',
           data: {
             id: discoveryResult.id,
           }
@@ -39,7 +39,7 @@ class Shelly1pmDriver extends Homey.Driver {
 
         const result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
         deviceArray = {
-          name: 'Shelly 1PM ['+ discoveryResult.address +']',
+          name: 'Shelly 1L ['+ discoveryResult.address +']',
           data: {
             id: discoveryResult.id,
           },
@@ -48,7 +48,7 @@ class Shelly1pmDriver extends Homey.Driver {
             username : '',
             password : ''
           },
-          capabilities: ["onoff", "measure_power", "meter_power", "measure_temperature", "alarm_generic"],
+          capabilities: ["onoff", "measure_power", "meter_power", "measure_temperature", "alarm_generic", "alarm_generic.1"],
           store: {
             type: result.type
           },
@@ -68,9 +68,9 @@ class Shelly1pmDriver extends Homey.Driver {
       try {
         const result = await this.util.sendCommand('/settings', data.address, data.username, data.password);
         const hostname = result.device.hostname;
-        if (hostname.startsWith('shelly1pm-')) {
+        if (hostname.startsWith('shelly1l-')) {
           deviceArray = {
-            name: 'Shelly 1PM ['+ data.address +']',
+            name: 'Shelly 1L ['+ data.address +']',
             data: {
               id: result.device.hostname,
             },
@@ -121,4 +121,4 @@ class Shelly1pmDriver extends Homey.Driver {
 
 }
 
-module.exports = Shelly1pmDriver;
+module.exports = Shelly1lDriver;

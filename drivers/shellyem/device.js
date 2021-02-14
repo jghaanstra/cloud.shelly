@@ -15,7 +15,6 @@ class ShellyEmDevice extends Homey.Device {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned');
-    this.homey.flow.getDeviceTriggerCard('triggerReactivePower');
     this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
 
     this.setAvailable();
@@ -27,6 +26,9 @@ class ShellyEmDevice extends Homey.Device {
     }
     if (!this.hasCapability('meter_power')) {
       this.addCapability('meter_power');
+    }
+    if (!this.hasCapability('reactive_power')) {
+      this.addCapability('reactive_power');
     }
     if (this.hasCapability('button.callbackevents')) {
       this.removeCapability('button.callbackevents');
@@ -82,7 +84,6 @@ class ShellyEmDevice extends Homey.Device {
       let measure_power = result.meters[channel].power;
       let measure_voltage = result.emeters[channel].voltage;
       let meter_power = result.emeters[channel].total / 1000;
-      let reactive_power = result.emeters[channel].reactive;
       let meter_power_returned = result.emeters[channel].total_returned / 1000;
       let meter_power_returned_rounded = Number(meter_power_returned.toFixed(3));
 
@@ -104,11 +105,6 @@ class ShellyEmDevice extends Homey.Device {
       // capability measure_voltage
       if (measure_voltage != this.getCapabilityValue('measure_voltage')) {
         this.setCapabilityValue('measure_voltage', measure_voltage);
-      }
-
-      // capability reactive_power
-      if (reactive_power != this.getCapabilityValue('reactive_power')) {
-        this.setCapabilityValue('reactive_power', reactive_power);
       }
 
       // capability meter_power_returned
@@ -152,13 +148,6 @@ class ShellyEmDevice extends Homey.Device {
           if (meter_power_returned_rounded != this.getCapabilityValue('meter_power_returned')) {
             this.setCapabilityValue('meter_power_returned', meter_power_returned_rounded);
             this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned').trigger(this, {'energy': meter_power_returned_rounded}, {});
-          }
-          break;
-        case 'powerFactor0':
-        case 'powerFactor1':
-          if (value != this.getCapabilityValue('meter_power_factor')) {
-            this.setCapabilityValue('meter_power_factor', value);
-            this.homey.flow.getDeviceTriggerCard('triggerMeterPowerFactor').trigger(this, {'pf': value}, {});
           }
           break;
         case 'voltage0':

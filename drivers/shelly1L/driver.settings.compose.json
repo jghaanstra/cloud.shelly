@@ -1,0 +1,23 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Device Settings",
+      "nl": "Apparaat instellingen"
+    },
+    "children": [
+      {
+        "id": "address",
+        "$extends": "address"
+      },
+      {
+        "id": "username",
+        "$extends": "username"
+      },
+      {
+        "id": "password",
+        "$extends": "password"
+      }
+    ]
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "name": {
+    "en": "Shelly 1L",
+    "nl": "Shelly 1L"
+  },
+  "class": "socket",
+  "discovery": "shelly1l",
+  "$extends": [
+    "shelly1pm"
+  ],
+  "capabilities": [
+    "onoff",
+    "measure_power",
+    "meter_power",
+    "measure_temperature",
+    "measure_temperature.1",
+    "measure_temperature.2",
+    "measure_temperature.3",
+    "measure_humidity",
+    "alarm_generic",
+    "alarm_generic.1"
+  ],
+  "capabilitiesOptions": {
+    "alarm_generic": {
+      "title": {
+        "en": "State of Input 1",
+        "nl": "Status van Input 1"
+      }
+    },
+    "alarm_generic.1": {
+      "title": {
+        "en": "State of Input 2",
+        "nl": "Status van Input 2"
+      }
+    }
+  }
+}

@@ -12,7 +12,6 @@
     "onoff",
     "measure_power",
     "measure_voltage",
-    "reactive_power",
     "meter_power",
     "meter_power_returned"
   ],

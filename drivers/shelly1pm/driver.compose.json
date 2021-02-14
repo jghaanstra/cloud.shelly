@@ -1,7 +1,7 @@
 {
   "name": {
-    "en": "Shelly 1PM / 1L",
-    "nl": "Shelly 1PM / 1L"
+    "en": "Shelly 1PM",
+    "nl": "Shelly 1PM"
   },
   "class": "socket",
   "discovery": "shelly1pm",
