@@ -204,21 +204,21 @@ class Shelly1lDevice extends Homey.Device {
           }
           break;
         case 'inputEvent0':
-          let actionEvent0 = this.util.getActionEventDescription(value) + '_1';
-          this.setStoreValue('actionEvent1', actionEvent0);
+          let actionEvent1 = this.util.getActionEventDescription(value) + '_1';
+          this.setStoreValue('actionEvent1', actionEvent1);
           break;
         case 'inputEvent1':
-          let actionEvent1 = this.util.getActionEventDescription(value) + '_2';
-          this.setStoreValue('actionEvent2', actionEvent1);
+          let actionEvent2 = this.util.getActionEventDescription(value) + '_2';
+          this.setStoreValue('actionEvent2', actionEvent2);
           break;
         case 'inputEventCounter0':
           if (value > 0) {
-            this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent0')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent0')});
+            this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent1')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent1')});
           }
           break;
         case 'inputEventCounter1':
           if (value > 0) {
-            this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent1')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent1')});
+            this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent2')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent2')});
           }
           break;
         case 'overPower':
