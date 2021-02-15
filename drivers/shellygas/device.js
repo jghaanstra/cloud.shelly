@@ -54,9 +54,9 @@ class ShellyGasDevice extends Homey.Device {
       if (!this.getAvailable()) { this.setAvailable(); }
 
       if (result.gas_sensor.alarm_state == 'mild' || result.gas_sensor.alarm_state == 'heavy') {
-        let alarm = true;
+        var alarm = true;
       } else {
-        let alarm = false;
+        var alarm = false;
       }
       let gas_concentration = Number(result.concentration.ppm);
 
