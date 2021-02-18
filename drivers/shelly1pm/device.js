@@ -148,6 +148,16 @@ class Shelly1pmDevice extends Homey.Device {
         }
       }
 
+      // external input
+      if (result.ext_switch.hasOwnProperty() && !this.hasCapability('alarm_generic.external')) {
+        this.addCapability('alarm_generic.external');
+      } else if (result.ext_switch.hasOwnProperty() && this.hasCapability('alarm_generic.external')) {
+        let alarm_external = result.ext_switch[0].input === 0 ? false : true;
+        if (alarm_external != this.getCapabilityValue('alarm_generic.external')) {
+          this.setCapabilityValue('alarm_generic.external', alarm_external);
+        }
+      }
+
     } catch (error) {
       this.setUnavailable(this.homey.__('device.unreachable') + error.message);
       this.log(error);
@@ -201,6 +211,12 @@ class Shelly1pmDevice extends Homey.Device {
         case 'externalHumidity':
           if (value != this.getCapabilityValue('measure_humidity')) {
             this.setCapabilityValue('measure_humidity', value);
+          }
+          break;
+        case 'externalInput0':
+          let alarm_external = value === 0 ? false : true;
+          if (alarm_external != this.getCapabilityValue('alarm_generic.external')) {
+            this.setCapabilityValue('alarm_generic.external', alarm_external);
           }
           break;
         case 'input0':

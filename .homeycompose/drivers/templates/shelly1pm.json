@@ -8,7 +8,9 @@
     "onoff",
     "measure_temperature",
     "measure_temperature.2",
-    "measure_temperature.3"
+    "measure_temperature.3",
+    "alarm_generic",
+    "alarm_generic.external"
   ],
   "capabilitiesOptions": {
     "measure_temperature.1": {
@@ -32,7 +34,13 @@
     "alarm_generic": {
       "title": {
         "en": "State of Input 1",
-        "nl": "Status van Input 1"
+        "nl": "Status van input 1"
+      }
+    },
+    "alarm_generic.external": {
+      "title": {
+        "en": "State of External Input",
+        "nl": "Status van externe Input"
       }
     }
   },

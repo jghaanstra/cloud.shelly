@@ -115,6 +115,16 @@ class Shelly1Device extends Homey.Device {
             this.setCapabilityValue('measure_temperature.3', temp3);
           }
         }
+
+        // external input
+        if (result.ext_switch.hasOwnProperty() && !this.hasCapability('alarm_generic.external')) {
+          this.addCapability('alarm_generic.external');
+        } else if (result.ext_switch.hasOwnProperty() && this.hasCapability('alarm_generic.external')) {
+          let alarm_external = result.ext_switch[0].input === 0 ? false : true;
+          if (alarm_external != this.getCapabilityValue('alarm_generic.external')) {
+            this.setCapabilityValue('alarm_generic.external', alarm_external);
+          }
+        }
       }
 
       // capability measure_humidity, measure_humidity.2, measure_humidity.3
@@ -160,6 +170,12 @@ class Shelly1Device extends Homey.Device {
         case 'externalHumidity':
           if (value != this.getCapabilityValue('measure_humidity')) {
             this.setCapabilityValue('measure_humidity', value);
+          }
+          break;
+        case 'externalInput0':
+          let alarm_external = value === 0 ? false : true;
+          if (alarm_external != this.getCapabilityValue('alarm_generic.external')) {
+            this.setCapabilityValue('alarm_generic.external', alarm_external);
           }
           break;
         case 'input0':

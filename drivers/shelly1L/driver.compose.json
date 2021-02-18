@@ -18,7 +18,8 @@
     "measure_temperature.3",
     "measure_humidity",
     "alarm_generic",
-    "alarm_generic.1"
+    "alarm_generic.1",
+    "alarm_generic.external"
   ],
   "capabilitiesOptions": {
     "alarm_generic": {
