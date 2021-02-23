@@ -137,7 +137,7 @@ class Shelly1lDevice extends Homey.Device {
       }
 
       // external input
-      if (result.ext_switch.hasOwnProperty() && !this.hasCapability('alarm_generic.external')) {
+      if (result.ext_switch.hasOwnProperty([0]) && !this.hasCapability('alarm_generic.external')) {
         this.addCapability('alarm_generic.external');
       } else if (result.ext_switch.hasOwnProperty() && this.hasCapability('alarm_generic.external')) {
         let alarm_external = result.ext_switch[0].input === 0 ? false : true;

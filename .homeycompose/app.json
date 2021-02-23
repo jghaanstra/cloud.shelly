@@ -79,7 +79,8 @@
   "homepage": "https://community.athom.com/t/765",
   "images": {
     "small": "./assets/images/small.jpg",
-    "large": "./assets/images/large.jpg"
+    "large": "./assets/images/large.jpg",
+    "xlarge": "./assets/images/xlarge.jpg"
   },
   "category": "appliances",
   "description": {

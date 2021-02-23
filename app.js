@@ -246,10 +246,11 @@ class ShellyApp extends Homey.App {
 
     // COAP DISCOVERY AND MESSAGES
     shellies.on('discover', device => {
-      this.log('Discovered device with ID', device.id, 'and type', device.type, 'on IP address', device.host);
+      this.log('Discovered device with ID', device.id, 'and type', device.type, 'with IP address', device.host);
 
       device.on('change', (prop, newValue, oldValue) => {
         try {
+          //this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'with IP address', device.host);
           if (shellyDevices.length > 0) {
             const filteredShellies = shellyDevices.filter(shelly => shelly.id.includes(device.id));
             if (filteredShellies.length > 0) {
@@ -270,13 +271,13 @@ class ShellyApp extends Homey.App {
               }
               return;
             } else {
-              this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'but this device has not been added to Homey yet.');
+              this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'with IP address', device.host, 'but this device has not been added to Homey yet.');
             }
           } else {
-            this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'but no Shelly devices have been added to Homey yet.');
+            this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'with IP address', device.host, 'but no Shelly devices have been added to Homey yet.');
           }
         } catch (error) {
-          this.log('Error processing CoAP message for device', device.id, 'with type', device.type, 'on capability', prop, 'with old value', oldValue, 'to new value', newValue);
+          this.log('Error processing CoAP message for device', device.id, 'of type', device.type, 'with IP address', device.host, 'on capability', prop, 'with old value', oldValue, 'to new value', newValue);
           this.log(error);
         }
       })

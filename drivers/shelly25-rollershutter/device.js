@@ -168,7 +168,7 @@ class Shelly25RollerShutterDevice extends Homey.Device {
         this.setCapabilityValue('alarm_generic.1', alarm_generic_1);
       }
 
-    } catch {
+    } catch (error) {
       this.setUnavailable(this.homey.__('device.unreachable') + error.message);
       this.log(error);
     }

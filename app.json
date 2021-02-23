@@ -51,7 +51,7 @@
       "Shelly Button"
     ]
   },
-  "version": "3.0.14",
+  "version": "3.0.15",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -80,7 +80,8 @@
   "homepage": "https://community.athom.com/t/765",
   "images": {
     "small": "./assets/images/small.jpg",
-    "large": "./assets/images/large.jpg"
+    "large": "./assets/images/large.jpg",
+    "xlarge": "./assets/images/xlarge.jpg"
   },
   "category": "appliances",
   "description": {
@@ -1424,7 +1425,8 @@
         "measure_temperature.2",
         "measure_temperature.3",
         "measure_humidity",
-        "alarm_generic"
+        "alarm_generic",
+        "alarm_generic.external"
       ],
       "capabilitiesOptions": {
         "measure_temperature.1": {
@@ -1448,7 +1450,13 @@
         "alarm_generic": {
           "title": {
             "en": "State of Input 1",
-            "nl": "Status van Input 1"
+            "nl": "Status van input 1"
+          }
+        },
+        "alarm_generic.external": {
+          "title": {
+            "en": "State of External Input",
+            "nl": "Status van externe Input"
           }
         }
       },
@@ -1548,7 +1556,8 @@
         "measure_temperature.3",
         "measure_humidity",
         "alarm_generic",
-        "alarm_generic.1"
+        "alarm_generic.1",
+        "alarm_generic.external"
       ],
       "capabilitiesOptions": {
         "alarm_generic": {
@@ -1659,7 +1668,8 @@
         "measure_temperature.2",
         "measure_temperature.3",
         "measure_humidity",
-        "alarm_generic"
+        "alarm_generic",
+        "alarm_generic.external"
       ],
       "capabilitiesOptions": {
         "measure_temperature.1": {
@@ -1683,7 +1693,13 @@
         "alarm_generic": {
           "title": {
             "en": "State of Input 1",
-            "nl": "Status van Input 1"
+            "nl": "Status van input 1"
+          }
+        },
+        "alarm_generic.external": {
+          "title": {
+            "en": "State of External Input",
+            "nl": "Status van externe Input"
           }
         }
       },
@@ -4019,7 +4035,13 @@
         "alarm_generic": {
           "title": {
             "en": "State of Input 1",
-            "nl": "Status van Input 1"
+            "nl": "Status van input 1"
+          }
+        },
+        "alarm_generic.external": {
+          "title": {
+            "en": "State of External Input",
+            "nl": "Status van externe Input"
           }
         }
       },
