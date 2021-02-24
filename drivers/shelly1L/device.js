@@ -18,6 +18,7 @@ class Shelly1lDevice extends Homey.Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
+    this.homey.flow.getDeviceTriggerCard('triggerInput');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature1');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature2');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature3');
@@ -172,6 +173,7 @@ class Shelly1lDevice extends Homey.Device {
             let alarm_external = value === 0 ? false : true;
             if (alarm_external != this.getCapabilityValue('alarm_generic.external')) {
               this.setCapabilityValue('alarm_generic.external', alarm_external);
+              this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'external switch 1', 'state': alarm_external}, {});
             }
           }
           break;
@@ -179,12 +181,14 @@ class Shelly1lDevice extends Homey.Device {
           let alarm_generic = value === 0 ? false : true;
           if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
             this.setCapabilityValue('alarm_generic', alarm_generic);
+            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': alarm_generic}, {});
           }
           break;
         case 'input1':
           let alarm_generic_1 = value === 0 ? false : true;
           if (alarm_generic_1 != this.getCapabilityValue('alarm_generic.1')) {
             this.setCapabilityValue('alarm_generic.1', alarm_generic_1);
+            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 2', 'state': alarm_generic_1}, {});
           }
           break;
         case 'inputEvent0':

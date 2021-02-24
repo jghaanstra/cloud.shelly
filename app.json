@@ -187,6 +187,44 @@
         ]
       },
       {
+        "id": "triggerInput",
+        "title": {
+          "en": "Input State Changed",
+          "nl": "Input status gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "input",
+            "type": "string",
+            "title": {
+              "en": "Input",
+              "nl": "Input"
+            },
+            "example": "input 1"
+          },
+          {
+            "name": "state",
+            "type": "string",
+            "title": {
+              "en": "State",
+              "nl": "Status"
+            },
+            "example": "true"
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni"
+          }
+        ]
+      },
+      {
         "id": "triggerInput1",
         "title": {
           "en": "State of Input 2",
@@ -213,7 +251,8 @@
             },
             "filter": "driver_id=shellyi3|shellydimmer&capabilities=alarm_generic.1"
           }
-        ]
+        ],
+        "deprecated": true
       },
       {
         "id": "triggerInput2",
@@ -242,7 +281,8 @@
             },
             "filter": "driver_id=shellyi3&capabilities=alarm_generic.2"
           }
-        ]
+        ],
+        "deprecated": true
       },
       {
         "id": "triggerMeterPowerFactor",
@@ -1456,7 +1496,7 @@
         "alarm_generic.external": {
           "title": {
             "en": "State of External Input",
-            "nl": "Status van externe Input"
+            "nl": "Status van externe input"
           }
         }
       },
@@ -1699,7 +1739,7 @@
         "alarm_generic.external": {
           "title": {
             "en": "State of External Input",
-            "nl": "Status van externe Input"
+            "nl": "Status van externe input"
           }
         }
       },
@@ -4041,7 +4081,7 @@
         "alarm_generic.external": {
           "title": {
             "en": "State of External Input",
-            "nl": "Status van externe Input"
+            "nl": "Status van externe input"
           }
         }
       },

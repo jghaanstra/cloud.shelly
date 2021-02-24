@@ -14,6 +14,7 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
+    this.homey.flow.getDeviceTriggerCard('triggerInput');
     this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
 
     this.setAvailable();
@@ -154,9 +155,10 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
           }
           break;
         case 'input0':
-          let alarm = value === 0 ? false : true;
-          if (alarm != this.getCapabilityValue('alarm_generic')) {
-            this.setCapabilityValue('alarm_generic', alarm);
+          let alarm_generic = value === 0 ? false : true;
+          if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
+            this.setCapabilityValue('alarm_generic', alarm_generic);
+            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': alarm_generic}, {});
           }
           break;
         case 'overPower':

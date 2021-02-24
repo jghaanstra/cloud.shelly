@@ -40,7 +40,7 @@
     "alarm_generic.external": {
       "title": {
         "en": "State of External Input",
-        "nl": "Status van externe Input"
+        "nl": "Status van externe input"
       }
     }
   },

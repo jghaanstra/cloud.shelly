@@ -25,5 +25,6 @@
       },
       "filter": "driver_id=shellyi3|shellydimmer&capabilities=alarm_generic.1"
     }
-  ]
+  ],
+  "deprecated": true
 }
