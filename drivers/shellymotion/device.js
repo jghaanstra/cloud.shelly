@@ -63,7 +63,7 @@ class ShellyMotionDevice extends Homey.Device {
       }
 
     } catch (error) {
-      this.log('Shelly Door Window Sensor is probably asleep and disconnected'+ error);
+      this.log('Shelly Motion Sensor is probably asleep: '+ error);
     }
   }
 

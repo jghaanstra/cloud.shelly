@@ -187,7 +187,7 @@ class ShellyDimmerDevice extends Homey.Device {
           let alarm_generic = value === 0 ? false : true;
           if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
             this.setCapabilityValue('alarm_generic', alarm_generic);
-            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': alarm_generic}, {});
+            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': alarm_generic.toString()}, {});
           }
           break;
         case 'input1':
@@ -195,7 +195,7 @@ class ShellyDimmerDevice extends Homey.Device {
           if (alarm_generic_1 != this.getCapabilityValue('alarm_generic.1')) {
             let status = value === 1 ? "On" : "Off";
             this.setCapabilityValue('alarm_generic.1', alarm_generic_1);
-            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 2', 'state': alarm_generic_1}, {});
+            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 2', 'state': alarm_generic_1.toString()}, {});
           }
           break;
         case 'inputEvent0':

@@ -158,7 +158,7 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
           let alarm_generic = value === 0 ? false : true;
           if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
             this.setCapabilityValue('alarm_generic', alarm_generic);
-            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': alarm_generic}, {});
+            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': alarm_generic.toString()}, {});
           }
           break;
         case 'overPower':
