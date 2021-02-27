@@ -17,7 +17,6 @@ class ShellyMotionDriver extends Homey.Driver {
     let deviceIcon = 'icon.svg';
 
     session.setHandler('list_devices', async (data) => {
-      console.log(discoveryResults);
       const devices = Object.values(discoveryResults).map(discoveryResult => {
         return {
           name: 'Shelly Motion Sensor ['+ discoveryResult.address +']',
