@@ -18,7 +18,7 @@
     "success": "Shelly apparaat succesvol toegevoegd",
     "startpairing": "Koppel het apparaat eerst met de Shelly smartphone app. Druk daarna op de fysieke knop op in je Shelly sensor of verwijder en herplaats de batterij om het apparaat wakker te maken. Wacht tot de LED aan blijft, de Shelly is dan verbonden met je WiFi netwerk. Klik vervolgens op de volgende knop hieronder.",
     "startpairingbutton": "Koppel het apparaat eerst met de Shelly smartphone app. Verbind een USB kabel aan de knop om er zeker van te zijn dat deze stroom heeft en verbonden is met WiFi voordat je verder gaat.",
-    "startpairingmotion": "[DUE TO A BUG IN THE MOTION SENSOR FIRMWARE YOU NEED TO MANUALLY PAIR THIS DEVICE USING ITS IP ADDRESS AS IT WONT BE DISCOVERED] Koppel het apparaat eerst met de Shelly smartphone app. Schakel de CoAP communicatie optie (onder Internet & Security) in via de webinterface van de Shelly en voeg hier het IP adres van Homey toe. Herstart je Shelly via de webinterface en ga verder met de pairing wizard direct nadat de sensor is herstart.",
+    "startpairingmotion": "[DUE TO A BUG IN THE MOTION SENSOR FIRMWARE YOU NEED TO MANUALLY PAIR THIS DEVICE USING ITS IP ADDRESS] Koppel het apparaat eerst met de Shelly smartphone app. Herstart je Shelly bewegingssensor via de webinterface en ga verder met de pairing wizard direct nadat de sensor is herstart.",
     "titleselection": "Wat wil je doen?",
     "nodevices": "Geen apparaten gevonden. Je kan het nog een keer proberen of je Shelly handmatig toevoegen als je het IP adres weet.",
     "again": "Probeer opnieuw",

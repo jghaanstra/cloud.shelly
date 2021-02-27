@@ -102,7 +102,13 @@ class ShellyMotionDriver extends Homey.Driver {
     });
 
     session.setHandler('add_device', async (data) => {
-      return Promise.resolve(deviceArray);
+      try {
+        const homey_ip = await this.homey.cloud.getLocalAddress();
+        const result = await this.util.sendCommand('/settings?coiot_enable=true&coiot_peer='+ homey_ip.substring(0, homey_ip.length-3), deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
+        return Promise.resolve(deviceArray);
+      } catch (error) {
+        return Promise.reject(error);
+      }
     });
 
     session.setHandler('save_icon', async (data) => {

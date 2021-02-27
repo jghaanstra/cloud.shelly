@@ -26,7 +26,8 @@
       "Shelly Vintage",
       "Shelly i3",
       "Shelly Gas",
-      "Shelly Button"
+      "Shelly Button",
+      "Shelly Motion"
     ],
     "nl": [
       "Shelly",
@@ -47,10 +48,12 @@
       "Shelly Vintage",
       "Shelly i3",
       "Shelly Gas",
-      "Shelly Button"
+      "Shelly Button",
+      "Shelly bewegingssenor",
+      "Shelly motion"
     ]
   },
-  "version": "3.0.17",
+  "version": "3.0.18",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",

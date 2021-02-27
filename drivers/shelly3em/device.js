@@ -83,7 +83,7 @@ class Shelly3EmDevice extends Homey.Device {
       if (!this.getAvailable()) { this.setAvailable(); }
 
       let channel = this.getStoreValue('channel');
-      let measure_power = result.meters[channel].power;
+      let measure_power = result.emeters[channel].power;
       let meter_power_factor = result.emeters[channel].pf;
       let measure_current = result.emeters[channel].current;
       let measure_voltage = result.emeters[channel].voltage;
@@ -121,10 +121,10 @@ class Shelly3EmDevice extends Homey.Device {
         this.setCapabilityValue('meter_power_returned', meter_power_returned_rounded);
       }
 
-      // update measure_power and meter_power only for channel 0
+      // update onoff only for channel 0
       if (this.getStoreValue('channel') === 0) {
         // capability onoff
-        let onoff = this.getStoreValue("channel") === 0 ? result.relays[0].ison : result.relays[1].ison;
+        let onoff = result.relays[0].ison;
         if (onoff != this.getCapabilityValue('onoff')) {
           this.setCapabilityValue('onoff', onoff);
         }
