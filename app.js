@@ -270,11 +270,7 @@ class ShellyApp extends Homey.App {
                 homeydevice.setSettings({address: device.host});
               }
               return;
-            } else {
-              this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'with IP address', device.host, 'but this device has not been added to Homey yet.');
             }
-          } else {
-            this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'with IP address', device.host, 'but no Shelly devices have been added to Homey yet.');
           }
         } catch (error) {
           this.log('Error processing CoAP message for device', device.id, 'of type', device.type, 'with IP address', device.host, 'on capability', prop, 'with old value', oldValue, 'to new value', newValue);
