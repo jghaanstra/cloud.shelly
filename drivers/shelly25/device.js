@@ -49,7 +49,7 @@ class Shelly25Device extends Homey.Device {
     // UPDATE INITIAL STATE AND POLLING IF NEEDED
     if (this.homey.settings.get('general_coap')) {
       setInterval(async () => {
-        setTimeout(() => {
+        setTimeout(async () => {
           await this.initialStateUpdate();
         }, this.getStoreValue('channel') * 1000);
       }, 5000);
