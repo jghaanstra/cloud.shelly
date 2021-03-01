@@ -34,10 +34,18 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
       this.removeCapability('button.removecallbackevents');
     }
 
-    // UPDATE INITIAL STATE
-    setTimeout(() => {
-      this.initialStateUpdate();
-    }, this.getStoreValue('channel') * 2000);
+    // UPDATE INITIAL STATE AND POLLING IF NEEDED
+    if (this.homey.settings.get('general_coap')) {
+      setInterval(async () => {
+        setTimeout(() => {
+          await this.initialStateUpdate();
+        }, this.getStoreValue('channel') * 1000);
+      }, 5000);
+    } else {
+      setTimeout(() => {
+        this.initialStateUpdate();
+      }, this.getStoreValue('channel') * 2000);
+    }
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {
@@ -78,7 +86,7 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
       if (!this.getAvailable()) { this.setAvailable(); }
 
       let channel = this.getStoreValue('channel');
-      let onoff = result.relays[channel].ison;
+      let onoff = result.lights[channel].ison;
       let measure_power = result.meters[channel].power;
       let meter_power = result.meters[channel].total * 0.000017;
       let dim = result.lights[channel].brightness > 100 ? 1 : result.lights[channel].brightness / 100;

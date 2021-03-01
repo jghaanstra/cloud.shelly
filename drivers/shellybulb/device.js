@@ -17,8 +17,14 @@ class ShellyBulbDevice extends Homey.Device {
       this.addCapability('light_mode');
     }
 
-    // UPDATE INITIAL STATE
-    this.initialStateUpdate();
+    // UPDATE INITIAL STATE AND POLLING IF NEEDED
+    if (this.homey.settings.get('general_coap')) {
+      setInterval(async () => {
+        await this.initialStateUpdate();
+      }, 5000);
+    } else {
+      this.initialStateUpdate();
+    }
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {

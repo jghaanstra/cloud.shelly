@@ -40,10 +40,18 @@ class Shelly3EmDevice extends Homey.Device {
       this.removeCapability('button.removecallbackevents');
     }
 
-    // UPDATE INITIAL STATE
-    setTimeout(() => {
-      this.initialStateUpdate();
-    }, this.getStoreValue('channel') * 2000);
+    // UPDATE INITIAL STATE AND POLLING IF NEEDED
+    if (this.homey.settings.get('general_coap')) {
+      setInterval(async () => {
+        setTimeout(() => {
+          await this.initialStateUpdate();
+        }, this.getStoreValue('channel') * 1000);
+      }, 5000);
+    } else {
+      setTimeout(() => {
+        this.initialStateUpdate();
+      }, this.getStoreValue('channel') * 2000);
+    }
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {

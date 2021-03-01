@@ -17,8 +17,15 @@ class ShellySmokeDevice extends Homey.Device {
       this.removeCapability('measure_voltage');
     }
 
-    // UPDATE INITIAL STATE
-    this.initialStateUpdate();
+    // UPDATE INITIAL STATE AND POLLING IF NEEDED
+    if (this.homey.settings.get('general_coap')) {
+      setInterval(async () => {
+        await this.initialStateUpdate();
+      }, 5000);
+    } else {
+      this.initialStateUpdate();
+    }
+    
   }
 
   async onAdded() {

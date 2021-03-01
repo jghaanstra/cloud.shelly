@@ -18,9 +18,13 @@ class ShellyApp extends Homey.App {
     }, 30000);
 
     // START COAP LISTENER FOR RECEIVING STATUS UPDATES
-    setTimeout(async () => {
-      shellies.start();
-    }, 40000);
+    if (!this.homey.settings.get('general_coap')) {
+      setTimeout(async () => {
+        shellies.start();
+      }, 40000);
+    } else {
+      this.log('CoAP listener has been disabled from the app settings');
+    }
 
     // UPDATE THE SHELLY COLLECTION REGULARLY
     setInterval(async () => {
@@ -187,27 +191,27 @@ class ShellyApp extends Homey.App {
         }
       })
 
-      this.homey.flow.getActionCard('moveRollerShutterPreviousPosition')
-        .registerRunListener(async (args) => {
-          let position = args.device.getStoreValue('previous_position');
-          if (position == undefined) {
-  			    return Promise.reject('previous position has not been set yet');
-  		    } else {
-            args.device.setStoreValue('previous_position', args.device.getCapabilityValue('windowcoverings_set'));
-            if (args.device.getSetting('halfway') != 0.5) {
-  				    if (position > 0.5) {
-                position = -2 * position * args.device.getSetting('halfway') + 2 * position + 2 * args.device.getSetting('halfway') - 1;
-              } else {
-                position = 2 * position * args.device.getSetting('halfway');
-              };
-  		        args.device.setCapabilityValue('windowcoverings_set', position);
-  		        return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-    	      } else {
-              args.device.setCapabilityValue('windowcoverings_set', position);
-  		        return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-            }
+    this.homey.flow.getActionCard('moveRollerShutterPreviousPosition')
+      .registerRunListener(async (args) => {
+        let position = args.device.getStoreValue('previous_position');
+        if (position == undefined) {
+			    return Promise.reject('previous position has not been set yet');
+		    } else {
+          args.device.setStoreValue('previous_position', args.device.getCapabilityValue('windowcoverings_set'));
+          if (args.device.getSetting('halfway') != 0.5) {
+				    if (position > 0.5) {
+              position = -2 * position * args.device.getSetting('halfway') + 2 * position + 2 * args.device.getSetting('halfway') - 1;
+            } else {
+              position = 2 * position * args.device.getSetting('halfway');
+            };
+		        args.device.setCapabilityValue('windowcoverings_set', position);
+		        return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+  	      } else {
+            args.device.setCapabilityValue('windowcoverings_set', position);
+		        return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           }
-    	  })
+        }
+  	  })
 
     // SHELLY DUO
     this.homey.flow.getActionCard('actionDuoDimTemperature')
@@ -244,7 +248,7 @@ class ShellyApp extends Homey.App {
         return await this.util.sendCommand('/self_test', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
 
-    // COAP DISCOVERY AND MESSAGES
+    // COAP
     shellies.on('discover', device => {
       this.log('Discovered device with ID', device.id, 'and type', device.type, 'with IP address', device.host);
 
@@ -291,11 +295,32 @@ class ShellyApp extends Homey.App {
 
   }
 
+  async updateSettings(settings) {
+    try {
+      if (settings.general_coap) {
+        this.log('CoAP listener has been disabled from the app settings and the listener is now stopped');
+        shellies.stop();
+        return Promise.resolve(true);
+      } else {
+        this.log('CoAP listener has been enabled from the app settings and the listener is now (re)started');
+        shellies.stop();
+        setTimeout(async () => {
+          shellies.start();
+        }, 4000);
+        return Promise.resolve(true);
+      }
+    } catch(error) {
+      this.log(error);
+      return Promise.reject(error);
+    }
+  }
+
   async updateShellyCollection() {
     try {
       shellyDevices = await this.util.getShellies();
       return Promise.resolve(true);
     } catch(error) {
+      this.log(error);
       return Promise.reject(error);
     }
   }

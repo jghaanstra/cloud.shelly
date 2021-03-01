@@ -26,8 +26,14 @@ class Shelly1lDevice extends Homey.Device {
 
     this.setAvailable();
 
-    // UPDATE INITIAL STATE
-    this.initialStateUpdate();
+    // UPDATE INITIAL STATE AND POLLING IF NEEDED
+    if (this.homey.settings.get('general_coap')) {
+      setInterval(async () => {
+        await this.initialStateUpdate();
+      }, 5000);
+    } else {
+      this.initialStateUpdate();
+    }
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {

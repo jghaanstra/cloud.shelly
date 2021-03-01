@@ -29,6 +29,13 @@ class ShellyFloodDevice extends Homey.Device {
       this.removeCapability('button.removecallbackevents');
     }
 
+    // UPDATE INITIAL STATE AND POLLING IF NEEDED
+    if (this.homey.settings.get('general_coap')) {
+      setInterval(async () => {
+        await this.initialStateUpdate();
+      }, 5000);
+    }
+
   }
 
   async onAdded() {
@@ -47,6 +54,35 @@ class ShellyFloodDevice extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
+  async initialStateUpdate() {
+    try {
+      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
+      if (!this.getAvailable()) { this.setAvailable(); }
+
+      let alarm_water = result.flood;
+      let measure_battery = result.bat.value;
+      let measure_temperature = result.tmp.value;
+
+      // capability alarm_water
+      if (alarm_water != device.getCapabilityValue('alarm_water')) {
+        device.setCapabilityValue('alarm_water', alarm_water);
+      }
+
+      // capability measure_temperature
+      if (measure_temperature != device.getCapabilityValue('measure_temperature')) {
+        device.setCapabilityValue('measure_temperature', measure_temperature);
+      }
+
+      // capability measure_battery
+      if (measure_battery != this.getCapabilityValue('measure_battery')) {
+        this.setCapabilityValue('measure_battery', measure_battery);
+      }
+
+    } catch (error) {
+      this.log('Shelly Flood is probably asleep and disconnected');
+    }
+
+  }
 
   // TODO: REMOVE AFTER 3.1.0
   async updateReportStatus(device, status) {

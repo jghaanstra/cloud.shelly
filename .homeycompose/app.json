@@ -53,7 +53,7 @@
       "Shelly motion"
     ]
   },
-  "version": "3.0.18",
+  "version": "3.0.19",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -103,6 +103,11 @@
       "method": "get",
       "path": "/report_status/:devicetype/:deviceid",
       "public": true
+    },
+    "updateSettings": {
+      "method": "put",
+      "path": "/updatesettings",
+      "public": false
     }
   }
 }
