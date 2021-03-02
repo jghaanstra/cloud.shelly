@@ -3,7 +3,7 @@
 const Homey = require('homey');
 const Util = require('/lib/util.js');
 const shellies = require('shellies');
-let shellyDevices = {};
+let shellyDevices = [];
 
 class ShellyApp extends Homey.App {
 
@@ -283,12 +283,18 @@ class ShellyApp extends Homey.App {
       })
 
       device.on('offline', () => {
-        const offlineShellies = shellyDevices.filter(shelly => shelly.id.includes(device.id));
-        if (offlineShellies.length > 0) {
-          Object.keys(offlineShellies).forEach(key => {
-            const device = this.homey.drivers.getDriver(offlineShellies[key].driver).getDevice({id: offlineShellies[key].id});
-            this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": 'Device is offline'});
-          });
+        try {
+          if (shellyDevices.length > 0) {
+            const offlineShellies = shellyDevices.filter(shelly => shelly.id.includes(device.id));
+            if (offlineShellies.length > 0) {
+              Object.keys(offlineShellies).forEach(key => {
+                const device = this.homey.drivers.getDriver(offlineShellies[key].driver).getDevice({id: offlineShellies[key].id});
+                this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": 'Device is offline'});
+              });
+            }
+          }
+        } catch (error) {
+          this.log(error);
         }
       })
     });

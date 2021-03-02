@@ -184,6 +184,10 @@ class ShellyRGBW2CWWWDevice extends Homey.Device {
     }, 63000);
   }
 
+  getCallbacks() {
+    return [];
+  }
+
 }
 
 module.exports = ShellyRGBW2CWWWDevice;
