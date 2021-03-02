@@ -17,22 +17,8 @@
     "measure_temperature.2",
     "measure_temperature.3",
     "measure_humidity",
-    "alarm_generic",
-    "alarm_generic.1",
-    "alarm_generic.external"
-  ],
-  "capabilitiesOptions": {
-    "alarm_generic": {
-      "title": {
-        "en": "State of Input 1",
-        "nl": "Status van Input 1"
-      }
-    },
-    "alarm_generic.1": {
-      "title": {
-        "en": "State of Input 2",
-        "nl": "Status van Input 2"
-      }
-    }
-  }
+    "input_1",
+    "input_2",
+    "input_external"
+  ]
 }

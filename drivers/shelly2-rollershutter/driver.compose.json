@@ -6,30 +6,18 @@
   "class": "windowcoverings",
   "discovery": "shelly2",
   "$extends": [
-    "defaultswithalarmgeneric"
+    "defaults"
   ],
   "capabilities": [
     "windowcoverings_state",
     "windowcoverings_set",
     "measure_power",
     "meter_power",
-    "alarm_generic",
-    "alarm_generic.1",
+    "input_1",
+    "input_2",
     "button.sethalfwayposition"
   ],
   "capabilitiesOptions": {
-    "alarm_generic": {
-      "title": {
-        "en": "State of Input 1",
-        "nl": "State of Input 1"
-      }
-    },
-    "alarm_generic.1": {
-      "title": {
-        "en": "State of Input 2",
-        "nl": "State of Input 2"
-      }
-    },
     "button.sethalfwayposition": {
       "maintenanceAction": true,
       "title": {

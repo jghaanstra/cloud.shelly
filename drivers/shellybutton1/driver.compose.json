@@ -6,11 +6,11 @@
   "class": "button",
   "discovery": "shellybutton1",
   "$extends": [
-    "defaultswithalarmgeneric"
+    "defaults"
   ],
   "capabilities": [
     "measure_battery",
-    "alarm_generic"
+    "input_1"
   ],
   "energy": {
     "batteries": [

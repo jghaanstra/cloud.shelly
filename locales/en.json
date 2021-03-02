@@ -54,8 +54,9 @@
   "settings": {
     "title": "Shelly Settings",
     "general": "General Settings",
-    "intro-coap": "Users with a lot (20+) Shelly devices may experience the app crashing when using device updates over CoAP. Disabling this will prevent the app from crashing and will switch to HTTP polling fallback. Beware that device updates will be slower and that this also disables the input and action events (like short push etc). Please restart the app or Homey after changing this setting for it to take effect.",
+    "intro-coap": "Users with a lot (40+) Shelly devices may experience the app crashing when using device updates over CoAP. Disabling this will prevent the app from crashing and will switch to HTTP polling fallback. Beware that device updates will be slower and that this also disables the input and action events (like short push etc). Please restart the app or Homey after changing this setting for it to take effect.",
     "coap": "Disable CoAP?",
+    "polling": "Polling frequency in seconds",
     "success": "Settings have been saved succesfully.",
     "save": "Save"
   }

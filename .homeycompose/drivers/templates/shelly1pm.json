@@ -6,11 +6,11 @@
   "icon": "{{driverAssetsPath}}/icon.svg",
   "capabilities": [
     "onoff",
-    "measure_temperature",
+    "measure_temperature.1",
     "measure_temperature.2",
     "measure_temperature.3",
-    "alarm_generic",
-    "alarm_generic.external"
+    "measure_humidity",
+    "input_1"
   ],
   "capabilitiesOptions": {
     "measure_temperature.1": {
@@ -29,18 +29,6 @@
       "title": {
         "en": "Temperature Sensor 3",
         "nl": "Temperatuursensor 3"
-      }
-    },
-    "alarm_generic": {
-      "title": {
-        "en": "State of Input 1",
-        "nl": "Status van input 1"
-      }
-    },
-    "alarm_generic.external": {
-      "title": {
-        "en": "State of External Input",
-        "nl": "Status van externe input"
       }
     }
   },

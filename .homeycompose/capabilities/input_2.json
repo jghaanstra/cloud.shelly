@@ -1,0 +1,12 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "State of Input 2",
+    "nl": "Status van input 2"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": null,
+  "insights": true,
+  "icon": "/assets/input_switch.svg"
+}

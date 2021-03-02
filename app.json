@@ -50,11 +50,11 @@
       "Shelly i3",
       "Shelly Gas",
       "Shelly Button",
-      "Shelly bewegingssenor",
+      "Shelly bewegingsensor",
       "Shelly motion"
     ]
   },
-  "version": "3.0.19",
+  "version": "3.0.20",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -393,7 +393,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1pm&capabilities=measure_temperature.1"
+            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shellyuni&capabilities=measure_temperature.1"
           }
         ]
       },
@@ -422,7 +422,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1pm|shellyuni&capabilities=measure_temperature.2"
+            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shellyuni&capabilities=measure_temperature.2"
           }
         ]
       },
@@ -451,7 +451,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1pm|shellyuni&capabilities=measure_temperature.3"
+            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shellyuni&capabilities=measure_temperature.3"
           }
         ]
       },
@@ -530,6 +530,24 @@
         ]
       },
       {
+        "id": "conditionInput0",
+        "title": {
+          "en": "Input 1 !{{is|isn't}} on",
+          "nl": "Input 1 !{{is|is niet}} aan"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+          }
+        ]
+      },
+      {
         "id": "conditionInput1",
         "title": {
           "en": "Input 2 !{{is|isn't}} on",
@@ -543,7 +561,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi3|shellydimmer&capabilities=alarm_generic.1"
+            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_2"
           }
         ]
       },
@@ -561,7 +579,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi3&capabilities=alarm_generic.2"
+            "filter": "driver_id=shellyi3&capabilities=input_3"
           }
         ]
       },
@@ -1473,8 +1491,8 @@
         "measure_temperature.2",
         "measure_temperature.3",
         "measure_humidity",
-        "alarm_generic",
-        "alarm_generic.external"
+        "input_1",
+        "input_external"
       ],
       "capabilitiesOptions": {
         "measure_temperature.1": {
@@ -1493,18 +1511,6 @@
           "title": {
             "en": "Temperature Sensor 3",
             "nl": "Temperatuursensor 3"
-          }
-        },
-        "alarm_generic": {
-          "title": {
-            "en": "State of Input 1",
-            "nl": "Status van input 1"
-          }
-        },
-        "alarm_generic.external": {
-          "title": {
-            "en": "State of External Input",
-            "nl": "Status van externe input"
           }
         }
       },
@@ -1603,21 +1609,27 @@
         "measure_temperature.2",
         "measure_temperature.3",
         "measure_humidity",
-        "alarm_generic",
-        "alarm_generic.1",
-        "alarm_generic.external"
+        "input_1",
+        "input_2",
+        "input_external"
       ],
       "capabilitiesOptions": {
-        "alarm_generic": {
+        "measure_temperature.1": {
           "title": {
-            "en": "State of Input 1",
-            "nl": "Status van Input 1"
+            "en": "Temperature Sensor 1",
+            "nl": "Temperatuursensor 1"
           }
         },
-        "alarm_generic.1": {
+        "measure_temperature.2": {
           "title": {
-            "en": "State of Input 2",
-            "nl": "Status van Input 2"
+            "en": "Temperature Sensor 2",
+            "nl": "Temperatuursensor 2"
+          }
+        },
+        "measure_temperature.3": {
+          "title": {
+            "en": "Temperature Sensor 3",
+            "nl": "Temperatuursensor 3"
           }
         }
       },
@@ -1716,8 +1728,8 @@
         "measure_temperature.2",
         "measure_temperature.3",
         "measure_humidity",
-        "alarm_generic",
-        "alarm_generic.external"
+        "input_1",
+        "input_external"
       ],
       "capabilitiesOptions": {
         "measure_temperature.1": {
@@ -1736,18 +1748,6 @@
           "title": {
             "en": "Temperature Sensor 3",
             "nl": "Temperatuursensor 3"
-          }
-        },
-        "alarm_generic": {
-          "title": {
-            "en": "State of Input 1",
-            "nl": "Status van input 1"
-          }
-        },
-        "alarm_generic.external": {
-          "title": {
-            "en": "State of External Input",
-            "nl": "Status van externe input"
           }
         }
       },
@@ -1837,14 +1837,6 @@
         "small": "/drivers/shelly2/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly2/assets/icon.svg",
-      "capabilitiesOptions": {
-        "alarm_generic": {
-          "title": {
-            "en": "State of Input 1",
-            "nl": "Status van Input 1"
-          }
-        }
-      },
       "pair": [
         {
           "id": "list_devices",
@@ -1889,7 +1881,7 @@
         "onoff",
         "measure_power",
         "meter_power",
-        "alarm_generic"
+        "input_1"
       ],
       "id": "shelly2",
       "settings": [
@@ -1937,31 +1929,6 @@
         "small": "/drivers/shelly2-rollershutter/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly2-rollershutter/assets/icon.svg",
-      "capabilitiesOptions": {
-        "alarm_generic": {
-          "title": {
-            "en": "State of Input 1",
-            "nl": "State of Input 1"
-          }
-        },
-        "alarm_generic.1": {
-          "title": {
-            "en": "State of Input 2",
-            "nl": "State of Input 2"
-          }
-        },
-        "button.sethalfwayposition": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Set the optical middle percentage",
-            "nl": "Instellen percentage optische midden"
-          },
-          "desc": {
-            "en": "Use this card if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action card to save this position.",
-            "nl": "Gebruik deze actie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie card uit om de positie op te slaan."
-          }
-        }
-      },
       "pair": [
         {
           "id": "list_devices",
@@ -2007,10 +1974,23 @@
         "windowcoverings_set",
         "measure_power",
         "meter_power",
-        "alarm_generic",
-        "alarm_generic.1",
+        "input_1",
+        "input_2",
         "button.sethalfwayposition"
       ],
+      "capabilitiesOptions": {
+        "button.sethalfwayposition": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Set the optical middle percentage",
+            "nl": "Instellen percentage optische midden"
+          },
+          "desc": {
+            "en": "Use this card if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action card to save this position.",
+            "nl": "Gebruik deze actie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie card uit om de positie op te slaan."
+          }
+        }
+      },
       "id": "shelly2-rollershutter",
       "settings": [
         {
@@ -2079,14 +2059,6 @@
         "small": "/drivers/shelly25/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly25/assets/icon.svg",
-      "capabilitiesOptions": {
-        "alarm_generic": {
-          "title": {
-            "en": "State of Input 1",
-            "nl": "Status van Input 1"
-          }
-        }
-      },
       "pair": [
         {
           "id": "list_devices",
@@ -2132,7 +2104,7 @@
         "measure_power",
         "meter_power",
         "measure_temperature",
-        "alarm_generic"
+        "input_1"
       ],
       "id": "shelly25",
       "settings": [
@@ -2180,31 +2152,6 @@
         "small": "/drivers/shelly25-rollershutter/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly25-rollershutter/assets/icon.svg",
-      "capabilitiesOptions": {
-        "alarm_generic": {
-          "title": {
-            "en": "State of Input 1",
-            "nl": "State of Input 1"
-          }
-        },
-        "alarm_generic.1": {
-          "title": {
-            "en": "State of Input 2",
-            "nl": "State of Input 2"
-          }
-        },
-        "button.sethalfwayposition": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Set the optical middle percentage",
-            "nl": "Instellen percentage optische midden"
-          },
-          "desc": {
-            "en": "Use this card if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action card to save this position.",
-            "nl": "Gebruik deze actie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie card uit om de positie op te slaan."
-          }
-        }
-      },
       "pair": [
         {
           "id": "list_devices",
@@ -2250,10 +2197,23 @@
         "windowcoverings_set",
         "measure_power",
         "meter_power",
-        "alarm_generic",
-        "alarm_generic.1",
+        "input_1",
+        "input_2",
         "button.sethalfwayposition"
       ],
+      "capabilitiesOptions": {
+        "button.sethalfwayposition": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Set the optical middle percentage",
+            "nl": "Instellen percentage optische midden"
+          },
+          "desc": {
+            "en": "Use this card if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action card to save this position.",
+            "nl": "Gebruik deze actie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie card uit om de positie op te slaan."
+          }
+        }
+      },
       "id": "shelly25-rollershutter",
       "settings": [
         {
@@ -2623,14 +2583,6 @@
         "small": "/drivers/shellybutton1/assets/images/small.jpg"
       },
       "icon": "/drivers/shellybutton1/assets/icon.svg",
-      "capabilitiesOptions": {
-        "alarm_generic": {
-          "title": {
-            "en": "State of Input 1",
-            "nl": "Status van Input 1"
-          }
-        }
-      },
       "pair": [
         {
           "id": "start",
@@ -2679,7 +2631,7 @@
       "discovery": "shellybutton1",
       "capabilities": [
         "measure_battery",
-        "alarm_generic"
+        "input_1"
       ],
       "energy": {
         "batteries": [
@@ -2732,20 +2684,6 @@
         "small": "/drivers/shellydimmer/assets/images/small.jpg"
       },
       "icon": "/drivers/shellydimmer/assets/icon.svg",
-      "capabilitiesOptions": {
-        "alarm_generic": {
-          "title": {
-            "en": "State of Input 1",
-            "nl": "Status van Input 1"
-          }
-        },
-        "alarm_generic.1": {
-          "title": {
-            "en": "State of Input 2",
-            "nl": "Status van Input 2"
-          }
-        }
-      },
       "pair": [
         {
           "id": "list_devices",
@@ -2792,8 +2730,8 @@
         "measure_power",
         "meter_power",
         "measure_temperature",
-        "alarm_generic",
-        "alarm_generic.1"
+        "input_1",
+        "input_2"
       ],
       "id": "shellydimmer",
       "settings": [
@@ -3449,26 +3387,6 @@
         "small": "/drivers/shellyi3/assets/images/small.jpg"
       },
       "icon": "/drivers/shellyi3/assets/icon.svg",
-      "capabilitiesOptions": {
-        "alarm_generic": {
-          "title": {
-            "en": "State of Input 1",
-            "nl": "Status van Input 1"
-          }
-        },
-        "alarm_generic.1": {
-          "title": {
-            "en": "State of Input 2",
-            "nl": "Status van Input 2"
-          }
-        },
-        "alarm_generic.2": {
-          "title": {
-            "en": "State of Input 3",
-            "nl": "Status van Input 3"
-          }
-        }
-      },
       "pair": [
         {
           "id": "list_devices",
@@ -3510,9 +3428,9 @@
       "class": "other",
       "discovery": "shellyi3",
       "capabilities": [
-        "alarm_generic",
-        "alarm_generic.1",
-        "alarm_generic.2"
+        "input_1",
+        "input_2",
+        "input_3"
       ],
       "id": "shellyi3",
       "settings": [
@@ -3663,20 +3581,6 @@
         "small": "/drivers/shellyrgbw2color/assets/images/small.jpg"
       },
       "icon": "/drivers/shellyrgbw2color/assets/icon.svg",
-      "capabilitiesOptions": {
-        "onoff.whitemode": {
-          "title": {
-            "en": "Toggle white mode",
-            "nl": "Wit modus schakelen"
-          }
-        },
-        "alarm_generic": {
-          "title": {
-            "en": "State of SW terminal 1",
-            "nl": "Status van SW terminal 1"
-          }
-        }
-      },
       "pair": [
         {
           "id": "list_devices",
@@ -3727,8 +3631,16 @@
         "meter_power",
         "light_mode",
         "onoff.whitemode",
-        "alarm_generic"
+        "input_1"
       ],
+      "capabilitiesOptions": {
+        "onoff.whitemode": {
+          "title": {
+            "en": "Toggle white mode",
+            "nl": "Wit modus schakelen"
+          }
+        }
+      },
       "id": "shellyrgbw2color",
       "settings": [
         {
@@ -3850,14 +3762,6 @@
         "small": "/drivers/shellyrgbw2white/assets/images/small.jpg"
       },
       "icon": "/drivers/shellyrgbw2white/assets/icon.svg",
-      "capabilitiesOptions": {
-        "alarm_generic": {
-          "title": {
-            "en": "State of Input 1",
-            "nl": "Status van Input 1"
-          }
-        }
-      },
       "pair": [
         {
           "id": "list_devices",
@@ -3903,7 +3807,7 @@
         "dim",
         "measure_power",
         "meter_power",
-        "alarm_generic"
+        "input_1"
       ],
       "id": "shellyrgbw2white",
       "settings": [
@@ -4055,11 +3959,11 @@
       "icon": "/drivers/shellyuni/assets/icon.svg",
       "capabilities": [
         "onoff",
-        "measure_temperature",
+        "measure_temperature.1",
         "measure_temperature.2",
         "measure_temperature.3",
         "measure_humidity",
-        "alarm_generic"
+        "input_1"
       ],
       "capabilitiesOptions": {
         "measure_temperature.1": {
@@ -4078,18 +3982,6 @@
           "title": {
             "en": "Temperature Sensor 3",
             "nl": "Temperatuursensor 3"
-          }
-        },
-        "alarm_generic": {
-          "title": {
-            "en": "State of Input 1",
-            "nl": "Status van input 1"
-          }
-        },
-        "alarm_generic.external": {
-          "title": {
-            "en": "State of External Input",
-            "nl": "Status van externe input"
           }
         }
       },
@@ -4282,6 +4174,54 @@
         "en": "ppm",
         "nl": "ppm"
       }
+    },
+    "input_1": {
+      "type": "boolean",
+      "title": {
+        "en": "State of Input 1",
+        "nl": "Status van input 1"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": null,
+      "insights": true,
+      "icon": "/assets/input_switch.svg"
+    },
+    "input_2": {
+      "type": "boolean",
+      "title": {
+        "en": "State of Input 2",
+        "nl": "Status van input 2"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": null,
+      "insights": true,
+      "icon": "/assets/input_switch.svg"
+    },
+    "input_3": {
+      "type": "boolean",
+      "title": {
+        "en": "State of Input 3",
+        "nl": "Status van input 3"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": null,
+      "insights": true,
+      "icon": "/assets/input_switch.svg"
+    },
+    "input_external": {
+      "type": "boolean",
+      "title": {
+        "en": "State of External Input",
+        "nl": "Status van externe input"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": null,
+      "insights": true,
+      "icon": "/assets/input_switch.svg"
     },
     "meter_power_consumed": {
       "type": "number",

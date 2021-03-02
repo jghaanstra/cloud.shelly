@@ -44,6 +44,10 @@
       <label for="coap" data-i18n="settings.coap">Disable CoAP?</label>
       <input type="checkbox" class="form-control" id="coap">
       </div>
+      <div class="form-group">
+      <label for="port" data-i18n="settings.polling">Polling Frequency</label>
+      <input type="number" class="form-control" id="polling" placeholder="5" min="5" max="3600">
+      </div>
       <div class="messages messages-general">
       <p class="shelly-ok shelly-status" style="color: #008C23;"><i class="fa fa-check"></i> <span class="shelly-ok-msg" data-i18n="settings.success">Settings have been saved succesfully.</span></p>
       <p class="shelly-error shelly-status" style="color: #ff6300;"><i class="fa fa-times"></i> <span class="shelly-error-msg"></span></p>
@@ -62,6 +66,13 @@
           .catch(error => {
             return console.error('Could not get CoAP setting', error);
           })
+        Homey.get('general_polling_frequency')
+          .then(polling => {
+            document.getElementById('polling').value = polling;
+          })
+          .catch(error => {
+            return console.error('Could not get polling frequency', error);
+          })
 
         document.getElementById("save-general").addEventListener("click", function(elem) {
           save(Homey);
@@ -73,6 +84,7 @@
 
       function save(Homey) {
         Homey.set('general_coap', document.getElementById('coap').checked);
+        Homey.set('general_polling_frequency', document.getElementById('polling').value);
 
         Homey.api('PUT', '/updatesettings/', {
           "general_coap": document.getElementById('coap').checked

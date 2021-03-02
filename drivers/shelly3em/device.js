@@ -46,7 +46,7 @@ class Shelly3EmDevice extends Homey.Device {
         setTimeout(async () => {
           await this.initialStateUpdate();
         }, this.getStoreValue('channel') * 1000);
-      }, 5000);
+      }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
     } else {
       setTimeout(() => {
         this.initialStateUpdate();

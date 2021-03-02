@@ -6,14 +6,14 @@
   "class": "light",
   "discovery": "shellyrgbw2",
   "$extends": [
-    "defaultswithalarmgeneric"
+    "defaults"
   ],
   "capabilities": [
     "onoff",
     "dim",
     "measure_power",
     "meter_power",
-    "alarm_generic"
+    "input_1"
   ],
   "pair": [
     {

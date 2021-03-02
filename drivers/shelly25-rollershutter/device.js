@@ -24,11 +24,17 @@ class Shelly25RollerShutterDevice extends Homey.Device {
     if (!this.hasCapability('meter_power')) {
       this.addCapability('meter_power');
     }
-    if (!this.hasCapability('alarm_generic')) {
-      this.addCapability('alarm_generic');
+    if (this.hasCapability('alarm_generic')) {
+      this.removeCapability('alarm_generic');
     }
-    if (!this.hasCapability('alarm_generic.1')) {
-      this.addCapability('alarm_generic.1');
+    if (this.hasCapability('alarm_generic.1')) {
+      this.removeCapability('alarm_generic.1');
+    }
+    if (!this.hasCapability('input_1')) {
+      this.addCapability('input_1');
+    }
+    if (!this.hasCapability('input_2')) {
+      this.addCapability('input_2');
     }
     if (!this.hasCapability('measure_temperature')) {
       this.addCapability('measure_temperature');
@@ -44,7 +50,7 @@ class Shelly25RollerShutterDevice extends Homey.Device {
     if (this.homey.settings.get('general_coap')) {
       setInterval(async () => {
         await this.initialStateUpdate();
-      }, 5000);
+      }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
     } else {
       this.initialStateUpdate();
     }
@@ -118,8 +124,8 @@ class Shelly25RollerShutterDevice extends Homey.Device {
       let measure_power = result.meters[0].power;
       let meter_power = result.meters[0].total * 0.000017;
       let measure_temperature = result.temperature;
-      let alarm_generic = result.inputs[0].input == 1 ? true : false;
-      let alarm_generic_1 = result.inputs[1].input == 1 ? true : false;
+      let input_1 = result.inputs[0].input == 1 ? true : false;
+      let input_2 = result.inputs[1].input == 1 ? true : false;
       var windowcoverings_set = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
 
       if ( result.rollers[0].state == 'stop' ) {
@@ -166,14 +172,16 @@ class Shelly25RollerShutterDevice extends Homey.Device {
         this.setCapabilityValue('measure_temperature', measure_temperature);
       }
 
-      // capability alarm_generic
-      if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
-        this.setCapabilityValue('alarm_generic', alarm_generic);
+      // capability input_1
+      if (input_1 != this.getCapabilityValue('input_1')) {
+        this.setCapabilityValue('input_1', input_1);
+        this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': input_1.toString()}, {});
       }
 
-      // capability alarm_generic.1
-      if (alarm_generic_1 != this.getCapabilityValue('alarm_generic.1')) {
-        this.setCapabilityValue('alarm_generic.1', alarm_generic_1);
+      // capability input_2
+      if (input_2 != this.getCapabilityValue('input_2')) {
+        this.setCapabilityValue('input_2', input_2);
+        this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 2', 'state': input_2.toString()}, {});
       }
 
     } catch (error) {
@@ -240,17 +248,17 @@ class Shelly25RollerShutterDevice extends Homey.Device {
           }
           break;
         case 'input0':
-          let alarm_generic = value === 0 ? false : true;
-          if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
-            this.setCapabilityValue('alarm_generic', alarm_generic);
-            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': alarm_generic.toString()}, {});
+          let input_1 = value === 0 ? false : true;
+          if (input_1 != this.getCapabilityValue('input_1')) {
+            this.setCapabilityValue('input_1', input_1);
+            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': input_1.toString()}, {});
           }
           break;
         case 'input1':
-          let alarm_generic_1 = value === 0 ? false : true;
-          if (alarm_generic_1 != this.getCapabilityValue('alarm_generic.1')) {
-            this.setCapabilityValue('alarm_generic.1', alarm_generic_1);
-            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 2', 'state': alarm_generic_1.toString()}, {});
+          let input_2 = value === 0 ? false : true;
+          if (input_2 != this.getCapabilityValue('input_2')) {
+            this.setCapabilityValue('input_2', input_2);
+            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 2', 'state': input_2.toString()}, {});
           }
           break;
         case 'rollerStopReason':

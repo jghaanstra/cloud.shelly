@@ -30,8 +30,11 @@ class ShellyButton1Device extends Homey.Device {
     if (this.hasCapability('measure_voltage')) {
       this.removeCapability('measure_voltage');
     }
-    if (!this.hasCapability('alarm_generic')) {
-      this.addCapability('alarm_generic');
+    if (this.hasCapability('alarm_generic')) {
+      this.removeCapability('alarm_generic');
+    }
+    if (!this.hasCapability('input_1')) {
+      this.addCapability('input_1');
     }
     if (this.hasCapability('button.callbackevents')) {
       this.removeCapability('button.callbackevents');
@@ -44,7 +47,7 @@ class ShellyButton1Device extends Homey.Device {
     if (this.homey.settings.get('general_coap')) {
       setInterval(async () => {
         await this.initialStateUpdate();
-      }, 5000);
+      }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
     }
 
   }
@@ -71,16 +74,17 @@ class ShellyButton1Device extends Homey.Device {
       if (!this.getAvailable()) { this.setAvailable(); }
 
       let measure_battery = result.bat.value;
-      let alarm_generic = result.inputs[0].input == 1 ? true : false;
+      let input_1 = result.inputs[0].input == 1 ? true : false;
 
       // capability measure_power
       if (measure_battery != this.getCapabilityValue('measure_battery')) {
         this.setCapabilityValue('measure_battery', measure_battery);
       }
 
-      // capability alarm_generic
-      if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
-        this.setCapabilityValue('alarm_generic', alarm_generic);
+      // capability input_1
+      if (input_1 != this.getCapabilityValue('input_1')) {
+        this.setCapabilityValue('input_1', input_1);
+        this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': input_1.toString()}, {});
       }
 
     } catch (error) {
@@ -99,10 +103,10 @@ class ShellyButton1Device extends Homey.Device {
           }
           break;
         case 'input0':
-          let alarm_generic = value === 0 ? false : true;
-          if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
-            this.setCapabilityValue('alarm_generic', alarm_generic);
-            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': alarm_generic.toString()}, {});
+          let input_1 = value === 0 ? false : true;
+          if (input_1 != this.getCapabilityValue('input_1')) {
+            this.setCapabilityValue('input_1', input_1);
+            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': input_1.toString()}, {});
           }
           break;
         case 'wakeUpEvent':

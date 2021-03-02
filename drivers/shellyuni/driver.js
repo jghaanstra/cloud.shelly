@@ -48,7 +48,7 @@ class ShellyUniDriver extends Homey.Driver {
             username : '',
             password : ''
           },
-          capabilities: ['onoff', 'alarm_generic', 'button.callbackevents', 'button.removecallbackevents'],
+          capabilities: ['onoff', 'input_1'],
           store: {
             type: result.type
           },
@@ -79,7 +79,7 @@ class ShellyUniDriver extends Homey.Driver {
               username : data.username,
               password : data.password
             },
-            capabilities: ['onoff', 'alarm_generic', 'button.callbackevents', 'button.removecallbackevents'],
+            capabilities: ['onoff', 'input_1'],
             store: {
               type: result.device.type
             }

@@ -22,14 +22,18 @@ class Shelly1Device extends Homey.Device {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.homey.flow.getDeviceTriggerCard('triggerInput');
+    this.homey.flow.getDeviceTriggerCard('triggerTemperature1');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature2');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature3');
 
     this.setAvailable();
 
     // TODO: ADD AND REMOVE STUFF - REMOVE CODE AFTER 3.1.0
-    if (!this.hasCapability('alarm_generic')) {
-      this.addCapability('alarm_generic');
+    if (this.hasCapability('alarm_generic')) {
+      this.removeCapability('alarm_generic');
+    }
+    if (!this.hasCapability('input_1')) {
+      this.addCapability('input_1');
     }
     if (this.hasCapability('button.callbackevents')) {
       this.removeCapability('button.callbackevents');
@@ -42,7 +46,7 @@ class Shelly1Device extends Homey.Device {
     if (this.homey.settings.get('general_coap')) {
       setInterval(async () => {
         await this.initialStateUpdate();
-      }, 5000);
+      }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
     } else {
       this.initialStateUpdate();
     }
@@ -78,16 +82,78 @@ class Shelly1Device extends Homey.Device {
       if (!this.getAvailable()) { this.setAvailable(); }
 
       let onoff = result.relays[0].ison;
-      let alarm_generic = result.inputs[0].input == 1 ? true : false;
+      let input_1 = result.inputs[0].input == 1 ? true : false;
 
       // capability onoff
       if (onoff != this.getCapabilityValue('onoff')) {
         this.setCapabilityValue('onoff', onoff);
       }
 
-      // capability alarm_generic
-      if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
-        this.setCapabilityValue('alarm_generic', alarm_generic);
+      // capability input_1
+      if (input_1 != this.getCapabilityValue('input_1')) {
+        this.setCapabilityValue('input_1', input_1);
+        this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': input_1.toString()}, {});
+      }
+
+      // capability measure_temperature.1, measure_temperature.2, measure_temperature.3
+      if (Object.entries(result.ext_temperature).length !== 0) {
+        // sensor 1
+        if (result.ext_temperature.hasOwnProperty([0]) && !this.hasCapability('measure_temperature.1')) {
+          this.addCapability('measure_temperature.1');
+        } else if (result.ext_temperature.hasOwnProperty([0]) && this.hasCapability('measure_temperature.1')) {
+          let temp1 = result.ext_temperature[0].tC;
+          if (temp1 != this.getCapabilityValue('measure_temperature.1')) {
+            this.setCapabilityValue('measure_temperature.1', temp1);
+            this.homey.flow.getDeviceTriggerCard('triggerTemperature1').trigger(this, {'temperature': temp1}, {});
+          }
+        }
+
+        // sensor 2
+        if (result.ext_temperature.hasOwnProperty([1]) && !this.hasCapability('measure_temperature.2')) {
+          this.addCapability('measure_temperature.2');
+        } else if (result.ext_temperature.hasOwnProperty([1]) && this.hasCapability('measure_temperature.2')) {
+          let temp2 = result.ext_temperature[1].tC;
+          if (temp2 != this.getCapabilityValue('measure_temperature.2')) {
+            this.setCapabilityValue('measure_temperature.2', temp2);
+            this.homey.flow.getDeviceTriggerCard('triggerTemperature2').trigger(this, {'temperature': temp2}, {});
+          }
+        }
+
+        // sensor 3
+        if (result.ext_temperature.hasOwnProperty([2]) && !this.hasCapability('measure_temperature.3')) {
+          this.addCapability('measure_temperature.3');
+        } else if (result.ext_temperature.hasOwnProperty([2]) && this.hasCapability('measure_temperature.3')) {
+          let temp3 = result.ext_temperature[2].tC;
+          if (temp3 != this.getCapabilityValue('measure_temperature.3')) {
+            this.setCapabilityValue('measure_temperature.3', temp3);
+            this.homey.flow.getDeviceTriggerCard('triggerTemperature3').trigger(this, {'temperature': temp3}, {});
+          }
+        }
+      }
+
+      // capability measure_humidity
+      if (Object.entries(result.ext_humidity).length !== 0) {
+        if (result.ext_humidity.hasOwnProperty([0]) && !this.hasCapability('measure_humidity')) {
+          this.addCapability('measure_humidity');
+        } else if (result.ext_humidity.hasOwnProperty([0]) && this.hasCapability('measure_humidity')) {
+          let measure_humidity = result.ext_humidity[0].hum;
+          if (measure_humidity != this.getCapabilityValue('measure_humidity')) {
+            this.setCapabilityValue('measure_humidity', measure_humidity);
+          }
+        }
+      }
+
+      // capability input_external
+      if ("ext_switch" in result) {
+        if (result.ext_switch.hasOwnProperty([0]) && !this.hasCapability('input_external')) {
+          this.addCapability('input_external');
+        } else if (result.ext_switch.hasOwnProperty([0]) && this.hasCapability('input_external')) {
+          let input_external = result.ext_switch[0].input === 0 ? false : true;
+          if (input_external != this.getCapabilityValue('input_external')) {
+            this.setCapabilityValue('input_external', input_external);
+            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'external switch 1', 'state': input_external.toString()}, {});
+          }
+        }
       }
 
     } catch (error) {
@@ -107,60 +173,40 @@ class Shelly1Device extends Homey.Device {
           }
           break;
         case 'externalTemperature0':
-          if (!this.hasCapability('measure_temperature.1')) {
-            this.addCapability('measure_temperature.1');
-          } else {
-            if (value != this.getCapabilityValue('measure_temperature.1')) {
-              this.setCapabilityValue('measure_temperature.1', value);
-              this.homey.flow.getDeviceTriggerCard('triggerTemperature1').trigger(this, {'temperature': value}, {});
-            }
+          if (value != this.getCapabilityValue('measure_temperature.1')) {
+            this.setCapabilityValue('measure_temperature.1', value);
+            this.homey.flow.getDeviceTriggerCard('triggerTemperature1').trigger(this, {'temperature': value}, {});
           }
           break;
         case 'externalTemperature1':
-          if (!this.hasCapability('measure_temperature.2')) {
-            this.addCapability('measure_temperature.2');
-          } else {
-            if (value != this.getCapabilityValue('measure_temperature.2')) {
-              this.setCapabilityValue('measure_temperature.2', value);
-              this.homey.flow.getDeviceTriggerCard('triggerTemperature2').trigger(this, {'temperature': value}, {});
-            }
+          if (value != this.getCapabilityValue('measure_temperature.2')) {
+            this.setCapabilityValue('measure_temperature.2', value);
+            this.homey.flow.getDeviceTriggerCard('triggerTemperature2').trigger(this, {'temperature': value}, {});
           }
           break;
         case 'externalTemperature2':
-          if (!this.hasCapability('measure_temperature.3')) {
-            this.addCapability('measure_temperature.3');
-          } else {
-            if (value != this.getCapabilityValue('measure_temperature.3')) {
-              this.setCapabilityValue('measure_temperature.3', value);
-              this.homey.flow.getDeviceTriggerCard('triggerTemperature3').trigger(this, {'temperature': value}, {});
-            }
+          if (value != this.getCapabilityValue('measure_temperature.3')) {
+            this.setCapabilityValue('measure_temperature.3', value);
+            this.homey.flow.getDeviceTriggerCard('triggerTemperature3').trigger(this, {'temperature': value}, {});
           }
           break;
         case 'externalHumidity':
-          if (!this.hasCapability('measure_humidity')) {
-            this.addCapability('measure_humidity');
-          } else {
-            if (value != this.getCapabilityValue('measure_humidity')) {
-              this.setCapabilityValue('measure_humidity', value);
-            }
+          if (value != this.getCapabilityValue('measure_humidity')) {
+            this.setCapabilityValue('measure_humidity', value);
           }
           break;
         case 'externalInput0':
-          if (!this.hasCapability('alarm_generic.external')) {
-            this.addCapability('alarm_generic.external');
-          } else {
-            let alarm_external = value === 0 ? false : true;
-            if (alarm_external != this.getCapabilityValue('alarm_generic.external')) {
-              this.setCapabilityValue('alarm_generic.external', alarm_external);
-              this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'external switch 1', 'state': alarm_external.toString()}, {});
-            }
+          let input_external = value === 0 ? false : true;
+          if (input_external != this.getCapabilityValue('input_external')) {
+            this.setCapabilityValue('input_external', input_external);
+            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'external switch 1', 'state': input_external.toString()}, {});
           }
           break;
         case 'input0':
-          let alarm_generic = value === 0 ? false : true;
-          if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
-            this.setCapabilityValue('alarm_generic', alarm_generic);
-            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': alarm_generic.toString()}, {});
+          let input_1 = value === 0 ? false : true;
+          if (input_1 != this.getCapabilityValue('input_1')) {
+            this.setCapabilityValue('input_1', input_1);
+            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': input_1.toString()}, {});
           }
           break;
         case 'inputEvent0':

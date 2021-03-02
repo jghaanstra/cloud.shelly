@@ -24,8 +24,11 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
     if (!this.hasCapability('meter_power')) {
       this.addCapability('meter_power');
     }
-    if (!this.hasCapability('alarm_generic')) {
-      this.addCapability('alarm_generic');
+    if (this.hasCapability('alarm_generic')) {
+      this.removeCapability('alarm_generic');
+    }
+    if (!this.hasCapability('input_1') && this.getStoreValue('channel') == 0) {
+      this.addCapability('input_1');
     }
     if (this.hasCapability('button.callbackevents')) {
       this.removeCapability('button.callbackevents');
@@ -39,7 +42,7 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
       setInterval(async () => {
         setTimeout(async () => {
           await this.initialStateUpdate();
-        }, this.getStoreValue('channel') * 1000);
+        }, this.getStoreValue('channel') * 1000 || 5000);
       }, 5000);
     } else {
       setTimeout(() => {
@@ -90,7 +93,7 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
       let measure_power = result.meters[channel].power;
       let meter_power = result.meters[channel].total * 0.000017;
       let dim = result.lights[channel].brightness > 100 ? 1 : result.lights[channel].brightness / 100;
-      let alarm_generic = results.inputs[0].input === 1 ? true : false;
+      let input_1 = result.inputs[0].input === 1 ? true : false;
 
       // capability onoff
       if (onoff != this.getCapabilityValue('onoff')) {
@@ -112,9 +115,10 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
         this.setCapabilityValue('dim', dim);
       }
 
-      // capability alarm_generic
-      if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
-        this.setCapabilityValue('alarm_generic', alarm_generic);
+      // capability input_1
+      if (input_1 != this.getCapabilityValue('input_1') && this.getStoreValue('channel') == 0) {
+        this.setCapabilityValue('input_1', input_1);
+        this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': input_1.toString()}, {});
       }
 
     } catch (error) {
@@ -163,10 +167,10 @@ class ShellyRGBW2WhiteDevice extends Homey.Device {
           }
           break;
         case 'input0':
-          let alarm_generic = value === 0 ? false : true;
-          if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
-            this.setCapabilityValue('alarm_generic', alarm_generic);
-            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': alarm_generic.toString()}, {});
+          let input_1 = value === 0 ? false : true;
+          if (input_1 != this.getCapabilityValue('input_1') && this.getStoreValue('channel') == 0) {
+            this.setCapabilityValue('input_1', input_1);
+            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': input_1.toString()}, {});
           }
           break;
         case 'overPower':

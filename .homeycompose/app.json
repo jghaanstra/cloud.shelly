@@ -49,11 +49,11 @@
       "Shelly i3",
       "Shelly Gas",
       "Shelly Button",
-      "Shelly bewegingssenor",
+      "Shelly bewegingsensor",
       "Shelly motion"
     ]
   },
-  "version": "3.0.19",
+  "version": "3.0.20",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",

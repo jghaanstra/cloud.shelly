@@ -12,7 +12,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shellyi3&capabilities=alarm_generic.2"
+      "filter": "driver_id=shellyi3&capabilities=input_3"
     }
   ]
 }

@@ -6,7 +6,7 @@
   "class": "light",
   "discovery": "shellyrgbw2",
   "$extends": [
-    "defaultswithalarmgeneric"
+    "defaults"
   ],
   "capabilities": [
     "onoff",
@@ -18,19 +18,13 @@
     "meter_power",
     "light_mode",
     "onoff.whitemode",
-    "alarm_generic"
+    "input_1"
   ],
   "capabilitiesOptions": {
     "onoff.whitemode": {
       "title": {
         "en": "Toggle white mode",
         "nl": "Wit modus schakelen"
-      }
-    },
-    "alarm_generic": {
-      "title": {
-        "en": "State of SW terminal 1",
-        "nl": "Status van SW terminal 1"
       }
     }
   }

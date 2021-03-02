@@ -105,6 +105,7 @@ class ShellyMotionDriver extends Homey.Driver {
       try {
         const homey_ip = await this.homey.cloud.getLocalAddress();
         const result = await this.util.sendCommand('/settings?coiot_enable=true&coiot_peer='+ homey_ip.substring(0, homey_ip.length-3), deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
+        const reboot = await this.util.sendCommand('/reboot', deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
         return Promise.resolve(deviceArray);
       } catch (error) {
         return Promise.reject(error);

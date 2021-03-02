@@ -48,7 +48,7 @@ class Shelly1lDriver extends Homey.Driver {
             username : '',
             password : ''
           },
-          capabilities: ["onoff", "measure_power", "meter_power", "measure_temperature", "alarm_generic", "alarm_generic.1"],
+          capabilities: ["onoff", "measure_power", "meter_power", "measure_temperature", "input_1", "input_2"],
           store: {
             type: result.type
           },
@@ -79,7 +79,7 @@ class Shelly1lDriver extends Homey.Driver {
               username : data.username,
               password : data.password
             },
-            capabilities: ["onoff", "measure_power", "meter_power", "measure_temperature", "alarm_generic"],
+            capabilities: ["onoff", "measure_power", "meter_power", "measure_temperature", "input_1", "input_2"],
             store: {
               type: result.device.type
             }

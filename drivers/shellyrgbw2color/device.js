@@ -32,8 +32,11 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
     if (!this.hasCapability('meter_power')) {
       this.addCapability('meter_power');
     }
-    if (!this.hasCapability('alarm_generic')) {
-      this.addCapability('alarm_generic');
+    if (this.hasCapability('alarm_generic')) {
+      this.removeCapability('alarm_generic');
+    }
+    if (!this.hasCapability('input_1')) {
+      this.addCapability('input_1');
     }
     if (this.hasCapability('button.callbackevents')) {
       this.removeCapability('button.callbackevents');
@@ -46,7 +49,7 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
     if (this.homey.settings.get('general_coap')) {
       setInterval(async () => {
         await this.initialStateUpdate();
-      }, 5000);
+      }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
     } else {
       this.initialStateUpdate();
     }
@@ -126,7 +129,7 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
       let light_hue = Number((hsv.h / 360).toFixed(2));
       let measure_power = result.meters[0].power;
       let meter_power = result.meters[0].total * 0.000017;
-      let alarm_generic = result.inputs[0].input === 1 ? true : false;
+      let input_1 = result.inputs[0].input === 1 ? true : false;
 
       // capability onoff
       if (onoff != this.getCapabilityValue('onoff')) {
@@ -163,9 +166,10 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
         this.setCapabilityValue('meter_power', meter_power);
       }
 
-      // capability alarm_generic
-      if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
-        this.setCapabilityValue('alarm_generic', alarm_generic);
+      // capability input_1
+      if (input_1 != this.getCapabilityValue('input_1')) {
+        this.setCapabilityValue('input_1', input_1);
+        this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': input_1.toString()}, {});
       }
 
       //capability white_mode
@@ -242,10 +246,10 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
           }
           break;
         case 'input0':
-          let alarm_generic = value === 0 ? false : true;
-          if (alarm_generic != this.getCapabilityValue('alarm_generic')) {
-            this.setCapabilityValue('alarm_generic', alarm_generic);
-            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': alarm_generic.toString()}, {});
+          let input_1 = value === 0 ? false : true;
+          if (input_1 != this.getCapabilityValue('input_1')) {
+            this.setCapabilityValue('input_1', input_1);
+            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': input_1.toString()}, {});
           }
           break;
         case 'inputEvent0':

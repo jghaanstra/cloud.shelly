@@ -23,7 +23,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly1|shelly1pm|shellyuni&capabilities=measure_temperature.3"
+      "filter": "driver_id=shelly1|shelly1l|shelly1pm|shellyuni&capabilities=measure_temperature.3"
     }
   ]
 }

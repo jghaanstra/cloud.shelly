@@ -52,10 +52,19 @@ class ShellyApp extends Homey.App {
       return await this.util.getActions(args.shelly.actions);
     });
 
+    this.homey.flow.getConditionCard('conditionInput0')
+      .registerRunListener(async (args) => {
+        if (args.device) {
+          return args.device.getCapability("input_1");
+        } else {
+          return false;
+        }
+      })
+
     this.homey.flow.getConditionCard('conditionInput1')
       .registerRunListener(async (args) => {
         if (args.device) {
-          return args.device.getCapability("alarm_generic.1");
+          return args.device.getCapability("input_2");
         } else {
           return false;
         }
@@ -64,7 +73,7 @@ class ShellyApp extends Homey.App {
     this.homey.flow.getConditionCard('conditionInput2')
       .registerRunListener(async (args) => {
         if (args.device) {
-          return args.device.getCapability("alarm_generic.2");
+          return args.device.getCapability("input_3");
         } else {
           return false;
         }
