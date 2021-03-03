@@ -27,6 +27,9 @@ class ShellyEmDevice extends Homey.Device {
     if (!this.hasCapability('meter_power')) {
       this.addCapability('meter_power');
     }
+    if (!this.hasCapability('meter_power_returned')) {
+      this.addCapability('meter_power_returned');
+    }
     if (!this.hasCapability('reactive_power')) {
       this.addCapability('reactive_power');
     }

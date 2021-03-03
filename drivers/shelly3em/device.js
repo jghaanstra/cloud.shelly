@@ -33,6 +33,9 @@ class Shelly3EmDevice extends Homey.Device {
     if (!this.hasCapability('meter_power')) {
       this.addCapability('meter_power');
     }
+    if (!this.hasCapability('meter_power_returned')) {
+      this.addCapability('meter_power_returned');
+    }
     if (this.hasCapability('button.callbackevents')) {
       this.removeCapability('button.callbackevents');
     }
