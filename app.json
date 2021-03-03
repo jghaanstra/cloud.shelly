@@ -54,7 +54,7 @@
       "Shelly motion"
     ]
   },
-  "version": "3.0.20",
+  "version": "3.0.21",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -230,7 +230,8 @@
             },
             "filter": "driver_id=shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni"
           }
-        ]
+        ],
+        "deprecated": true
       },
       {
         "id": "triggerInput1",
@@ -263,6 +264,42 @@
         "deprecated": true
       },
       {
+        "id": "triggerInput1Off",
+        "title": {
+          "en": "Input 1 turned off",
+          "nl": "Input 1 uitgezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+          }
+        ]
+      },
+      {
+        "id": "triggerInput1On",
+        "title": {
+          "en": "Input 1 turned on",
+          "nl": "Input 1 aangezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+          }
+        ]
+      },
+      {
         "id": "triggerInput2",
         "title": {
           "en": "State of Input 3",
@@ -291,6 +328,114 @@
           }
         ],
         "deprecated": true
+      },
+      {
+        "id": "triggerInput2Off",
+        "title": {
+          "en": "Input 2 turned off",
+          "nl": "Input 2 uitgezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly1l|shelly2-rollershutter|shelly25-rollershutter|shellyi3&capabilities=input_2"
+          }
+        ]
+      },
+      {
+        "id": "triggerInput2On",
+        "title": {
+          "en": "Input 2 turned on",
+          "nl": "Input 2 aangezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly1l|shelly2-rollershutter|shelly25-rollershutter|shellyi3&capabilities=input_2"
+          }
+        ]
+      },
+      {
+        "id": "triggerInput3Off",
+        "title": {
+          "en": "Input 3 turned off",
+          "nl": "Input 3 uitgezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellyi3&capabilities=input_3"
+          }
+        ]
+      },
+      {
+        "id": "triggerInput3On",
+        "title": {
+          "en": "Input 3 turned on",
+          "nl": "Input 3 aangezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellyi3&capabilities=input_3"
+          }
+        ]
+      },
+      {
+        "id": "triggerInputExternal1Off",
+        "title": {
+          "en": "External input turned off",
+          "nl": "Externe input uitgezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly1|shelly1l|shelly1pm&capabilities=input_external"
+          }
+        ]
+      },
+      {
+        "id": "triggerInputExternal1On",
+        "title": {
+          "en": "External input turned on",
+          "nl": "Externe input aangezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly1|shelly1l|shelly1pm&capabilities=input_external"
+          }
+        ]
       },
       {
         "id": "triggerMeterPowerFactor",
@@ -561,7 +706,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_2"
+            "filter": "driver_id=shelly1l|shelly2-rollershutter|shelly25-rollershutter|shellyi3&capabilities=input_2"
           }
         ]
       },

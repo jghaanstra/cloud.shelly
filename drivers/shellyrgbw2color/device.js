@@ -22,8 +22,12 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    this.homey.flow.getDeviceTriggerCard('triggerInput');
+    this.homey.flow.getDeviceTriggerCard('triggerInput1On');
+    this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
     this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
+
+    // TODO: REMOVE AFTER 3.1.0
+    this.homey.flow.getDeviceTriggerCard('triggerInput');
 
     this.setAvailable();
 
@@ -169,7 +173,11 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
       // capability input_1
       if (input_1 != this.getCapabilityValue('input_1')) {
         this.setCapabilityValue('input_1', input_1);
-        this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': input_1.toString()}, {});
+        if (input_1) {
+          this.homey.flow.getDeviceTriggerCard('triggerInput1On').trigger(this, {}, {});
+        } else {
+          this.homey.flow.getDeviceTriggerCard('triggerInput1Off').trigger(this, {}, {});
+        }
       }
 
       //capability white_mode
@@ -249,7 +257,11 @@ class ShellyRGBW2ColorDevice extends Homey.Device {
           let input_1 = value === 0 ? false : true;
           if (input_1 != this.getCapabilityValue('input_1')) {
             this.setCapabilityValue('input_1', input_1);
-            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': input_1.toString()}, {});
+            if (input_1) {
+              this.homey.flow.getDeviceTriggerCard('triggerInput1On').trigger(this, {}, {});
+            } else {
+              this.homey.flow.getDeviceTriggerCard('triggerInput1Off').trigger(this, {}, {});
+            }
           }
           break;
         case 'inputEvent0':

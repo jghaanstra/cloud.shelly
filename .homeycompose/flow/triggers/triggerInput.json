@@ -34,5 +34,6 @@
       },
       "filter": "driver_id=shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni"
     }
-  ]
+  ],
+  "deprecated": true
 }

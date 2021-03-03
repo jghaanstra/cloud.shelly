@@ -21,11 +21,17 @@ class Shelly1pmDevice extends Homey.Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    this.homey.flow.getDeviceTriggerCard('triggerInput');
+    this.homey.flow.getDeviceTriggerCard('triggerInput1On');
+    this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
+    this.homey.flow.getDeviceTriggerCard('triggerInputExternal1On');
+    this.homey.flow.getDeviceTriggerCard('triggerInputExternal1Off');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature1');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature2');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature3');
     this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
+
+    // TODO: REMOVE AFTER 3.1.0
+    this.homey.flow.getDeviceTriggerCard('triggerInput');
 
     this.setAvailable();
 
@@ -114,7 +120,11 @@ class Shelly1pmDevice extends Homey.Device {
       // capability input_1
       if (input_1 != this.getCapabilityValue('input_1')) {
         this.setCapabilityValue('input_1', input_1);
-        this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': input_1.toString()}, {});
+        if (input_1) {
+          this.homey.flow.getDeviceTriggerCard('triggerInput1On').trigger(this, {}, {});
+        } else {
+          this.homey.flow.getDeviceTriggerCard('triggerInput1Off').trigger(this, {}, {});
+        }
       }
 
       // capability measure_temperature.1, measure_temperature.2, measure_temperature.3
@@ -173,7 +183,11 @@ class Shelly1pmDevice extends Homey.Device {
           let input_external = result.ext_switch[0].input === 0 ? false : true;
           if (input_external != this.getCapabilityValue('input_external')) {
             this.setCapabilityValue('input_external', input_external);
-            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'external switch 1', 'state': input_external.toString()}, {});
+            if (input_external) {
+              this.homey.flow.getDeviceTriggerCard('triggerInputExternal1On').trigger(this, {}, {});
+            } else {
+              this.homey.flow.getDeviceTriggerCard('triggerInputExternal1Off').trigger(this, {}, {});
+            }
           }
         }
       }
@@ -237,14 +251,22 @@ class Shelly1pmDevice extends Homey.Device {
           let input_external = value === 0 ? false : true;
           if (input_external != this.getCapabilityValue('input_external')) {
             this.setCapabilityValue('input_external', input_external);
-            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'external switch 1', 'state': input_external.toString()}, {});
+            if (input_external) {
+              this.homey.flow.getDeviceTriggerCard('triggerInputExternal1On').trigger(this, {}, {});
+            } else {
+              this.homey.flow.getDeviceTriggerCard('triggerInputExternal1Off').trigger(this, {}, {});
+            }
           }
           break;
         case 'input0':
           let input_1 = value === 0 ? false : true;
           if (input_1 != this.getCapabilityValue('input_1')) {
             this.setCapabilityValue('input_1', input_1);
-            this.homey.flow.getDeviceTriggerCard('triggerInput').trigger(this, {'input': 'input 1', 'state': input_1.toString()}, {});
+            if (input_1) {
+              this.homey.flow.getDeviceTriggerCard('triggerInput1On').trigger(this, {}, {});
+            } else {
+              this.homey.flow.getDeviceTriggerCard('triggerInput1Off').trigger(this, {}, {});
+            }
           }
           break;
         case 'inputEvent0':

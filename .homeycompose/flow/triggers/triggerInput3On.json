@@ -1,0 +1,18 @@
+{
+  "id": "triggerInput3On",
+  "title": {
+    "en": "Input 3 turned on",
+    "nl": "Input 3 aangezet"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shellyi3&capabilities=input_3"
+    }
+  ]
+}

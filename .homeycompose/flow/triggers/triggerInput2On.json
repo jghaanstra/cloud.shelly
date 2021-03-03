@@ -1,8 +1,8 @@
 {
-  "id": "conditionInput1",
+  "id": "triggerInput2On",
   "title": {
-    "en": "Input 2 !{{is|isn't}} on",
-    "nl": "Input 2 !{{is|is niet}} aan"
+    "en": "Input 2 turned on",
+    "nl": "Input 2 aangezet"
   },
   "args": [
     {

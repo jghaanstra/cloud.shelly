@@ -1,0 +1,18 @@
+{
+  "id": "triggerInputExternal1Off",
+  "title": {
+    "en": "External input turned off",
+    "nl": "Externe input uitgezet"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly1|shelly1l|shelly1pm&capabilities=input_external"
+    }
+  ]
+}

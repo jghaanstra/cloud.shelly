@@ -184,5 +184,8 @@
   },
   "3.0.19": {
     "en": "Added a app setting to disable all CoAP traffic and fallback to basic HTTP polling. This is useful for users that have a lot of Shelly devices and are experiencing app crashes on version 3.0.18 while this is being investigated. Also fixed an issue with offline Shelly RGBW2 White."
+  },
+  "3.0.21": {
+    "en": "Please see the changelog on the community forum support topic (link is at the bottom of this page) as it's to long to mention here."
   }
 }
