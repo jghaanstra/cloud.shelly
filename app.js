@@ -46,7 +46,7 @@ class ShellyApp extends Homey.App {
       }
     });
     listenerCallbacks.getArgument('shelly').registerAutocompleteListener(async (query, args) => {
-      return await this.util.getShellies('actions');
+      return await this.util.getShellies('flowcard');
     });
     listenerCallbacks.getArgument('action').registerAutocompleteListener(async (query, args) => {
       return await this.util.getActions(args.shelly.actions);
@@ -277,7 +277,8 @@ class ShellyApp extends Homey.App {
                   var deviceid = filteredShellies[0].main_device+'-channel-'+channel;
                 }
               }
-              const homeydevice = this.homey.drivers.getDriver(filteredShellies[0].driver).getDevice({id: deviceid});
+              const filteredShelly = filteredShellies.filter(shelly => shelly.id.includes(deviceid));
+              const homeydevice = filteredShelly[0].device;
               homeydevice.deviceCoapReport(prop, newValue);
               if (homeydevice.getSetting('address') !== device.host) {
                 homeydevice.setSettings({address: device.host});
@@ -332,7 +333,7 @@ class ShellyApp extends Homey.App {
 
   async updateShellyCollection() {
     try {
-      shellyDevices = await this.util.getShellies();
+      shellyDevices = await this.util.getShellies('collection');
       return Promise.resolve(true);
     } catch(error) {
       this.log(error);
