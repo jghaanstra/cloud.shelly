@@ -54,7 +54,7 @@
       "Shelly motion"
     ]
   },
-  "version": "3.0.25",
+  "version": "3.0.26",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -343,7 +343,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1l|shelly2-rollershutter|shelly25-rollershutter|shellyi3&capabilities=input_2"
+            "filter": "driver_id=shelly1l|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
           }
         ]
       },
@@ -361,7 +361,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1l|shelly2-rollershutter|shelly25-rollershutter|shellyi3&capabilities=input_2"
+            "filter": "driver_id=shelly1l|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
           }
         ]
       },
@@ -4328,7 +4328,7 @@
       },
       "getable": true,
       "setable": false,
-      "uiComponent": null,
+      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/input_switch.svg"
     },
@@ -4340,7 +4340,7 @@
       },
       "getable": true,
       "setable": false,
-      "uiComponent": null,
+      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/input_switch.svg"
     },
@@ -4352,7 +4352,7 @@
       },
       "getable": true,
       "setable": false,
-      "uiComponent": null,
+      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/input_switch.svg"
     },

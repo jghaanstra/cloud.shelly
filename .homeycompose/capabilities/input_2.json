@@ -6,7 +6,7 @@
   },
   "getable": true,
   "setable": false,
-  "uiComponent": null,
+  "uiComponent": "sensor",
   "insights": true,
   "icon": "/assets/input_switch.svg"
 }

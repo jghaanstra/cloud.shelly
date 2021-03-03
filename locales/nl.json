@@ -54,7 +54,7 @@
   "settings": {
     "title": "Shelly instellingen",
     "general": "Algemene instellingen",
-    "intro-coap": "Gebruikers met veel (40+) Shelly apparaten kunnen app crashes ervaren bij gebruik van apparaat updates via CoAP. Dit uitschakelen zal ervoor zorgen dat de app niet meer crasht en schakelt over naar een HTTP polling fallback. Wees je ervan bewust dat hierdoor updates langzamer binnen komen en ook de input en action event (zoals short push etc.) functionaliteit uitschakelt. Herstart de app of Homey om de wijziging daadwerkelijk toe te passen.",
+    "intro-coap": "CoAP uitschakelen zal de CoAP listener stoppen en overschakelen naar HTTP polling. Dit kan handig zijn voor sommige netwerken waar CoAP niet werkt. Wees je ervan bewust dat hierdoor updates langzamer binnen komen en ook de input en action event (zoals short push etc.) functionaliteit uitschakelt. Herstart de app of Homey om de wijziging daadwerkelijk toe te passen.",
     "coap": "Uitschakelen CoAP?",
     "polling": "Polling frequentie in seconden",
     "success": "Instellingen zijn succesvol opgeslagen.",

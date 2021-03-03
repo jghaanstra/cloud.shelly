@@ -29,7 +29,7 @@ class ShellyApp extends Homey.App {
     // UPDATE THE SHELLY COLLECTION REGULARLY
     setInterval(async () => {
       await this.updateShellyCollection();
-    }, 300000);
+    }, 900000);
 
     // GENERIC FLOWCARDS
     this.homey.flow.getTriggerCard('triggerDeviceOffline');
@@ -55,7 +55,7 @@ class ShellyApp extends Homey.App {
     this.homey.flow.getConditionCard('conditionInput0')
       .registerRunListener(async (args) => {
         if (args.device) {
-          return args.device.getCapability("input_1");
+          return args.device.getCapabilityValue("input_1");
         } else {
           return false;
         }
@@ -64,7 +64,7 @@ class ShellyApp extends Homey.App {
     this.homey.flow.getConditionCard('conditionInput1')
       .registerRunListener(async (args) => {
         if (args.device) {
-          return args.device.getCapability("input_2");
+          return args.device.getCapabilityValue("input_2");
         } else {
           return false;
         }
@@ -73,7 +73,7 @@ class ShellyApp extends Homey.App {
     this.homey.flow.getConditionCard('conditionInput2')
       .registerRunListener(async (args) => {
         if (args.device) {
-          return args.device.getCapability("input_3");
+          return args.device.getCapabilityValue("input_3");
         } else {
           return false;
         }
