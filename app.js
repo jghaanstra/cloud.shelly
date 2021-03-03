@@ -298,7 +298,7 @@ class ShellyApp extends Homey.App {
             const offlineShellies = shellyDevices.filter(shelly => shelly.id.includes(device.id));
             if (offlineShellies.length > 0) {
               Object.keys(offlineShellies).forEach(key => {
-                this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": offlineShellies[key].getName(), "device_error": 'Device is offline'});
+                this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.id, "device_error": 'Device is offline'});
               });
             }
           }
