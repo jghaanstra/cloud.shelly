@@ -183,6 +183,7 @@ class Shelly1Device extends Homey.Device {
 
       switch(capability) {
         case 'relay0':
+          this.log('received CoAP message for relay with value', value);
           if (value != this.getCapabilityValue('onoff')) {
             this.setCapabilityValue('onoff', value);
           }
