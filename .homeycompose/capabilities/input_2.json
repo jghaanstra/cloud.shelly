@@ -8,5 +8,13 @@
   "setable": false,
   "uiComponent": "sensor",
   "insights": true,
+  "insightsTitleFalse": {
+    "en": "Input 2 turned off",
+    "nl": "Input 2 uitgeschakeld"
+  },
+  "insightsTitleTrue": {
+    "en": "Input 2 turned on",
+    "nl": "Input 2 ingeschakeld"
+  },
   "icon": "/assets/input_switch.svg"
 }

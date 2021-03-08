@@ -6,7 +6,15 @@
   },
   "getable": true,
   "setable": false,
-  "uiComponent": null,
+  "uiComponent": "sensor",
   "insights": true,
+  "insightsTitleFalse": {
+    "en": "External input turned off",
+    "nl": "Externe input uitgeschakeld"
+  },
+  "insightsTitleTrue": {
+    "en": "External input turned on",
+    "nl": "Externe input ingeschakeld"
+  },
   "icon": "/assets/input_switch.svg"
 }

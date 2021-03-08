@@ -175,7 +175,7 @@ class ShellyRGBW2CWWWDevice extends Homey.Device {
 
     this.pingInterval = setInterval(async () => {
       try {
-        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
+        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         this.setAvailable();
         this.pollDevice();
       } catch (error) {

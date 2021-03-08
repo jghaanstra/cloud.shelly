@@ -20,41 +20,33 @@ class Shelly3EmDevice extends Homey.Device {
 
     this.setAvailable();
 
-    // TODO: REMOVE AFTER 3.1.0
-    // REMOVE ONOFF FOR CHANNEL 1 AND 2 AS SHELLY 3EM SHARES THIS OVER CHANNEL 0
-    if (this.getStoreValue("channel") !== 0) {
-      if (this.hasCapability('onoff')) {
-        this.removeCapability('onoff');
+    if (!this.getStoreValue('SDK') === 3) {
+      // TODO: REMOVE AFTER 3.1.0
+      if (this.getStoreValue("channel") !== 0) {
+        if (this.hasCapability('onoff')) {
+          this.removeCapability('onoff');
+        }
       }
-    }
-    if (this.hasCapability('meter_power_consumed')) {
-      this.removeCapability('meter_power_consumed');
-    }
-    if (!this.hasCapability('meter_power')) {
-      this.addCapability('meter_power');
-    }
-    if (!this.hasCapability('meter_power_returned')) {
-      this.addCapability('meter_power_returned');
-    }
-    if (this.hasCapability('button.callbackevents')) {
-      this.removeCapability('button.callbackevents');
-    }
-    if (this.hasCapability('button.removecallbackevents')) {
-      this.removeCapability('button.removecallbackevents');
+      if (this.hasCapability('meter_power_consumed')) {
+        this.removeCapability('meter_power_consumed');
+      }
+      if (!this.hasCapability('meter_power')) {
+        this.addCapability('meter_power');
+      }
+      if (!this.hasCapability('meter_power_returned')) {
+        this.addCapability('meter_power_returned');
+      }
+      if (this.hasCapability('button.callbackevents')) {
+        this.removeCapability('button.callbackevents');
+      }
+      if (this.hasCapability('button.removecallbackevents')) {
+        this.removeCapability('button.removecallbackevents');
+      }
+      this.setStoreValue("SDK", 3);
     }
 
-    // UPDATE INITIAL STATE AND POLLING IF NEEDED
-    if (this.homey.settings.get('general_coap')) {
-      setInterval(async () => {
-        setTimeout(async () => {
-          await this.initialStateUpdate();
-        }, this.getStoreValue('channel') * 1000);
-      }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
-    } else {
-      setTimeout(() => {
-        this.initialStateUpdate();
-      }, this.getStoreValue('channel') * 2000);
-    }
+    // SET UNICAST, DO INITIAL STATE OVER HTTP AND START POLLING IF COAP IS DISABLED
+    this.bootSequence();
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {
@@ -88,9 +80,33 @@ class Shelly3EmDevice extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
+  async bootSequence() {
+    try {
+      if (this.homey.settings.get('general_coap')) {
+        setInterval(async () => {
+          setTimeout(async () => {
+            await this.initialStateUpdate();
+          }, this.getStoreValue('channel') * 1000);
+        }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
+      } else {
+        setTimeout(() => {
+          this.initialStateUpdate();
+        }, this.getStoreValue('channel') * 3000);
+        if (!this.getStoreValue('unicast') === true) {
+          if (this.getStoreValue('channel') === 0) {
+            const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          }
+          this.setStoreValue("unicast", true);
+        }
+      }
+    } catch (error) {
+      this.log(error);
+    }
+  }
+
   async initialStateUpdate() {
     try {
-      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
+      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       if (!this.getAvailable()) { this.setAvailable(); }
 
       let channel = this.getStoreValue('channel');

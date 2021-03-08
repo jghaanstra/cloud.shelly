@@ -29,22 +29,24 @@ class ShellyButton1Device extends Homey.Device {
 
     this.setAvailable();
 
-    // ADD AND REMOVE CAPABILITIES
-    // TODO: REMOVE AFTER 3.1.0
-    if (this.hasCapability('measure_voltage')) {
-      this.removeCapability('measure_voltage');
-    }
-    if (this.hasCapability('alarm_generic')) {
-      this.removeCapability('alarm_generic');
-    }
-    if (!this.hasCapability('input_1')) {
-      this.addCapability('input_1');
-    }
-    if (this.hasCapability('button.callbackevents')) {
-      this.removeCapability('button.callbackevents');
-    }
-    if (this.hasCapability('button.removecallbackevents')) {
-      this.removeCapability('button.removecallbackevents');
+    if (!this.getStoreValue('SDK') === 3) {
+      // TODO: REMOVE AFTER 3.1.0
+      if (this.hasCapability('measure_voltage')) {
+        this.removeCapability('measure_voltage');
+      }
+      if (this.hasCapability('alarm_generic')) {
+        this.removeCapability('alarm_generic');
+      }
+      if (!this.hasCapability('input_1')) {
+        this.addCapability('input_1');
+      }
+      if (this.hasCapability('button.callbackevents')) {
+        this.removeCapability('button.callbackevents');
+      }
+      if (this.hasCapability('button.removecallbackevents')) {
+        this.removeCapability('button.removecallbackevents');
+      }
+      this.setStoreValue("SDK", 3);
     }
 
     // UPDATE INITIAL STATE AND POLLING IF NEEDED
@@ -74,7 +76,7 @@ class ShellyButton1Device extends Homey.Device {
   // HELPER FUNCTIONS
   async initialStateUpdate() {
     try {
-      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
+      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       if (!this.getAvailable()) { this.setAvailable(); }
 
       let measure_battery = result.bat.value;

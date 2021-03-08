@@ -35,8 +35,6 @@ class ShellyVintageDriver extends Homey.Driver {
     session.setHandler('get_device', async (data) => {
       try {
         const discoveryResult = discoveryResults[selectedDeviceId];
-        if(!discoveryResult) return callback(new Error('Something went wrong'));
-
         const result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
         deviceArray = {
           name: 'Shelly Vintage ['+ discoveryResult.address +']',
@@ -105,7 +103,7 @@ class ShellyVintageDriver extends Homey.Driver {
       return Promise.resolve(deviceArray);
     });
 
-    socket.on('setIcon', async (data) => {
+    session.setHandler('setIcon', async (data) => {
       deviceIcon = data.icon;
       return Promise.resolve(true);
     });

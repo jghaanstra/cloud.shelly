@@ -11,14 +11,8 @@ class ShellyMotionDevice extends Homey.Device {
 
     this.setAvailable();
 
-    // UPDATE INITIAL STATE AND POLLING IF NEEDED
-    if (this.homey.settings.get('general_coap')) {
-      setInterval(async () => {
-        await this.initialStateUpdate();
-      }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
-    } else {
-      this.initialStateUpdate();
-    }
+    // SET UNICAST, DO INITIAL STATE OVER HTTP AND START POLLING IF COAP IS DISABLED
+    this.bootSequence();
 
   }
 
@@ -38,9 +32,29 @@ class ShellyMotionDevice extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
+  async bootSequence() {
+    try {
+      if (this.homey.settings.get('general_coap')) {
+        setInterval(() => {
+          this.initialStateUpdate();
+        }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
+      } else {
+        setTimeout(() => {
+          this.initialStateUpdate();
+        }, 5000);
+        if (!this.getStoreValue('unicast') === true) {
+          const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          this.setStoreValue("unicast", true);
+        }
+      }
+    } catch (error) {
+      this.log(error);
+    }
+  }
+
   async initialStateUpdate() {
     try {
-      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'), 'polling');
+      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       if (!this.getAvailable()) { this.setAvailable(); }
 
       let alarm_motion = result.sensor.motion;

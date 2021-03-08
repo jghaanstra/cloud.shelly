@@ -35,8 +35,6 @@ class Shelly4ProDriver extends Homey.Driver {
     session.setHandler('get_device', async (data) => {
       try {
         const discoveryResult = discoveryResults[selectedDeviceId];
-        if(!discoveryResult) return callback(new Error('Something went wrong'));
-
         const result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
         deviceArray = {
           name: 'Shelly 4 Pro ['+ discoveryResult.address +']',

@@ -35,8 +35,6 @@ class ShellyMotionDriver extends Homey.Driver {
     session.setHandler('get_device', async (data) => {
       try {
         const discoveryResult = discoveryResults[selectedDeviceId];
-        if(!discoveryResult) return callback(new Error('Something went wrong'));
-
         const result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
         deviceArray = {
           name: 'Shelly Motion Sensor ['+ discoveryResult.address +']',
@@ -49,7 +47,8 @@ class ShellyMotionDriver extends Homey.Driver {
             password : ''
           },
           store: {
-            type: result.type
+            type: result.type,
+            unicast: false
           },
           icon: deviceIcon
         }
@@ -79,7 +78,8 @@ class ShellyMotionDriver extends Homey.Driver {
               password : data.password
             },
             store: {
-              type: result.device.type
+              type: result.device.type,
+              unicast: false
             }
           }
           return Promise.resolve(deviceArray);
@@ -103,9 +103,8 @@ class ShellyMotionDriver extends Homey.Driver {
 
     session.setHandler('add_device', async (data) => {
       try {
-        const homey_ip = await this.homey.cloud.getLocalAddress();
-        const result = await this.util.sendCommand('/settings?coiot_enable=true&coiot_peer='+ homey_ip.substring(0, homey_ip.length-3), deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
-        const reboot = await this.util.sendCommand('/reboot', deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
+        const unicast = await this.util.setUnicast(deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
+        deviceArray.store.unicast = true;
         return Promise.resolve(deviceArray);
       } catch (error) {
         return Promise.reject(error);

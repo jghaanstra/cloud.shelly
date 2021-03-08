@@ -35,8 +35,6 @@ class ShellyhtDriver extends Homey.Driver {
     session.setHandler('get_device', async (data) => {
       try {
         const discoveryResult = discoveryResults[selectedDeviceId];
-        if(!discoveryResult) return callback(new Error('Something went wrong'));
-
         const result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
         deviceArray = {
           name: 'Shelly HT ['+ discoveryResult.address +']',
@@ -49,7 +47,8 @@ class ShellyhtDriver extends Homey.Driver {
             password : ''
           },
           store: {
-            type: result.type
+            type: result.type,
+            unicast: false
           },
           icon: deviceIcon
         }
@@ -81,7 +80,7 @@ class ShellyhtDriver extends Homey.Driver {
             },
             store: {
               type: result.device.type,
-              outputs: result.device.num_outputs
+              unicast: false
             }
           }
           return Promise.resolve(deviceArray);
@@ -104,7 +103,13 @@ class ShellyhtDriver extends Homey.Driver {
     });
 
     session.setHandler('add_device', async (data) => {
-      return Promise.resolve(deviceArray);
+      try {
+        const unicast = await this.util.setUnicast(deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
+        deviceArray.store.unicast = true;
+        return Promise.resolve(deviceArray);
+      } catch (error) {
+        return Promise.reject(error);
+      }
     });
 
     session.setHandler('save_icon', async (data) => {

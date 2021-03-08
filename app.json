@@ -54,7 +54,7 @@
       "Shelly motion"
     ]
   },
-  "version": "3.0.26",
+  "version": "3.0.27",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -3848,6 +3848,7 @@
         "light_temperature",
         "measure_power"
       ],
+      "deprecated": true,
       "id": "shellyrgbw2cwww",
       "settings": [
         {
@@ -4330,6 +4331,14 @@
       "setable": false,
       "uiComponent": "sensor",
       "insights": true,
+      "insightsTitleFalse": {
+        "en": "Input 1 turned off",
+        "nl": "Input 1 uitgeschakeld"
+      },
+      "insightsTitleTrue": {
+        "en": "Input 1 turned on",
+        "nl": "Input 1 ingeschakeld"
+      },
       "icon": "/assets/input_switch.svg"
     },
     "input_2": {
@@ -4342,6 +4351,14 @@
       "setable": false,
       "uiComponent": "sensor",
       "insights": true,
+      "insightsTitleFalse": {
+        "en": "Input 2 turned off",
+        "nl": "Input 2 uitgeschakeld"
+      },
+      "insightsTitleTrue": {
+        "en": "Input 2 turned on",
+        "nl": "Input 2 ingeschakeld"
+      },
       "icon": "/assets/input_switch.svg"
     },
     "input_3": {
@@ -4354,6 +4371,14 @@
       "setable": false,
       "uiComponent": "sensor",
       "insights": true,
+      "insightsTitleFalse": {
+        "en": "Input 3 turned off",
+        "nl": "Input 3 uitgeschakeld"
+      },
+      "insightsTitleTrue": {
+        "en": "Input 3 turned on",
+        "nl": "Input 3 ingeschakeld"
+      },
       "icon": "/assets/input_switch.svg"
     },
     "input_external": {
@@ -4364,8 +4389,16 @@
       },
       "getable": true,
       "setable": false,
-      "uiComponent": null,
+      "uiComponent": "sensor",
       "insights": true,
+      "insightsTitleFalse": {
+        "en": "External input turned off",
+        "nl": "Externe input uitgeschakeld"
+      },
+      "insightsTitleTrue": {
+        "en": "External input turned on",
+        "nl": "Externe input ingeschakeld"
+      },
       "icon": "/assets/input_switch.svg"
     },
     "meter_power_consumed": {
