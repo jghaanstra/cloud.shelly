@@ -97,6 +97,7 @@ class Shelly1Device extends Homey.Device {
 
       // capability input_1
       if (input_1 != this.getCapabilityValue('input_1')) {
+        this.log('updating input state of', this.getData().id, 'during device initialisation to', input_1);
         this.setCapabilityValue('input_1', input_1);
         if (input_1) {
           this.homey.flow.getDeviceTriggerCard('triggerInput1On').trigger(this, {}, {});
@@ -222,6 +223,7 @@ class Shelly1Device extends Homey.Device {
           break;
         case 'input0':
           let input_1 = value === 0 ? false : true;
+          this.log('received CoAP message for Input 1 with value', input_1);
           if (input_1 != this.getCapabilityValue('input_1')) {
             this.setCapabilityValue('input_1', input_1);
             if (input_1) {

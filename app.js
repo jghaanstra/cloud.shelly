@@ -263,7 +263,10 @@ class ShellyApp extends Homey.App {
 
       device.on('change', (prop, newValue, oldValue) => {
         try {
-          //this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'with IP address', device.host);
+          let device_id_debug = device.id;
+          if (device_id_debug.includes("shelly1-")) {
+            this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'with IP address', device.host);
+          }
           if (shellyDevices.length > 0) {
             const filteredShellies = shellyDevices.filter(shelly => shelly.id.includes(device.id));
             if (filteredShellies.length > 0) {
