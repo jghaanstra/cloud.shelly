@@ -34,6 +34,8 @@ class Shelly1Device extends Homey.Device {
 
     this.setAvailable();
 
+    this.log('Initializing Shelly 1 with ID', this.getData().id, 'and IP', this.getSetting('address'));
+
     // TODO: ADD AND REMOVE STUFF - REMOVE CODE AFTER 3.1.0
     if (this.hasCapability('alarm_generic')) {
       this.removeCapability('alarm_generic');

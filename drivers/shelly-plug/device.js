@@ -17,6 +17,8 @@ class ShellyPlugDevice extends Homey.Device {
 
     this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
 
+    this.log('Initializing Shelly Plug with ID', this.getData().id, 'and IP', this.getSetting('address'));
+
     this.setAvailable();
 
     // REMOVE CAPABILITIES
