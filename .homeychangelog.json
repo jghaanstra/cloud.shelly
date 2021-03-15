@@ -202,5 +202,8 @@
   },
   "3.0.26": {
     "en": "Fixed missing Input 2 trigger card for dimmer, fixed input condition cards and added the input state to the device pages."
+  },
+  "3.0.27": {
+    "en": "Switch to unicast for Shelly devices with firmware 1.10.0 or higher for better network compatibility (please enable CoAP again in the app settings if you have previously disabled it), also added HTTP polling every minute as backup and fixed an issue with pairing of the Shelly Vintage."
   }
 }
