@@ -37,12 +37,8 @@ class ShellydwDevice extends Homey.Device {
       this.setStoreValue("SDK", 3);
     }
 
-    // UPDATE INITIAL STATE AND POLLING IF NEEDED
-    if (this.homey.settings.get('general_coap')) {
-      setInterval(async () => {
-        await this.initialStateUpdate();
-      }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
-    }
+    // START POLLING IF COAP IS DISABLED OR TRY INITIAL UPDATE
+    this.bootSequence();
 
   }
 
@@ -52,6 +48,7 @@ class ShellydwDevice extends Homey.Device {
 
   async onDeleted() {
     try {
+      clearInterval(this.pollingInterval);
       const iconpath = "/userdata/" + this.getData().id +".svg";
       await this.util.removeIcon(iconpath);
       await this.homey.app.updateShellyCollection();
@@ -62,6 +59,22 @@ class ShellydwDevice extends Homey.Device {
   }
 
   // HELPER FUNCTIONS
+  async bootSequence() {
+    try {
+      if (this.homey.settings.get('general_coap')) {
+        this.pollingInterval = setInterval(() => {
+          this.initialStateUpdate();
+        }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
+      } else {
+        setTimeout(() => {
+          this.initialStateUpdate();
+        }, this.util.getRandomTimeout(10));
+      }
+    } catch (error) {
+      this.log(error);
+    }
+  }
+
   async initialStateUpdate() {
     try {
       let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
@@ -112,6 +125,14 @@ class ShellydwDevice extends Homey.Device {
   async deviceCoapReport(capability, value) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
+
+      // update unicast
+      if (!this.getStoreValue('unicast') === true) {
+        const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        if (result === 'OK') {
+          this.setStoreValue("unicast", true);
+        }  
+      }
 
       switch(capability) {
         case 'state':

@@ -2,6 +2,7 @@
 
 const Homey = require('homey');
 const Util = require('/lib/util.js');
+const semver = require('semver');
 const callbacks = [];
 
 class Shelly4ProDevice extends Homey.Device {
@@ -30,6 +31,7 @@ class Shelly4ProDevice extends Homey.Device {
 
   async onDeleted() {
     try {
+      clearInterval(this.pollingInterval);
       if (this.getStoreValue('channel') === 0) {
         const iconpath = "/userdata/" + this.getData().id +".svg";
         return await this.util.removeIcon(iconpath);
@@ -45,7 +47,7 @@ class Shelly4ProDevice extends Homey.Device {
   async bootSequence() {
     try {
       if (this.homey.settings.get('general_coap')) {
-        setInterval(async () => {
+        this.pollingInterval = setInterval(() => {
           setTimeout(async () => {
             await this.initialStateUpdate();
           }, this.getStoreValue('channel') * 1000);
@@ -53,13 +55,10 @@ class Shelly4ProDevice extends Homey.Device {
       } else {
         setTimeout(() => {
           this.initialStateUpdate();
-        }, this.getStoreValue('channel') * 3000);
-        if (!this.getStoreValue('unicast') === true) {
-          if (this.getStoreValue('channel') === 0) {
-            const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-          }
-          this.setStoreValue("unicast", true);
-        }
+        }, this.util.getRandomTimeout(10));
+        this.pollingInterval = setInterval(() => {
+          this.initialStateUpdate();
+        }, (60000 + (1000 * this.getStoreValue('channel'))));
       }
     } catch (error) {
       this.log(error);
@@ -91,8 +90,20 @@ class Shelly4ProDevice extends Homey.Device {
         this.setCapabilityValue('meter_power', meter_power);
       }
 
+      // update unicast for channel 0
+      if (this.getStoreValue('channel') === 0) {
+        const version = result.update.old_version.match(/v([0-9a-z.-]+)/)[1];
+        if (semver.gt(version, '1.9.9') && !this.getStoreValue('unicast') === true) {
+          const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          if (result === 'OK') {
+            this.setStoreValue("unicast", true);
+          }  
+        }
+      }
+
     } catch (error) {
       this.setUnavailable(this.homey.__('device.unreachable') + error.message);
+      this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.message});
       this.log(error);
     }
   }

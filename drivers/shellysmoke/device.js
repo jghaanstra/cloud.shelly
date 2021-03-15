@@ -2,6 +2,7 @@
 
 const Homey = require('homey');
 const Util = require('/lib/util.js');
+const semver = require('semver');
 const callbacks = [];
 
 class ShellySmokeDevice extends Homey.Device {
@@ -19,7 +20,7 @@ class ShellySmokeDevice extends Homey.Device {
       this.setStoreValue("SDK", 3);
     }
 
-    // SET UNICAST, DO INITIAL STATE OVER HTTP AND START POLLING IF COAP IS DISABLED
+    // START POLLING IF COAP IS DISABLED OR TRY INITIAL UPDATE
     this.bootSequence();
 
   }
@@ -30,6 +31,7 @@ class ShellySmokeDevice extends Homey.Device {
 
   async onDeleted() {
     try {
+      clearInterval(this.pollingInterval);
       const iconpath = "/userdata/" + this.getData().id +".svg";
       await this.util.removeIcon(iconpath);
       await this.homey.app.updateShellyCollection();
@@ -43,17 +45,13 @@ class ShellySmokeDevice extends Homey.Device {
   async bootSequence() {
     try {
       if (this.homey.settings.get('general_coap')) {
-        setInterval(() => {
+        this.pollingInterval = setInterval(() => {
           this.initialStateUpdate();
         }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
       } else {
         setTimeout(() => {
           this.initialStateUpdate();
-        }, 5000);
-        if (!this.getStoreValue('unicast') === true) {
-          const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-          this.setStoreValue("unicast", true);
-        }
+        }, this.util.getRandomTimeout(10));
       }
     } catch (error) {
       this.log(error);
@@ -84,9 +82,17 @@ class ShellySmokeDevice extends Homey.Device {
         this.setCapabilityValue('measure_battery', measure_battery);
       }
 
+      // update unicast
+      const version = result.update.old_version.match(/v([0-9a-z.-]+)/)[1];
+      if (semver.gt(version, '1.9.9') && !this.getStoreValue('unicast') === true) {
+        const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        if (result === 'OK') {
+          this.setStoreValue("unicast", true);
+        }  
+      }
+
     } catch (error) {
       this.log('Shelly Smoke is probably asleep and disconnected'+ error);
-      return Promise.resolve(true);
     }
   }
 

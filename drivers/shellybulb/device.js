@@ -71,6 +71,7 @@ class ShellyBulbDevice extends Homey.Device {
 
   async onDeleted() {
     try {
+      clearInterval(this.pollingInterval);
       const iconpath = "/userdata/" + this.getData().id +".svg";
       await this.util.removeIcon(iconpath);
       await this.homey.app.updateShellyCollection();
@@ -84,17 +85,16 @@ class ShellyBulbDevice extends Homey.Device {
   async bootSequence() {
     try {
       if (this.homey.settings.get('general_coap')) {
-        setInterval(() => {
+        this.pollingInterval = setInterval(() => {
           this.initialStateUpdate();
         }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
       } else {
         setTimeout(() => {
           this.initialStateUpdate();
-        }, 5000);
-        if (!this.getStoreValue('unicast') === true) {
-          const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-          this.setStoreValue("unicast", true);
-        }
+        }, this.util.getRandomTimeout(10));
+        this.pollingInterval = setInterval(() => {
+          this.initialStateUpdate();
+        }, 60000);
       }
     } catch (error) {
       this.log(error);
@@ -152,8 +152,17 @@ class ShellyBulbDevice extends Homey.Device {
         this.setCapabilityValue('light_mode', light_mode);
       }
 
+      // update unicast
+      if (!this.getStoreValue('unicast') === true) {
+        const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        if (result === 'OK') {
+          this.setStoreValue("unicast", true);
+        }  
+      }
+
     } catch (error) {
       this.setUnavailable(this.homey.__('device.unreachable') + error.message);
+      this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.message});
       this.log(error);
     }
   }
