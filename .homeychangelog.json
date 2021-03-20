@@ -205,5 +205,8 @@
   },
   "3.0.27": {
     "en": "Switch to unicast for Shelly devices with firmware 1.10.0 or higher for better network compatibility (please enable CoAP again in the app settings if you have previously disabled it), also added HTTP polling every minute as backup and fixed an issue with pairing of the Shelly Vintage."
+  },
+  "3.0.28": {
+    "en": "Fixed an issue with the Shelly Dimmer 1 (added a workaround due to not using semantic versioning in firmware version of the Shelly Dimmer 1)"
   }
 }

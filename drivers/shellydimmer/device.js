@@ -2,7 +2,6 @@
 
 const Homey = require('homey');
 const Util = require('/lib/util.js');
-const semver = require('semver');
 const callbacks = [
   'shortpush',
   'longpush'
@@ -192,12 +191,11 @@ class ShellyDimmerDevice extends Homey.Device {
       }
 
       // update unicast
-      const version = result.update.old_version.match(/v([0-9a-z.-]+)/)[1];
-      if (semver.gt(version, '1.9.6') && !this.getStoreValue('unicast') === true) {
+      if (!this.getStoreValue('unicast') === true) {
         const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         if (result === 'OK') {
           this.setStoreValue("unicast", true);
-        }  
+        }
       }
 
     } catch (error) {
