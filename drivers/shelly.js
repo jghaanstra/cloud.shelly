@@ -2,7 +2,6 @@
 
 const Homey = require('homey');
 const Util = require('/lib/util.js');
-const semver = require('semver');
 
 class ShellyDevice extends Homey.Device {
 

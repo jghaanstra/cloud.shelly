@@ -1,6 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
+const Shelly = require('../shelly.js');
 const Util = require('/lib/util.js');
 const semver = require('semver');
 const callbacks = [
@@ -17,7 +18,7 @@ const temp_callbacks = [
   'longpush'
 ];
 
-class Shelly1Device extends Homey.Device {
+class Shelly1Device extends Shelly {
 
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
@@ -68,38 +69,7 @@ class Shelly1Device extends Homey.Device {
     return;
   }
 
-  async onDeleted() {
-    try {
-      clearInterval(this.pollingInterval);
-      const iconpath = "/userdata/" + this.getData().id +".svg";
-      await this.util.removeIcon(iconpath);
-      await this.homey.app.updateShellyCollection();
-      return;
-    } catch (error) {
-      this.log(error);
-    }
-  }
-
   // HELPER FUNCTIONS
-  async bootSequence() {
-    try {
-      if (this.homey.settings.get('general_coap')) {
-        this.pollingInterval = setInterval(() => {
-          this.initialStateUpdate();
-        }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
-      } else {
-        setTimeout(() => {
-          this.initialStateUpdate();
-        }, this.util.getRandomTimeout(10));
-        this.pollingInterval = setInterval(() => {
-          this.initialStateUpdate();
-        }, 60000);
-      }
-    } catch (error) {
-      this.log(error);
-    }
-  }
-
   async initialStateUpdate() {
     try {
       let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
