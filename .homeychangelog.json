@@ -217,5 +217,8 @@
   },
   "3.0.31": {
     "en": "Code improvements for easier maintenance and a small fix for switching between color modes of the Shelly Bulb."
+  },
+  "3.0.32": {
+    "en": "Small fix for devices appearing as offline while they are not."
   }
 }

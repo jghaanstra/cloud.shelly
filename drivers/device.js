@@ -79,10 +79,14 @@ class ShellyDevice extends Homey.Device {
       // RELAYS (onoff)
       if (result.hasOwnProperty("relays") && this.hasCapability('onoff')) {
 
-        /* onoff */
-        let onoff = result.relays[channel].ison;
-        if (onoff != this.getCapabilityValue('onoff')) {
-          this.setCapabilityValue('onoff', onoff);
+        if (result.relays.hasOwnProperty([channel])) {
+
+          /* onoff */
+          let onoff = result.relays[channel].ison;
+          if (onoff != this.getCapabilityValue('onoff')) {
+            this.setCapabilityValue('onoff', onoff);
+          }
+
         }
 
       }
@@ -90,20 +94,24 @@ class ShellyDevice extends Homey.Device {
       // METERS (measure_power, meter_power)
       if (result.hasOwnProperty("meters")) {
 
-        /* measure_power */
-        if (result.meters[channel].hasOwnProperty("power") && this.hasCapability('measure_power')) {
-          let measure_power_meter = result.meters[channel].power;
-          if (measure_power_meter != this.getCapabilityValue('measure_power')) {
-            this.setCapabilityValue('measure_power', measure_power_meter);
-          }
-        }
+        if (result.meters.hasOwnProperty([channel])) {
 
-        /* meter_power */
-        if (result.meters[channel].hasOwnProperty("total") && this.hasCapability('meter_power')) {
-          let meter_power_meter = result.meters[channel].total * 0.000017;
-          if (meter_power_meter != this.getCapabilityValue('meter_power')) {
-            this.setCapabilityValue('meter_power', meter_power_meter);
+          /* measure_power */
+          if (result.meters[channel].hasOwnProperty("power") && this.hasCapability('measure_power')) {
+            let measure_power_meter = result.meters[channel].power;
+            if (measure_power_meter != this.getCapabilityValue('measure_power')) {
+              this.setCapabilityValue('measure_power', measure_power_meter);
+            }
           }
+
+          /* meter_power */
+          if (result.meters[channel].hasOwnProperty("total") && this.hasCapability('meter_power')) {
+            let meter_power_meter = result.meters[channel].total * 0.000017;
+            if (meter_power_meter != this.getCapabilityValue('meter_power')) {
+              this.setCapabilityValue('meter_power', meter_power_meter);
+            }
+          }
+
         }
 
       }
@@ -111,53 +119,57 @@ class ShellyDevice extends Homey.Device {
       // EMETERS (measure_power, meter_power, meter_power_returned, power_factor, measure_current, measure_voltage)
       if (result.hasOwnProperty("emeters")) {
 
-        /* measure_power */
-        if (result.emeters[channel].hasOwnProperty("power") && this.hasCapability('measure_power')) {
-          let measure_power_emeter = result.emeters[channel].power;
-          if (measure_power_emeter != this.getCapabilityValue('measure_power')) {
-            this.setCapabilityValue('measure_power', measure_power_emeter);
-          }
-        }
+        if (result.emeters.hasOwnProperty([channel])) {
 
-        /* meter_power */
-        if (result.emeters[channel].hasOwnProperty("total") && this.hasCapability('meter_power')) {
-          let meter_power_emeter = result.emeters[channel].total / 1000;
-          if (meter_power_emeter != this.getCapabilityValue('meter_power')) {
-            this.setCapabilityValue('meter_power', meter_power_emeter);
+          /* measure_power */
+          if (result.emeters[channel].hasOwnProperty("power") && this.hasCapability('measure_power')) {
+            let measure_power_emeter = result.emeters[channel].power;
+            if (measure_power_emeter != this.getCapabilityValue('measure_power')) {
+              this.setCapabilityValue('measure_power', measure_power_emeter);
+            }
           }
-        }
 
-        /* meter_power_returned */
-        if (result.emeters[channel].hasOwnProperty("total_returned") && this.hasCapability('meter_power_returned')) {
-          let meter_power_returned = result.emeters[channel].total_returned / 1000;
-          let meter_power_returned_rounded = Number(meter_power_returned.toFixed(3));
-          if (meter_power_returned_rounded != this.getCapabilityValue('meter_power_returned')) {
-            this.setCapabilityValue('meter_power_returned', meter_power_returned_rounded);
+          /* meter_power */
+          if (result.emeters[channel].hasOwnProperty("total") && this.hasCapability('meter_power')) {
+            let meter_power_emeter = result.emeters[channel].total / 1000;
+            if (meter_power_emeter != this.getCapabilityValue('meter_power')) {
+              this.setCapabilityValue('meter_power', meter_power_emeter);
+            }
           }
-        }
 
-        /* power factor */
-        if (result.emeters[channel].hasOwnProperty("pf") && this.hasCapability('meter_power_factor')) {
-          let meter_power_factor = result.emeters[channel].pf;
-          if (meter_power_factor != this.getCapabilityValue('meter_power_factor')) {
-            this.setCapabilityValue('meter_power_factor', meter_power_factor);
+          /* meter_power_returned */
+          if (result.emeters[channel].hasOwnProperty("total_returned") && this.hasCapability('meter_power_returned')) {
+            let meter_power_returned = result.emeters[channel].total_returned / 1000;
+            let meter_power_returned_rounded = Number(meter_power_returned.toFixed(3));
+            if (meter_power_returned_rounded != this.getCapabilityValue('meter_power_returned')) {
+              this.setCapabilityValue('meter_power_returned', meter_power_returned_rounded);
+            }
           }
-        }
 
-        /* measure_current */
-        if (result.emeters[channel].hasOwnProperty("current")  && this.hasCapability('measure_current')) {
-          let measure_current = result.emeters[channel].current;
-          if (measure_current != this.getCapabilityValue('measure_current')) {
-            this.setCapabilityValue('measure_current', measure_current);
+          /* power factor */
+          if (result.emeters[channel].hasOwnProperty("pf") && this.hasCapability('meter_power_factor')) {
+            let meter_power_factor = result.emeters[channel].pf;
+            if (meter_power_factor != this.getCapabilityValue('meter_power_factor')) {
+              this.setCapabilityValue('meter_power_factor', meter_power_factor);
+            }
           }
-        }
 
-        /* measure_voltage */
-        if (result.emeters[channel].hasOwnProperty("voltage")  && this.hasCapability('measure_voltage')) {
-          let measure_voltage = result.emeters[channel].voltage;
-          if (measure_voltage != this.getCapabilityValue('measure_voltage')) {
-            this.setCapabilityValue('measure_voltage', measure_voltage);
+          /* measure_current */
+          if (result.emeters[channel].hasOwnProperty("current")  && this.hasCapability('measure_current')) {
+            let measure_current = result.emeters[channel].current;
+            if (measure_current != this.getCapabilityValue('measure_current')) {
+              this.setCapabilityValue('measure_current', measure_current);
+            }
           }
+
+          /* measure_voltage */
+          if (result.emeters[channel].hasOwnProperty("voltage")  && this.hasCapability('measure_voltage')) {
+            let measure_voltage = result.emeters[channel].voltage;
+            if (measure_voltage != this.getCapabilityValue('measure_voltage')) {
+              this.setCapabilityValue('measure_voltage', measure_voltage);
+            }
+          }
+
         }
 
       }
@@ -225,89 +237,93 @@ class ShellyDevice extends Homey.Device {
       // LIGHTS
       if (result.hasOwnProperty("lights")) {
 
-        /* light_mode */
-        if (result.lights[channel].hasOwnProperty("mode") && this.hasCapability('light_mode')) {
-          var light_mode = result.lights[channel].mode === 'white' ? 'temperature' : 'color';
-          if (light_mode != this.getCapabilityValue('light_mode') && this.getStoreValue('type') !== 'SHRGBW2') {
-            this.setCapabilityValue('light_mode', light_mode);
-          }
-        } else {
-          var light_mode = 'temperature';
-        }
+        if (result.lights.hasOwnProperty([channel])) {
 
-        // Shelly DUO
-        if (this.getStoreValue('type') === 'SHBDUO-1') {
-
-          /* dim */
-          let dim_duo = result.lights[channel].brightness > 100 ? 1 : result.lights[channel].brightness / 100;
-          if (dim_duo != this.getCapabilityValue('dim')) {
-            this.setCapabilityValue('dim', dim_duo);
-          }
-
-          /* light_temperature */
-          let light_temperature_duo = 1 - (result.lights[channel].white / 100);
-          if (light_temperature_duo != this.getCapabilityValue('light_temperature')) {
-            this.setCapabilityValue('light_temperature', light_temperature_duo);
-          }
-
-        }
-
-        // Shelly Bulb (RGB)
-        if (this.getStoreValue('type') === 'SHBLB-1' || this.getStoreValue('type') === 'SHCB-1') {
-
-          /* dim */
-          if (light_mode === 'color') {
-            var dim_bulb = result.lights[channel].gain > 100 ? 1 : result.lights[channel].gain / 100;
+          /* light_mode */
+          if (result.lights[channel].hasOwnProperty("mode") && this.hasCapability('light_mode')) {
+            var light_mode = result.lights[channel].mode === 'white' ? 'temperature' : 'color';
+            if (light_mode != this.getCapabilityValue('light_mode') && this.getStoreValue('type') !== 'SHRGBW2') {
+              this.setCapabilityValue('light_mode', light_mode);
+            }
           } else {
-            var dim_bulb = result.lights[channel].brightness > 100 ? 1 : result.lights[channel].brightness / 100;
-          }
-          if (dim_bulb != this.getCapabilityValue('dim')) {
-            this.setCapabilityValue('dim', dim_bulb);
+            var light_mode = 'temperature';
           }
 
-          /* light_temperature_temp */
-          let light_temperature_bulb = 1 - Number(this.util.normalize(result.lights[channel].temp, 3000, 6500));
-          if (light_temperature_bulb != this.getCapabilityValue('light_temperature')) {
-            this.setCapabilityValue('light_temperature', light_temperature_bulb);
+          // Shelly DUO
+          if (this.getStoreValue('type') === 'SHBDUO-1') {
+
+            /* dim */
+            let dim_duo = result.lights[channel].brightness > 100 ? 1 : result.lights[channel].brightness / 100;
+            if (dim_duo != this.getCapabilityValue('dim')) {
+              this.setCapabilityValue('dim', dim_duo);
+            }
+
+            /* light_temperature */
+            let light_temperature_duo = 1 - (result.lights[channel].white / 100);
+            if (light_temperature_duo != this.getCapabilityValue('light_temperature')) {
+              this.setCapabilityValue('light_temperature', light_temperature_duo);
+            }
+
           }
 
-        }
+          // Shelly Bulb (RGB)
+          if (this.getStoreValue('type') === 'SHBLB-1' || this.getStoreValue('type') === 'SHCB-1') {
 
-        // Shelly RGBW2
-        if (this.getStoreValue('type') === 'SHRGBW2') {
+            /* dim */
+            if (light_mode === 'color') {
+              var dim_bulb = result.lights[channel].gain > 100 ? 1 : result.lights[channel].gain / 100;
+            } else {
+              var dim_bulb = result.lights[channel].brightness > 100 ? 1 : result.lights[channel].brightness / 100;
+            }
+            if (dim_bulb != this.getCapabilityValue('dim')) {
+              this.setCapabilityValue('dim', dim_bulb);
+            }
 
-          /* dim */
-          let dim_rgbw2 = result.lights[channel].gain > 100 ? 1 : result.lights[channel].gain / 100;
-          if (dim_rgbw2 != this.getCapabilityValue('dim')) {
-            this.setCapabilityValue('dim', dim_rgbw2);
+            /* light_temperature_temp */
+            let light_temperature_bulb = 1 - Number(this.util.normalize(result.lights[channel].temp, 3000, 6500));
+            if (light_temperature_bulb != this.getCapabilityValue('light_temperature')) {
+              this.setCapabilityValue('light_temperature', light_temperature_bulb);
+            }
+
           }
 
-          /* light_temperature */
-          let light_temperature_rgbw2 = 1 - Number(this.util.normalize(result.lights[channel].white, 0, 255));
-          if (light_temperature_rgbw2 != this.getCapabilityValue('light_temperature')) {
-            this.setCapabilityValue('light_temperature', light_temperature_rgbw2);
+          // Shelly RGBW2
+          if (this.getStoreValue('type') === 'SHRGBW2') {
+
+            /* dim */
+            let dim_rgbw2 = result.lights[channel].gain > 100 ? 1 : result.lights[channel].gain / 100;
+            if (dim_rgbw2 != this.getCapabilityValue('dim')) {
+              this.setCapabilityValue('dim', dim_rgbw2);
+            }
+
+            /* light_temperature */
+            let light_temperature_rgbw2 = 1 - Number(this.util.normalize(result.lights[channel].white, 0, 255));
+            if (light_temperature_rgbw2 != this.getCapabilityValue('light_temperature')) {
+              this.setCapabilityValue('light_temperature', light_temperature_rgbw2);
+            }
+
           }
 
-        }
+          /* light_hue & light_saturation */
+          if (light_mode === 'color') {
+            this.setStoreValue('red', result.lights[channel].red);
+            this.setStoreValue('green', result.lights[channel].green);
+            this.setStoreValue('blue', result.lights[channel].blue);
 
-        /* light_hue & light_saturation */
-        if (light_mode === 'color') {
-          this.setStoreValue('red', result.lights[channel].red);
-          this.setStoreValue('green', result.lights[channel].green);
-          this.setStoreValue('blue', result.lights[channel].blue);
+            let color = tinycolor({r: result.lights[channel].red, g: result.lights[channel].green, b: result.lights[channel].blue});
+            let hsv = color.toHsv();
+            let light_hue = Number((hsv.h / 360).toFixed(2));
 
-          let color = tinycolor({r: result.lights[channel].red, g: result.lights[channel].green, b: result.lights[channel].blue});
-          let hsv = color.toHsv();
-          let light_hue = Number((hsv.h / 360).toFixed(2));
+            // capability light_hue
+            if (light_hue != this.getCapabilityValue('light_hue')) {
+              this.setCapabilityValue('light_hue', light_hue);
+            }
 
-          // capability light_hue
-          if (light_hue != this.getCapabilityValue('light_hue')) {
-            this.setCapabilityValue('light_hue', light_hue);
-          }
+            // capability light_saturation
+            if (hsv.s != this.getCapabilityValue('light_saturation')) {
+              this.setCapabilityValue('light_saturation', hsv.s);
+            }
 
-          // capability light_saturation
-          if (hsv.s != this.getCapabilityValue('light_saturation')) {
-            this.setCapabilityValue('light_saturation', hsv.s);
           }
 
         }
