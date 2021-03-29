@@ -4,6 +4,10 @@
     "en": "Change roller shutter with offset",
     "nl": "Wijzig roller shutter met offset"
   },
+  "titleFormatted": {
+    "en": "Change roller shutter to [[direction]] with offset [[offset]]",
+    "nl": "Change roller shutter naar [[direction]] met offset [[offset]]"
+  },
   "hint": {
     "en": "Use this card to open or close your roller shutter with a given offset.",
     "nl": "Gebruik deze actie om de roller shutter te openen of stoppen met de opgegeven offset."

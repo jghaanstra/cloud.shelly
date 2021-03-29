@@ -6,7 +6,7 @@
   "class": "socket",
   "discovery": "shelly1pm",
   "$extends": [
-    "shelly1pm"
+    "shelly1"
   ],
   "capabilities": [
     "onoff",

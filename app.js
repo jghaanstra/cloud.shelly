@@ -103,7 +103,6 @@ class ShellyApp extends Homey.App {
         return await this.util.sendCommand('/ota?update=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
 
-    // SHELLY 1
     this.homey.flow.getActionCard('flipbackSwitch')
       .registerRunListener(async (args) => {
         if (args.switch === '1') {
@@ -113,7 +112,6 @@ class ShellyApp extends Homey.App {
         }
       })
 
-    // SHELLY 2 & SHELLY 4 PRO
     this.homey.flow.getActionCard('flipbackSwitch2')
       .registerRunListener(async (args) => {
         if (args.switch === '1') {
@@ -133,15 +131,6 @@ class ShellyApp extends Homey.App {
       })
 
     // SHELLY RGBW2
-    this.homey.flow.getActionCard('flipbackSwitchRGBW2Color')
-      .registerRunListener(async (args) => {
-        if (args.switch === '1') {
-          return await this.util.sendCommand('/color/0?turn=on&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-        } else {
-          return await this.util.sendCommand('/color/0?turn=off&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-        }
-      })
-
     this.homey.flow.getActionCard('effectRGBW2Color')
       .registerRunListener(async (args) => {
         return await this.util.sendCommand('/color/0?turn=on&effect='+ Number(args.effect) +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));

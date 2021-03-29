@@ -1,31 +1,34 @@
 'use strict';
 
 const Homey = require('homey');
+const Device = require('../device.js');
 const Util = require('/lib/util.js');
-const callbacks = [
-  'shortpush',
-  'double_shortpush',
-  'triple_shortpush',
-  'longpush'
-];
-// TODO: REMOVE AFTER 3.1.0
-const temp_callbacks = [
-  'shortpush',
-  'double_shortpush',
-  'triple_shortpush',
-  'longpush'
-];
 
-class ShellyButton1Device extends Homey.Device {
+class ShellyButton1Device extends Device {
 
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
+
+    this.callbacks = [
+      'shortpush',
+      'double_shortpush',
+      'triple_shortpush',
+      'longpush'
+    ];
+    // TODO: REMOVE AFTER 3.1.0
+    this.temp_callbacks = [
+      'shortpush',
+      'double_shortpush',
+      'triple_shortpush',
+      'longpush'
+    ];
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
 
     // TODO: REMOVE AFTER 3.1.0
     this.homey.flow.getDeviceTriggerCard('triggerInput');
+    this.setStoreValue("battery", true);
 
     this.setAvailable();
 
@@ -54,124 +57,11 @@ class ShellyButton1Device extends Homey.Device {
 
   }
 
-  async onAdded() {
-    return await this.homey.app.updateShellyCollection();
-  }
-
-  async onDeleted() {
-    try {
-      clearInterval(this.pollingInterval);
-      const iconpath = "/userdata/" + this.getData().id +".svg";
-      await this.util.removeIcon(iconpath);
-      await this.homey.app.updateShellyCollection();
-      return;
-    } catch (error) {
-      this.log(error);
-    }
-  }
-
   // HELPER FUNCTIONS
-  async bootSequence() {
-    try {
-      if (this.homey.settings.get('general_coap')) {
-        this.pollingInterval = setInterval(() => {
-          this.initialStateUpdate();
-        }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
-      } else {
-        setTimeout(() => {
-          this.initialStateUpdate();
-        }, this.util.getRandomTimeout(10));
-      }
-    } catch (error) {
-      this.log(error);
-    }
-  }
-
-  async initialStateUpdate() {
-    try {
-      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      if (!this.getAvailable()) { this.setAvailable(); }
-
-      let measure_battery = result.bat.value;
-      let input_1 = result.inputs[0].input == 1 ? true : false;
-
-      // capability measure_power
-      if (measure_battery != this.getCapabilityValue('measure_battery')) {
-        this.setCapabilityValue('measure_battery', measure_battery);
-      }
-
-      // capability input_1
-      if (input_1 != this.getCapabilityValue('input_1')) {
-        this.setCapabilityValue('input_1', input_1);
-        if (input_1) {
-          this.homey.flow.getDeviceTriggerCard('triggerInput1On').trigger(this, {}, {});
-        } else {
-          this.homey.flow.getDeviceTriggerCard('triggerInput1Off').trigger(this, {}, {});
-        }
-      }
-
-    } catch (error) {
-      this.log('Shelly Button 1 is probably asleep and disconnected');
-    }
-  }
-
-  async deviceCoapReport(capability, value) {
-    try {
-      if (!this.getAvailable()) { this.setAvailable(); }
-
-      // update unicast
-      if (!this.getStoreValue('unicast') === true) {
-        const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        if (result === 'OK') {
-          this.setStoreValue("unicast", true);
-        }  
-      }
-
-      switch(capability) {
-        case 'battery':
-          if (value != this.getCapabilityValue('measure_battery')) {
-            this.setCapabilityValue('measure_battery', value);
-          }
-          break;
-        case 'input0':
-          let input_1 = value === 0 ? false : true;
-          if (input_1 != this.getCapabilityValue('input_1')) {
-            this.setCapabilityValue('input_1', input_1);
-            if (input_1) {
-              this.homey.flow.getDeviceTriggerCard('triggerInput1On').trigger(this, {}, {});
-            } else {
-              this.homey.flow.getDeviceTriggerCard('triggerInput1Off').trigger(this, {}, {});
-            }
-          }
-          break;
-        case 'wakeUpEvent':
-          break;
-        case 'inputEvent0':
-          let actionEvent = this.util.getActionEventDescription(value);
-          this.setStoreValue('actionEvent', actionEvent);
-          break;
-        case 'inputEventCounter0':
-          if (value > 0) {
-            this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')});
-          }
-          break;
-        default:
-          //this.log('Device does not support reported capability '+ capability +' with value '+ value);
-      }
-      return Promise.resolve(true);
-    } catch(error) {
-      this.log(error);
-      return Promise.reject(error);
-    }
-  }
-
-  getCallbacks() {
-    return callbacks;
-  }
 
   // TODO: REMOVE AFTER 3.1.0
   async removeCallbacks() {
-    return await this.util.removeCallbackEvents('/settings/actions?index=0&name=', temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    return await this.util.removeCallbackEvents('/settings/actions?index=0&name=', this.temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

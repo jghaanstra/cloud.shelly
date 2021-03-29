@@ -10,63 +10,65 @@
   "tags": {
     "en": [
       "Shelly",
-      "Shelly 1",
-      "Shelly 2",
       "Shelly Plug",
       "Shelly Plug S",
-      "Shelly 4 Pro",
-      "Shelly RGBW2",
-      "Shelly EM",
+      "Shelly 1",
+      "Shelly 1L",
+      "Shelly 1PM",
+      "Shelly 2",
       "Shelly 3EM",
+      "Shelly 4 Pro",
+      "Shelly 2.5",
       "Shelly Bulb",
-      "Shelly Flood Sensor",
-      "Shelly Humidity Temperature",
-      "Shelly Door Window",
+      "Shelly Button 1",
       "Shelly Dimmer",
       "Shelly Duo",
-      "Shelly Vintage",
-      "Shelly i3",
+      "Shelly Door Window",
+      "Shelly EM",
+      "Shelly Flood Sensor",
       "Shelly Gas",
-      "Shelly Button",
-      "Shelly Motion"
+      "Shelly Humidity Temperature",
+      "Shelly i3",
+      "Shelly Motion",
+      "Shelly RGBW2",
+      "Shelly Smoke",
+      "Shelly Uni",
+      "Shelly Vintage"
     ],
     "nl": [
       "Shelly",
-      "Shelly 1",
-      "Shelly 2",
       "Shelly Plug",
       "Shelly Plug S",
-      "Shelly 4 Pro",
-      "Shelly RGBW2",
-      "Shelly EM",
+      "Shelly 1",
+      "Shelly 1L",
+      "Shelly 1PM",
+      "Shelly 2",
       "Shelly 3EM",
+      "Shelly 4 Pro",
+      "Shelly 2.5",
       "Shelly Bulb",
-      "Shelly Flood Sensor",
-      "Shelly Luchtvochtigheid Temperatuur",
-      "Shelly Deur Raam",
+      "Shelly Button 1",
       "Shelly Dimmer",
       "Shelly Duo",
-      "Shelly Vintage",
-      "Shelly i3",
+      "Shelly Door Window",
+      "Shelly EM",
+      "Shelly Flood Sensor",
       "Shelly Gas",
-      "Shelly Button",
-      "Shelly bewegingsensor",
-      "Shelly motion"
+      "Shelly Humidity Temperature",
+      "Shelly i3",
+      "Shelly Motion",
+      "Shelly RGBW2",
+      "Shelly Smoke",
+      "Shelly Uni",
+      "Shelly Vintage"
     ]
   },
-  "version": "3.0.28",
+  "version": "3.0.31",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
     "email": "homey@solidewebservices.com",
     "website": "https://github.com/jghaanstra/cloud.shelly/"
-  },
-  "contributors": {
-    "developers": [
-      {
-        "name": "Sebastian Lotz"
-      }
-    ]
   },
   "contributing": {
     "donate": {
@@ -118,6 +120,10 @@
         "title": {
           "en": "Action event",
           "nl": "Actie gebeurtenis"
+        },
+        "titleFormatted": {
+          "en": "[[shelly]] action event [[action]]",
+          "nl": "[[shelly]] actie gebeurtenis [[action]]"
         },
         "tokens": [
           {
@@ -797,6 +803,10 @@
           "en": "Switch state temporary",
           "nl": "Wijzig status tijdelijk"
         },
+        "titleFormatted": {
+          "en": "Switch state temporary to [[switch]] for [[timer]] seconds",
+          "nl": "Wijzig status tijdelijk naar [[switch]] voor [[timer]] seconden"
+        },
         "hint": {
           "en": "Use this card to turn Shelly ON or OFF but only for the set time in seconds, after the timer it will switch back.",
           "nl": "Gebruik deze actie om Shelly AAN of UIT te schakelen voor de ingestelde duur in seconden, na de timer zal hij terugschakelen."
@@ -843,7 +853,190 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly-plug|shelly-plug-s"
+            "filter": "driver_id=shelly1|shell1pm|shelly1l|shelly-plug|shelly-plug-s|shellyem|shelly3em"
+          }
+        ]
+      },
+      {
+        "id": "flipbackSwitch2",
+        "title": {
+          "en": "Switch state temporary",
+          "nl": "Wijzig status tijdelijk"
+        },
+        "titleFormatted": {
+          "en": "Switch state of [[relay]] temporary to [[switch]] for [[timer]] seconds",
+          "nl": "Wijzig status of [[relay]] tijdelijk naar [[switch]] voor [[timer]] seconden"
+        },
+        "hint": {
+          "en": "Use this card to turn the Shelly 2 ON or OFF but only for the set time in seconds, after the timer it will switch back.",
+          "nl": "Gebruik deze actie om de Shelly 2 AAN of UIT te schakelen voor de ingestelde duur in seconden, na de timer zal hij terugschakelen."
+        },
+        "args": [
+          {
+            "name": "relay",
+            "type": "dropdown",
+            "placeholder": {
+              "en": "Relay",
+              "nl": "Relay"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Relay 1",
+                  "nl": "Relay 1"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Relay 2",
+                  "nl": "Relay 2"
+                }
+              }
+            ]
+          },
+          {
+            "name": "switch",
+            "type": "dropdown",
+            "placeholder": {
+              "en": "Temporary switch",
+              "nl": "Tijdelijk schakelen"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Switch OFF",
+                  "nl": "Uitschakelen"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Switch ON",
+                  "nl": "Inschakelen"
+                }
+              }
+            ]
+          },
+          {
+            "name": "timer",
+            "type": "number",
+            "placeholder": {
+              "en": "Duration in seconds",
+              "nl": "Duur in seconden"
+            },
+            "min": 1,
+            "max": 120,
+            "step": 1
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly2|shelly25|shellyuni"
+          }
+        ]
+      },
+      {
+        "id": "flipbackSwitch4",
+        "title": {
+          "en": "Switch state temporary",
+          "nl": "Wijzig status tijdelijk"
+        },
+        "titleFormatted": {
+          "en": "Switch state of [[relay]] temporary to [[switch]] for [[timer]] seconds",
+          "nl": "Wijzig status of [[relay]] tijdelijk naar [[switch]] voor [[timer]] seconden"
+        },
+        "hint": {
+          "en": "Use this card to turn the Shelly 4 Pro ON or OFF but only for the set time in seconds, after the timer it will switch back.",
+          "nl": "Gebruik deze actie om de Shelly 4 Pro AAN of UIT te schakelen voor de ingestelde duur in seconden, na de timer zal hij terugschakelen."
+        },
+        "args": [
+          {
+            "name": "relay",
+            "type": "dropdown",
+            "placeholder": {
+              "en": "Relay",
+              "nl": "Relay"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Relay 1",
+                  "nl": "Relay 1"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Relay 2",
+                  "nl": "Relay 2"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "Relay 3",
+                  "nl": "Relay 3"
+                }
+              },
+              {
+                "id": "3",
+                "label": {
+                  "en": "Relay 4",
+                  "nl": "Relay 4"
+                }
+              }
+            ]
+          },
+          {
+            "name": "switch",
+            "type": "dropdown",
+            "placeholder": {
+              "en": "Temporary switch",
+              "nl": "Tijdelijk schakelen"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Switch OFF",
+                  "nl": "Uitschakelen"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Switch ON",
+                  "nl": "Inschakelen"
+                }
+              }
+            ]
+          },
+          {
+            "name": "timer",
+            "type": "number",
+            "placeholder": {
+              "en": "Duration in seconds",
+              "nl": "Duur in seconden"
+            },
+            "min": 1,
+            "step": 1
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly4pro"
           }
         ]
       },
@@ -852,6 +1045,10 @@
         "title": {
           "en": "Change roller shutter",
           "nl": "Wijzig roller shutter"
+        },
+        "titleFormatted": {
+          "en": "Change roller shutter to [[direction]] for [[move_duration]] seconds",
+          "nl": "Change roller shutter naar [[direction]] voor [[move_duration]] seconden"
         },
         "hint": {
           "en": "Use this card to open, close or stop your roller shutter for a given time.",
@@ -916,6 +1113,10 @@
         "title": {
           "en": "Change roller shutter with offset",
           "nl": "Wijzig roller shutter met offset"
+        },
+        "titleFormatted": {
+          "en": "Change roller shutter to [[direction]] with offset [[offset]]",
+          "nl": "Change roller shutter naar [[direction]] met offset [[offset]]"
         },
         "hint": {
           "en": "Use this card to open or close your roller shutter with a given offset.",
@@ -1013,186 +1214,14 @@
         ]
       },
       {
-        "id": "flipbackSwitch2",
-        "title": {
-          "en": "Switch state temporary",
-          "nl": "Wijzig status tijdelijk"
-        },
-        "hint": {
-          "en": "Use this card to turn the Shelly 2 ON or OFF but only for the set time in seconds, after the timer it will switch back.",
-          "nl": "Gebruik deze actie om de Shelly 2 AAN of UIT te schakelen voor de ingestelde duur in seconden, na de timer zal hij terugschakelen."
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shelly2"
-          },
-          {
-            "name": "relay",
-            "type": "dropdown",
-            "placeholder": {
-              "en": "Relay",
-              "nl": "Relay"
-            },
-            "values": [
-              {
-                "id": "0",
-                "label": {
-                  "en": "Relay 1",
-                  "nl": "Relay 1"
-                }
-              },
-              {
-                "id": "1",
-                "label": {
-                  "en": "Relay 2",
-                  "nl": "Relay 2"
-                }
-              }
-            ]
-          },
-          {
-            "name": "switch",
-            "type": "dropdown",
-            "placeholder": {
-              "en": "Temporary switch",
-              "nl": "Tijdelijk schakelen"
-            },
-            "values": [
-              {
-                "id": "0",
-                "label": {
-                  "en": "Switch OFF",
-                  "nl": "Uitschakelen"
-                }
-              },
-              {
-                "id": "1",
-                "label": {
-                  "en": "Switch ON",
-                  "nl": "Inschakelen"
-                }
-              }
-            ]
-          },
-          {
-            "name": "timer",
-            "type": "number",
-            "placeholder": {
-              "en": "Duration in seconds",
-              "nl": "Duur in seconden"
-            },
-            "min": 1,
-            "max": 120,
-            "step": 1
-          }
-        ]
-      },
-      {
-        "id": "flipbackSwitch4",
-        "title": {
-          "en": "Switch state temporary",
-          "nl": "Wijzig status tijdelijk"
-        },
-        "hint": {
-          "en": "Use this card to turn the Shelly 4 Pro ON or OFF but only for the set time in seconds, after the timer it will switch back.",
-          "nl": "Gebruik deze actie om de Shelly 4 Pro AAN of UIT te schakelen voor de ingestelde duur in seconden, na de timer zal hij terugschakelen."
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shelly4pro"
-          },
-          {
-            "name": "relay",
-            "type": "dropdown",
-            "placeholder": {
-              "en": "Relay",
-              "nl": "Relay"
-            },
-            "values": [
-              {
-                "id": "0",
-                "label": {
-                  "en": "Relay 1",
-                  "nl": "Relay 1"
-                }
-              },
-              {
-                "id": "1",
-                "label": {
-                  "en": "Relay 2",
-                  "nl": "Relay 2"
-                }
-              },
-              {
-                "id": "2",
-                "label": {
-                  "en": "Relay 3",
-                  "nl": "Relay 3"
-                }
-              },
-              {
-                "id": "3",
-                "label": {
-                  "en": "Relay 4",
-                  "nl": "Relay 4"
-                }
-              }
-            ]
-          },
-          {
-            "name": "switch",
-            "type": "dropdown",
-            "placeholder": {
-              "en": "Temporary switch",
-              "nl": "Tijdelijk schakelen"
-            },
-            "values": [
-              {
-                "id": "0",
-                "label": {
-                  "en": "Switch OFF",
-                  "nl": "Uitschakelen"
-                }
-              },
-              {
-                "id": "1",
-                "label": {
-                  "en": "Switch ON",
-                  "nl": "Inschakelen"
-                }
-              }
-            ]
-          },
-          {
-            "name": "timer",
-            "type": "number",
-            "placeholder": {
-              "en": "Duration in seconds",
-              "nl": "Duur in seconden"
-            },
-            "min": 1,
-            "step": 1
-          },
-          {
-            "name": "device",
-            "type": "device",
-            "placeholder": {
-              "en": "Select Shelly 4 Pro",
-              "nl": "Selecteer Shelly 4 Pro"
-            },
-            "filter": "driver_id=shelly4pro"
-          }
-        ]
-      },
-      {
         "id": "actionDuoDimTemperature",
         "title": {
           "en": "Set dim and color temperature",
           "nl": "Instellen dim en kleur temperatuur"
+        },
+        "titleFormatted": {
+          "en": "Set dim to [[brightness]] and color temperature to [[light_temperature]]",
+          "nl": "Instellen dim naar [[brightness]] en kleur temperatuur naar [[light_temperature]]"
         },
         "args": [
           {
@@ -1241,6 +1270,10 @@
         "title": {
           "en": "Set alarm volume",
           "nl": "Instellen alarm volume"
+        },
+        "titleFormatted": {
+          "en": "Set alarm volume to [[volume]]",
+          "nl": "Instellen alarm volume naar [[volume]]"
         },
         "args": [
           {
@@ -1316,8 +1349,12 @@
       {
         "id": "effectRGBW2Color",
         "title": {
-          "en": "Switch Effect On/Off",
-          "nl": "Effect in- of uitschakelen"
+          "en": "Switch Effect",
+          "nl": "Effect schakelen"
+        },
+        "titleFormatted": {
+          "en": "Switch effect to [[effect]]",
+          "nl": "Effect schakelen naar [[effect]]"
         },
         "args": [
           {
@@ -1383,58 +1420,6 @@
                 }
               }
             ]
-          }
-        ]
-      },
-      {
-        "id": "flipbackSwitchRGBW2Color",
-        "title": {
-          "en": "Switch state temporary",
-          "nl": "Wijzig status tijdelijk"
-        },
-        "hint": {
-          "en": "Use this card to turn the Shelly RGBW2 Color ON or OFF but only for the set time in seconds, after the timer it will switch back.",
-          "nl": "Gebruik deze actie om de Shelly RGBW2 Color AAN of UIT te schakelen voor de ingestelde duur in seconden, na de timer zal hij terugschakelen."
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shellyrgbw2color"
-          },
-          {
-            "name": "switch",
-            "type": "dropdown",
-            "placeholder": {
-              "en": "Temporary switch",
-              "nl": "Tijdelijk schakelen"
-            },
-            "values": [
-              {
-                "id": "0",
-                "label": {
-                  "en": "Switch OFF",
-                  "nl": "Uitschakelen"
-                }
-              },
-              {
-                "id": "1",
-                "label": {
-                  "en": "Switch ON",
-                  "nl": "Inschakelen"
-                }
-              }
-            ]
-          },
-          {
-            "name": "timer",
-            "type": "number",
-            "placeholder": {
-              "en": "Duration in seconds",
-              "nl": "Duur in seconden"
-            },
-            "min": 1,
-            "step": 1
           }
         ]
       }
@@ -1632,7 +1617,7 @@
       "icon": "/drivers/shelly1/assets/icon.svg",
       "capabilities": [
         "onoff",
-        "measure_temperature",
+        "measure_temperature.1",
         "measure_temperature.2",
         "measure_temperature.3",
         "measure_humidity",

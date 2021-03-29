@@ -4,6 +4,10 @@
     "en": "Change roller shutter",
     "nl": "Wijzig roller shutter"
   },
+  "titleFormatted": {
+    "en": "Change roller shutter to [[direction]] for [[move_duration]] seconds",
+    "nl": "Change roller shutter naar [[direction]] voor [[move_duration]] seconden"
+  },
   "hint": {
     "en": "Use this card to open, close or stop your roller shutter for a given time.",
     "nl": "Gebruik deze actie om de roller shutter te openen, sluiten of stoppen met de opgegeven duur."

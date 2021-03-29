@@ -10,6 +10,8 @@ class ShellyRGBW2CWWWDevice extends Homey.Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
+    this.callbacks = [];
+
     this.pollDevice();
     this.setAvailable();
 
@@ -182,10 +184,6 @@ class ShellyRGBW2CWWWDevice extends Homey.Device {
         this.log('Device is not reachable, pinging every 63 seconds to see if it comes online again.');
       }
     }, 63000);
-  }
-
-  getCallbacks() {
-    return [];
   }
 
 }

@@ -208,5 +208,14 @@
   },
   "3.0.28": {
     "en": "Fixed an issue with the Shelly Dimmer 1 (added a workaround due to not using semantic versioning in firmware version of the Shelly Dimmer 1)"
+  },
+  "3.0.29": {
+    "en": "Code improvements for easier maintenance and a small fix for switching between color modes of the Shelly Bulb."
+  },
+  "3.0.30": {
+    "en": "Code improvements for easier maintenance and a small fix for switching between color modes of the Shelly Bulb."
+  },
+  "3.0.31": {
+    "en": "Code improvements for easier maintenance and a small fix for switching between color modes of the Shelly Bulb."
   }
 }

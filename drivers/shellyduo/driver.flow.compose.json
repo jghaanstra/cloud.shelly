@@ -6,6 +6,10 @@
         "en": "Set dim and color temperature",
         "nl": "Instellen dim en kleur temperatuur"
       },
+      "titleFormatted": {
+        "en": "Set dim to [[brightness]] and color temperature to [[light_temperature]]",
+        "nl": "Instellen dim naar [[brightness]] en kleur temperatuur naar [[light_temperature]]"
+      },
       "args": [
         {
           "name": "brightness",

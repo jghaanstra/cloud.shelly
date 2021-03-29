@@ -4,6 +4,10 @@
     "en": "Action event",
     "nl": "Actie gebeurtenis"
   },
+  "titleFormatted": {
+    "en": "[[shelly]] action event [[action]]",
+    "nl": "[[shelly]] actie gebeurtenis [[action]]"
+  },
   "tokens": [
     {
       "name": "id",

@@ -4,6 +4,10 @@
     "en": "Switch state temporary",
     "nl": "Wijzig status tijdelijk"
   },
+  "titleFormatted": {
+    "en": "Switch state temporary to [[switch]] for [[timer]] seconds",
+    "nl": "Wijzig status tijdelijk naar [[switch]] voor [[timer]] seconden"
+  },
   "hint": {
     "en": "Use this card to turn Shelly ON or OFF but only for the set time in seconds, after the timer it will switch back.",
     "nl": "Gebruik deze actie om Shelly AAN of UIT te schakelen voor de ingestelde duur in seconden, na de timer zal hij terugschakelen."
@@ -50,7 +54,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly1|shelly-plug|shelly-plug-s"
+      "filter": "driver_id=shelly1|shell1pm|shelly1l|shelly-plug|shelly-plug-s|shellyem|shelly3em"
     }
   ]
 }

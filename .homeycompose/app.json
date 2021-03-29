@@ -9,63 +9,65 @@
   "tags": {
     "en": [
       "Shelly",
-      "Shelly 1",
-      "Shelly 2",
       "Shelly Plug",
       "Shelly Plug S",
-      "Shelly 4 Pro",
-      "Shelly RGBW2",
-      "Shelly EM",
+      "Shelly 1",
+      "Shelly 1L",
+      "Shelly 1PM",
+      "Shelly 2",
       "Shelly 3EM",
+      "Shelly 4 Pro",
+      "Shelly 2.5",
       "Shelly Bulb",
-      "Shelly Flood Sensor",
-      "Shelly Humidity Temperature",
-      "Shelly Door Window",
+      "Shelly Button 1",
       "Shelly Dimmer",
       "Shelly Duo",
-      "Shelly Vintage",
-      "Shelly i3",
+      "Shelly Door Window",
+      "Shelly EM",
+      "Shelly Flood Sensor",
       "Shelly Gas",
-      "Shelly Button",
-      "Shelly Motion"
+      "Shelly Humidity Temperature",
+      "Shelly i3",
+      "Shelly Motion",
+      "Shelly RGBW2",
+      "Shelly Smoke",
+      "Shelly Uni",
+      "Shelly Vintage"
     ],
     "nl": [
       "Shelly",
-      "Shelly 1",
-      "Shelly 2",
       "Shelly Plug",
       "Shelly Plug S",
-      "Shelly 4 Pro",
-      "Shelly RGBW2",
-      "Shelly EM",
+      "Shelly 1",
+      "Shelly 1L",
+      "Shelly 1PM",
+      "Shelly 2",
       "Shelly 3EM",
+      "Shelly 4 Pro",
+      "Shelly 2.5",
       "Shelly Bulb",
-      "Shelly Flood Sensor",
-      "Shelly Luchtvochtigheid Temperatuur",
-      "Shelly Deur Raam",
+      "Shelly Button 1",
       "Shelly Dimmer",
       "Shelly Duo",
-      "Shelly Vintage",
-      "Shelly i3",
+      "Shelly Door Window",
+      "Shelly EM",
+      "Shelly Flood Sensor",
       "Shelly Gas",
-      "Shelly Button",
-      "Shelly bewegingsensor",
-      "Shelly motion"
+      "Shelly Humidity Temperature",
+      "Shelly i3",
+      "Shelly Motion",
+      "Shelly RGBW2",
+      "Shelly Smoke",
+      "Shelly Uni",
+      "Shelly Vintage"
     ]
   },
-  "version": "3.0.28",
+  "version": "3.0.31",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
     "email": "homey@solidewebservices.com",
     "website": "https://github.com/jghaanstra/cloud.shelly/"
-  },
-  "contributors": {
-    "developers": [
-      {
-        "name": "Sebastian Lotz"
-      }
-    ]
   },
   "contributing": {
     "donate": {

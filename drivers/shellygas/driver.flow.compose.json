@@ -35,6 +35,10 @@
         "en": "Set alarm volume",
         "nl": "Instellen alarm volume"
       },
+      "titleFormatted": {
+        "en": "Set alarm volume to [[volume]]",
+        "nl": "Instellen alarm volume naar [[volume]]"
+      },
       "args": [
         {
           "name": "volume",
