@@ -220,5 +220,8 @@
   },
   "3.0.32": {
     "en": "Small fix for devices appearing as offline while they are not."
+  },
+  "3.0.33": {
+    "en": "Fix for Shelly 4 Pro appearing as offline."
   }
 }
