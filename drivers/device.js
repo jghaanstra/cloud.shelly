@@ -587,7 +587,7 @@ class ShellyDevice extends Homey.Device {
       }
 
       // update unicast
-      if (!this.getStoreValue('unicast') === true && this.getStoreValue('battery') === false && this.getStoreValue('type') !=== 'SHSW-44') {
+      if (!this.getStoreValue('unicast') === true && this.getStoreValue('battery') === false && this.getStoreValue('type') !== 'SHSW-44') {
         const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         if (result === 'OK') {
           this.setStoreValue("unicast", true);

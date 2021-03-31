@@ -226,5 +226,8 @@
   },
   "3.0.34": {
     "en": "Fix issue with dim values for RGBW2 White."
+  },
+  "3.0.35": {
+    "en": "Fix issue with dim values for RGBW2 White."
   }
 }
