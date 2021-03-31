@@ -223,5 +223,8 @@
   },
   "3.0.33": {
     "en": "Fix for Shelly 4 Pro appearing as offline."
+  },
+  "3.0.34": {
+    "en": "Fix issue with dim values for RGBW2 White."
   }
 }

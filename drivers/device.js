@@ -291,9 +291,15 @@ class ShellyDevice extends Homey.Device {
           if (this.getStoreValue('type') === 'SHRGBW2') {
 
             /* dim */
-            let dim_rgbw2 = result.lights[channel].gain > 100 ? 1 : result.lights[channel].gain / 100;
-            if (dim_rgbw2 != this.getCapabilityValue('dim')) {
-              this.setCapabilityValue('dim', dim_rgbw2);
+            let dim_rgbw2color = result.lights[channel].gain > 100 ? 1 : result.lights[channel].gain / 100;
+            if (dim_rgbw2color != this.getCapabilityValue('dim')) {
+              this.setCapabilityValue('dim', dim_rgbw2color);
+            }
+
+            /* dim */
+            let dim_rgbwwhite = result.lights[channel].brightness > 100 ? 1 : result.lights[channel].brightness / 100;
+            if (dim_rgbwwhite != this.getCapabilityValue('dim')) {
+              this.setCapabilityValue('dim', dim_rgbwwhite);
             }
 
             /* light_temperature */
@@ -581,7 +587,7 @@ class ShellyDevice extends Homey.Device {
       }
 
       // update unicast
-      if (!this.getStoreValue('unicast') === true) {
+      if (!this.getStoreValue('unicast') === true && this.getStoreValue('battery') === false && this.getStoreValue('type') !=== 'SHSW-44') {
         const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         if (result === 'OK') {
           this.setStoreValue("unicast", true);
