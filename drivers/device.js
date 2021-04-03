@@ -290,22 +290,25 @@ class ShellyDevice extends Homey.Device {
           // Shelly RGBW2
           if (this.getStoreValue('type') === 'SHRGBW2') {
 
-            /* dim */
-            let dim_rgbw2color = result.lights[channel].gain > 100 ? 1 : result.lights[channel].gain / 100;
-            if (dim_rgbw2color != this.getCapabilityValue('dim')) {
-              this.setCapabilityValue('dim', dim_rgbw2color);
+            /* dim and light_temperature in color mode */
+            if (result.lights[channel].mode === 'color') {
+              let dim_rgbw2color = result.lights[channel].gain > 100 ? 1 : result.lights[channel].gain / 100;
+              if (dim_rgbw2color != this.getCapabilityValue('dim')) {
+                this.setCapabilityValue('dim', dim_rgbw2color);
+              }
+
+              let light_temperature_rgbw2 = 1 - Number(this.util.normalize(result.lights[channel].white, 0, 255));
+              if (light_temperature_rgbw2 != this.getCapabilityValue('light_temperature')) {
+                this.setCapabilityValue('light_temperature', light_temperature_rgbw2);
+              }
             }
 
-            /* dim */
-            let dim_rgbwwhite = result.lights[channel].brightness > 100 ? 1 : result.lights[channel].brightness / 100;
-            if (dim_rgbwwhite != this.getCapabilityValue('dim')) {
-              this.setCapabilityValue('dim', dim_rgbwwhite);
-            }
-
-            /* light_temperature */
-            let light_temperature_rgbw2 = 1 - Number(this.util.normalize(result.lights[channel].white, 0, 255));
-            if (light_temperature_rgbw2 != this.getCapabilityValue('light_temperature')) {
-              this.setCapabilityValue('light_temperature', light_temperature_rgbw2);
+            /* dim white mode */
+            if (result.lights[channel].mode === 'white') {
+              let dim_rgbwwhite = result.lights[channel].brightness > 100 ? 1 : result.lights[channel].brightness / 100;
+              if (dim_rgbwwhite != this.getCapabilityValue('dim')) {
+                this.setCapabilityValue('dim', dim_rgbwwhite);
+              }
             }
 
           }
@@ -450,6 +453,19 @@ class ShellyDevice extends Homey.Device {
           let measure_humidity = result.hum.value;
           if (measure_humidity != this.getCapabilityValue('measure_humidity')) {
             this.setCapabilityValue('measure_humidity', measure_humidity);
+          }
+        }
+
+      }
+
+      // ADCS (measure_voltage)
+      if (result.hasOwnProperty("adcs") && this.hasCapability('measure_voltage')) {
+
+        /* measure_voltage */
+        if (result.adcs.hasOwnProperty("voltage")) {
+          let measure_voltage_adc = result.adcs.voltage;
+          if (measure_voltage_adc != this.getCapabilityValue('measure_voltage')) {
+            this.setCapabilityValue('measure_voltage', measure_voltage_adc);
           }
         }
 

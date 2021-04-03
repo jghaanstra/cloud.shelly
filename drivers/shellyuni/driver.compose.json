@@ -14,44 +14,33 @@
     "measure_temperature.2",
     "measure_temperature.3",
     "measure_humidity",
+    "measure_voltage",
     "input_1"
   ],
-  "pair": [
-    {
-      "id": "list_devices",
-      "template": "list_devices",
-      "options": {
-        "singular": true
-      },
-      "navigation": {
-        "next": "icon_select"
+  "capabilitiesOptions": {
+    "measure_temperature.1": {
+      "title": {
+        "en": "Temperature Sensor 1",
+        "nl": "Temperatuursensor 1"
       }
     },
-    {
-      "id": "icon_select",
-      "$template": "icon_select"
-    },
-    {
-      "id": "get_device",
-      "$template": "get_device"
-    },
-    {
-      "id": "login_credentials",
-      "template": "login_credentials",
-      "options": {
-        "logo": "../../../assets/shelly-logo.png"
+    "measure_temperature.2": {
+      "title": {
+        "en": "Temperature Sensor 2",
+        "nl": "Temperatuursensor 2"
       }
     },
-    {
-      "id": "add_device"
+    "measure_temperature.3": {
+      "title": {
+        "en": "Temperature Sensor 3",
+        "nl": "Temperatuursensor 3"
+      }
     },
-    {
-      "id": "select_pairing",
-      "$template": "select_pairing"
-    },
-    {
-      "id": "manual_pairing",
-      "$template": "manual_pairing"
+    "measure_voltage": {
+      "title": {
+        "en": "ADC Voltage",
+        "nl": "ADC Voltage"
+      }
     }
-  ]
+  }
 }

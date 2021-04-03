@@ -59,6 +59,10 @@ class ShellyUniDevice extends Device {
       this.setStoreValue("SDK", 3);
     }
 
+    if (!this.hasCapability('measure_voltage')) {
+      this.addCapability('measure_voltage');
+    }
+
     // INITIAL UPDATE AND POLLING
     this.bootSequence();
 

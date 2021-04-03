@@ -229,5 +229,8 @@
   },
   "3.0.35": {
     "en": "Fix issue with dim values for RGBW2 White."
+  },
+  "3.0.36": {
+    "en": "Add ADC voltage for Shelly Uni and fix small issue with dimming being null for RGBW2."
   }
 }
