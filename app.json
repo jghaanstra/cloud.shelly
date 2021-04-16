@@ -63,7 +63,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.0.37",
+  "version": "3.0.38",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -1249,7 +1249,8 @@
             "labelMultiplier": 1,
             "labelDecimals": 0
           }
-        ]
+        ],
+        "deprecated": true
       },
       {
         "id": "actionGasMute",
@@ -1569,6 +1570,14 @@
         "meter_power",
         "measure_temperature"
       ],
+      "capabilitiesOptions": {
+        "measure_temperature": {
+          "title": {
+            "en": "Device Temperature",
+            "nl": "Apparaat temperatuur"
+          }
+        }
+      },
       "id": "shelly-plug-s",
       "settings": [
         {
@@ -2760,8 +2769,7 @@
       "class": "button",
       "discovery": "shellybutton1",
       "capabilities": [
-        "measure_battery",
-        "input_1"
+        "measure_battery"
       ],
       "energy": {
         "batteries": [
