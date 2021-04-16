@@ -36,7 +36,7 @@ class Shelly1Device extends Device {
 
     this.setAvailable();
 
-    if (!this.getStoreValue('SDK') === 3) {
+    if (!this.getStoreValue('sdk') === 3) {
       // TODO: REMOVE AFTER 3.1.0
       if (this.hasCapability('alarm_generic')) {
         this.removeCapability('alarm_generic');
@@ -50,7 +50,7 @@ class Shelly1Device extends Device {
       if (this.hasCapability('button.removecallbackevents')) {
         this.removeCapability('button.removecallbackevents');
       }
-      this.setStoreValue("SDK", 3);
+      this.setStoreValue("sdk", 3);
     }
 
     // INITIAL UPDATE AND POLLING
@@ -62,11 +62,6 @@ class Shelly1Device extends Device {
       return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
-  }
-
-  async onAdded() {
-    await this.homey.app.updateShellyCollection();
-    return;
   }
 
   // HELPER FUNCTIONS

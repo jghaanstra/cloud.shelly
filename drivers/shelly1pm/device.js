@@ -37,7 +37,7 @@ class Shelly1pmDevice extends Device {
 
     this.setAvailable();
 
-    if (!this.getStoreValue('SDK') === 3) {
+    if (!this.getStoreValue('sdk') === 3) {
       // TODO: REMOVE AFTER 3.1.0
       if (this.hasCapability('meter_power_wmin')) {
         this.removeCapability('meter_power_wmin');
@@ -54,7 +54,7 @@ class Shelly1pmDevice extends Device {
       if (this.hasCapability('button.removecallbackevents')) {
         this.removeCapability('button.removecallbackevents');
       }
-      this.setStoreValue("SDK", 3);
+      this.setStoreValue("sdk", 3);
     }
 
     // INITIAL UPDATE AND POLLING

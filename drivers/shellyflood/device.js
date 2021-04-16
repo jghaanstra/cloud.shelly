@@ -22,7 +22,7 @@ class ShellyFloodDevice extends Device {
 
     this.setAvailable();
 
-    if (!this.getStoreValue('SDK') === 3) {
+    if (!this.getStoreValue('sdk') === 3) {
       // TODO: REMOVE AFTER 3.1.0
       if (this.hasCapability('measure_voltage')) {
         this.removeCapability('measure_voltage');
@@ -33,7 +33,7 @@ class ShellyFloodDevice extends Device {
       if (this.hasCapability('button.removecallbackevents')) {
         this.removeCapability('button.removecallbackevents');
       }
-      this.setStoreValue("SDK", 3);
+      this.setStoreValue("sdk", 3);
     }
 
     // START POLLING IF COAP IS DISABLED OR TRY INITIAL UPDATE

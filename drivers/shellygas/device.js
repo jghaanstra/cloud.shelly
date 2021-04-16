@@ -21,7 +21,7 @@ class ShellyGasDevice extends Device {
 
     this.setAvailable();
 
-    if (!this.getStoreValue('SDK') === 3) {
+    if (!this.getStoreValue('sdk') === 3) {
       // TODO: REMOVE AFTER 3.1.0
       if (this.hasCapability('button.callbackevents')) {
         this.removeCapability('button.callbackevents');
@@ -29,7 +29,7 @@ class ShellyGasDevice extends Device {
       if (this.hasCapability('button.removecallbackevents')) {
         this.removeCapability('button.removecallbackevents');
       }
-      this.setStoreValue("SDK", 3);
+      this.setStoreValue("sdk", 3);
     }
 
     // INITIAL UPDATE AND POLLING

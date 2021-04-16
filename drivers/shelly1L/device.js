@@ -32,7 +32,7 @@ class Shelly1lDevice extends Device {
 
     this.setAvailable();
 
-    if (!this.getStoreValue('SDK') === 3) {
+    if (!this.getStoreValue('sdk') === 3) {
       // TODO: REMOVE AFTER 3.1.0
       if (this.hasCapability('alarm_generic')) {
         this.removeCapability('alarm_generic');
@@ -46,7 +46,7 @@ class Shelly1lDevice extends Device {
       if (!this.hasCapability('input_2')) {
         this.addCapability('input_2');
       }
-      this.setStoreValue("SDK", 3);
+      this.setStoreValue("sdk", 3);
     }
 
     // INITIAL UPDATE AND POLLING

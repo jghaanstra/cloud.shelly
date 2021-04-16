@@ -36,7 +36,7 @@ class ShellyUniDevice extends Device {
 
     this.setAvailable();
 
-    if (!this.getStoreValue('SDK') === 3) {
+    if (!this.getStoreValue('sdk') === 3) {
       // TODO: REMOVE AFTER 3.1.0
       if (this.hasCapability('alarm_generic')) {
         this.removeCapability('alarm_generic');
@@ -56,7 +56,7 @@ class ShellyUniDevice extends Device {
       if (this.hasCapability('button.removecallbackevents')) {
         this.removeCapability('button.removecallbackevents');
       }
-      this.setStoreValue("SDK", 3);
+      this.setStoreValue("sdk", 3);
     }
 
     if (!this.hasCapability('measure_voltage')) {

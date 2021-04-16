@@ -232,5 +232,8 @@
   },
   "3.0.36": {
     "en": "Add ADC voltage for Shelly Uni and fix small issue with dimming being null for RGBW2."
+  },
+  "3.0.37": {
+    "en": "Added user friendly names for events  in action event trigger cards and fixed an issue where Shelly Uni did not create a device for the second relay channel. Also renamed the temperature capability of Shelly Plug S to device temperature and remove obsolete input_1 capability of Shelly Button 1. Lastely deprecated the combined temperature and dim action card for the Shelly DUO as the can be achieved with two built in action cards."
   }
 }

@@ -51,7 +51,9 @@ class ShellyDriver extends Homey.Driver {
             channel: 0,
             type: result.type,
             unicast: false,
-            battery: this.config.battery
+            battery: this.config.battery,
+            sdk: 3,
+            communication: 'coap'
           },
           icon: deviceIcon
         }
@@ -85,7 +87,9 @@ class ShellyDriver extends Homey.Driver {
               channel: 0,
               type: result.device.type,
               unicast: false,
-              battery: this.config.battery
+              battery: this.config.battery,
+              sdk: 3,
+              communication: 'coap'
             }
           }
           return Promise.resolve(deviceArray);
