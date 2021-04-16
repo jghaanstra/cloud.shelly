@@ -459,7 +459,7 @@ class ShellyDevice extends Homey.Device {
       }
 
       // ADCS (measure_voltage)
-      if (result.hasOwnProperty("adcs") && this.hasCapability('measure_voltage')) {
+      if (result.hasOwnProperty("adcs") && this.hasCapability('measure_voltage') && this.getStoreValue('channel') === 0) {
 
         /* measure_voltage */
         if (result.adcs.hasOwnProperty("voltage")) {
@@ -536,7 +536,7 @@ class ShellyDevice extends Homey.Device {
       if (result.hasOwnProperty("ext_temperature")) {
 
         /* measure_temperature.1 */
-        if (result.ext_temperature.hasOwnProperty([0]) && !this.hasCapability('measure_temperature.1')) {
+        if (result.ext_temperature.hasOwnProperty([0]) && !this.hasCapability('measure_temperature.1') && this.getStoreValue('channel') === 0) {
           this.addCapability('measure_temperature.1');
         } else if (result.ext_temperature.hasOwnProperty([0]) && this.hasCapability('measure_temperature.1')) {
           let temp1 = result.ext_temperature[0].tC;
@@ -547,7 +547,7 @@ class ShellyDevice extends Homey.Device {
         }
 
         /* measure_temperature.2 */
-        if (result.ext_temperature.hasOwnProperty([1]) && !this.hasCapability('measure_temperature.2')) {
+        if (result.ext_temperature.hasOwnProperty([1]) && !this.hasCapability('measure_temperature.2') && this.getStoreValue('channel') === 0) {
           this.addCapability('measure_temperature.2');
         } else if (result.ext_temperature.hasOwnProperty([1]) && this.hasCapability('measure_temperature.2')) {
           let temp2 = result.ext_temperature[1].tC;
@@ -558,7 +558,7 @@ class ShellyDevice extends Homey.Device {
         }
 
         /* measure_temperature.3 */
-        if (result.ext_temperature.hasOwnProperty([2]) && !this.hasCapability('measure_temperature.3')) {
+        if (result.ext_temperature.hasOwnProperty([2]) && !this.hasCapability('measure_temperature.3') && this.getStoreValue('channel') === 0) {
           this.addCapability('measure_temperature.3');
         } else if (result.ext_temperature.hasOwnProperty([2]) && this.hasCapability('measure_temperature.3')) {
           let temp3 = result.ext_temperature[2].tC;

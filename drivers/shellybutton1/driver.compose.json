@@ -9,8 +9,7 @@
     "defaults"
   ],
   "capabilities": [
-    "measure_battery",
-    "input_1"
+    "measure_battery"
   ],
   "energy": {
     "batteries": [

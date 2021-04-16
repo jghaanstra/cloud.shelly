@@ -31,7 +31,8 @@
           "labelMultiplier": 1,
           "labelDecimals": 0
         }
-      ]
+      ],
+      "deprecated": true
     }
   ]
 }

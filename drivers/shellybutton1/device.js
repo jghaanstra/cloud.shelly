@@ -23,9 +23,6 @@ class ShellyButton1Device extends Device {
       'longpush'
     ];
 
-    this.homey.flow.getDeviceTriggerCard('triggerInput1On');
-    this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
-
     // TODO: REMOVE AFTER 3.1.0
     this.homey.flow.getDeviceTriggerCard('triggerInput');
     this.setStoreValue("battery", true);
@@ -40,9 +37,6 @@ class ShellyButton1Device extends Device {
       if (this.hasCapability('alarm_generic')) {
         this.removeCapability('alarm_generic');
       }
-      if (!this.hasCapability('input_1')) {
-        this.addCapability('input_1');
-      }
       if (this.hasCapability('button.callbackevents')) {
         this.removeCapability('button.callbackevents');
       }
@@ -50,6 +44,10 @@ class ShellyButton1Device extends Device {
         this.removeCapability('button.removecallbackevents');
       }
       this.setStoreValue("sdk", 3);
+    }
+
+    if (this.hasCapability('input_1')) {
+      this.removeCapability('input_1');
     }
 
     // START POLLING IF COAP IS DISABLED OR TRY INITIAL UPDATE

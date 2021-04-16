@@ -25,8 +25,6 @@ class ShellyUniDevice extends Device {
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
-    this.homey.flow.getDeviceTriggerCard('triggerInput2On');
-    this.homey.flow.getDeviceTriggerCard('triggerInput2Off');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature1');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature2');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature3');
@@ -59,8 +57,10 @@ class ShellyUniDevice extends Device {
       this.setStoreValue("sdk", 3);
     }
 
-    if (!this.hasCapability('measure_voltage')) {
+    if (!this.hasCapability('measure_voltage') && this.getStoreValue("channel") === 0) {
       this.addCapability('measure_voltage');
+    } else if (this.hasCapability('measure_voltage') && this.getStoreValue("channel") === 1) {
+      this.removeCapability('measure_voltage');
     }
 
     // INITIAL UPDATE AND POLLING
