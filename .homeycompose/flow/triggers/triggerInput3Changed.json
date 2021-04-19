@@ -1,0 +1,18 @@
+{
+  "id": "triggerInput3Changed",
+  "title": {
+    "en": "Input 3 changed",
+    "nl": "Input 3 gewijzigd"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shellyi3&capabilities=input_3"
+    }
+  ]
+}

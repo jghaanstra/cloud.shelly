@@ -43,15 +43,13 @@ class Shellyi3Device extends Device {
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
+    this.homey.flow.getDeviceTriggerCard('triggerInput1Changed');
     this.homey.flow.getDeviceTriggerCard('triggerInput2On');
     this.homey.flow.getDeviceTriggerCard('triggerInput2Off');
+    this.homey.flow.getDeviceTriggerCard('triggerInput2Changed');
     this.homey.flow.getDeviceTriggerCard('triggerInput3On');
     this.homey.flow.getDeviceTriggerCard('triggerInput3Off');
-
-    // TODO: REMOVE AFTER 3.1.0
-    this.homey.flow.getDeviceTriggerCard('triggerInput');
-    this.homey.flow.getDeviceTriggerCard('triggerInput1');
-    this.homey.flow.getDeviceTriggerCard('triggerInput2');
+    this.homey.flow.getDeviceTriggerCard('triggerInput3Changed');
 
     this.setAvailable();
 

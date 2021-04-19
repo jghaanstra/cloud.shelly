@@ -1,0 +1,18 @@
+{
+  "id": "triggerInput2Changed",
+  "title": {
+    "en": "Input 2 changed",
+    "nl": "Input 2 gewijzigd"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly1l|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
+    }
+  ]
+}

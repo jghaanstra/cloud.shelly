@@ -24,7 +24,6 @@ class ShellyButton1Device extends Device {
     ];
 
     // TODO: REMOVE AFTER 3.1.0
-    this.homey.flow.getDeviceTriggerCard('triggerInput');
     this.setStoreValue("battery", true);
 
     this.setAvailable();

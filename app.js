@@ -36,7 +36,17 @@ class ShellyApp extends Homey.App {
 
     const listenerCallbacks = this.homey.flow.getTriggerCard('triggerCallbacks').registerRunListener(async (args, state) => {
       try {
-        if ((state.id == args.shelly.id && args.action.id === 999) || (args.shelly.id === 'all' && state.action == args.action.action) || (args.shelly.id === 'all' && args.action.id === 999) || ((state.id == args.shelly.id || args.shelly == undefined) && (state.action == args.action.action || args.action == undefined))) {
+        if (args.action.action === undefined) {
+          var action = args.action.name;
+        } else {
+          var action = args.action.action;
+        }
+        if (
+          (state.id == args.shelly.id && args.action.id === 999) ||
+          (args.shelly.id === 'all' && state.action == action) ||
+          (args.shelly.id === 'all' && args.action.id === 999) ||
+          ((state.id === args.shelly.id || args.shelly === undefined) && (state.action === action || args.action === undefined))
+        ) {
           return Promise.resolve(true);
         } else {
           return Promise.resolve(false);

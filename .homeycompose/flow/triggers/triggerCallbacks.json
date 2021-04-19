@@ -5,8 +5,8 @@
     "nl": "Actie gebeurtenis"
   },
   "titleFormatted": {
-    "en": "[[shelly]] action event [[action]]",
-    "nl": "[[shelly]] actie gebeurtenis [[action]]"
+    "en": "Device [[shelly]] with action event [[action]]",
+    "nl": "Apparaat [[shelly]] met actie gebeurtenis [[action]]"
   },
   "tokens": [
     {

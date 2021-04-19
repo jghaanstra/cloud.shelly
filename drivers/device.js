@@ -516,7 +516,6 @@ class ShellyDevice extends Homey.Device {
           }
         }
 
-
         /* input_3 */
         if (result.inputs.hasOwnProperty([2]) && this.hasCapability('input_3')) {
           let input_3 = result.inputs[2].input == 1 ? true : false;
@@ -845,6 +844,7 @@ class ShellyDevice extends Homey.Device {
             } else {
               this.homey.flow.getDeviceTriggerCard('triggerInput1Off').trigger(this, {}, {});
             }
+            this.homey.flow.getDeviceTriggerCard('triggerInput1Changed').trigger(this, {}, {});
           }
           break;
         case 'input1':
@@ -857,6 +857,7 @@ class ShellyDevice extends Homey.Device {
               } else {
                 this.homey.flow.getDeviceTriggerCard('triggerInput1Off').trigger(this, {}, {});
               }
+              this.homey.flow.getDeviceTriggerCard('triggerInput1Changed').trigger(this, {}, {});
             }
           } else {
             let input_2 = value === 0 ? false : true;
@@ -867,6 +868,7 @@ class ShellyDevice extends Homey.Device {
               } else {
                 this.homey.flow.getDeviceTriggerCard('triggerInput2Off').trigger(this, {}, {});
               }
+              this.homey.flow.getDeviceTriggerCard('triggerInput2Changed').trigger(this, {}, {});
             }
           }
           break;
@@ -879,6 +881,7 @@ class ShellyDevice extends Homey.Device {
             } else {
               this.homey.flow.getDeviceTriggerCard('triggerInput3Off').trigger(this, {}, {});
             }
+            this.homey.flow.getDeviceTriggerCard('triggerInput3Changed').trigger(this, {}, {});
           }
           break;
         case 'inputEvent0':
@@ -979,19 +982,22 @@ class ShellyDevice extends Homey.Device {
   }
 
   updateDeviceRgb() {
-    clearTimeout(this.updateDeviceRgbTimeout);
-
-    this.updateDeviceRgbTimeout = setTimeout(() => {
-      let color = tinycolor({ r: this.getStoreValue('red'), g: this.getStoreValue('green'), b: this.getStoreValue('blue') });
-      let hsv = color.toHsv();
-      let light_hue = Number((hsv.h / 360).toFixed(2));
-      if (light_hue !== this.getCapabilityValue('light_hue')) {
-        this.setCapabilityValue('light_hue', light_hue);
-      }
-      if (hsv.v !== this.getCapabilityValue('light_saturation')) {
-        this.setCapabilityValue('light_saturation', hsv.v);
-      }
-    }, 2000);
+    try {
+      clearTimeout(this.updateDeviceRgbTimeout);
+      this.updateDeviceRgbTimeout = setTimeout(() => {
+        let color = tinycolor({ r: this.getStoreValue('red'), g: this.getStoreValue('green'), b: this.getStoreValue('blue') });
+        let hsv = color.toHsv();
+        let light_hue = Number((hsv.h / 360).toFixed(2));
+        if (light_hue !== this.getCapabilityValue('light_hue')) {
+          this.setCapabilityValue('light_hue', light_hue);
+        }
+        if (hsv.v !== this.getCapabilityValue('light_saturation')) {
+          this.setCapabilityValue('light_saturation', hsv.v);
+        }
+      }, 2000);
+    } catch (error) {
+      this.log(error);
+    }
   }
 
   rollerState(value) {
@@ -1021,16 +1027,20 @@ class ShellyDevice extends Homey.Device {
   }
 
   rollerPosition(value) {
-    var windowcoverings_set = value >= 100 ? 1 : value / 100;
-    if (this.getSetting('halfway') !== 0.5) {
-      if (windowcoverings_set < this.getSetting('halfway')) {
-        windowcoverings_set = 0.5 * windowcoverings_set / this.getSetting('halfway');
-      } else {
-        windowcoverings_set = windowcoverings_set - (1 - (windowcoverings_set - this.getSetting('halfway')) * (1 / (1 - this.getSetting('halfway')))) * (this.getSetting('halfway') - 0.5);
+    try {
+      var windowcoverings_set = value >= 100 ? 1 : value / 100;
+      if (this.getSetting('halfway') !== 0.5) {
+        if (windowcoverings_set < this.getSetting('halfway')) {
+          windowcoverings_set = 0.5 * windowcoverings_set / this.getSetting('halfway');
+        } else {
+          windowcoverings_set = windowcoverings_set - (1 - (windowcoverings_set - this.getSetting('halfway')) * (1 / (1 - this.getSetting('halfway')))) * (this.getSetting('halfway') - 0.5);
+        };
       };
-    };
-    if (windowcoverings_set != this.getCapabilityValue('windowcoverings_set')) {
-      this.setCapabilityValue('windowcoverings_set', windowcoverings_set);
+      if (windowcoverings_set != this.getCapabilityValue('windowcoverings_set')) {
+        this.setCapabilityValue('windowcoverings_set', windowcoverings_set);
+      }
+    } catch (error) {
+      this.log(error);
     }
   }
 

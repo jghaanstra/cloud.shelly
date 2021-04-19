@@ -63,7 +63,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.0.38",
+  "version": "3.0.40",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -122,8 +122,8 @@
           "nl": "Actie gebeurtenis"
         },
         "titleFormatted": {
-          "en": "[[shelly]] action event [[action]]",
-          "nl": "[[shelly]] actie gebeurtenis [[action]]"
+          "en": "Device [[shelly]] with action event [[action]]",
+          "nl": "Apparaat [[shelly]] met actie gebeurtenis [[action]]"
         },
         "tokens": [
           {
@@ -201,31 +201,11 @@
         ]
       },
       {
-        "id": "triggerInput",
+        "id": "triggerInput1Changed",
         "title": {
-          "en": "Input State Changed",
-          "nl": "Input status gewijzigd"
+          "en": "Input 1 changed",
+          "nl": "Input 1 gewijzigd"
         },
-        "tokens": [
-          {
-            "name": "input",
-            "type": "string",
-            "title": {
-              "en": "Input",
-              "nl": "Input"
-            },
-            "example": "input 1"
-          },
-          {
-            "name": "state",
-            "type": "string",
-            "title": {
-              "en": "State",
-              "nl": "Status"
-            },
-            "example": "true"
-          }
-        ],
         "args": [
           {
             "name": "device",
@@ -234,40 +214,9 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni"
+            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
           }
-        ],
-        "deprecated": true
-      },
-      {
-        "id": "triggerInput1",
-        "title": {
-          "en": "State of Input 2",
-          "nl": "Status van Input 2"
-        },
-        "tokens": [
-          {
-            "name": "status",
-            "type": "string",
-            "title": {
-              "en": "Status",
-              "nl": "Status"
-            },
-            "example": "On"
-          }
-        ],
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
-            "filter": "driver_id=shellyi3|shellydimmer&capabilities=alarm_generic.1"
-          }
-        ],
-        "deprecated": true
+        ]
       },
       {
         "id": "triggerInput1Off",
@@ -306,22 +255,11 @@
         ]
       },
       {
-        "id": "triggerInput2",
+        "id": "triggerInput2Changed",
         "title": {
-          "en": "State of Input 3",
-          "nl": "Status van Input 3"
+          "en": "Input 2 changed",
+          "nl": "Input 2 gewijzigd"
         },
-        "tokens": [
-          {
-            "name": "status",
-            "type": "string",
-            "title": {
-              "en": "Status",
-              "nl": "Status"
-            },
-            "example": "On"
-          }
-        ],
         "args": [
           {
             "name": "device",
@@ -330,10 +268,9 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi3&capabilities=alarm_generic.2"
+            "filter": "driver_id=shelly1l|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
           }
-        ],
-        "deprecated": true
+        ]
       },
       {
         "id": "triggerInput2Off",
@@ -368,6 +305,24 @@
               "nl": "Selecteer Shelly"
             },
             "filter": "driver_id=shelly1l|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
+          }
+        ]
+      },
+      {
+        "id": "triggerInput3Changed",
+        "title": {
+          "en": "Input 3 changed",
+          "nl": "Input 3 gewijzigd"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellyi3&capabilities=input_3"
           }
         ]
       },

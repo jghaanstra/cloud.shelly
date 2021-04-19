@@ -238,5 +238,11 @@
   },
   "3.0.38": {
     "en": "Added user friendly names for events in action event trigger cards and fixed an issue where Shelly Uni did not create a device for the second relay channel. Also renamed the temperature capability of Shelly Plug S to device temperature and remove obsolete input_1 capability of Shelly Button 1. Lastely deprecated the combined temperature and dim action card for the Shelly DUO as the can be achieved with two built in action cards."
+  },
+  "3.0.39": {
+    "en": "Added user friendly names for events in action event trigger cards and fixed an issue where Shelly Uni did not create a device for the second relay channel. Also renamed the temperature capability of Shelly Plug S to device temperature and remove obsolete input_1 capability of Shelly Button 1. Lastely deprecated the combined temperature and dim action card for the Shelly DUO as the can be achieved with two built in action cards."
+  },
+  "3.0.40": {
+    "en": "Added an \"Input x Has Changed\" trigger card for devices with inputs. Also added user friendly names for events in action event trigger cards and fixed an issue where Shelly Uni did not create a device for the second relay channel. Also renamed the temperature capability of Shelly Plug S to device temperature and remove obsolete input_1 capability of Shelly Button 1. Lastely deprecated the combined temperature and dim action card for the Shelly DUO as the can be achieved with two built in action cards."
   }
 }
