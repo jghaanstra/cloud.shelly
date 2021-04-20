@@ -885,7 +885,7 @@ class ShellyDevice extends Homey.Device {
           }
           break;
         case 'inputEvent0':
-          if (this.hasCapability('input_1') && this.hasCapability('input_2')) {
+          if (this.hasCapability('input_1') && this.hasCapability('input_2') && !this.getStoreValue('type') === 'SHIX3-1') {
             let actionEvent1 = this.util.getActionEventDescription(value) + '_1';
             this.setStoreValue('actionEvent1', actionEvent1);
           } else {
@@ -894,7 +894,7 @@ class ShellyDevice extends Homey.Device {
           }
           break;
         case 'inputEvent1':
-          if (this.hasCapability('input_1') && this.hasCapability('input_2')) {
+          if (this.hasCapability('input_1') && this.hasCapability('input_2') && !this.getStoreValue('type') === 'SHIX3-1') {
             let actionEvent2 = this.util.getActionEventDescription(value) + '_2';
             this.setStoreValue('actionEvent2', actionEvent2);
           } else {
@@ -903,7 +903,7 @@ class ShellyDevice extends Homey.Device {
           }
           break;
         case 'inputEvent2':
-          let actionEvent3 = this.util.getActionEventDescription(value) + '_3';
+          let actionEvent3 = this.util.getActionEventDescription(value);
           this.setStoreValue('actionEvent3', actionEvent3);
           break;
         case 'inputEventCounter0':
