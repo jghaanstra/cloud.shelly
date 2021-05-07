@@ -10,7 +10,7 @@ class Shelly2RollerShutterDriver extends Driver {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly 2 Roller',
+      name: 'Shelly 2 Rollershutter',
       battery: false,
       hostname: 'shelly2-'
     }
