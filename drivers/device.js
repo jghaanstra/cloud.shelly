@@ -543,6 +543,8 @@ class ShellyDevice extends Homey.Device {
             this.setCapabilityValue('measure_temperature.1', temp1);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature1').trigger(this, {'temperature': temp1}, {});
           }
+        } else if (!result.ext_temperature.hasOwnProperty([0]) && this.hasCapability('measure_temperature.1')) {
+          this.removeCapability('measure_temperature.1');
         }
 
         /* measure_temperature.2 */
@@ -554,6 +556,8 @@ class ShellyDevice extends Homey.Device {
             this.setCapabilityValue('measure_temperature.2', temp2);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature2').trigger(this, {'temperature': temp2}, {});
           }
+        } else if (!result.ext_temperature.hasOwnProperty([1]) && this.hasCapability('measure_temperature.2')) {
+          this.removeCapability('measure_temperature.2');
         }
 
         /* measure_temperature.3 */
@@ -565,6 +569,8 @@ class ShellyDevice extends Homey.Device {
             this.setCapabilityValue('measure_temperature.3', temp3);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature3').trigger(this, {'temperature': temp3}, {});
           }
+        } else if (!result.ext_temperature.hasOwnProperty([2]) && this.hasCapability('measure_temperature.3')) {
+          this.removeCapability('measure_temperature.3');
         }
 
       }
@@ -583,6 +589,8 @@ class ShellyDevice extends Homey.Device {
               this.homey.flow.getDeviceTriggerCard('triggerInputExternal1Off').trigger(this, {}, {});
             }
           }
+        } else if (!result.ext_switch.hasOwnProperty([0]) && this.hasCapability('input_external')) {
+          this.removeCapability('input_external');
         }
       }
 
@@ -597,6 +605,8 @@ class ShellyDevice extends Homey.Device {
           if (measure_humidity_ext != this.getCapabilityValue('measure_humidity')) {
             this.setCapabilityValue('measure_humidity', measure_humidity_ext);
           }
+        } else if (!result.ext_humidity.hasOwnProperty([0]) && this.hasCapability('measure_humidity')) {
+          this.removeCapability('measure_humidity');
         }
 
       }

@@ -63,7 +63,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.0.42",
+  "version": "3.0.43",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -631,7 +631,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyi3|shellymotion|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyuni|shellyvintage"
+            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyi3|shellymotion|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyuni|shellyvintage"
           }
         ]
       },
@@ -730,7 +730,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyi3|shellymotion|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyuni|shellyvintage"
+            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyi3|shellymotion|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyuni|shellyvintage"
           }
         ]
       },
@@ -4622,6 +4622,15 @@
               "value": "^shelly4pro-"
             }
           }
+        ],
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shelly4pro-"
+            }
+          }
         ]
       ]
     },
@@ -4825,7 +4834,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellymotionsensor-"
