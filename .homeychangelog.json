@@ -253,5 +253,8 @@
   },
   "3.0.43": {
     "en": "Added a workaround for firmware issue with auto discovery of Shelly motion sensor, also added the firmware check condition card and firmware update card for Shelly 1L. Removed the temperature and humidity capability for Shelly 1/1PM/1L if no external sensors are present and fixed issue with switching between color and temperature mode for Shelly RGBW2 Color."
+  },
+  "3.0.44": {
+    "en": "Added a workaround for firmware issue with auto discovery of Shelly motion sensor, also added the firmware check condition card and firmware update card for Shelly 1L. Removed the temperature and humidity capability for Shelly 1/1PM/1L if no external sensors are present and fixed issue with switching between color and temperature mode for Shelly RGBW2 Color."
   }
 }

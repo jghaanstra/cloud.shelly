@@ -63,7 +63,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.0.43",
+  "version": "3.0.44",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -4464,7 +4464,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellyplug-"
@@ -4483,7 +4483,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellyplug-s-"
@@ -4502,7 +4502,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shelly1-"
@@ -4521,7 +4521,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shelly1l-"
@@ -4540,7 +4540,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shelly1pm-"
@@ -4559,7 +4559,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellyswitch-"
@@ -4578,7 +4578,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellyswitch25-"
@@ -4597,7 +4597,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellyem3-"
@@ -4616,7 +4616,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shelly4pro-"
@@ -4644,7 +4644,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellybulb-|shellycolorbulb-"
@@ -4663,7 +4663,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellybutton1-"
@@ -4682,7 +4682,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellydimmer2?-"
@@ -4701,7 +4701,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^ShellyBulbDuo-"
@@ -4720,7 +4720,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellydw2?-"
@@ -4739,7 +4739,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellyem-"
@@ -4758,7 +4758,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellyflood-"
@@ -4777,7 +4777,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellygas-"
@@ -4796,7 +4796,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellyht-"
@@ -4815,7 +4815,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellyix3-"
@@ -4853,7 +4853,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellyrgbw2-"
@@ -4872,7 +4872,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellysmoke-"
@@ -4891,7 +4891,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^shellyuni-"
@@ -4910,7 +4910,7 @@
       "conditions": [
         [
           {
-            "field": "txt.id",
+            "field": "host",
             "match": {
               "type": "regex",
               "value": "^ShellyVintage-"

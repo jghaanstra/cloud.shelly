@@ -21,7 +21,7 @@ class ShellyDriver extends Homey.Driver {
         return {
           name: this.config.name+ ' ['+ discoveryResult.address +']',
           data: {
-            id: discoveryResult.id,
+            id: discoveryResult.host,
           }
         };
       });
@@ -39,7 +39,7 @@ class ShellyDriver extends Homey.Driver {
         deviceArray = {
           name: this.config.name+ ' ['+ discoveryResult.address +']',
           data: {
-            id: discoveryResult.id,
+            id: discoveryResult.host,
           },
           settings: {
             address  : discoveryResult.address,
@@ -47,7 +47,7 @@ class ShellyDriver extends Homey.Driver {
             password : ''
           },
           store: {
-            main_device: discoveryResult.id,
+            main_device: discoveryResult.host,
             channel: 0,
             type: result.type,
             unicast: false,

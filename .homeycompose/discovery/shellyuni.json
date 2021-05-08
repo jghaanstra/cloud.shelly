@@ -8,7 +8,7 @@
   "conditions": [
     [
       {
-        "field": "txt.id",
+        "field": "host",
         "match": {
           "type": "regex",
           "value": "^shellyuni-"
