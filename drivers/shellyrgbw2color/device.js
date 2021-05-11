@@ -99,8 +99,7 @@ class ShellyRGBW2ColorDevice extends Device {
     });
 
     this.registerCapabilityListener('light_mode', async (value) => {
-      const light_mode = value === 'temperature' ? 'white' : 'color';
-      return await this.util.sendCommand('/settings/?mode='+ light_mode +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+
     });
 
   }

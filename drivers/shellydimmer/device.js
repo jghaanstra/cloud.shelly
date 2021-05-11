@@ -87,7 +87,7 @@ class ShellyDimmerDevice extends Device {
       if (!this.getCapabilityValue('onoff')) {
         this.setCapabilityValue('onoff', true);
       }
-      const dim = value * 100;
+      const dim = value === 0 ? 1 : value * 100;
       return await this.util.sendCommand('/light/0?brightness='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 

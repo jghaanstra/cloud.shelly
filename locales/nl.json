@@ -30,6 +30,7 @@
     "intro_vintage_icon": "Selecteer welk icoon die je wilt gebruiken voor je Shelly Vintage."
   },
   "util": {
+    "400": "Error 400: ongeldige API request, verstuur aub vanuit de app instellingen een diagnostisch report naar de ontwikkelaar om te helpen om dit issue op te lossen.",
     "401": "Foutmelding 401: gebruikers credentials ontbreken of deze gebruiker is niet geautoriseerd, zorg ervoor dat je de gebruikers credentials goed hebt overgenomen zoals ingevoerd via de Shelly smartphone app of webinterface.",
     "502": "Timeout foutmelding: zorg ervoor dat je het correcte IP adres hebt ingevoerd en dat het Shelly apparaat online is.",
     "500": "Foutmelding 500: interne server fout",

@@ -256,5 +256,8 @@
   },
   "3.0.44": {
     "en": "Added a workaround for firmware issue with auto discovery of Shelly motion sensor, also added the firmware check condition card and firmware update card for Shelly 1L. Removed the temperature and humidity capability for Shelly 1/1PM/1L if no external sensors are present and fixed issue with switching between color and temperature mode for Shelly RGBW2 Color."
+  },
+  "3.0.45": {
+    "en": "Fixed an error when setting dimmer to 0 brightness, also fixed an issue where flow cards where not showing up on the Shelly 1L. Added a possible fix for some RGBW2 devices returning a 404 error after the previous release and included some additional error handling for network communication errors."
   }
 }

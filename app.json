@@ -63,7 +63,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.0.44",
+  "version": "3.0.45",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Jelger Haanstra",
@@ -214,7 +214,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
           }
         ]
       },
@@ -232,7 +232,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
           }
         ]
       },
@@ -250,7 +250,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
           }
         ]
       },
@@ -268,7 +268,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1l|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
+            "filter": "driver_id=shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
           }
         ]
       },
@@ -286,7 +286,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1l|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
+            "filter": "driver_id=shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
           }
         ]
       },
@@ -304,7 +304,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1l|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
+            "filter": "driver_id=shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
           }
         ]
       },
@@ -376,7 +376,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1l|shelly1pm&capabilities=input_external"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm&capabilities=input_external"
           }
         ]
       },
@@ -394,7 +394,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1l|shelly1pm&capabilities=input_external"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm&capabilities=input_external"
           }
         ]
       },
@@ -499,7 +499,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shellyuni&capabilities=measure_temperature.1"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shellyuni&capabilities=measure_temperature.1"
           }
         ]
       },
@@ -528,7 +528,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shellyuni&capabilities=measure_temperature.2"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shellyuni&capabilities=measure_temperature.2"
           }
         ]
       },
@@ -557,7 +557,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shellyuni&capabilities=measure_temperature.3"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shellyuni&capabilities=measure_temperature.3"
           }
         ]
       },
@@ -631,7 +631,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyi3|shellymotion|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyuni|shellyvintage"
+            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyi3|shellymotion|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyuni|shellyvintage"
           }
         ]
       },
@@ -649,7 +649,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
           }
         ]
       },
@@ -667,7 +667,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1l|shelly2-rollershutter|shelly25-rollershutter|shellyi3&capabilities=input_2"
+            "filter": "driver_id=shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellyi3&capabilities=input_2"
           }
         ]
       },
@@ -730,7 +730,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1l|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyi3|shellymotion|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyuni|shellyvintage"
+            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyi3|shellymotion|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyuni|shellyvintage"
           }
         ]
       },
@@ -748,7 +748,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyvintage|shellyi3|shellymotion"
+            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyvintage|shellyi3|shellymotion"
           }
         ]
       },

@@ -37,13 +37,13 @@ class ShellyDriver extends Homey.Driver {
         const discoveryResult = discoveryResults[selectedDeviceId];
 
         if (discoveryResult.txt.gen === '2') {
-          let result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
-          let type = result.model;
-          let communication = 'websockets';
+          var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
+          var type = result.model;
+          var communication = 'websockets';
         } else {
-          let result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
-          let type = result.type;
-          let communication = 'coap';
+          var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
+          var type = result.type;
+          var communication = 'coap';
         }
 
         deviceArray = {
@@ -81,15 +81,15 @@ class ShellyDriver extends Homey.Driver {
       try {
 
         if (data.generation === 'gen2') {
-          let result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
-          let id = result.id;
-          let type = result.model;
-          let communication = 'websockets';
+          var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
+          var id = result.id;
+          var type = result.model;
+          var communication = 'websockets';
         } else {
-          let result = await this.util.sendCommand('/settings', data.address, data.username, data.password);
-          let id = result.device.hostname;
-          let type = result.device.type;
-          let communication = 'coap';
+          var result = await this.util.sendCommand('/settings', data.address, data.username, data.password);
+          var id = result.device.hostname;
+          var type = result.device.type;
+          var communication = 'coap';
         }
 
         if (id.startsWith(this.config.hostname)) {

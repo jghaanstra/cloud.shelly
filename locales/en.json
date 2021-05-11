@@ -30,6 +30,7 @@
     "intro_vintage_icon": "Select which icon you want to use for your Shelly Vintage."
   },
   "util": {
+    "400": "Error 400: invalid API request, please send a diagnostic report from the app settings to the developer to help solve this issue.",
     "401": "Error 401: user credentials are missing or this user is not authorized, make sure you have copied the correct user credentials as entered in the Shelly smartphone app or Webinterface.",
     "502": "Timeout error: make sure you have entered the correct IP address and that the Shelly device is online.",
     "500": "Error 500: internal server error",
