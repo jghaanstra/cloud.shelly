@@ -278,7 +278,7 @@ class ShellyApp extends Homey.App {
               }
               const filteredShelly = filteredShellies.filter(shelly => shelly.id.includes(deviceid));
               const homeydevice = filteredShelly[0].device;
-              homeydevice.deviceCoapReport(prop, newValue);
+              homeydevice.parseCapabilityUpdate(prop, newValue);
               if (homeydevice.getSetting('address') !== device.host) {
                 homeydevice.setSettings({address: device.host});
               }

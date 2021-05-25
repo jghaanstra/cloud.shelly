@@ -259,5 +259,8 @@
   },
   "3.0.45": {
     "en": "Fixed an error when setting dimmer to 0 brightness, also fixed an issue where flow cards where not showing up on the Shelly 1L. Added a possible fix for some RGBW2 devices returning a 404 error after the previous release and included some additional error handling for network communication errors."
+  },
+  "3.0.46": {
+    "en": "Branding improvements and preparations for the upcoming Shelly4Pro. No functional changes in this release."
   }
 }

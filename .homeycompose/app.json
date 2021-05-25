@@ -62,12 +62,20 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.0.45",
+  "version": "3.0.46",
   "compatibility": ">=5.0.0",
   "author": {
-    "name": "Jelger Haanstra",
-    "email": "homey@solidewebservices.com",
+    "name": "Allterco Robotics",
+    "email": "homey@shelly.cloud",
     "website": "https://github.com/jghaanstra/cloud.shelly/"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Jelger Haanstra",
+        "email": "homey@solidewebservices.com"
+      }
+    ]
   },
   "contributing": {
     "donate": {
@@ -81,7 +89,7 @@
   },
   "homeyCommunityTopicId": 765,
   "source": "https://github.com/jghaanstra/cloud.shelly",
-  "homepage": "https://community.athom.com/t/765",
+  "homepage": "https://shelly.cloud/",
   "images": {
     "small": "./assets/images/small.jpg",
     "large": "./assets/images/large.jpg",
