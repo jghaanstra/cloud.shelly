@@ -63,7 +63,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.0.46",
+  "version": "3.0.47",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Allterco Robotics",
@@ -91,6 +91,7 @@
   "homeyCommunityTopicId": 765,
   "source": "https://github.com/jghaanstra/cloud.shelly",
   "homepage": "https://shelly.cloud/",
+  "support": "https://community.athom.com/t/app-shelly/765",
   "images": {
     "small": "./assets/images/small.jpg",
     "large": "./assets/images/large.jpg",
@@ -98,8 +99,8 @@
   },
   "category": "appliances",
   "description": {
-    "en": "Control Shelly devices with Homey",
-    "nl": "Bedien Shelly apparaten via Homey"
+    "en": "Smart solutions for every home and office",
+    "nl": "Slimme oplossingen voor elk huis en kantoor"
   },
   "dependencies": {
     "net": "*"
@@ -745,8 +746,8 @@
       {
         "id": "actionReboot",
         "title": {
-          "en": "Reboot your Shelly",
-          "nl": "Herstart je Shelly"
+          "en": "Reboot device",
+          "nl": "Herstart apparaat"
         },
         "args": [
           {

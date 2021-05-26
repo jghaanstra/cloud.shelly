@@ -262,5 +262,8 @@
   },
   "3.0.46": {
     "en": "Branding improvements and preparations for the upcoming Shelly4Pro. No functional changes in this release."
+  },
+  "3.0.47": {
+    "en": "Branding improvements, no functional changes."
   }
 }

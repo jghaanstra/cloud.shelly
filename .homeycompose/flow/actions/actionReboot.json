@@ -1,8 +1,8 @@
 {
   "id": "actionReboot",
   "title": {
-    "en": "Reboot your Shelly",
-    "nl": "Herstart je Shelly"
+    "en": "Reboot device",
+    "nl": "Herstart apparaat"
   },
   "args": [
     {
