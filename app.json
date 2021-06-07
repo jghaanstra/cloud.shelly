@@ -63,7 +63,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.0.47",
+  "version": "3.0.48",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Allterco Robotics",
@@ -2544,7 +2544,10 @@
       "capabilities": [
         "onoff",
         "measure_power",
-        "meter_power"
+        "meter_power",
+        "measure_voltage",
+        "input_1",
+        "measure_temperature"
       ],
       "id": "shelly4pro",
       "settings": [
@@ -4621,7 +4624,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -4839,7 +4842,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {

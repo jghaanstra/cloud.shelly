@@ -21,7 +21,7 @@ class ShellyDriver extends Homey.Driver {
         return {
           name: this.config.name+ ' ['+ discoveryResult.address +']',
           data: {
-            id: discoveryResult.host,
+            id: discoveryResult.host
           }
         };
       });
@@ -32,14 +32,24 @@ class ShellyDriver extends Homey.Driver {
       }
     });
 
+    session.setHandler('list_devices_selection', async (data) => {
+      return selectedDeviceId = data[0].data.id;
+    });
+
     session.setHandler('get_device', async (data) => {
       try {
         const discoveryResult = discoveryResults[selectedDeviceId];
 
-        if (discoveryResult.txt.gen === '2') {
-          var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
-          var type = result.model;
-          var communication = 'websockets';
+        if (discoveryResult.txt !== undefined) {
+          if (discoveryResult.txt.gen === '2') {
+            var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
+            var type = result.model;
+            var communication = 'websockets';
+          } else {
+            var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
+            var type = result.type;
+            var communication = 'coap';
+          }
         } else {
           var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
           var type = result.type;
@@ -122,10 +132,6 @@ class ShellyDriver extends Homey.Driver {
       }
     });
 
-    session.setHandler('list_devices_selection', async (data) => {
-      return selectedDeviceId = data[0].data.id;
-    });
-
     session.setHandler('login', async (data) => {
       deviceArray.settings.username = data.username;
       deviceArray.settings.password = data.password;
@@ -134,9 +140,13 @@ class ShellyDriver extends Homey.Driver {
 
     session.setHandler('add_device', async (data) => {
       try {
-        const unicast = await this.util.setUnicast(deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
-        deviceArray.store.unicast = true;
-        return Promise.resolve(deviceArray);
+        if (deviceArray.store.communication === 'coap') {
+          const unicast = await this.util.setUnicast(deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
+          deviceArray.store.unicast = true;
+          return Promise.resolve(deviceArray);
+        } else {
+          return Promise.resolve(deviceArray);
+        }
       } catch (error) {
         return Promise.reject(error);
       }

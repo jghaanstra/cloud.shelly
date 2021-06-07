@@ -6,6 +6,24 @@
         for (i = 0; i < 5; i++) {
           var deviceid = i + 1;
           if (i < 4) {
+            if (i === 0) {
+              var capabilities = [
+                "onoff",
+                "measure_power",
+                "meter_power",
+                "measure_voltage",
+                "input_1",
+                "measure_temperature"
+              ]
+            } else {
+              var capabilities = [
+                "onoff",
+                "measure_power",
+                "meter_power",
+                "measure_voltage",
+                "input_1"
+              ]
+            }
             Homey.createDevice({
               name: 'Shelly 4 Pro ' + deviceid,
       				data: {
@@ -16,6 +34,7 @@
                 username : result.settings.username,
                 password : result.settings.password
               },
+              capabilities: capabilities,
               store: {
                 main_device: result.data.id,
                 channel: i,
@@ -23,7 +42,7 @@
                 battery: result.store.battery,
                 unicast: result.store.unicast,
                 sdk: 3,
-                communication: 'coap'
+                communication: result.store.communication
               },
               icon: result.icon
       			});

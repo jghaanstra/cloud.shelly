@@ -11,7 +11,10 @@
   "capabilities": [
     "onoff",
     "measure_power",
-    "meter_power"
+    "meter_power",
+    "measure_voltage",
+    "input_1",
+    "measure_temperature"
   ],
   "pair": [
     {

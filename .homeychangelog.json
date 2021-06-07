@@ -265,5 +265,8 @@
   },
   "3.0.47": {
     "en": "Branding improvements, no functional changes."
+  },
+  "3.0.48": {
+    "en": "Fix for pairing the Shelly Motion Sensor."
   }
 }
