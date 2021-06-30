@@ -21,6 +21,12 @@
     "input_1"
   ],
   "capabilitiesOptions": {
+    "light_temperature": {
+      "title": {
+        "en": "Dimlevel white",
+        "nl": "Dim niveau wit"
+      }
+    },
     "onoff.whitemode": {
       "title": {
         "en": "Toggle white mode",

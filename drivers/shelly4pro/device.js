@@ -9,8 +9,15 @@ class Shelly4ProDevice extends Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    this.callbacks = [];
-
+    if (this.getStoreValue('communication') === 'websockets') {
+      this.callbacks = [
+        'shortpush',
+        'longpush'
+      ];
+    } else {
+      this.callbacks = [];
+    }
+    
     this.setAvailable();
 
     // INITIAL UPDATE AND POLLING

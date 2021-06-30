@@ -1,0 +1,30 @@
+{
+  "name": {
+    "en": "Shelly Air",
+    "nl": "Shelly Air"
+  },
+  "class": "sensor",
+  "discovery": "shellyair",
+  "$extends": [
+    "defaults"
+  ],
+  "capabilities": [
+    "onoff",
+    "measure_power",
+    "meter_power",
+    "measure_temperature",
+    "measure_temperature.1",
+    "measure_temperature.2",
+    "measure_temperature.3",
+    "measure_humidity",
+    "input_1"
+  ],
+  "capabilitiesOptions": {
+    "measure_temperature": {
+      "title": {
+        "en": "Device Temperature",
+        "nl": "Apparaat temperatuur"
+      }
+    }
+  }
+}

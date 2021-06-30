@@ -99,7 +99,7 @@ class ShellyDevice extends Homey.Device {
         }
       } else {
         const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
-        const device = this.homey.drivers.getDevice({id: device_id });
+        const device = this.driver.getDevice({id: device_id });
         device.updateCapabilityValue(capability, value);
       }
     } catch (error) {
@@ -287,6 +287,12 @@ class ShellyDevice extends Homey.Device {
 
               let light_temperature_rgbw2 = 1 - Number(this.util.normalize(result.lights[channel].white, 0, 255));
               this.updateCapabilityValue('light_temperature', light_temperature_rgbw2);
+
+              if (result.lights[channel].white > 125 && !this.getCapabilityValue('onoff.whitemode')) {
+                this.updateCapabilityValue('onoff.whitemode', true);
+              } else if (result.lights[channel].white <= 125 && this.getCapabilityValue('onoff.whitemode')) {
+                this.updateCapabilityValue('onoff.whitemode', false);
+              }
             }
 
             /* dim white mode */
@@ -586,39 +592,39 @@ class ShellyDevice extends Homey.Device {
       if (result.hasOwnProperty("switch:"+ channel)) {
 
         /* onoff */
-        if (result["switch:"+channel].hasOwnProperty("ouput") && this.hasCapability('onoff')) {
-          this.updateCapabilityValue('onoff', result["switch:"+channel].output);
+        if (result["switch:"+channel].hasOwnProperty("output") && this.hasCapability('onoff')) {
+          this.updateCapabilityValue('onoff', result["switch:"+channel].output, channel);
         }
 
         /* measure_power */
         if (result["switch:"+channel].hasOwnProperty("apower") && this.hasCapability('measure_power')) {
-          this.updateCapabilityValue('measure_power', result["switch:"+channel].apower);
+          this.updateCapabilityValue('measure_power', result["switch:"+channel].apower, channel);
         }
 
         /* meter_power */
         if (result["switch:"+channel].hasOwnProperty("aenergy") && this.hasCapability('meter_power')) {
           if (result["switch:"+channel].aenergy.hasOwnProperty("total")) {
-            this.updateCapabilityValue('meter_power', result["switch:"+channel].aenergy.total);
+            this.updateCapabilityValue('meter_power', result["switch:"+channel].aenergy.total, channel);
           }
         }
 
         /* measure_voltage */
         if (result["switch:"+channel].hasOwnProperty("voltage")) {
-          this.updateCapabilityValue('measure_voltage', result["switch:"+channel].voltage);
+          this.updateCapabilityValue('measure_voltage', result["switch:"+channel].voltage, channel);
         }
 
         /* input */
         if (result["switch:"+channel].hasOwnProperty("input") && this.hasCapability('input_1')) {
-          this.updateCapabilityValue('input_1', result["switch:"+channel].input);
+          this.updateCapabilityValue('input_1', result["switch:"+channel].input, channel);
         }
 
       }
 
       // DEVICE TEMPERATURE
-      if (result.hasOwnProperty("sys_temp") && !this.hasCapability('measure_temperature') && this.getStoreValue('channel') === 0) {
+      if (result.hasOwnProperty("systemp") && this.hasCapability('measure_temperature') && this.getStoreValue('channel') === 0) {
 
         /* measure_temperature */
-        this.updateCapabilityValue('measure_temperature', result.sys_temp.tC);
+        this.updateCapabilityValue('measure_temperature', result.systemp.tC, 0);
       }
 
     } catch (error) {
@@ -650,27 +656,35 @@ class ShellyDevice extends Homey.Device {
     this.ws.on('message', (data) => {
       try {
         const result = JSON.parse(data);
-        if (result.method === 'NotifyStatus') {
-          delete result.params.ts;
-          for (const component in result.params) {
-            var channel_number = Number(component.substr(component.length - 1));
-            var component_name = component.substr(0, component.length - 2);
-            for (const [capability, value] of Object.entries(result.params[component])) {
-              if (capability !== 'id' && capability !== 'source') {
+        if (result.method === 'NotifyStatus') { /* parse capability status updates */
+          const components_list = Object.entries(result.params);
+          const components = components_list.map(([component, options]) => { return { component, ...options }; });
+
+          components.forEach((element) => {
+            var component = element.component;
+            var channel = element.id
+
+            for (const [capability, value] of Object.entries(element)) {
+
+              if (capability !== 'component' && capability !== 'id' && capability !== 'source') {
+
+                /* parse aenergy data */
                 if (typeof value === 'object' && value !== null) {
                   for (const [capability, values] of Object.entries(value)) {
                     if (capability !== 'by_minute' && capability !== 'minute_ts') {
-                      this.log(capability, values);
-                      //this.parseCapabilityUpdate(capability, values, channel);
+                      this.parseCapabilityUpdate(capability, values, channel);
                     }
                   }
                 } else {
-                  this.log(capability, value);
-                  //this.parseCapabilityUpdate(capability, value, channel);
+                  this.parseCapabilityUpdate(capability, value, channel);
                 }
               }
             }
-          }
+          });
+        } else if (result.method === 'NotifyEvent') { /* parse event updates */
+          result.params.events.forEach((event) => {
+            this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(event.event)}, {"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(event.event)});
+          });
         }
       } catch (error) {
         this.log(error);

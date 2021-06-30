@@ -63,7 +63,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.0.48",
+  "version": "3.0.49",
   "compatibility": ">=5.0.0",
   "author": {
     "name": "Allterco Robotics",
@@ -223,7 +223,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellyair|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
           }
         ]
       },
@@ -241,7 +241,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellyair|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
           }
         ]
       },
@@ -259,7 +259,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly-air|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
           }
         ]
       },
@@ -508,7 +508,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shellyuni&capabilities=measure_temperature.1"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shellair|shellyuni&capabilities=measure_temperature.1"
           }
         ]
       },
@@ -537,7 +537,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shellyuni&capabilities=measure_temperature.2"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shellyair|shellyuni&capabilities=measure_temperature.2"
           }
         ]
       },
@@ -566,7 +566,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shellyuni&capabilities=measure_temperature.3"
+            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shellyair|shellyuni&capabilities=measure_temperature.3"
           }
         ]
       },
@@ -2591,6 +2591,111 @@
     },
     {
       "images": {
+        "large": "/drivers/shellyair/assets/images/large.jpg",
+        "small": "/drivers/shellyair/assets/images/small.jpg"
+      },
+      "icon": "/drivers/shellyair/assets/icon.svg",
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "name": {
+        "en": "Shelly Air",
+        "nl": "Shelly Air"
+      },
+      "class": "sensor",
+      "discovery": "shellyair",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power",
+        "measure_temperature",
+        "measure_temperature.1",
+        "measure_temperature.2",
+        "measure_temperature.3",
+        "measure_humidity",
+        "input_1"
+      ],
+      "capabilitiesOptions": {
+        "measure_temperature": {
+          "title": {
+            "en": "Device Temperature",
+            "nl": "Apparaat temperatuur"
+          }
+        }
+      },
+      "id": "shellyair",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "images": {
         "large": "/drivers/shellybulb/assets/images/large.jpg",
         "small": "/drivers/shellybulb/assets/images/small.jpg"
       },
@@ -3739,6 +3844,12 @@
         "input_1"
       ],
       "capabilitiesOptions": {
+        "light_temperature": {
+          "title": {
+            "en": "Dimlevel white",
+            "nl": "Dim niveau wit"
+          }
+        },
         "onoff.whitemode": {
           "title": {
             "en": "Toggle white mode",
@@ -4641,6 +4752,25 @@
             "match": {
               "type": "regex",
               "value": "^shelly4pro-"
+            }
+          }
+        ]
+      ]
+    },
+    "shellyair": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{host}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shellyair-"
             }
           }
         ]

@@ -68,6 +68,13 @@ class ShellyRGBW2ColorDevice extends Device {
     this.registerCapabilityListener('light_temperature', async (value) => {
       const white = Number(this.util.denormalize(value, 0, 255));
       await this.setCapabilityValue('light_mode', 'temperature');
+
+      if (white > 125 && !this.getCapabilityValue('onoff.whitemode')) {
+        this.updateCapabilityValue('onoff.whitemode', true);
+      } else if (white <= 125 && this.getCapabilityValue('onoff.whitemode')) {
+        this.updateCapabilityValue('onoff.whitemode', false);
+      }
+      
       return await this.util.sendCommand('/color/0?white='+ white, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
