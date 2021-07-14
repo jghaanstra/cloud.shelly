@@ -1,6 +1,6 @@
 'use strict';
 
-const Util = require('/lib/util.js');
+const Util = require('./lib/util.js');
 
 module.exports = {
   async buttonActionTrigger({homey, params}) {

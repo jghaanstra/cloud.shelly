@@ -2,7 +2,7 @@
 
 const Homey = require('homey');
 const Device = require('../device.js');
-const Util = require('/lib/util.js');
+const Util = require('../../lib/util.js');
 
 class ShellyMotionDevice extends Device {
 

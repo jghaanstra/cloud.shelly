@@ -2,7 +2,7 @@
 
 const Homey = require('homey');
 const Driver = require('../driver.js');
-const Util = require('/lib/util.js');
+const Util = require('../../lib/util.js');
 
 class ShellyBulbDriver extends Driver {
 
