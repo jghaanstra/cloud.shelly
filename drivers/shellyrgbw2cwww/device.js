@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const Util = require('/lib/util.js');
+const Util = require('../../lib/util.js');
 const tinycolor = require("tinycolor2");
 const queryparams = 'red green blue white gain turn'.split(' ');
 

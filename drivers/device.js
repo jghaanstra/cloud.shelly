@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const Util = require('/lib/util.js');
+const Util = require('../../lib/util.js');
 const WebSocket = require('ws');
 const tinycolor = require("tinycolor2");
 
