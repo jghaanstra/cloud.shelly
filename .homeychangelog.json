@@ -271,5 +271,8 @@
   },
   "3.0.49": {
     "en": "Added support for the first generation Shelly Air, fix for updating the white mode capability when white channel from RGBW2 is changed and added better capability description for light_temperature for RGBW2 as it's used for setting the white channel instead of light temperature."
+  },
+  "3.0.50": {
+    "en": "Minor branding improvements, no functional changes."
   }
 }
