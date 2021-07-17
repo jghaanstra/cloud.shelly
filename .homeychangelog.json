@@ -274,5 +274,8 @@
   },
   "3.0.50": {
     "en": "Minor branding improvements, no functional changes."
+  },
+  "3.0.51": {
+    "en": "Possible fix for reading ADCS for Shelly Uni."
   }
 }

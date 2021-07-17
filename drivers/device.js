@@ -418,10 +418,11 @@ class ShellyDevice extends Homey.Device {
       if (result.hasOwnProperty("adcs") && this.hasCapability('measure_voltage') && this.getStoreValue('channel') === 0) {
 
         /* measure_voltage */
-        if (result.adcs.hasOwnProperty("voltage")) {
-          this.updateCapabilityValue('measure_voltage', result.adcs.voltage);
+        if (result.adcs.hasOwnProperty([0])) {
+          if (result.adcs[0].hasOwnProperty("voltage")) {
+            this.updateCapabilityValue('measure_voltage', result.adcs[0].voltage);
+          }
         }
-
       }
 
       // INPUTS (input_1, input_2, input_3)
