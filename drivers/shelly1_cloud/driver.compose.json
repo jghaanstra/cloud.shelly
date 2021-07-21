@@ -1,0 +1,14 @@
+{
+  "name": {
+    "en": "Shelly 1",
+    "nl": "Shelly 1"
+  },
+  "class": "socket",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "onoff",
+    "input_1"
+  ]
+}

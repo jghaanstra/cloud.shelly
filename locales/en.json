@@ -27,7 +27,14 @@
     "intro_upload": "If you wish to use a custom icon for your device you can upload it here. The icon needs to be in .svg format.",
     "default_icon": "Use default",
     "save": "Save",
-    "intro_vintage_icon": "Select which icon you want to use for your Shelly Vintage."
+    "intro_vintage_icon": "Select which icon you want to use for your Shelly Vintage.",
+    "title_cloud_pairing": "Pair Shelly over the cloud",
+    "instructions_cloud_pairing": "You are about the pair a Shelly device over the cloud. During pairing you will have to enter your Shelly cloud token en cloud server address. These can be found in your account at https://my.shelly.cloud/ under \"User Settings > Security > Authorization Cloud Key\". If you have previously paired a device these details will be pre-filled for you. You will also have to enter the device ID of the device you wish to pair. You can find this device ID under the webinterface of through your Shelly cloud account under \"Settings > Device Info > Device ID\".",
+    "server_address": "Server Address",
+    "cloud_token": "Cloud Token",
+    "device_id": "Device ID",
+    "cloud_credentials": "Previously entered cloud credetials found. Server address and cloud token have been pre-filled.",
+    "no_cloud_credentials": "There are no cloud credentials registered yet. Please fill in the server address and token as well."
   },
   "util": {
     "400": "Error 400: invalid API request, please send a diagnostic report from the app settings to the developer to help solve this issue.",

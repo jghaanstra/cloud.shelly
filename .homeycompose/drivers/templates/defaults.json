@@ -42,5 +42,6 @@
       "id": "manual_pairing",
       "$template": "manual_pairing"
     }
-  ]
+  ],
+  "platforms": [ "local" ]
 }

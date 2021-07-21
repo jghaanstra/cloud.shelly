@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const Device = require('../device.js');
+const Device = require('../device_local.js');
 const Util = require('../../lib/util.js');
 
 class Shelly25Device extends Device {

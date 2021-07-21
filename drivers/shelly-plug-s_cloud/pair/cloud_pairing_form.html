@@ -1,0 +1,127 @@
+<script type="text/javascript">
+
+Homey.setTitle(Homey.__('pair.title_cloud_pairing'));
+
+$(function() {
+
+  Homey.emit('get_cloud_login')
+    .then(result => {
+      if (result.result) {
+        $('#server_address').val(result.server_address);
+        $('#cloud_token').val(result.cloud_token);
+      } else {
+        $('.shelly-error').show();
+        $('.shelly-error-msg').html(Homey.__('pair.no_cloud_credentials'));
+      }
+    })
+    .catch(error => {
+      $('.shelly-error').show();
+      $('.shelly-error-msg').html(error);
+    });
+
+	$('#test-connection').click(function() {
+		$('.shelly-test').hide();
+		$('.shelly-ok').hide();
+		$('.shelly-error').hide();
+		$('.shelly-info').hide();
+
+		var server_address = $('#server_address').val();
+    var cloud_token = $('#cloud_token').val();
+		var device_id = $('#device_id').val();
+
+		if (server_address !== '' && cloud_token !== '' && device_id !== '') {
+			var data = {
+        server_address: server_address,
+				cloud_token: cloud_token,
+				device_id: device_id
+			};
+
+      Homey.emit('test_cloud_connection', data)
+        .then(result => {
+          var shellyinfo = "<div class='info-row'><span class='info-label' data-i18n='pair.hostname'>Shelly Hostname:</span><span class='info-value'> "+ result.data.device_settings.device.hostname +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.type'>Shelly Device Type:</span><span class='info-value'> "+ result.data.device_settings.device.type +"</span></div>";
+          $('.shelly-info').show();
+          $('.shelly-info').html(shellyinfo);
+          $('.shelly-test').show();
+          $('#connect').prop('disabled', false);
+        })
+        .catch(error => {
+          $('.shelly-error').show();
+					$('.shelly-error-msg').html(error);
+        });
+		} else {
+			$('.shelly-error').show();
+			$('.shelly-error-msg').html( Homey.__('pair.nosettings') );
+		}
+
+	});
+
+	$('#connect').click(function() {
+    Homey.showView('add_device');
+	});
+})
+</script>
+
+<style type="text/css">
+  .form-group {
+    width: 100%;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .form-group label {
+    display: block;
+  }
+  .shelly-status, .shelly-info {
+		display: none;
+	}
+  .shelly-info {
+    margin-top: 10px;
+    font-size: 12px;
+  }
+  .shelly-info .info-row {
+    min-width: 150px;
+    padding-bottom: 4px;
+  }
+  .shelly-info .info-label {
+    display: inline-block;
+    min-width: 100px;
+    font-weight: 700;
+  }
+  .buttons, .messages {
+    padding-top: 14px;
+  }
+  .button:disabled {
+    color: #ccc;
+  }
+  .button:enabled {
+    background-color: #00c139 !important;
+    color: #fff;
+  }
+</style>
+
+<p data-i18n="pair.instructions_cloud_pairing">You are about the pair a Shelly device over the cloud. During pairing you will have to enter your Shelly cloud token en cloud server address. These can be found in your account at https://my.shelly.cloud/ under "User Settings > Security > Authorization Cloud Key". You will also have to enter the device ID of the device you wish to pair. You can find this device ID under the webinterface of through your Shelly cloud account under "Settings > Device Info > Device ID".</p>
+<div class="shelly-pairing">
+  <div class="form-group">
+		<label for="server_address" data-i18n="pair.server_address">Server Address</label>
+		<input type="text" class="form-control" id="server_address">
+	</div>
+	<div class="form-group">
+		<label for="cloud_token" data-i18n="pair.cloud_token">Cloud Token</label>
+		<input type="password" class="form-control" id="cloud_token">
+	</div>
+	<div class="form-group">
+		<label for="device_id" data-i18n="pair.device_id">Password</label>
+		<input type="text" class="form-control" id="device_id">
+	</div>
+	<div class="form-group buttons">
+		<button id="test-connection" class="button" data-i18n="pair.test">Test Connection</button>
+		<button id="connect" class="button" data-i18n="pair.connect" disabled>Connect</button>
+	</div>
+</div>
+
+<div class="shelly-info"></div>
+
+<div class="messages">
+	<p class="shelly-status shelly-test" style="color: #008C23;"><i class="fa fa-check"></i> <span class="shelly-test-msg" data-i18n="pair.testing">Connection test succesfull</span></p>
+	<p class="shelly-status shelly-ok" style="color: #008C23;"><i class="fa fa-check"></i> <span class="shelly-ok-msg" data-i18n="pair.success">Shelly device added succesfully</span></p>
+	<p class="shelly-status shelly-error" style="color: #ff6300;"><i class="fa fa-times"></i> <span class="shelly-error-msg"></span></p>
+</div>

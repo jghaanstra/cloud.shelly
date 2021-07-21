@@ -1,7 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
-const Util = require('../../lib/util.js');
+const Util = require('../lib/util.js');
 const WebSocket = require('ws');
 const tinycolor = require("tinycolor2");
 
@@ -11,34 +11,19 @@ class ShellyDevice extends Homey.Device {
     if (!this.util) this.util = new Util({homey: this.homey});
   }
 
-  async onAdded() {
-    if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
-      setTimeout(async () => {
-        return await this.homey.app.updateShellyCollection();
-      }, 2000);
-    }
-  }
-
-  async onDeleted() {
-    try {
-      clearInterval(this.pollingInterval);
-      if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
-        const iconpath = "/userdata/" + this.getData().id +".svg";
-        await this.util.removeIcon(iconpath);
-      }
-      await this.homey.app.updateShellyCollection();
-      return;
-    } catch (error) {
-      this.log(error);
-    }
-  }
 
   // HELPER FUNCTIONS
 
   /* boot sequence */
   async bootSequence() {
     try {
-      if (this.getStoreValue('communication') === 'websockets') {
+      if (this.getStoreValue('communication') === 'cloud') {
+        this.pollingInterval = setInterval(() => {
+          setTimeout(async () => {
+            await this.pollDevice();
+          }, this.getStoreValue('channel') * 1500);
+        }, 10000);
+      } else if (this.getStoreValue('communication') === 'websockets') {
         if (this.getStoreValue('channel') === 0) {
           this.ws = null;
           this.connected = false;
@@ -46,41 +31,41 @@ class ShellyDevice extends Homey.Device {
           this.connectWebsocket();
         }
         setTimeout(() => {
-          this.pollDeviceGen2();
+          this.pollWebsocketDevice();
         }, this.util.getRandomTimeout(10));
         if ((this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) && this.getStoreValue('battery') !== true) {
           this.pollingInterval = setInterval(() => {
-            this.pollDeviceGen2();
+            this.pollWebsocketDevice();
           }, 60000);
         } else {
           this.pollingInterval = setInterval(() => {
-            this.pollDeviceGen2();
+            this.pollWebsocketDevice();
           }, (60000 + (1000 * this.getStoreValue('channel'))));
         }
       } else {
         if (this.homey.settings.get('general_coap')) { /* CoAP is disabled */
           if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
             this.pollingInterval = setInterval(() => {
-              this.pollDeviceGen1();
+              this.pollDevice();
             }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
           } else {
             this.pollingInterval = setInterval(() => {
               setTimeout(async () => {
-                await this.pollDeviceGen1();
+                await this.pollDevice();
               }, this.getStoreValue('channel') * 1500);
             }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
           }
         } else { /* CoAP is enabled */
           setTimeout(() => {
-            this.pollDeviceGen1();
+            this.pollDevice();
           }, this.util.getRandomTimeout(10));
           if ((this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) && this.getStoreValue('battery') !== true) {
             this.pollingInterval = setInterval(() => {
-              this.pollDeviceGen1();
+              this.pollDevice();
             }, 60000);
           } else {
             this.pollingInterval = setInterval(() => {
-              this.pollDeviceGen1();
+              this.pollDevice();
             }, (60000 + (1000 * this.getStoreValue('channel'))));
           }
         }
@@ -108,10 +93,16 @@ class ShellyDevice extends Homey.Device {
     }
   }
 
-  /* polling gen1 devices */
-  async pollDeviceGen1() {
+  /* polling local HTTP and cloud devices */
+  async pollDevice() {
     try {
-      let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      if (this.getStoreValue('communication') === 'cloud') {
+        let data = await this.util.sendCloudCommand('/device/status', this.getSetting('server_address'), this.getSetting('cloud_token'), this.getSetting('device_id'));
+        var result = data.data.device_status;
+      } else {
+        var result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      }
+
       if (!this.getAvailable()) { this.setAvailable(); }
 
       let channel = this.getStoreValue('channel') || 0;
@@ -497,8 +488,6 @@ class ShellyDevice extends Homey.Device {
             this.updateCapabilityValue('measure_temperature.1', temp1);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature1').trigger(this, {'temperature': temp1}, {});
           }
-        } else if (!result.ext_temperature.hasOwnProperty([0]) && this.hasCapability('measure_temperature.1')) {
-          this.removeCapability('measure_temperature.1');
         }
 
         /* measure_temperature.2 */
@@ -510,8 +499,6 @@ class ShellyDevice extends Homey.Device {
             this.updateCapabilityValue('measure_temperature.2', temp2);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature2').trigger(this, {'temperature': temp2}, {});
           }
-        } else if (!result.ext_temperature.hasOwnProperty([1]) && this.hasCapability('measure_temperature.2')) {
-          this.removeCapability('measure_temperature.2');
         }
 
         /* measure_temperature.3 */
@@ -523,8 +510,6 @@ class ShellyDevice extends Homey.Device {
             this.updateCapabilityValue('measure_temperature.3', temp3);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature3').trigger(this, {'temperature': temp3}, {});
           }
-        } else if (!result.ext_temperature.hasOwnProperty([2]) && this.hasCapability('measure_temperature.3')) {
-          this.removeCapability('measure_temperature.3');
         }
 
       }
@@ -543,8 +528,6 @@ class ShellyDevice extends Homey.Device {
               this.homey.flow.getDeviceTriggerCard('triggerInputExternal1Off').trigger(this, {}, {});
             }
           }
-        } else if (!result.ext_switch.hasOwnProperty([0]) && this.hasCapability('input_external')) {
-          this.removeCapability('input_external');
         }
       }
 
@@ -556,14 +539,12 @@ class ShellyDevice extends Homey.Device {
           this.addCapability('measure_humidity');
         } else if (result.ext_humidity.hasOwnProperty([0]) && this.hasCapability('measure_humidity')) {
           this.updateCapabilityValue('measure_humidity', result.ext_humidity[0].hum);
-        } else if (!result.ext_humidity.hasOwnProperty([0]) && this.hasCapability('measure_humidity')) {
-          this.removeCapability('measure_humidity');
         }
 
       }
 
       // update unicast
-      if (!this.getStoreValue('unicast') === true && this.getStoreValue('battery') === false && this.getStoreValue('type') !== 'SHSW-44') {
+      if (this.getStoreValue('communication') === 'coap' && !this.getStoreValue('unicast') === true && this.getStoreValue('battery') === false && this.getStoreValue('type') !== 'SHSW-44') {
         const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         if (result === 'OK') {
           this.setStoreValue("unicast", true);
@@ -581,138 +562,11 @@ class ShellyDevice extends Homey.Device {
     }
   }
 
-  /* polling gen2 devices */
-  async pollDeviceGen2() {
-    try {
-      let result = await this.util.sendCommand('/rpc/Shelly.GetStatus', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      if (!this.getAvailable()) { this.setAvailable(); }
-
-      let channel = this.getStoreValue('channel') || 0;
-
-      // SWITCH component
-      if (result.hasOwnProperty("switch:"+ channel)) {
-
-        /* onoff */
-        if (result["switch:"+channel].hasOwnProperty("output") && this.hasCapability('onoff')) {
-          this.updateCapabilityValue('onoff', result["switch:"+channel].output, channel);
-        }
-
-        /* measure_power */
-        if (result["switch:"+channel].hasOwnProperty("apower") && this.hasCapability('measure_power')) {
-          this.updateCapabilityValue('measure_power', result["switch:"+channel].apower, channel);
-        }
-
-        /* meter_power */
-        if (result["switch:"+channel].hasOwnProperty("aenergy") && this.hasCapability('meter_power')) {
-          if (result["switch:"+channel].aenergy.hasOwnProperty("total")) {
-            this.updateCapabilityValue('meter_power', result["switch:"+channel].aenergy.total, channel);
-          }
-        }
-
-        /* measure_voltage */
-        if (result["switch:"+channel].hasOwnProperty("voltage")) {
-          this.updateCapabilityValue('measure_voltage', result["switch:"+channel].voltage, channel);
-        }
-
-        /* input */
-        if (result["switch:"+channel].hasOwnProperty("input") && this.hasCapability('input_1')) {
-          this.updateCapabilityValue('input_1', result["switch:"+channel].input, channel);
-        }
-
-      }
-
-      // DEVICE TEMPERATURE
-      if (result.hasOwnProperty("systemp") && this.hasCapability('measure_temperature') && this.getStoreValue('channel') === 0) {
-
-        /* measure_temperature */
-        this.updateCapabilityValue('measure_temperature', result.systemp.tC, 0);
-      }
-
-    } catch (error) {
-      if (!this.getStoreValue('battery')) {
-        this.setUnavailable(this.homey.__('device.unreachable') + error.message);
-        this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.message});
-        this.log(error);
-      } else {
-        this.log(this.getData().id +' is probably asleep and disconnected');
-      }
-    }
-  }
+  /* polling websocket devices */
+  async pollWebsocketDevice() {  }
 
   /* websocket for gen2 devices */
-  async connectWebsocket() {
-    if (this.getSetting('username') && this.getSetting('password')) {
-      var headers = {'Authorization': 'Basic ' + Buffer.from(this.getSetting('username') + ":" + this.getSetting('password')).toString('base64')};
-    } else {
-      var headers = {};
-    }
-
-    this.ws = new WebSocket('ws://'+ this.getSetting("address") +'/rpc', {perMessageDeflate: false, headers: headers});
-
-    this.ws.on('open', () => {
-      this.ws.send(JSON.stringify({"id": 0, "src": this.getData().id, "method": "Shelly.GetStatus"}));
-      this.connected = true;
-    });
-
-    this.ws.on('message', (data) => {
-      try {
-        const result = JSON.parse(data);
-        if (result.method === 'NotifyStatus') { /* parse capability status updates */
-          const components_list = Object.entries(result.params);
-          const components = components_list.map(([component, options]) => { return { component, ...options }; });
-
-          components.forEach((element) => {
-            var component = element.component;
-            var channel = element.id
-
-            for (const [capability, value] of Object.entries(element)) {
-
-              if (capability !== 'component' && capability !== 'id' && capability !== 'source') {
-
-                /* parse aenergy data */
-                if (typeof value === 'object' && value !== null) {
-                  for (const [capability, values] of Object.entries(value)) {
-                    if (capability !== 'by_minute' && capability !== 'minute_ts') {
-                      this.parseCapabilityUpdate(capability, values, channel);
-                    }
-                  }
-                } else {
-                  this.parseCapabilityUpdate(capability, value, channel);
-                }
-              }
-            }
-          });
-        } else if (result.method === 'NotifyEvent') { /* parse event updates */
-          result.params.events.forEach((event) => {
-            this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(event.event)}, {"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(event.event)});
-          });
-        }
-      } catch (error) {
-        this.log(error);
-      }
-    });
-
-    this.ws.on('ping', () => {
-      clearTimeout(this.pingWsTimeout);
-      this.pingWsTimeout = setTimeout(() => {
-        this.ws.close();
-      }, 60000);
-    });
-
-    this.ws.on('error', (error) => {
-      this.log(error);
-      this.ws.close();
-    });
-
-    this.ws.on('close', () => {
-      clearTimeout(this.reconnectWsTimeout);
-      this.connected = false;
-
-      this.reconnectWsTimeout = setTimeout(() => {
-        this.connectWebsocket();
-      }, 60000);
-    });
-  }
+  async connectWebsocket() { }
 
   /* process capability updates from CoAP and Websockets */
   async parseCapabilityUpdate(capability, value, channel = 0) {

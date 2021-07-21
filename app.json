@@ -1435,6 +1435,9 @@
           "id": "manual_pairing"
         }
       ],
+      "platforms": [
+        "local"
+      ],
       "name": {
         "en": "Shelly Plug",
         "nl": "Shelly Plug"
@@ -1526,6 +1529,9 @@
           "id": "manual_pairing"
         }
       ],
+      "platforms": [
+        "local"
+      ],
       "name": {
         "en": "Shelly Plug S",
         "nl": "Shelly Plug S"
@@ -1588,18 +1594,158 @@
     },
     {
       "images": {
+        "large": "/drivers/shelly-plug-s_cloud/assets/images/large.jpg",
+        "small": "/drivers/shelly-plug-s_cloud/assets/images/small.jpg"
+      },
+      "icon": "/drivers/shelly-plug-s_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "cloud_pairing_form"
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "name": {
+        "en": "Shelly Plug S",
+        "nl": "Shelly Plug S"
+      },
+      "class": "socket",
+      "discovery": "shelly-plug-s",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power",
+        "measure_temperature"
+      ],
+      "capabilitiesOptions": {
+        "measure_temperature": {
+          "title": {
+            "en": "Device Temperature",
+            "nl": "Apparaat temperatuur"
+          }
+        }
+      },
+      "id": "shelly-plug-s_cloud",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "server_address",
+              "type": "text",
+              "value": "https://shelly-8-eu.shelly.cloud",
+              "label": {
+                "en": "Server Address",
+                "nl": "Server adres"
+              }
+            },
+            {
+              "id": "cloud_token",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Cloud Token",
+                "nl": "Cloud token"
+              }
+            },
+            {
+              "id": "device_id",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Device ID",
+                "nl": "Device ID"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "images": {
+        "large": "/drivers/shelly-plug_cloud/assets/images/large.jpg",
+        "small": "/drivers/shelly-plug_cloud/assets/images/small.jpg"
+      },
+      "icon": "/drivers/shelly-plug_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "cloud_pairing_form"
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "name": {
+        "en": "Shelly Plug",
+        "nl": "Shelly Plug"
+      },
+      "class": "socket",
+      "discovery": "shelly-plug",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power"
+      ],
+      "id": "shelly-plug_cloud",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "server_address",
+              "type": "text",
+              "value": "https://shelly-8-eu.shelly.cloud",
+              "label": {
+                "en": "Server Address",
+                "nl": "Server adres"
+              }
+            },
+            {
+              "id": "cloud_token",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Cloud Token",
+                "nl": "Cloud token"
+              }
+            },
+            {
+              "id": "device_id",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Device ID",
+                "nl": "Device ID"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "images": {
         "large": "/drivers/shelly1/assets/images/large.jpg",
         "small": "/drivers/shelly1/assets/images/small.jpg"
       },
       "icon": "/drivers/shelly1/assets/icon.svg",
       "capabilities": [
         "onoff",
-        "measure_temperature.1",
-        "measure_temperature.2",
-        "measure_temperature.3",
-        "measure_humidity",
-        "input_1",
-        "input_external"
+        "input_1"
       ],
       "capabilitiesOptions": {
         "measure_temperature.1": {
@@ -1654,6 +1800,9 @@
         {
           "id": "manual_pairing"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly 1",
@@ -1712,31 +1861,14 @@
         "measure_power",
         "meter_power",
         "measure_temperature",
-        "measure_temperature.1",
-        "measure_temperature.2",
-        "measure_temperature.3",
-        "measure_humidity",
         "input_1",
-        "input_2",
-        "input_external"
+        "input_2"
       ],
       "capabilitiesOptions": {
-        "measure_temperature.1": {
+        "measure_temperature": {
           "title": {
-            "en": "Temperature Sensor 1",
-            "nl": "Temperatuursensor 1"
-          }
-        },
-        "measure_temperature.2": {
-          "title": {
-            "en": "Temperature Sensor 2",
-            "nl": "Temperatuursensor 2"
-          }
-        },
-        "measure_temperature.3": {
-          "title": {
-            "en": "Temperature Sensor 3",
-            "nl": "Temperatuursensor 3"
+            "en": "Device Temperature",
+            "nl": "Apparaat temperatuur"
           }
         }
       },
@@ -1773,6 +1905,9 @@
         {
           "id": "manual_pairing"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly 1L",
@@ -1822,6 +1957,72 @@
     },
     {
       "images": {
+        "large": "/drivers/shelly1_cloud/assets/images/large.jpg",
+        "small": "/drivers/shelly1_cloud/assets/images/small.jpg"
+      },
+      "icon": "/drivers/shelly1_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "cloud_pairing_form"
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "name": {
+        "en": "Shelly 1",
+        "nl": "Shelly 1"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff",
+        "input_1"
+      ],
+      "id": "shelly1_cloud",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "server_address",
+              "type": "text",
+              "value": "https://shelly-8-eu.shelly.cloud",
+              "label": {
+                "en": "Server Address",
+                "nl": "Server adres"
+              }
+            },
+            {
+              "id": "cloud_token",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Cloud Token",
+                "nl": "Cloud token"
+              }
+            },
+            {
+              "id": "device_id",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Device ID",
+                "nl": "Device ID"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "images": {
         "large": "/drivers/shelly1pm/assets/images/large.jpg",
         "small": "/drivers/shelly1pm/assets/images/small.jpg"
       },
@@ -1831,30 +2032,13 @@
         "measure_power",
         "meter_power",
         "measure_temperature",
-        "measure_temperature.1",
-        "measure_temperature.2",
-        "measure_temperature.3",
-        "measure_humidity",
-        "input_1",
-        "input_external"
+        "input_1"
       ],
       "capabilitiesOptions": {
-        "measure_temperature.1": {
+        "measure_temperature": {
           "title": {
-            "en": "Temperature Sensor 1",
-            "nl": "Temperatuursensor 1"
-          }
-        },
-        "measure_temperature.2": {
-          "title": {
-            "en": "Temperature Sensor 2",
-            "nl": "Temperatuursensor 2"
-          }
-        },
-        "measure_temperature.3": {
-          "title": {
-            "en": "Temperature Sensor 3",
-            "nl": "Temperatuursensor 3"
+            "en": "Device Temperature",
+            "nl": "Apparaat temperatuur"
           }
         }
       },
@@ -1891,6 +2075,9 @@
         {
           "id": "manual_pairing"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly 1PM",
@@ -1977,6 +2164,9 @@
         {
           "id": "manual_pairing"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly 2 Relay",
@@ -2069,6 +2259,9 @@
         {
           "id": "manual_pairing"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly 2 Roller Shutter",
@@ -2200,6 +2393,9 @@
           "id": "manual_pairing"
         }
       ],
+      "platforms": [
+        "local"
+      ],
       "name": {
         "en": "Shelly 2.5 Relay",
         "nl": "Shelly 2.5 Relay"
@@ -2292,6 +2488,9 @@
         {
           "id": "manual_pairing"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly 2.5 Roller Shutter",
@@ -2423,6 +2622,9 @@
           "id": "manual_pairing"
         }
       ],
+      "platforms": [
+        "local"
+      ],
       "name": {
         "en": "Shelly 3EM",
         "nl": "Shelly 3EM"
@@ -2539,6 +2741,9 @@
           "id": "manual_pairing"
         }
       ],
+      "platforms": [
+        "local"
+      ],
       "name": {
         "en": "Shelly 4 Pro",
         "nl": "Shelly 4 Pro"
@@ -2632,6 +2837,9 @@
         {
           "id": "manual_pairing"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly Air",
@@ -2738,6 +2946,9 @@
           "id": "manual_pairing"
         }
       ],
+      "platforms": [
+        "local"
+      ],
       "name": {
         "en": "Shelly Bulb (RGBW)",
         "nl": "Shelly Bulb (RGBW)"
@@ -2838,6 +3049,9 @@
           "id": "manual_pairing"
         }
       ],
+      "platforms": [
+        "local"
+      ],
       "name": {
         "en": "Shelly Button 1",
         "nl": "Shelly Button 1"
@@ -2931,6 +3145,9 @@
         {
           "id": "manual_pairing"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly Dimmer (2)",
@@ -3026,6 +3243,9 @@
         {
           "id": "manual_pairing"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly Duo",
@@ -3127,6 +3347,9 @@
           "id": "manual_pairing"
         }
       ],
+      "platforms": [
+        "local"
+      ],
       "name": {
         "en": "Shelly Door/Window Sensor (2)",
         "nl": "Shelly Deur/Raam Sensor (2)"
@@ -3226,6 +3449,9 @@
         {
           "id": "manual_pairing"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly EM",
@@ -3347,6 +3573,9 @@
           "id": "manual_pairing"
         }
       ],
+      "platforms": [
+        "local"
+      ],
       "name": {
         "en": "Shelly Flood Sensor",
         "nl": "Shelly Flood Sensor"
@@ -3442,6 +3671,9 @@
         {
           "id": "manual_pairing"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly Gas Sensor",
@@ -3539,6 +3771,9 @@
           "id": "manual_pairing"
         }
       ],
+      "platforms": [
+        "local"
+      ],
       "name": {
         "en": "Shelly Humidity & Temperature",
         "nl": "Shelly Humidity & Temperature"
@@ -3634,6 +3869,9 @@
         {
           "id": "manual_pairing"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly i3",
@@ -3732,6 +3970,9 @@
           "id": "manual_pairing"
         }
       ],
+      "platforms": [
+        "local"
+      ],
       "name": {
         "en": "Shelly Motion Sensor",
         "nl": "Shelly Bewegingssensor"
@@ -3829,6 +4070,9 @@
           "id": "manual_pairing"
         }
       ],
+      "platforms": [
+        "local"
+      ],
       "name": {
         "en": "Shelly RGBW2 Color Mode",
         "nl": "Shelly RGBW2 Color Mode"
@@ -3911,6 +4155,9 @@
         {
           "id": "start"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly RGBW2 2x CW/WW Mode",
@@ -4017,6 +4264,9 @@
           "id": "manual_pairing"
         }
       ],
+      "platforms": [
+        "local"
+      ],
       "name": {
         "en": "Shelly RGBW2 4x White Mode",
         "nl": "Shelly RGBW2 4x White Mode"
@@ -4115,6 +4365,9 @@
         {
           "id": "manual_pairing"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly Smoke Detector",
@@ -4247,6 +4500,9 @@
           "id": "manual_pairing"
         }
       ],
+      "platforms": [
+        "local"
+      ],
       "name": {
         "en": "Shelly Uni",
         "nl": "Shelly Uni"
@@ -4332,6 +4588,9 @@
         {
           "id": "manual_pairing"
         }
+      ],
+      "platforms": [
+        "local"
       ],
       "name": {
         "en": "Shelly Vintage",

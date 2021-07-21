@@ -1,0 +1,9 @@
+{
+  "id": "cloud_token",
+  "type": "password",
+  "value": "",
+  "label": {
+    "en": "Cloud Token",
+    "nl": "Cloud token"
+  }
+}

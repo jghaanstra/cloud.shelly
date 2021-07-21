@@ -1,0 +1,25 @@
+{
+  "name": {
+    "en": "Shelly Plug S",
+    "nl": "Shelly Plug S"
+  },
+  "class": "socket",
+  "discovery": "shelly-plug-s",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "onoff",
+    "measure_power",
+    "meter_power",
+    "measure_temperature"
+  ],
+  "capabilitiesOptions": {
+    "measure_temperature": {
+      "title": {
+        "en": "Device Temperature",
+        "nl": "Apparaat temperatuur"
+      }
+    }
+  }
+}

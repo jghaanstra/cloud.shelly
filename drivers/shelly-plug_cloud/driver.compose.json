@@ -1,0 +1,16 @@
+{
+  "name": {
+    "en": "Shelly Plug",
+    "nl": "Shelly Plug"
+  },
+  "class": "socket",
+  "discovery": "shelly-plug",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "onoff",
+    "measure_power",
+    "meter_power"
+  ]
+}

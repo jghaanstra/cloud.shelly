@@ -27,7 +27,14 @@
     "intro_upload": "Als je een eigen icoon voor je apparaat wilt gebruiken kan je deze hier uploaden. Het icoon moet in .svg format zijn.",
     "default_icon": "Gebruik standaard",
     "save": "Opslaan",
-    "intro_vintage_icon": "Selecteer welk icoon die je wilt gebruiken voor je Shelly Vintage."
+    "intro_vintage_icon": "Selecteer welk icoon die je wilt gebruiken voor je Shelly Vintage.",
+    "title_cloud_pairing": "Koppel Shelly over de cloud",
+    "instructions_cloud_pairing": "Je staat op het punt om een Shelly cloud apparaat te koppelen. Tijdens het koppelen zal je jouw Shelly cloud token en cloud server adres moeten invoeren. Beide kan je vinden in je Shelly account op https://my.shelly.cloud/ onder \"User Settings > Security > Authorization Cloud Key\". Indien je eerder een Shelly Cloud apparaat hebt gekoppeld zijn deze gegevens vooringevuld. Je zal ook het device ID van het apparaat moeten opgeven dat je wil koppelen. Deze kan je vinden onder de webinterface van het apparaat op via jouw Shelly cloud account onder \"Settings > Device Info > Device ID\".",
+    "server_address": "Server adres",
+    "cloud_token": "Cloud Token",
+    "device_id": "Device ID",
+    "cloud_credentials": "Eerder ingegeven cloud credentials gevonden. Server adres en cloud token zijn vooringevuld.",
+    "no_cloud_credentials": "Er zijn nog geen cloud credentials geregistreerd. Vul ook het server address en cloud token in."
   },
   "util": {
     "400": "Error 400: ongeldige API request, verstuur aub vanuit de app instellingen een diagnostisch report naar de ontwikkelaar om te helpen om dit issue op te lossen.",
