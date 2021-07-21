@@ -10,24 +10,8 @@ class ShellyDuoDevice extends Device {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.callbacks = [];
-    // TODO: REMOVE AFTER 3.1.0
-    this.temp_callbacks = [
-      'out_on',
-      'out_off'
-    ];
 
     this.setAvailable();
-
-    if (!this.getStoreValue('sdk') === 3) {
-      // TODO: REMOVE AFTER 3.1.0
-      if (this.hasCapability('button.callbackevents')) {
-        this.removeCapability('button.callbackevents');
-      }
-      if (this.hasCapability('button.removecallbackevents')) {
-        this.removeCapability('button.removecallbackevents');
-      }
-      this.setStoreValue("sdk", 3);
-    }
 
     // INITIAL UPDATE AND POLLING
     this.bootSequence();
@@ -48,13 +32,6 @@ class ShellyDuoDevice extends Device {
       return await this.util.sendCommand('/light/0?white='+ white +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
-  }
-
-  // HELPER FUNCTIONS
-
-  // TODO: REMOVE AFTER 3.1.0
-  async removeCallbacks() {
-    return await this.util.removeCallbackEvents('/settings/actions?index=0&name=', this.temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

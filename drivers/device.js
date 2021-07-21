@@ -23,7 +23,7 @@ class ShellyDevice extends Homey.Device {
             await this.pollDevice();
           }, this.getStoreValue('channel') * 1500);
         }, 10000);
-      } else if (this.getStoreValue('communication') === 'websockets') {
+      } else if (this.getStoreValue('communication') === 'websocket') {
         if (this.getStoreValue('channel') === 0) {
           this.ws = null;
           this.connected = false;

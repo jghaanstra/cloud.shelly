@@ -25,5 +25,6 @@
       },
       "filter": "driver_id=shellydw"
     }
-  ]
+  ],
+  "platforms": ["local", "cloud"]
 }

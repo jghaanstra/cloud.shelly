@@ -12,7 +12,8 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly1|shelly1L|shelly1pm&capabilities=input_external"
+      "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1pm&capabilities=input_external"
     }
-  ]
+  ],
+  "platforms": ["local", "cloud"]
 }

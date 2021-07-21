@@ -6,7 +6,8 @@
         "en": "Disable white mode",
         "nl": "Uitschakelen wit modus"
       },
-      "args": []
+      "args": [],
+      "platforms": ["local"]
     },
     {
       "id": "actionRGBW2EnableWhiteMode",
@@ -14,7 +15,8 @@
         "en": "Enable white mode",
         "nl": "Inschakelen wit modus"
       },
-      "args": []
+      "args": [],
+      "platforms": ["local"]
     },
     {
       "id": "effectRGBW2Color",
@@ -29,6 +31,10 @@
       "args": [
         {
           "name": "effect",
+          "title": {
+            "en": "Effect",
+            "nl": "Effect"
+          },
           "type": "dropdown",
           "placeholder": {
             "en": "Effect",
@@ -86,7 +92,8 @@
             }
           ]
         }
-      ]
+      ],
+      "platforms": ["local"]
     }
   ]
 }

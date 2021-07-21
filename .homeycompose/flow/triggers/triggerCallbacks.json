@@ -41,6 +41,10 @@
     {
       "name": "shelly",
       "type": "autocomplete",
+      "title": {
+        "en": "Select your Shelly ...",
+        "nl": "Selecteer je Shelly ..."
+      },
       "placeholder": {
         "en": "Select your Shelly ...",
         "nl": "Selecteer je Shelly ..."
@@ -49,10 +53,15 @@
     {
       "name": "action",
       "type": "autocomplete",
+      "title": {
+        "en": "Select Action ...",
+        "nl": "Selecteer actie ..."
+      },
       "placeholder": {
         "en": "Select Action ...",
         "nl": "Selecteer actie ..."
       }
     }
-  ]
+  ],
+  "platforms": ["local"]
 }

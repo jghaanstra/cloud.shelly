@@ -14,11 +14,6 @@ class ShellyBulbDevice extends Device {
 
     this.setAvailable();
 
-    // TODO: REMOVE AFTER 3.1.0
-    if (!this.hasCapability('light_mode')) {
-      this.addCapability('light_mode');
-    }
-
     // INITIAL UPDATE AND POLLING
     this.bootSequence();
 

@@ -43,5 +43,6 @@
       "$template": "manual_pairing"
     }
   ],
-  "platforms": [ "local" ]
+  "platforms": [ "local" ],
+  "connectivity": [ "lan" ]
 }

@@ -15,19 +15,6 @@ class ShellyDimmerDevice extends Device {
       'shortpush_2',
       'longpush_2'
     ];
-    // TODO: REMOVE AFTER 3.1.0
-    this.temp_callbacks = [
-      'btn1_on',
-      'btn1_off',
-      'btn2_on',
-      'btn2_off',
-      'out_on',
-      'out_off',
-      'btn1_shortpush',
-      'btn1_longpush',
-      'btn2_shortpush',
-      'btn2_longpush'
-    ];
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
@@ -37,42 +24,7 @@ class ShellyDimmerDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput2Changed');
     this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
 
-    // TODO: REMOVE AFTER 3.0.29
-    this.setStoreValue('unicast', false);
-
     this.setAvailable();
-
-    if (!this.getStoreValue('sdk') === 3) {
-      // TODO: REMOVE AFTER 3.1.0
-      if (this.hasCapability('meter_power_wmin')) {
-        this.removeCapability('meter_power_wmin');
-      }
-      if (this.hasCapability('onoff.input1')) {
-        this.removeCapability('onoff.input1');
-      }
-      if (this.hasCapability('onoff.input2')) {
-        this.removeCapability('onoff.input2');
-      }
-      if (this.hasCapability('alarm_generic')) {
-        this.removeCapability('alarm_generic');
-      }
-      if (this.hasCapability('alarm_generic.1')) {
-        this.removeCapability('alarm_generic.1');
-      }
-      if (!this.hasCapability('input_1')) {
-        this.addCapability('input_1');
-      }
-      if (!this.hasCapability('input_2')) {
-        this.addCapability('input_2');
-      }
-      if (this.hasCapability('button.callbackevents')) {
-        this.removeCapability('button.callbackevents');
-      }
-      if (this.hasCapability('button.removecallbackevents')) {
-        this.removeCapability('button.removecallbackevents');
-      }
-      this.setStoreValue("sdk", 3);
-    }
 
     // INITIAL UPDATE AND POLLING
     this.bootSequence();
@@ -91,13 +43,6 @@ class ShellyDimmerDevice extends Device {
       return await this.util.sendCommand('/light/0?brightness='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
-  }
-
-  // HELPER FUNCTIONS
-
-  // TODO: REMOVE AFTER 3.1.0
-  async removeCallbacks() {
-    return await this.util.removeCallbackEvents('/settings/actions?index=0&name=', this.temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

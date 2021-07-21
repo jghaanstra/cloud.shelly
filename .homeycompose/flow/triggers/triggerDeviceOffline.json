@@ -23,5 +23,6 @@
       },
       "example": "Error 401: not authenticated"
     }
-  ]
+  ],
+  "platforms": ["local", "cloud"]
 }

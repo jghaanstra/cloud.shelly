@@ -16,6 +16,10 @@
     {
       "name": "switch",
       "type": "dropdown",
+      "title": {
+        "en": "Temporary switch",
+        "nl": "Tijdelijk schakelen"
+      },
       "placeholder": {
         "en": "Temporary switch",
         "nl": "Tijdelijk schakelen"
@@ -40,6 +44,10 @@
     {
       "name": "timer",
       "type": "number",
+      "title": {
+        "en": "Duration in seconds",
+        "nl": "Duur in seconden"
+      },
       "placeholder": {
         "en": "Duration in seconds",
         "nl": "Duur in seconden"
@@ -56,5 +64,6 @@
       },
       "filter": "driver_id=shelly1|shell1pm|shelly1l|shelly-plug|shelly-plug-s|shellyem|shelly3em"
     }
-  ]
+  ],
+  "platforms": ["local"]
 }

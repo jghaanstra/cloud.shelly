@@ -14,15 +14,6 @@ class ShellyRGBW2ColorDevice extends Device {
       'longpush',
       'shortpush'
     ];
-    // TODO: REMOVE AFTER 3.1.0
-    this.temp_callbacks = [
-      'btn_on',
-      'btn_off',
-      'btn_longpush',
-      'btn_shortpush',
-      'out_on',
-      'out_off'
-    ];
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
@@ -30,26 +21,6 @@ class ShellyRGBW2ColorDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
 
     this.setAvailable();
-
-    if (!this.getStoreValue('sdk') === 3) {
-      // TODO: REMOVE AFTER 3.1.0
-      if (!this.hasCapability('meter_power')) {
-        this.addCapability('meter_power');
-      }
-      if (this.hasCapability('alarm_generic')) {
-        this.removeCapability('alarm_generic');
-      }
-      if (!this.hasCapability('input_1')) {
-        this.addCapability('input_1');
-      }
-      if (this.hasCapability('button.callbackevents')) {
-        this.removeCapability('button.callbackevents');
-      }
-      if (this.hasCapability('button.removecallbackevents')) {
-        this.removeCapability('button.removecallbackevents');
-      }
-      this.setStoreValue("sdk", 3);
-    }
 
     // INITIAL UPDATE AND POLLING
     this.bootSequence();
@@ -74,7 +45,7 @@ class ShellyRGBW2ColorDevice extends Device {
       } else if (white <= 125 && this.getCapabilityValue('onoff.whitemode')) {
         this.updateCapabilityValue('onoff.whitemode', false);
       }
-      
+
       return await this.util.sendCommand('/color/0?white='+ white, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
@@ -109,13 +80,6 @@ class ShellyRGBW2ColorDevice extends Device {
 
     });
 
-  }
-
-  // HELPER FUNCTIONS
-
-  // TODO: REMOVE AFTER 3.1.0
-  async removeCallbacks() {
-    return await this.util.removeCallbackEvents('/settings/actions?index=0&name=', this.temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

@@ -11,20 +11,9 @@ class ShellySmokeDevice extends Device {
 
     this.callbacks = [];
 
-    // TODO: REMOVE AFTER 3.1.0
-    this.setStoreValue("battery", true);
-
     this.setAvailable();
 
-    if (!this.getStoreValue('sdk') === 3) {
-      // TODO: REMOVE AFTER 3.1.0
-      if (this.hasCapability('measure_voltage')) {
-        this.removeCapability('measure_voltage');
-      }
-      this.setStoreValue("sdk", 3);
-    }
-
-    // START POLLING IF COAP IS DISABLED OR TRY INITIAL UPDATE
+    // INITIAL UPDATE AND POLLING
     this.bootSequence();
 
   }

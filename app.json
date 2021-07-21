@@ -63,7 +63,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.0.51",
+  "version": "3.1.0",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -110,16 +110,6 @@
     "net": "*"
   },
   "api": {
-    "buttonActionTrigger": {
-      "method": "get",
-      "path": "/button_actions/:devicetype/:deviceid/:action",
-      "public": true
-    },
-    "reportStatusEvent": {
-      "method": "get",
-      "path": "/report_status/:devicetype/:deviceid",
-      "public": true
-    },
     "updateSettings": {
       "method": "put",
       "path": "/updatesettings",
@@ -171,6 +161,10 @@
           {
             "name": "shelly",
             "type": "autocomplete",
+            "title": {
+              "en": "Select your Shelly ...",
+              "nl": "Selecteer je Shelly ..."
+            },
             "placeholder": {
               "en": "Select your Shelly ...",
               "nl": "Selecteer je Shelly ..."
@@ -179,11 +173,18 @@
           {
             "name": "action",
             "type": "autocomplete",
+            "title": {
+              "en": "Select Action ...",
+              "nl": "Selecteer actie ..."
+            },
             "placeholder": {
               "en": "Select Action ...",
               "nl": "Selecteer actie ..."
             }
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -211,6 +212,10 @@
             },
             "example": "Error 401: not authenticated"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -227,8 +232,12 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellyair|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+            "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellyair|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -245,8 +254,12 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellyair|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+            "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellyair|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -263,8 +276,12 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly-air|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+            "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly-air|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -283,6 +300,10 @@
             },
             "filter": "driver_id=shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -301,6 +322,10 @@
             },
             "filter": "driver_id=shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -319,6 +344,10 @@
             },
             "filter": "driver_id=shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -337,6 +366,10 @@
             },
             "filter": "driver_id=shellyi3&capabilities=input_3"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -355,6 +388,10 @@
             },
             "filter": "driver_id=shellyi3&capabilities=input_3"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -373,6 +410,10 @@
             },
             "filter": "driver_id=shellyi3&capabilities=input_3"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -389,8 +430,12 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm&capabilities=input_external"
+            "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1pm&capabilities=input_external"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -407,8 +452,12 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm&capabilities=input_external"
+            "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1pm&capabilities=input_external"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -438,6 +487,10 @@
             },
             "filter": "driver_id=shellyem|shelly3em&capabilities=reactive_power"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -467,6 +520,10 @@
             },
             "filter": "driver_id=shellyem|shelly3em&capabilities=meter_power_returned"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -485,6 +542,10 @@
             },
             "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1pm|shelly2|shelly25|shellydimmer|shelly3em|shellyem|shellyrgbw2color|shellyrgbw2white"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -512,8 +573,12 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shellair|shellyuni&capabilities=measure_temperature.1"
+            "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1pm|shellair|shellyuni&capabilities=measure_temperature.1"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -541,8 +606,12 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shellyair|shellyuni&capabilities=measure_temperature.2"
+            "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1pm|shellyair|shellyuni&capabilities=measure_temperature.2"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -570,8 +639,12 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shellyair|shellyuni&capabilities=measure_temperature.3"
+            "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1pm|shellyair|shellyuni&capabilities=measure_temperature.3"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -601,6 +674,10 @@
             },
             "filter": "driver_id=shellydw"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -626,6 +703,9 @@
             "name": "device",
             "filter": "driver_id=shellygas"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       }
     ],
@@ -646,6 +726,9 @@
             },
             "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyi3|shellymotion|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyuni|shellyvintage"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -662,8 +745,12 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+            "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shellybutton1|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -682,6 +769,10 @@
             },
             "filter": "driver_id=shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellyi3&capabilities=input_2"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -700,6 +791,10 @@
             },
             "filter": "driver_id=shellyi3&capabilities=input_3"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -745,6 +840,9 @@
             },
             "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyi3|shellymotion|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyuni|shellyvintage"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -761,8 +859,12 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyvintage|shellyi3|shellymotion"
+            "filter": "driver_id=shelly-plug|shelly-plug_cloud|shelly-plug-s|shelly-plug-s_cloud|shelly1|shelly1_cloud|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyvintage|shellyi3|shellymotion"
           }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -783,6 +885,10 @@
           {
             "name": "switch",
             "type": "dropdown",
+            "title": {
+              "en": "Temporary switch",
+              "nl": "Tijdelijk schakelen"
+            },
             "placeholder": {
               "en": "Temporary switch",
               "nl": "Tijdelijk schakelen"
@@ -807,6 +913,10 @@
           {
             "name": "timer",
             "type": "number",
+            "title": {
+              "en": "Duration in seconds",
+              "nl": "Duur in seconden"
+            },
             "placeholder": {
               "en": "Duration in seconds",
               "nl": "Duur in seconden"
@@ -823,6 +933,9 @@
             },
             "filter": "driver_id=shelly1|shell1pm|shelly1l|shelly-plug|shelly-plug-s|shellyem|shelly3em"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -843,6 +956,10 @@
           {
             "name": "relay",
             "type": "dropdown",
+            "title": {
+              "en": "Relay",
+              "nl": "Relay"
+            },
             "placeholder": {
               "en": "Relay",
               "nl": "Relay"
@@ -867,6 +984,10 @@
           {
             "name": "switch",
             "type": "dropdown",
+            "title": {
+              "en": "Temporary switch",
+              "nl": "Tijdelijk schakelen"
+            },
             "placeholder": {
               "en": "Temporary switch",
               "nl": "Tijdelijk schakelen"
@@ -891,6 +1012,10 @@
           {
             "name": "timer",
             "type": "number",
+            "title": {
+              "en": "Duration in seconds",
+              "nl": "Duur in seconden"
+            },
             "placeholder": {
               "en": "Duration in seconds",
               "nl": "Duur in seconden"
@@ -908,6 +1033,9 @@
             },
             "filter": "driver_id=shelly2|shelly25|shellyuni"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -928,6 +1056,10 @@
           {
             "name": "relay",
             "type": "dropdown",
+            "title": {
+              "en": "Relay",
+              "nl": "Relay"
+            },
             "placeholder": {
               "en": "Relay",
               "nl": "Relay"
@@ -966,6 +1098,10 @@
           {
             "name": "switch",
             "type": "dropdown",
+            "title": {
+              "en": "Temporary switch",
+              "nl": "Tijdelijk schakelen"
+            },
             "placeholder": {
               "en": "Temporary switch",
               "nl": "Tijdelijk schakelen"
@@ -990,6 +1126,10 @@
           {
             "name": "timer",
             "type": "number",
+            "title": {
+              "en": "Duration in seconds",
+              "nl": "Duur in seconden"
+            },
             "placeholder": {
               "en": "Duration in seconds",
               "nl": "Duur in seconden"
@@ -1006,6 +1146,9 @@
             },
             "filter": "driver_id=shelly4pro"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -1026,6 +1169,10 @@
           {
             "name": "direction",
             "type": "dropdown",
+            "title": {
+              "en": "Direction",
+              "nl": "Richting"
+            },
             "placeholder": {
               "en": "Direction",
               "nl": "Richting"
@@ -1060,6 +1207,10 @@
             "min": 0.1,
             "max": 3600,
             "step": 0.1,
+            "title": {
+              "en": "Duration in seconds",
+              "nl": "Duur in seconden"
+            },
             "placeholder": {
               "en": "Duration in seconds",
               "nl": "Duur in seconden"
@@ -1074,6 +1225,9 @@
             },
             "filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -1094,6 +1248,10 @@
           {
             "name": "direction",
             "type": "dropdown",
+            "title": {
+              "en": "Direction",
+              "nl": "Richting"
+            },
             "placeholder": {
               "en": "Direction",
               "nl": "Richting"
@@ -1121,6 +1279,10 @@
             "min": 1,
             "max": 100,
             "step": 1,
+            "title": {
+              "en": "Offset",
+              "nl": "Offset"
+            },
             "placeholder": {
               "en": "Offset",
               "nl": "Offset"
@@ -1135,6 +1297,9 @@
             },
             "filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -1157,6 +1322,9 @@
             },
             "filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -1179,46 +1347,10 @@
             },
             "filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
           }
-        ]
-      },
-      {
-        "id": "actionDuoDimTemperature",
-        "title": {
-          "en": "Set dim and color temperature",
-          "nl": "Instellen dim en kleur temperatuur"
-        },
-        "titleFormatted": {
-          "en": "Set dim to [[brightness]] and color temperature to [[light_temperature]]",
-          "nl": "Instellen dim naar [[brightness]] en kleur temperatuur naar [[light_temperature]]"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shellyduo"
-          },
-          {
-            "name": "brightness",
-            "type": "range",
-            "min": 0,
-            "max": 1,
-            "step": 0.01,
-            "label": "%",
-            "labelMultiplier": 100,
-            "labelDecimals": 0
-          },
-          {
-            "name": "light_temperature",
-            "type": "range",
-            "min": 2700,
-            "max": 6500,
-            "step": 1,
-            "label": "K",
-            "labelMultiplier": 1,
-            "labelDecimals": 0
-          }
         ],
-        "deprecated": true
+        "platforms": [
+          "local"
+        ]
       },
       {
         "id": "actionGasMute",
@@ -1232,6 +1364,9 @@
             "name": "device",
             "filter": "driver_id=shellygas"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -1252,11 +1387,18 @@
           },
           {
             "name": "volume",
+            "title": {
+              "en": "Volume",
+              "nl": "Volume"
+            },
             "type": "range",
             "min": 0,
             "max": 11,
             "step": 1
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -1271,6 +1413,9 @@
             "name": "device",
             "filter": "driver_id=shellygas"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -1285,6 +1430,9 @@
             "name": "device",
             "filter": "driver_id=shellygas"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -1299,6 +1447,9 @@
             "name": "device",
             "filter": "driver_id=shellyrgbw2color"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -1313,6 +1464,9 @@
             "name": "device",
             "filter": "driver_id=shellyrgbw2color"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -1333,6 +1487,10 @@
           },
           {
             "name": "effect",
+            "title": {
+              "en": "Effect",
+              "nl": "Effect"
+            },
             "type": "dropdown",
             "placeholder": {
               "en": "Effect",
@@ -1390,6 +1548,9 @@
               }
             ]
           }
+        ],
+        "platforms": [
+          "local"
         ]
       }
     ]
@@ -1437,6 +1598,9 @@
       ],
       "platforms": [
         "local"
+      ],
+      "connectivity": [
+        "lan"
       ],
       "name": {
         "en": "Shelly Plug",
@@ -1532,6 +1696,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly Plug S",
         "nl": "Shelly Plug S"
@@ -1609,6 +1776,9 @@
       "platforms": [
         "cloud"
       ],
+      "connectivity": [
+        "cloud"
+      ],
       "name": {
         "en": "Shelly Plug S",
         "nl": "Shelly Plug S"
@@ -1684,6 +1854,9 @@
         }
       ],
       "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
         "cloud"
       ],
       "name": {
@@ -1804,6 +1977,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly 1",
         "nl": "Shelly 1"
@@ -1909,6 +2085,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly 1L",
         "nl": "Shelly 1L"
@@ -1970,6 +2149,9 @@
         }
       ],
       "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
         "cloud"
       ],
       "name": {
@@ -2079,6 +2261,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly 1PM",
         "nl": "Shelly 1PM"
@@ -2167,6 +2352,9 @@
       ],
       "platforms": [
         "local"
+      ],
+      "connectivity": [
+        "lan"
       ],
       "name": {
         "en": "Shelly 2 Relay",
@@ -2262,6 +2450,9 @@
       ],
       "platforms": [
         "local"
+      ],
+      "connectivity": [
+        "lan"
       ],
       "name": {
         "en": "Shelly 2 Roller Shutter",
@@ -2396,6 +2587,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly 2.5 Relay",
         "nl": "Shelly 2.5 Relay"
@@ -2491,6 +2685,9 @@
       ],
       "platforms": [
         "local"
+      ],
+      "connectivity": [
+        "lan"
       ],
       "name": {
         "en": "Shelly 2.5 Roller Shutter",
@@ -2625,6 +2822,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly 3EM",
         "nl": "Shelly 3EM"
@@ -2744,6 +2944,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly 4 Pro",
         "nl": "Shelly 4 Pro"
@@ -2840,6 +3043,9 @@
       ],
       "platforms": [
         "local"
+      ],
+      "connectivity": [
+        "lan"
       ],
       "name": {
         "en": "Shelly Air",
@@ -2949,6 +3155,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly Bulb (RGBW)",
         "nl": "Shelly Bulb (RGBW)"
@@ -3052,6 +3261,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly Button 1",
         "nl": "Shelly Button 1"
@@ -3148,6 +3360,9 @@
       ],
       "platforms": [
         "local"
+      ],
+      "connectivity": [
+        "lan"
       ],
       "name": {
         "en": "Shelly Dimmer (2)",
@@ -3246,6 +3461,9 @@
       ],
       "platforms": [
         "local"
+      ],
+      "connectivity": [
+        "lan"
       ],
       "name": {
         "en": "Shelly Duo",
@@ -3350,6 +3568,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly Door/Window Sensor (2)",
         "nl": "Shelly Deur/Raam Sensor (2)"
@@ -3452,6 +3673,9 @@
       ],
       "platforms": [
         "local"
+      ],
+      "connectivity": [
+        "lan"
       ],
       "name": {
         "en": "Shelly EM",
@@ -3576,6 +3800,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly Flood Sensor",
         "nl": "Shelly Flood Sensor"
@@ -3674,6 +3901,9 @@
       ],
       "platforms": [
         "local"
+      ],
+      "connectivity": [
+        "lan"
       ],
       "name": {
         "en": "Shelly Gas Sensor",
@@ -3774,6 +4004,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly Humidity & Temperature",
         "nl": "Shelly Humidity & Temperature"
@@ -3872,6 +4105,9 @@
       ],
       "platforms": [
         "local"
+      ],
+      "connectivity": [
+        "lan"
       ],
       "name": {
         "en": "Shelly i3",
@@ -3973,6 +4209,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly Motion Sensor",
         "nl": "Shelly Bewegingssensor"
@@ -4073,6 +4312,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly RGBW2 Color Mode",
         "nl": "Shelly RGBW2 Color Mode"
@@ -4158,6 +4400,9 @@
       ],
       "platforms": [
         "local"
+      ],
+      "connectivity": [
+        "lan"
       ],
       "name": {
         "en": "Shelly RGBW2 2x CW/WW Mode",
@@ -4267,6 +4512,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly RGBW2 4x White Mode",
         "nl": "Shelly RGBW2 4x White Mode"
@@ -4368,6 +4616,9 @@
       ],
       "platforms": [
         "local"
+      ],
+      "connectivity": [
+        "lan"
       ],
       "name": {
         "en": "Shelly Smoke Detector",
@@ -4503,6 +4754,9 @@
       "platforms": [
         "local"
       ],
+      "connectivity": [
+        "lan"
+      ],
       "name": {
         "en": "Shelly Uni",
         "nl": "Shelly Uni"
@@ -4591,6 +4845,9 @@
       ],
       "platforms": [
         "local"
+      ],
+      "connectivity": [
+        "lan"
       ],
       "name": {
         "en": "Shelly Vintage",

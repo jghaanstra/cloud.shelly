@@ -14,5 +14,6 @@
       },
       "filter": "driver_id=shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellyi3&capabilities=input_2"
     }
-  ]
+  ],
+  "platforms": ["local", "cloud"]
 }

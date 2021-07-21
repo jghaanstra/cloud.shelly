@@ -25,5 +25,6 @@
       },
       "filter": "driver_id=shellyem|shelly3em&capabilities=meter_power_returned"
     }
-  ]
+  ],
+  "platforms": ["local", "cloud"]
 }

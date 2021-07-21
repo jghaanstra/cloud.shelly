@@ -13,15 +13,6 @@ class Shelly1pmDevice extends Device {
       'shortpush',
       'longpush'
     ];
-    // TODO: REMOVE AFTER 3.1.0
-    this.temp_callbacks = [
-      'btn_on',
-      'btn_off',
-      'out_on',
-      'out_off',
-      'shortpush',
-      'longpush'
-    ];
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
@@ -35,26 +26,6 @@ class Shelly1pmDevice extends Device {
 
     this.setAvailable();
 
-    if (!this.getStoreValue('sdk') === 3) {
-      // TODO: REMOVE AFTER 3.1.0
-      if (this.hasCapability('meter_power_wmin')) {
-        this.removeCapability('meter_power_wmin');
-      }
-      if (this.hasCapability('alarm_generic')) {
-        this.removeCapability('alarm_generic');
-      }
-      if (!this.hasCapability('input_1')) {
-        this.addCapability('input_1');
-      }
-      if (this.hasCapability('button.callbackevents')) {
-        this.removeCapability('button.callbackevents');
-      }
-      if (this.hasCapability('button.removecallbackevents')) {
-        this.removeCapability('button.removecallbackevents');
-      }
-      this.setStoreValue("sdk", 3);
-    }
-
     // INITIAL UPDATE AND POLLING
     this.bootSequence();
 
@@ -64,13 +35,6 @@ class Shelly1pmDevice extends Device {
       return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
-  }
-
-  // HELPER FUNCTIONS
-
-  // TODO: REMOVE AFTER 3.1.0
-  async removeCallbacks() {
-    return await this.util.removeCallbackEvents('/settings/actions?index=0&name=', this.temp_callbacks, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
   }
 
 }

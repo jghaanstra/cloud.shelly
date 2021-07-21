@@ -17,7 +17,8 @@
           "example": 3452
         }
       ],
-      "args": []
+      "args": [],
+      "platforms": ["local"]
     }
   ],
   "actions": [
@@ -27,7 +28,8 @@
         "en": "Mute alarm",
         "nl": "Dempen alarm"
       },
-      "args": []
+      "args": [],
+      "platforms": ["local"]
     },
     {
       "id": "actionGasSetVolume",
@@ -42,12 +44,17 @@
       "args": [
         {
           "name": "volume",
+          "title": {
+            "en": "Volume",
+            "nl": "Volume"
+          },
           "type": "range",
           "min": 0,
           "max": 11,
           "step": 1
         }
-      ]
+      ],
+      "platforms": ["local"]
     },
     {
       "id": "actionGasTest",
@@ -55,7 +62,8 @@
         "en": "Test alarm",
         "nl": "Alarm testen"
       },
-      "args": []
+      "args": [],
+      "platforms": ["local"]
     },
     {
       "id": "actionGasUnmute",
@@ -63,7 +71,8 @@
         "en": "Unmute alarm",
         "nl": "Dempen alarm uitschakelen"
       },
-      "args": []
+      "args": [],
+      "platforms": ["local"]
     }
   ]
 }

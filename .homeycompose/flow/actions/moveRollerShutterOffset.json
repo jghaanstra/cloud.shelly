@@ -16,6 +16,10 @@
     {
       "name": "direction",
       "type": "dropdown",
+      "title": {
+        "en": "Direction",
+        "nl": "Richting"
+      },
       "placeholder": {
         "en": "Direction",
         "nl": "Richting"
@@ -43,6 +47,10 @@
       "min": 1,
       "max": 100,
       "step": 1,
+      "title": {
+        "en": "Offset",
+        "nl": "Offset"
+      },
       "placeholder": {
         "en": "Offset",
         "nl": "Offset"
@@ -57,5 +65,6 @@
       },
       "filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
     }
-  ]
+  ],
+  "platforms": ["local"]
 }

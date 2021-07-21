@@ -11,9 +11,6 @@ class ShellyMotionDevice extends Device {
 
     this.callbacks = [];
 
-    // TODO: REMOVE AFTER 3.1.0
-    this.setStoreValue("battery", true);
-
     this.setAvailable();
 
     // INITIAL UPDATE AND POLLING

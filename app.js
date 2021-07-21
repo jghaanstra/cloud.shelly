@@ -105,7 +105,13 @@ class ShellyApp extends Homey.App {
 
     this.homey.flow.getActionCard('actionReboot')
       .registerRunListener(async (args) => {
-        return await this.util.sendCommand('/reboot', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        if (args.device.getStoreValue('communication') === 'coap') {
+          return await this.util.sendCommand('/reboot', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } else if (args.device.getStoreValue('communication') === 'websocket') {
+          // TODO: set the correct command for Websocket connected devices
+        } else if (args.device.getStoreValue('communication') === 'cloud') {
+          return await this.util.sendCloudCommand('/device/reboot', args.device.getSetting('server_address'), args.device.getSetting('cloud_token'), args.device.getSetting('device_id'));
+        }
       })
 
     this.homey.flow.getActionCard('actionOTAUpdate')

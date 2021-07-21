@@ -14,5 +14,6 @@
       "$template": "add_device"
     }
   ],
-  "platforms": [ "cloud" ]
+  "platforms": [ "cloud" ],
+  "connectivity": [ "cloud" ]
 }

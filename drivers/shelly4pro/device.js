@@ -9,7 +9,7 @@ class Shelly4ProDevice extends Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    if (this.getStoreValue('communication') === 'websockets') {
+    if (this.getStoreValue('communication') === 'websocket') {
       this.callbacks = [
         'shortpush',
         'longpush'
@@ -17,7 +17,7 @@ class Shelly4ProDevice extends Device {
     } else {
       this.callbacks = [];
     }
-    
+
     this.setAvailable();
 
     // INITIAL UPDATE AND POLLING
@@ -25,7 +25,7 @@ class Shelly4ProDevice extends Device {
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {
-      if (this.getStoreValue('communication') === 'websockets') {
+      if (this.getStoreValue('communication') === 'websocket') {
         this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value} }));
       } else {
         const path = value ? '/relay/'+ this.getStoreValue("channel") +'?turn=on' : '/relay/'+ this.getStoreValue("channel") +'?turn=off';

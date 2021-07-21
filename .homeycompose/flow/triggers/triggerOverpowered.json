@@ -14,5 +14,6 @@
       },
       "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1pm|shelly2|shelly25|shellydimmer|shelly3em|shellyem|shellyrgbw2color|shellyrgbw2white"
     }
-  ]
+  ],
+  "platforms": ["local", "cloud"]
 }

@@ -25,5 +25,6 @@
       },
       "filter": "driver_id=shellyem|shelly3em&capabilities=reactive_power"
     }
-  ]
+  ],
+  "platforms": ["local", "cloud"]
 }
