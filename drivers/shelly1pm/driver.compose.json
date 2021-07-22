@@ -14,13 +14,5 @@
     "meter_power",
     "measure_temperature",
     "input_1"
-  ],
-  "capabilitiesOptions": {
-    "measure_temperature": {
-      "title": {
-        "en": "Device Temperature",
-        "nl": "Apparaat temperatuur"
-      }
-    }
-  }
+  ]
 }

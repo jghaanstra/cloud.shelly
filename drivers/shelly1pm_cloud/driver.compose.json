@@ -1,7 +1,7 @@
 {
   "name": {
-    "en": "Shelly 1",
-    "nl": "Shelly 1"
+    "en": "Shelly 1PM",
+    "nl": "Shelly 1PM"
   },
   "class": "socket",
   "$extends": [
@@ -9,6 +9,9 @@
   ],
   "capabilities": [
     "onoff",
+    "measure_power",
+    "meter_power",
+    "measure_temperature",
     "input_1"
   ]
 }

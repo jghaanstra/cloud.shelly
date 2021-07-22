@@ -4,9 +4,8 @@
     "nl": "Shelly 1L"
   },
   "class": "socket",
-  "discovery": "shelly1l",
   "$extends": [
-    "shelly1"
+    "shelly1_cloud"
   ],
   "capabilities": [
     "onoff",
@@ -15,13 +14,5 @@
     "measure_temperature",
     "input_1",
     "input_2"
-  ],
-  "capabilitiesOptions": {
-    "measure_temperature": {
-      "title": {
-        "en": "Device Temperature",
-        "nl": "Apparaat temperatuur"
-      }
-    }
-  }
+  ]
 }

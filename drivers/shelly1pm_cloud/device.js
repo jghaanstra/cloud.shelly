@@ -4,7 +4,7 @@ const Homey = require('homey');
 const Device = require('../device_cloud.js');
 const Util = require('../../lib/util.js');
 
-class Shelly1lCloudDevice extends Device {
+class Shelly1pmCloudDevice extends Device {
 
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
@@ -14,9 +14,6 @@ class Shelly1lCloudDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Changed');
-    this.homey.flow.getDeviceTriggerCard('triggerInput2On');
-    this.homey.flow.getDeviceTriggerCard('triggerInput2Off');
-    this.homey.flow.getDeviceTriggerCard('triggerInput2Changed');
     this.homey.flow.getDeviceTriggerCard('triggerInputExternal1On');
     this.homey.flow.getDeviceTriggerCard('triggerInputExternal1Off');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature1');
@@ -39,4 +36,4 @@ class Shelly1lCloudDevice extends Device {
 
 }
 
-module.exports = Shelly1lCloudDevice;
+module.exports = Shelly1pmCloudDevice;

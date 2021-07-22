@@ -4,7 +4,6 @@
     "nl": "Shelly Plug S"
   },
   "class": "socket",
-  "discovery": "shelly-plug-s",
   "$extends": [
     "defaults_cloud"
   ],

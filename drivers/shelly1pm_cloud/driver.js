@@ -4,18 +4,18 @@ const Homey = require('homey');
 const Driver = require('../driver_cloud.js');
 const Util = require('../../lib/util.js');
 
-class Shelly1lCloudDriver extends Driver {
+class Shelly1pmCloudDriver extends Driver {
 
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly 1L Cloud',
+      name: 'Shelly 1PM Cloud',
       battery: false,
-      hostname: 'shelly1l-'
+      hostname: 'shelly1pm-'
     }
   }
 
 }
 
-module.exports = Shelly1lCloudDriver;
+module.exports = Shelly1pmCloudDriver;

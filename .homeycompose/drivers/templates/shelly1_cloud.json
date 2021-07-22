@@ -79,6 +79,6 @@
       "$template": "manual_pairing"
     }
   ],
-  "platforms": [ "local" ],
-  "connectivity": [ "lan" ]
+  "platforms": [ "cloud" ],
+  "connectivity": [ "cloud" ]
 }
