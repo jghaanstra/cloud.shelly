@@ -227,20 +227,6 @@ class ShellyApp extends Homey.App {
         }
   	  })
 
-    // SHELLY DUO
-    this.homey.flow.getActionCard('actionDuoDimTemperature')
-      .registerRunListener(async (args) => {
-        try {
-          let light_temperature = 1 - Number(this.util.normalize(args.light_temperature, 2700, 6500));
-
-          args.device.triggerCapabilityListener("dim", args.brightness);
-          args.device.triggerCapabilityListener("light_temperature", light_temperature);
-          return Promise.resolve(true);
-        } catch (error) {
-          return Promise.reject(error);
-        }
-      })
-
     // SHELLY GAS
     this.homey.flow.getActionCard('actionGasSetVolume')
       .registerRunListener(async (args) => {
