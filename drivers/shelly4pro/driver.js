@@ -10,7 +10,7 @@ class Shelly4ProDriver extends Driver {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly 4 Pro',
+      name: 'Shelly Pro 4(PM)',
       battery: false,
       hostname: 'shelly4pro-'
     }

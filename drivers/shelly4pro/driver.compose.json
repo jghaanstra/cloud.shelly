@@ -1,7 +1,7 @@
 {
   "name": {
-    "en": "Shelly 4 Pro",
-    "nl": "Shelly 4 Pro"
+    "en": "Shelly Pro 4(PM)",
+    "nl": "Shelly Pro 4(PM)"
   },
   "class": "socket",
   "discovery": "shelly4pro",

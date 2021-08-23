@@ -286,5 +286,8 @@
   },
   "3.1.2": {
     "en": "Breaking change: due to code clean up this update breaks the upgrade path for user still on Homey firmware 4.x and lower. If you still need to update your Homey to firmware 5.x or higher you will need to re-pair your devices to avoid issues. Other then code clean up there are no functional changes in this release. Also removed the already deprecated custom dim/temperature action card for the Shelly DUO, please use the built in actions cards for this."
+  },
+  "3.2.0": {
+    "en": "Add support for the new Shelly Pro 4PM (uses websockets for communication). Also upgraded the shellies-coap library and some other minor improvements."
   }
 }

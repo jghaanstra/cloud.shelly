@@ -20,7 +20,7 @@
         "field": "host",
         "match": {
           "type": "regex",
-          "value": "^shelly4pro-"
+          "value": "^ShellyPro4PM-"
         }
       }
     ]

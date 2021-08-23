@@ -49,29 +49,34 @@ class ShellyDevice extends Device {
 
         /* onoff */
         if (result["switch:"+channel].hasOwnProperty("output") && this.hasCapability('onoff')) {
-          this.updateCapabilityValue('onoff', result["switch:"+channel].output, channel);
+          this.parseCapabilityUpdate('switch'+channel, result["switch:"+channel].output, channel);
         }
 
         /* measure_power */
         if (result["switch:"+channel].hasOwnProperty("apower") && this.hasCapability('measure_power')) {
-          this.updateCapabilityValue('measure_power', result["switch:"+channel].apower, channel);
+          this.parseCapabilityUpdate('power'+channel, result["switch:"+channel].apower, channel);
         }
 
         /* meter_power */
         if (result["switch:"+channel].hasOwnProperty("aenergy") && this.hasCapability('meter_power')) {
           if (result["switch:"+channel].aenergy.hasOwnProperty("total")) {
-            this.updateCapabilityValue('meter_power', result["switch:"+channel].aenergy.total, channel);
+            this.parseCapabilityUpdate('energyCounter'+channel, result["switch:"+channel].aenergy.total, channel);
           }
         }
 
         /* measure_voltage */
         if (result["switch:"+channel].hasOwnProperty("voltage")) {
-          this.updateCapabilityValue('measure_voltage', result["switch:"+channel].voltage, channel);
+          this.parseCapabilityUpdate('voltage'+channel, result["switch:"+channel].voltage, channel);
         }
 
         /* input */
         if (result["switch:"+channel].hasOwnProperty("input") && this.hasCapability('input_1')) {
-          this.updateCapabilityValue('input_1', result["switch:"+channel].input, channel);
+          this.parseCapabilityUpdate('input'+channel, result["switch:"+channel].input, channel);
+        }
+
+        /* measure_temperature (device temperature) */
+        if (result["switch:"+channel].hasOwnProperty("temperature") && this.hasCapability('measure_temperature')) {
+          this.parseCapabilityUpdate('deviceTemperature', result["switch:"+channel].temperature.tC, 0);
         }
 
       }
@@ -80,7 +85,7 @@ class ShellyDevice extends Device {
       if (result.hasOwnProperty("systemp") && this.hasCapability('measure_temperature') && this.getStoreValue('channel') === 0) {
 
         /* measure_temperature */
-        this.updateCapabilityValue('measure_temperature', result.systemp.tC, 0);
+        this.parseCapabilityUpdate('deviceTemperature', result.systemp.tC, 0);
       }
 
     } catch (error) {
@@ -124,10 +129,10 @@ class ShellyDevice extends Device {
 
               if (capability !== 'component' && capability !== 'id' && capability !== 'source') {
 
-                /* parse aenergy data */
+                /* parse aenergy and device temperature data */
                 if (typeof value === 'object' && value !== null) {
                   for (const [capability, values] of Object.entries(value)) {
-                    if (capability !== 'by_minute' && capability !== 'minute_ts') {
+                    if (capability !== 'by_minute' && capability !== 'minute_ts' && capability !== 'tF') {
                       this.parseCapabilityUpdate(capability, values, channel);
                     }
                   }

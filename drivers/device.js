@@ -635,13 +635,13 @@ class ShellyDevice extends Homey.Device {
         case 'current2':
           this.updateCapabilityValue('measure_current', value, channel);
           break;
-        case 'voltage':
         case 'voltage0':
         case 'voltage1':
         case 'voltage2':
           this.updateCapabilityValue('measure_voltage', value, channel);
           break;
         case 'overPower':
+        case 'overPower0':
         case 'overPower1':
           if (value) {
             this.homey.flow.getDeviceTriggerCard('triggerOverpowered').trigger(this, {}, {});
@@ -650,6 +650,7 @@ class ShellyDevice extends Homey.Device {
         case 'battery':
           this.updateCapabilityValue('measure_battery', value, channel);
           break;
+        case 'tC':
         case 'deviceTemperature':
         case 'temperature':
           this.updateCapabilityValue('measure_temperature', value, channel);
@@ -711,15 +712,19 @@ class ShellyDevice extends Homey.Device {
           this.updateDeviceRgb();
           break;
         case 'motion':
+          value = value === 1 || value ? true : false;
           this.updateCapabilityValue('alarm_motion', value, channel);
           break;
         case 'vibration':
+          value = value === 1 || value ? true : false;
           this.updateCapabilityValue('alarm_tamper', value, channel);
           break;
         case 'state':
+          value = value === 1 || value ? true : false;
           this.updateCapabilityValue('alarm_contact', value, channel);
           break;
         case 'flood':
+          value = value === 1 || value ? true : false;
           this.updateCapabilityValue('alarm_water', value, channel);
           break;
         case 'tilt':
@@ -746,12 +751,12 @@ class ShellyDevice extends Homey.Device {
           }
           break;
         case 'smoke':
+          value = value === 1 || value ? true : false;
           this.updateCapabilityValue('alarm_smoke', value, channel);
           break;
-        case 'input':
         case 'input0':
           let input_1 = value === 0 ? false : true;
-          if (input_1 != this.getCapabilityValue('input_1')) {
+          if (input_1 !== this.getCapabilityValue('input_1')) {
             this.updateCapabilityValue('input_1', input_1, channel);
             if (input_1) {
               this.homey.flow.getDeviceTriggerCard('triggerInput1On').trigger(this, {}, {});
@@ -764,7 +769,7 @@ class ShellyDevice extends Homey.Device {
         case 'input1':
           if (!this.hasCapability('input_2')) {
             let input_1_1 = value === 0 ? false : true;
-            if (input_1_1 != this.getCapabilityValue('input_1')) {
+            if (input_1_1 !== this.getCapabilityValue('input_1')) {
               this.updateCapabilityValue('input_1', input_1_1, channel);
               if (input_1_1) {
                 this.homey.flow.getDeviceTriggerCard('triggerInput1On').trigger(this, {}, {});
@@ -775,7 +780,7 @@ class ShellyDevice extends Homey.Device {
             }
           } else {
             let input_2 = value === 0 ? false : true;
-            if (input_2 != this.getCapabilityValue('input_2')) {
+            if (input_2 !== this.getCapabilityValue('input_2')) {
               this.updateCapabilityValue('input_2', input_2, channel);
               if (input_2) {
                 this.homey.flow.getDeviceTriggerCard('triggerInput2On').trigger(this, {}, {});

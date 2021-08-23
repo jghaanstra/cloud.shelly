@@ -4,7 +4,7 @@
     "name": "http",
     "protocol": "tcp"
   },
-  "id": "{{txt.id}}",
+  "id": "{{host}}",
   "conditions": [
     [
       {
@@ -12,6 +12,15 @@
         "match": {
           "type": "regex",
           "value": "^shelly1pm-"
+        }
+      }
+    ],
+    [
+      {
+        "field": "host",
+        "match": {
+          "type": "regex",
+          "value": "^ShellyPlus1PM-"
         }
       }
     ]

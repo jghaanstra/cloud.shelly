@@ -44,7 +44,7 @@ class ShellyDriver extends Homey.Driver {
           if (discoveryResult.txt.gen === '2') {
             var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
             var type = result.model;
-            var communication = 'websockets';
+            var communication = 'websocket';
           } else {
             var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
             var type = result.type;

@@ -9,10 +9,14 @@ class Shelly1pmDevice extends Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    this.callbacks = [
-      'shortpush',
-      'longpush'
-    ];
+    if (this.getStoreValue('communication') === 'websocket') {
+      this.callbacks = [
+        'shortpush',
+        'longpush'
+      ];
+    } else {
+      this.callbacks = [];
+    }
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
@@ -31,8 +35,12 @@ class Shelly1pmDevice extends Device {
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {
-      const path = value ? '/relay/0?turn=on' : '/relay/0?turn=off';
-      return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      if (this.getStoreValue('communication') === 'websocket') {
+        this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value} }));
+      } else {
+        const path = value ? '/relay/0?turn=on' : '/relay/0?turn=off';
+        return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      }
     });
 
   }

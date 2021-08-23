@@ -1,6 +1,6 @@
 {
   "name": "cloud.shelly",
-  "version": "3.1.2",
+  "version": "3.2.0",
   "description": "Homey app for controlling Shelly devices",
   "main": "app.js",
   "scripts": {
@@ -21,8 +21,8 @@
   "homepage": "https://apps.athom.com/app/cloud.shelly",
   "dependencies": {
     "node-fetch": "^2.6.1",
-    "shellies": "^1.5.0",
+    "shellies": "^1.6.0",
     "tinycolor2": "^1.4.2",
-    "ws": "^7.5.1"
+    "ws": "^7.5.3"
   }
 }

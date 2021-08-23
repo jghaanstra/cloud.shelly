@@ -1,0 +1,36 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Device Settings",
+      "nl": "Apparaat instellingen"
+    },
+    "children": [
+      {
+        "id": "server_address",
+        "$extends": "server_address"
+      },
+      {
+        "id": "cloud_token",
+        "$extends": "cloud_token"
+      },
+      {
+        "id": "device_id",
+        "$extends": "device_id"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "User Settings",
+      "nl": "Gebruikersinstellingen"
+    },
+    "children": [
+      {
+        "id": "halfway",
+        "$extends": "halfway"
+      }
+    ]
+  }
+]
