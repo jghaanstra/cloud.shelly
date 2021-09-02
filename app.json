@@ -63,7 +63,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.3.0",
+  "version": "3.3.1",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -223,10 +223,6 @@
         "title": {
           "en": "Firmware update available",
           "nl": "Firmware update beschikbaar"
-        },
-        "titleFormatted": {
-          "en": "[[device]] has a newer firmware available",
-          "nl": "[[device]] heeft een nieuwere firmware beschikbaar"
         },
         "tokens": [
           {

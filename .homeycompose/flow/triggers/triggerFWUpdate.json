@@ -4,10 +4,6 @@
     "en": "Firmware update available",
     "nl": "Firmware update beschikbaar"
   },
-  "titleFormatted": {
-    "en": "[[device]] has a newer firmware available",
-    "nl": "[[device]] heeft een nieuwere firmware beschikbaar"
-  },
   "tokens": [
     {
       "name": "id",

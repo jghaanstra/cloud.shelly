@@ -157,7 +157,7 @@ class ShellyApp extends Homey.App {
         } else if (args.device.getStoreValue('communication') === 'websocket') {
           return await args.device.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": onoff, "toggle": args.timer} }));
         } else if (args.device.getStoreValue('communication') === 'cloud') {
-          return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'relay', command_param: 'turn', command_value: onoff, deviceid: args.device.getSetting('device_id'), channel: args.device.getStoreValue('channel')})]);
+          return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timeout', command: 'relay', command_param: 'turn', command_value: onoff, timeout: args.timer, deviceid: args.device.getSetting('device_id'), channel: args.device.getStoreValue('channel')})]);
         }
       })
 
