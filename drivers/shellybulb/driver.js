@@ -10,7 +10,7 @@ class ShellyBulbDriver extends Driver {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly Bulb',
+      name: 'Shelly Bulb (RGBW)',
       battery: false,
       hostname: 'shellycolorbulb-'
     }

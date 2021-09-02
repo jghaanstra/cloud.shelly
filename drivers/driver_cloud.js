@@ -2,7 +2,7 @@
 
 const Homey = require('homey');
 const Util = require('../lib/util.js');
-
+const WebSocket = require('ws');
 
 class ShellyCloudDriver extends Homey.Driver {
 
@@ -13,43 +13,37 @@ class ShellyCloudDriver extends Homey.Driver {
   onPair(session) {
     let deviceArray = {};
 
-    session.setHandler('test_cloud_connection', async (data) => {
+    session.setHandler('test_connection', async (data) => {
       try {
-        const result = await this.util.sendCloudCommand('/device/settings', data.server_address, data.cloud_token, data.device_id);
-        const hostname = result.data.device_settings.device.hostname
-        if (hostname.startsWith(this.config.hostname)) {
-          deviceArray = {
-            name: this.config.name,
-            data: {
-              id: hostname,
-            },
-            settings: {
-              server_address: data.server_address,
-              cloud_token: data.cloud_token,
-              device_id: data.device_id
-            },
-            store: {
-              main_device: hostname,
-              channel: 0,
-              type: result.data.device_settings.device.type,
-              unicast: false,
-              battery: this.config.battery,
-              sdk: 3,
-              communication: 'cloud'
-            }
+        const device = await this.homey.app.getPairingDevice();
+        deviceArray = {
+          name: device.name[0],
+          data: {
+            id: device.deviceId,
+          },
+          settings: {
+            server_address: device.host,
+            device_id: device.deviceId
+          },
+          store: {
+            main_device: device.deviceId,
+            channel: 0,
+            type: this.config.type,
+            unicast: false,
+            battery: this.config.battery,
+            sdk: 3,
+            communication: 'cloud'
           }
-          return Promise.resolve(result);
-        } else {
-          return Promise.reject(this.homey.__('driver.wrongdevice'));
         }
+        return Promise.resolve(device);
       } catch (error) {
         return Promise.reject(error);
       }
     });
 
-    session.setHandler('get_cloud_login', async (data) => {
+    session.setHandler('get_integrator_url', async (data) => {
       try {
-        const result = await this.util.getCloudLogin();
+        const result = await this.homey.app.getIntegratorUrl();
         return Promise.resolve(result);
       } catch (error) {
         return Promise.reject(error);

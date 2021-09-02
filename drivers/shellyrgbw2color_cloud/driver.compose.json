@@ -1,0 +1,36 @@
+{
+  "name": {
+    "en": "Shelly RGBW2 Color Mode",
+    "nl": "Shelly RGBW2 Color Mode"
+  },
+  "class": "light",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "onoff",
+    "dim",
+    "light_temperature",
+    "light_hue",
+    "light_saturation",
+    "measure_power",
+    "meter_power",
+    "light_mode",
+    "onoff.whitemode",
+    "input_1"
+  ],
+  "capabilitiesOptions": {
+    "light_temperature": {
+      "title": {
+        "en": "Dimlevel white",
+        "nl": "Dim niveau wit"
+      }
+    },
+    "onoff.whitemode": {
+      "title": {
+        "en": "Toggle white mode",
+        "nl": "Wit modus schakelen"
+      }
+    }
+  }
+}

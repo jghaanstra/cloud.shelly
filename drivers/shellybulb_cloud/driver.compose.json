@@ -1,0 +1,18 @@
+{
+  "name": {
+    "en": "Shelly Bulb (RGBW)",
+    "nl": "Shelly Bulb (RGBW)"
+  },
+  "class": "light",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "onoff",
+    "dim",
+    "light_temperature",
+    "light_hue",
+    "light_saturation",
+    "light_mode"
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "name": {
+    "en": "Shelly Uni",
+    "nl": "Shelly Uni"
+  },
+  "class": "socket",
+  "$extends": [
+    "shelly1_cloud"
+  ],
+  "capabilities": [
+    "onoff",
+    "measure_temperature.1",
+    "measure_temperature.2",
+    "measure_temperature.3",
+    "measure_humidity",
+    "measure_voltage",
+    "input_1"
+  ],
+  "capabilitiesOptions": {
+    "measure_temperature.1": {
+      "title": {
+        "en": "Temperature Sensor 1",
+        "nl": "Temperatuursensor 1"
+      }
+    },
+    "measure_temperature.2": {
+      "title": {
+        "en": "Temperature Sensor 2",
+        "nl": "Temperatuursensor 2"
+      }
+    },
+    "measure_temperature.3": {
+      "title": {
+        "en": "Temperature Sensor 3",
+        "nl": "Temperatuursensor 3"
+      }
+    },
+    "measure_voltage": {
+      "title": {
+        "en": "ADC Voltage",
+        "nl": "ADC Voltage"
+      }
+    }
+  },
+  "pair": [
+    {
+      "id": "cloud_pairing_form",
+      "$template": "cloud_pairing_form"
+    },
+    {
+      "id": "add_device"
+    }
+  ]
+}

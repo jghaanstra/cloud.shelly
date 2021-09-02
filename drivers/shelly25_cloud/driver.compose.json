@@ -1,0 +1,26 @@
+{
+  "name": {
+    "en": "Shelly 2.5 Relay",
+    "nl": "Shelly 2.5 Relay"
+  },
+  "class": "socket",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "onoff",
+    "measure_power",
+    "meter_power",
+    "measure_temperature",
+    "input_1"
+  ],
+  "pair": [
+    {
+      "id": "cloud_pairing_form",
+      "$template": "cloud_pairing_form"
+    },
+    {
+      "id": "add_device"
+    }
+  ]
+}

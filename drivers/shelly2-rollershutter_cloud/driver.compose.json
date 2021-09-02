@@ -1,10 +1,9 @@
 {
   "name": {
-    "en": "Shelly 2 Roller Shutter Cloud",
-    "nl": "Shelly 2 Roller Shutter Cloud"
+    "en": "Shelly 2 Roller Shutter",
+    "nl": "Shelly 2 Roller Shutter"
   },
   "class": "windowcoverings",
-  "discovery": "shelly2",
   "$extends": [
     "defaults_cloud"
   ],
@@ -29,5 +28,6 @@
         "nl": "Gebruik deze actie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie card uit om de positie op te slaan."
       }
     }
-  }
+  },
+  "deprecated": true
 }

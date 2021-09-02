@@ -1,0 +1,17 @@
+{
+  "name": {
+    "en": "Shelly Duo",
+    "nl": "Shelly Duo"
+  },
+  "class": "light",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "onoff",
+    "dim",
+    "light_temperature",
+    "measure_power",
+    "meter_power"
+  ]
+}

@@ -1,10 +1,9 @@
 {
   "name": {
-    "en": "Shelly 2 Relay Cloud",
-    "nl": "Shelly 2 Relay Cloud"
+    "en": "Shelly 2 Relay",
+    "nl": "Shelly 2 Relay"
   },
   "class": "socket",
-  "discovery": "shelly2",
   "$extends": [
     "defaults_cloud"
   ],
@@ -16,40 +15,11 @@
   ],
   "pair": [
     {
-      "id": "list_devices",
-      "template": "list_devices",
-      "options": {
-        "singular": true
-      },
-      "navigation": {
-        "next": "icon_select"
-      }
-    },
-    {
-      "id": "icon_select",
-      "$template": "icon_select"
-    },
-    {
-      "id": "get_device",
-      "$template": "get_device"
-    },
-    {
-      "id": "login_credentials",
-      "template": "login_credentials",
-      "options": {
-        "logo": "../../../assets/shelly-logo.png"
-      }
+      "id": "cloud_pairing_form",
+      "$template": "cloud_pairing_form"
     },
     {
       "id": "add_device"
-    },
-    {
-      "id": "select_pairing",
-      "$template": "select_pairing"
-    },
-    {
-      "id": "manual_pairing",
-      "$template": "manual_pairing"
     }
   ]
 }

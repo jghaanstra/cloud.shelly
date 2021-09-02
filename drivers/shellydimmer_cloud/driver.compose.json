@@ -1,0 +1,19 @@
+{
+  "name": {
+    "en": "Shelly Dimmer (2)",
+    "nl": "Shelly Dimmer (2)"
+  },
+  "class": "light",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "onoff",
+    "dim",
+    "measure_power",
+    "meter_power",
+    "measure_temperature",
+    "input_1",
+    "input_2"
+  ]
+}

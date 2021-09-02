@@ -94,5 +94,6 @@
       "filter": "driver_id=shelly2|shelly25|shellyuni"
     }
   ],
-  "platforms": ["local"]
+  "platforms": ["local"],
+  "deprecated": true
 }

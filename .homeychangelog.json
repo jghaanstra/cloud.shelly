@@ -289,5 +289,8 @@
   },
   "3.2.0": {
     "en": "Add support for the new Shelly Pro 4PM (uses websockets for communication). Also upgraded the shellies-coap library and some other minor improvements."
+  },
+  "3.3.0": {
+    "en": "Added a generic firmware is available triggercard and deprecated the firmware available conditon card which is now obsolete. Please update your flows accordingly.. Deprecated the custom flipback switch 2 and flipback switch 4 action cards. These have become obsolete a long time ago, please update your flows to use the regular flipback switch card. Some other minor improvements in there as well."
   }
 }

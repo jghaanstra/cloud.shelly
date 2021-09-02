@@ -1,0 +1,26 @@
+{
+  "name": {
+    "en": "Shelly RGBW2 4x White Mode",
+    "nl": "Shelly RGBW2 4x White Mode"
+  },
+  "class": "light",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "onoff",
+    "dim",
+    "measure_power",
+    "meter_power",
+    "input_1"
+  ],
+  "pair": [
+    {
+      "id": "cloud_pairing_form",
+      "$template": "cloud_pairing_form"
+    },
+    {
+      "id": "add_device"
+    }
+  ]
+}

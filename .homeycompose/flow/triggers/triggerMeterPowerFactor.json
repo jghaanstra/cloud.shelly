@@ -23,7 +23,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shellyem|shelly3em&capabilities=reactive_power"
+      "filter": "driver_id=shellyem|shellyem_cloud|shelly3em|shelly3em_cloud&capabilities=reactive_power"
     }
   ],
   "platforms": ["local", "cloud"]

@@ -12,15 +12,6 @@ class ShellyCloudDevice extends Device {
     if (!this.util) this.util = new Util({homey: this.homey});
   }
 
-  async onDeleted() {
-    try {
-      clearInterval(this.pollingInterval);
-      return;
-    } catch (error) {
-      this.log(error);
-    }
-  }
-
 }
 
 module.exports = ShellyCloudDevice;

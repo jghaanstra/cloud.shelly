@@ -1,0 +1,41 @@
+{
+  "id": "triggerFWUpdate",
+  "title": {
+    "en": "Firmware update available",
+    "nl": "Firmware update beschikbaar"
+  },
+  "titleFormatted": {
+    "en": "[[device]] has a newer firmware available",
+    "nl": "[[device]] heeft een nieuwere firmware beschikbaar"
+  },
+  "tokens": [
+    {
+      "name": "id",
+      "type": "string",
+      "title": {
+        "en": "Device ID",
+        "nl": "Apparaat ID"
+      },
+      "example": "shelly1-8D4C25"
+    },
+    {
+      "name": "device",
+      "type": "string",
+      "title": {
+        "en": "Name",
+        "nl": "Naam"
+      },
+      "example": "Shelly 1"
+    },
+    {
+      "name": "firmware",
+      "type": "string",
+      "title": {
+        "en": "Firmware version",
+        "nl": "Firmware versie"
+      },
+      "example": "20210720-184522/v1.11.0-g6abd92e"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

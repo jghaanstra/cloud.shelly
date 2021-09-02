@@ -15,5 +15,5 @@
       "filter": "driver_id=shellyi3&capabilities=input_3"
     }
   ],
-  "platforms": ["local", "cloud"]
+  "platforms": ["local"]
 }

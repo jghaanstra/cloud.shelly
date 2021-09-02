@@ -11,18 +11,13 @@ class ShellyDevice extends Homey.Device {
     if (!this.util) this.util = new Util({homey: this.homey});
   }
 
-
   // HELPER FUNCTIONS
 
   /* boot sequence */
   async bootSequence() {
     try {
       if (this.getStoreValue('communication') === 'cloud') {
-        this.pollingInterval = setInterval(() => {
-          setTimeout(async () => {
-            await this.pollDevice();
-          }, this.getStoreValue('channel') * 1500);
-        }, 10000);
+        // nothing to do here
       } else if (this.getStoreValue('communication') === 'websocket') {
         if (this.getStoreValue('channel') === 0) {
           this.ws = null;
@@ -93,18 +88,26 @@ class ShellyDevice extends Homey.Device {
     }
   }
 
-  /* polling local HTTP and cloud devices */
+  /* polling local devices over HTTP REST API */
   async pollDevice() {
     try {
-      if (this.getStoreValue('communication') === 'cloud') {
-        let data = await this.util.sendCloudCommand('/device/status', this.getSetting('server_address'), this.getSetting('cloud_token'), this.getSetting('device_id'));
-        var result = data.data.device_status;
-      } else {
-        var result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      }
-
+      var result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       if (!this.getAvailable()) { this.setAvailable(); }
+      this.parseStatusUpdate(result);
+    } catch (error) {
+      if (!this.getStoreValue('battery')) {
+        this.setUnavailable(this.homey.__('device.unreachable') + error.message);
+        this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.message});
+        this.log(error);
+      } else {
+        this.log(this.getData().id +' is probably asleep and disconnected');
+      }
+    }
+  }
 
+  /* generic status updates parser for polling over local HTTP REST API and websockets cloud */
+  async parseStatusUpdate(result) {
+    try {
       let channel = this.getStoreValue('channel') || 0;
 
       // RELAYS (onoff)
@@ -227,6 +230,11 @@ class ShellyDevice extends Homey.Device {
       if (result.hasOwnProperty("lights")) {
 
         if (result.lights.hasOwnProperty([channel])) {
+
+          /* onoff */
+          if (result.lights[channel].hasOwnProperty("ison") && this.hasCapability('onoff')) {
+            this.updateCapabilityValue('onoff', result.lights[channel].ison);
+          }
 
           /* light_mode */
           if (result.lights[channel].hasOwnProperty("mode") && this.hasCapability('light_mode')) {
@@ -543,6 +551,14 @@ class ShellyDevice extends Homey.Device {
 
       }
 
+      // firmware update available?
+      if (result.hasOwnProperty("update")) {
+        if (result.update.has_update === true && (this.getStoreValue('latest_firmware') !== result.update.new_version)) {
+          this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": result.update.new_version});
+          this.setStoreValue("latest_firmware", result.update.new_version);
+        }
+      }
+
       // update unicast
       if (this.getStoreValue('communication') === 'coap' && !this.getStoreValue('unicast') === true && this.getStoreValue('battery') === false && this.getStoreValue('type') !== 'SHSW-44') {
         const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
@@ -562,13 +578,13 @@ class ShellyDevice extends Homey.Device {
     }
   }
 
-  /* polling websocket devices */
-  async pollWebsocketDevice() {  }
+  /* polling gen2 websocket devices */
+  async pollWebsocketDevice() { }
 
   /* websocket for gen2 devices */
   async connectWebsocket() { }
 
-  /* process capability updates from CoAP and Websockets */
+  /* process capability updates from CoAP and gen2 websocket devices */
   async parseCapabilityUpdate(capability, value, channel = 0) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }

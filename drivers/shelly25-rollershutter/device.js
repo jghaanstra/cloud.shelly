@@ -54,6 +54,7 @@ class Shelly25RollerShutterDevice extends Device {
         this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
         return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       } catch (error) {
+        this.log(error)
         return Promise.reject(error);
       }
     });

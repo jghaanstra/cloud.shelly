@@ -1,0 +1,27 @@
+{
+  "name": {
+    "en": "Shelly Pro 4(PM)",
+    "nl": "Shelly Pro 4(PM)"
+  },
+  "class": "socket",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "onoff",
+    "measure_power",
+    "meter_power",
+    "measure_voltage",
+    "input_1",
+    "measure_temperature"
+  ],
+  "pair": [
+    {
+      "id": "cloud_pairing_form",
+      "$template": "cloud_pairing_form"
+    },
+    {
+      "id": "add_device"
+    }
+  ]
+}

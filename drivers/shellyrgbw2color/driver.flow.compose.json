@@ -7,7 +7,7 @@
         "nl": "Uitschakelen wit modus"
       },
       "args": [],
-      "platforms": ["local"]
+      "platforms": ["local", "cloud"]
     },
     {
       "id": "actionRGBW2EnableWhiteMode",
@@ -16,7 +16,7 @@
         "nl": "Inschakelen wit modus"
       },
       "args": [],
-      "platforms": ["local"]
+      "platforms": ["local", "cloud"]
     },
     {
       "id": "effectRGBW2Color",

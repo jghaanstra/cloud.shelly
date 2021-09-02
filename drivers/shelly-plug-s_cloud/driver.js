@@ -12,7 +12,8 @@ class ShellyPlugSCloudDriver extends Driver {
     this.config = {
       name: 'Shelly Plug S Cloud',
       battery: false,
-      hostname: 'shellyplug-s-'
+      hostname: 'shellyplug-s-',
+      type: 'SHPLG-S'
     }
   }
 

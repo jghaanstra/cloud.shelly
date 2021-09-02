@@ -3,15 +3,13 @@
 Homey.setTitle(Homey.__('pair.title_cloud_pairing'));
 
 $(function() {
-
-  Homey.emit('get_cloud_login')
+  Homey.emit('get_integrator_url')
     .then(result => {
-      if (result.result) {
-        $('#server_address').val(result.server_address);
-        $('#cloud_token').val(result.cloud_token);
+      if (result) {
+        $('.integrator-link').html('<a href="'+ result +'" target="_blank">link</a>');
       } else {
         $('.shelly-error').show();
-        $('.shelly-error-msg').html(Homey.__('pair.no_cloud_credentials'));
+        $('.shelly-error-msg').html(Homey.__('pair.no_integrator_url'));
       }
     })
     .catch(error => {
@@ -19,52 +17,34 @@ $(function() {
       $('.shelly-error-msg').html(error);
     });
 
-	$('#test-connection').click(function() {
+  $('#test-connection').click(function() {
 		$('.shelly-test').hide();
 		$('.shelly-ok').hide();
 		$('.shelly-error').hide();
 		$('.shelly-info').hide();
 
-		var server_address = $('#server_address').val();
-    var cloud_token = $('#cloud_token').val();
-		var device_id = $('#device_id').val();
-
-		if (server_address !== '' && cloud_token !== '' && device_id !== '') {
-			var data = {
-        server_address: server_address,
-				cloud_token: cloud_token,
-				device_id: device_id
-			};
-
-      Homey.emit('test_cloud_connection', data)
-        .then(result => {
-          var shellyinfo = "<div class='info-row'><span class='info-label' data-i18n='pair.hostname'>Shelly Hostname:</span><span class='info-value'> "+ result.data.device_settings.device.hostname +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.type'>Shelly Device Type:</span><span class='info-value'> "+ result.data.device_settings.device.type +"</span></div>";
-          $('.shelly-info').show();
-          $('.shelly-info').html(shellyinfo);
-          $('.shelly-test').show();
-          $('#connect').prop('disabled', false);
-        })
-        .catch(error => {
-          $('.shelly-error').show();
-					$('.shelly-error-msg').html(error);
-        });
-		} else {
-			$('.shelly-error').show();
-			$('.shelly-error-msg').html( Homey.__('pair.nosettings') );
-		}
-
+    Homey.emit('test_connection')
+      .then(result => {
+        var shellyinfo = "<div class='info-row'><span class='info-label' data-i18n='pair.device'>Shelly Device:</span><span class='info-value'> "+ result.name[0] +"</span></div><div class='info-row'><span class='info-label' data-i18n='pair.deviceid'>Shelly Device ID:</span><span class='info-value'> "+ result.deviceId +"</span></div>";
+        $('.shelly-info').show();
+        $('.shelly-info').html(shellyinfo);
+        $('.shelly-test').show();
+        $('#connect').prop('disabled', false);
+      })
+      .catch(error => {
+        $('.shelly-error').show();
+				$('.shelly-error-msg').html(error);
+      });
 	});
 
-	$('#connect').click(function() {
+  $('#connect').click(function() {
     Homey.showView('add_device');
 	});
-})
+
+});
 </script>
 
 <style type="text/css">
-  .introtext {
-    margin-bottom: 20px;
-  }
   .form-group {
     width: 100%;
     display: block;
@@ -101,20 +81,18 @@ $(function() {
   }
 </style>
 
-<p data-i18n="pair.instructions_cloud_pairing" class="introtext">You are about the pair a Shelly device over the cloud. During pairing you will have to enter your Shelly cloud token en cloud server address. These can be found in your account at https://my.shelly.cloud/ under "User Settings > Security > Authorization Cloud Key". You will also have to enter the device ID of the device you wish to pair. You can find this device ID under the webinterface of through your Shelly cloud account under "Settings > Device Info > Device ID".</p>
+<p data-i18n="pair.instructions_cloud_pairing" class="introtext">You are about to pair a Shelly device over the cloud. Please follow these steps:</p>
+<ol>
+  <li><span data-i18n="pair.instructions_cloud_pairing_step_1">Visit the Shelly Integrator Portal using this</span> <span class="integrator-link"></span>.</li>
+  <li data-i18n="pair.instructions_cloud_pairing_step_2">Log into this portal with your Shelly cloud credentials.</li>
+  <li data-i18n="pair.instructions_cloud_pairing_step_3">Find the device you wish to pair making sure it's of the same model which you are currently pairing in Homey (if your device is not listed here you will have to enable the cloud connection through the device webinterface of the Shelly smartphone app first).</li>
+  <li data-i18n="pair.instructions_cloud_pairing_step_4">In the Shelly Integrator Portal click the device you wish to pair and enable the cloud integrator and control settings for that device.</li>
+  <li data-i18n="pair.instructions_cloud_pairing_step_5">Click save in the Shelly Integrator Portal and afterwards click next button in this pairing wizard.</li>
+  <li data-i18n="pair.instructions_cloud_pairing_step_5">Click save in the Shelly Integrator Portal and click next button in this pairing wizard.</li>
+  <li data-i18n="pair.instructions_cloud_pairing_step_6">If you see the correct device ID shown below you can click the next button to continu pairing the device.</li>
+</ol>
+
 <div class="shelly-pairing">
-  <div class="form-group">
-		<label for="server_address" data-i18n="pair.server_address">Server Address</label>
-		<input type="text" class="form-control" id="server_address">
-	</div>
-	<div class="form-group">
-		<label for="cloud_token" data-i18n="pair.cloud_token">Cloud Token</label>
-		<input type="password" class="form-control" id="cloud_token">
-	</div>
-	<div class="form-group">
-		<label for="device_id" data-i18n="pair.device_id">Password</label>
-		<input type="text" class="form-control" id="device_id">
-	</div>
 	<div class="form-group buttons">
 		<button id="test-connection" class="button" data-i18n="pair.test">Test Connection</button>
 		<button id="connect" class="button" data-i18n="pair.connect" disabled>Connect</button>

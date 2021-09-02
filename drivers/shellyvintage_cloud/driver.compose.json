@@ -1,0 +1,16 @@
+{
+  "name": {
+    "en": "Shelly Vintage",
+    "nl": "Shelly Vintage"
+  },
+  "class": "light",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "onoff",
+    "dim",
+    "measure_power",
+    "meter_power"
+  ]
+}

@@ -13,7 +13,6 @@
     "dim",
     "light_temperature",
     "measure_power",
-    "meter_power",
-    "meter_power_wmin"
+    "meter_power"
   ]
 }

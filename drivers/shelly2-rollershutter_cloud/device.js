@@ -41,17 +41,22 @@ class Shelly2RollerShutterCloudDevice extends Device {
     });
 
     this.registerCapabilityListener('windowcoverings_set', async (value) => {
-      if (this.getSetting('halfway') == 0.5) {
-        var position = value;
-      } else {
-        if (value > 0.5) {
-          var position = -2 * value * this.getSetting('halfway') + 2 * value + 2 * this.getSetting('halfway') - 1;
+      try {
+        if (this.getSetting('halfway') == 0.5) {
+          var position = value;
         } else {
-          var position = 2 * value * this.getSetting('halfway');
-        };
+          if (value > 0.5) {
+            var position = -2 * value * this.getSetting('halfway') + 2 * value + 2 * this.getSetting('halfway') - 1;
+          } else {
+            var position = 2 * value * this.getSetting('halfway');
+          };
+        }
+        this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
+        return await this.util.sendCloudCommand('/device/relay/roller/settings/topos/', this.getSetting('server_address'), this.getSetting('cloud_token'), this.getSetting('device_id'), {"pos": Math.round(position*100)});
+      } catch (error) {
+        this.log(error)
+        return Promise.reject(error);
       }
-      this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
-      return await this.util.sendCloudCommand('/device/relay/roller/settings/topos/', this.getSetting('server_address'), this.getSetting('cloud_token'), this.getSetting('device_id'), {"pos": Math.round(position*100)});
     });
 
     this.registerCapabilityListener('button.sethalfwayposition', async () => {

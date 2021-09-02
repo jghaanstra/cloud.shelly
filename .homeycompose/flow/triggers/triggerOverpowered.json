@@ -12,7 +12,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1pm|shelly2|shelly25|shellydimmer|shelly3em|shellyem|shellyrgbw2color|shellyrgbw2white"
+      "filter": "driver_id=shelly-plug|shelly-plug_cloud|shelly-plug-s|shelly-plug-s_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2_cloud|shelly25|shelly25_cloud|shellydimmer|shellydimmer_cloud|shelly3em|shelly3em_cloud|shellyem|shellyem_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud"
     }
   ],
   "platforms": ["local", "cloud"]

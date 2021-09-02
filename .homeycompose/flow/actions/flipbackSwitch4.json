@@ -107,5 +107,6 @@
       "filter": "driver_id=shelly4pro"
     }
   ],
-  "platforms": ["local"]
+  "platforms": ["local"],
+  "deprecated": true
 }

@@ -1,0 +1,31 @@
+{
+  "name": {
+    "en": "Shelly 3EM",
+    "nl": "Shelly 3EM"
+  },
+  "class": "socket",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "onoff",
+    "measure_power",
+    "meter_power_factor",
+    "measure_current",
+    "measure_voltage",
+    "meter_power",
+    "meter_power_returned"
+  ],
+  "pair": [
+    {
+      "id": "cloud_pairing_form",
+      "$template": "cloud_pairing_form"
+    },
+    {
+      "id": "add_device"
+    }
+  ],
+  "energy": {
+    "cumulative": true
+  }
+}
