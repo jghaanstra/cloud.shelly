@@ -69,7 +69,7 @@ class ShellyDevice extends Device {
           this.parseCapabilityUpdate('voltage'+channel, result["switch:"+channel].voltage, channel);
         }
 
-        /* input */
+        /* inputs */
         if (result["switch:"+channel].hasOwnProperty("input") && this.hasCapability('input_1')) {
           this.parseCapabilityUpdate('input'+channel, result["switch:"+channel].input, channel);
         }
@@ -86,6 +86,12 @@ class ShellyDevice extends Device {
 
         /* measure_temperature */
         this.parseCapabilityUpdate('deviceTemperature', result.systemp.tC, 0);
+      }
+
+      // FIRMWARE UPDATE AVAILABLE
+      if (result.sys.available_updates.hasOwnProperty("stable") {
+        this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": result.sys.available_updates.stable.version });
+        this.setStoreValue("latest_firmware", result.sys.available_updates.stable.version);
       }
 
     } catch (error) {

@@ -19,14 +19,14 @@ class ShellyCloudDriver extends Homey.Driver {
         deviceArray = {
           name: device.name[0],
           data: {
-            id: device.deviceId,
+            id: String(device.deviceId),
           },
           settings: {
             server_address: device.host,
-            device_id: device.deviceId
+            cloud_device_id: String(device.deviceId)
           },
           store: {
-            main_device: device.deviceId,
+            main_device: String(device.deviceId),
             channel: 0,
             type: this.config.type,
             unicast: false,

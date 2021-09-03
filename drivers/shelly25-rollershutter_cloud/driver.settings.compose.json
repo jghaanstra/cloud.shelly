@@ -11,8 +11,8 @@
         "$extends": "server_address"
       },
       {
-        "id": "device_id",
-        "$extends": "device_id"
+        "id": "cloud_device_id",
+        "$extends": "cloud_device_id"
       }
     ]
   },

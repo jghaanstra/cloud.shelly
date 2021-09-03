@@ -1,0 +1,15 @@
+{
+  "name": {
+    "en": "Shelly i3",
+    "nl": "Shelly i3"
+  },
+  "class": "other",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "input_1",
+    "input_2",
+    "input_3"
+  ]
+}

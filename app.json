@@ -19,6 +19,7 @@
       "Shelly 3EM",
       "Shelly 4 Pro",
       "Shelly 2.5",
+      "Shelly Air",
       "Shelly Bulb",
       "Shelly Button 1",
       "Shelly Dimmer",
@@ -46,6 +47,7 @@
       "Shelly 3EM",
       "Shelly 4 Pro",
       "Shelly 2.5",
+      "Shelly Air",
       "Shelly Bulb",
       "Shelly Button 1",
       "Shelly Dimmer",
@@ -63,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.3.1",
+  "version": "3.3.2",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -184,7 +186,8 @@
           }
         ],
         "platforms": [
-          "local"
+          "local",
+          "cloud"
         ]
       },
       {
@@ -1862,12 +1865,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -1923,12 +1926,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -2239,12 +2242,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -2329,12 +2332,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -2543,12 +2546,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -2856,12 +2859,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -3192,12 +3195,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -3277,12 +3280,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -3339,12 +3342,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -3529,12 +3532,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -3711,12 +3714,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -3897,12 +3900,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -4061,12 +4064,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -4333,12 +4336,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -4495,12 +4498,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -4793,12 +4796,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -5234,6 +5237,67 @@
     },
     {
       "images": {
+        "large": "/drivers/shellyi3_cloud/assets/images/large.jpg",
+        "small": "/drivers/shellyi3_cloud/assets/images/small.jpg"
+      },
+      "icon": "/drivers/shellyi3_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "cloud_pairing_form"
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "name": {
+        "en": "Shelly i3",
+        "nl": "Shelly i3"
+      },
+      "class": "other",
+      "capabilities": [
+        "input_1",
+        "input_2",
+        "input_3"
+      ],
+      "id": "shellyi3_cloud",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "server_address",
+              "type": "text",
+              "value": "https://shelly-8-eu.shelly.cloud",
+              "label": {
+                "en": "Server Address",
+                "nl": "Server adres"
+              }
+            },
+            {
+              "id": "cloud_device_id",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "images": {
         "large": "/drivers/shellymotion/assets/images/large.jpg",
         "small": "/drivers/shellymotion/assets/images/small.jpg"
       },
@@ -5529,12 +5593,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -5773,12 +5837,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -6099,12 +6163,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -6259,12 +6323,12 @@
               }
             },
             {
-              "id": "device_id",
+              "id": "cloud_device_id",
               "type": "text",
               "value": "",
               "label": {
-                "en": "Device ID",
-                "nl": "Device ID"
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]

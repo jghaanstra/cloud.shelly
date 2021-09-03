@@ -1,0 +1,9 @@
+{
+  "id": "cloud_device_id",
+  "type": "text",
+  "value": "",
+  "label": {
+    "en": "Cloud Device ID",
+    "nl": "Cloud Device ID"
+  }
+}

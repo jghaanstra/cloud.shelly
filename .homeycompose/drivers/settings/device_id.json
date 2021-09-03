@@ -1,9 +1,0 @@
-{
-  "id": "device_id",
-  "type": "text",
-  "value": "",
-  "label": {
-    "en": "Device ID",
-    "nl": "Device ID"
-  }
-}

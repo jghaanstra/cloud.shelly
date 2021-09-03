@@ -63,5 +63,5 @@
       }
     }
   ],
-  "platforms": ["local"]
+  "platforms": ["local", "cloud"]
 }
