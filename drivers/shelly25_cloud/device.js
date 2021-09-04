@@ -27,7 +27,7 @@ class Shelly25CloudDevice extends Device {
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {
       const onoff = value ? 'on' : 'off';
-      return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'turn', command_value: onoff, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+      return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'relay', command_param: 'turn', command_value: onoff, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
     });
 
   }

@@ -417,6 +417,7 @@ class ShellyApp extends Homey.App {
     ws = new WebSocket('wss://'+ cloudServer +':6113/shelly/wss/hk_sock?t='+ jwtToken);
 
     ws.on('open', () => {
+      this.log('Websocket for cloud devices opened.')
     	wsConnected = true;
     });
 
@@ -448,9 +449,10 @@ class ShellyApp extends Homey.App {
       clearTimeout(wsReconnectTimeout);
       wsConnected = false;
 
-      wsReconnectTimeout = setTimeout(() => {
-        this.websocketCloudListener();
-      }, 60000);
+      wsReconnectTimeout = setTimeout(async () => {
+        let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
+        this.websocketCloudListener(jwtToken);
+      }, 10000);
     });
 
   }
@@ -465,6 +467,14 @@ class ShellyApp extends Homey.App {
       return Promise.resolve(true);
     } catch (error) {
       this.log(error);
+
+      if (ws == null) {
+        let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
+        this.websocketCloudListener(jwtToken);
+      } else if (wsConnected) {
+        ws.close();
+      }
+
       return Promise.reject(error);
     }
   }
@@ -477,7 +487,11 @@ class ShellyApp extends Homey.App {
 
   // CLOUD: RETURN SHARED CLOUD DEVICE FOR PAIRING
   async getPairingDevice() {
-    return cloudPairingDevice;
+    if (cloudPairingDevice.hasOwnProperty('deviceId')) {
+      return Promise.resolve(cloudPairingDevice);
+    } else {
+      return Promise.reject(this.homey.__('app.no_pairing_device_found'));
+    }
   }
 
 }

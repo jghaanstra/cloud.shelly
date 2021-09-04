@@ -71,5 +71,8 @@
     "polling": "Polling frequentie in seconden",
     "success": "Instellingen zijn succesvol opgeslagen.",
     "save": "Opslaan"
+  },
+  "app": {
+    "no_pairing_device_found": "Geen apparaat om te koppelen gevonden, zorg ervoor dat je bovenstaande stappen volgt."
   }
 }

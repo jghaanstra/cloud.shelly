@@ -2,7 +2,6 @@
 
 const Homey = require('homey');
 const Util = require('../lib/util.js');
-const WebSocket = require('ws');
 
 class ShellyCloudDriver extends Homey.Driver {
 
@@ -23,7 +22,7 @@ class ShellyCloudDriver extends Homey.Driver {
           },
           settings: {
             server_address: device.host,
-            cloud_device_id: String(device.deviceId)
+            cloud_device_id: device.deviceId
           },
           store: {
             main_device: String(device.deviceId),

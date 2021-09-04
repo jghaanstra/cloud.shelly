@@ -298,5 +298,8 @@
   },
   "3.3.2": {
     "en": "Added a generic firmware is available triggercard and deprecated the firmware available conditon card which is now obsolete. Please update your flows accordingly.. Deprecated the custom flipback switch 2 and flipback switch 4 action cards. These have become obsolete a long time ago, please update your flows to use the regular flipback switch card. Some other minor improvements in there as well."
+  },
+  "3.3.3": {
+    "en": "Added a generic firmware is available triggercard and deprecated the firmware available conditon card which is now obsolete. Please update your flows accordingly. Deprecated the custom flipback switch 2 and flipback switch 4 action cards. These have become obsolete a long time ago, please update your flows to use the regular flipback switch card. Some other minor improvements in there as well."
   }
 }
