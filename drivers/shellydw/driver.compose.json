@@ -3,6 +3,11 @@
     "en": "Shelly Door/Window Sensor (2)",
     "nl": "Shelly Deur/Raam Sensor (2)"
   },
+  "images": {
+    "large": "./assets/drivers/shellydw/images/large.jpg",
+    "small": "./assets/drivers/shellydw/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shellydw/icon.svg",
   "class": "sensor",
   "discovery": "shellydw",
   "$extends": [

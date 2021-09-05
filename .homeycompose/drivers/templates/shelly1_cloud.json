@@ -1,9 +1,4 @@
 {
-  "images": {
-    "large": "{{driverAssetsPath}}/images/large.jpg",
-    "small": "{{driverAssetsPath}}/images/small.jpg"
-  },
-  "icon": "{{driverAssetsPath}}/icon.svg",
   "capabilities": [
     "onoff",
     "measure_temperature",

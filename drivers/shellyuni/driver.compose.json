@@ -3,6 +3,11 @@
     "en": "Shelly Uni",
     "nl": "Shelly Uni"
   },
+  "images": {
+    "large": "./assets/drivers/shellyuni/images/large.jpg",
+    "small": "./assets/drivers/shellyuni/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shellyuni/icon.svg",
   "class": "socket",
   "discovery": "shellyuni",
   "$extends": [

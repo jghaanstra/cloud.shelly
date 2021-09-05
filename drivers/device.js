@@ -11,6 +11,14 @@ class ShellyDevice extends Homey.Device {
     if (!this.util) this.util = new Util({homey: this.homey});
   }
 
+  async onAdded() {
+    if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
+      setTimeout(async () => {
+        return await this.homey.app.updateShellyCollection();
+      }, 2000);
+    }
+  }
+
   // HELPER FUNCTIONS
 
   /* boot sequence */

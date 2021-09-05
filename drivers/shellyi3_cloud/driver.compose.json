@@ -3,6 +3,11 @@
     "en": "Shelly i3",
     "nl": "Shelly i3"
   },
+  "images": {
+    "large": "./assets/drivers/shellyi3/images/large.jpg",
+    "small": "./assets/drivers/shellyi3/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shellyi3/icon.svg",
   "class": "other",
   "$extends": [
     "defaults_cloud"

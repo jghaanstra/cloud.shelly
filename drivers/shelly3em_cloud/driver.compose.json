@@ -3,6 +3,11 @@
     "en": "Shelly 3EM",
     "nl": "Shelly 3EM"
   },
+  "images": {
+    "large": "./assets/drivers/shelly3em/images/large.jpg",
+    "small": "./assets/drivers/shelly3em/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shelly3em/icon.svg",
   "class": "socket",
   "$extends": [
     "defaults_cloud"

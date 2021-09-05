@@ -3,6 +3,11 @@
     "en": "Shelly Flood Sensor",
     "nl": "Shelly Flood Sensor"
   },
+  "images": {
+    "large": "./assets/drivers/shellyflood/images/large.jpg",
+    "small": "./assets/drivers/shellyflood/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shellyflood/icon.svg",
   "class": "sensor",
   "discovery": "shellyflood",
   "$extends": [

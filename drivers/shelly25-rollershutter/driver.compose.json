@@ -3,6 +3,11 @@
     "en": "Shelly 2.5 Roller Shutter",
     "nl": "Shelly 2.5 Roller Shutter"
   },
+  "images": {
+    "large": "./assets/drivers/shelly25-rollershutter/images/large.jpg",
+    "small": "./assets/drivers/shelly25-rollershutter/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shelly25-rollershutter/icon.svg",
   "class": "windowcoverings",
   "discovery": "shelly25",
   "$extends": [

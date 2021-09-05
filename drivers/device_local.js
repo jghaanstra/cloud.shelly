@@ -12,14 +12,6 @@ class ShellyDevice extends Device {
     if (!this.util) this.util = new Util({homey: this.homey});
   }
 
-  async onAdded() {
-    if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
-      setTimeout(async () => {
-        return await this.homey.app.updateShellyCollection();
-      }, 2000);
-    }
-  }
-
   async onDeleted() {
     try {
       clearInterval(this.pollingInterval);
@@ -116,8 +108,9 @@ class ShellyDevice extends Device {
     this.ws = new WebSocket('ws://'+ this.getSetting("address") +'/rpc', {perMessageDeflate: false, headers: headers});
 
     this.ws.on('open', () => {
-      this.ws.send(JSON.stringify({"id": 0, "src": this.getData().id, "method": "Shelly.GetStatus"}));
       this.connected = true;
+      this.ws.send(JSON.stringify({"id": 0, "src": this.getData().id, "method": "Shelly.GetStatus"}));
+      this.log('Websocket for gen2 LAN device opened:', this.getData().id);
     });
 
     this.ws.on('message', (data) => {
@@ -161,8 +154,13 @@ class ShellyDevice extends Device {
     this.ws.on('ping', () => {
       clearTimeout(this.pingWsTimeout);
       this.pingWsTimeout = setTimeout(() => {
-        this.ws.close();
-      }, 60000);
+        if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
+          this.connected = false;
+          this.connectWebsocket();
+        } else {
+          this.ws.close();
+        }
+      }, 120 * 1000);
     });
 
     this.ws.on('error', (error) => {
@@ -176,7 +174,7 @@ class ShellyDevice extends Device {
 
       this.reconnectWsTimeout = setTimeout(() => {
         this.connectWebsocket();
-      }, 60000);
+      }, 30 * 1000);
     });
   }
 

@@ -3,6 +3,11 @@
     "en": "Shelly 2 Relay",
     "nl": "Shelly 2 Relay"
   },
+  "images": {
+    "large": "./assets/drivers/shelly2/images/large.jpg",
+    "small": "./assets/drivers/shelly2/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shelly2/icon.svg",
   "class": "socket",
   "discovery": "shelly2",
   "$extends": [

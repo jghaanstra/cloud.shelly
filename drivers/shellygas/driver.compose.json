@@ -3,6 +3,11 @@
     "en": "Shelly Gas Sensor",
     "nl": "Shelly Gas Sensor"
   },
+  "images": {
+    "large": "./assets/drivers/shellygas/images/large.jpg",
+    "small": "./assets/drivers/shellygas/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shellygas/icon.svg",
   "class": "sensor",
   "discovery": "shellygas",
   "$extends": [

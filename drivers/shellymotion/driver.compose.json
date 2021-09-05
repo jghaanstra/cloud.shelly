@@ -3,6 +3,11 @@
     "en": "Shelly Motion Sensor",
     "nl": "Shelly Bewegingssensor"
   },
+  "images": {
+    "large": "./assets/drivers/shellymotion/images/large.jpg",
+    "small": "./assets/drivers/shellymotion/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shellymotion/icon.svg",
   "class": "sensor",
   "discovery": "shellymotion",
   "$extends": [

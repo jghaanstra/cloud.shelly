@@ -3,6 +3,11 @@
     "en": "Shelly 1L",
     "nl": "Shelly 1L"
   },
+  "images": {
+    "large": "./assets/drivers/shelly1l/images/large.jpg",
+    "small": "./assets/drivers/shelly1l/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shelly1l/icon.svg",
   "class": "socket",
   "discovery": "shelly1l",
   "$extends": [

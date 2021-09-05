@@ -3,6 +3,11 @@
     "en": "Shelly Button 1",
     "nl": "Shelly Button 1"
   },
+  "images": {
+    "large": "./assets/drivers/shellybutton1/images/large.jpg",
+    "small": "./assets/drivers/shellybutton1/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shellybutton1/icon.svg",
   "class": "button",
   "discovery": "shellybutton1",
   "$extends": [

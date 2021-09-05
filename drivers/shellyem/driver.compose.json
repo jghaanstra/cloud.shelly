@@ -3,6 +3,11 @@
     "en": "Shelly EM",
     "nl": "Shelly EM"
   },
+  "images": {
+    "large": "./assets/drivers/shellyem/images/large.jpg",
+    "small": "./assets/drivers/shellyem/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shellyem/icon.svg",
   "class": "socket",
   "discovery": "shellyem",
   "$extends": [

@@ -3,6 +3,11 @@
     "en": "Shelly Plug S",
     "nl": "Shelly Plug S"
   },
+  "images": {
+    "large": "./assets/drivers/shelly-plug-s/images/large.jpg",
+    "small": "./assets/drivers/shelly-plug-s/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shelly-plug-s/icon.svg",
   "class": "socket",
   "$extends": [
     "defaults_cloud"

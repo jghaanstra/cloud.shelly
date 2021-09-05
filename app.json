@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.3.3",
+  "version": "3.3.4",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -1605,11 +1605,6 @@
   },
   "drivers": [
     {
-      "images": {
-        "large": "/drivers/shelly-plug/assets/images/large.jpg",
-        "small": "/drivers/shelly-plug/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly-plug/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -1654,6 +1649,11 @@
         "en": "Shelly Plug",
         "nl": "Shelly Plug"
       },
+      "images": {
+        "large": "./assets/drivers/shelly-plug/images/large.jpg",
+        "small": "./assets/drivers/shelly-plug/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly-plug/icon.svg",
       "class": "socket",
       "discovery": "shelly-plug",
       "capabilities": [
@@ -1702,11 +1702,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly-plug-s/assets/images/large.jpg",
-        "small": "/drivers/shelly-plug-s/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly-plug-s/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -1751,6 +1746,11 @@
         "en": "Shelly Plug S",
         "nl": "Shelly Plug S"
       },
+      "images": {
+        "large": "./assets/drivers/shelly-plug-s/images/large.jpg",
+        "small": "./assets/drivers/shelly-plug-s/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly-plug-s/icon.svg",
       "class": "socket",
       "discovery": "shelly-plug-s",
       "capabilities": [
@@ -1808,11 +1808,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly-plug-s_cloud/assets/images/large.jpg",
-        "small": "/drivers/shelly-plug-s_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly-plug-s_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -1831,6 +1826,11 @@
         "en": "Shelly Plug S",
         "nl": "Shelly Plug S"
       },
+      "images": {
+        "large": "./assets/drivers/shelly-plug-s/images/large.jpg",
+        "small": "./assets/drivers/shelly-plug-s/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly-plug-s/icon.svg",
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -1878,11 +1878,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly-plug_cloud/assets/images/large.jpg",
-        "small": "/drivers/shelly-plug_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly-plug_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -1901,6 +1896,11 @@
         "en": "Shelly Plug",
         "nl": "Shelly Plug"
       },
+      "images": {
+        "large": "./assets/drivers/shelly-plug/images/large.jpg",
+        "small": "./assets/drivers/shelly-plug/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly-plug/icon.svg",
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -1939,11 +1939,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly1/assets/images/large.jpg",
-        "small": "/drivers/shelly1/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly1/assets/icon.svg",
       "capabilities": [
         "onoff",
         "input_1"
@@ -2018,6 +2013,11 @@
         "en": "Shelly 1",
         "nl": "Shelly 1"
       },
+      "images": {
+        "large": "./assets/drivers/shelly1/images/large.jpg",
+        "small": "./assets/drivers/shelly1/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly1/icon.svg",
       "class": "socket",
       "discovery": "shelly1",
       "id": "shelly1",
@@ -2061,11 +2061,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly1L/assets/images/large.jpg",
-        "small": "/drivers/shelly1L/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly1L/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -2126,6 +2121,11 @@
         "en": "Shelly 1L",
         "nl": "Shelly 1L"
       },
+      "images": {
+        "large": "./assets/drivers/shelly1l/images/large.jpg",
+        "small": "./assets/drivers/shelly1l/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly1l/icon.svg",
       "class": "socket",
       "discovery": "shelly1l",
       "id": "shelly1L",
@@ -2169,11 +2169,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly1_cloud/assets/images/large.jpg",
-        "small": "/drivers/shelly1_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly1_cloud/assets/icon.svg",
       "capabilities": [
         "onoff",
         "input_1"
@@ -2222,6 +2217,11 @@
         "en": "Shelly 1",
         "nl": "Shelly 1"
       },
+      "images": {
+        "large": "./assets/drivers/shelly1/images/large.jpg",
+        "small": "./assets/drivers/shelly1/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly1/icon.svg",
       "class": "socket",
       "id": "shelly1_cloud",
       "settings": [
@@ -2255,11 +2255,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly1l_cloud/assets/images/large.jpg",
-        "small": "/drivers/shelly1l_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly1l_cloud/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -2312,6 +2307,11 @@
         "en": "Shelly 1L",
         "nl": "Shelly 1L"
       },
+      "images": {
+        "large": "./assets/drivers/shelly1l/images/large.jpg",
+        "small": "./assets/drivers/shelly1l/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly1l/icon.svg",
       "class": "socket",
       "id": "shelly1l_cloud",
       "settings": [
@@ -2345,11 +2345,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly1pm/assets/images/large.jpg",
-        "small": "/drivers/shelly1pm/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly1pm/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -2427,6 +2422,11 @@
         "en": "Shelly 1PM",
         "nl": "Shelly 1PM"
       },
+      "images": {
+        "large": "./assets/drivers/shelly1pm/images/large.jpg",
+        "small": "./assets/drivers/shelly1pm/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly1pm/icon.svg",
       "class": "socket",
       "discovery": "shelly1pm",
       "id": "shelly1pm",
@@ -2470,11 +2470,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly1pm_cloud/assets/images/large.jpg",
-        "small": "/drivers/shelly1pm_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly1pm_cloud/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -2526,6 +2521,11 @@
         "en": "Shelly 1PM",
         "nl": "Shelly 1PM"
       },
+      "images": {
+        "large": "./assets/drivers/shelly1pm/images/large.jpg",
+        "small": "./assets/drivers/shelly1pm/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly1pm/icon.svg",
       "class": "socket",
       "id": "shelly1pm_cloud",
       "settings": [
@@ -2559,11 +2559,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly2/assets/images/large.jpg",
-        "small": "/drivers/shelly2/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly2/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -2608,6 +2603,11 @@
         "en": "Shelly 2 Relay",
         "nl": "Shelly 2 Relay"
       },
+      "images": {
+        "large": "./assets/drivers/shelly2/images/large.jpg",
+        "small": "./assets/drivers/shelly2/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly2/icon.svg",
       "class": "socket",
       "discovery": "shelly2",
       "capabilities": [
@@ -2657,11 +2657,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly2-rollershutter/assets/images/large.jpg",
-        "small": "/drivers/shelly2-rollershutter/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly2-rollershutter/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -2706,6 +2701,11 @@
         "en": "Shelly 2 Roller Shutter",
         "nl": "Shelly 2 Roller Shutter"
       },
+      "images": {
+        "large": "./assets/drivers/shelly2-rollershutter/images/large.jpg",
+        "small": "./assets/drivers/shelly2-rollershutter/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly2-rollershutter/icon.svg",
       "class": "windowcoverings",
       "discovery": "shelly2",
       "capabilities": [
@@ -2793,11 +2793,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly2-rollershutter_cloud/assets/images/large.jpg",
-        "small": "/drivers/shelly2-rollershutter_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly2-rollershutter_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -2816,6 +2811,11 @@
         "en": "Shelly 2 Roller Shutter",
         "nl": "Shelly 2 Roller Shutter"
       },
+      "images": {
+        "large": "./assets/drivers/shelly2-rollershutter/images/large.jpg",
+        "small": "./assets/drivers/shelly2-rollershutter/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly2-rollershutter/icon.svg",
       "class": "windowcoverings",
       "capabilities": [
         "windowcoverings_state",
@@ -2894,11 +2894,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly25/assets/images/large.jpg",
-        "small": "/drivers/shelly25/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly25/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -2943,6 +2938,11 @@
         "en": "Shelly 2.5 Relay",
         "nl": "Shelly 2.5 Relay"
       },
+      "images": {
+        "large": "./assets/drivers/shelly25/images/large.jpg",
+        "small": "./assets/drivers/shelly25/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly25/icon.svg",
       "class": "socket",
       "discovery": "shelly25",
       "capabilities": [
@@ -2993,11 +2993,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly25-rollershutter/assets/images/large.jpg",
-        "small": "/drivers/shelly25-rollershutter/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly25-rollershutter/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -3042,6 +3037,11 @@
         "en": "Shelly 2.5 Roller Shutter",
         "nl": "Shelly 2.5 Roller Shutter"
       },
+      "images": {
+        "large": "./assets/drivers/shelly25-rollershutter/images/large.jpg",
+        "small": "./assets/drivers/shelly25-rollershutter/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly25-rollershutter/icon.svg",
       "class": "windowcoverings",
       "discovery": "shelly25",
       "capabilities": [
@@ -3129,11 +3129,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly25-rollershutter_cloud/assets/images/large.jpg",
-        "small": "/drivers/shelly25-rollershutter_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly25-rollershutter_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -3152,6 +3147,11 @@
         "en": "Shelly 2.5 Roller Shutter",
         "nl": "Shelly 2.5 Roller Shutter"
       },
+      "images": {
+        "large": "./assets/drivers/shelly25-rollershutter/images/large.jpg",
+        "small": "./assets/drivers/shelly25-rollershutter/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly25-rollershutter/icon.svg",
       "class": "windowcoverings",
       "capabilities": [
         "windowcoverings_state",
@@ -3230,11 +3230,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly25_cloud/assets/images/large.jpg",
-        "small": "/drivers/shelly25_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly25_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -3253,6 +3248,11 @@
         "en": "Shelly 2.5 Relay",
         "nl": "Shelly 2.5 Relay"
       },
+      "images": {
+        "large": "./assets/drivers/shelly25/images/large.jpg",
+        "small": "./assets/drivers/shelly25/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly25/icon.svg",
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -3293,11 +3293,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly2_cloud/assets/images/large.jpg",
-        "small": "/drivers/shelly2_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly2_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -3316,6 +3311,11 @@
         "en": "Shelly 2 Relay",
         "nl": "Shelly 2 Relay"
       },
+      "images": {
+        "large": "./assets/drivers/shelly2/images/large.jpg",
+        "small": "./assets/drivers/shelly2/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly2/icon.svg",
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -3355,11 +3355,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly3em/assets/images/large.jpg",
-        "small": "/drivers/shelly3em/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly3em/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -3404,6 +3399,11 @@
         "en": "Shelly 3EM",
         "nl": "Shelly 3EM"
       },
+      "images": {
+        "large": "./assets/drivers/shelly3em/images/large.jpg",
+        "small": "./assets/drivers/shelly3em/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly3em/icon.svg",
       "class": "socket",
       "discovery": "shelly3em",
       "capabilities": [
@@ -3477,11 +3477,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly3em_cloud/assets/images/large.jpg",
-        "small": "/drivers/shelly3em_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly3em_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -3500,6 +3495,11 @@
         "en": "Shelly 3EM",
         "nl": "Shelly 3EM"
       },
+      "images": {
+        "large": "./assets/drivers/shelly3em/images/large.jpg",
+        "small": "./assets/drivers/shelly3em/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly3em/icon.svg",
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -3563,11 +3563,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly4pro/assets/images/large.jpg",
-        "small": "/drivers/shelly4pro/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly4pro/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -3612,6 +3607,11 @@
         "en": "Shelly Pro 4(PM)",
         "nl": "Shelly Pro 4(PM)"
       },
+      "images": {
+        "large": "./assets/drivers/shelly4pro/images/large.jpg",
+        "small": "./assets/drivers/shelly4pro/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly4pro/icon.svg",
       "class": "socket",
       "discovery": "shelly4pro",
       "capabilities": [
@@ -3663,11 +3663,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shelly4pro_cloud/assets/images/large.jpg",
-        "small": "/drivers/shelly4pro_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shelly4pro_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -3686,6 +3681,11 @@
         "en": "Shelly Pro 4(PM)",
         "nl": "Shelly Pro 4(PM)"
       },
+      "images": {
+        "large": "./assets/drivers/shelly4pro/images/large.jpg",
+        "small": "./assets/drivers/shelly4pro/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shelly4pro/icon.svg",
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -3727,11 +3727,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyair/assets/images/large.jpg",
-        "small": "/drivers/shellyair/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyair/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -3776,6 +3771,11 @@
         "en": "Shelly Air",
         "nl": "Shelly Air"
       },
+      "images": {
+        "large": "./assets/drivers/shellyair/images/large.jpg",
+        "small": "./assets/drivers/shellyair/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyair/icon.svg",
       "class": "sensor",
       "discovery": "shellyair",
       "capabilities": [
@@ -3838,11 +3838,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyair_cloud/assets/images/large.jpg",
-        "small": "/drivers/shellyair_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyair_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -3861,6 +3856,11 @@
         "en": "Shelly Air",
         "nl": "Shelly Air"
       },
+      "images": {
+        "large": "./assets/drivers/shellyair/images/large.jpg",
+        "small": "./assets/drivers/shellyair/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyair/icon.svg",
       "class": "sensor",
       "capabilities": [
         "onoff",
@@ -3913,11 +3913,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellybulb/assets/images/large.jpg",
-        "small": "/drivers/shellybulb/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellybulb/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -3962,6 +3957,11 @@
         "en": "Shelly Bulb (RGBW)",
         "nl": "Shelly Bulb (RGBW)"
       },
+      "images": {
+        "large": "./assets/drivers/shellybulb/images/large.jpg",
+        "small": "./assets/drivers/shellybulb/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellybulb/icon.svg",
       "class": "light",
       "discovery": "shellybulb",
       "capabilities": [
@@ -4013,11 +4013,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellybulb_cloud/assets/images/large.jpg",
-        "small": "/drivers/shellybulb_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellybulb_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -4036,6 +4031,11 @@
         "en": "Shelly Bulb (RGBW)",
         "nl": "Shelly Bulb (RGBW)"
       },
+      "images": {
+        "large": "./assets/drivers/shellybulb/images/large.jpg",
+        "small": "./assets/drivers/shellybulb/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellybulb/icon.svg",
       "class": "light",
       "capabilities": [
         "onoff",
@@ -4077,11 +4077,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellybutton1/assets/images/large.jpg",
-        "small": "/drivers/shellybutton1/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellybutton1/assets/icon.svg",
       "pair": [
         {
           "id": "start",
@@ -4132,6 +4127,11 @@
         "en": "Shelly Button 1",
         "nl": "Shelly Button 1"
       },
+      "images": {
+        "large": "./assets/drivers/shellybutton1/images/large.jpg",
+        "small": "./assets/drivers/shellybutton1/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellybutton1/icon.svg",
       "class": "button",
       "discovery": "shellybutton1",
       "capabilities": [
@@ -4183,11 +4183,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellydimmer/assets/images/large.jpg",
-        "small": "/drivers/shellydimmer/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellydimmer/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -4232,6 +4227,11 @@
         "en": "Shelly Dimmer (2)",
         "nl": "Shelly Dimmer (2)"
       },
+      "images": {
+        "large": "./assets/drivers/shellydimmer/images/large.jpg",
+        "small": "./assets/drivers/shellydimmer/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellydimmer/icon.svg",
       "class": "light",
       "discovery": "shellydimmer",
       "capabilities": [
@@ -4284,11 +4284,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellydimmer_cloud/assets/images/large.jpg",
-        "small": "/drivers/shellydimmer_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellydimmer_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -4307,6 +4302,11 @@
         "en": "Shelly Dimmer (2)",
         "nl": "Shelly Dimmer (2)"
       },
+      "images": {
+        "large": "./assets/drivers/shellydimmer/images/large.jpg",
+        "small": "./assets/drivers/shellydimmer/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellydimmer/icon.svg",
       "class": "light",
       "capabilities": [
         "onoff",
@@ -4349,11 +4349,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyduo/assets/images/large.jpg",
-        "small": "/drivers/shellyduo/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyduo/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -4398,6 +4393,11 @@
         "en": "Shelly Duo",
         "nl": "Shelly Duo"
       },
+      "images": {
+        "large": "./assets/drivers/shellyduo/images/large.jpg",
+        "small": "./assets/drivers/shellyduo/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyduo/icon.svg",
       "class": "light",
       "discovery": "shellyduo",
       "capabilities": [
@@ -4448,11 +4448,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyduo_cloud/assets/images/large.jpg",
-        "small": "/drivers/shellyduo_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyduo_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -4471,6 +4466,11 @@
         "en": "Shelly Duo",
         "nl": "Shelly Duo"
       },
+      "images": {
+        "large": "./assets/drivers/shellyduo/images/large.jpg",
+        "small": "./assets/drivers/shellyduo/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyduo/icon.svg",
       "class": "light",
       "capabilities": [
         "onoff",
@@ -4511,11 +4511,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellydw/assets/images/large.jpg",
-        "small": "/drivers/shellydw/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellydw/assets/icon.svg",
       "pair": [
         {
           "id": "start",
@@ -4566,6 +4561,11 @@
         "en": "Shelly Door/Window Sensor (2)",
         "nl": "Shelly Deur/Raam Sensor (2)"
       },
+      "images": {
+        "large": "./assets/drivers/shellydw/images/large.jpg",
+        "small": "./assets/drivers/shellydw/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellydw/icon.svg",
       "class": "sensor",
       "discovery": "shellydw",
       "capabilities": [
@@ -4623,11 +4623,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyem/assets/images/large.jpg",
-        "small": "/drivers/shellyem/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyem/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -4672,6 +4667,11 @@
         "en": "Shelly EM",
         "nl": "Shelly EM"
       },
+      "images": {
+        "large": "./assets/drivers/shellyem/images/large.jpg",
+        "small": "./assets/drivers/shellyem/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyem/icon.svg",
       "class": "socket",
       "discovery": "shellyem",
       "capabilities": [
@@ -4743,11 +4743,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyem_cloud/assets/images/large.jpg",
-        "small": "/drivers/shellyem_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyem_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -4766,6 +4761,11 @@
         "en": "Shelly EM",
         "nl": "Shelly EM"
       },
+      "images": {
+        "large": "./assets/drivers/shellyem/images/large.jpg",
+        "small": "./assets/drivers/shellyem/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyem/icon.svg",
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -4827,11 +4827,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyflood/assets/images/large.jpg",
-        "small": "/drivers/shellyflood/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyflood/assets/icon.svg",
       "pair": [
         {
           "id": "start",
@@ -4882,6 +4877,11 @@
         "en": "Shelly Flood Sensor",
         "nl": "Shelly Flood Sensor"
       },
+      "images": {
+        "large": "./assets/drivers/shellyflood/images/large.jpg",
+        "small": "./assets/drivers/shellyflood/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyflood/icon.svg",
       "class": "sensor",
       "discovery": "shellyflood",
       "capabilities": [
@@ -4935,11 +4935,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellygas/assets/images/large.jpg",
-        "small": "/drivers/shellygas/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellygas/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -4984,6 +4979,11 @@
         "en": "Shelly Gas Sensor",
         "nl": "Shelly Gas Sensor"
       },
+      "images": {
+        "large": "./assets/drivers/shellygas/images/large.jpg",
+        "small": "./assets/drivers/shellygas/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellygas/icon.svg",
       "class": "sensor",
       "discovery": "shellygas",
       "capabilities": [
@@ -5031,11 +5031,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyht/assets/images/large.jpg",
-        "small": "/drivers/shellyht/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyht/assets/icon.svg",
       "pair": [
         {
           "id": "start",
@@ -5086,6 +5081,11 @@
         "en": "Shelly Humidity & Temperature",
         "nl": "Shelly Humidity & Temperature"
       },
+      "images": {
+        "large": "./assets/drivers/shellyht/images/large.jpg",
+        "small": "./assets/drivers/shellyht/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyht/icon.svg",
       "class": "sensor",
       "discovery": "shellyht",
       "capabilities": [
@@ -5139,11 +5139,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyi3/assets/images/large.jpg",
-        "small": "/drivers/shellyi3/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyi3/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -5188,6 +5183,11 @@
         "en": "Shelly i3",
         "nl": "Shelly i3"
       },
+      "images": {
+        "large": "./assets/drivers/shellyi3/images/large.jpg",
+        "small": "./assets/drivers/shellyi3/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyi3/icon.svg",
       "class": "other",
       "discovery": "shellyi3",
       "capabilities": [
@@ -5236,11 +5236,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyi3_cloud/assets/images/large.jpg",
-        "small": "/drivers/shellyi3_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyi3_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -5259,6 +5254,11 @@
         "en": "Shelly i3",
         "nl": "Shelly i3"
       },
+      "images": {
+        "large": "./assets/drivers/shellyi3/images/large.jpg",
+        "small": "./assets/drivers/shellyi3/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyi3/icon.svg",
       "class": "other",
       "capabilities": [
         "input_1",
@@ -5297,11 +5297,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellymotion/assets/images/large.jpg",
-        "small": "/drivers/shellymotion/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellymotion/assets/icon.svg",
       "pair": [
         {
           "id": "start",
@@ -5352,6 +5347,11 @@
         "en": "Shelly Motion Sensor",
         "nl": "Shelly Bewegingssensor"
       },
+      "images": {
+        "large": "./assets/drivers/shellymotion/images/large.jpg",
+        "small": "./assets/drivers/shellymotion/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellymotion/icon.svg",
       "class": "sensor",
       "discovery": "shellymotion",
       "capabilities": [
@@ -5406,11 +5406,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyrgbw2color/assets/images/large.jpg",
-        "small": "/drivers/shellyrgbw2color/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyrgbw2color/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -5455,6 +5450,11 @@
         "en": "Shelly RGBW2 Color Mode",
         "nl": "Shelly RGBW2 Color Mode"
       },
+      "images": {
+        "large": "./assets/drivers/shellyrgbw2/images/large.jpg",
+        "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyrgbw2/icon.svg",
       "class": "light",
       "discovery": "shellyrgbw2",
       "capabilities": [
@@ -5524,11 +5524,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyrgbw2color_cloud/assets/images/large.jpg",
-        "small": "/drivers/shellyrgbw2color_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyrgbw2color_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -5547,6 +5542,11 @@
         "en": "Shelly RGBW2 Color Mode",
         "nl": "Shelly RGBW2 Color Mode"
       },
+      "images": {
+        "large": "./assets/drivers/shellyrgbw2/images/large.jpg",
+        "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyrgbw2/icon.svg",
       "class": "light",
       "capabilities": [
         "onoff",
@@ -5606,11 +5606,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyrgbw2cwww/assets/images/large.jpg",
-        "small": "/drivers/shellyrgbw2cwww/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyrgbw2cwww/assets/icon.svg",
       "pair": [
         {
           "id": "start"
@@ -5626,6 +5621,11 @@
         "en": "Shelly RGBW2 2x CW/WW Mode",
         "nl": "Shelly RGBW2 2x CW/WW Mode"
       },
+      "images": {
+        "large": "./assets/drivers/shellyrgbw2/images/large.jpg",
+        "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyrgbw2/icon.svg",
       "class": "light",
       "capabilities": [
         "onoff",
@@ -5688,11 +5688,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyrgbw2white/assets/images/large.jpg",
-        "small": "/drivers/shellyrgbw2white/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyrgbw2white/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -5737,6 +5732,11 @@
         "en": "Shelly RGBW2 4x White Mode",
         "nl": "Shelly RGBW2 4x White Mode"
       },
+      "images": {
+        "large": "./assets/drivers/shellyrgbw2/images/large.jpg",
+        "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyrgbw2/icon.svg",
       "class": "light",
       "discovery": "shellyrgbw2",
       "capabilities": [
@@ -5787,11 +5787,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyrgbw2white_cloud/assets/images/large.jpg",
-        "small": "/drivers/shellyrgbw2white_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyrgbw2white_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -5810,6 +5805,11 @@
         "en": "Shelly RGBW2 4x White Mode",
         "nl": "Shelly RGBW2 4x White Mode"
       },
+      "images": {
+        "large": "./assets/drivers/shellyrgbw2/images/large.jpg",
+        "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyrgbw2/icon.svg",
       "class": "light",
       "capabilities": [
         "onoff",
@@ -5850,11 +5850,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellysmoke/assets/images/large.jpg",
-        "small": "/drivers/shellysmoke/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellysmoke/assets/icon.svg",
       "pair": [
         {
           "id": "start",
@@ -5905,6 +5900,11 @@
         "en": "Shelly Smoke Detector",
         "nl": "Shelly Rook Detector"
       },
+      "images": {
+        "large": "./assets/drivers/shellysmoke/images/large.jpg",
+        "small": "./assets/drivers/shellysmoke/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellysmoke/icon.svg",
       "class": "sensor",
       "discovery": "shellysmoke",
       "capabilities": [
@@ -5958,11 +5958,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyuni/assets/images/large.jpg",
-        "small": "/drivers/shellyuni/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyuni/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_temperature.1",
@@ -6042,6 +6037,11 @@
         "en": "Shelly Uni",
         "nl": "Shelly Uni"
       },
+      "images": {
+        "large": "./assets/drivers/shellyuni/images/large.jpg",
+        "small": "./assets/drivers/shellyuni/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyuni/icon.svg",
       "class": "socket",
       "discovery": "shellyuni",
       "id": "shellyuni",
@@ -6085,11 +6085,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyuni_cloud/assets/images/large.jpg",
-        "small": "/drivers/shellyuni_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyuni_cloud/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_temperature.1",
@@ -6143,6 +6138,11 @@
         "en": "Shelly Uni",
         "nl": "Shelly Uni"
       },
+      "images": {
+        "large": "./assets/drivers/shellyuni/images/large.jpg",
+        "small": "./assets/drivers/shellyuni/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyuni/icon.svg",
       "class": "socket",
       "id": "shellyuni_cloud",
       "settings": [
@@ -6176,11 +6176,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyvintage/assets/images/large.jpg",
-        "small": "/drivers/shellyvintage/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyvintage/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -6225,6 +6220,11 @@
         "en": "Shelly Vintage",
         "nl": "Shelly Vintage"
       },
+      "images": {
+        "large": "./assets/drivers/shellyvintage/images/large.jpg",
+        "small": "./assets/drivers/shellyvintage/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyvintage/icon.svg",
       "class": "light",
       "discovery": "shellyvintage",
       "capabilities": [
@@ -6274,11 +6274,6 @@
       ]
     },
     {
-      "images": {
-        "large": "/drivers/shellyvintage_cloud/assets/images/large.jpg",
-        "small": "/drivers/shellyvintage_cloud/assets/images/small.jpg"
-      },
-      "icon": "/drivers/shellyvintage_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -6297,6 +6292,11 @@
         "en": "Shelly Vintage",
         "nl": "Shelly Vintage"
       },
+      "images": {
+        "large": "./assets/drivers/shellyvintage/images/large.jpg",
+        "small": "./assets/drivers/shellyvintage/images/small.jpg"
+      },
+      "icon": "../assets/drivers/shellyvintage/icon.svg",
       "class": "light",
       "capabilities": [
         "onoff",

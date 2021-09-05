@@ -3,6 +3,11 @@
     "en": "Shelly Smoke Detector",
     "nl": "Shelly Rook Detector"
   },
+  "images": {
+    "large": "./assets/drivers/shellysmoke/images/large.jpg",
+    "small": "./assets/drivers/shellysmoke/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shellysmoke/icon.svg",
   "class": "sensor",
   "discovery": "shellysmoke",
   "$extends": [

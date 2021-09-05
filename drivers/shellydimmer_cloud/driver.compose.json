@@ -3,6 +3,11 @@
     "en": "Shelly Dimmer (2)",
     "nl": "Shelly Dimmer (2)"
   },
+  "images": {
+    "large": "./assets/drivers/shellydimmer/images/large.jpg",
+    "small": "./assets/drivers/shellydimmer/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shellydimmer/icon.svg",
   "class": "light",
   "$extends": [
     "defaults_cloud"

@@ -3,6 +3,11 @@
     "en": "Shelly 1PM",
     "nl": "Shelly 1PM"
   },
+  "images": {
+    "large": "./assets/drivers/shelly1pm/images/large.jpg",
+    "small": "./assets/drivers/shelly1pm/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shelly1pm/icon.svg",
   "class": "socket",
   "discovery": "shelly1pm",
   "$extends": [

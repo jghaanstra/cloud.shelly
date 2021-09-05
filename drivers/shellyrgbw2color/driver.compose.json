@@ -3,6 +3,11 @@
     "en": "Shelly RGBW2 Color Mode",
     "nl": "Shelly RGBW2 Color Mode"
   },
+  "images": {
+    "large": "./assets/drivers/shellyrgbw2/images/large.jpg",
+    "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shellyrgbw2/icon.svg",
   "class": "light",
   "discovery": "shellyrgbw2",
   "$extends": [

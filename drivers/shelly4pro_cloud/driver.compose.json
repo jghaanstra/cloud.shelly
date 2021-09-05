@@ -3,6 +3,11 @@
     "en": "Shelly Pro 4(PM)",
     "nl": "Shelly Pro 4(PM)"
   },
+  "images": {
+    "large": "./assets/drivers/shelly4pro/images/large.jpg",
+    "small": "./assets/drivers/shelly4pro/images/small.jpg"
+  },
+  "icon": "../assets/drivers/shelly4pro/icon.svg",
   "class": "socket",
   "$extends": [
     "defaults_cloud"
