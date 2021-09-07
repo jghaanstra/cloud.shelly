@@ -7,7 +7,6 @@
     "large": "./assets/drivers/shellybulb/images/large.jpg",
     "small": "./assets/drivers/shellybulb/images/small.jpg"
   },
-  "icon": "../assets/drivers/shellybulb/icon.svg",
   "class": "light",
   "$extends": [
     "defaults_cloud"

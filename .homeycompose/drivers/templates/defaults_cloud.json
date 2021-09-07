@@ -1,4 +1,5 @@
 {
+  "icon": "{{driverAssetsPath}}/icon.svg",
   "pair": [
     {
       "id": "cloud_pairing_form",

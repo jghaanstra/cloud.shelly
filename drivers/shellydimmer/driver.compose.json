@@ -7,7 +7,6 @@
     "large": "./assets/drivers/shellydimmer/images/large.jpg",
     "small": "./assets/drivers/shellydimmer/images/small.jpg"
   },
-  "icon": "../assets/drivers/shellydimmer/icon.svg",
   "class": "light",
   "discovery": "shellydimmer",
   "$extends": [

@@ -1,4 +1,5 @@
 {
+  "icon": "{{driverAssetsPath}}/icon.svg",
   "capabilities": [
     "onoff",
     "measure_temperature",

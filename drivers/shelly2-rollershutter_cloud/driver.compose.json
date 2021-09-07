@@ -7,7 +7,6 @@
     "large": "./assets/drivers/shelly2-rollershutter/images/large.jpg",
     "small": "./assets/drivers/shelly2-rollershutter/images/small.jpg"
   },
-  "icon": "../assets/drivers/shelly2-rollershutter/icon.svg",
   "class": "windowcoverings",
   "$extends": [
     "defaults_cloud"

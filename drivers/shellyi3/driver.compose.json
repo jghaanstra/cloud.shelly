@@ -7,7 +7,6 @@
     "large": "./assets/drivers/shellyi3/images/large.jpg",
     "small": "./assets/drivers/shellyi3/images/small.jpg"
   },
-  "icon": "../assets/drivers/shellyi3/icon.svg",
   "class": "other",
   "discovery": "shellyi3",
   "$extends": [

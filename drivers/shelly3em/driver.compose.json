@@ -7,7 +7,6 @@
     "large": "./assets/drivers/shelly3em/images/large.jpg",
     "small": "./assets/drivers/shelly3em/images/small.jpg"
   },
-  "icon": "../assets/drivers/shelly3em/icon.svg",
   "class": "socket",
   "discovery": "shelly3em",
   "$extends": [

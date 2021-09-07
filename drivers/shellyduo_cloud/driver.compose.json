@@ -7,7 +7,6 @@
     "large": "./assets/drivers/shellyduo/images/large.jpg",
     "small": "./assets/drivers/shellyduo/images/small.jpg"
   },
-  "icon": "../assets/drivers/shellyduo/icon.svg",
   "class": "light",
   "$extends": [
     "defaults_cloud"

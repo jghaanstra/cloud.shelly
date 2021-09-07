@@ -7,7 +7,6 @@
     "large": "./assets/drivers/shelly-plug/images/large.jpg",
     "small": "./assets/drivers/shelly-plug/images/small.jpg"
   },
-  "icon": "../assets/drivers/shelly-plug/icon.svg",
   "class": "socket",
   "discovery": "shelly-plug",
   "$extends": [

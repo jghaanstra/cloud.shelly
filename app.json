@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.3.4",
+  "version": "3.3.6",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -1605,6 +1605,7 @@
   },
   "drivers": [
     {
+      "icon": "/drivers/shelly-plug/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -1653,7 +1654,6 @@
         "large": "./assets/drivers/shelly-plug/images/large.jpg",
         "small": "./assets/drivers/shelly-plug/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly-plug/icon.svg",
       "class": "socket",
       "discovery": "shelly-plug",
       "capabilities": [
@@ -1702,6 +1702,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly-plug-s/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -1750,7 +1751,6 @@
         "large": "./assets/drivers/shelly-plug-s/images/large.jpg",
         "small": "./assets/drivers/shelly-plug-s/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly-plug-s/icon.svg",
       "class": "socket",
       "discovery": "shelly-plug-s",
       "capabilities": [
@@ -1808,6 +1808,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly-plug-s_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -1830,7 +1831,6 @@
         "large": "./assets/drivers/shelly-plug-s/images/large.jpg",
         "small": "./assets/drivers/shelly-plug-s/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly-plug-s/icon.svg",
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -1878,6 +1878,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly-plug_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -1900,7 +1901,6 @@
         "large": "./assets/drivers/shelly-plug/images/large.jpg",
         "small": "./assets/drivers/shelly-plug/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly-plug/icon.svg",
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -1939,6 +1939,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly1/assets/icon.svg",
       "capabilities": [
         "onoff",
         "input_1"
@@ -2017,7 +2018,6 @@
         "large": "./assets/drivers/shelly1/images/large.jpg",
         "small": "./assets/drivers/shelly1/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly1/icon.svg",
       "class": "socket",
       "discovery": "shelly1",
       "id": "shelly1",
@@ -2061,6 +2061,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly1L/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -2125,7 +2126,6 @@
         "large": "./assets/drivers/shelly1l/images/large.jpg",
         "small": "./assets/drivers/shelly1l/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly1l/icon.svg",
       "class": "socket",
       "discovery": "shelly1l",
       "id": "shelly1L",
@@ -2169,6 +2169,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly1_cloud/assets/icon.svg",
       "capabilities": [
         "onoff",
         "input_1"
@@ -2221,7 +2222,6 @@
         "large": "./assets/drivers/shelly1/images/large.jpg",
         "small": "./assets/drivers/shelly1/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly1/icon.svg",
       "class": "socket",
       "id": "shelly1_cloud",
       "settings": [
@@ -2255,6 +2255,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly1l_cloud/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -2311,7 +2312,6 @@
         "large": "./assets/drivers/shelly1l/images/large.jpg",
         "small": "./assets/drivers/shelly1l/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly1l/icon.svg",
       "class": "socket",
       "id": "shelly1l_cloud",
       "settings": [
@@ -2345,6 +2345,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly1pm/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -2426,7 +2427,6 @@
         "large": "./assets/drivers/shelly1pm/images/large.jpg",
         "small": "./assets/drivers/shelly1pm/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly1pm/icon.svg",
       "class": "socket",
       "discovery": "shelly1pm",
       "id": "shelly1pm",
@@ -2470,6 +2470,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly1pm_cloud/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -2525,7 +2526,6 @@
         "large": "./assets/drivers/shelly1pm/images/large.jpg",
         "small": "./assets/drivers/shelly1pm/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly1pm/icon.svg",
       "class": "socket",
       "id": "shelly1pm_cloud",
       "settings": [
@@ -2559,6 +2559,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly2/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -2607,7 +2608,6 @@
         "large": "./assets/drivers/shelly2/images/large.jpg",
         "small": "./assets/drivers/shelly2/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly2/icon.svg",
       "class": "socket",
       "discovery": "shelly2",
       "capabilities": [
@@ -2657,6 +2657,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly2-rollershutter/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -2705,7 +2706,6 @@
         "large": "./assets/drivers/shelly2-rollershutter/images/large.jpg",
         "small": "./assets/drivers/shelly2-rollershutter/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly2-rollershutter/icon.svg",
       "class": "windowcoverings",
       "discovery": "shelly2",
       "capabilities": [
@@ -2793,6 +2793,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly2-rollershutter_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -2815,7 +2816,6 @@
         "large": "./assets/drivers/shelly2-rollershutter/images/large.jpg",
         "small": "./assets/drivers/shelly2-rollershutter/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly2-rollershutter/icon.svg",
       "class": "windowcoverings",
       "capabilities": [
         "windowcoverings_state",
@@ -2894,6 +2894,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly25/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -2942,7 +2943,6 @@
         "large": "./assets/drivers/shelly25/images/large.jpg",
         "small": "./assets/drivers/shelly25/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly25/icon.svg",
       "class": "socket",
       "discovery": "shelly25",
       "capabilities": [
@@ -2993,6 +2993,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly25-rollershutter/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -3041,7 +3042,6 @@
         "large": "./assets/drivers/shelly25-rollershutter/images/large.jpg",
         "small": "./assets/drivers/shelly25-rollershutter/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly25-rollershutter/icon.svg",
       "class": "windowcoverings",
       "discovery": "shelly25",
       "capabilities": [
@@ -3129,6 +3129,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly25-rollershutter_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -3151,7 +3152,6 @@
         "large": "./assets/drivers/shelly25-rollershutter/images/large.jpg",
         "small": "./assets/drivers/shelly25-rollershutter/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly25-rollershutter/icon.svg",
       "class": "windowcoverings",
       "capabilities": [
         "windowcoverings_state",
@@ -3230,6 +3230,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly25_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -3252,7 +3253,6 @@
         "large": "./assets/drivers/shelly25/images/large.jpg",
         "small": "./assets/drivers/shelly25/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly25/icon.svg",
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -3293,6 +3293,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly2_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -3315,7 +3316,6 @@
         "large": "./assets/drivers/shelly2/images/large.jpg",
         "small": "./assets/drivers/shelly2/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly2/icon.svg",
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -3355,6 +3355,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly3em/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -3403,7 +3404,6 @@
         "large": "./assets/drivers/shelly3em/images/large.jpg",
         "small": "./assets/drivers/shelly3em/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly3em/icon.svg",
       "class": "socket",
       "discovery": "shelly3em",
       "capabilities": [
@@ -3477,6 +3477,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly3em_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -3499,7 +3500,6 @@
         "large": "./assets/drivers/shelly3em/images/large.jpg",
         "small": "./assets/drivers/shelly3em/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly3em/icon.svg",
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -3563,6 +3563,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly4pro/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -3611,7 +3612,6 @@
         "large": "./assets/drivers/shelly4pro/images/large.jpg",
         "small": "./assets/drivers/shelly4pro/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly4pro/icon.svg",
       "class": "socket",
       "discovery": "shelly4pro",
       "capabilities": [
@@ -3663,6 +3663,7 @@
       ]
     },
     {
+      "icon": "/drivers/shelly4pro_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -3685,7 +3686,6 @@
         "large": "./assets/drivers/shelly4pro/images/large.jpg",
         "small": "./assets/drivers/shelly4pro/images/small.jpg"
       },
-      "icon": "../assets/drivers/shelly4pro/icon.svg",
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -3727,6 +3727,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyair/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -3775,7 +3776,6 @@
         "large": "./assets/drivers/shellyair/images/large.jpg",
         "small": "./assets/drivers/shellyair/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyair/icon.svg",
       "class": "sensor",
       "discovery": "shellyair",
       "capabilities": [
@@ -3838,6 +3838,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyair_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -3860,7 +3861,6 @@
         "large": "./assets/drivers/shellyair/images/large.jpg",
         "small": "./assets/drivers/shellyair/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyair/icon.svg",
       "class": "sensor",
       "capabilities": [
         "onoff",
@@ -3913,6 +3913,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellybulb/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -3961,7 +3962,6 @@
         "large": "./assets/drivers/shellybulb/images/large.jpg",
         "small": "./assets/drivers/shellybulb/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellybulb/icon.svg",
       "class": "light",
       "discovery": "shellybulb",
       "capabilities": [
@@ -4013,6 +4013,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellybulb_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -4035,7 +4036,6 @@
         "large": "./assets/drivers/shellybulb/images/large.jpg",
         "small": "./assets/drivers/shellybulb/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellybulb/icon.svg",
       "class": "light",
       "capabilities": [
         "onoff",
@@ -4077,6 +4077,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellybutton1/assets/icon.svg",
       "pair": [
         {
           "id": "start",
@@ -4131,7 +4132,6 @@
         "large": "./assets/drivers/shellybutton1/images/large.jpg",
         "small": "./assets/drivers/shellybutton1/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellybutton1/icon.svg",
       "class": "button",
       "discovery": "shellybutton1",
       "capabilities": [
@@ -4183,6 +4183,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellydimmer/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -4231,7 +4232,6 @@
         "large": "./assets/drivers/shellydimmer/images/large.jpg",
         "small": "./assets/drivers/shellydimmer/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellydimmer/icon.svg",
       "class": "light",
       "discovery": "shellydimmer",
       "capabilities": [
@@ -4284,6 +4284,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellydimmer_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -4306,7 +4307,6 @@
         "large": "./assets/drivers/shellydimmer/images/large.jpg",
         "small": "./assets/drivers/shellydimmer/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellydimmer/icon.svg",
       "class": "light",
       "capabilities": [
         "onoff",
@@ -4349,6 +4349,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyduo/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -4397,7 +4398,6 @@
         "large": "./assets/drivers/shellyduo/images/large.jpg",
         "small": "./assets/drivers/shellyduo/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyduo/icon.svg",
       "class": "light",
       "discovery": "shellyduo",
       "capabilities": [
@@ -4448,6 +4448,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyduo_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -4470,7 +4471,6 @@
         "large": "./assets/drivers/shellyduo/images/large.jpg",
         "small": "./assets/drivers/shellyduo/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyduo/icon.svg",
       "class": "light",
       "capabilities": [
         "onoff",
@@ -4511,6 +4511,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellydw/assets/icon.svg",
       "pair": [
         {
           "id": "start",
@@ -4565,7 +4566,6 @@
         "large": "./assets/drivers/shellydw/images/large.jpg",
         "small": "./assets/drivers/shellydw/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellydw/icon.svg",
       "class": "sensor",
       "discovery": "shellydw",
       "capabilities": [
@@ -4623,6 +4623,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyem/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -4671,7 +4672,6 @@
         "large": "./assets/drivers/shellyem/images/large.jpg",
         "small": "./assets/drivers/shellyem/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyem/icon.svg",
       "class": "socket",
       "discovery": "shellyem",
       "capabilities": [
@@ -4743,6 +4743,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyem_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -4765,7 +4766,6 @@
         "large": "./assets/drivers/shellyem/images/large.jpg",
         "small": "./assets/drivers/shellyem/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyem/icon.svg",
       "class": "socket",
       "capabilities": [
         "onoff",
@@ -4827,6 +4827,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyflood/assets/icon.svg",
       "pair": [
         {
           "id": "start",
@@ -4881,7 +4882,6 @@
         "large": "./assets/drivers/shellyflood/images/large.jpg",
         "small": "./assets/drivers/shellyflood/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyflood/icon.svg",
       "class": "sensor",
       "discovery": "shellyflood",
       "capabilities": [
@@ -4935,6 +4935,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellygas/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -4983,7 +4984,6 @@
         "large": "./assets/drivers/shellygas/images/large.jpg",
         "small": "./assets/drivers/shellygas/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellygas/icon.svg",
       "class": "sensor",
       "discovery": "shellygas",
       "capabilities": [
@@ -5031,6 +5031,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyht/assets/icon.svg",
       "pair": [
         {
           "id": "start",
@@ -5085,7 +5086,6 @@
         "large": "./assets/drivers/shellyht/images/large.jpg",
         "small": "./assets/drivers/shellyht/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyht/icon.svg",
       "class": "sensor",
       "discovery": "shellyht",
       "capabilities": [
@@ -5139,6 +5139,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyi3/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -5187,7 +5188,6 @@
         "large": "./assets/drivers/shellyi3/images/large.jpg",
         "small": "./assets/drivers/shellyi3/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyi3/icon.svg",
       "class": "other",
       "discovery": "shellyi3",
       "capabilities": [
@@ -5236,6 +5236,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyi3_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -5258,7 +5259,6 @@
         "large": "./assets/drivers/shellyi3/images/large.jpg",
         "small": "./assets/drivers/shellyi3/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyi3/icon.svg",
       "class": "other",
       "capabilities": [
         "input_1",
@@ -5297,6 +5297,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellymotion/assets/icon.svg",
       "pair": [
         {
           "id": "start",
@@ -5351,7 +5352,6 @@
         "large": "./assets/drivers/shellymotion/images/large.jpg",
         "small": "./assets/drivers/shellymotion/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellymotion/icon.svg",
       "class": "sensor",
       "discovery": "shellymotion",
       "capabilities": [
@@ -5406,6 +5406,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyrgbw2color/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -5454,7 +5455,6 @@
         "large": "./assets/drivers/shellyrgbw2/images/large.jpg",
         "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyrgbw2/icon.svg",
       "class": "light",
       "discovery": "shellyrgbw2",
       "capabilities": [
@@ -5524,6 +5524,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyrgbw2color_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -5546,7 +5547,6 @@
         "large": "./assets/drivers/shellyrgbw2/images/large.jpg",
         "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyrgbw2/icon.svg",
       "class": "light",
       "capabilities": [
         "onoff",
@@ -5606,6 +5606,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyrgbw2cwww/assets/icon.svg",
       "pair": [
         {
           "id": "start"
@@ -5625,7 +5626,6 @@
         "large": "./assets/drivers/shellyrgbw2/images/large.jpg",
         "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyrgbw2/icon.svg",
       "class": "light",
       "capabilities": [
         "onoff",
@@ -5688,6 +5688,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyrgbw2white/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -5736,7 +5737,6 @@
         "large": "./assets/drivers/shellyrgbw2/images/large.jpg",
         "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyrgbw2/icon.svg",
       "class": "light",
       "discovery": "shellyrgbw2",
       "capabilities": [
@@ -5787,6 +5787,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyrgbw2white_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -5809,7 +5810,6 @@
         "large": "./assets/drivers/shellyrgbw2/images/large.jpg",
         "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyrgbw2/icon.svg",
       "class": "light",
       "capabilities": [
         "onoff",
@@ -5850,6 +5850,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellysmoke/assets/icon.svg",
       "pair": [
         {
           "id": "start",
@@ -5904,7 +5905,6 @@
         "large": "./assets/drivers/shellysmoke/images/large.jpg",
         "small": "./assets/drivers/shellysmoke/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellysmoke/icon.svg",
       "class": "sensor",
       "discovery": "shellysmoke",
       "capabilities": [
@@ -5958,6 +5958,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyuni/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_temperature.1",
@@ -6041,7 +6042,6 @@
         "large": "./assets/drivers/shellyuni/images/large.jpg",
         "small": "./assets/drivers/shellyuni/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyuni/icon.svg",
       "class": "socket",
       "discovery": "shellyuni",
       "id": "shellyuni",
@@ -6085,6 +6085,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyuni_cloud/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_temperature.1",
@@ -6142,7 +6143,6 @@
         "large": "./assets/drivers/shellyuni/images/large.jpg",
         "small": "./assets/drivers/shellyuni/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyuni/icon.svg",
       "class": "socket",
       "id": "shellyuni_cloud",
       "settings": [
@@ -6176,6 +6176,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyvintage/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -6224,7 +6225,6 @@
         "large": "./assets/drivers/shellyvintage/images/large.jpg",
         "small": "./assets/drivers/shellyvintage/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyvintage/icon.svg",
       "class": "light",
       "discovery": "shellyvintage",
       "capabilities": [
@@ -6274,6 +6274,7 @@
       ]
     },
     {
+      "icon": "/drivers/shellyvintage_cloud/assets/icon.svg",
       "pair": [
         {
           "id": "cloud_pairing_form"
@@ -6296,7 +6297,6 @@
         "large": "./assets/drivers/shellyvintage/images/large.jpg",
         "small": "./assets/drivers/shellyvintage/images/small.jpg"
       },
-      "icon": "../assets/drivers/shellyvintage/icon.svg",
       "class": "light",
       "capabilities": [
         "onoff",

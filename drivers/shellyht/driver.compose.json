@@ -7,7 +7,6 @@
     "large": "./assets/drivers/shellyht/images/large.jpg",
     "small": "./assets/drivers/shellyht/images/small.jpg"
   },
-  "icon": "../assets/drivers/shellyht/icon.svg",
   "class": "sensor",
   "discovery": "shellyht",
   "$extends": [

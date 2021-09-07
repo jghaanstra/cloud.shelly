@@ -7,7 +7,6 @@
     "large": "./assets/drivers/shellyrgbw2/images/large.jpg",
     "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
   },
-  "icon": "../assets/drivers/shellyrgbw2/icon.svg",
   "class": "light",
   "$extends": [
     "defaults"

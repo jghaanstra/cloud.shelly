@@ -7,7 +7,6 @@
     "large": "./assets/drivers/shellyair/images/large.jpg",
     "small": "./assets/drivers/shellyair/images/small.jpg"
   },
-  "icon": "../assets/drivers/shellyair/icon.svg",
   "class": "sensor",
   "$extends": [
     "defaults_cloud"

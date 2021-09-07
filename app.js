@@ -33,7 +33,7 @@ class ShellyApp extends Homey.App {
     // CLOUD: CHECK IF THERE ARE PAIRED CLOUD DEVICES AND OPEN WEBSOCKET
     setTimeout(async () => {
       let result = await this.util.getCloudDetails();
-      cloudInstall = result.result;
+      cloudInstall = result.cloudInstall;
       cloudServer = result.server_address;
 
       if (cloudInstall && cloudServer) {
@@ -49,11 +49,13 @@ class ShellyApp extends Homey.App {
 
     // COAP: START COAP LISTENER FOR RECEIVING STATUS UPDATES
     setTimeout(async () => {
-      if (!this.homey.settings.get('general_coap') && !cloudInstall) {
-        this.log('CoAP listener for gen1 LAN devices started.');
-        shellies.start();
-      } else {
-        this.log('CoAP listener not started, this is a cloud instance or the CoAP listener has been disabled from the app settings');
+      if (!cloudInstall) {
+        if (!this.homey.settings.get('general_coap')) {
+          this.log('CoAP listener for gen1 LAN devices started.');
+          shellies.start();
+        } else {
+          this.log('CoAP listener not started, the CoAP listener has been disabled from the app settings');
+        }
       }
     }, 40000);
 
