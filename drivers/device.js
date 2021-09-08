@@ -13,7 +13,7 @@ class ShellyDevice extends Homey.Device {
 
   async onAdded() {
     if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
-      setTimeout(async () => {
+      this.homey.setTimeout(async () => {
         return await this.homey.app.updateShellyCollection();
       }, 2000);
     }
@@ -33,44 +33,39 @@ class ShellyDevice extends Homey.Device {
           this.commandId = 0;
           this.connectWebsocket();
         }
-        setTimeout(() => {
+        this.homey.setTimeout(() => {
           this.pollWebsocketDevice();
         }, this.util.getRandomTimeout(10));
         if ((this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) && this.getStoreValue('battery') !== true) {
-          this.pollingInterval = setInterval(() => {
+          this.pollingInterval = this.homey.setInterval(() => {
             this.pollWebsocketDevice();
           }, 60000);
         } else {
-          this.pollingInterval = setInterval(() => {
+          this.pollingInterval = this.homey.setInterval(() => {
             this.pollWebsocketDevice();
           }, (60000 + (1000 * this.getStoreValue('channel'))));
         }
       } else {
         if (this.homey.settings.get('general_coap')) { /* CoAP is disabled */
           if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
-            this.pollingInterval = setInterval(() => {
+            this.pollingInterval = this.homey.setInterval(() => {
               this.pollDevice();
             }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
           } else {
-            this.pollingInterval = setInterval(() => {
-              setTimeout(async () => {
+            this.pollingInterval = this.homey.setInterval(() => {
+              this.homey.setTimeout(async () => {
                 await this.pollDevice();
               }, this.getStoreValue('channel') * 1500);
             }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
           }
         } else { /* CoAP is enabled */
-          setTimeout(() => {
+          let channel = this.getStoreValue('channel') || 0;
+          this.homey.setTimeout(() => {
             this.pollDevice();
           }, this.util.getRandomTimeout(10));
-          if ((this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) && this.getStoreValue('battery') !== true) {
-            this.pollingInterval = setInterval(() => {
-              this.pollDevice();
-            }, 60000);
-          } else {
-            this.pollingInterval = setInterval(() => {
-              this.pollDevice();
-            }, (60000 + (1000 * this.getStoreValue('channel'))));
-          }
+          this.pollingInterval = this.homey.setInterval(() => {
+            this.pollDevice();
+          }, (60000 + (1000 * channel)));
         }
       }
     } catch (error) {
@@ -460,39 +455,37 @@ class ShellyDevice extends Homey.Device {
         }
 
         /* input_2 */
-        if (result.inputs.hasOwnProperty([1])) {
-          if (this.hasCapability('input_2')) {
-            let input_2 = result.inputs[1].input == 1 ? true : false;
-            if (input_2 !== this.getCapabilityValue('input_2')) {
-              this.updateCapabilityValue('input_2', input_2);
-              if (input_2) {
-                this.homey.flow.getDeviceTriggerCard('triggerInput2On').trigger(this, {}, {});
-              } else {
-                this.homey.flow.getDeviceTriggerCard('triggerInput2Off').trigger(this, {}, {});
-              }
+        if (result.inputs.hasOwnProperty([1]) && this.hasCapability('input_2')) {
+          let input_2 = result.inputs[1].input == 1 ? true : false;
+          if (input_2 !== this.getCapabilityValue('input_2')) {
+            this.updateCapabilityValue('input_2', input_2);
+            if (input_2) {
+              this.homey.flow.getDeviceTriggerCard('triggerInput2On').trigger(this, {}, {});
+            } else {
+              this.homey.flow.getDeviceTriggerCard('triggerInput2Off').trigger(this, {}, {});
             }
-            // input/action events for cloud devices
-            if (this.getStoreValue('communication') === 'cloud' && result.inputs[1].event_cnt > 0 && (result.inputs[1].event_cnt > this.getStoreValue('event_cnt')) && result.inputs[1].event) {
-              var action1 = this.util.getActionEventDescription(result.inputs[1].event) + '_2';
-              this.setStoreValue('event_cnt', result.inputs[1].event_cnt);
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action1 }, {"id": this.getData().id, "device": this.getName(), "action": action1 });
-            }
-          } else {
+          }
+          // input/action events for cloud devices
+          if (this.getStoreValue('communication') === 'cloud' && result.inputs[1].event_cnt > 0 && (result.inputs[1].event_cnt > this.getStoreValue('event_cnt')) && result.inputs[1].event) {
+            var action1 = this.util.getActionEventDescription(result.inputs[1].event) + '_2';
+            this.setStoreValue('event_cnt', result.inputs[1].event_cnt);
+            this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action1 }, {"id": this.getData().id, "device": this.getName(), "action": action1 });
+          }
+        } else if (result.inputs.hasOwnProperty([1]) && this.hasCapability('input_1') && channel === 1) {
             let input_2 = result.inputs[1].input == 1 ? true : false;
             if (input_2 !== this.getCapabilityValue('input_1')) {
-              this.updateCapabilityValue('input_1', input_2, channel);
+              this.updateCapabilityValue('input_1', input_2);
               if (input_2) {
                 this.homey.flow.getDeviceTriggerCard('triggerInput1On').trigger(this, {}, {});
               } else {
                 this.homey.flow.getDeviceTriggerCard('triggerInput1Off').trigger(this, {}, {});
               }
             }
-            // input/action events for cloud devices
-            if (this.getStoreValue('communication') === 'cloud' && result.inputs[1].event_cnt > 0 && (result.inputs[1].event_cnt > this.getStoreValue('event_cnt')) && result.inputs[1].event) {
-              var action1 = this.util.getActionEventDescription(result.inputs[1].event);
-              this.setStoreValue('event_cnt', result.inputs[1].event_cnt);
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action1 }, {"id": this.getData().id, "device": this.getName(), "action": action1 });
-            }
+          // input/action events for cloud devices
+          if (this.getStoreValue('communication') === 'cloud' && result.inputs[1].event_cnt > 0 && (result.inputs[1].event_cnt > this.getStoreValue('event_cnt')) && result.inputs[1].event) {
+            var action1 = this.util.getActionEventDescription(result.inputs[1].event);
+            this.setStoreValue('event_cnt', result.inputs[1].event_cnt);
+            this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action1 }, {"id": this.getData().id, "device": this.getName(), "action": action1 });
           }
         }
 
@@ -951,7 +944,7 @@ class ShellyDevice extends Homey.Device {
   updateDeviceRgb() {
     try {
       clearTimeout(this.updateDeviceRgbTimeout);
-      this.updateDeviceRgbTimeout = setTimeout(() => {
+      this.updateDeviceRgbTimeout = this.homey.setTimeout(() => {
         let color = tinycolor({ r: this.getStoreValue('red'), g: this.getStoreValue('green'), b: this.getStoreValue('blue') });
         let hsv = color.toHsv();
         let light_hue = Number((hsv.h / 360).toFixed(2));

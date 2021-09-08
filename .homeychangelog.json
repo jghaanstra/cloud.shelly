@@ -310,5 +310,8 @@
   },
   "3.3.6": {
     "en": "Fixed an issue with device icons not displaying correctly."
+  },
+  "3.3.7": {
+    "en": "Fixed an issue with the 2nd input of a multichannel devices updating incorrectly. Code improvements for the newly added support for Homey Cloud. "
   }
 }

@@ -14,12 +14,12 @@ class ShellyCloudDevice extends Device {
 
   async onAdded() {
     // TODO: Enable on Shelly Cloud 2.1
-    // setTimeout(async () => {
+    // this.homey.setTimeout(async () => {
     //   return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Integrator:ActionRequest', deviceid: this.getSetting('cloud_device_id')})]);
     // }, 3000);
 
     if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
-      setTimeout(async () => {
+      this.homey.setTimeout(async () => {
         return await this.homey.app.updateShellyCollection();
       }, 2000);
     }

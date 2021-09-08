@@ -15,6 +15,11 @@ class ShellyDevice extends Device {
   async onDeleted() {
     try {
       clearInterval(this.pollingInterval);
+      if (this.getStoreValue('communication') === 'websocket' && this.ws.readyState !== WebSocket.CLOSED) {
+        clearTimeout(this.pingWsTimeout);
+        clearTimeout(this.reconnectWsTimeout);
+        this.ws.close();
+      }
       if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
         const iconpath = "/userdata/" + this.getData().id +".svg";
         await this.util.removeIcon(iconpath);
@@ -153,7 +158,7 @@ class ShellyDevice extends Device {
 
     this.ws.on('ping', () => {
       clearTimeout(this.pingWsTimeout);
-      this.pingWsTimeout = setTimeout(() => {
+      this.pingWsTimeout = this.homey.setTimeout(() => {
         if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
           this.connected = false;
           this.connectWebsocket();
@@ -171,8 +176,7 @@ class ShellyDevice extends Device {
     this.ws.on('close', () => {
       clearTimeout(this.reconnectWsTimeout);
       this.connected = false;
-
-      this.reconnectWsTimeout = setTimeout(() => {
+      this.reconnectWsTimeout = this.homey.setTimeout(() => {
         this.connectWebsocket();
       }, 30 * 1000);
     });

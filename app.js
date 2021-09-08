@@ -4,15 +4,6 @@ const Homey = require('homey');
 const Util = require('./lib/util.js');
 const shellies = require('shellies');
 const WebSocket = require('ws');
-let shellyDevices = [];
-let cloudPairingDevice = {};
-let cloudInstall = false;
-let cloudServer = null;
-let ws = null;
-let wsConnected = false;
-let wsReconnectTimeout = null;
-let wsPingInterval = null;
-let wsPingTimeout = null;
 
 class ShellyApp extends Homey.App {
 
@@ -21,35 +12,43 @@ class ShellyApp extends Homey.App {
 
     if (!this.util) this.util = new Util({homey: this.homey});
 
+    // VARIABLES GENERIC
+    this.shellyDevices = [];
+
+    // VARIABLES CLOUD
+    this.cloudPairingDevice = {};
+    this.cloudInstall = false;
+    this.cloudServer = null;
+    this.ws = null;
+    this.wsConnected = false;
+
     // CLOUD: REGISTER WEBHOOK FOR SHELLY INTEGRATOR PORTAL
     const homeyId = await this.homey.cloud.getHomeyId();
     const webhook_id = Homey.env.WEBHOOK_ID;
     const webhook_secret = Homey.env.WEBHOOK_SECRET;
-    const webhook_data = {
-      deviceId: homeyId
-    }
+    const webhook_data = { deviceId: homeyId }
     const webhook = await this.homey.cloud.createWebhook(webhook_id, webhook_secret, webhook_data);
 
     // CLOUD: CHECK IF THERE ARE PAIRED CLOUD DEVICES AND OPEN WEBSOCKET
-    setTimeout(async () => {
+    this.homey.setTimeout(async () => {
       let result = await this.util.getCloudDetails();
-      cloudInstall = result.cloudInstall;
-      cloudServer = result.server_address;
+      this.cloudInstall = result.cloudInstall;
+      this.cloudServer = result.server_address;
 
-      if (cloudInstall && cloudServer) {
+      if (this.cloudInstall && this.cloudServer) {
         let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
         this.websocketCloudListener(jwtToken);
       }
     }, 5000);
 
     // COAP, CLOUD & GEN2 WEBSOCKETS: INITIALLY UPDATE THE SHELLY COLLECTION
-    setTimeout(async () => {
+    this.homey.setTimeout(async () => {
       await this.updateShellyCollection();
     }, 30000);
 
     // COAP: START COAP LISTENER FOR RECEIVING STATUS UPDATES
-    setTimeout(async () => {
-      if (!cloudInstall) {
+    this.homey.setTimeout(async () => {
+      if (!this.cloudInstall) {
         if (!this.homey.settings.get('general_coap')) {
           this.log('CoAP listener for gen1 LAN devices started.');
           shellies.start();
@@ -60,7 +59,7 @@ class ShellyApp extends Homey.App {
     }, 40000);
 
     // COAP, CLOUD & GEN2 WEBSOCKETS: UPDATE THE SHELLY COLLECTION REGULARLY
-    setInterval(async () => {
+    this.homey.setInterval(async () => {
       await this.updateShellyCollection();
     }, 900000);
 
@@ -320,8 +319,8 @@ class ShellyApp extends Homey.App {
       device.on('change', (prop, newValue, oldValue) => {
         try {
           //this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'with IP address', device.host);
-          if (shellyDevices.length > 0) {
-            const filteredShellies = shellyDevices.filter(shelly => shelly.id.includes(device.id));
+          if (this.shellyDevices.length > 0) {
+            const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(device.id));
             if (filteredShellies.length > 0) {
               if (filteredShellies.length === 1) {
                 var deviceid = filteredShellies[0].id;
@@ -350,8 +349,8 @@ class ShellyApp extends Homey.App {
 
       device.on('offline', () => {
         try {
-          if (shellyDevices.length > 0) {
-            const offlineShellies = shellyDevices.filter(shelly => shelly.id.includes(device.id));
+          if (this.shellyDevices.length > 0) {
+            const offlineShellies = this.shellyDevices.filter(shelly => shelly.id.includes(device.id));
             if (offlineShellies.length > 0) {
               Object.keys(offlineShellies).forEach(key => {
                 this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.id, "device_error": 'Device is offline'});
@@ -370,12 +369,12 @@ class ShellyApp extends Homey.App {
         this.log('received webhook message:');
         this.log(args.body)
         if (args.body.action === 'add') {
-          cloudServer = args.body.host;
-          cloudPairingDevice = args.body;
+          this.cloudServer = args.body.host;
+          this.cloudPairingDevice = args.body;
         }
 
         // start websocket listener, it could be the first device being paired
-        if (ws === null || ws.readyState === WebSocket.CLOSED) {
+        if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
           let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
           this.websocketCloudListener(jwtToken);
         }
@@ -383,6 +382,12 @@ class ShellyApp extends Homey.App {
         this.log(error);
       }
     });
+  }
+
+  async onUninit() {
+    clearTimeout(this.wsPingInterval);
+    clearTimeout(this.wsPingTimeout);
+    clearTimeout(this.wsReconnectTimeout);
   }
 
   // COAP: UPDATE SETTINGS AND START/STOP COAP LISTENER
@@ -395,7 +400,7 @@ class ShellyApp extends Homey.App {
       } else {
         this.log('CoAP listener has been enabled from the app settings and the listener is now (re)started');
         shellies.stop();
-        setTimeout(async () => {
+        this.homey.setTimeout(async () => {
           shellies.start();
         }, 4000);
         return Promise.resolve(true);
@@ -409,7 +414,7 @@ class ShellyApp extends Homey.App {
   // COAP & GEN2 WEBSOCKETS: UPDATE COLLECTION OF DEVICES
   async updateShellyCollection() {
     try {
-      shellyDevices = await this.util.getShellies('collection');
+      this.shellyDevices = await this.util.getShellies('collection');
       return Promise.resolve(true);
     } catch(error) {
       this.log(error);
@@ -419,25 +424,25 @@ class ShellyApp extends Homey.App {
 
   // CLOUD: OPEN WEBSOCKET FOR STATUS CLOUD DEVICES
   async websocketCloudListener(jwtToken) {
-    ws = new WebSocket('wss://'+ cloudServer +':6113/shelly/wss/hk_sock?t='+ jwtToken, {perMessageDeflate: false});
+    this.ws = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ jwtToken, {perMessageDeflate: false});
 
-    ws.on('open', () => {
+    this.ws.on('open', () => {
       this.log('Websocket for cloud devices opened.');
-    	wsConnected = true;
+    	this.wsConnected = true;
 
       // start sending pings every 2 minutes to check the connection status
-      clearTimeout(wsPingInterval);
-      wsPingInterval = setInterval(() => {
-        ws.ping();
+      clearTimeout(this.wsPingInterval);
+      this.wsPingInterval = this.homey.setInterval(() => {
+        this.ws.ping();
       }, 120 * 1000);
     });
 
-    ws.on('message', async (data) => {
+    this.ws.on('message', async (data) => {
       try {
         const result = JSON.parse(data);
         if (result.event === 'Shelly:StatusOnChange') {
-          if (shellyDevices.length > 0) {
-            const filteredShellies = shellyDevices.filter(shelly => shelly.id.includes(result.deviceId));
+          if (this.shellyDevices.length > 0) {
+            const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.deviceId));
             for (const filteredShelly of filteredShellies) {
               filteredShelly.device.parseStatusUpdate(result.status);
               await this.util.sleep(250);
@@ -446,8 +451,8 @@ class ShellyApp extends Homey.App {
         }
         // TODO: add when Shelly Cloud 2.1 is deployed and test it for inital status update
         // else if (result.event === 'Integrator:ActionResponse') {
-        //   if (shellyDevices.length > 0) {
-        //     const filteredShellies = shellyDevices.filter(shelly => shelly.id.includes(result.deviceId));
+        //   if (this.shellyDevices.length > 0) {
+        //     const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.deviceId));
         //     for (const filteredShelly of filteredShellies) {
         //       filteredShelly.device.parseStatusUpdate(result.data.deviceStatus);
         //       await this.util.sleep(5);
@@ -459,31 +464,31 @@ class ShellyApp extends Homey.App {
       }
     });
 
-    ws.on('pong', () => {
-      clearTimeout(wsPingTimeout);
-      wsPingTimeout = setTimeout(async () => {
-        if (ws === null || ws.readyState === WebSocket.CLOSED) {
-          wsConnected = false;
+    this.ws.on('pong', () => {
+      clearTimeout(this.wsPingTimeout);
+      this.wsPingTimeout = this.homey.setTimeout(async () => {
+        if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
+          this.wsConnected = false;
           let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
           this.websocketCloudListener(jwtToken);
-        } else if (wsConnected) {
-          ws.close();
+        } else if (this.wsConnected) {
+          this.ws.close();
         }
       }, 130 * 1000);
     });
 
-    ws.on('error', (error) => {
+    this.ws.on('error', (error) => {
       this.log('Websocket error:', error);
-      ws.close();
+      this.ws.close();
     });
 
-    ws.on('close', (code, reason) => {
+    this.ws.on('close', (code, reason) => {
       this.log('Websocket closed due to reasoncode:', code);
-      wsConnected = false;
+      this.wsConnected = false;
 
       // retry connection after 500 miliseconds
-      clearTimeout(wsReconnectTimeout);
-      wsReconnectTimeout = setTimeout(async () => {
+      clearTimeout(this.wsReconnectTimeout);
+      this.wsReconnectTimeout = this.homey.setTimeout(async () => {
         let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
         this.websocketCloudListener(jwtToken);
       }, 500);
@@ -495,7 +500,7 @@ class ShellyApp extends Homey.App {
   async websocketSendCommand(commands) {
     try {
       for (let command of commands) {
-    		ws.send(command);
+    		this.ws.send(command);
     		await this.util.sleep(500);
     	}
       return Promise.resolve(true);
@@ -503,12 +508,12 @@ class ShellyApp extends Homey.App {
       this.log('Websocket error sending command');
       this.log(error);
 
-      if (ws === null || ws.readyState === WebSocket.CLOSED) {
-        wsConnected = false;
+      if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
+        this.wsConnected = false;
         let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
         this.websocketCloudListener(jwtToken);
-      } else if (wsConnected) {
-        ws.close();
+      } else if (this.wsConnected) {
+        this.ws.close();
       }
 
       return Promise.reject(error);
@@ -523,8 +528,8 @@ class ShellyApp extends Homey.App {
 
   // CLOUD: RETURN SHARED CLOUD DEVICE FOR PAIRING
   async getPairingDevice() {
-    if (cloudPairingDevice.hasOwnProperty('deviceId')) {
-      return Promise.resolve(cloudPairingDevice);
+    if (this.cloudPairingDevice.hasOwnProperty('deviceId')) {
+      return Promise.resolve(this.cloudPairingDevice);
     } else {
       return Promise.reject(this.homey.__('app.no_pairing_device_found'));
     }
