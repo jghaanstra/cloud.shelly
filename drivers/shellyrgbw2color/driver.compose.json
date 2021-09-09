@@ -25,6 +25,11 @@
     "input_1"
   ],
   "capabilitiesOptions": {
+    "dim": {
+			"opts": {
+				"duration": true
+			}
+    },
     "light_temperature": {
       "title": {
         "en": "Dimlevel white",

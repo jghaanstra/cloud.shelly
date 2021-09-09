@@ -313,5 +313,8 @@
   },
   "3.3.7": {
     "en": "Fixed an issue with the 2nd input of a multichannel devices updating incorrectly. Code improvements for the newly added support for Homey Cloud. "
+  },
+  "3.3.8": {
+    "en": "Added support for the Shelly Button 1 on Homey Cloud. Also added dimming transition for the dimmer, RGBW2, Duo and Vintage on Homey Pro (limited to 5 seconds due to Shelly API limitations). And fixed a bug in the momentary flipback switch action card."
   }
 }

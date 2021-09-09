@@ -18,6 +18,13 @@
     "measure_power",
     "meter_power"
   ],
+  "capabilitiesOptions": {
+		"dim": {
+			"opts": {
+				"duration": true
+			}
+		}
+  },
   "pair": [
     {
       "id": "list_devices",

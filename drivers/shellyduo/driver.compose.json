@@ -18,5 +18,12 @@
     "light_temperature",
     "measure_power",
     "meter_power"
-  ]
+  ],
+  "capabilitiesOptions": {
+		"dim": {
+			"opts": {
+				"duration": true
+			}
+		}
+  }
 }

@@ -1,0 +1,38 @@
+{
+  "name": {
+    "en": "Shelly Button 1",
+    "nl": "Shelly Button 1"
+  },
+  "images": {
+    "large": "./assets/drivers/shellybutton1/images/large.jpg",
+    "small": "./assets/drivers/shellybutton1/images/small.jpg"
+  },
+  "class": "button",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "measure_battery"
+  ],
+  "energy": {
+    "batteries": [
+      "INTERNAL"
+    ]
+  },
+  "pair": [
+    {
+      "id": "start",
+      "navigation": {
+        "next": "cloud_pairing_form"
+      }
+    },
+    {
+      "id": "cloud_pairing_form",
+      "$template": "cloud_pairing_form"
+    },
+    {
+      "id": "add_device",
+      "$template": "add_device"
+    }
+  ]
+}

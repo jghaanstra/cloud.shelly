@@ -23,8 +23,11 @@ class ShellyVintageDevice extends Device {
     });
 
     this.registerCapabilityListener('dim', async (value) => {
+      if (opts.duration === undefined || typeof opts.duration == 'undefined') {
+        opts.duration = '500';
+      }
       const dim = value * 100;
-      return await this.util.sendCommand('/light/0?brightness='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      return await this.util.sendCommand('/light/0?brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
   }

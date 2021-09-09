@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.3.7",
+  "version": "3.3.8",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -838,31 +838,6 @@
         "platforms": [
           "local"
         ]
-      },
-      {
-        "id": "triggerTilt",
-        "title": {
-          "en": "Tilt changed",
-          "nl": "Kanteling gewijzigd"
-        },
-        "tokens": [
-          {
-            "name": "tilt",
-            "type": "number",
-            "title": {
-              "en": "°",
-              "nl": "°"
-            },
-            "example": 170
-          }
-        ],
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shellydw"
-          }
-        ]
       }
     ],
     "actions": [
@@ -912,7 +887,7 @@
         "id": "flipbackSwitch",
         "title": {
           "en": "Switch state temporary",
-          "nl": "Wijzig status tijdelijk"
+          "nl": "Schakel status tijdelijk"
         },
         "titleFormatted": {
           "en": "Switch state temporary to [[switch]] for [[timer]] seconds",
@@ -1370,6 +1345,74 @@
         "platforms": [
           "local",
           "cloud"
+        ]
+      },
+      {
+        "id": "onOffTransition",
+        "title": {
+          "en": "Switch light gradually",
+          "nl": "Schakel lamp geleidelijk"
+        },
+        "titleFormatted": {
+          "en": "Switch light to [[switch]] with a transition of [[transition]] milliseconds",
+          "nl": "Schakel lamp naar [[switch]] met een transitie van [[transition]] milliseconden"
+        },
+        "args": [
+          {
+            "name": "switch",
+            "type": "dropdown",
+            "title": {
+              "en": "Switch",
+              "nl": "Schakel"
+            },
+            "placeholder": {
+              "en": "Switch",
+              "nl": "Schakel"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Switch OFF",
+                  "nl": "Uitschakelen"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Switch ON",
+                  "nl": "Inschakelen"
+                }
+              }
+            ]
+          },
+          {
+            "name": "transition",
+            "type": "number",
+            "title": {
+              "en": "Transition in milliseconds",
+              "nl": "Transitie in milliseconden"
+            },
+            "placeholder": {
+              "en": "Transition in milliseconds",
+              "nl": "Transitie in milliseconden"
+            },
+            "min": 1,
+            "max": 5000,
+            "step": 1
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellydimmer|shellyduo|shellyrgbw2color|shellyrgbw2white|shellyvintage"
+          }
+        ],
+        "platforms": [
+          "local"
         ]
       },
       {
@@ -4183,6 +4226,76 @@
       ]
     },
     {
+      "icon": "/drivers/shellybutton1_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "start",
+          "navigation": {
+            "next": "cloud_pairing_form"
+          }
+        },
+        {
+          "id": "cloud_pairing_form"
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "name": {
+        "en": "Shelly Button 1",
+        "nl": "Shelly Button 1"
+      },
+      "images": {
+        "large": "./assets/drivers/shellybutton1/images/large.jpg",
+        "small": "./assets/drivers/shellybutton1/images/small.jpg"
+      },
+      "class": "button",
+      "capabilities": [
+        "measure_battery"
+      ],
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ]
+      },
+      "id": "shellybutton1_cloud",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "server_address",
+              "type": "text",
+              "value": "https://shelly-8-eu.shelly.cloud",
+              "label": {
+                "en": "Server Address",
+                "nl": "Server adres"
+              }
+            },
+            {
+              "id": "cloud_device_id",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "icon": "/drivers/shellydimmer/assets/icon.svg",
       "pair": [
         {
@@ -4243,6 +4356,13 @@
         "input_1",
         "input_2"
       ],
+      "capabilitiesOptions": {
+        "dim": {
+          "opts": {
+            "duration": true
+          }
+        }
+      },
       "id": "shellydimmer",
       "settings": [
         {
@@ -4317,6 +4437,13 @@
         "input_1",
         "input_2"
       ],
+      "capabilitiesOptions": {
+        "dim": {
+          "opts": {
+            "duration": true
+          }
+        }
+      },
       "id": "shellydimmer_cloud",
       "settings": [
         {
@@ -4407,6 +4534,13 @@
         "measure_power",
         "meter_power"
       ],
+      "capabilitiesOptions": {
+        "dim": {
+          "opts": {
+            "duration": true
+          }
+        }
+      },
       "id": "shellyduo",
       "settings": [
         {
@@ -5470,6 +5604,11 @@
         "input_1"
       ],
       "capabilitiesOptions": {
+        "dim": {
+          "opts": {
+            "duration": true
+          }
+        },
         "light_temperature": {
           "title": {
             "en": "Dimlevel white",
@@ -5746,6 +5885,13 @@
         "meter_power",
         "input_1"
       ],
+      "capabilitiesOptions": {
+        "dim": {
+          "opts": {
+            "duration": true
+          }
+        }
+      },
       "id": "shellyrgbw2white",
       "settings": [
         {
@@ -6233,6 +6379,13 @@
         "measure_power",
         "meter_power"
       ],
+      "capabilitiesOptions": {
+        "dim": {
+          "opts": {
+            "duration": true
+          }
+        }
+      },
       "id": "shellyvintage",
       "settings": [
         {

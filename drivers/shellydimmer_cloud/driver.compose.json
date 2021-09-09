@@ -19,5 +19,12 @@
     "measure_temperature",
     "input_1",
     "input_2"
-  ]
+  ],
+  "capabilitiesOptions": {
+		"dim": {
+			"opts": {
+				"duration": true
+			}
+		}
+  }
 }

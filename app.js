@@ -155,13 +155,13 @@ class ShellyApp extends Homey.App {
 
     this.homey.flow.getActionCard('flipbackSwitch')
       .registerRunListener(async (args) => {
-        var onoff = args.switch === 1 ? 'on' : 'off';
+        var onoff = args.switch === "1" ? 'on' : 'off';
         if (args.device.getStoreValue('communication') === 'coap') {
           return await this.util.sendCommand('/relay/0?turn='+ onoff +'&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         } else if (args.device.getStoreValue('communication') === 'websocket') {
           return await args.device.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": onoff, "toggle": args.timer} }));
         } else if (args.device.getStoreValue('communication') === 'cloud') {
-          return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timeout', command: 'relay', command_param: 'turn', command_value: onoff, timeout: args.timer, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
+          return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'relay', command_param: 'turn', command_value: onoff, timer_param: 'timeout', timer: args.timer, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
         }
       })
 
@@ -182,6 +182,18 @@ class ShellyApp extends Homey.App {
           return await this.util.sendCommand('/relay/'+ args.relay +'?turn=on&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         } else {
           return await this.util.sendCommand('/relay/'+ args.relay +'?turn=off&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        }
+      })
+
+    this.homey.flow.getActionCard('onOffTransition')
+      .registerRunListener(async (args) => {
+        var onoff = args.switch === "1" ? 'on' : 'off';
+        if (args.device.getStoreValue('communication') === 'coap') {
+          return await this.util.sendCommand('/light/0?turn='+ onoff +'&transition='+ args.transition +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } else if (args.device.getStoreValue('communication') === 'websocket') {
+          return await args.device.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": onoff, "transition": args.transition} }));
+        } else if (args.device.getStoreValue('communication') === 'cloud') {
+          return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'light', command_param: 'turn', command_value: onoff, timer_param: 'transition', timer: args.transition, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
         }
       })
 

@@ -31,9 +31,12 @@ class ShellyRGBW2ColorDevice extends Device {
       return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
-    this.registerCapabilityListener('dim', async (value) => {
+    this.registerCapabilityListener('dim', async (value, opts) => {
+      if (opts.duration === undefined || typeof opts.duration == 'undefined') {
+        opts.duration = '500';
+      }
       const dim = value * 100;
-      return await this.util.sendCommand('/color/0?gain='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      return await this.util.sendCommand('/color/0?gain='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerCapabilityListener('light_temperature', async (value) => {

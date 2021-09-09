@@ -1,10 +1,10 @@
 'use strict';
 
 const Homey = require('homey');
-const Device = require('../device_local.js');
+const Device = require('../device_cloud.js');
 const Util = require('../../lib/util.js');
 
-class ShellyButton1Device extends Device {
+class ShellyButton1CloudDevice extends Device {
 
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
@@ -25,4 +25,4 @@ class ShellyButton1Device extends Device {
 
 }
 
-module.exports = ShellyButton1Device;
+module.exports = ShellyButton1CloudDevice;

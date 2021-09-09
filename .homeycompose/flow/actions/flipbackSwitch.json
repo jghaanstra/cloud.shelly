@@ -2,7 +2,7 @@
   "id": "flipbackSwitch",
   "title": {
     "en": "Switch state temporary",
-    "nl": "Wijzig status tijdelijk"
+    "nl": "Schakel status tijdelijk"
   },
   "titleFormatted": {
     "en": "Switch state temporary to [[switch]] for [[timer]] seconds",

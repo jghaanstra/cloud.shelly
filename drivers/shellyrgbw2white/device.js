@@ -27,9 +27,12 @@ class ShellyRGBW2WhiteDevice extends Device {
       return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
-    this.registerCapabilityListener('dim', async (value) => {
+    this.registerCapabilityListener('dim', async (value, opts) => {
+      if (opts.duration === undefined || typeof opts.duration == 'undefined') {
+        opts.duration = '500';
+      }
       const dim = value * 100;
-      return await this.util.sendCommand('/white/'+ this.getStoreValue('channel') +'?brightness='+ dim +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      return await this.util.sendCommand('/white/'+ this.getStoreValue('channel') +'?brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
   }
