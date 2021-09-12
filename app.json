@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.3.8",
+  "version": "3.4.0",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -719,7 +719,8 @@
           }
         ],
         "platforms": [
-          "local"
+          "local",
+          "cloud"
         ]
       },
       {
@@ -4757,6 +4758,82 @@
       ]
     },
     {
+      "icon": "/drivers/shellydw_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "start",
+          "navigation": {
+            "next": "cloud_pairing_form"
+          }
+        },
+        {
+          "id": "cloud_pairing_form"
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "name": {
+        "en": "Shelly Door/Window Sensor (2)",
+        "nl": "Shelly Deur/Raam Sensor (2)"
+      },
+      "images": {
+        "large": "./assets/drivers/shellydw/images/large.jpg",
+        "small": "./assets/drivers/shellydw/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_contact",
+        "measure_luminance",
+        "measure_battery",
+        "measure_temperature",
+        "alarm_tamper",
+        "tilt"
+      ],
+      "energy": {
+        "batteries": [
+          "CR123A",
+          "CR123A"
+        ]
+      },
+      "id": "shellydw_cloud",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "server_address",
+              "type": "text",
+              "value": "https://shelly-8-eu.shelly.cloud",
+              "label": {
+                "en": "Server Address",
+                "nl": "Server adres"
+              }
+            },
+            {
+              "id": "cloud_device_id",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "icon": "/drivers/shellyem/assets/icon.svg",
       "pair": [
         {
@@ -5069,6 +5146,78 @@
       ]
     },
     {
+      "icon": "/drivers/shellyflood_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "start",
+          "navigation": {
+            "next": "cloud_pairing_form"
+          }
+        },
+        {
+          "id": "cloud_pairing_form"
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "name": {
+        "en": "Shelly Flood Sensor",
+        "nl": "Shelly Flood Sensor"
+      },
+      "images": {
+        "large": "./assets/drivers/shellyflood/images/large.jpg",
+        "small": "./assets/drivers/shellyflood/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_water",
+        "measure_temperature",
+        "measure_battery"
+      ],
+      "energy": {
+        "batteries": [
+          "CR123A"
+        ]
+      },
+      "id": "shellyflood_cloud",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "server_address",
+              "type": "text",
+              "value": "https://shelly-8-eu.shelly.cloud",
+              "label": {
+                "en": "Server Address",
+                "nl": "Server adres"
+              }
+            },
+            {
+              "id": "cloud_device_id",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "icon": "/drivers/shellygas/assets/icon.svg",
       "pair": [
         {
@@ -5266,6 +5415,78 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "icon": "/drivers/shellyht_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "start",
+          "navigation": {
+            "next": "cloud_pairing_form"
+          }
+        },
+        {
+          "id": "cloud_pairing_form"
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "name": {
+        "en": "Shelly Humidity & Temperature",
+        "nl": "Shelly Humidity & Temperature"
+      },
+      "images": {
+        "large": "./assets/drivers/shellyht/images/large.jpg",
+        "small": "./assets/drivers/shellyht/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "measure_humidity",
+        "measure_temperature",
+        "measure_battery"
+      ],
+      "energy": {
+        "batteries": [
+          "CR123A"
+        ]
+      },
+      "id": "shellyht_cloud",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "server_address",
+              "type": "text",
+              "value": "https://shelly-8-eu.shelly.cloud",
+              "label": {
+                "en": "Server Address",
+                "nl": "Server adres"
+              }
+            },
+            {
+              "id": "cloud_device_id",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -5533,6 +5754,79 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "icon": "/drivers/shellymotion_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "start",
+          "navigation": {
+            "next": "cloud_pairing_form"
+          }
+        },
+        {
+          "id": "cloud_pairing_form"
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "name": {
+        "en": "Shelly Motion Sensor",
+        "nl": "Shelly Bewegingssensor"
+      },
+      "images": {
+        "large": "./assets/drivers/shellymotion/images/large.jpg",
+        "small": "./assets/drivers/shellymotion/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_motion",
+        "measure_luminance",
+        "measure_battery",
+        "alarm_tamper"
+      ],
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ]
+      },
+      "id": "shellymotion_cloud",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "server_address",
+              "type": "text",
+              "value": "https://shelly-8-eu.shelly.cloud",
+              "label": {
+                "en": "Server Address",
+                "nl": "Server adres"
+              }
+            },
+            {
+              "id": "cloud_device_id",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -6097,6 +6391,78 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "icon": "/drivers/shellysmoke_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "start",
+          "navigation": {
+            "next": "cloud_pairing_form"
+          }
+        },
+        {
+          "id": "cloud_pairing_form"
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "name": {
+        "en": "Shelly Smoke Detector",
+        "nl": "Shelly Rook Detector"
+      },
+      "images": {
+        "large": "./assets/drivers/shellysmoke/images/large.jpg",
+        "small": "./assets/drivers/shellysmoke/images/small.jpg"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "alarm_smoke",
+        "measure_temperature",
+        "measure_battery"
+      ],
+      "energy": {
+        "batteries": [
+          "AA"
+        ]
+      },
+      "id": "shellysmoke_cloud",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "server_address",
+              "type": "text",
+              "value": "https://shelly-8-eu.shelly.cloud",
+              "label": {
+                "en": "Server Address",
+                "nl": "Server adres"
+              }
+            },
+            {
+              "id": "cloud_device_id",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]

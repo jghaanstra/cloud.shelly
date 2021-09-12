@@ -22,7 +22,7 @@ class ShellyVintageDevice extends Device {
       return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
-    this.registerCapabilityListener('dim', async (value) => {
+    this.registerCapabilityListener('dim', async (value, opts) => {
       if (opts.duration === undefined || typeof opts.duration == 'undefined') {
         opts.duration = '500';
       }

@@ -316,5 +316,8 @@
   },
   "3.3.8": {
     "en": "Added support for the Shelly Button 1 on Homey Cloud. Also added dimming transition for the dimmer, RGBW2, Duo and Vintage on Homey Pro (limited to 5 seconds due to Shelly API limitations). And fixed a bug in the momentary flipback switch action card."
+  },
+  "3.4.0": {
+    "en": "Fixed issue with dimming on Shelly Vintage. Possibly fixed an issue with the intelligent action for Shelly 2(.5) roller shutter. Added support for Door/Window, Motion, Flood, Humidity/Temperature and Smoke sensors on Homey Cloud."
   }
 }

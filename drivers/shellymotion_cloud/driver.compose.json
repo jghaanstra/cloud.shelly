@@ -1,0 +1,41 @@
+{
+  "name": {
+    "en": "Shelly Motion Sensor",
+    "nl": "Shelly Bewegingssensor"
+  },
+  "images": {
+    "large": "./assets/drivers/shellymotion/images/large.jpg",
+    "small": "./assets/drivers/shellymotion/images/small.jpg"
+  },
+  "class": "sensor",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "alarm_motion",
+    "measure_luminance",
+    "measure_battery",
+    "alarm_tamper"
+  ],
+  "pair": [
+    {
+      "id": "start",
+      "navigation": {
+        "next": "cloud_pairing_form"
+      }
+    },
+    {
+      "id": "cloud_pairing_form",
+      "$template": "cloud_pairing_form"
+    },
+    {
+      "id": "add_device",
+      "$template": "add_device"
+    }
+  ],
+  "energy": {
+    "batteries": [
+      "INTERNAL"
+    ]
+  }
+}

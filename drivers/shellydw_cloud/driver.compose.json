@@ -1,0 +1,44 @@
+{
+  "name": {
+    "en": "Shelly Door/Window Sensor (2)",
+    "nl": "Shelly Deur/Raam Sensor (2)"
+  },
+  "images": {
+    "large": "./assets/drivers/shellydw/images/large.jpg",
+    "small": "./assets/drivers/shellydw/images/small.jpg"
+  },
+  "class": "sensor",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "alarm_contact",
+    "measure_luminance",
+    "measure_battery",
+    "measure_temperature",
+    "alarm_tamper",
+    "tilt"
+  ],
+  "pair": [
+    {
+      "id": "start",
+      "navigation": {
+        "next": "cloud_pairing_form"
+      }
+    },
+    {
+      "id": "cloud_pairing_form",
+      "$template": "cloud_pairing_form"
+    },
+    {
+      "id": "add_device",
+      "$template": "add_device"
+    }
+  ],
+  "energy": {
+    "batteries": [
+      "CR123A",
+      "CR123A"
+    ]
+  }
+}

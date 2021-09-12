@@ -1,0 +1,40 @@
+{
+  "name": {
+    "en": "Shelly Humidity & Temperature",
+    "nl": "Shelly Humidity & Temperature"
+  },
+  "images": {
+    "large": "./assets/drivers/shellyht/images/large.jpg",
+    "small": "./assets/drivers/shellyht/images/small.jpg"
+  },
+  "class": "sensor",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "measure_humidity",
+    "measure_temperature",
+    "measure_battery"
+  ],
+  "pair": [
+    {
+      "id": "start",
+      "navigation": {
+        "next": "cloud_pairing_form"
+      }
+    },
+    {
+      "id": "cloud_pairing_form",
+      "$template": "cloud_pairing_form"
+    },
+    {
+      "id": "add_device",
+      "$template": "add_device"
+    }
+  ],
+  "energy": {
+    "batteries": [
+      "CR123A"
+    ]
+  }
+}

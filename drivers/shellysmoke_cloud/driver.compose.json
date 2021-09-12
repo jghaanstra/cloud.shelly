@@ -1,0 +1,40 @@
+{
+  "name": {
+    "en": "Shelly Smoke Detector",
+    "nl": "Shelly Rook Detector"
+  },
+  "images": {
+    "large": "./assets/drivers/shellysmoke/images/large.jpg",
+    "small": "./assets/drivers/shellysmoke/images/small.jpg"
+  },
+  "class": "sensor",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "alarm_smoke",
+    "measure_temperature",
+    "measure_battery"
+  ],
+  "pair": [
+    {
+      "id": "start",
+      "navigation": {
+        "next": "cloud_pairing_form"
+      }
+    },
+    {
+      "id": "cloud_pairing_form",
+      "$template": "cloud_pairing_form"
+    },
+    {
+      "id": "add_device",
+      "$template": "add_device"
+    }
+  ],
+  "energy": {
+    "batteries": [
+      "AA"
+    ]
+  }
+}

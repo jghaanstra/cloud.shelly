@@ -242,25 +242,25 @@ class ShellyApp extends Homey.App {
       .registerRunListener(async (args) => {
         if (args.device.getCapabilityValue('windowcoverings_state') !== 'idle') {
           args.device.setCapabilityValue('windowcoverings_state','idle');
-          if (args.device.getStoreValue('communication') === 'coap') {
+          if (args.device.getStoreValue('communication') === 'coap' || args.device.getStoreValue('communication') === undefined) {
             return await this.util.sendCommand('/roller/0?go=stop', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } else if (args.device.getStoreValue('communication') === 'cloud') {
             // TODO: fix this when the roller type is added to Shelly Cloud
             //return await this.util.sendCloudCommand('/device/relay/roller/control/', this.getSetting('server_address'), this.getSetting('cloud_token'), this.getSetting('cloud_device_id'), {"direction": "stop"});
           }
-        } else if (args.device.getStoreValue('last_action') == 'up') {
+        } else if (args.device.getStoreValue('last_action') === 'up') {
           args.device.setStoreValue('last_action', 'down');
           args.device.setCapabilityValue('windowcoverings_state','down');
-          if (args.device.getStoreValue('communication') === 'coap') {
+          if (args.device.getStoreValue('communication') === 'coap' || args.device.getStoreValue('communication') === undefined) {
             return await this.util.sendCommand('/roller/0?go=close', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } else if (args.device.getStoreValue('communication') === 'cloud') {
             // TODO: fix this when the roller type is added to Shelly Cloud
             //return await this.util.sendCloudCommand('/device/relay/roller/control/', this.getSetting('server_address'), this.getSetting('cloud_token'), this.getSetting('cloud_device_id'), {"direction": "close"});
           }
-        } else if (args.device.getStoreValue('last_action') == 'down') {
+        } else if (args.device.getStoreValue('last_action') === 'down') {
           args.device.setStoreValue('last_action', 'up');
           args.device.setCapabilityValue('windowcoverings_state','up');
-          if (args.device.getStoreValue('communication') === 'coap') {
+          if (args.device.getStoreValue('communication') === 'coap' || args.device.getStoreValue('communication') === undefined) {
             return await this.util.sendCommand('/roller/0?go=open', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } else if (args.device.getStoreValue('communication') === 'cloud') {
             // TODO: fix this when the roller type is added to Shelly Cloud
@@ -274,18 +274,18 @@ class ShellyApp extends Homey.App {
     this.homey.flow.getActionCard('moveRollerShutterPreviousPosition')
       .registerRunListener(async (args) => {
         let position = args.device.getStoreValue('previous_position');
-        if (position == undefined) {
+        if (position === undefined) {
 			    return Promise.reject('previous position has not been set yet');
 		    } else {
           args.device.setStoreValue('previous_position', args.device.getCapabilityValue('windowcoverings_set'));
-          if (args.device.getSetting('halfway') != 0.5) {
+          if (args.device.getSetting('halfway') !== 0.5) {
 				    if (position > 0.5) {
               position = -2 * position * args.device.getSetting('halfway') + 2 * position + 2 * args.device.getSetting('halfway') - 1;
             } else {
               position = 2 * position * args.device.getSetting('halfway');
             };
 		        args.device.setCapabilityValue('windowcoverings_set', position);
-            if (args.device.getStoreValue('communication') === 'coap') {
+            if (args.device.getStoreValue('communication') === 'coap' || args.device.getStoreValue('communication') === undefined) {
               return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
             } else if (args.device.getStoreValue('communication') === 'cloud') {
               // TODO: fix this when the roller type is added to Shelly Cloud
@@ -293,7 +293,7 @@ class ShellyApp extends Homey.App {
             }
   	      } else {
             args.device.setCapabilityValue('windowcoverings_set', position);
-            if (args.device.getStoreValue('communication') === 'coap') {
+            if (args.device.getStoreValue('communication') === 'coap' || args.device.getStoreValue('communication') === undefined) {
               return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
             } else if (args.device.getStoreValue('communication') === 'cloud') {
               /// TODO: fix this when the roller type is added to Shelly Cloud
