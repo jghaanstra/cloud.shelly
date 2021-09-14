@@ -62,7 +62,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly-plug|shelly-plug_cloud|shelly-plug-s|shelly-plug-s_cloud|shelly1|shelly1_cloud|shell1pm|shell1pm_cloud|shelly1l|shelly1l_cloud|shelly2|shelly2_cloud|shelly25|shelly25_cloud|shellyem|shellyem_cloud|shelly3em|shelly3em_cloud|shellyuni|shellyuni_cloud"
+      "filter": "driver_id=shelly-plug|shelly-plug_cloud|shelly-plug-s|shelly-plug-s_cloud|shelly1|shelly1_cloud|shelly1pm|shell1pm_cloud|shelly1l|shelly1l_cloud|shelly2|shelly2_cloud|shelly25|shelly25_cloud|shellyem|shellyem_cloud|shelly3em|shelly3em_cloud|shellyuni|shellyuni_cloud"
     }
   ],
   "platforms": ["local", "cloud"]

@@ -10,17 +10,19 @@ class ShellyCloudDevice extends Device {
 
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
+
+    this.homey.setTimeout(async () => {
+      return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Integrator:ActionRequest', deviceid: this.getSetting('cloud_device_id')})]);
+    }, 2000);
   }
 
   async onAdded() {
-    // TODO: Enable on Shelly Cloud 2.1
-    // this.homey.setTimeout(async () => {
-    //   return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Integrator:ActionRequest', deviceid: this.getSetting('cloud_device_id')})]);
-    // }, 3000);
-
     if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
       this.homey.setTimeout(async () => {
-        return await this.homey.app.updateShellyCollection();
+        await this.homey.app.updateShellyCollection();
+        await this.util.sleep(2000);
+        await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Integrator:ActionRequest', deviceid: this.getSetting('cloud_device_id')})]);
+        return;
       }, 2000);
     }
   }

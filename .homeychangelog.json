@@ -319,5 +319,8 @@
   },
   "3.4.0": {
     "en": "Fixed issue with dimming on Shelly Vintage. Possibly fixed an issue with the intelligent action for Shelly 2(.5) roller shutter. Added support for Door/Window, Motion, Flood, Humidity/Temperature and Smoke sensors on Homey Cloud."
+  },
+  "3.4.1": {
+    "en": "Initial state of devices added to Homey Cloud is now updated. Removed some deprecated flow cards, make sure to fix your flows if you missed the previous announcements. "
   }
 }

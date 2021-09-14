@@ -122,21 +122,6 @@ class ShellyApp extends Homey.App {
         }
       })
 
-    this.homey.flow.getConditionCard('conditionFW')
-      .registerRunListener(async (args) => {
-        // TODO: deprecated and needs to be removed at some point
-        try {
-          const result = await this.util.sendCommand('/ota', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-          if (result.has_update) {
-            return Promise.resolve(true);
-          } else {
-            return Promise.resolve(false);
-          }
-        } catch (error) {
-          return Promise.reject(error);
-        }
-      })
-
     this.homey.flow.getActionCard('actionReboot')
       .registerRunListener(async (args) => {
         if (args.device.getStoreValue('communication') === 'coap') {
@@ -162,26 +147,6 @@ class ShellyApp extends Homey.App {
           return await args.device.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": onoff, "toggle": args.timer} }));
         } else if (args.device.getStoreValue('communication') === 'cloud') {
           return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'relay', command_param: 'turn', command_value: onoff, timer_param: 'timeout', timer: args.timer, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
-        }
-      })
-
-    this.homey.flow.getActionCard('flipbackSwitch2')
-      .registerRunListener(async (args) => {
-        // TODO: this is deprecated and needs the be removed eventually
-        if (args.switch === '1') {
-          return await this.util.sendCommand('/relay/'+ args.relay +'?turn=on&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-        } else {
-          return await this.util.sendCommand('/relay/'+ args.relay +'?turn=off&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-        }
-      })
-
-    this.homey.flow.getActionCard('flipbackSwitch4')
-      .registerRunListener(async (args) => {
-        // TODO: this is deprecated and needs the be removed eventually
-        if (args.switch === '1') {
-          return await this.util.sendCommand('/relay/'+ args.relay +'?turn=on&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-        } else {
-          return await this.util.sendCommand('/relay/'+ args.relay +'?turn=off&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         }
       })
 
@@ -242,30 +207,15 @@ class ShellyApp extends Homey.App {
       .registerRunListener(async (args) => {
         if (args.device.getCapabilityValue('windowcoverings_state') !== 'idle') {
           args.device.setCapabilityValue('windowcoverings_state','idle');
-          if (args.device.getStoreValue('communication') === 'coap' || args.device.getStoreValue('communication') === undefined) {
-            return await this.util.sendCommand('/roller/0?go=stop', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-          } else if (args.device.getStoreValue('communication') === 'cloud') {
-            // TODO: fix this when the roller type is added to Shelly Cloud
-            //return await this.util.sendCloudCommand('/device/relay/roller/control/', this.getSetting('server_address'), this.getSetting('cloud_token'), this.getSetting('cloud_device_id'), {"direction": "stop"});
-          }
+          return await this.util.sendCommand('/roller/0?go=stop', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         } else if (args.device.getStoreValue('last_action') === 'up') {
           args.device.setStoreValue('last_action', 'down');
           args.device.setCapabilityValue('windowcoverings_state','down');
-          if (args.device.getStoreValue('communication') === 'coap' || args.device.getStoreValue('communication') === undefined) {
-            return await this.util.sendCommand('/roller/0?go=close', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-          } else if (args.device.getStoreValue('communication') === 'cloud') {
-            // TODO: fix this when the roller type is added to Shelly Cloud
-            //return await this.util.sendCloudCommand('/device/relay/roller/control/', this.getSetting('server_address'), this.getSetting('cloud_token'), this.getSetting('cloud_device_id'), {"direction": "close"});
-          }
+          return await this.util.sendCommand('/roller/0?go=close', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         } else if (args.device.getStoreValue('last_action') === 'down') {
           args.device.setStoreValue('last_action', 'up');
           args.device.setCapabilityValue('windowcoverings_state','up');
-          if (args.device.getStoreValue('communication') === 'coap' || args.device.getStoreValue('communication') === undefined) {
-            return await this.util.sendCommand('/roller/0?go=open', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-          } else if (args.device.getStoreValue('communication') === 'cloud') {
-            // TODO: fix this when the roller type is added to Shelly Cloud
-            //return await this.util.sendCloudCommand('/device/relay/roller/control/', this.getSetting('server_address'), this.getSetting('cloud_token'), this.getSetting('cloud_device_id'), {"direction": "open"});
-          }
+          return await this.util.sendCommand('/roller/0?go=open', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         } else {
           return Promise.reject(error);
         }
@@ -274,31 +224,21 @@ class ShellyApp extends Homey.App {
     this.homey.flow.getActionCard('moveRollerShutterPreviousPosition')
       .registerRunListener(async (args) => {
         let position = args.device.getStoreValue('previous_position');
-        if (position === undefined) {
+        if (position == undefined) {
 			    return Promise.reject('previous position has not been set yet');
 		    } else {
           args.device.setStoreValue('previous_position', args.device.getCapabilityValue('windowcoverings_set'));
-          if (args.device.getSetting('halfway') !== 0.5) {
+          if (args.device.getSetting('halfway') != 0.5) {
 				    if (position > 0.5) {
               position = -2 * position * args.device.getSetting('halfway') + 2 * position + 2 * args.device.getSetting('halfway') - 1;
             } else {
               position = 2 * position * args.device.getSetting('halfway');
             };
 		        args.device.setCapabilityValue('windowcoverings_set', position);
-            if (args.device.getStoreValue('communication') === 'coap' || args.device.getStoreValue('communication') === undefined) {
-              return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-            } else if (args.device.getStoreValue('communication') === 'cloud') {
-              // TODO: fix this when the roller type is added to Shelly Cloud
-              //return await this.util.sendCloudCommand('/device/relay/roller/settings/topos/', args.device.getSetting('server_address'), args.device.getSetting('cloud_token'), args.device.getSetting('cloud_device_id'), {"pos": Math.round(position*100)});
-            }
+		        return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
   	      } else {
             args.device.setCapabilityValue('windowcoverings_set', position);
-            if (args.device.getStoreValue('communication') === 'coap' || args.device.getStoreValue('communication') === undefined) {
-              return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-            } else if (args.device.getStoreValue('communication') === 'cloud') {
-              /// TODO: fix this when the roller type is added to Shelly Cloud
-              //return await this.util.sendCloudCommand('/device/relay/roller/settings/topos/', args.device.getSetting('server_address'), args.device.getSetting('cloud_token'), args.device.getSetting('cloud_device_id'), {"pos": Math.round(position*100)});
-            }
+		        return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           }
         }
   	  })
@@ -426,7 +366,8 @@ class ShellyApp extends Homey.App {
   // COAP & GEN2 WEBSOCKETS: UPDATE COLLECTION OF DEVICES
   async updateShellyCollection() {
     try {
-      this.shellyDevices = await this.util.getShellies('collection');
+      let newShellyDevices = await this.util.getShellies('collection');
+      this.shellyDevices = newShellyDevices;
       return Promise.resolve(true);
     } catch(error) {
       this.log(error);
@@ -453,24 +394,21 @@ class ShellyApp extends Homey.App {
       try {
         const result = JSON.parse(data);
         if (result.event === 'Shelly:StatusOnChange') {
-          if (this.shellyDevices.length > 0) {
-            const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.deviceId));
-            for (const filteredShelly of filteredShellies) {
-              filteredShelly.device.parseStatusUpdate(result.status);
-              await this.util.sleep(250);
+          const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.deviceId));
+          for (const filteredShelly of filteredShellies) {
+            filteredShelly.device.parseStatusUpdate(result.status);
+            await this.util.sleep(250);
+          }
+        } else if (result.event === 'Integrator:ActionResponse') {
+          const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.data.deviceId));
+          for (const filteredShelly of filteredShellies) {
+            if (filteredShelly.device.getStoreValue('type') !== result.data.deviceCode) {
+              filteredShelly.device.setStoreValue('type', result.data.deviceCode);
             }
+            filteredShelly.device.parseStatusUpdate(result.data.deviceStatus);
+            await this.util.sleep(250);
           }
         }
-        // TODO: add when Shelly Cloud 2.1 is deployed and test it for inital status update
-        // else if (result.event === 'Integrator:ActionResponse') {
-        //   if (this.shellyDevices.length > 0) {
-        //     const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.deviceId));
-        //     for (const filteredShelly of filteredShellies) {
-        //       filteredShelly.device.parseStatusUpdate(result.data.deviceStatus);
-        //       await this.util.sleep(5);
-        //     }
-        //   }
-        // }
       } catch (error) {
         this.log(error);
       }

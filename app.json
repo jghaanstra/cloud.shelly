@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.4.0",
+  "version": "3.4.1",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -754,28 +754,6 @@
     ],
     "conditions": [
       {
-        "id": "conditionFW",
-        "title": {
-          "en": "New firmware !{{is|isn't}} available",
-          "nl": "Nieuwe firmware !{{is|is niet}} beschikbaar"
-        },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
-            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly3em|shelly4pro|shelly25|shelly25-rollershutter|shellybulb|shellydimmer|shellyduo|shellyem|shellyi3|shellymotion|shellyrgbw2color|shellyrgbw2cwww|shellyrgbw2white|shellyuni|shellyvintage"
-          }
-        ],
-        "platforms": [
-          "local"
-        ],
-        "deprecated": true
-      },
-      {
         "id": "conditionInput0",
         "title": {
           "en": "Input 1 !{{is|isn't}} on",
@@ -948,228 +926,13 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plug|shelly-plug_cloud|shelly-plug-s|shelly-plug-s_cloud|shelly1|shelly1_cloud|shell1pm|shell1pm_cloud|shelly1l|shelly1l_cloud|shelly2|shelly2_cloud|shelly25|shelly25_cloud|shellyem|shellyem_cloud|shelly3em|shelly3em_cloud|shellyuni|shellyuni_cloud"
+            "filter": "driver_id=shelly-plug|shelly-plug_cloud|shelly-plug-s|shelly-plug-s_cloud|shelly1|shelly1_cloud|shelly1pm|shell1pm_cloud|shelly1l|shelly1l_cloud|shelly2|shelly2_cloud|shelly25|shelly25_cloud|shellyem|shellyem_cloud|shelly3em|shelly3em_cloud|shellyuni|shellyuni_cloud"
           }
         ],
         "platforms": [
           "local",
           "cloud"
         ]
-      },
-      {
-        "id": "flipbackSwitch2",
-        "title": {
-          "en": "Switch state temporary",
-          "nl": "Wijzig status tijdelijk"
-        },
-        "titleFormatted": {
-          "en": "Switch state of [[relay]] temporary to [[switch]] for [[timer]] seconds",
-          "nl": "Wijzig status of [[relay]] tijdelijk naar [[switch]] voor [[timer]] seconden"
-        },
-        "hint": {
-          "en": "Use this card to turn the Shelly 2 ON or OFF but only for the set time in seconds, after the timer it will switch back.",
-          "nl": "Gebruik deze actie om de Shelly 2 AAN of UIT te schakelen voor de ingestelde duur in seconden, na de timer zal hij terugschakelen."
-        },
-        "args": [
-          {
-            "name": "relay",
-            "type": "dropdown",
-            "title": {
-              "en": "Relay",
-              "nl": "Relay"
-            },
-            "placeholder": {
-              "en": "Relay",
-              "nl": "Relay"
-            },
-            "values": [
-              {
-                "id": "0",
-                "label": {
-                  "en": "Relay 1",
-                  "nl": "Relay 1"
-                }
-              },
-              {
-                "id": "1",
-                "label": {
-                  "en": "Relay 2",
-                  "nl": "Relay 2"
-                }
-              }
-            ]
-          },
-          {
-            "name": "switch",
-            "type": "dropdown",
-            "title": {
-              "en": "Temporary switch",
-              "nl": "Tijdelijk schakelen"
-            },
-            "placeholder": {
-              "en": "Temporary switch",
-              "nl": "Tijdelijk schakelen"
-            },
-            "values": [
-              {
-                "id": "0",
-                "label": {
-                  "en": "Switch OFF",
-                  "nl": "Uitschakelen"
-                }
-              },
-              {
-                "id": "1",
-                "label": {
-                  "en": "Switch ON",
-                  "nl": "Inschakelen"
-                }
-              }
-            ]
-          },
-          {
-            "name": "timer",
-            "type": "number",
-            "title": {
-              "en": "Duration in seconds",
-              "nl": "Duur in seconden"
-            },
-            "placeholder": {
-              "en": "Duration in seconds",
-              "nl": "Duur in seconden"
-            },
-            "min": 1,
-            "max": 120,
-            "step": 1
-          },
-          {
-            "name": "device",
-            "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
-            "filter": "driver_id=shelly2|shelly25|shellyuni"
-          }
-        ],
-        "platforms": [
-          "local"
-        ],
-        "deprecated": true
-      },
-      {
-        "id": "flipbackSwitch4",
-        "title": {
-          "en": "Switch state temporary",
-          "nl": "Wijzig status tijdelijk"
-        },
-        "titleFormatted": {
-          "en": "Switch state of [[relay]] temporary to [[switch]] for [[timer]] seconds",
-          "nl": "Wijzig status of [[relay]] tijdelijk naar [[switch]] voor [[timer]] seconden"
-        },
-        "hint": {
-          "en": "Use this card to turn the Shelly 4 Pro ON or OFF but only for the set time in seconds, after the timer it will switch back.",
-          "nl": "Gebruik deze actie om de Shelly 4 Pro AAN of UIT te schakelen voor de ingestelde duur in seconden, na de timer zal hij terugschakelen."
-        },
-        "args": [
-          {
-            "name": "relay",
-            "type": "dropdown",
-            "title": {
-              "en": "Relay",
-              "nl": "Relay"
-            },
-            "placeholder": {
-              "en": "Relay",
-              "nl": "Relay"
-            },
-            "values": [
-              {
-                "id": "0",
-                "label": {
-                  "en": "Relay 1",
-                  "nl": "Relay 1"
-                }
-              },
-              {
-                "id": "1",
-                "label": {
-                  "en": "Relay 2",
-                  "nl": "Relay 2"
-                }
-              },
-              {
-                "id": "2",
-                "label": {
-                  "en": "Relay 3",
-                  "nl": "Relay 3"
-                }
-              },
-              {
-                "id": "3",
-                "label": {
-                  "en": "Relay 4",
-                  "nl": "Relay 4"
-                }
-              }
-            ]
-          },
-          {
-            "name": "switch",
-            "type": "dropdown",
-            "title": {
-              "en": "Temporary switch",
-              "nl": "Tijdelijk schakelen"
-            },
-            "placeholder": {
-              "en": "Temporary switch",
-              "nl": "Tijdelijk schakelen"
-            },
-            "values": [
-              {
-                "id": "0",
-                "label": {
-                  "en": "Switch OFF",
-                  "nl": "Uitschakelen"
-                }
-              },
-              {
-                "id": "1",
-                "label": {
-                  "en": "Switch ON",
-                  "nl": "Inschakelen"
-                }
-              }
-            ]
-          },
-          {
-            "name": "timer",
-            "type": "number",
-            "title": {
-              "en": "Duration in seconds",
-              "nl": "Duur in seconden"
-            },
-            "placeholder": {
-              "en": "Duration in seconds",
-              "nl": "Duur in seconden"
-            },
-            "min": 1,
-            "step": 1
-          },
-          {
-            "name": "device",
-            "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
-            "filter": "driver_id=shelly4pro"
-          }
-        ],
-        "platforms": [
-          "local"
-        ],
-        "deprecated": true
       },
       {
         "id": "moveRollerShutter",
@@ -1434,12 +1197,11 @@
               "en": "Select Shelly 2",
               "nl": "Selecteer Shelly 2"
             },
-            "filter": "driver_id=shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud"
+            "filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
           }
         ],
         "platforms": [
-          "local",
-          "cloud"
+          "local"
         ]
       },
       {
