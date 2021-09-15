@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.4.1",
+  "version": "3.4.2",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -1817,8 +1817,8 @@
         "lan"
       ],
       "name": {
-        "en": "Shelly 1",
-        "nl": "Shelly 1"
+        "en": "Shelly (Plus) 1",
+        "nl": "Shelly (Plus) 1"
       },
       "images": {
         "large": "./assets/drivers/shelly1/images/large.jpg",
@@ -2226,8 +2226,8 @@
         "lan"
       ],
       "name": {
-        "en": "Shelly 1PM",
-        "nl": "Shelly 1PM"
+        "en": "Shelly (Plus) 1PM",
+        "nl": "Shelly (Plus) 1PM"
       },
       "images": {
         "large": "./assets/drivers/shelly1pm/images/large.jpg",

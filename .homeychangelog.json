@@ -322,5 +322,8 @@
   },
   "3.4.1": {
     "en": "Initial state of devices added to Homey Cloud is now updated. Removed some deprecated flow cards, make sure to fix your flows if you missed the previous announcements. "
+  },
+  "3.4.2": {
+    "en": "Add support for Shelly Plus 1 and Shelly Plus 1PM next generation devices. Fixed a bug with the flipback switch for relay devices."
   }
 }

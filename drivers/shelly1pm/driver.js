@@ -10,7 +10,7 @@ class Shelly1pmDriver extends Driver {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly 1PM',  // TODO: rename at some point
+      name: 'Shelly (Plus) 1PM',
       battery: false,
       hostname: 'shelly1pm-'
     }
