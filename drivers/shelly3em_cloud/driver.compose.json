@@ -18,7 +18,8 @@
     "measure_current",
     "measure_voltage",
     "meter_power",
-    "meter_power_returned"
+    "meter_power_returned",
+    "rssi"
   ],
   "pair": [
     {

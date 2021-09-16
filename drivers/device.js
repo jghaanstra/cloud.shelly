@@ -578,6 +578,20 @@ class ShellyDevice extends Homey.Device {
 
       }
 
+      // RSSI
+      if (result.hasOwnProperty("wifi_sta")) {
+
+        /* measure_humidity */
+        if (result.wifi_sta.hasOwnProperty("rssi")) {
+          if (!this.hasCapability("rssi")) {
+            this.addCapability("rssi"); // TODO: remove this after some releases
+          } else {
+            this.updateCapabilityValue('rssi', result.wifi_sta.rssi);
+          }
+        }
+
+      }
+
       // firmware update available?
       if (result.hasOwnProperty("update")) {
         if (result.update.has_update === true && (this.getStoreValue('latest_firmware') !== result.update.new_version)) {

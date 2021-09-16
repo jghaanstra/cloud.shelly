@@ -16,7 +16,8 @@
     "onoff",
     "dim",
     "measure_power",
-    "meter_power"
+    "meter_power",
+    "rssi"
   ],
   "capabilitiesOptions": {
 		"dim": {

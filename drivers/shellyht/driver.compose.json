@@ -15,7 +15,8 @@
   "capabilities": [
     "measure_humidity",
     "measure_temperature",
-    "measure_battery"
+    "measure_battery",
+    "rssi"
   ],
   "pair": [
     {

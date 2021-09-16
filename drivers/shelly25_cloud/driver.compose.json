@@ -16,7 +16,8 @@
     "measure_power",
     "meter_power",
     "measure_temperature",
-    "input_1"
+    "input_1",
+    "rssi"
   ],
   "pair": [
     {

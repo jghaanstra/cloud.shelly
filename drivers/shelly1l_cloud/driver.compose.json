@@ -17,6 +17,7 @@
     "meter_power",
     "measure_temperature",
     "input_1",
-    "input_2"
+    "input_2",
+    "rssi"
   ]
 }

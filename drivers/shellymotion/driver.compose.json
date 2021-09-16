@@ -16,7 +16,8 @@
     "alarm_motion",
     "measure_luminance",
     "measure_battery",
-    "alarm_tamper"
+    "alarm_tamper",
+    "rssi"
   ],
   "pair": [
     {

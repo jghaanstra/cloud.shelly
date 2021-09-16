@@ -15,7 +15,8 @@
     "onoff",
     "measure_power",
     "meter_power",
-    "measure_temperature"
+    "measure_temperature",
+    "rssi"
   ],
   "capabilitiesOptions": {
     "measure_temperature": {

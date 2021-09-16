@@ -13,7 +13,8 @@
     "defaults"
   ],
   "capabilities": [
-    "measure_battery"
+    "measure_battery",
+    "rssi"
   ],
   "energy": {
     "batteries": [

@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "WiFi Signal",
+    "nl": "WiFi signaal"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": false,
+  "icon": "/assets/rssi.svg",
+  "units": {
+    "en": "RSSI",
+    "nl": "RSSI"
+  }
+}

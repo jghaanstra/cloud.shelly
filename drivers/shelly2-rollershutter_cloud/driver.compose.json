@@ -18,7 +18,8 @@
     "meter_power",
     "input_1",
     "input_2",
-    "button.sethalfwayposition"
+    "button.sethalfwayposition",
+    "rssi"
   ],
   "capabilitiesOptions": {
     "button.sethalfwayposition": {

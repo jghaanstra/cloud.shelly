@@ -15,7 +15,8 @@
   "capabilities": [
     "alarm_smoke",
     "measure_temperature",
-    "measure_battery"
+    "measure_battery",
+    "rssi"
   ],
   "pair": [
     {

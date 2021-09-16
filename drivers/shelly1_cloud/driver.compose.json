@@ -13,6 +13,7 @@
   ],
   "capabilities": [
     "onoff",
-    "input_1"
+    "input_1",
+    "rssi"
   ]
 }

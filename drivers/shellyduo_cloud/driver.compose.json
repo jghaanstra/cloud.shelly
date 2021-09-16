@@ -16,6 +16,7 @@
     "dim",
     "light_temperature",
     "measure_power",
-    "meter_power"
+    "meter_power",
+    "rssi"
   ]
 }

@@ -19,7 +19,8 @@
     "measure_temperature.3",
     "measure_humidity",
     "measure_voltage",
-    "input_1"
+    "input_1",
+    "rssi"
   ],
   "capabilitiesOptions": {
     "measure_temperature.1": {

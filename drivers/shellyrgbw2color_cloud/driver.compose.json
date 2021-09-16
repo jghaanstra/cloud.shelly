@@ -21,7 +21,8 @@
     "meter_power",
     "light_mode",
     "onoff.whitemode",
-    "input_1"
+    "input_1",
+    "rssi"
   ],
   "capabilitiesOptions": {
     "light_temperature": {

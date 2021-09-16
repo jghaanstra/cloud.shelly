@@ -325,5 +325,8 @@
   },
   "3.4.2": {
     "en": "Add support for Shelly Plus 1 and Shelly Plus 1PM next generation devices. Fixed a bug with the flipback switch for relay devices."
+  },
+  "3.4.3": {
+    "en": "Added RSSI WiFi signal to all devices. Fixed an issue with action events for Shelly Plus devices after an API update. And fixed an issue with the flipback switch action card for multichannel devices."
   }
 }

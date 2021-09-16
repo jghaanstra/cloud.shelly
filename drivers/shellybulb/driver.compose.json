@@ -18,6 +18,7 @@
     "light_temperature",
     "light_hue",
     "light_saturation",
-    "light_mode"
+    "light_mode",
+    "rssi"
   ]
 }

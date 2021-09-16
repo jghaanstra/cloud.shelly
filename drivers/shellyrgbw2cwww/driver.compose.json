@@ -15,7 +15,8 @@
     "onoff",
     "dim",
     "light_temperature",
-    "measure_power"
+    "measure_power",
+    "rssi"
   ],
   "pair": [
     {

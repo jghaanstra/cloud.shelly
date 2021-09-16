@@ -21,7 +21,8 @@
     "measure_temperature.2",
     "measure_temperature.3",
     "measure_humidity",
-    "input_1"
+    "input_1",
+    "rssi"
   ],
   "capabilitiesOptions": {
     "measure_temperature": {

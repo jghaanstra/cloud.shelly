@@ -18,7 +18,8 @@
     "measure_battery",
     "measure_temperature",
     "alarm_tamper",
-    "tilt"
+    "tilt",
+    "rssi"
   ],
   "pair": [
     {

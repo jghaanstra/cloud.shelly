@@ -46,43 +46,59 @@ class ShellyDevice extends Device {
 
         /* onoff */
         if (result["switch:"+channel].hasOwnProperty("output") && this.hasCapability('onoff')) {
-          this.parseCapabilityUpdate('switch'+channel, result["switch:"+channel].output, channel);
+          this.updateCapabilityValue('onoff', result["switch:"+channel].output, channel);
         }
 
         /* measure_power */
         if (result["switch:"+channel].hasOwnProperty("apower") && this.hasCapability('measure_power')) {
-          this.parseCapabilityUpdate('power'+channel, result["switch:"+channel].apower, channel);
+          this.updateCapabilityValue('measure_power', result["switch:"+channel].apower, channel);
         }
 
         /* meter_power */
         if (result["switch:"+channel].hasOwnProperty("aenergy") && this.hasCapability('meter_power')) {
           if (result["switch:"+channel].aenergy.hasOwnProperty("total")) {
-            this.parseCapabilityUpdate('energyCounter'+channel, result["switch:"+channel].aenergy.total, channel);
+            this.updateCapabilityValue('meter_power', result["switch:"+channel].aenergy.total, channel);
           }
         }
 
         /* measure_voltage */
-        if (result["switch:"+channel].hasOwnProperty("voltage")) {
-          this.parseCapabilityUpdate('voltage'+channel, result["switch:"+channel].voltage, channel);
-        }
-
-        /* inputs */
-        if (result["switch:"+channel].hasOwnProperty("input") && this.hasCapability('input_1')) {
-          this.parseCapabilityUpdate('input'+channel, result["switch:"+channel].input, channel);
+        if (result["switch:"+channel].hasOwnProperty("voltage") && this.hasCapability('measure_voltage')) {
+          this.updateCapabilityValue('measure_voltage', result["switch:"+channel].voltage, channel);
         }
 
         /* measure_temperature (device temperature) */
         if (result["switch:"+channel].hasOwnProperty("temperature") && this.hasCapability('measure_temperature')) {
-          this.parseCapabilityUpdate('deviceTemperature', result["switch:"+channel].temperature.tC, 0);
+          this.updateCapabilityValue('measure_temperature', result["switch:"+channel].temperature.tC, 0);
         }
 
+      }
+
+      // INPUTS
+      if (result.hasOwnProperty("input:"+ channel) && this.hasCapability('input_1')) {
+        if (result["input:"+channel].hasOwnProperty("state") && result["input:"+channel].state !== null) {
+          this.updateCapabilityValue('input_1', result["input:"+channel].state, channel);
+        }
       }
 
       // DEVICE TEMPERATURE
       if (result.hasOwnProperty("systemp") && this.hasCapability('measure_temperature') && this.getStoreValue('channel') === 0) {
 
         /* measure_temperature */
-        this.parseCapabilityUpdate('deviceTemperature', result.systemp.tC, 0);
+        this.updateCapabilityValue('measure_temperature', result.systemp.tC, 0);
+      }
+
+      // RSSI
+      if (result.hasOwnProperty("wifi")) {
+
+        /* measure_humidity */
+        if (result.wifi.hasOwnProperty("rssi")) {
+          if (!this.hasCapability("rssi")) {
+            this.addCapability("rssi"); // TODO: remove this after some releases
+          } else {
+            this.updateCapabilityValue('rssi', result.wifi.rssi);
+          }
+        }
+
       }
 
       // FIRMWARE UPDATE AVAILABLE

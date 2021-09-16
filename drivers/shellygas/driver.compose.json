@@ -14,6 +14,7 @@
   ],
   "capabilities": [
     "alarm_smoke",
-    "gas_concentration"
+    "gas_concentration",
+    "rssi"
   ]
 }
