@@ -431,7 +431,7 @@ class ShellyDevice extends Homey.Device {
       if (result.hasOwnProperty("inputs")) {
 
         /* input_1 */
-        if (result.inputs.hasOwnProperty([0]) && this.hasCapability('input_1')) {
+        if (result.inputs.hasOwnProperty([0]) && this.hasCapability('input_1') && this.getStoreValue('channel') === 0) {
           let input_1 = result.inputs[0].input == 1 ? true : false;
           if (input_1 !== this.getCapabilityValue('input_1')) {
             this.updateCapabilityValue('input_1', input_1);
@@ -471,11 +471,11 @@ class ShellyDevice extends Homey.Device {
             this.setStoreValue('event_cnt', result.inputs[1].event_cnt);
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action1 }, {"id": this.getData().id, "device": this.getName(), "action": action1 });
           }
-        } else if (result.inputs.hasOwnProperty([1]) && this.hasCapability('input_1') && channel === 1) {
-            let input_2 = result.inputs[1].input == 1 ? true : false;
-            if (input_2 !== this.getCapabilityValue('input_1')) {
+        } else if (result.inputs.hasOwnProperty([1]) && this.hasCapability('input_1') && this.getStoreValue('channel') === 1) {
+            let input_2_1 = result.inputs[1].input == 1 ? true : false;
+            if (input_2_1 !== this.getCapabilityValue('input_1')) {
               this.updateCapabilityValue('input_1', input_2);
-              if (input_2) {
+              if (input_2_1) {
                 this.homey.flow.getDeviceTriggerCard('triggerInput1On').trigger(this, {}, {});
               } else {
                 this.homey.flow.getDeviceTriggerCard('triggerInput1Off').trigger(this, {}, {});

@@ -149,13 +149,15 @@ class ShellyDevice extends Device {
 
               if (capability !== 'component' && capability !== 'id' && capability !== 'source') {
 
-                /* parse aenergy and device temperature data */
-                if (typeof value === 'object' && value !== null) {
+                if (typeof value === 'object' && value !== null) { /* parse aenergy and device temperature data */
                   for (const [capability, values] of Object.entries(value)) {
                     if (capability !== 'by_minute' && capability !== 'minute_ts' && capability !== 'tF') {
                       this.parseCapabilityUpdate(capability, values, channel);
                     }
                   }
+                } else if (component.startsWith('input')) { /* parse input data */
+                  let input = component.replace(":", "");
+                  this.parseCapabilityUpdate(input, value, channel);
                 } else {
                   this.parseCapabilityUpdate(capability, value, channel);
                 }

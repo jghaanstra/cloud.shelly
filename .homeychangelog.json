@@ -328,5 +328,8 @@
   },
   "3.4.3": {
     "en": "Added RSSI WiFi signal to all devices. Fixed an issue with action events for Shelly Plus devices after an API update. And fixed an issue with the flipback switch action card for multichannel devices."
+  },
+  "3.4.4": {
+    "en": "Fixed an issue with the inputs for GEN1 devices with multiple channels. Fixed an issue with inputs for GEN2 (Plus) devices."
   }
 }
