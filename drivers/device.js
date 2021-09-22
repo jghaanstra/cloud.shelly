@@ -440,6 +440,7 @@ class ShellyDevice extends Homey.Device {
             } else {
               this.homey.flow.getDeviceTriggerCard('triggerInput1Off').trigger(this, {}, {});
             }
+            this.homey.flow.getDeviceTriggerCard('triggerInput1Changed').trigger(this, {}, {});
           }
 
           // input/action event for cloud devices
@@ -464,6 +465,7 @@ class ShellyDevice extends Homey.Device {
             } else {
               this.homey.flow.getDeviceTriggerCard('triggerInput2Off').trigger(this, {}, {});
             }
+            this.homey.flow.getDeviceTriggerCard('triggerInput2Changed').trigger(this, {}, {});
           }
           // input/action events for cloud devices
           if (this.getStoreValue('communication') === 'cloud' && result.inputs[1].event_cnt > 0 && (result.inputs[1].event_cnt > this.getStoreValue('event_cnt')) && result.inputs[1].event) {
@@ -474,12 +476,13 @@ class ShellyDevice extends Homey.Device {
         } else if (result.inputs.hasOwnProperty([1]) && this.hasCapability('input_1') && this.getStoreValue('channel') === 1) {
             let input_2_1 = result.inputs[1].input == 1 ? true : false;
             if (input_2_1 !== this.getCapabilityValue('input_1')) {
-              this.updateCapabilityValue('input_1', input_2);
+              this.updateCapabilityValue('input_1', input_2_1);
               if (input_2_1) {
                 this.homey.flow.getDeviceTriggerCard('triggerInput1On').trigger(this, {}, {});
               } else {
                 this.homey.flow.getDeviceTriggerCard('triggerInput1Off').trigger(this, {}, {});
               }
+              this.homey.flow.getDeviceTriggerCard('triggerInput1Changed').trigger(this, {}, {});
             }
           // input/action events for cloud devices
           if (this.getStoreValue('communication') === 'cloud' && result.inputs[1].event_cnt > 0 && (result.inputs[1].event_cnt > this.getStoreValue('event_cnt')) && result.inputs[1].event) {
@@ -499,6 +502,7 @@ class ShellyDevice extends Homey.Device {
             } else {
               this.homey.flow.getDeviceTriggerCard('triggerInput3Off').trigger(this, {}, {});
             }
+            this.homey.flow.getDeviceTriggerCard('triggerInput3Changed').trigger(this, {}, {});
           }
 
           // input/action events for cloud devices
