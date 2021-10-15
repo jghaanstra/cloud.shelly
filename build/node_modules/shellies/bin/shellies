@@ -1,0 +1,170 @@
+#!/usr/bin/env node
+/* eslint-disable no-console */
+
+const colors = require('colors/safe')
+const commandLineCommands = require('command-line-commands')
+
+const packageVersion = require('../package.json').version
+const shellies = require('../index')
+
+const h = (txt, color = 'green') => {
+  return colors[color](txt) + ' ' + colors.gray(new Date().toISOString())
+}
+
+const v = (key, val) => {
+  return colors.gray(key + ':') + ' ' + val
+}
+
+const listen = () => {
+  shellies
+    .on('discover', (device, unknown) => {
+      if (!unknown) {
+        console.log(h('[Device discovered]'))
+      } else {
+        console.log(h('[Unknown device]', 'yellow'))
+      }
+      console.log(
+        v('Model', unknown ? device.type : device.modelName),
+        v('ID', device.id),
+        v('Host', device.host)
+      )
+
+      for (const [prop, value] of device) {
+        console.log(
+          v('Property', prop),
+          v('Value', value)
+        )
+      }
+
+      device.getSettings()
+        .then(settings => {
+          device.settings = settings
+        })
+        .catch(error => {
+          console.error(h('[Request failed]', 'red'))
+          console.log('Failed to load settings for device with ID', device.id)
+          console.log('Error:', error.status, error.message)
+        })
+
+      device
+        .on('change', (prop, newValue) => {
+          if (prop === 'settings') {
+            return
+          }
+
+          console.log(h('[Property changed]'))
+          console.log(
+            v('Property', prop),
+            v('Value', newValue),
+            v('Device ID', device.id)
+          )
+        })
+        .on('offline', () => {
+          console.log(h('[Device offline]', 'red'))
+          console.log(
+            v('Model', unknown ? device.type : device.modelName),
+            v('ID', device.id),
+            v('Host', device.host)
+          )
+        })
+        .on('online', () => {
+          console.log(h('[Device online]'))
+          console.log(
+            v('Model', unknown ? device.type : device.modelName),
+            v('ID', device.id),
+            v('Host', device.host)
+          )
+        })
+    })
+    .on('stale', device => {
+      console.log(h('[Device stale]', 'red'))
+      console.log(
+        v('Model', unknown ? device.type : device.modelName),
+        v('ID', device.id),
+        v('Host', device.host)
+      )
+    })
+    .start()
+}
+
+const description = host => {
+  shellies.Coap.getDescription(host)
+    .then(msg => {
+      const device = shellies.createDevice(
+        msg.deviceType,
+        msg.deviceId,
+        msg.host
+      )
+
+      const unknown = shellies.isUnknownDevice(device)
+      if (unknown) {
+        console.log(colors.yellow('[Unknown device]'))
+      }
+
+      console.log(
+        v('Model', unknown ? device.type : device.modelName),
+        v('ID', device.id),
+        v('Host', device.host)
+      )
+      console.log(v('Protocol revision', msg.protocolRevision))
+
+      console.log(v('Description', JSON.stringify(msg.payload)))
+    })
+}
+
+const status = host => {
+  shellies.Coap.getStatus(host)
+    .then(msg => {
+      const device = shellies.createDevice(
+        msg.deviceType,
+        msg.deviceId,
+        msg.host
+      )
+      device.update(msg)
+      device.ttl = 0
+
+      const unknown = shellies.isUnknownDevice(device)
+      if (unknown) {
+        console.log(colors.yellow('[Unknown device]'))
+      }
+
+      console.log(
+        v('Model', unknown ? device.type : device.modelName),
+        v('ID', device.id),
+        v('Host', device.host)
+      )
+
+      if (!shellies.isUnknownDevice(device)) {
+        for (const [prop, value] of device) {
+          console.log(
+            v('Property', prop),
+            v('Value', value)
+          )
+        }
+      }
+
+      console.log(v('Status', JSON.stringify(msg.payload)))
+    })
+}
+
+const commands = new Map()
+commands.set('listen', listen)
+commands.set('description', description)
+commands.set('status', status)
+
+try {
+  const { command, argv } = commandLineCommands(
+    Array.from(commands.keys())
+  )
+
+  commands.get(command).apply(this, argv)
+} catch (e) {
+  if (e.name === 'INVALID_COMMAND') {
+    console.log('node-shellies', packageVersion)
+    console.log('')
+    console.log('Valid commands:', Array.from(commands.keys()).join(', '))
+  } else {
+    console.error(e)
+    process.exit(1)
+  }
+}

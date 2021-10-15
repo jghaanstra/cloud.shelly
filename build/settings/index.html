@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+  <head>
+  <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+		<style>
+    .shelly-notification .table {
+    width: auto;
+    }
+    .shelly-notification .table th, .shelly-notification .table td {
+    padding: 2px 20px 2px 0;
+    }
+    .form-group {
+    padding-bottom: 10px;
+    }
+    .shelly-general .form-group input[type='text'], .shelly-general .form-group input[type='password'] {
+    width: 220px;
+    }
+    .shelly-status {
+  		display: none;
+  	}
+    .buttons, .messages {
+    padding-top: 10px;
+    }
+    .button {
+      width: 100%;
+      margin-bottom: 4px !important;
+    }
+    .button:disabled {
+      color: #ccc;
+    }
+    .button:enabled {
+      background-color: #00c139 !important;
+      color: #fff;
+    }
+		</style>
+  </head>
+  <body>
+    <h1 data-i18n="settings.title">Shelly App Settings</h1>
+
+    <fieldset class="shelly-general">
+      <legend data-i18n="settings.general">General Settings</legend>
+      <p data-i18n="settings.intro-coap">Users with a lot (20+) Shelly devices may experience the app crashing when using device updates over CoAP. Disabling this will prevent the app from crashing and will switch to HTTP polling fallback. Beware that this also disables the input and action events (like short push etc).</p>
+      <div class="form-group">
+      <label for="coap" data-i18n="settings.coap">Disable CoAP?</label>
+      <input type="checkbox" class="form-control" id="coap">
+      </div>
+      <div class="form-group">
+      <label for="port" data-i18n="settings.polling">Polling Frequency</label>
+      <input type="number" class="form-control" id="polling" placeholder="5" min="5" max="3600">
+      </div>
+      <div class="messages messages-general">
+      <p class="shelly-ok shelly-status" style="color: #008C23;"><i class="fa fa-check"></i> <span class="shelly-ok-msg" data-i18n="settings.success">Settings have been saved succesfully.</span></p>
+      <p class="shelly-error shelly-status" style="color: #ff6300;"><i class="fa fa-times"></i> <span class="shelly-error-msg"></span></p>
+      </div>
+      <div class="form-group buttons">
+      <button id="save-general" class="button" data-i18n="settings.save">Save</button>
+      </div>
+    </fieldset>
+
+    <script type="text/javascript">
+      function onHomeyReady(Homey) {
+        Homey.get('general_coap')
+          .then(coap => {
+            document.getElementById('coap').checked = coap;
+          })
+          .catch(error => {
+            return console.error('Could not get CoAP setting', error);
+          })
+        Homey.get('general_polling_frequency')
+          .then(polling => {
+            document.getElementById('polling').value = polling;
+          })
+          .catch(error => {
+            return console.error('Could not get polling frequency', error);
+          })
+
+        document.getElementById("save-general").addEventListener("click", function(elem) {
+          save(Homey);
+          return false;
+        });
+
+        Homey.ready();
+      }
+
+      function save(Homey) {
+        Homey.set('general_coap', document.getElementById('coap').checked);
+        Homey.set('general_polling_frequency', document.getElementById('polling').value);
+
+        Homey.api('PUT', '/updatesettings/', {
+          "general_coap": document.getElementById('coap').checked
+        })
+          .then(result => {
+            document.getElementsByClassName('shelly-ok')[0].style.display = 'block';
+          })
+          .catch(error => {
+            document.getElementsByClassName('shelly-error')[0].style.display = 'block';
+            document.getElementsByClassName('shelly-error-msg')[0].innerHTML = error;
+          });
+      };
+    </script>
+  </body>
+</html>

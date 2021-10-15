@@ -334,5 +334,8 @@
   },
   "3.4.5": {
     "en": "Fixed an issue with the inputs for GEN1 devices with multiple channels. Fixed an issue with inputs for GEN2 (Plus) devices."
+  },
+  "3.4.6": {
+    "en": "Updated the Shelly Uni icon. Improved the dimming capability of the Shelly Dimmer, it not respects the transition time. Fixed a small issue with crashes on Homey Cloud."
   }
 }

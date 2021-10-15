@@ -1,0 +1,42 @@
+<script type="text/javascript">
+
+Homey.setTitle(Homey.__('pair.titleselection'));
+
+$(function() {
+  var shelly = {};
+
+	$('#again').click(function() {
+    Homey.showView('list_devices');
+	});
+
+  $('#manual').click(function() {
+    Homey.showView('manual_pairing');
+	});
+
+})
+</script>
+
+<style type="text/css">
+  .form-group {
+    width: 100%;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .buttons {
+    text-align: center;
+    padding-top: 14px;
+  }
+  .button {
+    display: block;
+    min-width: 100%;
+    margin-bottom: 8px !important;
+  }
+</style>
+
+<p data-i18n="pair.nodevices">No devices have been discovered. You can try again or use manual pairing if you know the IP address of your Shelly device.</p>
+<div class="shelly-pairing">
+	<div class="form-group buttons">
+		<button id="again" class="button" data-i18n="pair.again">Try Again</button>
+		<button id="manual" class="button" data-i18n="pair.manual">Manual</button>
+	</div>
+</div>
