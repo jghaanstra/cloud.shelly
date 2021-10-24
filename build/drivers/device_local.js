@@ -15,10 +15,12 @@ class ShellyDevice extends Device {
   async onDeleted() {
     try {
       clearInterval(this.pollingInterval);
-      if (this.getStoreValue('communication') === 'websocket' && this.ws.readyState !== WebSocket.CLOSED) {
+      if (this.getStoreValue('communication') === 'websocket') {
         clearTimeout(this.pingWsTimeout);
         clearTimeout(this.reconnectWsTimeout);
-        this.ws.close();
+        if (this.getStoreValue('channel') === 0 && this.ws.readyState !== WebSocket.CLOSED) {
+          this.ws.close();
+        }
       }
       if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
         const iconpath = "/userdata/" + this.getData().id +".svg";

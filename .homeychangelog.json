@@ -337,5 +337,11 @@
   },
   "3.4.6": {
     "en": "Updated the Shelly Uni icon. Improved the dimming capability of the Shelly Dimmer, it not respects the transition time. Fixed a small issue with crashes on Homey Cloud."
+  },
+  "3.4.7": {
+    "en": "Fixed an issue with switching channel 2-4 of the Shelly 4Pro Plus and added trigger cards for the input of the Shelly 4Pro Plus."
+  },
+  "3.4.8": {
+    "en": "Fixed an issue with switching channel 2-4 of the Shelly 4Pro Plus and added trigger cards for the input of the Shelly 4Pro Plus."
   }
 }
