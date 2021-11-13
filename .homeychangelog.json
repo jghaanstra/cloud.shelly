@@ -343,5 +343,8 @@
   },
   "3.4.8": {
     "en": "Fixed an issue with switching channel 2-4 of the Shelly 4Pro Plus and added trigger cards for the input of the Shelly 4Pro Plus."
+  },
+  "3.4.9": {
+    "en": "Fix for meter power capability displaying in watt-hours instead of kWh on Shelly Plus devices."
   }
 }

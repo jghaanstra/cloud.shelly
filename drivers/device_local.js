@@ -59,7 +59,8 @@ class ShellyDevice extends Device {
         /* meter_power */
         if (result["switch:"+channel].hasOwnProperty("aenergy") && this.hasCapability('meter_power')) {
           if (result["switch:"+channel].aenergy.hasOwnProperty("total")) {
-            this.updateCapabilityValue('meter_power', result["switch:"+channel].aenergy.total, channel);
+            let meter_power = result["switch:"+channel].aenergy.total * 0.000017;
+            this.updateCapabilityValue('meter_power', meter_power, channel);
           }
         }
 

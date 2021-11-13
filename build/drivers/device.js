@@ -662,6 +662,7 @@ class ShellyDevice extends Homey.Device {
         case 'power3':
           this.updateCapabilityValue('measure_power', value, channel);
           break;
+        case: 'total':
         case 'energyCounter0':
         case 'energyCounter1':
         case 'energyCounter2':
