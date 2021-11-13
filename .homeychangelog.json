@@ -346,5 +346,8 @@
   },
   "3.4.9": {
     "en": "Fix for meter power capability displaying in watt-hours instead of kWh on Shelly Plus devices."
+  },
+  "3.4.10": {
+    "en": "Fix for meter power capability displaying in watt-hours instead of kWh on Shelly Plus devices."
   }
 }
