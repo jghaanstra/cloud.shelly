@@ -662,7 +662,6 @@ class ShellyDevice extends Homey.Device {
         case 'power3':
           this.updateCapabilityValue('measure_power', value, channel);
           break;
-        case 'total':
         case 'energyCounter0':
         case 'energyCounter1':
         case 'energyCounter2':
@@ -672,6 +671,10 @@ class ShellyDevice extends Homey.Device {
           } else {
             var meter_power = value * 0.000017;
           }
+          this.updateCapabilityValue('meter_power', meter_power, channel);
+          break;
+        case 'total':
+          var meter_power = value / 1000;
           this.updateCapabilityValue('meter_power', meter_power, channel);
           break;
         case 'energyReturned0':
