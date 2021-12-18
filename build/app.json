@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.5.0",
+  "version": "3.5.1",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -7854,10 +7854,10 @@
       },
       "getable": true,
       "setable": true,
-      "uiComponent": "slider",
+      "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/valve_position.svg",
-      "min": 0,
+      "min": -1,
       "max": 100,
       "units": {
         "en": "%",

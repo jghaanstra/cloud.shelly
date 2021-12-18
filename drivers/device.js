@@ -780,7 +780,7 @@ class ShellyDevice extends Homey.Device {
           this.updateCapabilityValue('dim', dim, channel);
           break;
         case 'mode':
-          if (this.getStoreValue('type') !== 'SHTRV-01') {
+          if (this.getStoreValue('type') === 'SHTRV-01') {
             this.updateCapabilityValue('valve_mode', value.toString());
           } else {
             let light_mode = value === 'white' ? 'temperature' : 'color';

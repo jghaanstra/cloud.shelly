@@ -355,5 +355,8 @@
   },
   "3.5.0": {
     "en": "Support for Shelly TRV, Shelly Pro 1, Shelly Pro 1PM, Shelly Pro 2 and Shelly Pro 2PM for local Homey has been added. Also the device temperature for Shelly 2.5 rollershutter has been added for local Homey. And the device overpowered trigger card has been deprecated. Please use the generic device error trigger card available on app level which now also reports overpower, overtemperature, overvoltage and overcurrent errors for Shelly Pro and Plus devices."
+  },
+  "3.5.1": {
+    "en": "Support for Shelly TRV, Shelly Pro 1, Shelly Pro 1PM, Shelly Pro 2 and Shelly Pro 2PM for local Homey has been added. Also the device temperature for Shelly 2.5 rollershutter has been added for local Homey. And the device overpowered trigger card has been deprecated. Please use the generic device error trigger card available on app level which now also reports overpower, overtemperature, overvoltage and overcurrent errors for Shelly Pro and Plus devices."
   }
 }
