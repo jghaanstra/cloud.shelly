@@ -1,0 +1,19 @@
+{
+  "id": "triggerInput4Off",
+  "title": {
+    "en": "Input 4 turned off",
+    "nl": "Input 4 uitgezet"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shellyi4&capabilities=input_4"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

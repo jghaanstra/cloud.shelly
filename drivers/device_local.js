@@ -83,6 +83,24 @@ class ShellyDevice extends Device {
         }
       }
 
+      if (result.hasOwnProperty("input:"+ channel) && this.hasCapability('input_2')) {
+        if (result["input:"+channel].hasOwnProperty("state") && result["input:"+channel].state !== null) {
+          this.updateCapabilityValue('input_2', result["input:"+channel].state, channel);
+        }
+      }
+
+      if (result.hasOwnProperty("input:"+ channel) && this.hasCapability('input_3')) {
+        if (result["input:"+channel].hasOwnProperty("state") && result["input:"+channel].state !== null) {
+          this.updateCapabilityValue('input_3', result["input:"+channel].state, channel);
+        }
+      }
+
+      if (result.hasOwnProperty("input:"+ channel) && this.hasCapability('input_4')) {
+        if (result["input:"+channel].hasOwnProperty("state") && result["input:"+channel].state !== null) {
+          this.updateCapabilityValue('input_4', result["input:"+channel].state, channel);
+        }
+      }
+
       // DEVICE TEMPERATURE
       if (result.hasOwnProperty("systemp") && this.hasCapability('measure_temperature') && this.getStoreValue('channel') === 0) {
 
@@ -93,13 +111,9 @@ class ShellyDevice extends Device {
       // RSSI
       if (result.hasOwnProperty("wifi")) {
 
-        /* measure_humidity */
-        if (result.wifi.hasOwnProperty("rssi")) {
-          if (!this.hasCapability("rssi")) {
-            this.addCapability("rssi"); // TODO: remove this after some releases
-          } else {
-            this.updateCapabilityValue('rssi', result.wifi.rssi);
-          }
+        /* rssi */
+        if (result.wifi.hasOwnProperty("rssi") && this.hasCapability("rssi")) {
+          this.updateCapabilityValue('rssi', result.wifi.rssi);
         }
 
       }
@@ -149,8 +163,13 @@ class ShellyDevice extends Device {
             var channel = element.id
 
             for (const [capability, value] of Object.entries(element)) {
-
-              if (capability !== 'component' && capability !== 'id' && capability !== 'source') {
+              if (capability === 'errors') { /* handle device errors */
+                value.forEach((element) => {
+                  const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
+                  const device = this.driver.getDevice({id: device_id });
+                  this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": this.homey.__(element)});
+                });
+              } else if (capability !== 'component' && capability !== 'id' && capability !== 'source') {
 
                 if (typeof value === 'object' && value !== null) { /* parse aenergy and device temperature data */
                   for (const [capability, values] of Object.entries(value)) {
@@ -169,7 +188,14 @@ class ShellyDevice extends Device {
           });
         } else if (result.method === 'NotifyEvent') { /* parse event updates */
           result.params.events.forEach((event) => {
-            this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(event.event)}, {"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(event.event)});
+            var channel = event.id;
+            if (channel === 0) {
+              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(event.event)}, {"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(event.event)});
+            } else {
+              const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
+              const device = this.driver.getDevice({id: device_id });
+              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(event.event)}, {"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(event.event)});
+            }
           });
         }
       } catch (error) {

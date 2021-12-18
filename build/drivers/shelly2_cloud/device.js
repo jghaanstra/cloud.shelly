@@ -17,7 +17,7 @@ class Shelly2CloudDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Changed');
-    this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
+    this.homey.flow.getDeviceTriggerCard('triggerOverpowered'); // TODO: card is deprecated, remove after some time.
 
     this.setAvailable();
 

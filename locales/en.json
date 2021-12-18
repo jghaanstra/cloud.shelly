@@ -21,6 +21,7 @@
     "startpairing": "First pair the device with the Shelly smartphone app. Then press the physical button on your Shelly sensor or remove and re-insert the battery to wake up the device. The LED inside the sensor stops blinking once it has connected to your WiFi and is then ready for pairing. Then you can click the next button below.",
     "startpairingbutton": "First pair the device with the Shelly smartphone app. Connect a USB cable to the button to ensure it's powered and connected with your WiFi before continuing.",
     "startpairingmotion": "First pair the device with the Shelly smartphone app. From the webinterface reboot your Shelly Motion Sensor and continu this pairing wizard directly after the sensor has rebooted.",
+    "startpairingtrv": "First pair the device with the Shelly smartphone app and mount it according to the instructions. Then shortly press the reset button next to the USB-C charger with a pin to make sure the device is awake. Continue the pairing wizard.",
     "titleselection": "What do you want to do?",
     "nodevices": "No devices have been discovered. You can try again or use manual pairing if you know the IP address of your Shelly device.",
     "again": "Try Again",
@@ -58,7 +59,11 @@
     "warning": "With this setup, controlling the LED strips with the Shelly apps is not practical."
   },
   "device": {
-    "unreachable": "Device is unreachable: "
+    "unreachable": "Device is unreachable: ",
+    "overpower": "Error: device is overpowered.",
+    "overvoltage": "Error: overvoltage.",
+    "overtemp": "Error: device temperature to high.",
+    "overcurrent": "Error: overcurrent."
   },
   "driver": {
     "wrongdevice": "The Shelly device you are trying to pair does not match with the selected Shelly device in the pairing wizard."

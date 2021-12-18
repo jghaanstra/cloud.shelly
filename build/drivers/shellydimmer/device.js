@@ -22,7 +22,7 @@ class ShellyDimmerDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput2On');
     this.homey.flow.getDeviceTriggerCard('triggerInput2Off');
     this.homey.flow.getDeviceTriggerCard('triggerInput2Changed');
-    this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
+    this.homey.flow.getDeviceTriggerCard('triggerOverpowered'); // TODO: card is deprecated, remove after some time.
 
     this.setAvailable();
 

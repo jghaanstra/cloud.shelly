@@ -1,0 +1,39 @@
+<script type="text/javascript">
+  try {
+    Homey.emit('add_device', {})
+      .then(result => {
+        var i;
+        for (i = 0; i < 3; i++) {
+          var deviceid = i + 1;
+          if (i < 2) {
+            Homey.createDevice({
+      				name: 'Shelly Pro 2PM ' + deviceid,
+      				data: {
+                id: result.data.id + '-channel-' + i
+              },
+      				settings: {
+                address  : result.settings.address,
+                username : result.settings.username,
+                password : result.settings.password
+              },
+              store: {
+                main_device: result.data.id,
+                channel: i,
+                type: result.store.type,
+                battery: result.store.battery,
+                unicast: result.store.unicast,
+                sdk: 3,
+                communication: result.store.communication
+              },
+              icon: result.icon
+      			});
+          } else {
+            Homey.done()
+          }
+    		}
+      })
+  } catch (error) {
+    Homey.alert(error);
+    Homey.done();
+  }
+</script>

@@ -20,6 +20,11 @@ class Shelly25RollerShutterDevice extends Device {
 
     this.setAvailable();
 
+    // TODO: remove in the next release
+    if (!this.hasCapability('measure_temperature')) {
+      this.addCapability('measure_temperature')
+    }
+
     // INITIAL UPDATE AND POLLING
     this.bootSequence();
 

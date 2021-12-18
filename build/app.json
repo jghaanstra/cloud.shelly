@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.4.11",
+  "version": "3.5.0",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -193,8 +193,8 @@
       {
         "id": "triggerDeviceOffline",
         "title": {
-          "en": "Device not reachable",
-          "nl": "Apparaat is niet bereikbaar"
+          "en": "Device error",
+          "nl": "Apparaat foutmelding"
         },
         "tokens": [
           {
@@ -213,7 +213,7 @@
               "en": "Error",
               "nl": "Fout"
             },
-            "example": "Error 401: not authenticated"
+            "example": "Error: device is overpowered."
           }
         ],
         "platforms": [
@@ -460,6 +460,72 @@
         ]
       },
       {
+        "id": "triggerInput4Changed",
+        "title": {
+          "en": "Input 4 changed",
+          "nl": "Input 4 gewijzigd"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellyi4&capabilities=input_4"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "triggerInput4Off",
+        "title": {
+          "en": "Input 4 turned off",
+          "nl": "Input 4 uitgezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellyi4&capabilities=input_4"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "triggerInput4On",
+        "title": {
+          "en": "Input 4 turned on",
+          "nl": "Input 4 aangezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellyi4&capabilities=input_4"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
         "id": "triggerInputExternal1Off",
         "title": {
           "en": "External input turned off",
@@ -589,7 +655,8 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "deprecated": true
       },
       {
         "id": "triggerTemperature1",
@@ -724,6 +791,34 @@
         ]
       },
       {
+        "id": "triggerValvePosition",
+        "title": {
+          "en": "Valve position changed",
+          "nl": "Afsluitklep positie gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "position",
+            "type": "number",
+            "title": {
+              "en": "Position",
+              "nl": "Positie"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=shelly-trv"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
         "id": "triggerGasConcentration",
         "title": {
           "en": "Gas concentration changed",
@@ -816,6 +911,76 @@
         ],
         "platforms": [
           "local"
+        ]
+      },
+      {
+        "id": "conditionValveMode",
+        "title": {
+          "en": "Valve profile !{{is|is not}}",
+          "nl": "Radiator profiel !{{is|is niet}}"
+        },
+        "titleFormatted": {
+          "en": "Valve profile !{{is|is not}} [[profile]]",
+          "nl": "Radiator profiel !{{is|is niet}} [[profile]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=shelly-trv"
+          },
+          {
+            "name": "profile",
+            "type": "dropdown",
+            "title": {
+              "en": "Profile",
+              "nl": "Profiel"
+            },
+            "values": [
+              {
+                "id": "0",
+                "title": {
+                  "en": "Disabled",
+                  "nl": "Uitgeschakeld"
+                }
+              },
+              {
+                "id": "1",
+                "title": {
+                  "en": "Profile 1",
+                  "nl": "Profiel 1"
+                }
+              },
+              {
+                "id": "2",
+                "title": {
+                  "en": "Profile 2",
+                  "nl": "Profiel 2"
+                }
+              },
+              {
+                "id": "3",
+                "title": {
+                  "en": "Profile 3",
+                  "nl": "Profiel 3"
+                }
+              },
+              {
+                "id": "4",
+                "title": {
+                  "en": "Profile 4",
+                  "nl": "Profiel 4"
+                }
+              },
+              {
+                "id": "5",
+                "title": {
+                  "en": "Profile 5",
+                  "nl": "Profiel 5"
+                }
+              }
+            ]
+          }
         ]
       }
     ],
@@ -1198,6 +1363,112 @@
               "nl": "Selecteer Shelly 2"
             },
             "filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "actionValvePosition",
+        "title": {
+          "en": "Manually set valve",
+          "nl": "Handmatig afsluitklep instellen"
+        },
+        "titleFormatted": {
+          "en": "Manually set valve position to [[position]]",
+          "nl": "Handmatig instellen radiator positie naar [[position]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=shelly-trv"
+          },
+          {
+            "name": "position",
+            "type": "range",
+            "title": {
+              "en": "Position",
+              "nl": "Positie"
+            },
+            "min": 0,
+            "max": 100,
+            "step": 0.1,
+            "label": "%"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "actionValveMode",
+        "title": {
+          "en": "Set valve profile",
+          "nl": "Instellen radiator profiel"
+        },
+        "titleFormatted": {
+          "en": "Set valve profile to [[profile]]",
+          "nl": "Instellen radiator profiel naar [[profile]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=shelly-trv"
+          },
+          {
+            "name": "profile",
+            "type": "dropdown",
+            "title": {
+              "en": "Profile",
+              "nl": "Profiel"
+            },
+            "values": [
+              {
+                "id": "0",
+                "title": {
+                  "en": "Disabled",
+                  "nl": "Uitgeschakeld"
+                }
+              },
+              {
+                "id": "1",
+                "title": {
+                  "en": "Profile 1",
+                  "nl": "Profiel 1"
+                }
+              },
+              {
+                "id": "2",
+                "title": {
+                  "en": "Profile 2",
+                  "nl": "Profiel 2"
+                }
+              },
+              {
+                "id": "3",
+                "title": {
+                  "en": "Profile 3",
+                  "nl": "Profiel 3"
+                }
+              },
+              {
+                "id": "4",
+                "title": {
+                  "en": "Profile 4",
+                  "nl": "Profiel 4"
+                }
+              },
+              {
+                "id": "5",
+                "title": {
+                  "en": "Profile 5",
+                  "nl": "Profiel 5"
+                }
+              }
+            ]
           }
         ],
         "platforms": [
@@ -1742,6 +2013,522 @@
               "label": {
                 "en": "Cloud Device ID",
                 "nl": "Cloud Device ID"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "icon": "/drivers/shelly-pro-1/assets/icon.svg",
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "name": {
+        "en": "Shelly Pro 1",
+        "nl": "Shelly Pro 1"
+      },
+      "images": {
+        "xlarge": "./assets/drivers/shelly-pro-1/images/xlarge.jpg",
+        "large": "./assets/drivers/shelly-pro-1/images/large.jpg",
+        "small": "./assets/drivers/shelly-pro-1/images/small.jpg"
+      },
+      "class": "socket",
+      "discovery": "shelly-pro-1",
+      "capabilities": [
+        "onoff",
+        "measure_temperature",
+        "input_1",
+        "rssi"
+      ],
+      "id": "shelly-pro-1",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "icon": "/drivers/shelly-pro-1pm/assets/icon.svg",
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "name": {
+        "en": "Shelly Pro 1PM",
+        "nl": "Shelly Pro 1PM"
+      },
+      "images": {
+        "xlarge": "./assets/drivers/shelly-pro-1pm/images/xlarge.jpg",
+        "large": "./assets/drivers/shelly-pro-1pm/images/large.jpg",
+        "small": "./assets/drivers/shelly-pro-1pm/images/small.jpg"
+      },
+      "class": "socket",
+      "discovery": "shelly-pro-1pm",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power",
+        "measure_voltage",
+        "measure_current",
+        "measure_temperature",
+        "input_1",
+        "rssi"
+      ],
+      "id": "shelly-pro-1pm",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "icon": "/drivers/shelly-pro-2/assets/icon.svg",
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "name": {
+        "en": "Shelly Pro 2",
+        "nl": "Shelly Pro 2"
+      },
+      "images": {
+        "xlarge": "./assets/drivers/shelly-pro-2/images/xlarge.jpg",
+        "large": "./assets/drivers/shelly-pro-2/images/large.jpg",
+        "small": "./assets/drivers/shelly-pro-2/images/small.jpg"
+      },
+      "class": "socket",
+      "discovery": "shelly-pro-2",
+      "capabilities": [
+        "onoff",
+        "measure_temperature",
+        "input_1",
+        "rssi"
+      ],
+      "id": "shelly-pro-2",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "icon": "/drivers/shelly-pro-2pm/assets/icon.svg",
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "name": {
+        "en": "Shelly Pro 2PM",
+        "nl": "Shelly Pro 2PM"
+      },
+      "images": {
+        "xlarge": "./assets/drivers/shelly-pro-2pm/images/xlarge.jpg",
+        "large": "./assets/drivers/shelly-pro-2pm/images/large.jpg",
+        "small": "./assets/drivers/shelly-pro-2pm/images/small.jpg"
+      },
+      "class": "socket",
+      "discovery": "shelly-pro-2pm",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power",
+        "measure_voltage",
+        "measure_current",
+        "measure_temperature",
+        "input_1",
+        "rssi"
+      ],
+      "id": "shelly-pro-2pm",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "icon": "/drivers/shelly-trv/assets/icon.svg",
+      "pair": [
+        {
+          "id": "start",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "name": {
+        "en": "Shelly TRV",
+        "nl": "Shelly TRV"
+      },
+      "images": {
+        "xlarge": "./assets/drivers/shelly-trv/images/xlarge.jpg",
+        "large": "./assets/drivers/shelly-trv/images/large.jpg",
+        "small": "./assets/drivers/shelly-trv/images/small.jpg"
+      },
+      "class": "heater",
+      "discovery": "shelly-trv",
+      "capabilities": [
+        "target_temperature",
+        "measure_temperature",
+        "measure_battery",
+        "valve_position",
+        "valve_mode",
+        "rssi"
+      ],
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ]
+      },
+      "id": "shelly-trv",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
               }
             }
           ]
@@ -2869,6 +3656,7 @@
         "windowcoverings_set",
         "measure_power",
         "meter_power",
+        "measure_temperature",
         "input_1",
         "input_2",
         "button.sethalfwayposition",
@@ -2979,6 +3767,7 @@
         "windowcoverings_set",
         "measure_power",
         "meter_power",
+        "measure_temperature",
         "input_1",
         "input_2",
         "button.sethalfwayposition",
@@ -5457,6 +6246,106 @@
       ]
     },
     {
+      "icon": "/drivers/shellyi4/assets/icon.svg",
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "name": {
+        "en": "Shelly i4",
+        "nl": "Shelly i4"
+      },
+      "images": {
+        "xlarge": "./assets/drivers/shellyi4/images/xlarge.jpg",
+        "large": "./assets/drivers/shellyi4/images/large.jpg",
+        "small": "./assets/drivers/shellyi4/images/small.jpg"
+      },
+      "class": "other",
+      "discovery": "shellyi4",
+      "capabilities": [
+        "input_1",
+        "input_2",
+        "input_3",
+        "input_4",
+        "rssi"
+      ],
+      "id": "shellyi4",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "icon": "/drivers/shellymotion/assets/icon.svg",
       "pair": [
         {
@@ -6750,6 +7639,26 @@
       },
       "icon": "/assets/input_switch.svg"
     },
+    "input_4": {
+      "type": "boolean",
+      "title": {
+        "en": "State of Input 4",
+        "nl": "Status van input 4"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleFalse": {
+        "en": "Input 4 turned off",
+        "nl": "Input 4 uitgeschakeld"
+      },
+      "insightsTitleTrue": {
+        "en": "Input 4 turned on",
+        "nl": "Input 4 ingeschakeld"
+      },
+      "icon": "/assets/input_switch.svg"
+    },
     "input_external": {
       "type": "boolean",
       "title": {
@@ -6881,6 +7790,79 @@
         "en": "°",
         "nl": "°"
       }
+    },
+    "valve_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Valve profile",
+        "nl": "Radiator profiel"
+      },
+      "values": [
+        {
+          "id": "0",
+          "title": {
+            "en": "Disabled",
+            "nl": "Uitgeschakeld"
+          }
+        },
+        {
+          "id": "1",
+          "title": {
+            "en": "Profile 1",
+            "nl": "Profiel 1"
+          }
+        },
+        {
+          "id": "2",
+          "title": {
+            "en": "Profile 2",
+            "nl": "Profiel 2"
+          }
+        },
+        {
+          "id": "3",
+          "title": {
+            "en": "Profile 3",
+            "nl": "Profiel 3"
+          }
+        },
+        {
+          "id": "4",
+          "title": {
+            "en": "Profile 4",
+            "nl": "Profiel 4"
+          }
+        },
+        {
+          "id": "5",
+          "title": {
+            "en": "Profile 5",
+            "nl": "Profiel 5"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "icon": "/assets/valve_mode.svg"
+    },
+    "valve_position": {
+      "type": "number",
+      "title": {
+        "en": "Valve position",
+        "nl": "Afsluitklep positie"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "slider",
+      "insights": true,
+      "icon": "/assets/valve_position.svg",
+      "min": 0,
+      "max": 100,
+      "units": {
+        "en": "%",
+        "nl": "%"
+      }
     }
   },
   "discovery": {
@@ -6917,6 +7899,101 @@
             "match": {
               "type": "regex",
               "value": "^shellyplug-s-"
+            }
+          }
+        ]
+      ]
+    },
+    "shelly-pro-1": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{host}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^ShellyPro1-"
+            }
+          }
+        ]
+      ]
+    },
+    "shelly-pro-1pm": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{host}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^ShellyPro1PM-"
+            }
+          }
+        ]
+      ]
+    },
+    "shelly-pro-2": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{host}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^ShellyPro2-"
+            }
+          }
+        ]
+      ]
+    },
+    "shelly-pro-2pm": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{host}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^ShellyPro2PM-"
+            }
+          }
+        ]
+      ]
+    },
+    "shelly-trv": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{host}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^shellytrv-"
             }
           }
         ]
@@ -7286,6 +8363,25 @@
             "match": {
               "type": "regex",
               "value": "^shellyix3-"
+            }
+          }
+        ]
+      ]
+    },
+    "shellyi4": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{host}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^ShellyPlusI4-"
             }
           }
         ]

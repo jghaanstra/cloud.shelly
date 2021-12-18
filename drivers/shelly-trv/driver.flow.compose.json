@@ -1,0 +1,185 @@
+{
+  "triggers": [
+    {
+      "id": "triggerValvePosition",
+      "title": {
+        "en": "Valve position changed",
+        "nl": "Afsluitklep positie gewijzigd"
+      },
+      "tokens": [
+        {
+          "name": "position",
+          "type": "number",
+          "title": {
+            "en": "Position",
+            "nl": "Positie"
+          },
+          "example": 5.0
+        }
+      ],
+      "args": [],
+      "platforms": ["local"]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "conditionValveMode",
+      "title": {
+        "en": "Valve profile !{{is|is not}}",
+        "nl": "Radiator profiel !{{is|is niet}}"
+      },
+      "titleFormatted": {
+        "en": "Valve profile !{{is|is not}} [[profile]]",
+        "nl": "Radiator profiel !{{is|is niet}} [[profile]]"
+      },
+      "args": [
+        {
+          "name": "profile",
+          "type": "dropdown",
+          "title": {
+            "en": "Profile",
+            "nl": "Profiel"
+          },
+          "values": [
+            {
+              "id": "0",
+              "title": {
+                "en": "Disabled",
+                "nl": "Uitgeschakeld"
+              }
+            },
+            {
+              "id": "1",
+              "title": {
+                "en": "Profile 1",
+                "nl": "Profiel 1"
+              }
+            },
+            {
+              "id": "2",
+              "title": {
+                "en": "Profile 2",
+                "nl": "Profiel 2"
+              }
+            },
+            {
+              "id": "3",
+              "title": {
+                "en": "Profile 3",
+                "nl": "Profiel 3"
+              }
+            },
+            {
+              "id": "4",
+              "title": {
+                "en": "Profile 4",
+                "nl": "Profiel 4"
+              }
+            },
+            {
+              "id": "5",
+              "title": {
+                "en": "Profile 5",
+                "nl": "Profiel 5"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "actionValvePosition",
+      "title": {
+        "en": "Manually set valve",
+        "nl": "Handmatig afsluitklep instellen"
+      },
+      "titleFormatted": {
+        "en": "Manually set valve position to [[position]]",
+        "nl": "Handmatig instellen radiator positie naar [[position]]"
+      },
+      "args": [
+        {
+          "name": "position",
+          "type": "range",
+          "title": {
+            "en": "Position",
+            "nl": "Positie"
+          },
+          "min": 0,
+          "max": 100,
+          "step": 0.1,
+          "label": "%"
+        }
+      ],
+      "platforms": ["local"]
+    },
+    {
+      "id": "actionValveMode",
+      "title": {
+        "en": "Set valve profile",
+        "nl": "Instellen radiator profiel"
+      },
+      "titleFormatted": {
+        "en": "Set valve profile to [[profile]]",
+        "nl": "Instellen radiator profiel naar [[profile]]"
+      },
+      "args": [
+        {
+          "name": "profile",
+          "type": "dropdown",
+          "title": {
+            "en": "Profile",
+            "nl": "Profiel"
+          },
+          "values": [
+            {
+              "id": "0",
+              "title": {
+                "en": "Disabled",
+                "nl": "Uitgeschakeld"
+              }
+            },
+            {
+              "id": "1",
+              "title": {
+                "en": "Profile 1",
+                "nl": "Profiel 1"
+              }
+            },
+            {
+              "id": "2",
+              "title": {
+                "en": "Profile 2",
+                "nl": "Profiel 2"
+              }
+            },
+            {
+              "id": "3",
+              "title": {
+                "en": "Profile 3",
+                "nl": "Profiel 3"
+              }
+            },
+            {
+              "id": "4",
+              "title": {
+                "en": "Profile 4",
+                "nl": "Profiel 4"
+              }
+            },
+            {
+              "id": "5",
+              "title": {
+                "en": "Profile 5",
+                "nl": "Profiel 5"
+              }
+            }
+          ]
+        }
+      ],
+      "platforms": ["local"]
+    }
+  ]
+}

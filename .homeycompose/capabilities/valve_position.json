@@ -1,0 +1,18 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Valve position",
+    "nl": "Afsluitklep positie"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "slider",
+  "insights": true,
+  "icon": "/assets/valve_position.svg",
+  "min": 0,
+  "max": 100,
+  "units": {
+    "en": "%",
+    "nl": "%"
+  }
+}

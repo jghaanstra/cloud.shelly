@@ -1,0 +1,7 @@
+<script type="text/javascript">
+  Homey.emit('get_device', {})
+    .catch(error => {
+      Homey.alert(error);
+      Homey.done()
+    });
+</script>

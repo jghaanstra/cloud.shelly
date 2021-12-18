@@ -1,0 +1,22 @@
+{
+  "name": {
+    "en": "Shelly Pro 1",
+    "nl": "Shelly Pro 1"
+  },
+  "images": {
+    "xlarge": "./assets/drivers/shelly-pro-1/images/xlarge.jpg",
+    "large": "./assets/drivers/shelly-pro-1/images/large.jpg",
+    "small": "./assets/drivers/shelly-pro-1/images/small.jpg"
+  },
+  "class": "socket",
+  "discovery": "shelly-pro-1",
+  "$extends": [
+    "defaults"
+  ],
+  "capabilities": [
+    "onoff",
+    "measure_temperature",
+    "input_1",
+    "rssi"
+  ]
+}

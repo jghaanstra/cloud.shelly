@@ -12,7 +12,7 @@ class ShellyEmDevice extends Device {
     this.callbacks = [];
 
     this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned');
-    this.homey.flow.getDeviceTriggerCard('triggerOverpowered');
+    this.homey.flow.getDeviceTriggerCard('triggerOverpowered'); // TODO: card is deprecated, remove after some time.
 
     this.setAvailable();
 

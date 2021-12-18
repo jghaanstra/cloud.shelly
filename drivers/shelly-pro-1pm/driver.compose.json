@@ -1,0 +1,26 @@
+{
+  "name": {
+    "en": "Shelly Pro 1PM",
+    "nl": "Shelly Pro 1PM"
+  },
+  "images": {
+    "xlarge": "./assets/drivers/shelly-pro-1pm/images/xlarge.jpg",
+    "large": "./assets/drivers/shelly-pro-1pm/images/large.jpg",
+    "small": "./assets/drivers/shelly-pro-1pm/images/small.jpg"
+  },
+  "class": "socket",
+  "discovery": "shelly-pro-1pm",
+  "$extends": [
+    "defaults"
+  ],
+  "capabilities": [
+    "onoff",
+    "measure_power",
+    "meter_power",
+    "measure_voltage",
+    "measure_current",
+    "measure_temperature",
+    "input_1",
+    "rssi"
+  ]
+}

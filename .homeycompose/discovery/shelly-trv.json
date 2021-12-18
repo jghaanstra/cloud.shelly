@@ -1,0 +1,19 @@
+{
+  "type": "mdns-sd",
+  "mdns-sd": {
+    "name": "http",
+    "protocol": "tcp"
+  },
+  "id": "{{host}}",
+  "conditions": [
+    [
+      {
+        "field": "host",
+        "match": {
+          "type": "regex",
+          "value": "^shellytrv-"
+        }
+      }
+    ]
+  ]
+}

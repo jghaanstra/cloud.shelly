@@ -1,8 +1,8 @@
 {
   "id": "triggerDeviceOffline",
   "title": {
-    "en": "Device not reachable",
-    "nl": "Apparaat is niet bereikbaar"
+    "en": "Device error",
+    "nl": "Apparaat foutmelding"
   },
   "tokens": [
     {
@@ -21,7 +21,7 @@
         "en": "Error",
         "nl": "Fout"
       },
-      "example": "Error 401: not authenticated"
+      "example": "Error: device is overpowered."
     }
   ],
   "platforms": ["local", "cloud"]

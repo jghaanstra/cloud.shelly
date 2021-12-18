@@ -264,6 +264,31 @@ class ShellyApp extends Homey.App {
         return await this.util.sendCommand('/self_test', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
 
+    // SHELLY TRV
+    this.homey.flow.getConditionCard('conditionValveMode')
+      .registerRunListener(async (args) => {
+        if (args.profile === args.device.getCapabilityValue("valve_mode")) {
+          return true;
+        } else {
+          return false;
+        }
+      })
+
+    this.homey.flow.getActionCard('actionValvePosition')
+      .registerRunListener(async (args) => {
+        return await this.util.sendCommand('/thermostat/0?pos='+ args.position +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+      })
+
+    this.homey.flow.getActionCard('actionValveMode')
+      .registerRunListener(async (args) => {
+        if (args.profile === "0") {
+          return await this.util.sendCommand('/thermostat/0?schedule=false', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } else {
+          return await this.util.sendCommand('/thermostat/0?schedule=true&schedule_profile='+ args.profile +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        }
+      })
+
+
     // COAP: COAP LISTENER
     shellies.on('discover', device => {
       this.log('Discovered device with ID', device.id, 'and type', device.type, 'with IP address', device.host);

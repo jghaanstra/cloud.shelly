@@ -1,0 +1,23 @@
+{
+  "name": {
+    "en": "Shelly i4",
+    "nl": "Shelly i4"
+  },
+  "images": {
+    "xlarge": "./assets/drivers/shellyi4/images/xlarge.jpg",
+    "large": "./assets/drivers/shellyi4/images/large.jpg",
+    "small": "./assets/drivers/shellyi4/images/small.jpg"
+  },
+  "class": "other",
+  "discovery": "shellyi4",
+  "$extends": [
+    "defaults"
+  ],
+  "capabilities": [
+    "input_1",
+    "input_2",
+    "input_3",
+    "input_4",
+    "rssi"
+  ]
+}

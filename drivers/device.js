@@ -108,7 +108,7 @@ class ShellyDevice extends Homey.Device {
     }
   }
 
-  /* generic status updates parser for polling over local HTTP REST API and websockets cloud */
+  /* generic status updates parser for polling over local HTTP REST API and Cloud */
   async parseStatusUpdate(result) {
     try {
       let channel = this.getStoreValue('channel') || 0;
@@ -181,12 +181,17 @@ class ShellyDevice extends Homey.Device {
 
       }
 
-      // BAT (measure_battery)
+      // BAT (measure_battery, measure_voltage)
       if (result.hasOwnProperty("bat")) {
 
         /* measure_battery */
         if (result.bat.hasOwnProperty("value") && this.hasCapability('measure_battery')) {
           this.updateCapabilityValue('measure_battery', result.bat.value);
+        }
+
+        /* measure_voltage */
+        if (result.bat.hasOwnProperty("voltage") && this.hasCapability('measure_voltage')) {
+          this.updateCapabilityValue('measure_voltage', result.bat.voltage);
         }
 
       }
@@ -211,6 +216,38 @@ class ShellyDevice extends Homey.Device {
 
         /* measure_temperature */
         this.updateCapabilityValue('measure_temperature', result.temperature);
+
+      }
+
+      // THERMOSTATS (target_temperature, measure_temperature)
+      if (result.hasOwnProperty("thermostats") && this.hasCapability('measure_temperature')) {
+
+        /* valve_position */
+        if (result.thermostats[channel].hasOwnProperty("pos") && this.hasCapability('valve_position')) {
+          if (result.thermostats[channel].pos != this.getCapabilityValue('valve_position')) {
+            this.updateCapabilityValue('valve_position', result.thermostats[channel].pos);
+            this.homey.flow.getDeviceTriggerCard('triggerValvePosition').trigger(this, {'position': result.thermostats[channel].pos}, {})
+          }
+        }
+
+        /* valve_mode */
+        if (result.thermostats[channel].hasOwnProperty("schedule") && result.thermostats[channel].hasOwnProperty("schedule_profile") && this.hasCapability('valve_mode')) {
+          if (!result.thermostats[channel].schedule && this.getCapabilityValue('valve_position') !== "0") {
+            this.updateCapabilityValue('valve_mode', "0");
+          } else if (result.thermostats[channel].schedule && (result.thermostats[channel].schedule_profile.toString() !== this.getCapabilityValue('valve_mode'))) {
+            this.updateCapabilityValue('valve_mode', result.thermostats[channel].schedule_profile.toString());
+          }
+        }
+
+        /* target_temperature */
+        if (result.thermostats[channel].hasOwnProperty("target_t") && this.hasCapability('measure_temperature')) {
+          this.updateCapabilityValue('target_temperature', result.thermostats[channel].target_t.value);
+        }
+
+        /* measure_temperature */
+        if (result.thermostats[channel].hasOwnProperty("tmp") && this.hasCapability('measure_temperature')) {
+          this.updateCapabilityValue('measure_temperature', result.thermostats[channel].tmp.value);
+        }
 
       }
 
@@ -585,13 +622,9 @@ class ShellyDevice extends Homey.Device {
       // RSSI
       if (result.hasOwnProperty("wifi_sta")) {
 
-        /* measure_humidity */
-        if (result.wifi_sta.hasOwnProperty("rssi")) {
-          if (!this.hasCapability("rssi")) {
-            this.addCapability("rssi"); // TODO: remove this after some releases
-          } else {
-            this.updateCapabilityValue('rssi', result.wifi_sta.rssi);
-          }
+        /* rssi */
+        if (result.wifi_sta.hasOwnProperty("rssi") && this.hasCapability("rssi")) {
+          this.updateCapabilityValue('rssi', result.wifi_sta.rssi);
         }
 
       }
@@ -695,6 +728,7 @@ class ShellyDevice extends Homey.Device {
             this.homey.flow.getDeviceTriggerCard('triggerMeterPowerFactor').trigger(this, {'pf': value}, {});
           }
           break;
+        case 'current':
         case 'current0':
         case 'current1':
         case 'current2':
@@ -709,7 +743,7 @@ class ShellyDevice extends Homey.Device {
         case 'overPower0':
         case 'overPower1':
           if (value) {
-            this.homey.flow.getDeviceTriggerCard('triggerOverpowered').trigger(this, {}, {});
+            this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": this.homey.__('device.overpower')});
           }
           break;
         case 'battery':
@@ -718,7 +752,17 @@ class ShellyDevice extends Homey.Device {
         case 'tC':
         case 'deviceTemperature':
         case 'temperature':
+        case 'temp':
           this.updateCapabilityValue('measure_temperature', value, channel);
+          break;
+        case 'targetTemp':
+          this.updateCapabilityValue('target_temperature', value, channel);
+          break;
+        case 'valvePos':
+          if (value != this.getCapabilityValue('valve_position')) {
+            this.updateCapabilityValue('valve_position', value, channel);
+            this.homey.flow.getDeviceTriggerCard('triggerValvePosition').trigger(this, {'position': value}, {})
+          }
           break;
         case 'rollerState':
           this.rollerState(value);
@@ -736,8 +780,12 @@ class ShellyDevice extends Homey.Device {
           this.updateCapabilityValue('dim', dim, channel);
           break;
         case 'mode':
-          let light_mode = value === 'white' ? 'temperature' : 'color';
-          this.updateCapabilityValue('light_mode', light_mode, channel);
+          if (this.getStoreValue('type') !== 'SHTRV-01') {
+            this.updateCapabilityValue('valve_mode', value.toString());
+          } else {
+            let light_mode = value === 'white' ? 'temperature' : 'color';
+            this.updateCapabilityValue('light_mode', light_mode, channel);
+          }
           break;
         case 'colorTemperature':
           if (this.getStoreValue('type') === 'SHBDUO-1') {
@@ -866,6 +914,18 @@ class ShellyDevice extends Homey.Device {
               this.homey.flow.getDeviceTriggerCard('triggerInput3Off').trigger(this, {}, {});
             }
             this.homey.flow.getDeviceTriggerCard('triggerInput3Changed').trigger(this, {}, {});
+          }
+          break;
+        case 'input3':
+          let input_4 = value === 0 ? false : true;
+          if (input_4 != this.getCapabilityValue('input_4')) {
+            this.updateCapabilityValue('input_4', input_4, channel);
+            if (input_4) {
+              this.homey.flow.getDeviceTriggerCard('triggerInput4On').trigger(this, {}, {});
+            } else {
+              this.homey.flow.getDeviceTriggerCard('triggerInput4Off').trigger(this, {}, {});
+            }
+            this.homey.flow.getDeviceTriggerCard('triggerInput4Changed').trigger(this, {}, {});
           }
           break;
         case 'inputEvent0':
