@@ -12,8 +12,7 @@ class Shellyi3Driver extends Driver {
     this.config = {
       name: 'Shelly i3 Cloud',
       battery: false,
-      hostname: 'shellyi3-',
-      type: 'SHIX3-1'
+      hostname: 'shellyi3-'
     }
   }
 

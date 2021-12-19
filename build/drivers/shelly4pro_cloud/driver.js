@@ -12,8 +12,7 @@ class Shelly4ProCloudDriver extends Driver {
     this.config = {
       name: 'Shelly Pro 4(PM) Cloud',
       battery: false,
-      hostname: 'shelly4pro-',
-      type: 'SHSW-44'
+      hostname: 'shelly4pro-'
     }
   }
 

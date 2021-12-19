@@ -12,7 +12,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly4pro|shelly4pro_cloud|shelly25|shelly25_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellyair|shellybutton1|shellydimmer|shellydimmer_cloud|shellyi3|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
+      "filter": "driver_id=shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly4pro|shelly4pro_cloud|shelly25|shelly25_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellyair|shellybutton1|shellydimmer|shellydimmer_cloud|shellyi3|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
     }
   ],
   "platforms": ["local", "cloud"]

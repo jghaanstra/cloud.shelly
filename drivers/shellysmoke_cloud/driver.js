@@ -12,8 +12,7 @@ class ShellySmokeCloudDriver extends Driver {
     this.config = {
       name: 'Shelly Smoke',
       battery: true,
-      hostname: 'shellysmoke-',
-      type: 'SHSM-02'
+      hostname: 'shellysmoke-'
     }
   }
 
