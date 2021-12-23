@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.5.2",
+  "version": "3.5.3",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -931,55 +931,15 @@
           },
           {
             "name": "profile",
-            "type": "dropdown",
+            "type": "autocomplete",
             "title": {
               "en": "Profile",
               "nl": "Profiel"
             },
-            "values": [
-              {
-                "id": "0",
-                "title": {
-                  "en": "Disabled",
-                  "nl": "Uitgeschakeld"
-                }
-              },
-              {
-                "id": "1",
-                "title": {
-                  "en": "Profile 1",
-                  "nl": "Profiel 1"
-                }
-              },
-              {
-                "id": "2",
-                "title": {
-                  "en": "Profile 2",
-                  "nl": "Profiel 2"
-                }
-              },
-              {
-                "id": "3",
-                "title": {
-                  "en": "Profile 3",
-                  "nl": "Profiel 3"
-                }
-              },
-              {
-                "id": "4",
-                "title": {
-                  "en": "Profile 4",
-                  "nl": "Profiel 4"
-                }
-              },
-              {
-                "id": "5",
-                "title": {
-                  "en": "Profile 5",
-                  "nl": "Profiel 5"
-                }
-              }
-            ]
+            "placeholder": {
+              "en": "Select profile ...",
+              "nl": "Selecteer profiel ..."
+            }
           }
         ]
       }
@@ -1420,55 +1380,15 @@
           },
           {
             "name": "profile",
-            "type": "dropdown",
+            "type": "autocomplete",
             "title": {
               "en": "Profile",
               "nl": "Profiel"
             },
-            "values": [
-              {
-                "id": "0",
-                "title": {
-                  "en": "Disabled",
-                  "nl": "Uitgeschakeld"
-                }
-              },
-              {
-                "id": "1",
-                "title": {
-                  "en": "Profile 1",
-                  "nl": "Profiel 1"
-                }
-              },
-              {
-                "id": "2",
-                "title": {
-                  "en": "Profile 2",
-                  "nl": "Profiel 2"
-                }
-              },
-              {
-                "id": "3",
-                "title": {
-                  "en": "Profile 3",
-                  "nl": "Profiel 3"
-                }
-              },
-              {
-                "id": "4",
-                "title": {
-                  "en": "Profile 4",
-                  "nl": "Profiel 4"
-                }
-              },
-              {
-                "id": "5",
-                "title": {
-                  "en": "Profile 5",
-                  "nl": "Profiel 5"
-                }
-              }
-            ]
+            "placeholder": {
+              "en": "Select profile ...",
+              "nl": "Selecteer profiel ..."
+            }
           }
         ],
         "platforms": [

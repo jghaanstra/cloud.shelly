@@ -267,12 +267,16 @@ class ShellyApp extends Homey.App {
     // SHELLY TRV
     this.homey.flow.getConditionCard('conditionValveMode')
       .registerRunListener(async (args) => {
-        if (args.profile === args.device.getCapabilityValue("valve_mode")) {
+        if (args.profile.id === args.device.getCapabilityValue("valve_mode")) {
           return true;
         } else {
           return false;
         }
       })
+      .getArgument('profile')
+        .registerAutocompleteListener(async (query, args) => {
+          return await this.util.getTrvProfiles(args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        })
 
     this.homey.flow.getActionCard('actionValvePosition')
       .registerRunListener(async (args) => {
@@ -284,9 +288,13 @@ class ShellyApp extends Homey.App {
         if (args.profile === "0") {
           return await this.util.sendCommand('/thermostat/0?schedule=false', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         } else {
-          return await this.util.sendCommand('/thermostat/0?schedule=true&schedule_profile='+ args.profile +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          return await this.util.sendCommand('/thermostat/0?schedule=true&schedule_profile='+ args.profile.id +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         }
       })
+      .getArgument('profile')
+        .registerAutocompleteListener(async (query, args) => {
+          return await this.util.getTrvProfiles(args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        })
 
 
     // COAP: COAP LISTENER
