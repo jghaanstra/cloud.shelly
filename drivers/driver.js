@@ -12,23 +12,36 @@ class ShellyDriver extends Homey.Driver {
   onPair(session) {
     const discoveryStrategy = this.getDiscoveryStrategy();
     const discoveryResults = discoveryStrategy.getDiscoveryResults();
+    let unpairedShellies = 0;
     let selectedDeviceId;
     let deviceArray = {};
     let deviceIcon = 'icon.svg';
 
     session.setHandler('list_devices', async (data) => {
-      const devices = Object.values(discoveryResults).map(discoveryResult => {
-        return {
-          name: this.config.name+ ' ['+ discoveryResult.address +']',
-          data: {
-            id: discoveryResult.host
+      try {
+        const shellyDevices = await this.util.getShellies('collection');
+        const devices = Object.values(discoveryResults).map(discoveryResult => {
+          if (shellyDevices.length > 0) {
+            const pairedShelly = shellyDevices.filter(shelly => shelly.id.includes(discoveryResult.host));
+            if (pairedShelly.length === 0) {
+              unpairedShellies++
+            }
           }
-        };
-      });
-      if (devices.length) {
-        return devices;
-      } else {
-        session.showView('select_pairing');
+          return {
+            name: this.config.name+ ' ['+ discoveryResult.address +']',
+            data: {
+              id: discoveryResult.host
+            }
+          };
+        });
+        if (unpairedShellies > 0) {
+          return devices;
+        } else {
+          session.showView('select_pairing');
+        }
+      } catch (error) {
+        this.log(error);
+        return Promise.reject(error);
       }
     });
 

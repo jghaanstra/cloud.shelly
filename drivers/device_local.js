@@ -17,10 +17,14 @@ class ShellyDevice extends Device {
       clearInterval(this.pollingInterval);
       if (this.getStoreValue('communication') === 'websocket') {
         clearTimeout(this.pingWsTimeout);
-        clearTimeout(this.reconnectWsTimeout);
         if (this.getStoreValue('channel') === 0 && this.ws.readyState !== WebSocket.CLOSED) {
           this.ws.close();
         }
+        clearTimeout(this.reconnectWsTimeout);
+      }
+      if (this.getStoreValue('communication') === 'coap') {
+        await this.util.sendCommand('/settings?coiot_enable=false', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await this.util.sendCommand('/reboot', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       }
       if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
         const iconpath = "/userdata/" + this.getData().id +".svg";

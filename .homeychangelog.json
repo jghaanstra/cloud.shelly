@@ -364,5 +364,8 @@
   },
   "3.5.3": {
     "en": "Use the user-configured profile names for Shelly TRV instead of default profile names for profile condition and action card. "
+  },
+  "3.5.4": {
+    "en": "Small improvements. CoAP / CoIot is now disabled on gen1 devices when removed from Homey Pro. Users are given the option to manually pair their device in the scenario where some devices are not discovered over mDNS but others are but have already been paired. And better clean up running processes before the app is updated on Homey Cloud. "
   }
 }

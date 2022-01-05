@@ -373,6 +373,10 @@ class ShellyApp extends Homey.App {
     clearTimeout(this.wsPingInterval);
     clearTimeout(this.wsPingTimeout);
     clearTimeout(this.wsReconnectTimeout);
+    shellies.stop();
+    if (this.ws.readyState !== WebSocket.CLOSED) {
+      this.ws.close();
+    }
   }
 
   // COAP: UPDATE SETTINGS AND START/STOP COAP LISTENER
@@ -406,6 +410,11 @@ class ShellyApp extends Homey.App {
       this.log(error);
       return Promise.reject(error);
     }
+  }
+
+  // COAP & GEN2 WEBSOCKETS: RETURN PAIRED DEVICES
+  async getShellyCollection() {
+    return this.shellyDevices;
   }
 
   // CLOUD: OPEN WEBSOCKET FOR STATUS CLOUD DEVICES
