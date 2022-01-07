@@ -12,7 +12,7 @@ class ShellyButton1CloudDriver extends Driver {
     this.config = {
       name: 'Shelly Button 1 Cloud',
       battery: true,
-      hostname: 'shellybutton1-'
+      hostname: ['shellybutton1-']
     }
   }
 

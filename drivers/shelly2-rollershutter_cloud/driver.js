@@ -12,7 +12,7 @@ class Shelly2RollerShutterCloudDriver extends Driver {
     this.config = {
       name: 'Shelly 2 Roller Shutter Cloud',
       battery: false,
-      hostname: 'shelly2-'
+      hostname: ['shelly2-']
     }
   }
 

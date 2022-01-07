@@ -12,7 +12,7 @@ class ShellyEmCloudDriver extends Driver {
     this.config = {
       name: 'Shelly EM Cloud',
       battery: false,
-      hostname: 'shellyem-'
+      hostname: ['shellyem-']
     }
   }
 

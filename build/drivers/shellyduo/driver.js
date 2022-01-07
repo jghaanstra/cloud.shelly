@@ -12,7 +12,7 @@ class ShellyDuoDriver extends Driver {
     this.config = {
       name: 'Shelly Duo',
       battery: false,
-      hostname: 'ShellyBulbDuo-'
+      hostname: ['ShellyBulbDuo-']
     }
   }
 

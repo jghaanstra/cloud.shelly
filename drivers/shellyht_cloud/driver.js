@@ -12,7 +12,7 @@ class ShellyhtCloudDriver extends Driver {
     this.config = {
       name: 'Shelly HT',
       battery: true,
-      hostname: 'shellyht-'
+      hostname: ['shellyht-']
     }
   }
 

@@ -12,7 +12,7 @@ class ShellyBulbDriver extends Driver {
     this.config = {
       name: 'Shelly Bulb (RGBW)',
       battery: false,
-      hostname: 'shellycolorbulb-'
+      hostname: ['shellybulb-', 'shellycolorbulb-']
     }
   }
 

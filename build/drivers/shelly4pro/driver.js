@@ -12,7 +12,7 @@ class Shelly4ProDriver extends Driver {
     this.config = {
       name: 'Shelly Pro 4(PM)',
       battery: false,
-      hostname: 'shelly4pro-'
+      hostname: ['shelly4pro-']
     }
   }
 

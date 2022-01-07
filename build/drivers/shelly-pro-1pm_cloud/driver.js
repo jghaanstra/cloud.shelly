@@ -12,7 +12,7 @@ class ShellyPro1PMCloudDriver extends Driver {
     this.config = {
       name: 'Shelly Pro 1PM Cloud',
       battery: false,
-      hostname: 'ShellyPro1PM-'
+      hostname: ['ShellyPro1PM-']
     }
   }
 

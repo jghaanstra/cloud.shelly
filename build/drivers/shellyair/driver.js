@@ -12,7 +12,7 @@ class ShellyAirDriver extends Driver {
     this.config = {
       name: 'Shelly Air',
       battery: false,
-      hostname: 'shellyair-'
+      hostname: ['shellyair-']
     }
   }
 

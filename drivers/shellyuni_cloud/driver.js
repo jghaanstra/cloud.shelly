@@ -12,7 +12,7 @@ class ShellyUniCloudDriver extends Driver {
     this.config = {
       name: 'Shelly Uni Cloud',
       battery: false,
-      hostname: 'shellyuni-'
+      hostname: ['shellyuni-']
     }
   }
 

@@ -12,7 +12,7 @@ class ShellyMotionDriver extends Driver {
     this.config = {
       name: 'Shelly Motion',
       battery: true,
-      hostname: 'shellymotionsensor-'
+      hostname: ['shellymotionsensor-']
     }
   }
 

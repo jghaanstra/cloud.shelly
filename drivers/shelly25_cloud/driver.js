@@ -12,7 +12,7 @@ class Shelly25CloudDriver extends Driver {
     this.config = {
       name: 'Shelly 2.5 Relay Cloud',
       battery: false,
-      hostname: 'shellyswitch25-'
+      hostname: ['shellyswitch25-']
     }
   }
 

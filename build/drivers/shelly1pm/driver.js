@@ -12,7 +12,7 @@ class Shelly1pmDriver extends Driver {
     this.config = {
       name: 'Shelly (Plus) 1PM',
       battery: false,
-      hostname: 'shelly1pm-'
+      hostname: ['shelly1pm-', 'shellyplus1pm-', 'ShellyPlus1PM-']
     }
   }
 

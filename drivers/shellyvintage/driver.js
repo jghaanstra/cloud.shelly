@@ -12,7 +12,7 @@ class ShellyVintageDriver extends Driver {
     this.config = {
       name: 'Shelly Vintage',
       battery: false,
-      hostname: 'ShellyVintage-'
+      hostname: ['ShellyVintage-']
     }
   }
 

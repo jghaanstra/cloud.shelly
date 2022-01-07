@@ -12,7 +12,7 @@ class ShellydwDriver extends Driver {
     this.config = {
       name: 'Shelly DW',
       battery: true,
-      hostname: 'shellydw-'
+      hostname: ['shellydw-']
     }
   }
 

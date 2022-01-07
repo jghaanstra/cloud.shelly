@@ -21,7 +21,9 @@ class ShellyDriver extends Homey.Driver {
       try {
         const shellyDevices = await this.util.getShellies('collection');
         const devices = Object.values(discoveryResults).map(discoveryResult => {
-          if (shellyDevices.length > 0) {
+          if (shellyDevices.length === 0) {
+            unpairedShellies++
+          } else if (shellyDevices.length > 0) {
             const pairedShelly = shellyDevices.filter(shelly => shelly.id.includes(discoveryResult.host));
             if (pairedShelly.length === 0) {
               unpairedShellies++
@@ -115,7 +117,7 @@ class ShellyDriver extends Homey.Driver {
           var communication = 'coap';
         }
 
-        if (id.startsWith(this.config.hostname)) {
+        if (this.config.hostname.some( (host) => { return id.startsWith(host); } )) {
           deviceArray = {
             name: this.config.name+ ' ['+ data.address +']',
             data: {

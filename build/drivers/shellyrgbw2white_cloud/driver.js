@@ -12,7 +12,7 @@ class ShellyRGBW2WhiteCloudDriver extends Driver {
     this.config = {
       name: 'Shelly RGBW2 White Cloud',
       battery: false,
-      hostname: 'shellyrgbw2-'
+      hostname: ['shellyrgbw2-']
     }
   }
 

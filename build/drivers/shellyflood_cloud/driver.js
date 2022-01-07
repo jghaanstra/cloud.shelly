@@ -12,7 +12,7 @@ class ShellyFloodCloudDriver extends Driver {
     this.config = {
       name: 'Shelly Flood',
       battery: true,
-      hostname: 'shellyflood-'
+      hostname: ['shellyflood-']
     }
   }
 

@@ -12,7 +12,7 @@ class ShellyDimmerCloudDriver extends Driver {
     this.config = {
       name: 'Shelly Dimmer Cloud',
       battery: false,
-      hostname: 'shellydimmer'
+      hostname: ['shellydimmer-', 'shellydimmer2-']
     }
   }
 

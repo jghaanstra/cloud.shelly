@@ -367,5 +367,8 @@
   },
   "3.5.4": {
     "en": "Small improvements. CoAP / CoIot is now disabled on gen1 devices when removed from Homey Pro. Users are given the option to manually pair their device in the scenario where some devices are not discovered over mDNS but others are but have already been paired. And better clean up running processes before the app is updated on Homey Cloud. "
+  },
+  "3.5.5": {
+    "en": "This release fix a bug for devices not being discovered when pairing the first Shelly device with Homey and a bug where Shelly Plus devices can not be paired manually if needed."
   }
 }
