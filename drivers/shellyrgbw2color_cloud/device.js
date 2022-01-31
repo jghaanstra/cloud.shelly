@@ -18,7 +18,6 @@ class ShellyRGBW2ColorCloudDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Changed');
-    this.homey.flow.getDeviceTriggerCard('triggerOverpowered'); // TODO: card is deprecated, remove after some time.
 
     this.setAvailable();
 
@@ -32,7 +31,10 @@ class ShellyRGBW2ColorCloudDevice extends Device {
     });
 
     this.registerCapabilityListener('dim', async (value) => {
-      const dim = value * 100;
+      if (!this.getCapabilityValue('onoff')) {
+        this.setCapabilityValue('onoff', true);
+      }
+      const dim = value === 0 ? 1 : value * 100;
       return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'gain', command_value: dim, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
     });
 

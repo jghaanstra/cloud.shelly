@@ -22,7 +22,6 @@ class ShellyDimmerDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput2On');
     this.homey.flow.getDeviceTriggerCard('triggerInput2Off');
     this.homey.flow.getDeviceTriggerCard('triggerInput2Changed');
-    this.homey.flow.getDeviceTriggerCard('triggerOverpowered'); // TODO: card is deprecated, remove after some time.
 
     this.setAvailable();
 
@@ -37,14 +36,18 @@ class ShellyDimmerDevice extends Device {
 
     this.registerCapabilityListener('dim', async (value, opts) => {
       if (opts.duration === undefined || typeof opts.duration == 'undefined') {
-        opts.duration = '500';
+        opts.duration = 500;
       }
-      if (!this.getCapabilityValue('onoff')) {
-        const dim = value === 0 ? 1 : value * 100;
-        return await this.util.sendCommand('/light/0?turn=on&brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      if (opts.duration > 5000 ) {
+        return Promise.reject(this.homey.__('device.maximum_dim_duration'));
       } else {
-        const dim = value === 0 ? 1 : value * 100;
-        return await this.util.sendCommand('/light/0?brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        if (!this.getCapabilityValue('onoff')) {
+          const dim = value === 0 ? 1 : value * 100;
+          return await this.util.sendCommand('/light/0?turn=on&brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        } else {
+          const dim = value === 0 ? 1 : value * 100;
+          return await this.util.sendCommand('/light/0?brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        }
       }
     });
 

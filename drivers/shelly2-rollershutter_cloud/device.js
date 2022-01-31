@@ -42,14 +42,17 @@ class Shelly2RollerShutterCloudDevice extends Device {
 
     this.registerCapabilityListener('windowcoverings_set', async (value) => {
       try {
-        if (this.getSetting('halfway') == 0.5) {
+        const halfway = this.getSetting('halfway');
+        if (halfway === 0.5) {
           var position = value;
         } else {
-          if (value > 0.5) {
-            var position = -2 * value * this.getSetting('halfway') + 2 * value + 2 * this.getSetting('halfway') - 1;
+          if (value === 0.5) {
+            var position = halfway;
+          } else if (value > 0.5) {
+            var position = halfway + (value - 0.5) * (1 - halfway) / 0.5;
           } else {
-            var position = 2 * value * this.getSetting('halfway');
-          };
+            var position = halfway + (value - 0.5) * (1 - halfway) / 0.5;
+          }
         }
         this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
         return await this.util.sendCloudCommand('/device/relay/roller/settings/topos/', this.getSetting('server_address'), this.getSetting('cloud_token'), this.getSetting('cloud_device_id'), {"pos": Math.round(position*100)});

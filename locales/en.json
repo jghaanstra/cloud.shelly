@@ -63,7 +63,8 @@
     "overpower": "Error: device is overpowered.",
     "overvoltage": "Error: overvoltage.",
     "overtemp": "Error: device temperature to high.",
-    "overcurrent": "Error: overcurrent."
+    "overcurrent": "Error: overcurrent.",
+    "maximum_dim_duration": "Shelly devices have a maximum of 5 seconds dim duration"
   },
   "driver": {
     "wrongdevice": "The Shelly device you are trying to pair does not match with the selected Shelly device in the pairing wizard."

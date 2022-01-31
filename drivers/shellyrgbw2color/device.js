@@ -18,7 +18,6 @@ class ShellyRGBW2ColorDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Changed');
-    this.homey.flow.getDeviceTriggerCard('triggerOverpowered'); // TODO: card is deprecated, remove after some time.
 
     this.setAvailable();
 
@@ -33,10 +32,19 @@ class ShellyRGBW2ColorDevice extends Device {
 
     this.registerCapabilityListener('dim', async (value, opts) => {
       if (opts.duration === undefined || typeof opts.duration == 'undefined') {
-        opts.duration = '500';
+        opts.duration = 500;
       }
-      const dim = value * 100;
-      return await this.util.sendCommand('/color/0?gain='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      if (opts.duration > 5000 ) {
+        return Promise.reject(this.homey.__('device.maximum_dim_duration'));
+      } else {
+        if (!this.getCapabilityValue('onoff')) {
+          const dim = value === 0 ? 1 : value * 100;
+          return await this.util.sendCommand('/light/0?turn=on&gain='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        } else {
+          const dim = value === 0 ? 1 : value * 100;
+          return await this.util.sendCommand('/light/0?gain='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        }
+      }
     });
 
     this.registerCapabilityListener('light_temperature', async (value) => {

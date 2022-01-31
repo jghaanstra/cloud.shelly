@@ -59,7 +59,23 @@
       "id": "login_credentials",
       "template": "login_credentials",
       "options": {
-        "logo": "../../../assets/shelly-logo.png"
+        "logo": "../../../assets/shelly-logo.png",
+        "usernameLabel": {
+          "en": "Username (admin for gen2 devices)",
+          "nl": "Gebruikersnaam (admin voor gen2 devices)"
+        },
+        "usernamePlaceholder": {
+          "en": "Username",
+          "nl": "Gebruikersnaam"
+        },
+        "PasswordLabel": {
+          "en": "Password",
+          "nl": "Wachtwoord"
+        },
+        "usernamePlaceholder": {
+          "en": "Password",
+          "nl": "Wachtwoord"
+        }
       }
     },
     {

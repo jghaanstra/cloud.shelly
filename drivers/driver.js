@@ -58,15 +58,18 @@ class ShellyDriver extends Homey.Driver {
         if (discoveryResult.txt !== undefined) {
           if (discoveryResult.txt.gen === '2') {
             var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
+            var auth = result.auth_en;
             var type = result.model;
             var communication = 'websocket';
           } else {
             var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
+            var auth = result.auth;
             var type = result.type;
             var communication = 'coap';
           }
         } else {
           var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
+          var auth = result.auth;
           var type = result.type;
           var communication = 'coap';
         }
@@ -92,7 +95,7 @@ class ShellyDriver extends Homey.Driver {
           },
           icon: deviceIcon
         }
-        if (result.auth) {
+        if (auth) {
           session.showView('login_credentials');
         } else {
           session.showView('add_device');
@@ -148,8 +151,13 @@ class ShellyDriver extends Homey.Driver {
     });
 
     session.setHandler('login', async (data) => {
-      deviceArray.settings.username = data.username;
-      deviceArray.settings.password = data.password;
+      if (deviceArray.store.communication === 'websocket') {
+        deviceArray.settings.username = 'admin';
+        deviceArray.settings.password = data.password;
+      } else {
+        deviceArray.settings.username = data.username;
+        deviceArray.settings.password = data.password;
+      }
       return Promise.resolve(true);
     });
 

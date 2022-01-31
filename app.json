@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.5.5",
+  "version": "3.5.6",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -634,29 +634,6 @@
           "local",
           "cloud"
         ]
-      },
-      {
-        "id": "triggerOverpowered",
-        "title": {
-          "en": "Overpowered",
-          "nl": "Overbelast"
-        },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
-            "filter": "driver_id=shelly-plug|shelly-plug_cloud|shelly-plug-s|shelly-plug-s_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2_cloud|shelly25|shelly25_cloud|shellydimmer|shellydimmer_cloud|shelly3em|shelly3em_cloud|shellyem|shellyem_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud"
-          }
-        ],
-        "platforms": [
-          "local",
-          "cloud"
-        ],
-        "deprecated": true
       },
       {
         "id": "triggerTemperature1",
@@ -1396,6 +1373,43 @@
         ]
       },
       {
+        "id": "actionMeasuredExtTemp",
+        "title": {
+          "en": "Manually set measured temperature",
+          "nl": "Handmatig instellen gemeten temperatuur"
+        },
+        "titleFormatted": {
+          "en": "Manually set measure temperature to [[temperature]]",
+          "nl": "Handmatig instellen gemeten temperatuur op [[temperature]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=shelly-trv"
+          },
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur"
+            },
+            "placeholder": {
+              "en": "Degrees Celcius",
+              "nl": "Graden celcius"
+            },
+            "min": -50,
+            "max": 100,
+            "step": 11,
+            "label": "°C"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
         "id": "actionGasMute",
         "title": {
           "en": "Mute alarm",
@@ -1624,7 +1638,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -1722,7 +1748,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -1962,7 +2000,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -2124,7 +2174,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -2769,7 +2831,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -2878,7 +2952,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -2995,8 +3081,8 @@
         "cloud"
       ],
       "name": {
-        "en": "Shelly 1",
-        "nl": "Shelly 1"
+        "en": "Shelly (Plus) 1",
+        "nl": "Shelly (Plus) 1"
       },
       "images": {
         "large": "./assets/drivers/shelly1/images/large.jpg",
@@ -3182,7 +3268,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -3302,8 +3400,8 @@
         "cloud"
       ],
       "name": {
-        "en": "Shelly 1PM",
-        "nl": "Shelly 1PM"
+        "en": "Shelly (Plus) 1PM",
+        "nl": "Shelly (Plus) 1PM"
       },
       "images": {
         "large": "./assets/drivers/shelly1pm/images/large.jpg",
@@ -3463,7 +3561,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -3802,7 +3912,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -4546,7 +4668,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -4734,7 +4868,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -5078,7 +5224,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -5260,7 +5418,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -6009,7 +6179,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -6288,7 +6470,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -6448,7 +6642,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {
@@ -6732,7 +6938,19 @@
           "id": "login_credentials",
           "template": "login_credentials",
           "options": {
-            "logo": "../../../assets/shelly-logo.png"
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
           }
         },
         {

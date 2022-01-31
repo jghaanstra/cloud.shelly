@@ -1,1 +1,5 @@
 env.json
+
+
+# Added by Homey CLI
+/.homeybuild/

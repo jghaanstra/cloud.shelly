@@ -41,7 +41,7 @@ class ShellyApp extends Homey.App {
       }
     }, 5000);
 
-    // COAP, CLOUD & GEN2 WEBSOCKETS: INITIALLY UPDATE THE SHELLY COLLECTION
+    // COAP, CLOUD & GEN2 WEBSOCKETS: INITIALLY UPDATE THE SHELLY COLLECTION FOR MATCHING INCOMING STATUS UPDATES
     this.homey.setTimeout(async () => {
       await this.updateShellyCollection();
     }, 30000);
@@ -227,19 +227,7 @@ class ShellyApp extends Homey.App {
         if (position == undefined) {
 			    return Promise.reject('previous position has not been set yet');
 		    } else {
-          args.device.setStoreValue('previous_position', args.device.getCapabilityValue('windowcoverings_set'));
-          if (args.device.getSetting('halfway') != 0.5) {
-				    if (position > 0.5) {
-              position = -2 * position * args.device.getSetting('halfway') + 2 * position + 2 * args.device.getSetting('halfway') - 1;
-            } else {
-              position = 2 * position * args.device.getSetting('halfway');
-            };
-		        args.device.setCapabilityValue('windowcoverings_set', position);
-		        return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-  	      } else {
-            args.device.setCapabilityValue('windowcoverings_set', position);
-		        return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-          }
+          return await args.device.triggerCapabilityListener('windowcoverings_set', position);
         }
   	  })
 
@@ -296,8 +284,13 @@ class ShellyApp extends Homey.App {
           return await this.util.getTrvProfiles(args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         })
 
+    this.homey.flow.getActionCard('actionMeasuredExtTemp')
+      .registerRunListener(async (args) => {
+        return await this.util.sendCommand('/ext_t?temp='+ args.temperature +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+      })
 
-    // COAP: COAP LISTENER
+
+    // COAP: COAP LISTENER FOR PROCESSING INCOMING MESSAGES
     shellies.on('discover', device => {
       this.log('Discovered device with ID', device.id, 'and type', device.type, 'with IP address', device.host);
 
@@ -348,7 +341,7 @@ class ShellyApp extends Homey.App {
       })
     });
 
-    // CLOUD: PROCESS SHELLY CLOUD DEVICE REGISTRATION
+    // CLOUD: PROCESS SHELLY CLOUD CALLBACK MESSAGES FOR DEVICE PAIRING
     webhook.on('message', async (args) => {
       try {
         this.log('received webhook message:');
@@ -367,16 +360,6 @@ class ShellyApp extends Homey.App {
         this.log(error);
       }
     });
-  }
-
-  async onUninit() {
-    clearTimeout(this.wsPingInterval);
-    clearTimeout(this.wsPingTimeout);
-    clearTimeout(this.wsReconnectTimeout);
-    shellies.stop();
-    if (this.ws.readyState !== WebSocket.CLOSED) {
-      this.ws.close();
-    }
   }
 
   // COAP: UPDATE SETTINGS AND START/STOP COAP LISTENER
@@ -417,7 +400,7 @@ class ShellyApp extends Homey.App {
     return this.shellyDevices;
   }
 
-  // CLOUD: OPEN WEBSOCKET FOR STATUS CLOUD DEVICES
+  // CLOUD: OPEN WEBSOCKET FOR PROCESSING CLOUD DEVICES STATUS UPDATES
   async websocketCloudListener(jwtToken) {
     this.ws = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ jwtToken, {perMessageDeflate: false});
 
@@ -440,7 +423,11 @@ class ShellyApp extends Homey.App {
         if (result.event === 'Shelly:StatusOnChange') {
           const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.deviceId));
           for (const filteredShelly of filteredShellies) {
-            filteredShelly.device.parseStatusUpdate(result.status);
+            if (filteredShelly.communication === 'websocket') {
+              filteredShelly.device.parseStatusUpdateGen2(result.status);
+            } else {
+              filteredShelly.device.parseStatusUpdate(result.status);
+            }
             await this.util.sleep(250);
           }
         } else if (result.event === 'Integrator:ActionResponse') {
@@ -449,7 +436,11 @@ class ShellyApp extends Homey.App {
             if (filteredShelly.device.getStoreValue('type') !== result.data.deviceCode) {
               filteredShelly.device.setStoreValue('type', result.data.deviceCode);
             }
-            filteredShelly.device.parseStatusUpdate(result.data.deviceStatus);
+            if (filteredShelly.communication === 'websocket') {
+              filteredShelly.device.parseStatusUpdateGen2(result.data.deviceStatus);
+            } else {
+              filteredShelly.device.parseStatusUpdate(result.data.deviceStatus);
+            }
             await this.util.sleep(250);
           }
         }
@@ -527,6 +518,16 @@ class ShellyApp extends Homey.App {
       return Promise.resolve(this.cloudPairingDevice);
     } else {
       return Promise.reject(this.homey.__('app.no_pairing_device_found'));
+    }
+  }
+
+  async onUninit() {
+    clearTimeout(this.wsPingInterval);
+    clearTimeout(this.wsPingTimeout);
+    clearTimeout(this.wsReconnectTimeout);
+    shellies.stop();
+    if (this.ws.readyState !== WebSocket.CLOSED) {
+      this.ws.close();
     }
   }
 

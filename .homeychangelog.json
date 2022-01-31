@@ -370,5 +370,8 @@
   },
   "3.5.5": {
     "en": "This release fix a bug for devices not being discovered when pairing the first Shelly device with Homey and a bug where Shelly Plus devices can not be paired manually if needed."
+  },
+  "3.5.6": {
+    "en": "Added a new action card for Shelly TRV to set the external measured temperature through a flow for Homey Pro. And finally fixed the 400 error when setting the position of blinds for the Shelly 2(.5) rollershutter for Homey Pro. Also fixed the parsing status updates for Gen2/Plus devices connected to Homey Cloud. Improved the error handling when setting dim duration for lights above 5 seconds which Shelly devices do not support for Homey Pro. Setting dim when light is off for the Duo, RGBW2 Color, RGBW2 White and Vintage now also turns on the light and sets the dim in a single action similar to the dimmer for Homey Pro and Homey. And permanently removed the overpowered trigger card. It’s been replaced by the generic device error trigger card available on app level."
   }
 }

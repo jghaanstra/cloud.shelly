@@ -100,6 +100,36 @@
         }
       ],
       "platforms": ["local"]
+    },
+    {
+      "id": "actionMeasuredExtTemp",
+      "title": {
+        "en": "Manually set measured temperature",
+        "nl": "Handmatig instellen gemeten temperatuur"
+      },
+      "titleFormatted": {
+        "en": "Manually set measure temperature to [[temperature]]",
+        "nl": "Handmatig instellen gemeten temperatuur op [[temperature]]"
+      },
+      "args": [
+        {
+          "name": "temperature",
+          "type": "number",
+          "title": {
+            "en": "Temperature",
+            "nl": "Temperatuur"
+          },
+          "placeholder": {
+            "en": "Degrees Celcius",
+            "nl": "Graden celcius"
+          },
+          "min": -50,
+          "max": 100,
+          "step": 11,
+          "label": "°C"
+        }
+      ],
+      "platforms": ["local"]
     }
   ]
 }

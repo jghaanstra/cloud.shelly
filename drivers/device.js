@@ -34,15 +34,15 @@ class ShellyDevice extends Homey.Device {
           this.connectWebsocket();
         }
         this.homey.setTimeout(() => {
-          this.pollWebsocketDevice();
+          this.pollDevice();
         }, this.util.getRandomTimeout(10));
         if ((this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) && this.getStoreValue('battery') !== true) {
           this.pollingInterval = this.homey.setInterval(() => {
-            this.pollWebsocketDevice();
+            this.pollDevice();
           }, 60000);
         } else {
           this.pollingInterval = this.homey.setInterval(() => {
-            this.pollWebsocketDevice();
+            this.pollDevice();
           }, (60000 + (1000 * this.getStoreValue('channel'))));
         }
       } else {
@@ -91,12 +91,18 @@ class ShellyDevice extends Homey.Device {
     }
   }
 
-  /* polling local devices over HTTP REST API */
+  /* polling local GEN1 or GEN2 devices over HTTP REST API */
   async pollDevice() {
     try {
-      var result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      if (!this.getAvailable()) { this.setAvailable(); }
-      this.parseStatusUpdate(result);
+      if (this.getStoreValue('communication') === 'websocket') {
+        let result = await this.util.sendCommand('/rpc/Shelly.GetStatus', this.getSetting('address'), this.getSetting('password'));
+        if (!this.getAvailable()) { this.setAvailable(); }
+        this.parseStatusUpdateGen2(result);
+      } else {
+        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        if (!this.getAvailable()) { this.setAvailable(); }
+        this.parseStatusUpdate(result);
+      }
     } catch (error) {
       if (!this.getStoreValue('battery')) {
         this.setUnavailable(this.homey.__('device.unreachable') + error.message);
@@ -108,7 +114,7 @@ class ShellyDevice extends Homey.Device {
     }
   }
 
-  /* generic status updates parser for polling over local HTTP REST API and Cloud */
+  /* generic status updates parser for polling over local HTTP REST API and Cloud for GEN1 */
   async parseStatusUpdate(result) {
     try {
       let channel = this.getStoreValue('channel') || 0;
@@ -656,8 +662,101 @@ class ShellyDevice extends Homey.Device {
     }
   }
 
-  /* polling gen2 websocket devices */
-  async pollWebsocketDevice() { }
+  /* generic status updates parser for polling over local HTTP REST API and Cloud for GEN2 */
+  async parseStatusUpdateGen2(result) {
+    try {
+      let channel = this.getStoreValue('channel') || 0;
+
+      // SWITCH component
+      if (result.hasOwnProperty("switch:"+ channel)) {
+
+        /* onoff */
+        if (result["switch:"+channel].hasOwnProperty("output") && this.hasCapability('onoff')) {
+          this.updateCapabilityValue('onoff', result["switch:"+channel].output, channel);
+        }
+
+        /* measure_power */
+        if (result["switch:"+channel].hasOwnProperty("apower") && this.hasCapability('measure_power')) {
+          this.updateCapabilityValue('measure_power', result["switch:"+channel].apower, channel);
+        }
+
+        /* meter_power */
+        if (result["switch:"+channel].hasOwnProperty("aenergy") && this.hasCapability('meter_power')) {
+          if (result["switch:"+channel].aenergy.hasOwnProperty("total")) {
+            let meter_power = result["switch:"+channel].aenergy.total / 1000;
+            this.updateCapabilityValue('meter_power', meter_power, channel);
+          }
+        }
+
+        /* measure_voltage */
+        if (result["switch:"+channel].hasOwnProperty("voltage") && this.hasCapability('measure_voltage')) {
+          this.updateCapabilityValue('measure_voltage', result["switch:"+channel].voltage, channel);
+        }
+
+        /* measure_temperature (device temperature) */
+        if (result["switch:"+channel].hasOwnProperty("temperature") && this.hasCapability('measure_temperature')) {
+          this.updateCapabilityValue('measure_temperature', result["switch:"+channel].temperature.tC, 0);
+        }
+
+      }
+
+      // INPUTS
+      if (result.hasOwnProperty("input:"+ channel) && this.hasCapability('input_1')) {
+        if (result["input:"+channel].hasOwnProperty("state") && result["input:"+channel].state !== null) {
+          this.updateCapabilityValue('input_1', result["input:"+channel].state, channel);
+        }
+      }
+
+      if (result.hasOwnProperty("input:"+ channel) && this.hasCapability('input_2')) {
+        if (result["input:"+channel].hasOwnProperty("state") && result["input:"+channel].state !== null) {
+          this.updateCapabilityValue('input_2', result["input:"+channel].state, channel);
+        }
+      }
+
+      if (result.hasOwnProperty("input:"+ channel) && this.hasCapability('input_3')) {
+        if (result["input:"+channel].hasOwnProperty("state") && result["input:"+channel].state !== null) {
+          this.updateCapabilityValue('input_3', result["input:"+channel].state, channel);
+        }
+      }
+
+      if (result.hasOwnProperty("input:"+ channel) && this.hasCapability('input_4')) {
+        if (result["input:"+channel].hasOwnProperty("state") && result["input:"+channel].state !== null) {
+          this.updateCapabilityValue('input_4', result["input:"+channel].state, channel);
+        }
+      }
+
+      // DEVICE TEMPERATURE
+      if (result.hasOwnProperty("systemp") && this.hasCapability('measure_temperature') && this.getStoreValue('channel') === 0) {
+
+        /* measure_temperature */
+        this.updateCapabilityValue('measure_temperature', result.systemp.tC, 0);
+      }
+
+      // RSSI
+      if (result.hasOwnProperty("wifi")) {
+
+        /* rssi */
+        if (result.wifi.hasOwnProperty("rssi") && this.hasCapability("rssi")) {
+          this.updateCapabilityValue('rssi', result.wifi.rssi);
+        }
+
+      }
+
+      // FIRMWARE UPDATE AVAILABLE
+      if (result.sys.available_updates.hasOwnProperty("stable")) {
+        this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": result.sys.available_updates.stable.version });
+        this.setStoreValue("latest_firmware", result.sys.available_updates.stable.version);
+      }
+    } catch (error) {
+      if (!this.getStoreValue('battery')) {
+        this.setUnavailable(this.homey.__('device.unreachable') + error.message);
+        this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.message});
+        this.log(error);
+      } else {
+        this.log(this.getData().id +' is probably asleep and disconnected');
+      }
+    }
+  }
 
   /* websocket for gen2 devices */
   async connectWebsocket() { }

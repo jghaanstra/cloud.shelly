@@ -23,7 +23,10 @@ class ShellyVintageCloudDevice extends Device {
     });
 
     this.registerCapabilityListener('dim', async (value) => {
-      const dim = value * 100;
+      if (!this.getCapabilityValue('onoff')) {
+        this.setCapabilityValue('onoff', true);
+      }
+      const dim = value === 0 ? 1 : value * 100;
       return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'brightness', command_value: dim, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
     });
 
