@@ -20,6 +20,11 @@ class ShellyPro1CloudDevice extends Device {
 
     this.setAvailable();
 
+    // TO DO: REMOVE AFTER SOME RELEASES
+    if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null) {
+      this.setStoreValue('gen', 'gen2');
+    }
+
     // INITIAL UPDATE AND POLLING
     this.bootSequence();
 

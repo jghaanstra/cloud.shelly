@@ -344,8 +344,6 @@ class ShellyApp extends Homey.App {
     // CLOUD: PROCESS SHELLY CLOUD CALLBACK MESSAGES FOR DEVICE PAIRING
     webhook.on('message', async (args) => {
       try {
-        this.log('received webhook message:');
-        this.log(args.body)
         if (args.body.action === 'add') {
           this.cloudServer = args.body.host;
           this.cloudPairingDevice = args.body;
@@ -423,10 +421,10 @@ class ShellyApp extends Homey.App {
         if (result.event === 'Shelly:StatusOnChange') {
           const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.deviceId));
           for (const filteredShelly of filteredShellies) {
-            if (filteredShelly.communication === 'websocket') {
+            if (filteredShelly.gen === 'gen2') {
               filteredShelly.device.parseStatusUpdateGen2(result.status);
             } else {
-              filteredShelly.device.parseStatusUpdate(result.status);
+              filteredShelly.device.parseStatusUpdate(result.data.deviceStatus);
             }
             await this.util.sleep(250);
           }
@@ -436,7 +434,7 @@ class ShellyApp extends Homey.App {
             if (filteredShelly.device.getStoreValue('type') !== result.data.deviceCode) {
               filteredShelly.device.setStoreValue('type', result.data.deviceCode);
             }
-            if (filteredShelly.communication === 'websocket') {
+            if (filteredShelly.gen === 'gen2') {
               filteredShelly.device.parseStatusUpdateGen2(result.data.deviceStatus);
             } else {
               filteredShelly.device.parseStatusUpdate(result.data.deviceStatus);

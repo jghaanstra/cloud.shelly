@@ -60,17 +60,20 @@ class ShellyDriver extends Homey.Driver {
             var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
             var auth = result.auth_en;
             var type = result.model;
+            var gen = 'gen2';
             var communication = 'websocket';
           } else {
             var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
             var auth = result.auth;
             var type = result.type;
+            var gen = 'gen1';
             var communication = 'coap';
           }
         } else {
           var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
           var auth = result.auth;
           var type = result.type;
+          var gen = 'gen1';
           var communication = 'coap';
         }
 
@@ -91,6 +94,7 @@ class ShellyDriver extends Homey.Driver {
             unicast: false,
             battery: this.config.battery,
             sdk: 3,
+            gen: gen,
             communication: communication
           },
           icon: deviceIcon
@@ -112,11 +116,13 @@ class ShellyDriver extends Homey.Driver {
           var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', data.address, '', '');
           var id = result.id;
           var type = result.model;
+          var gen = 'gen2';
           var communication = 'websocket';
         } else {
           var result = await this.util.sendCommand('/settings', data.address, data.username, data.password);
           var id = result.device.hostname;
           var type = result.device.type;
+          var gen = 'gen1';
           var communication = 'coap';
         }
 
@@ -138,6 +144,7 @@ class ShellyDriver extends Homey.Driver {
               unicast: false,
               battery: this.config.battery,
               sdk: 3,
+              gen: gen,
               communication: communication
             }
           }

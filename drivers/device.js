@@ -26,7 +26,21 @@ class ShellyDevice extends Homey.Device {
     try {
       if (this.getStoreValue('communication') === 'cloud') {
         // nothing to do here
+
+        // TO DO: REMOVE AFTER SOME RELEASES AND AFTER GEN HAS BECOME AVAILABLE IN THE INTEGRATOR API CALLBACK
+        if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null) {
+          if (this.getStoreValue('type').startsWith('SNSW') || this.getStoreValue('type').startsWith('SPSW')) {
+            this.setStoreValue('gen', 'gen2');
+          }
+        }
+
       } else if (this.getStoreValue('communication') === 'websocket') {
+
+        // TO DO: REMOVE AFTER SOME RELEASES
+        if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null) {
+          this.setStoreValue('gen', 'gen2');
+        }
+
         if (this.getStoreValue('channel') === 0) {
           this.ws = null;
           this.connected = false;
@@ -46,6 +60,12 @@ class ShellyDevice extends Homey.Device {
           }, (60000 + (1000 * this.getStoreValue('channel'))));
         }
       } else {
+
+        // TO DO: REMOVE AFTER SOME RELEASES
+        if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null) {
+          this.setStoreValue('gen', 'gen1');
+        }
+
         if (this.homey.settings.get('general_coap')) { /* CoAP is disabled */
           if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
             this.pollingInterval = this.homey.setInterval(() => {
