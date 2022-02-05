@@ -376,5 +376,8 @@
   },
   "3.5.7": {
     "en": "This releases fixes an issue where the status of GEN2/Plus device connected to Homey Cloud is not updated. Also update some of the used frameworks due to security issues."
+  },
+  "3.5.8": {
+    "en": "The release contains some small bug fixes."
   }
 }

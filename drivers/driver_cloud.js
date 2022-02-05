@@ -15,7 +15,7 @@ class ShellyCloudDriver extends Homey.Driver {
     session.setHandler('test_connection', async (data) => {
       try {
         const device = await this.homey.app.getPairingDevice();
-        // TO DO: ADD GEN ATTRIBUTE WHEN IT BECOMES AVAILABLE IN THE INTEGRATOR API
+        // TO DO: ADD GEN ATTRIBUTE WHEN IT BECOMES AVAILABLE IN THE INTEGRATOR API, ALSO IN CLOUD DRIVERS WITH MODIFIED ADD DEVICE TEMPLATE
         deviceArray = {
           name: device.name[0],
           data: {
