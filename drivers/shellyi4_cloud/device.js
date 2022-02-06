@@ -4,7 +4,7 @@ const Homey = require('homey');
 const Device = require('../device_cloud.js');
 const Util = require('../../lib/util.js');
 
-class Shellyi3CloudDevice extends Device {
+class Shellyi4DeviceCloud extends Device {
 
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
@@ -27,7 +27,13 @@ class Shellyi3CloudDevice extends Device {
       'double_shortpush_3',
       'triple_shortpush_3',
       'shortpush_longpush_3',
-      'longpush_shortpush_3'
+      'longpush_shortpush_3',
+      'shortpush_4',
+      'longpush_4',
+      'double_shortpush_4',
+      'triple_shortpush_4',
+      'shortpush_longpush_4',
+      'longpush_shortpush_4'
     ];
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
@@ -39,12 +45,15 @@ class Shellyi3CloudDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput3On');
     this.homey.flow.getDeviceTriggerCard('triggerInput3Off');
     this.homey.flow.getDeviceTriggerCard('triggerInput3Changed');
+    this.homey.flow.getDeviceTriggerCard('triggerInput4On');
+    this.homey.flow.getDeviceTriggerCard('triggerInput4Off');
+    this.homey.flow.getDeviceTriggerCard('triggerInput4Changed');
 
     this.setAvailable();
 
-    // TO DO: REMOVE AFTER SOME RELEASES AND AFTER GEN HAS BECOME AVAILABLE IN THE INTEGRATOR API CALLBACK
-    if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null || this.getStoreValue('gen') == 'gen2') {
-      this.setStoreValue('gen', 'gen1');
+    // TO DO: REMOVE AFTER SOME RELEASES
+    if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null) {
+      this.setStoreValue('gen', 'gen2');
     }
 
     // INITIAL UPDATE AND POLLING
@@ -54,4 +63,4 @@ class Shellyi3CloudDevice extends Device {
 
 }
 
-module.exports = Shellyi3CloudDevice;
+module.exports = Shellyi4DeviceCloud;

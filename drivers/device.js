@@ -26,14 +26,6 @@ class ShellyDevice extends Homey.Device {
     try {
       if (this.getStoreValue('communication') === 'cloud') {
         // nothing to do here
-
-        // TO DO: REMOVE AFTER SOME RELEASES AND AFTER GEN HAS BECOME AVAILABLE IN THE INTEGRATOR API CALLBACK
-        if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null) {
-          if (this.getStoreValue('type').startsWith('SNSW') || this.getStoreValue('type').startsWith('SPSW')) {
-            this.setStoreValue('gen', 'gen2');
-          }
-        }
-
       } else if (this.getStoreValue('communication') === 'websocket') {
 
         // TO DO: REMOVE AFTER SOME RELEASES
@@ -695,27 +687,50 @@ class ShellyDevice extends Homey.Device {
           this.updateCapabilityValue('onoff', result["switch:"+channel].output, channel);
         }
 
+      }
+
+      // COVER / ROLLERSHUTTER COMPONENT
+      if (result.hasOwnProperty("cover:"+ channel)) {
+
+        /* windowcoverings_state */
+        if (result["cover:"+channel].hasOwnProperty("current_pos") && this.hasCapability('windowcoverings_state')) {
+          this.rollerState(result["cover:"+channel].state);
+        }
+
+        /* windowcoverings_set */
+        if (result["cover:"+channel].hasOwnProperty("current_pos") && this.hasCapability('windowcoverings_set')) {
+          let windowcoverings_set = result["cover:"+channel].current_pos / 100;
+          this.updateCapabilityValue('windowcoverings_set', windowcoverings_set, channel);
+        }
+
+      }
+
+      // MEASURE POWER, METER POWER AND TEMPERATURE FOR SWITCH AND COVER COMPONENT
+      if (result.hasOwnProperty("switch:"+ channel) || result.hasOwnProperty("cover:"+ channel) ) {
+
+        let component = result.hasOwnProperty("switch:"+ channel) ? result["switch:"+ channel] : result["cover:"+ channel];
+
         /* measure_power */
-        if (result["switch:"+channel].hasOwnProperty("apower") && this.hasCapability('measure_power')) {
-          this.updateCapabilityValue('measure_power', result["switch:"+channel].apower, channel);
+        if (component.hasOwnProperty("apower") && this.hasCapability('measure_power')) {
+          this.updateCapabilityValue('measure_power', component.apower, channel);
         }
 
         /* meter_power */
-        if (result["switch:"+channel].hasOwnProperty("aenergy") && this.hasCapability('meter_power')) {
-          if (result["switch:"+channel].aenergy.hasOwnProperty("total")) {
-            let meter_power = result["switch:"+channel].aenergy.total / 1000;
+        if (component.hasOwnProperty("aenergy") && this.hasCapability('meter_power')) {
+          if (component.aenergy.hasOwnProperty("total")) {
+            let meter_power = component.aenergy.total / 1000;
             this.updateCapabilityValue('meter_power', meter_power, channel);
           }
         }
 
         /* measure_voltage */
-        if (result["switch:"+channel].hasOwnProperty("voltage") && this.hasCapability('measure_voltage')) {
-          this.updateCapabilityValue('measure_voltage', result["switch:"+channel].voltage, channel);
+        if (component.hasOwnProperty("voltage") && this.hasCapability('measure_voltage')) {
+          this.updateCapabilityValue('measure_voltage', component.voltage, channel);
         }
 
         /* measure_temperature (device temperature) */
-        if (result["switch:"+channel].hasOwnProperty("temperature") && this.hasCapability('measure_temperature')) {
-          this.updateCapabilityValue('measure_temperature', result["switch:"+channel].temperature.tC, 0);
+        if (component.hasOwnProperty("temperature") && this.hasCapability('measure_temperature')) {
+          this.updateCapabilityValue('measure_temperature', component.temperature.tC, 0);
         }
 
       }
@@ -889,6 +904,10 @@ class ShellyDevice extends Homey.Device {
         case 'rollerPosition':
           this.rollerPosition(value);
           break;
+        case 'current_pos':
+          let windowcoverings_set = value / 100;
+          this.updateCapabilityValue('windowcoverings_set', windowcoverings_set, channel);
+          break;
         case 'gain':
         case 'brightness':
         case 'brightness0':
@@ -952,8 +971,12 @@ class ShellyDevice extends Homey.Device {
           this.updateCapabilityValue('alarm_tamper', value, channel);
           break;
         case 'state':
-          value = value === 1 || value ? true : false;
-          this.updateCapabilityValue('alarm_contact', value, channel);
+          if (this.hasCapability('windowcoverings_state')) {
+            this.rollerState(value);
+          } else if (this.hasCapability('alarm_contact')) {
+            value = value === 1 || value ? true : false;
+            this.updateCapabilityValue('alarm_contact', value, channel);
+          }
           break;
         case 'flood':
           value = value === 1 || value ? true : false;
@@ -1161,12 +1184,16 @@ class ShellyDevice extends Homey.Device {
     try {
       switch(value) {
         case 'stop':
+        case 'open':
+        case 'closed':
           var windowcoverings_state = 'idle'
           break;
         case 'open':
+        case 'opening':
           var windowcoverings_state = 'up';
           break;
         case 'close':
+        case 'closing':
           var windowcoverings_state = 'down';
           break;
         default:
@@ -1183,14 +1210,19 @@ class ShellyDevice extends Homey.Device {
 
   rollerPosition(value) {
     try {
-      var windowcoverings_set = value >= 100 ? 1 : value / 100;
-      if (this.getSetting('halfway') !== 0.5) {
-        if (windowcoverings_set < this.getSetting('halfway')) {
-          windowcoverings_set = 0.5 * windowcoverings_set / this.getSetting('halfway');
+      const halfway = this.getSetting('halfway');
+      if (halfway === 0.5) {
+        var windowcoverings_set = value;
+      } else {
+        if (value === 0.5) {
+          var windowcoverings_set = halfway;
+        } else if (value > 0.5) {
+          var windowcoverings_set = halfway + (value - 0.5) * (1 - halfway) / 0.5;
         } else {
-          windowcoverings_set = windowcoverings_set - (1 - (windowcoverings_set - this.getSetting('halfway')) * (1 / (1 - this.getSetting('halfway')))) * (this.getSetting('halfway') - 0.5);
-        };
-      };
+          var windowcoverings_set = halfway + (value - 0.5) * (1 - halfway) / 0.5;
+        }
+      }
+      this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
       this.updateCapabilityValue('windowcoverings_set', windowcoverings_set);
     } catch (error) {
       this.log(error);

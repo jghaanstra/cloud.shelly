@@ -10,9 +10,9 @@ class Shellyi4Driver extends Driver {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly i4',
+      name: 'Shelly Plus i4',
       battery: false,
-      hostname: ['shellyi4-']
+      hostname: ['shellyplusi4-', 'ShellyPlusI4-']
     }
   }
 

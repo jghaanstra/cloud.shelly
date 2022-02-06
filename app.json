@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.5.8",
+  "version": "3.5.9",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -6674,8 +6674,8 @@
         "lan"
       ],
       "name": {
-        "en": "Shelly i4",
-        "nl": "Shelly i4"
+        "en": "Shelly Plus i4",
+        "nl": "Shelly Plus i4"
       },
       "images": {
         "xlarge": "./assets/drivers/shellyi4/images/xlarge.jpg",
@@ -6725,6 +6725,70 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "icon": "/drivers/shellyi4_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "cloud_pairing_form"
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "name": {
+        "en": "Shelly Plus i4",
+        "nl": "Shelly Plus i4"
+      },
+      "images": {
+        "xlarge": "./assets/drivers/shellyi4/images/xlarge.jpg",
+        "large": "./assets/drivers/shellyi4/images/large.jpg",
+        "small": "./assets/drivers/shellyi4/images/small.jpg"
+      },
+      "class": "other",
+      "capabilities": [
+        "input_1",
+        "input_2",
+        "input_3",
+        "input_4",
+        "rssi"
+      ],
+      "id": "shellyi4_cloud",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "server_address",
+              "type": "text",
+              "value": "https://shelly-8-eu.shelly.cloud",
+              "label": {
+                "en": "Server Address",
+                "nl": "Server adres"
+              }
+            },
+            {
+              "id": "cloud_device_id",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]

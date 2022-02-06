@@ -400,84 +400,109 @@ class ShellyApp extends Homey.App {
 
   // CLOUD: OPEN WEBSOCKET FOR PROCESSING CLOUD DEVICES STATUS UPDATES
   async websocketCloudListener(jwtToken) {
-    this.ws = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ jwtToken, {perMessageDeflate: false});
+    try {
+      if (this.cloudServer) {
+        this.ws = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ jwtToken, {perMessageDeflate: false});
 
-    this.ws.on('open', () => {
-      this.log('Websocket for cloud devices opened.');
-    	this.wsConnected = true;
+        this.ws.on('open', () => {
+          this.log('Websocket for cloud devices opened.');
+          this.wsConnected = true;
 
-      // start sending pings every 2 minutes to check the connection status
-      clearTimeout(this.wsPingInterval);
-      this.wsPingInterval = this.homey.setInterval(() => {
-        if (this.wsConnected === true && this.ws.readyState === WebSocket.OPEN) {
-          this.ws.ping();
-        }
-      }, 120 * 1000);
-    });
-
-    this.ws.on('message', async (data) => {
-      try {
-        const result = JSON.parse(data);
-        if (result.event === 'Shelly:StatusOnChange') {
-          const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.deviceId));
-          for (const filteredShelly of filteredShellies) {
-            if (filteredShelly.gen === 'gen2') {
-              filteredShelly.device.parseStatusUpdateGen2(result.status);
-            } else {
-              filteredShelly.device.parseStatusUpdate(result.data.deviceStatus);
+          // start sending pings every 2 minutes to check the connection status
+          clearTimeout(this.wsPingInterval);
+          this.wsPingInterval = this.homey.setInterval(() => {
+            if (this.wsConnected === true && this.ws.readyState === WebSocket.OPEN) {
+              this.ws.ping();
             }
-            await this.util.sleep(250);
+          }, 120 * 1000);
+        });
+
+        this.ws.on('message', async (data) => {
+          try {
+            const result = JSON.parse(data);
+            if (result.event === 'Shelly:StatusOnChange') {
+              const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.deviceId));
+              for (const filteredShelly of filteredShellies) {
+                // TODO: REMOVE THIS AFTER SOME RELEASES
+                if (filteredShelly.device.getStoreValue('type') !== result.data.deviceCode) {
+                  filteredShelly.device.setStoreValue('type', result.data.deviceCode);
+                }
+                if (filteredShelly.gen === 'gen2') {
+                  filteredShelly.device.parseStatusUpdateGen2(result.status);
+                } else {
+                  filteredShelly.device.parseStatusUpdate(result.status);
+                }
+                await this.util.sleep(250);
+              }
+            } else if (result.event === 'Integrator:ActionResponse') {
+
+              const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.data.deviceId));
+              for (const filteredShelly of filteredShellies) {
+                await this.updateShellyCollection();
+                // TODO: REMOVE THIS AFTER SOME RELEASES
+                if (filteredShelly.device.getStoreValue('type') !== result.data.deviceCode) {
+                  filteredShelly.device.setStoreValue('type', result.data.deviceCode);
+                }
+                if (filteredShelly.gen === 'gen2') {
+                  if (result.data.hasOwnProperty('deviceStatus')) {
+                    filteredShelly.device.parseStatusUpdateGen2(result.data.deviceStatus);
+                  }
+                } else {
+                  if (result.data.hasOwnProperty('deviceStatus')) {
+                    filteredShelly.device.parseStatusUpdate(result.data.deviceStatus);
+                  }
+                }
+                await this.util.sleep(250);
+              }
+            }
+          } catch (error) {
+            this.log(error);
           }
-        } else if (result.event === 'Integrator:ActionResponse') {
-          const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.data.deviceId));
-          for (const filteredShelly of filteredShellies) {
-            if (filteredShelly.device.getStoreValue('type') !== result.data.deviceCode) {
-              filteredShelly.device.setStoreValue('type', result.data.deviceCode);
-            }
-            if (filteredShelly.gen === 'gen2') {
-              filteredShelly.device.parseStatusUpdateGen2(result.data.deviceStatus);
-            } else {
-              filteredShelly.device.parseStatusUpdate(result.data.deviceStatus);
-            }
-            await this.util.sleep(250);
-          }
-        }
-      } catch (error) {
-        this.log(error);
-      }
-    });
+        });
 
-    this.ws.on('pong', () => {
-      clearTimeout(this.wsPingTimeout);
-      this.wsPingTimeout = this.homey.setTimeout(async () => {
-        if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
-          this.wsConnected = false;
-          let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
-          this.websocketCloudListener(jwtToken);
-        } else if (this.wsConnected) {
+        this.ws.on('pong', () => {
+          clearTimeout(this.wsPingTimeout);
+          this.wsPingTimeout = this.homey.setTimeout(async () => {
+            if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
+              this.wsConnected = false;
+              let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
+              this.websocketCloudListener(jwtToken);
+            } else if (this.wsConnected) {
+              this.ws.close();
+            }
+          }, 130 * 1000);
+        });
+
+        this.ws.on('error', (error) => {
+          this.log('Websocket error:', error);
           this.ws.close();
-        }
-      }, 130 * 1000);
-    });
+        });
 
-    this.ws.on('error', (error) => {
-      this.log('Websocket error:', error);
-      this.ws.close();
-    });
+        this.ws.on('close', (code, reason) => {
+          this.log('Websocket closed due to reasoncode:', code);
+          clearTimeout(this.wsPingInterval);
+          this.wsConnected = false;
 
-    this.ws.on('close', (code, reason) => {
-      this.log('Websocket closed due to reasoncode:', code);
-      clearTimeout(this.wsPingInterval);
-      this.wsConnected = false;
+          // retry connection after 500 miliseconds
+          clearTimeout(this.wsReconnectTimeout);
+          this.wsReconnectTimeout = this.homey.setTimeout(async () => {
+            let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
+            this.websocketCloudListener(jwtToken);
+          }, 500);
+        });
 
-      // retry connection after 500 miliseconds
+      } else {
+        throw new Error('No cloud server details yet.');
+      }
+    } catch (error) {
       clearTimeout(this.wsReconnectTimeout);
       this.wsReconnectTimeout = this.homey.setTimeout(async () => {
-        let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
-        this.websocketCloudListener(jwtToken);
-      }, 500);
-    });
-
+        if (!this.wsConnected) {
+          let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
+          this.websocketCloudListener(jwtToken);
+        }
+      }, 5000);
+    }
   }
 
   // CLOUD: SEND COMMANDS OVER WEBSOCKET

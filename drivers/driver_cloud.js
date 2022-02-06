@@ -28,7 +28,7 @@ class ShellyCloudDriver extends Homey.Driver {
           store: {
             main_device: String(device.deviceId),
             channel: 0,
-            type: device.deviceType,
+            type: device.deviceCode,
             unicast: false,
             battery: this.config.battery,
             sdk: 3,

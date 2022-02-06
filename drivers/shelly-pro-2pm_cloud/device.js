@@ -20,13 +20,13 @@ class ShellyPro2PMCloudDevice extends Device {
 
     this.setAvailable();
 
-    // INITIAL UPDATE AND POLLING
-    this.bootSequence();
-
     // TO DO: REMOVE AFTER SOME RELEASES
     if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null) {
       this.setStoreValue('gen', 'gen2');
     }
+
+    // INITIAL UPDATE AND POLLING
+    this.bootSequence();
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {

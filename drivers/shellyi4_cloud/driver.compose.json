@@ -9,9 +9,8 @@
     "small": "./assets/drivers/shellyi4/images/small.jpg"
   },
   "class": "other",
-  "discovery": "shellyi4",
   "$extends": [
-    "defaults"
+    "defaults_cloud"
   ],
   "capabilities": [
     "input_1",

@@ -64,7 +64,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.5.8",
+  "version": "3.5.9",
   "compatibility": ">=5.0.0",
   "platforms": [ "local", "cloud" ],
   "author": {
