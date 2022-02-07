@@ -122,6 +122,15 @@ class ShellyApp extends Homey.App {
         }
       })
 
+    this.homey.flow.getConditionCard('conditionInput3')
+      .registerRunListener(async (args) => {
+        if (args.device) {
+          return args.device.getCapabilityValue("input_4");
+        } else {
+          return false;
+        }
+      })
+
     this.homey.flow.getActionCard('actionReboot')
       .registerRunListener(async (args) => {
         if (args.device.getStoreValue('communication') === 'websocket') {
@@ -423,10 +432,6 @@ class ShellyApp extends Homey.App {
             if (result.event === 'Shelly:StatusOnChange') {
               const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.deviceId));
               for (const filteredShelly of filteredShellies) {
-                // TODO: REMOVE THIS AFTER SOME RELEASES
-                if (filteredShelly.device.getStoreValue('type') !== result.data.deviceCode) {
-                  filteredShelly.device.setStoreValue('type', result.data.deviceCode);
-                }
                 if (filteredShelly.gen === 'gen2') {
                   filteredShelly.device.parseStatusUpdateGen2(result.status);
                 } else {

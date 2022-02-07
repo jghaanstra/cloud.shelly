@@ -1,8 +1,12 @@
 {
-  "id": "triggerInput4Off",
+  "id": "conditionInput3",
   "title": {
-    "en": "Input 4 turned off",
-    "nl": "Input 4 uitgezet"
+    "en": "Input 4 !{{is|isn't}} on",
+    "nl": "Input 4 !{{is|is niet}} aan"
+  },
+  "titleFormatted": {
+    "en": "Input 4 !{{is|isn't}} on for [[device]]",
+    "nl": "Input 4 !{{is|is niet}} aan voor [[device]]"
   },
   "args": [
     {

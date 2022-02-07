@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.5.9",
+  "version": "3.5.10",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -275,7 +275,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly4pro|shelly4pro_cloud|shelly25|shelly25_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellyair|shellybutton1|shellydimmer|shellydimmer_cloud|shellyi3|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
+            "filter": "driver_id=shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly4pro|shelly4pro_cloud|shelly25|shelly25_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellyair|shellybutton1|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
           }
         ],
         "platforms": [
@@ -297,7 +297,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly4pro|shelly4pro_cloud|shelly25|shelly25_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellyair|shellybutton1|shellydimmer|shellydimmer_cloud|shellyi3|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
+            "filter": "driver_id=shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly4pro|shelly4pro_cloud|shelly25|shelly25_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellyair|shellybutton1|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
           }
         ],
         "platforms": [
@@ -319,7 +319,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly4pro|shelly4pro_cloud|shelly25|shelly25_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellyair|shellybutton1|shellydimmer|shellydimmer_cloud|shellyi3|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
+            "filter": "driver_id=shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly4pro|shelly4pro_cloud|shelly25|shelly25_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellyair|shellybutton1|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
           }
         ],
         "platforms": [
@@ -341,7 +341,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellydimmer|shellydimmer_cloud|shellyi3&capabilities=input_2"
+            "filter": "driver_id=shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_2"
           }
         ],
         "platforms": [
@@ -363,7 +363,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellydimmer|shellydimmer_cloud|shellyi3&capabilities=input_2"
+            "filter": "driver_id=shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_2"
           }
         ],
         "platforms": [
@@ -385,7 +385,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellydimmer|shellydimmer_cloud|shellyi3&capabilities=input_2"
+            "filter": "driver_id=shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_2"
           }
         ],
         "platforms": [
@@ -407,7 +407,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi3&capabilities=input_3"
+            "filter": "driver_id=shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_3"
           }
         ],
         "platforms": [
@@ -429,7 +429,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi3&capabilities=input_3"
+            "filter": "driver_id=shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_3"
           }
         ],
         "platforms": [
@@ -451,7 +451,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi3&capabilities=input_3"
+            "filter": "driver_id=shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_3"
           }
         ],
         "platforms": [
@@ -473,7 +473,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi4&capabilities=input_4"
+            "filter": "driver_id=shellyi4|shellyi4_cloud&capabilities=input_4"
           }
         ],
         "platforms": [
@@ -495,7 +495,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi4&capabilities=input_4"
+            "filter": "driver_id=shellyi4|shellyi4_cloud&capabilities=input_4"
           }
         ],
         "platforms": [
@@ -517,7 +517,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi4&capabilities=input_4"
+            "filter": "driver_id=shellyi4|shellyi4_cloud&capabilities=input_4"
           }
         ],
         "platforms": [
@@ -839,7 +839,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25|shelly25_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellybutton1|shellydimmer|shellydimmer_cloud|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
+            "filter": "driver_id=shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25|shelly25_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellybutton1|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud|shellyrgbw2color|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
           }
         ],
         "platforms": [
@@ -861,7 +861,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellyi3&capabilities=input_2"
+            "filter": "driver_id=shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_2"
           }
         ],
         "platforms": [
@@ -883,11 +883,38 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi3&capabilities=input_3"
+            "filter": "driver_id=shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_3"
           }
         ],
         "platforms": [
-          "local"
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "conditionInput3",
+        "title": {
+          "en": "Input 4 !{{is|isn't}} on",
+          "nl": "Input 4 !{{is|is niet}} aan"
+        },
+        "titleFormatted": {
+          "en": "Input 4 !{{is|isn't}} on for [[device]]",
+          "nl": "Input 4 !{{is|is niet}} aan voor [[device]]"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shellyi4|shellyi4_cloud&capabilities=input_4"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -3620,8 +3647,8 @@
             "nl": "Instellen percentage optische midden"
           },
           "desc": {
-            "en": "Use this card if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action card to save this position.",
-            "nl": "Gebruik deze actie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie card uit om de positie op te slaan."
+            "en": "Use this option if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action to save this position.",
+            "nl": "Gebruik deze optie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie uit om de positie op te slaan."
           }
         }
       },
@@ -3730,8 +3757,8 @@
             "nl": "Instellen percentage optische midden"
           },
           "desc": {
-            "en": "Use this card if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action card to save this position.",
-            "nl": "Gebruik deze actie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie card uit om de positie op te slaan."
+            "en": "Use this option if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action to save this position.",
+            "nl": "Gebruik deze optie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie uit om de positie op te slaan."
           }
         }
       },
@@ -3972,8 +3999,8 @@
             "nl": "Instellen percentage optische midden"
           },
           "desc": {
-            "en": "Use this card if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action card to save this position.",
-            "nl": "Gebruik deze actie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie card uit om de positie op te slaan."
+            "en": "Use this option if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action to save this position.",
+            "nl": "Gebruik deze optie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie uit om de positie op te slaan."
           }
         }
       },
@@ -4083,8 +4110,8 @@
             "nl": "Instellen percentage optische midden"
           },
           "desc": {
-            "en": "Use this card if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action card to save this position.",
-            "nl": "Gebruik deze actie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie card uit om de positie op te slaan."
+            "en": "Use this option if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action to save this position.",
+            "nl": "Gebruik deze option als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie uit om de positie op te slaan."
           }
         }
       },

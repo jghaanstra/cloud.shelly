@@ -382,5 +382,8 @@
   },
   "3.5.9": {
     "en": "This release contains a breaking change. If you recently paired any GEN2/Plus devices with Homy Cloud/Beta you will need to re-pair your devices to make sure it receives status updates. The release also adds support for Shelly Plus i4 for Homey Cloud. It also contains a possible fix for rollershutters not updating to the correct position when halfway setting is set."
+  },
+  "3.5.10": {
+    "en": "This release attempts to fix the missing status updates for devices paired with Homey Beta/Cloud. It also adds all input flowcards for the Shellyi4 when paired with Homey Beta/Cloud."
   }
 }
