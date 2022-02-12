@@ -42,7 +42,6 @@ class Shellyi3Device extends Device {
 
     this.setAvailable();
 
-    // INITIAL UPDATE AND POLLING
     this.bootSequence();
 
   }

@@ -18,7 +18,6 @@ class ShellyButton1Device extends Device {
 
     this.setAvailable();
 
-    // INITIAL UPDATE
     this.bootSequence();
 
   }

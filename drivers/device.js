@@ -27,12 +27,6 @@ class ShellyDevice extends Homey.Device {
       if (this.getStoreValue('communication') === 'cloud') {
         // nothing to do here
       } else if (this.getStoreValue('communication') === 'websocket') {
-
-        // TO DO: REMOVE AFTER SOME RELEASES
-        if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null) {
-          this.setStoreValue('gen', 'gen2');
-        }
-
         if (this.getStoreValue('channel') === 0) {
           this.ws = null;
           this.connected = false;
@@ -52,12 +46,6 @@ class ShellyDevice extends Homey.Device {
           }, (60000 + (1000 * this.getStoreValue('channel'))));
         }
       } else {
-
-        // TO DO: REMOVE AFTER SOME RELEASES
-        if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null) {
-          this.setStoreValue('gen', 'gen1');
-        }
-
         if (this.homey.settings.get('general_coap')) { /* CoAP is disabled */
           if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
             this.pollingInterval = this.homey.setInterval(() => {
@@ -279,7 +267,11 @@ class ShellyDevice extends Homey.Device {
 
         /* windowcoverings_set */
         if (result.rollers[channel].hasOwnProperty("current_pos")) {
-          this.rollerPosition(result.rollers[channel].current_pos);
+          var windowcoverings_set = result.rollers[channel].current_pos / 100;
+          if (windowcoverings_set !== this.getCapabilityValue('windowcoverings_set')) {
+            this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
+            this.updateCapabilityValue('windowcoverings_set', result.rollers[channel].current_pos);
+          }
         }
 
       }
@@ -902,10 +894,9 @@ class ShellyDevice extends Homey.Device {
           this.rollerState(value);
           break;
         case 'rollerPosition':
-          this.rollerPosition(value);
-          break;
         case 'current_pos':
           let windowcoverings_set = value / 100;
+          this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
           this.updateCapabilityValue('windowcoverings_set', windowcoverings_set, channel);
           break;
         case 'gain':
@@ -1203,27 +1194,6 @@ class ShellyDevice extends Homey.Device {
         this.setStoreValue('last_action', windowcoverings_state);
       }
       this.updateCapabilityValue('windowcoverings_state', windowcoverings_state);
-    } catch (error) {
-      this.log(error);
-    }
-  }
-
-  rollerPosition(value) {
-    try {
-      const halfway = this.getSetting('halfway');
-      if (halfway === 0.5) {
-        var windowcoverings_set = value;
-      } else {
-        if (value === 0.5) {
-          var windowcoverings_set = halfway;
-        } else if (value > 0.5) {
-          var windowcoverings_set = halfway + (value - 0.5) * (1 - halfway) / 0.5;
-        } else {
-          var windowcoverings_set = halfway + (value - 0.5) * (1 - halfway) / 0.5;
-        }
-      }
-      this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
-      this.updateCapabilityValue('windowcoverings_set', windowcoverings_set);
     } catch (error) {
       this.log(error);
     }

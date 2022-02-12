@@ -20,20 +20,6 @@
     "measure_temperature",
     "input_1",
     "input_2",
-    "button.sethalfwayposition",
     "rssi"
-  ],
-  "capabilitiesOptions": {
-    "button.sethalfwayposition": {
-      "maintenanceAction": true,
-      "title": {
-        "en": "Set the optical middle percentage",
-        "nl": "Instellen percentage optische midden"
-      },
-      "desc": {
-        "en": "Use this option if your roller shutter does not stop in the optical middle when set to 50% (because the movement is non linear). Set your roller shutter to the optical middle and execute this action to save this position.",
-        "nl": "Gebruik deze optie als je roller shutter niet in het optische midden stopt bij 50% (omdat het open/sluiten niet linear is). Stel je roller shutter in op het optische midden en voer deze actie uit om de positie op te slaan."
-      }
-    }
-  }
+  ]
 }

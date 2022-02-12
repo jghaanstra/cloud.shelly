@@ -13,7 +13,7 @@ class Shelly4ProCloudDevice extends Device {
 
     this.setAvailable();
 
-    // TO DO: REMOVE AFTER SOME RELEASES AND AFTER GEN HAS BECOME AVAILABLE IN THE INTEGRATOR API CALLBACK
+    // TO O: REMOVE AFTER SOME RELEASES AND AFTER GEN HAS BECOME AVAILABLE IN THE INTEGRATOR API CALLBACK
     if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null) {
       if (this.getStoreValue('type').startsWith('SPSW')) {
         this.setStoreValue('gen', 'gen2');
@@ -22,7 +22,6 @@ class Shelly4ProCloudDevice extends Device {
       }
     }
 
-    // INITIAL UPDATE AND POLLING
     this.bootSequence();
 
     // LISTENERS FOR UPDATING CAPABILITIES

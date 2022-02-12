@@ -385,5 +385,8 @@
   },
   "3.5.10": {
     "en": "This release attempts to fix the missing status updates for devices paired with Homey Beta/Cloud. It also adds all input flowcards for the Shellyi4 when paired with Homey Beta/Cloud."
+  },
+  "3.6.0": {
+    "en": "This release contains breaking changes. The halfway setting from Shelly 2(.5) Roller Shutter has been removed due to ongoing issues with this functionality which is not part of the Shelly eco system. The already deprecated RGBW2 CWWW driver has been completely removed. The release also adds support for Shelly Pro 2 and Shelly Pro 2PM in roller shutter mode for Homey Pro."
   }
 }

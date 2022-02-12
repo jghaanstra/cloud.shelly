@@ -1,21 +1,21 @@
 'use strict';
 
 const Homey = require('homey');
-const Driver = require('../driver_cloud.js');
+const Driver = require('../driver.js');
 const Util = require('../../lib/util.js');
 
-class Shelly2RollerShutterCloudDriver extends Driver {
+class ShellyPro2PMRollerShutterDriver extends Driver {
 
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly 2 Roller Shutter Cloud',
+      name: 'Shelly Pro 2PM RollerShutter',
       battery: false,
-      hostname: ['shelly2-']
+      hostname: ['ShellyPro2PM-']
     }
   }
 
 }
 
-module.exports = Shelly2RollerShutterCloudDriver;
+module.exports = ShellyPro2PMRollerShutterDriver;

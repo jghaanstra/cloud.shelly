@@ -20,7 +20,6 @@ class Shelly4ProDevice extends Device {
 
     this.setAvailable();
 
-    // INITIAL UPDATE AND POLLING
     this.bootSequence();
 
     // LISTENERS FOR UPDATING CAPABILITIES

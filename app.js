@@ -187,17 +187,23 @@ class ShellyApp extends Homey.App {
         return args.device.triggerCapabilityListener("onoff.whitemode", false);
       })
 
-    // SHELLY 2(.5) ROLLER SHUTTER
+    // SHELLY (PRO) 2(.5)(PM) ROLLER SHUTTER
     this.homey.flow.getActionCard('moveRollerShutter')
       .registerRunListener(async (args) => {
         if (args.direction == 'open') {
           args.device.setStoreValue('last_action', 'up');
           args.device.setCapabilityValue('windowcoverings_state','up');
+          var gen2_method = 'Cover.Open';
         } else if (args.direction == 'close') {
           args.device.setStoreValue('last_action', 'down');
           args.device.setCapabilityValue('windowcoverings_state','down');
+          var gen2_method = 'Cover.Close';
         }
-        return await this.util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.move_duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        if (args.device.getStoreValue('communication') === 'websocket') {
+          return await args.device.ws.send(JSON.stringify({"id": this.getCommandId(), "method": method, "params": {"id": this.getStoreValue('channel'), "duration": args.move_duration} }));
+        } else {
+          return await this.util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.move_duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        }
       })
 
     this.homey.flow.getActionCard('moveRollerShutterOffset')
@@ -215,16 +221,11 @@ class ShellyApp extends Homey.App {
     this.homey.flow.getActionCard('rollerShutterIntelligentAction')
       .registerRunListener(async (args) => {
         if (args.device.getCapabilityValue('windowcoverings_state') !== 'idle') {
-          args.device.setCapabilityValue('windowcoverings_state','idle');
-          return await this.util.sendCommand('/roller/0?go=stop', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          return await args.device.triggerCapabilityListener('windowcoverings_state', 'idle');
         } else if (args.device.getStoreValue('last_action') === 'up') {
-          args.device.setStoreValue('last_action', 'down');
-          args.device.setCapabilityValue('windowcoverings_state','down');
-          return await this.util.sendCommand('/roller/0?go=close', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          return await args.device.triggerCapabilityListener('windowcoverings_state', 'up');
         } else if (args.device.getStoreValue('last_action') === 'down') {
-          args.device.setStoreValue('last_action', 'up');
-          args.device.setCapabilityValue('windowcoverings_state','up');
-          return await this.util.sendCommand('/roller/0?go=open', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          return await args.device.triggerCapabilityListener('windowcoverings_state', 'down');
         } else {
           return Promise.reject(error);
         }

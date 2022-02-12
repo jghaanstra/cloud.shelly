@@ -25,13 +25,12 @@ class ShellyDimmerCloudDevice extends Device {
 
     this.setAvailable();
 
-    // INITIAL UPDATE AND POLLING
-    this.bootSequence();
-
-    // TO DO: REMOVE AFTER SOME RELEASES AND AFTER GEN HAS BECOME AVAILABLE IN THE INTEGRATOR API CALLBACK
+    // TODO: REMOVE AFTER SOME RELEASES AND AFTER GEN HAS BECOME AVAILABLE IN THE INTEGRATOR API CALLBACK
     if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null || this.getStoreValue('gen') == 'gen2') {
       this.setStoreValue('gen', 'gen1');
     }
+
+    this.bootSequence();
 
     // LISTENERS FOR UPDATING CAPABILITIES
     this.registerCapabilityListener('onoff', async (value) => {

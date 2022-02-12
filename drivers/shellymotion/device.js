@@ -13,7 +13,6 @@ class ShellyMotionDevice extends Device {
 
     this.setAvailable();
 
-    // INITIAL UPDATE AND POLLING
     this.bootSequence();
 
   }

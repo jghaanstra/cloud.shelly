@@ -20,7 +20,11 @@ class Shelly2RollerShutterDevice extends Device {
 
     this.setAvailable();
 
-    // INITIAL UPDATE AND POLLING
+    // TODO: REMOVE AFTER SOME RELEASES
+    if (this.hasCapability('button.sethalfwayposition')) {
+      this.removeCapability('button.sethalfwayposition');
+    }
+
     this.bootSequence();
 
     // LISTENERS FOR UPDATING CAPABILITIES
@@ -42,34 +46,10 @@ class Shelly2RollerShutterDevice extends Device {
 
     this.registerCapabilityListener('windowcoverings_set', async (value) => {
       try {
-        const halfway = this.getSetting('halfway');
-        if (halfway === 0.5) {
-          var position = value;
-        } else {
-          if (value === 0.5) {
-            var position = halfway;
-          } else if (value > 0.5) {
-            var position = halfway + (value - 0.5) * (1 - halfway) / 0.5;
-          } else {
-            var position = halfway + (value - 0.5) * (1 - halfway) / 0.5;
-          }
-        }
         this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
-        return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(position*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(value*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       } catch (error) {
         this.log(error)
-        return Promise.reject(error);
-      }
-    });
-
-    this.registerCapabilityListener('button.sethalfwayposition', async () => {
-      try {
-        let result = this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        let position = result.rollers[0].current_pos >= 100 ? 1 : result.rollers[0].current_pos / 100;
-        this.setSettings({'halfway':  position});
-        return Promise.resolve(true);
-      } catch (error) {
-        this.log(error);
         return Promise.reject(error);
       }
     });

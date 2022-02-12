@@ -17,10 +17,6 @@
       {
         "id": "password",
         "$extends": "password"
-      },
-      {
-        "id": "polling",
-        "$extends": "polling"
       }
     ]
   }

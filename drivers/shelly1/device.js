@@ -34,7 +34,6 @@ class Shelly1Device extends Device {
 
     this.setAvailable();
 
-    // INITIAL UPDATE AND POLLING
     this.bootSequence();
 
     // LISTENERS FOR UPDATING CAPABILITIES
