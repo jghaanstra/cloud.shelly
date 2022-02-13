@@ -1175,8 +1175,6 @@ class ShellyDevice extends Homey.Device {
     try {
       switch(value) {
         case 'stop':
-        case 'open':
-        case 'closed':
           var windowcoverings_state = 'idle'
           break;
         case 'open':
@@ -1184,6 +1182,7 @@ class ShellyDevice extends Homey.Device {
           var windowcoverings_state = 'up';
           break;
         case 'close':
+        case 'closed':
         case 'closing':
           var windowcoverings_state = 'down';
           break;
