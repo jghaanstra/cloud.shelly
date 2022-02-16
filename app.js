@@ -13,10 +13,9 @@ class ShellyApp extends OAuth2App {
   static OAUTH2_CLIENT = ShellyOAuth2Client;
   static OAUTH2_DEBUG = false;
   static OAUTH2_MULTI_SESSION = false;
-  //static OAUTH2_DRIVERS = ['shelly-plug-s_cloud', 'shelly-plug_cloud', 'shelly-pro-1_cloud', 'shelly-pro-1pm_cloud', 'shelly-pro-2_cloud', 'shelly-pro-2pm_cloud', 'shelly1_cloud', 'shelly1l_cloud', 'shelly1pm_cloud', 'shelly25_cloud', 'shelly2_cloud', 'shelly3em_cloud', 'shelly4pro_cloud', 'shellyair_cloud', 'shellybulb_cloud', 'shellybutton1_cloud', 'shellydimmer_cloud', 'shellyduo_cloud', 'shellydw_cloud', 'shellyem_cloud', 'shellyflood_cloud', 'shellyht_cloud', 'shellyi3_cloud', 'shellyi4_cloud', 'shellymotion_cloud', 'shellyrgbw2color_cloud', 'shellyrgbw2white_cloud', 'shellysmoke_cloud', 'shellyuni_cloud', 'shellyvintage_cloud'];
-  static OAUTH2_DRIVERS = ['shelly1_cloud'];
+  static OAUTH2_DRIVERS = ['shelly-plug-s_cloud', 'shelly-plug_cloud', 'shelly-pro-1_cloud', 'shelly-pro-1pm_cloud', 'shelly-pro-2_cloud', 'shelly-pro-2pm_cloud', 'shelly1_cloud', 'shelly1l_cloud', 'shelly1pm_cloud', 'shelly25_cloud', 'shelly2_cloud', 'shelly3em_cloud', 'shelly4pro_cloud', 'shellyair_cloud', 'shellybulb_cloud', 'shellybutton1_cloud', 'shellydimmer_cloud', 'shellyduo_cloud', 'shellydw_cloud', 'shellyem_cloud', 'shellyflood_cloud', 'shellyht_cloud', 'shellyi3_cloud', 'shellyi4_cloud', 'shellymotion_cloud', 'shellyrgbw2color_cloud', 'shellyrgbw2white_cloud', 'shellysmoke_cloud', 'shellyuni_cloud', 'shellyvintage_cloud'];
 
-  async onInit() {
+  async onOAuth2Init() {
     this.log('Initializing Shelly App ...');
 
     if (!this.util) this.util = new Util({homey: this.homey});
@@ -34,7 +33,7 @@ class ShellyApp extends OAuth2App {
     // CLOUD: COPEN WEBSOCKET
     this.homey.setTimeout(async () => {
       this.websocketCloudListener();
-    }, 5000);
+    }, 2000);
 
     // COAP, CLOUD & GEN2 WEBSOCKETS: INITIALLY UPDATE THE SHELLY COLLECTION FOR MATCHING INCOMING STATUS UPDATES
     this.homey.setTimeout(async () => {

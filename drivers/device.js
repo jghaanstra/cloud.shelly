@@ -141,7 +141,7 @@ class ShellyDevice extends Homey.Device {
             break
           case 'coap':
             if (!this.getCapabilityValue('onoff')) {
-              const dim = value === 0 ? 1 : value * 100;
+              const dim_coap = value === 0 ? 1 : value * 100;
               return await this.util.sendCommand('/light/0?turn=on&brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
             } else {
               const dim = value === 0 ? 1 : value * 100;
@@ -168,12 +168,14 @@ class ShellyDevice extends Homey.Device {
       switch(this.getStoreValue('communication')) {
         case 'websocket':
           break
-        case 'coap':
-          const white = 100 - (value * 100);
+        case 'coap': {
+          let white = 100 - (value * 100);
           return await this.util.sendCommand('/light/0?white='+ white +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        case 'cloud':
-          const white = 100 - (value * 100);
+        }
+        case 'cloud': {
+          let white = 100 - (value * 100);
           return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'white', command_value: white, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+        }
         default:
           break;
       }

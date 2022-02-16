@@ -14,12 +14,15 @@ class ShellyCloudDevice extends OAuth2Device {
   async bootSequence() {
 
     // update initial device status on init
-    const device_data = await this.oAuth2Client.getCloudDevices(this.getSetting('cloud_server'));
-    if (this.getStoreValue('gen') === 'gen1') {
-      this.parseStatusUpdate(device_data.data.devices_status[this.getData().id])
-    } else if (this.getStoreValue('gen') === 'gen2') {
-      this.parseStatusUpdateGen2(device_data.data.devices_status[this.getData().id])
-    }
+    this.homey.setTimeout(async () => {
+      await this.util.sleep(3000);
+      const device_data = await this.oAuth2Client.getCloudDevices(this.getSetting('cloud_server'));
+      if (this.getStoreValue('gen') === 'gen1') {
+        this.parseStatusUpdate(device_data.data.devices_status[this.getData().id])
+      } else if (this.getStoreValue('gen') === 'gen2') {
+        this.parseStatusUpdateGen2(device_data.data.devices_status[this.getData().id])
+      }
+    }, 6000);
 
   }
 
@@ -30,7 +33,7 @@ class ShellyCloudDevice extends OAuth2Device {
       this.homey.setTimeout(async () => {
         await this.homey.app.updateShellyCollection();
         await this.util.sleep(2000);
-        this.homey.app.websocketCloudOauthListener();
+        this.homey.app.websocketCloudListener();
         return;
       }, 1000);
     }

@@ -13,16 +13,12 @@ class ShellyPlugSCloudDevice extends Device {
 
     this.setAvailable();
 
-    this.homey.setTimeout(async () => {
-      await this.util.sleep(2000);
-      this.bootSequence();
-    }, 3000);
+    this.bootSequence();
 
     // CAPABILITY LISTENERS
     this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
 
   }
-
 
 }
 
