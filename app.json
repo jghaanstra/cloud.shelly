@@ -65,7 +65,11 @@
       "Shelly Vintage"
     ]
   },
+<<<<<<< HEAD
   "version": "3.7.0",
+=======
+  "version": "3.6.5",
+>>>>>>> master
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
