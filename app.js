@@ -386,6 +386,7 @@ class ShellyApp extends OAuth2App {
   // CLOUD: OPEN WEBSOCKET FOR PROCESSING CLOUD DEVICES STATUS UPDATES
   async websocketCloudListener() {
     try {
+      //console.log(this.checkHasOAuth2Client());
       const client = await this.getFirstSavedOAuth2Client();
       const oauth_token = await client.getToken();
       this.cloudAccessToken = oauth_token.access_token;

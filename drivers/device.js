@@ -220,7 +220,7 @@ class ShellyDevice extends Homey.Device {
   }
 
   /* valve_mode */
-  async onCapabilityValvePosition(value, opts) {
+  async onCapabilityValveMode(value, opts) {
     try {
       switch(this.getStoreValue('communication')) {
         case 'websocket':{
