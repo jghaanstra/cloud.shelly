@@ -25,7 +25,7 @@ class ShellyDevice extends Homey.Device {
   async onCapabilityOnoff(value, opts) {
     try {
       switch(this.getStoreValue('communication')) {
-        case 'websocket':
+        case 'websocket':{
           if (this.getStoreValue('channel') === 0) {
             return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value} }));
           } else {
@@ -33,12 +33,15 @@ class ShellyDevice extends Homey.Device {
             const device = this.driver.getDevice({id: device_id });
             return await device.ws.send(JSON.stringify({"id": device.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value} }));
           }
-        case 'coap':
+        }
+        case 'coap': {
           const path = value ? '/relay/'+ this.getStoreValue("channel") +'?turn=on' : '/relay/'+ this.getStoreValue("channel") +'?turn=off';
           return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        case 'cloud':
+        }
+        case 'cloud': {
           const onoff = value ? 'on' : 'off';
           return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'relay', command_param: 'turn', command_value: onoff, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+        }
         default:
           break;
       }
@@ -51,14 +54,17 @@ class ShellyDevice extends Homey.Device {
   async onCapabilityOnoffLight(value, opts) {
     try {
       switch(this.getStoreValue('communication')) {
-        case 'websocket':
+        case 'websocket': {
           break;
-        case 'coap':
+        }
+        case 'coap': {
           const path = value ? '/light/'+ this.getStoreValue("channel") +'?turn=on' : '/light/'+ this.getStoreValue("channel") +'?turn=off';
           return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        case 'cloud':
+        }
+        case 'cloud': {
           const onoff = value ? 'on' : 'off';
           return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'turn', command_value: onoff, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+        }
         default:
           break;
       }
@@ -74,7 +80,7 @@ class ShellyDevice extends Homey.Device {
         this.setStoreValue('last_action', value);
       }
       switch(this.getStoreValue('communication')) {
-        case 'websocket':
+        case 'websocket': {
           switch (value) {
             case 'idle':
               return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.Stop", "params": {"id": this.getStoreValue('channel')} }));
@@ -85,7 +91,8 @@ class ShellyDevice extends Homey.Device {
             default:
               return Promise.reject('State not recognized ...');
           }
-        case 'coap':
+        }
+        case 'coap': {
           switch (value) {
             case 'idle':
               return await this.util.sendCommand('/roller/0?go=stop', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
@@ -96,9 +103,10 @@ class ShellyDevice extends Homey.Device {
             default:
               return Promise.reject('State not recognized ...');
           }
-        case 'cloud':
-
+        }
+        case 'cloud': {
           break;
+        }
         default:
           break;
       }
@@ -112,10 +120,12 @@ class ShellyDevice extends Homey.Device {
     try {
       this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
       switch(this.getStoreValue('communication')) {
-        case 'websocket':
+        case 'websocket': {
           return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.GoToPosition", "params": {"id": this.getStoreValue('channel'), "pos": Math.round(value*100)} }));
-        case 'coap':
+        }
+        case 'coap': {
           return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(value*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        }
         case 'cloud':
 
           break;
@@ -137,9 +147,10 @@ class ShellyDevice extends Homey.Device {
         return Promise.reject(this.homey.__('device.maximum_dim_duration'));
       } else {
         switch(this.getStoreValue('communication')) {
-          case 'websocket':
+          case 'websocket': {
             break
-          case 'coap':
+          }
+          case 'coap': {
             if (!this.getCapabilityValue('onoff')) {
               const dim_coap = value === 0 ? 1 : value * 100;
               return await this.util.sendCommand('/light/0?turn=on&brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
@@ -147,12 +158,14 @@ class ShellyDevice extends Homey.Device {
               const dim = value === 0 ? 1 : value * 100;
               return await this.util.sendCommand('/light/0?brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
             }
-          case 'cloud':
+          }
+          case 'cloud': {
             if (!this.getCapabilityValue('onoff')) {
               this.setCapabilityValue('onoff', true);
             }
             const dim = value === 0 ? 1 : value * 100;
             return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'brightness', command_value: dim, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+          }
           default:
             break;
         }
@@ -166,14 +179,15 @@ class ShellyDevice extends Homey.Device {
   async onCapabilityLightTemperature(value, opts) {
     try {
       switch(this.getStoreValue('communication')) {
-        case 'websocket':
+        case 'websocket': {
           break
+        }
         case 'coap': {
-          let white = 100 - (value * 100);
+          const white = 100 - (value * 100);
           return await this.util.sendCommand('/light/0?white='+ white +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         }
         case 'cloud': {
-          let white = 100 - (value * 100);
+          const white = 100 - (value * 100);
           return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'white', command_value: white, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
         }
         default:
@@ -188,14 +202,15 @@ class ShellyDevice extends Homey.Device {
   async onCapabilityValvePosition(value, opts) {
     try {
       switch(this.getStoreValue('communication')) {
-        case 'websocket':
+        case 'websocket':{
           break;
-        case 'coap':
+        }
+        case 'coap': {
           return await this.util.sendCommand('/thermostat/0?pos='+ value, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        }
+        case 'cloud':{
           break;
-        case 'cloud':
-
-          break;
+        }
         default:
           break;
       }
@@ -208,18 +223,19 @@ class ShellyDevice extends Homey.Device {
   async onCapabilityValvePosition(value, opts) {
     try {
       switch(this.getStoreValue('communication')) {
-        case 'websocket':
+        case 'websocket':{
           break;
-        case 'coap':
+        }
+        case 'coap': {
           if (value === "0") {
             return await this.util.sendCommand('/thermostat/0?schedule=false', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
           } else {
             return await this.util.sendCommand('/thermostat/0?schedule=true&schedule_profile='+ value, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
           }
+        }
+        case 'cloud': {
           break;
-        case 'cloud':
-
-          break;
+        }
         default:
           break;
       }
@@ -232,14 +248,15 @@ class ShellyDevice extends Homey.Device {
   async onCapabilityTargetTemperature(value, opts) {
     try {
       switch(this.getStoreValue('communication')) {
-        case 'websocket':
+        case 'websocket':{
           break;
-        case 'coap':
+        }
+        case 'coap': {
           return await this.util.sendCommand('/thermostat/0?target_t_enabled=true&target_t='+ value, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        }
+        case 'cloud':{
           break;
-        case 'cloud':
-
-          break;
+        }
         default:
           break;
       }
