@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.6.2",
+  "version": "3.7.0",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -1868,10 +1868,32 @@
       "icon": "/drivers/shelly-plug-s_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -1939,10 +1961,32 @@
       "icon": "/drivers/shelly-plug_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -2328,10 +2372,32 @@
       "icon": "/drivers/shelly-pro-1_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -2506,10 +2572,32 @@
       "icon": "/drivers/shelly-pro-1pm_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -2676,6 +2764,12 @@
         },
         {
           "id": "add_device"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -2955,6 +3049,12 @@
         },
         {
           "id": "add_device"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -3532,10 +3632,32 @@
       },
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -3553,36 +3675,7 @@
         "small": "./assets/drivers/shelly1/images/small.jpg"
       },
       "class": "socket",
-      "id": "shelly1_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shelly1_cloud"
     },
     {
       "icon": "/drivers/shelly1l_cloud/assets/icon.svg",
@@ -3623,10 +3716,32 @@
       },
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -3851,10 +3966,32 @@
       },
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -4339,6 +4476,12 @@
           "id": "add_device"
         }
       ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
       "platforms": [
         "cloud"
       ],
@@ -4401,6 +4544,12 @@
         },
         {
           "id": "add_device"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -4587,6 +4736,12 @@
         },
         {
           "id": "add_device"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -4777,6 +4932,12 @@
           "id": "add_device"
         }
       ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
       "platforms": [
         "cloud"
       ],
@@ -4960,10 +5121,32 @@
       "icon": "/drivers/shellyair_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -5149,10 +5332,32 @@
       "icon": "/drivers/shellybulb_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -5331,6 +5536,12 @@
         },
         {
           "id": "add_device"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -5513,10 +5724,32 @@
       "icon": "/drivers/shellydimmer_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -5705,10 +5938,32 @@
       "icon": "/drivers/shellyduo_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -5892,6 +6147,12 @@
         },
         {
           "id": "add_device"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -6084,6 +6345,12 @@
         },
         {
           "id": "add_device"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -6284,6 +6551,12 @@
         },
         {
           "id": "add_device"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -6577,6 +6850,12 @@
           "id": "add_device"
         }
       ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
       "platforms": [
         "cloud"
       ],
@@ -6748,10 +7027,32 @@
       "icon": "/drivers/shellyi3_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -6922,10 +7223,32 @@
       "icon": "/drivers/shellyi4_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -7106,6 +7429,12 @@
         },
         {
           "id": "add_device"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -7306,10 +7635,32 @@
       "icon": "/drivers/shellyrgbw2color_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -7502,6 +7853,12 @@
           "id": "add_device"
         }
       ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
       "platforms": [
         "cloud"
       ],
@@ -7679,6 +8036,12 @@
         },
         {
           "id": "add_device"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -7912,6 +8275,12 @@
           "id": "add_device"
         }
       ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
       "platforms": [
         "cloud"
       ],
@@ -8068,10 +8437,32 @@
       "icon": "/drivers/shellyvintage_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [

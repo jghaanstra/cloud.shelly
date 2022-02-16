@@ -1,11 +1,19 @@
 'use strict';
 
 const Homey = require('homey');
+const { OAuth2App } = require('homey-oauth2app');
+const ShellyOAuth2Client = require('./lib/ShellyOAuth2Client');
 const Util = require('./lib/util.js');
 const shellies = require('shellies');
 const WebSocket = require('ws');
+const jwt_decode = require('jwt-decode');
 
-class ShellyApp extends Homey.App {
+class ShellyApp extends OAuth2App {
+
+  static OAUTH2_CLIENT = ShellyOAuth2Client;
+  static OAUTH2_DEBUG = false;
+  static OAUTH2_MULTI_SESSION = false;
+  static OAUTH2_DRIVERS = ['shelly-plug-s_cloud', 'shelly-plug_cloud', 'shelly-pro-1_cloud', 'shelly-pro-1pm_cloud', 'shelly-pro-2_cloud', 'shelly-pro-2pm_cloud', 'shelly1_cloud', 'shelly1l_cloud', 'shelly1pm_cloud', 'shelly25_cloud', 'shelly2_cloud', 'shelly3em_cloud', 'shelly4pro_cloud', 'shellyair_cloud', 'shellybulb_cloud', 'shellybutton1_cloud', 'shellydimmer_cloud', 'shellyduo_cloud', 'shellydw_cloud', 'shellyem_cloud', 'shellyflood_cloud', 'shellyht_cloud', 'shellyi3_cloud', 'shellyi4_cloud', 'shellymotion_cloud', 'shellyrgbw2color_cloud', 'shellyrgbw2white_cloud', 'shellysmoke_cloud', 'shellyuni_cloud', 'shellyvintage_cloud'];
 
   async onInit() {
     this.log('Initializing Shelly App ...');
@@ -16,29 +24,15 @@ class ShellyApp extends Homey.App {
     this.shellyDevices = [];
 
     // VARIABLES CLOUD
-    this.cloudPairingDevice = {};
     this.cloudInstall = false;
     this.cloudServer = null;
+    this.cloudAccessToken = null;
     this.ws = null;
     this.wsConnected = false;
 
-    // CLOUD: REGISTER WEBHOOK FOR SHELLY INTEGRATOR PORTAL
-    const homeyId = await this.homey.cloud.getHomeyId();
-    const webhook_id = Homey.env.WEBHOOK_ID;
-    const webhook_secret = Homey.env.WEBHOOK_SECRET;
-    const webhook_data = { deviceId: homeyId }
-    const webhook = await this.homey.cloud.createWebhook(webhook_id, webhook_secret, webhook_data);
-
-    // CLOUD: CHECK IF THERE ARE PAIRED CLOUD DEVICES AND OPEN WEBSOCKET
+    // CLOUD: COPEN WEBSOCKET
     this.homey.setTimeout(async () => {
-      let result = await this.util.getCloudDetails();
-      this.cloudInstall = result.cloudInstall;
-      this.cloudServer = result.server_address;
-
-      if (this.cloudInstall && this.cloudServer) {
-        let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
-        this.websocketCloudListener(jwtToken);
-      }
+      this.websocketCloudListener();
     }, 5000);
 
     // COAP, CLOUD & GEN2 WEBSOCKETS: INITIALLY UPDATE THE SHELLY COLLECTION FOR MATCHING INCOMING STATUS UPDATES
@@ -48,7 +42,7 @@ class ShellyApp extends Homey.App {
 
     // COAP: START COAP LISTENER FOR RECEIVING STATUS UPDATES
     this.homey.setTimeout(async () => {
-      if (!this.cloudInstall) {
+      if (!this.cloudInstall) { // TODO: make a standalone cloud install check and drop this variable
         if (!this.homey.settings.get('general_coap')) {
           this.log('CoAP listener for gen1 LAN devices started.');
           shellies.start();
@@ -299,7 +293,6 @@ class ShellyApp extends Homey.App {
         return await this.util.sendCommand('/ext_t?temp='+ args.temperature +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
 
-
     // COAP: COAP LISTENER FOR PROCESSING INCOMING MESSAGES
     shellies.on('discover', device => {
       this.log('Discovered device with ID', device.id, 'and type', device.type, 'with IP address', device.host);
@@ -350,24 +343,6 @@ class ShellyApp extends Homey.App {
         }
       })
     });
-
-    // CLOUD: PROCESS SHELLY CLOUD CALLBACK MESSAGES FOR DEVICE PAIRING
-    webhook.on('message', async (args) => {
-      try {
-        if (args.body.action === 'add') {
-          this.cloudServer = args.body.host;
-          this.cloudPairingDevice = args.body;
-        }
-
-        // start websocket listener, it could be the first device being paired
-        if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
-          let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
-          this.websocketCloudListener(jwtToken);
-        }
-      } catch (error) {
-        this.log(error);
-      }
-    });
   }
 
   // COAP: UPDATE SETTINGS AND START/STOP COAP LISTENER
@@ -409,13 +384,19 @@ class ShellyApp extends Homey.App {
   }
 
   // CLOUD: OPEN WEBSOCKET FOR PROCESSING CLOUD DEVICES STATUS UPDATES
-  async websocketCloudListener(jwtToken) {
+  async websocketCloudListener() {
     try {
-      if (this.cloudServer) {
-        this.ws = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ jwtToken, {perMessageDeflate: false});
+      const client = await this.getFirstSavedOAuth2Client();
+      const oauth_token = await client.getToken();
+      this.cloudAccessToken = oauth_token.access_token;
+      const cloud_details = await jwt_decode(oauth_token.access_token);
+      this.cloudServer = cloud_details.user_api_url.replace('https://', '');
+
+      if (this.ws == null || this.ws.readyState === WebSocket.CLOSED) {
+        this.ws = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ this.cloudAccessToken, {perMessageDeflate: false});
 
         this.ws.on('open', () => {
-          this.log('Websocket for cloud devices opened.');
+          this.log('Websocket for oauth cloud devices opened.');
           this.wsConnected = true;
 
           // start sending pings every 2 minutes to check the connection status
@@ -430,37 +411,20 @@ class ShellyApp extends Homey.App {
         this.ws.on('message', async (data) => {
           try {
             const result = JSON.parse(data);
-            if (result.event === 'Shelly:StatusOnChange') {
-              const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.deviceId));
-              for (const filteredShelly of filteredShellies) {
-                if (filteredShelly.gen === 'gen2') {
-                  filteredShelly.device.parseStatusUpdateGen2(result.status);
-                } else {
-                  filteredShelly.device.parseStatusUpdate(result.status);
-                }
-                await this.util.sleep(250);
-              }
-            } else if (result.event === 'Integrator:ActionResponse') {
 
-              const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.data.deviceId));
+            if (result.event === 'Shelly:StatusOnChange') {
+              const device_id = result.device.id.toString(16); // convert regular device id to cloud device id to allow matching
+              const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(device_id));
               for (const filteredShelly of filteredShellies) {
-                await this.updateShellyCollection();
-                // TODO: REMOVE THIS AFTER SOME RELEASES
-                if (filteredShelly.device.getStoreValue('type') !== result.data.deviceCode) {
-                  filteredShelly.device.setStoreValue('type', result.data.deviceCode);
-                }
-                if (filteredShelly.gen === 'gen2') {
-                  if (result.data.hasOwnProperty('deviceStatus')) {
-                    filteredShelly.device.parseStatusUpdateGen2(result.data.deviceStatus);
-                  }
-                } else {
-                  if (result.data.hasOwnProperty('deviceStatus')) {
-                    filteredShelly.device.parseStatusUpdate(result.data.deviceStatus);
-                  }
+                if (result.device.gen === 'G1') {
+                  filteredShelly.device.parseStatusUpdate(result.status);
+                } else if (result.device.gen === 'G2') {
+                  filteredShelly.device.parseStatusUpdateGen2(result.status);
                 }
                 await this.util.sleep(250);
               }
             }
+
           } catch (error) {
             this.log(error);
           }
@@ -471,8 +435,7 @@ class ShellyApp extends Homey.App {
           this.wsPingTimeout = this.homey.setTimeout(async () => {
             if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
               this.wsConnected = false;
-              let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
-              this.websocketCloudListener(jwtToken);
+              this.websocketCloudListener();
             } else if (this.wsConnected) {
               this.ws.close();
             }
@@ -492,8 +455,7 @@ class ShellyApp extends Homey.App {
           // retry connection after 500 miliseconds
           clearTimeout(this.wsReconnectTimeout);
           this.wsReconnectTimeout = this.homey.setTimeout(async () => {
-            let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
-            this.websocketCloudListener(jwtToken);
+            this.websocketCloudListener();
           }, 500);
         });
 
@@ -501,13 +463,14 @@ class ShellyApp extends Homey.App {
         throw new Error('No cloud server details yet.');
       }
     } catch (error) {
-      clearTimeout(this.wsReconnectTimeout);
-      this.wsReconnectTimeout = this.homey.setTimeout(async () => {
-        if (!this.wsConnected) {
-          let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
-          this.websocketCloudListener(jwtToken);
-        }
-      }, 5000);
+      if (error.message !== 'No OAuth2 Client Found') {
+        clearTimeout(this.wsReconnectTimeout);
+        this.wsReconnectTimeout = this.homey.setTimeout(async () => {
+          if (!this.wsConnected) {
+            this.websocketCloudListener(this.cloudAccessToken);
+          }
+        }, 5000);
+      }
     }
   }
 
@@ -525,28 +488,12 @@ class ShellyApp extends Homey.App {
 
       if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
         this.wsConnected = false;
-        let jwtToken = await this.util.getJWTToken(Homey.env.SHELLY_TAG, Homey.env.SHELLY_TOKEN);
-        this.websocketCloudListener(jwtToken);
+        this.websocketCloudListener();
       } else if (this.wsConnected) {
         this.ws.close();
       }
 
       return Promise.reject(error);
-    }
-  }
-
-  // CLOUD: FABRICATE SHELLY INTEGRATOR PORTAL URL
-  async getIntegratorUrl() {
-    const homeyId = await this.homey.cloud.getHomeyId();
-    return 'https://my.shelly.cloud/integrator.html?itg='+ Homey.env.SHELLY_TAG +'&cb=https://webhooks.athom.com/webhook/'+ Homey.env.WEBHOOK_ID +'/?homey='+ homeyId
-  }
-
-  // CLOUD: RETURN SHARED CLOUD DEVICE FOR PAIRING
-  async getPairingDevice() {
-    if (this.cloudPairingDevice.hasOwnProperty('deviceId')) {
-      return Promise.resolve(this.cloudPairingDevice);
-    } else {
-      return Promise.reject(this.homey.__('app.no_pairing_device_found'));
     }
   }
 

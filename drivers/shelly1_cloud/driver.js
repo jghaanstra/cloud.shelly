@@ -6,11 +6,11 @@ const Util = require('../../lib/util.js');
 
 class Shelly1CloudDriver extends Driver {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly 1 Cloud',
+      name: 'Shelly (Plus) 1 Cloud',
       battery: false,
       hostname: ['shelly1-', 'shellyplus1-', 'ShellyPlus1-']
     }

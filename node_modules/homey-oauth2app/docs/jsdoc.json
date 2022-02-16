@@ -1,0 +1,22 @@
+{
+  "plugins": [
+    "jsdoc-ts-utils",
+    "plugins/markdown"
+  ],
+  "source": {
+    "include": [
+      "./README.md",
+      "./lib",
+      "./index.js"
+    ]
+  },
+  "opts": {
+    "simpleAnalyticsHost": "sa.athom.com",
+    "mainpagetitle": "Homey OAuth2",
+    "destination": "./build",
+    "template": "./node_modules/homey-jsdoc-template"
+  },
+  "tsUtils": {
+    "typeScriptUtilityTypes": false
+  }
+}

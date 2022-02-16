@@ -1,63 +1,64 @@
 'use strict';
 
 const Homey = require('homey');
+const { OAuth2Driver } = require('homey-oauth2app');
 const Util = require('../lib/util.js');
+const jwt_decode = require('jwt-decode');
 
-class ShellyCloudDriver extends Homey.Driver {
+class ShellyCloudDriver extends OAuth2Driver {
 
-  onInit() {
+  async onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
   }
 
-  onPair(session) {
-    let deviceArray = {};
-
-    session.setHandler('test_connection', async (data) => {
-      try {
-        const device = await this.homey.app.getPairingDevice();
-        // TODO: ADD GEN ATTRIBUTE WHEN IT BECOMES AVAILABLE IN THE INTEGRATOR API, ALSO IN CLOUD DRIVERS WITH MODIFIED ADD DEVICE TEMPLATE
-        deviceArray = {
-          name: device.name[0],
-          data: {
-            id: String(device.deviceId),
-          },
-          settings: {
-            server_address: device.host,
-            cloud_device_id: device.deviceId
-          },
-          store: {
-            main_device: String(device.deviceId),
-            channel: 0,
-            type: device.deviceCode,
-            unicast: false,
-            battery: this.config.battery,
-            sdk: 3,
-            communication: 'cloud'
+  async onPairListDevices({ oAuth2Client }) {
+    try {
+      console.log('start pairing');
+      const oauth_token = await oAuth2Client.getToken();
+      const cloud_details = await jwt_decode(oauth_token.access_token);
+      const cloud_server = cloud_details.user_api_url.replace('https://', '');
+      const devices_data = await oAuth2Client.getCloudDevices(cloud_server);
+      var devices = [];
+      Object.entries(devices_data.data.devices_status).forEach(([key, value]) => {
+        if (value.hasOwnProperty('_dev_info')) { // make sure _dev_info is present
+          if (value._dev_info.online) { // we only want to pair online devices to avoid users complaining about unreachable devices
+            var device_code = value._dev_info.code; // get the device code
+            if (value._dev_info.gen === "G1") { // get the IP address to allow device identification in the pairing wizard, property location depends on device generation
+              var device_ip = value.wifi_sta.ip;
+              var gen = 'gen1';
+            } else if (value._dev_info.gen === "G2") {
+              var device_ip = value.wifi.sta_ip;
+              var gen = 'gen2';
+            }
+            if (this.config.code.some((host) => { return device_code.startsWith(host) })) { // filter only device for the chosen driver
+              devices.push({
+                name: this.config.name+ ' ['+ device_ip +']',
+                data: {
+                  id: String(key),
+                },
+                settings: {
+                  cloud_server: cloud_server,
+                  cloud_device_id: parseInt(String(key),16)
+                },
+                store: {
+                  main_device: String(key),
+                  channel: 0,
+                  type: device_code,
+                  battery: this.config.battery,
+                  sdk: 3,
+                  gen: gen,
+                  communication: 'cloud'
+                }
+              });
+            }
           }
         }
-        return Promise.resolve(device);
-      } catch (error) {
-        return Promise.reject(error);
-      }
-    });
-
-    session.setHandler('get_integrator_url', async (data) => {
-      try {
-        const result = await this.homey.app.getIntegratorUrl();
-        return Promise.resolve(result);
-      } catch (error) {
-        return Promise.reject(error);
-      }
-    });
-
-
-    session.setHandler('add_device', async (data) => {
-      try {
-        return Promise.resolve(deviceArray);
-      } catch (error) {
-        return Promise.reject(error);
-      }
-    });
+      });
+      return devices;
+    } catch (error) {
+      this.log(error);
+      return Promise.reject(error);
+    }
   }
 
 }

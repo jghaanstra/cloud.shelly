@@ -2,29 +2,39 @@
 
 const Homey = require('homey');
 const Device = require('./device.js');
+const { OAuth2Device } = require('homey-oauth2app');
 const Util = require('../lib/util.js');
-const WebSocket = require('ws');
-const tinycolor = require("tinycolor2");
 
-class ShellyCloudDevice extends Device {
+class ShellyCloudDevice extends OAuth2Device {
 
-  onInit() {
+  async onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
+  }
 
-    this.homey.setTimeout(async () => {
-      return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Integrator:ActionRequest', deviceid: this.getSetting('cloud_device_id')})]);
-    }, 2000);
+  async bootSequence() {
+
+    // update initial device status on init
+    const device_data = await this.oAuth2Client.getCloudDevices(this.getSetting('cloud_server'));
+    if (this.getStoreValue('gen') === 'gen1') {
+      this.parseStatusUpdate(device_data.data.devices_status[this.getData().id])
+    } else if (this.getStoreValue('gen') === 'gen2') {
+      this.parseStatusUpdateGen2(device_data.data.devices_status[this.getData().id])
+    }
+
   }
 
   async onAdded() {
-    if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
+
+    // update device collection and start cloud websocket listener (if needed)
+    if (this.getStoreValue('channel') === 0) {
       this.homey.setTimeout(async () => {
         await this.homey.app.updateShellyCollection();
         await this.util.sleep(2000);
-        await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Integrator:ActionRequest', deviceid: this.getSetting('cloud_device_id')})]);
+        this.homey.app.websocketCloudOauthListener();
         return;
-      }, 2000);
+      }, 1000);
     }
+
   }
 
   async onDeleted() {
@@ -36,5 +46,12 @@ class ShellyCloudDevice extends Device {
   }
 
 }
+
+ShellyCloudDevice.prototype.updateCapabilityValue = Device.prototype.updateCapabilityValue;
+ShellyCloudDevice.prototype.parseStatusUpdate = Device.prototype.parseStatusUpdate;
+ShellyCloudDevice.prototype.parseStatusUpdateGen2 = Device.prototype.parseStatusUpdateGen2;
+ShellyCloudDevice.prototype.parseCapabilityUpdate = Device.prototype.parseCapabilityUpdate;
+
+// TODO: also map capability listeners?
 
 module.exports = ShellyCloudDevice;
