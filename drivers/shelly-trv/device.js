@@ -17,22 +17,10 @@ class ShellyTRVDevice extends Device {
 
     this.bootSequence();
 
-    // LISTENERS FOR UPDATING CAPABILITIES
-    this.registerCapabilityListener('valve_position', async (value) => {
-      return await this.util.sendCommand('/thermostat/0?pos='+ value, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
-
-    this.registerCapabilityListener('valve_mode', async (value) => {
-      if (value === "0") {
-        return await this.util.sendCommand('/thermostat/0?schedule=false', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      } else {
-        return await this.util.sendCommand('/thermostat/0?schedule=true&schedule_profile='+ value, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      }
-    });
-
-    this.registerCapabilityListener('target_temperature', async (value) => {
-      return await this.util.sendCommand('/thermostat/0?target_t_enabled=true&target_t='+ value, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
+    // CAPABILITY LISTENERS
+    this.registerCapabilityListener("onoff", this.onCapabilityValvePosition.bind(this));
+    this.registerCapabilityListener("valve_mode", this.onCapabilityValveMode.bind(this));
+    this.registerCapabilityListener("target_temperature", this.onCapabilityTargetTemperature.bind(this));
 
   }
 

@@ -22,11 +22,8 @@ class Shelly25Device extends Device {
 
     this.bootSequence();
 
-    // LISTENERS FOR UPDATING CAPABILITIES
-    this.registerCapabilityListener('onoff', async (value) => {
-      const path = value ? '/relay/'+ this.getStoreValue("channel") +'?turn=on' : '/relay/'+ this.getStoreValue("channel") +'?turn=off';
-      return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
+    // CAPABILITY LISTENERS
+    this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
 
   }
 

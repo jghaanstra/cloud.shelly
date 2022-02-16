@@ -22,10 +22,8 @@ class ShellyPro1Device extends Device {
 
     this.bootSequence();
 
-    // LISTENERS FOR UPDATING CAPABILITIES
-    this.registerCapabilityListener('onoff', async (value) => {
-      this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value} }));
-    });
+    // CAPABILITY LISTENERS
+    this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
 
   }
 

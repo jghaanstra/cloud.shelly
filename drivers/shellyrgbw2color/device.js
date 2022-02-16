@@ -23,7 +23,7 @@ class ShellyRGBW2ColorDevice extends Device {
 
     this.bootSequence();
 
-    // LISTENERS FOR UPDATING CAPABILITIES
+    // CAPABILITY LISTENERS
     this.registerCapabilityListener('onoff', async (value) => {
       const path = value ? '/color/0?turn=on' : '/color/0?turn=off';
       return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
@@ -38,10 +38,10 @@ class ShellyRGBW2ColorDevice extends Device {
       } else {
         if (!this.getCapabilityValue('onoff')) {
           const dim = value === 0 ? 1 : value * 100;
-          return await this.util.sendCommand('/light/0?turn=on&gain='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?turn=on&brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         } else {
           const dim = value === 0 ? 1 : value * 100;
-          return await this.util.sendCommand('/light/0?gain='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         }
       }
     });

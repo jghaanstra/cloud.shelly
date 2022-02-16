@@ -16,11 +16,8 @@ class ShellyBulbDevice extends Device {
 
     this.bootSequence();
 
-    // LISTENERS FOR UPDATING CAPABILITIES
-    this.registerCapabilityListener('onoff', async (value) => {
-      const path = value ? '/light/0?turn=on' : '/light/0?turn=off';
-      return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
+    // CAPABILITY LISTENERS
+    this.registerCapabilityListener("onoff", this.onCapabilityOnoffLight.bind(this));
 
     this.registerCapabilityListener('dim', async (value) => {
       const dim = value * 100;

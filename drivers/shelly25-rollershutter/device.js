@@ -20,39 +20,11 @@ class Shelly25RollerShutterDevice extends Device {
 
     this.setAvailable();
 
-    // TODO: REMOVE AFTER SOME RELEASES
-    if (this.hasCapability('button.sethalfwayposition')) {
-      this.removeCapability('button.sethalfwayposition');
-    }
-
     this.bootSequence();
 
-    // LISTENERS FOR UPDATING CAPABILITIES
-    this.registerCapabilityListener('windowcoverings_state', async (value) => {
-      if (value !== 'idle' && value !== this.getStoreValue('last_action')) {
-        this.setStoreValue('last_action', value);
-      }
-
-      if (value == 'idle') {
-        return await this.util.sendCommand('/roller/0?go=stop', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      } else if (value == 'up') {
-        return await this.util.sendCommand('/roller/0?go=open', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      } else if (value == 'down') {
-        return await this.util.sendCommand('/roller/0?go=close', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      } else {
-        return Promise.reject('State not recognized ...');
-      }
-    });
-
-    this.registerCapabilityListener('windowcoverings_set', async (value) => {
-      try {
-        this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
-        return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(value*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      } catch (error) {
-        this.log(error)
-        return Promise.reject(error);
-      }
-    });
+    // CAPABILITY LISTENERS
+    this.registerCapabilityListener("windowcoverings_state", this.onCapabilityWindowcoveringsState.bind(this));
+    this.registerCapabilityListener("windowcoverings_set", this.onCapabilityWindowcoveringsSet.bind(this));
 
   }
 

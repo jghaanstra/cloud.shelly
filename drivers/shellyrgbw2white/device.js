@@ -24,7 +24,7 @@ class ShellyRGBW2WhiteDevice extends Device {
 
     this.bootSequence();
 
-    // LISTENERS FOR UPDATING CAPABILITIES
+    // CAPABILITY LISTENERS
     this.registerCapabilityListener('onoff', async (value) => {
       const path = value ? '/white/'+ this.getStoreValue("channel") +'?turn=on' : '/white/'+ this.getStoreValue("channel") +'?turn=off';
       return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));

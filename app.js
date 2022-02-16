@@ -44,7 +44,7 @@ class ShellyApp extends Homey.App {
     // COAP, CLOUD & GEN2 WEBSOCKETS: INITIALLY UPDATE THE SHELLY COLLECTION FOR MATCHING INCOMING STATUS UPDATES
     this.homey.setTimeout(async () => {
       await this.updateShellyCollection();
-    }, 30000);
+    }, 20000);
 
     // COAP: START COAP LISTENER FOR RECEIVING STATUS UPDATES
     this.homey.setTimeout(async () => {
@@ -56,7 +56,7 @@ class ShellyApp extends Homey.App {
           this.log('CoAP listener not started, the CoAP listener has been disabled from the app settings');
         }
       }
-    }, 40000);
+    }, 25000);
 
     // COAP, CLOUD & GEN2 WEBSOCKETS: UPDATE THE SHELLY COLLECTION REGULARLY
     this.homey.setInterval(async () => {

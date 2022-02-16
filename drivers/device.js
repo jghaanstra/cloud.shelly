@@ -19,6 +19,234 @@ class ShellyDevice extends Homey.Device {
     }
   }
 
+  // CAPABILITY LISTENERS
+
+  /* onoff relay */
+  async onCapabilityOnoff(value, opts) {
+    try {
+      switch(this.getStoreValue('communication')) {
+        case 'websocket':
+          if (this.getStoreValue('channel') === 0) {
+            return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value} }));
+          } else {
+            const device_id = this.getStoreValue('main_device') + '-channel-0';
+            const device = this.driver.getDevice({id: device_id });
+            return await device.ws.send(JSON.stringify({"id": device.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value} }));
+          }
+        case 'coap':
+          const path = value ? '/relay/'+ this.getStoreValue("channel") +'?turn=on' : '/relay/'+ this.getStoreValue("channel") +'?turn=off';
+          return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        case 'cloud':
+          const onoff = value ? 'on' : 'off';
+          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'relay', command_param: 'turn', command_value: onoff, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+        default:
+          break;
+      }
+    } catch (error) {
+      this.log(error);
+    }
+  }
+
+  /* onoff light */
+  async onCapabilityOnoffLight(value, opts) {
+    try {
+      switch(this.getStoreValue('communication')) {
+        case 'websocket':
+          break;
+        case 'coap':
+          const path = value ? '/light/'+ this.getStoreValue("channel") +'?turn=on' : '/light/'+ this.getStoreValue("channel") +'?turn=off';
+          return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        case 'cloud':
+          const onoff = value ? 'on' : 'off';
+          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'turn', command_value: onoff, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+        default:
+          break;
+      }
+    } catch (error) {
+      this.log(error);
+    }
+  }
+
+  /* windowcoverings_state */
+  async onCapabilityWindowcoveringsState(value, opts) {
+    try {
+      if (value !== 'idle' && value !== this.getStoreValue('last_action')) {
+        this.setStoreValue('last_action', value);
+      }
+      switch(this.getStoreValue('communication')) {
+        case 'websocket':
+          switch (value) {
+            case 'idle':
+              return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.Stop", "params": {"id": this.getStoreValue('channel')} }));
+            case 'up':
+              return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.Open", "params": {"id": this.getStoreValue('channel')} }));
+            case 'down':
+              return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.Close", "params": {"id": this.getStoreValue('channel')} }));
+            default:
+              return Promise.reject('State not recognized ...');
+          }
+        case 'coap':
+          switch (value) {
+            case 'idle':
+              return await this.util.sendCommand('/roller/0?go=stop', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+            case 'up':
+              return await this.util.sendCommand('/roller/0?go=open', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+            case 'down':
+              return await this.util.sendCommand('/roller/0?go=close', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+            default:
+              return Promise.reject('State not recognized ...');
+          }
+        case 'cloud':
+
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      this.log(error);
+    }
+  }
+
+  /* windowcoverings_set */
+  async onCapabilityWindowcoveringsSet(value, opts) {
+    try {
+      this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
+      switch(this.getStoreValue('communication')) {
+        case 'websocket':
+          return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.GoToPosition", "params": {"id": this.getStoreValue('channel'), "pos": Math.round(value*100)} }));
+        case 'coap':
+          return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(value*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        case 'cloud':
+
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      this.log(error);
+    }
+  }
+
+  /* dim */
+  async onCapabilityDim(value, opts) {
+    try {
+      if (opts.duration === undefined || typeof opts.duration == 'undefined') {
+        opts.duration = 500;
+      }
+      if (opts.duration > 5000 ) {
+        return Promise.reject(this.homey.__('device.maximum_dim_duration'));
+      } else {
+        switch(this.getStoreValue('communication')) {
+          case 'websocket':
+            break
+          case 'coap':
+            if (!this.getCapabilityValue('onoff')) {
+              const dim = value === 0 ? 1 : value * 100;
+              return await this.util.sendCommand('/light/0?turn=on&brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+            } else {
+              const dim = value === 0 ? 1 : value * 100;
+              return await this.util.sendCommand('/light/0?brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+            }
+          case 'cloud':
+            if (!this.getCapabilityValue('onoff')) {
+              this.setCapabilityValue('onoff', true);
+            }
+            const dim = value === 0 ? 1 : value * 100;
+            return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'brightness', command_value: dim, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+          default:
+            break;
+        }
+      }
+    } catch (error) {
+      this.log(error);
+    }
+  }
+
+  /* light_temperature */
+  async onCapabilityLightTemperature(value, opts) {
+    try {
+      switch(this.getStoreValue('communication')) {
+        case 'websocket':
+          break
+        case 'coap':
+          const white = 100 - (value * 100);
+          return await this.util.sendCommand('/light/0?white='+ white +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        case 'cloud':
+          const white = 100 - (value * 100);
+          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'white', command_value: white, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+        default:
+          break;
+      }
+    } catch (error) {
+      this.log(error);
+    }
+  }
+
+  /* valve_position */
+  async onCapabilityValvePosition(value, opts) {
+    try {
+      switch(this.getStoreValue('communication')) {
+        case 'websocket':
+          break;
+        case 'coap':
+          return await this.util.sendCommand('/thermostat/0?pos='+ value, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          break;
+        case 'cloud':
+
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      this.log(error);
+    }
+  }
+
+  /* valve_mode */
+  async onCapabilityValvePosition(value, opts) {
+    try {
+      switch(this.getStoreValue('communication')) {
+        case 'websocket':
+          break;
+        case 'coap':
+          if (value === "0") {
+            return await this.util.sendCommand('/thermostat/0?schedule=false', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          } else {
+            return await this.util.sendCommand('/thermostat/0?schedule=true&schedule_profile='+ value, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          }
+          break;
+        case 'cloud':
+
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      this.log(error);
+    }
+  }
+
+  /* target_temperature */
+  async onCapabilityTargetTemperature(value, opts) {
+    try {
+      switch(this.getStoreValue('communication')) {
+        case 'websocket':
+          break;
+        case 'coap':
+          return await this.util.sendCommand('/thermostat/0?target_t_enabled=true&target_t='+ value, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          break;
+        case 'cloud':
+
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      this.log(error);
+    }
+  }
+
+
   // HELPER FUNCTIONS
 
   /* boot sequence */
