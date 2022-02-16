@@ -6,13 +6,14 @@ const Util = require('../../lib/util.js');
 
 class ShellyDuoCloudDriver extends Driver {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
       name: 'Shelly Duo Cloud',
       battery: false,
-      hostname: ['ShellyBulbDuo-']
+      hostname: ['ShellyBulbDuo-'],
+      code: ['SHBDUO-1']
     }
   }
 

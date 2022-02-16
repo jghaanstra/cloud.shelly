@@ -12,8 +12,9 @@
                 id: result.data.id + '-channel-' + i
               },
       				settings: {
-                server_address: result.settings.server_address,
-                cloud_device_id: result.settings.cloud_device_id
+                address  : result.settings.address,
+                username : result.settings.username,
+                password : result.settings.password
               },
               store: {
                 main_device: result.data.id,
@@ -22,6 +23,7 @@
                 battery: result.store.battery,
                 unicast: result.store.unicast,
                 sdk: 3,
+                gen: result.store.gen,
                 communication: result.store.communication
               },
               icon: result.icon

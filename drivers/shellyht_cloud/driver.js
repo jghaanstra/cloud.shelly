@@ -6,13 +6,14 @@ const Util = require('../../lib/util.js');
 
 class ShellyhtCloudDriver extends Driver {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
       name: 'Shelly HT',
       battery: true,
-      hostname: ['shellyht-']
+      hostname: ['shellyht-'],
+      code: ['SHHT-1']
     }
   }
 

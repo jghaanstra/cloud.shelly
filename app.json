@@ -65,11 +65,7 @@
       "Shelly Vintage"
     ]
   },
-<<<<<<< HEAD
   "version": "3.7.0",
-=======
-  "version": "3.6.5",
->>>>>>> master
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -2368,36 +2364,7 @@
         "input_1",
         "rssi"
       ],
-      "id": "shelly-pro-1_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shelly-pro-1_cloud"
     },
     {
       "icon": "/drivers/shelly-pro-1pm/assets/icon.svg",
@@ -2572,36 +2539,7 @@
         "input_1",
         "rssi"
       ],
-      "id": "shelly-pro-1pm_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shelly-pro-1pm_cloud"
     },
     {
       "icon": "/drivers/shelly-pro-2/assets/icon.svg",
@@ -2706,7 +2644,22 @@
       "icon": "/drivers/shelly-pro-2_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_device"
+          }
         },
         {
           "id": "add_device"
@@ -2991,7 +2944,22 @@
       "icon": "/drivers/shelly-pro-2pm_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_device"
+          }
         },
         {
           "id": "add_device"
@@ -3029,36 +2997,7 @@
         "input_1",
         "rssi"
       ],
-      "id": "shelly-pro-2pm_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shelly-pro-2pm_cloud"
     },
     {
       "icon": "/drivers/shelly-pro-2pm_rollershutter/assets/icon.svg",
@@ -3705,36 +3644,7 @@
         "small": "./assets/drivers/shelly1l/images/small.jpg"
       },
       "class": "socket",
-      "id": "shelly1l_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shelly1l_cloud"
     },
     {
       "icon": "/drivers/shelly1pm/assets/icon.svg",
@@ -3955,36 +3865,7 @@
         "small": "./assets/drivers/shelly1pm/images/small.jpg"
       },
       "class": "socket",
-      "id": "shelly1pm_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shelly1pm_cloud"
     },
     {
       "icon": "/drivers/shelly2/assets/icon.svg",
@@ -4416,7 +4297,22 @@
       "icon": "/drivers/shelly25_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_device"
+          }
         },
         {
           "id": "add_device"
@@ -4451,42 +4347,28 @@
         "input_1",
         "rssi"
       ],
-      "id": "shelly25_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shelly25_cloud"
     },
     {
       "icon": "/drivers/shelly2_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_device"
+          }
         },
         {
           "id": "add_device"
@@ -4520,36 +4402,7 @@
         "input_1",
         "rssi"
       ],
-      "id": "shelly2_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shelly2_cloud"
     },
     {
       "icon": "/drivers/shelly3em/assets/icon.svg",
@@ -4678,7 +4531,22 @@
       "icon": "/drivers/shelly3em_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_device"
+          }
         },
         {
           "id": "add_device"
@@ -4718,54 +4586,7 @@
       "energy": {
         "cumulative": true
       },
-      "id": "shelly3em_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "cumulative",
-              "type": "checkbox",
-              "label": {
-                "en": "Make cumulative",
-                "nl": "Maak cumulatief"
-              },
-              "value": true
-            }
-          ]
-        }
-      ]
+      "id": "shelly3em_cloud"
     },
     {
       "icon": "/drivers/shelly4pro/assets/icon.svg",
@@ -4872,7 +4693,22 @@
       "icon": "/drivers/shelly4pro_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_device"
+          }
         },
         {
           "id": "add_device"
@@ -4908,36 +4744,7 @@
         "measure_temperature",
         "rssi"
       ],
-      "id": "shelly4pro_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shelly4pro_cloud"
     },
     {
       "icon": "/drivers/shellyair/assets/icon.svg",
@@ -5130,36 +4937,7 @@
           }
         }
       },
-      "id": "shellyair_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellyair_cloud"
     },
     {
       "icon": "/drivers/shellybulb/assets/icon.svg",
@@ -5330,36 +5108,7 @@
         "light_mode",
         "rssi"
       ],
-      "id": "shellybulb_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellybulb_cloud"
     },
     {
       "icon": "/drivers/shellybutton1/assets/icon.svg",
@@ -5474,14 +5223,30 @@
         {
           "id": "start",
           "navigation": {
-            "next": "cloud_pairing_form"
+            "next": "login_oauth2"
           }
         },
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
         }
       ],
       "repair": [
@@ -5514,36 +5279,7 @@
           "INTERNAL"
         ]
       },
-      "id": "shellybutton1_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellybutton1_cloud"
     },
     {
       "icon": "/drivers/shellydimmer/assets/icon.svg",
@@ -5730,36 +5466,7 @@
           }
         }
       },
-      "id": "shellydimmer_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellydimmer_cloud"
     },
     {
       "icon": "/drivers/shellyduo/assets/icon.svg",
@@ -5935,36 +5642,7 @@
         "meter_power",
         "rssi"
       ],
-      "id": "shellyduo_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellyduo_cloud"
     },
     {
       "icon": "/drivers/shellydw/assets/icon.svg",
@@ -6085,14 +5763,30 @@
         {
           "id": "start",
           "navigation": {
-            "next": "cloud_pairing_form"
+            "next": "login_oauth2"
           }
         },
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
         }
       ],
       "repair": [
@@ -6131,36 +5825,7 @@
           "CR123A"
         ]
       },
-      "id": "shellydw_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellydw_cloud"
     },
     {
       "icon": "/drivers/shellyem/assets/icon.svg",
@@ -6287,7 +5952,22 @@
       "icon": "/drivers/shellyem_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_device"
+          }
         },
         {
           "id": "add_device"
@@ -6325,54 +6005,7 @@
       "energy": {
         "cumulative": true
       },
-      "id": "shellyem_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        },
-        {
-          "type": "group",
-          "label": {
-            "en": "User Settings",
-            "nl": "Gebruikersinstellingen"
-          },
-          "children": [
-            {
-              "id": "cumulative",
-              "type": "checkbox",
-              "label": {
-                "en": "Make cumulative",
-                "nl": "Maak cumulatief"
-              },
-              "value": true
-            }
-          ]
-        }
-      ]
+      "id": "shellyem_cloud"
     },
     {
       "icon": "/drivers/shellyflood/assets/icon.svg",
@@ -6489,14 +6122,30 @@
         {
           "id": "start",
           "navigation": {
-            "next": "cloud_pairing_form"
+            "next": "login_oauth2"
           }
         },
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
         }
       ],
       "repair": [
@@ -6531,36 +6180,7 @@
           "CR123A"
         ]
       },
-      "id": "shellyflood_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellyflood_cloud"
     },
     {
       "icon": "/drivers/shellygas/assets/icon.svg",
@@ -6786,14 +6406,30 @@
         {
           "id": "start",
           "navigation": {
-            "next": "cloud_pairing_form"
+            "next": "login_oauth2"
           }
         },
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
         }
       ],
       "repair": [
@@ -6828,36 +6464,7 @@
           "CR123A"
         ]
       },
-      "id": "shellyht_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellyht_cloud"
     },
     {
       "icon": "/drivers/shellyi3/assets/icon.svg",
@@ -7022,36 +6629,7 @@
         "input_3",
         "rssi"
       ],
-      "id": "shellyi3_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellyi3_cloud"
     },
     {
       "icon": "/drivers/shellyi4/assets/icon.svg",
@@ -7220,36 +6798,7 @@
         "input_4",
         "rssi"
       ],
-      "id": "shellyi4_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellyi4_cloud"
     },
     {
       "icon": "/drivers/shellymotion/assets/icon.svg",
@@ -7367,14 +6916,30 @@
         {
           "id": "start",
           "navigation": {
-            "next": "cloud_pairing_form"
+            "next": "login_oauth2"
           }
         },
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
         }
       ],
       "repair": [
@@ -7410,36 +6975,7 @@
           "INTERNAL"
         ]
       },
-      "id": "shellymotion_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellymotion_cloud"
     },
     {
       "icon": "/drivers/shellyrgbw2color/assets/icon.svg",
@@ -7651,36 +7187,7 @@
           }
         }
       },
-      "id": "shellyrgbw2color_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellyrgbw2color_cloud"
     },
     {
       "icon": "/drivers/shellyrgbw2white/assets/icon.svg",
@@ -7793,7 +7300,22 @@
       "icon": "/drivers/shellyrgbw2white_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_device"
+          }
         },
         {
           "id": "add_device"
@@ -7828,36 +7350,7 @@
         "input_1",
         "rssi"
       ],
-      "id": "shellyrgbw2white_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellyrgbw2white_cloud"
     },
     {
       "icon": "/drivers/shellysmoke/assets/icon.svg",
@@ -7974,14 +7467,30 @@
         {
           "id": "start",
           "navigation": {
-            "next": "cloud_pairing_form"
+            "next": "login_oauth2"
           }
         },
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
         }
       ],
       "repair": [
@@ -8016,36 +7525,7 @@
           "AA"
         ]
       },
-      "id": "shellysmoke_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellysmoke_cloud"
     },
     {
       "icon": "/drivers/shellyuni/assets/icon.svg",
@@ -8215,7 +7695,22 @@
       },
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_device"
+          }
         },
         {
           "id": "add_device"
@@ -8242,36 +7737,7 @@
         "small": "./assets/drivers/shellyuni/images/small.jpg"
       },
       "class": "socket",
-      "id": "shellyuni_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellyuni_cloud"
     },
     {
       "icon": "/drivers/shellyvintage/assets/icon.svg",
@@ -8433,36 +7899,7 @@
         "meter_power",
         "rssi"
       ],
-      "id": "shellyvintage_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shellyvintage_cloud"
     }
   ],
   "capabilities": {

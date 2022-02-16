@@ -6,13 +6,14 @@ const Util = require('../../lib/util.js');
 
 class Shelly3EmCloudDriver extends Driver {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
       name: 'Shelly 3EM Cloud',
       battery: false,
-      hostname: ['shellyem3-']
+      hostname: ['shellyem3-'],
+      code: ['SHEM-3']
     }
   }
 

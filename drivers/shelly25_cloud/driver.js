@@ -6,13 +6,14 @@ const Util = require('../../lib/util.js');
 
 class Shelly25CloudDriver extends Driver {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
       name: 'Shelly 2.5 Relay Cloud',
       battery: false,
-      hostname: ['shellyswitch25-']
+      hostname: ['shellyswitch25-'],
+      code: ['SHSW-25']
     }
   }
 

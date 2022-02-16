@@ -7,7 +7,7 @@ const tinycolor = require("tinycolor2");
 
 class ShellyRGBW2ColorCloudDevice extends Device {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.callbacks = [
@@ -20,11 +20,6 @@ class ShellyRGBW2ColorCloudDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput1Changed');
 
     this.setAvailable();
-
-    // TODO: REMOVE AFTER SOME RELEASES AND AFTER GEN HAS BECOME AVAILABLE IN THE INTEGRATOR API CALLBACK
-    if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null || this.getStoreValue('gen') == 'gen2') {
-      this.setStoreValue('gen', 'gen1');
-    }
 
     this.bootSequence();
 

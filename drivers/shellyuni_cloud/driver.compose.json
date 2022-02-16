@@ -49,8 +49,22 @@
   },
   "pair": [
     {
-      "id": "cloud_pairing_form",
-      "$template": "cloud_pairing_form"
+      "id": "login_oauth2",
+      "template": "login_oauth2",
+      "options": {
+        "hint": "Log in with your Shelly account in the new window.",
+        "button": "Log In"
+      }
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "options": {
+        "singular": true
+      },
+      "navigation": {
+        "next": "add_device"
+      }
     },
     {
       "id": "add_device"

@@ -6,13 +6,14 @@ const Util = require('../../lib/util.js');
 
 class ShellyDimmerCloudDriver extends Driver {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
       name: 'Shelly Dimmer Cloud',
       battery: false,
-      hostname: ['shellydimmer-', 'shellydimmer2-']
+      hostname: ['shellydimmer-', 'shellydimmer2-'],
+      code: ['SHDM-1', 'SHDM-2']
     }
   }
 

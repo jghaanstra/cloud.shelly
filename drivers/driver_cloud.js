@@ -2,14 +2,11 @@
 
 const Homey = require('homey');
 const { OAuth2Driver } = require('homey-oauth2app');
-const Util = require('../lib/util.js');
 const jwt_decode = require('jwt-decode');
 
 class ShellyCloudDriver extends OAuth2Driver {
 
-  async onOAuth2Init() {
-    if (!this.util) this.util = new Util({homey: this.homey});
-  }
+  // TODO: use onPair(session) to be able to add custom pairing template for 2 channel devices
 
   async onPairListDevices({ oAuth2Client }) {
     try {

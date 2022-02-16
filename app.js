@@ -42,7 +42,8 @@ class ShellyApp extends OAuth2App {
 
     // COAP: START COAP LISTENER FOR RECEIVING STATUS UPDATES
     this.homey.setTimeout(async () => {
-      if (!this.cloudInstall) { // TODO: make a standalone cloud install check and drop this variable
+      this.cloudInstall = await this.util.getCloudInstall();
+      if (!this.cloudInstall) {
         if (!this.homey.settings.get('general_coap')) {
           this.log('CoAP listener for gen1 LAN devices started.');
           shellies.start();
@@ -386,7 +387,7 @@ class ShellyApp extends OAuth2App {
   // CLOUD: OPEN WEBSOCKET FOR PROCESSING CLOUD DEVICES STATUS UPDATES
   async websocketCloudListener() {
     try {
-      //console.log(this.checkHasOAuth2Client());
+      // TODO: fix error for when there is no fresh OAuthClient
       const client = await this.getFirstSavedOAuth2Client();
       const oauth_token = await client.getToken();
       this.cloudAccessToken = oauth_token.access_token;

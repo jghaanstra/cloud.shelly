@@ -6,13 +6,14 @@ const Util = require('../../lib/util.js');
 
 class ShellyFloodCloudDriver extends Driver {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
       name: 'Shelly Flood',
       battery: true,
-      hostname: ['shellyflood-']
+      hostname: ['shellyflood-'],
+      code: ['SHWT-1']
     }
   }
 

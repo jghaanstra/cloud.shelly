@@ -6,13 +6,14 @@ const Util = require('../../lib/util.js');
 
 class ShellySmokeCloudDriver extends Driver {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
       name: 'Shelly Smoke',
       battery: true,
-      hostname: ['shellysmoke-']
+      hostname: ['shellysmoke-'],
+      code: ['SHSM-01', 'SHSM-02']
     }
   }
 

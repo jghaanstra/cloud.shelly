@@ -6,13 +6,14 @@ const Util = require('../../lib/util.js');
 
 class ShellyBulbCloudDriver extends Driver {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
       name: 'Shelly Bulb (RGBW) Cloud',
       battery: false,
-      hostname: ['shellybulb-', 'shellycolorbulb-']
+      hostname: ['shellybulb-', 'shellycolorbulb-'],
+      code: ['SHCB-1', 'SHCL-255', 'SHBLB-1']
     }
   }
 

@@ -6,13 +6,14 @@ const Util = require('../../lib/util.js');
 
 class Shellyi4DriverCloud extends Driver {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
       name: 'Shelly Plus i4 Cloud',
       battery: false,
-      hostname: ['shellyplusi4-', 'ShellyPlusI4-']
+      hostname: ['shellyplusi4-', 'ShellyPlusI4-'],
+      code: ['SNSN-0024X']
     }
   }
 

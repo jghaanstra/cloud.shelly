@@ -6,13 +6,14 @@ const Util = require('../../lib/util.js');
 
 class ShellyUniCloudDriver extends Driver {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
       name: 'Shelly Uni Cloud',
       battery: false,
-      hostname: ['shellyuni-']
+      hostname: ['shellyuni-'],
+      code: ['SHUNI-1']
     }
   }
 

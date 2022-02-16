@@ -6,13 +6,14 @@ const Util = require('../../lib/util.js');
 
 class ShellyAirCloudDriver extends Driver {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
       name: 'Shelly Air Cloud',
       battery: false,
-      hostname: ['shellyair-']
+      hostname: ['shellyair-'],
+      code: ['SHAIR-1']
     }
   }
 

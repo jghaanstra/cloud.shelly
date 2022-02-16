@@ -6,13 +6,14 @@ const Util = require('../../lib/util.js');
 
 class ShellyMotionCloudDriver extends Driver {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
       name: 'Shelly Motion',
       battery: true,
-      hostname: ['shellymotionsensor-']
+      hostname: ['shellymotionsensor-'],
+      code: ['SHMOS-01']
     }
   }
 

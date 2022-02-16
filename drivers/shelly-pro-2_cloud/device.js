@@ -6,7 +6,7 @@ const Util = require('../../lib/util.js');
 
 class ShellyPro2CloudDevice extends Device {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.callbacks = [
@@ -19,11 +19,6 @@ class ShellyPro2CloudDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput1Changed');
 
     this.setAvailable();
-
-    // TODO: REMOVE AFTER SOME RELEASES AND AFTER GEN HAS BECOME AVAILABLE IN THE INTEGRATOR API CALLBACK
-    if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null) {
-      this.setStoreValue('gen', 'gen2');
-    }
 
     this.bootSequence();
 
