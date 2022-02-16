@@ -13,7 +13,6 @@ class ShellyCloudDriver extends OAuth2Driver {
 
   async onPairListDevices({ oAuth2Client }) {
     try {
-      console.log('start pairing');
       const oauth_token = await oAuth2Client.getToken();
       const cloud_details = await jwt_decode(oauth_token.access_token);
       const cloud_server = cloud_details.user_api_url.replace('https://', '');

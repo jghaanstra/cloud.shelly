@@ -6,19 +6,17 @@ const Util = require('../../lib/util.js');
 
 class ShellyPlugSCloudDevice extends Device {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.callbacks = [];
 
     this.setAvailable();
 
-    // TODO: REMOVE AFTER SOME RELEASES AND AFTER GEN HAS BECOME AVAILABLE IN THE INTEGRATOR API CALLBACK
-    if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null || this.getStoreValue('gen') == 'gen2') {
-      this.setStoreValue('gen', 'gen1');
-    }
-
-    this.bootSequence();
+    this.homey.setTimeout(async () => {
+      await this.util.sleep(2000);
+      this.bootSequence();
+    }, 3000);
 
     // CAPABILITY LISTENERS
     this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));

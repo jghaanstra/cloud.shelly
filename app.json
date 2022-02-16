@@ -1926,36 +1926,7 @@
           }
         }
       },
-      "id": "shelly-plug-s_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shelly-plug-s_cloud"
     },
     {
       "icon": "/drivers/shelly-plug_cloud/assets/icon.svg",

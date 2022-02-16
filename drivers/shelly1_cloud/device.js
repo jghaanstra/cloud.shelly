@@ -31,10 +31,9 @@ class Shelly1CloudDevice extends Device {
     }, 3000);
 
     // CAPABILITY LISTENERS
-    this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
+    //this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
 
   }
-
 
 }
 
