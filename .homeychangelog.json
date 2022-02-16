@@ -394,5 +394,11 @@
   },
   "3.6.2": {
     "en": "This release adds support for Shelly Plus 2PM in relay and roller shutter mode for Homey Pro. It also contains some code refactoring."
+  },
+  "3.6.3": {
+    "en": "This release adds support for Shelly Plus 2PM in relay and roller shutter mode for Homey Pro. It also contains some code refactoring."
+  },
+  "3.6.4": {
+    "en": "This release adds support for Shelly Plus 2PM in relay and roller shutter mode for Homey Pro. It also contains some code refactoring."
   }
 }
