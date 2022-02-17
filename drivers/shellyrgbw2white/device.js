@@ -17,6 +17,10 @@ class ShellyRGBW2WhiteDevice extends Device {
 
     this.setAvailable();
 
+    // TODO: REMOVE THIS AFTER SOME RELEASES
+    this.setStoreValue('gen', 'gen1');
+    this.setStoreValue('communication', 'coap');
+
     this.bootSequence();
 
     // CAPABILITY LISTENERS
