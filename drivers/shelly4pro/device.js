@@ -16,6 +16,10 @@ class Shelly4ProDevice extends Device {
       ];
     } else {
       this.callbacks = [];
+      
+      // TODO: REMOVE THIS AFTER SOME RELEASES
+      this.setStoreValue('gen', 'gen1');
+      this.setStoreValue('communication', 'coap');
     }
 
     this.setAvailable();
