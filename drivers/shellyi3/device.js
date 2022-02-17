@@ -45,6 +45,7 @@ class Shellyi3Device extends Device {
     // TODO: REMOVE THIS AFTER SOME RELEASES
     this.setStoreValue('gen', 'gen1');
     this.setStoreValue('communication', 'coap');
+    this.setStoreValue('channel', 0);
 
     this.bootSequence();
 
