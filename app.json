@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.6.8",
+  "version": "3.6.9",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -984,7 +984,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plug|shelly-plug_cloud|shelly-plug-s|shelly-plug-s_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly3em|shelly3em_cloud|shelly4pro|shelly4pro_cloud|shelly25|shelly25_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud|shellybulb|shellybulb_cloud|shellydimmer|shellydimmer_cloud|shellyduo|shellyem|shellyem_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyvintage|shellyvintage_cloud|shellyi3|shellymotion"
+            "filter": "driver_id=shelly-plug|shelly-plug_cloud|shelly-plug-s|shelly-plug-s_cloud|shelly-plus-2pm|shelly-plus-2pm_cloud|shelly-plus-2pm|shelly-plus-2pm_cloud|shelly-plus-2pm-rollershutter|shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2_cloud|shelly-pro-2_rollershutter|shelly-pro-2pm|shelly-pro-2pm_cloud|shelly-pro-2pm-rollershutter|shelly-trv|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2_cloud|shelly2-rollershutter|shelly3em|shelly3em_cloud|shelly4pro|shelly4pro_cloud|shelly25|shelly25_cloud|shelly25-rollershutter|shellybulb|shellybulb_cloud|shellydimmer|shellydimmer_cloud|shellyduo|shellyduo_cloud|shellyem|shellyem_cloud|shellygas|shellygas_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud|shellymotion|shellymotion_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud|shellyvintage|shellyvintage_cloud"
           }
         ],
         "platforms": [
@@ -2214,6 +2214,42 @@
       ]
     },
     {
+      "icon": "/drivers/shelly-plus-2pm_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "cloud_pairing_form"
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "name": {
+        "en": "Shelly Plus 2PM",
+        "nl": "Shelly Plus 2PM"
+      },
+      "images": {
+        "xlarge": "./assets/drivers/shelly-plus-2pm/images/xlarge.jpg",
+        "large": "./assets/drivers/shelly-plus-2pm/images/large.jpg",
+        "small": "./assets/drivers/shelly-plus-2pm/images/small.jpg"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power",
+        "measure_temperature",
+        "input_1",
+        "rssi"
+      ],
+      "id": "shelly-plus-2pm_cloud"
+    },
+    {
       "icon": "/drivers/shelly-pro-1/assets/icon.svg",
       "pair": [
         {
@@ -2669,70 +2705,7 @@
       ]
     },
     {
-      "icon": "/drivers/shelly-pro-2_cloud/assets/icon.svg",
-      "pair": [
-        {
-          "id": "cloud_pairing_form"
-        },
-        {
-          "id": "add_device"
-        }
-      ],
-      "platforms": [
-        "cloud"
-      ],
-      "connectivity": [
-        "cloud"
-      ],
-      "name": {
-        "en": "Shelly Pro 2",
-        "nl": "Shelly Pro 2"
-      },
-      "images": {
-        "xlarge": "./assets/drivers/shelly-pro-2/images/xlarge.jpg",
-        "large": "./assets/drivers/shelly-pro-2/images/large.jpg",
-        "small": "./assets/drivers/shelly-pro-2/images/small.jpg"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff",
-        "measure_temperature",
-        "input_1",
-        "rssi"
-      ],
-      "id": "shelly-pro-2_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "icon": "/drivers/shelly-pro-2_rollershutter/assets/icon.svg",
+      "icon": "/drivers/shelly-pro-2-rollershutter/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -2804,7 +2777,7 @@
         "input_2",
         "rssi"
       ],
-      "id": "shelly-pro-2_rollershutter",
+      "id": "shelly-pro-2-rollershutter",
       "settings": [
         {
           "type": "group",
@@ -2838,6 +2811,69 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "icon": "/drivers/shelly-pro-2_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "cloud_pairing_form"
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "name": {
+        "en": "Shelly Pro 2",
+        "nl": "Shelly Pro 2"
+      },
+      "images": {
+        "xlarge": "./assets/drivers/shelly-pro-2/images/xlarge.jpg",
+        "large": "./assets/drivers/shelly-pro-2/images/large.jpg",
+        "small": "./assets/drivers/shelly-pro-2/images/small.jpg"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff",
+        "measure_temperature",
+        "input_1",
+        "rssi"
+      ],
+      "id": "shelly-pro-2_cloud",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "server_address",
+              "type": "text",
+              "value": "https://shelly-8-eu.shelly.cloud",
+              "label": {
+                "en": "Server Address",
+                "nl": "Server adres"
+              }
+            },
+            {
+              "id": "cloud_device_id",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
@@ -2948,74 +2984,7 @@
       ]
     },
     {
-      "icon": "/drivers/shelly-pro-2pm_cloud/assets/icon.svg",
-      "pair": [
-        {
-          "id": "cloud_pairing_form"
-        },
-        {
-          "id": "add_device"
-        }
-      ],
-      "platforms": [
-        "cloud"
-      ],
-      "connectivity": [
-        "cloud"
-      ],
-      "name": {
-        "en": "Shelly Pro 2PM",
-        "nl": "Shelly Pro 2PM"
-      },
-      "images": {
-        "xlarge": "./assets/drivers/shelly-pro-2pm/images/xlarge.jpg",
-        "large": "./assets/drivers/shelly-pro-2pm/images/large.jpg",
-        "small": "./assets/drivers/shelly-pro-2pm/images/small.jpg"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff",
-        "measure_power",
-        "meter_power",
-        "measure_voltage",
-        "measure_current",
-        "measure_temperature",
-        "input_1",
-        "rssi"
-      ],
-      "id": "shelly-pro-2pm_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "icon": "/drivers/shelly-pro-2pm_rollershutter/assets/icon.svg",
+      "icon": "/drivers/shelly-pro-2pm-rollershutter/assets/icon.svg",
       "pair": [
         {
           "id": "list_devices",
@@ -3089,7 +3058,7 @@
         "input_2",
         "rssi"
       ],
-      "id": "shelly-pro-2pm_rollershutter",
+      "id": "shelly-pro-2pm-rollershutter",
       "settings": [
         {
           "type": "group",
@@ -3123,6 +3092,73 @@
               "label": {
                 "en": "Password",
                 "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "icon": "/drivers/shelly-pro-2pm_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "cloud_pairing_form"
+        },
+        {
+          "id": "add_device"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "name": {
+        "en": "Shelly Pro 2PM",
+        "nl": "Shelly Pro 2PM"
+      },
+      "images": {
+        "xlarge": "./assets/drivers/shelly-pro-2pm/images/xlarge.jpg",
+        "large": "./assets/drivers/shelly-pro-2pm/images/large.jpg",
+        "small": "./assets/drivers/shelly-pro-2pm/images/small.jpg"
+      },
+      "class": "socket",
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power",
+        "measure_voltage",
+        "measure_current",
+        "measure_temperature",
+        "input_1",
+        "rssi"
+      ],
+      "id": "shelly-pro-2pm_cloud",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "server_address",
+              "type": "text",
+              "value": "https://shelly-8-eu.shelly.cloud",
+              "label": {
+                "en": "Server Address",
+                "nl": "Server adres"
+              }
+            },
+            {
+              "id": "cloud_device_id",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Cloud Device ID",
+                "nl": "Cloud Device ID"
               }
             }
           ]
