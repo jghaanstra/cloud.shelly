@@ -10,9 +10,12 @@ class Shelly25RollerShutterDriver extends Driver {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly 2.5 Rollershutter',
+      name: 'Shelly 2.5 Roller Shutter',
       battery: false,
-      hostname: ['shellyswitch25-']
+      gen: 'gen1',
+      communication: 'coap',
+      hostname: ['shellyswitch25-'],
+      type: ['SHSW-25']
     }
   }
 

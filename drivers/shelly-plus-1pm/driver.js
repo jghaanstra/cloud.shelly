@@ -15,7 +15,7 @@ class ShellyPlus1PMDriver extends Driver {
       gen: 'gen2',
       communication: 'websocket',
       hostname: ['shellyplus1pm-', 'ShellyPlus1PM-'],
-      code: ['SNSW-001P16EU']
+      type: ['SNSW-001P16EU']
     }
   }
 

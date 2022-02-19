@@ -12,8 +12,10 @@ class Shelly3EmCloudDriver extends Driver {
     this.config = {
       name: 'Shelly 3EM Cloud',
       battery: false,
+      gen: 'gen1',
+      communication: 'cloud',
       hostname: ['shellyem3-'],
-      code: ['SHEM-3']
+      type: ['SHEM-3']
     }
   }
 

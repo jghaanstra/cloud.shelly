@@ -12,8 +12,10 @@ class ShellyMotionCloudDriver extends Driver {
     this.config = {
       name: 'Shelly Motion',
       battery: true,
+      gen: 'gen1',
+      communication: 'cloud',
       hostname: ['shellymotionsensor-'],
-      code: ['SHMOS-01']
+      type: ['SHMOS-01']
     }
   }
 

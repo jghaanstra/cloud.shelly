@@ -12,8 +12,10 @@ class Shelly2CloudDriver extends Driver {
     this.config = {
       name: 'Shelly 2 Relay Cloud',
       battery: false,
+      gen: 'gen1',
+      communication: 'cloud',
       hostname: ['shelly2-'],
-      code: ['SHSW-21']
+      type: ['SHSW-21']
     }
   }
 

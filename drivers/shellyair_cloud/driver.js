@@ -12,8 +12,10 @@ class ShellyAirCloudDriver extends Driver {
     this.config = {
       name: 'Shelly Air Cloud',
       battery: false,
+      gen: 'gen1',
+      communication: 'cloud',
       hostname: ['shellyair-'],
-      code: ['SHAIR-1']
+      type: ['SHAIR-1']
     }
   }
 

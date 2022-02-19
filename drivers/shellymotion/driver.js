@@ -12,7 +12,10 @@ class ShellyMotionDriver extends Driver {
     this.config = {
       name: 'Shelly Motion',
       battery: true,
-      hostname: ['shellymotionsensor-']
+      gen: 'gen1',
+      communication: 'coap',
+      hostname: ['shellymotionsensor-'],
+      type: ['SHMOS-01']
     }
   }
 

@@ -12,7 +12,10 @@ class ShellyPro1PMDriver extends Driver {
     this.config = {
       name: 'Shelly Pro 1PM',
       battery: false,
-      hostname: ['ShellyPro1PM-']
+      gen: 'gen2',
+      communication: 'websocket',
+      hostname: ['ShellyPro1PM-'],
+      type: ['SPSW-001PE16EU']
     }
   }
 

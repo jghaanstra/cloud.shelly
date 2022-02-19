@@ -55,26 +55,17 @@ class ShellyDriver extends Homey.Driver {
       try {
         const discoveryResult = discoveryResults[selectedDeviceId];
 
-        if (discoveryResult.txt !== undefined) {
-          if (discoveryResult.txt.gen === '2') {
-            var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
-            var auth = result.auth_en;
-            var type = result.model;
-            var gen = 'gen2';
-            var communication = 'websocket';
-          } else {
+        switch(this.config.gen) {
+          case 'gen1':
             var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
             var auth = result.auth;
             var type = result.type;
-            var gen = 'gen1';
-            var communication = 'coap';
-          }
-        } else {
-          var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
-          var auth = result.auth;
-          var type = result.type;
-          var gen = 'gen1';
-          var communication = 'coap';
+            break;
+          case 'gen2':
+            var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
+            var auth = result.auth_en;
+            var type = result.model;
+            break;
         }
 
         deviceArray = {
@@ -94,8 +85,8 @@ class ShellyDriver extends Homey.Driver {
             unicast: false,
             battery: this.config.battery,
             sdk: 3,
-            gen: gen,
-            communication: communication
+            gen: this.config.gen,
+            communication: this.config.communication
           },
           icon: deviceIcon
         }
@@ -112,18 +103,17 @@ class ShellyDriver extends Homey.Driver {
     session.setHandler('manual_pairing', async (data) => {
       try {
 
-        if (data.generation === 'gen2') {
-          var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', data.address, '', '');
-          var id = result.id;
-          var type = result.model;
-          var gen = 'gen2';
-          var communication = 'websocket';
-        } else {
-          var result = await this.util.sendCommand('/settings', data.address, data.username, data.password);
-          var id = result.device.hostname;
-          var type = result.device.type;
-          var gen = 'gen1';
-          var communication = 'coap';
+        switch(this.config.gen) {
+          case 'gen1':
+            var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
+            var id = result.device.hostname;
+            var type = result.type;
+            break;
+          case 'gen2':
+            var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
+            var id = result.id;
+            var type = result.model;
+            break;
         }
 
         if (this.config.hostname.some( (host) => { return id.startsWith(host); } )) {
@@ -140,12 +130,12 @@ class ShellyDriver extends Homey.Driver {
             store: {
               main_device: id,
               channel: 0,
-              type: type,
+              type: this.config.type,
               unicast: false,
               battery: this.config.battery,
               sdk: 3,
-              gen: gen,
-              communication: communication
+              gen: this.config.gen,
+              communication: this.config.communication
             }
           }
           return Promise.resolve(deviceArray);

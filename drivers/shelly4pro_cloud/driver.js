@@ -10,10 +10,12 @@ class Shelly4ProCloudDriver extends Driver {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly Pro 4(PM) Cloud',
+      name: 'Shelly Pro 4PM Cloud',
       battery: false,
+      gen: 'gen2',
+      communication: 'cloud',
       hostname: ['shelly4pro-', 'shellypro4pm-', 'ShellyPro4PM-'],
-      code: ['SHSW-44', 'SPSW-004PE16EU']
+      type: ['SPSW-004PE16EU']
     }
   }
 

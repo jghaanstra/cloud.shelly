@@ -12,8 +12,10 @@ class Shellyi4DriverCloud extends Driver {
     this.config = {
       name: 'Shelly Plus i4 Cloud',
       battery: false,
+      gen: 'gen2',
+      communication: 'cloud',
       hostname: ['shellyplusi4-', 'ShellyPlusI4-'],
-      code: ['SNSN-0024X']
+      type: ['SNSN-0024X']
     }
   }
 

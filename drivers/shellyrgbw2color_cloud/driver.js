@@ -12,8 +12,10 @@ class ShellyRGBW2ColorCloudDriver extends Driver {
     this.config = {
       name: 'Shelly RGBW2 Color Cloud',
       battery: false,
+      gen: 'gen1',
+      communication: 'cloud',
       hostname: ['shellyrgbw2-'],
-      code: ['SHRGBW2']
+      type: ['SHRGBW2']
     }
   }
 

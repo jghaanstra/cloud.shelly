@@ -13,14 +13,12 @@ $(function() {
 		var inputaddress = $('#address').val();
 		var inputusername = $('#username').val();
 		var inputpassword = $('#password').val();
-    var inputgeneration = $('input[name="gen"]:checked').val();
 
 		if (inputaddress != '') {
 			var data = {
 				address: inputaddress,
 				username: inputusername,
-				password: inputpassword,
-        generation: inputgeneration
+				password: inputpassword
 			};
 
       Homey.emit('manual_pairing', data)
@@ -85,7 +83,7 @@ $(function() {
   }
 </style>
 
-<p data-i18n="pair.intro">Enter the IP address and, if configured, your username and password for your Shelly device. Also select the generation of the device. If you do not know this try the first generation.</p>
+<p data-i18n="pair.intro">Enter the IP address and, if configured, your username and password for your Shelly device.</p>
 <div class="shelly-pairing">
 	<div class="form-group">
 		<label for="address" data-i18n="pair.address">IP address</label>
@@ -98,12 +96,6 @@ $(function() {
 	<div class="form-group">
 		<label for="password" data-i18n="pair.password">Password</label>
 		<input type="password" class="form-control" id="password">
-	</div>
-  <div class="form-group">
-    <input type="radio" id="gen1" name="gen" value="gen1" checked>
-    <label for="male">First Generation</label><br>
-    <input type="radio" id="gen2" name="gen" value="gen2">
-    <label for="male">Second Generation</label>
 	</div>
 	<div class="form-group buttons">
 		<button id="test-connection" class="button" data-i18n="pair.test">Test Connection</button>

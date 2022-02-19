@@ -12,7 +12,10 @@ class ShellyButton1Driver extends Driver {
     this.config = {
       name: 'Shelly Button 1',
       battery: true,
-      hostname: ['shellybutton1-']
+      gen: 'gen1',
+      communication: 'coap',
+      hostname: ['shellybutton1-', 'shellybutton2-'],
+      type: ['SHBTN-1', 'SHBTN-2']
     }
   }
 

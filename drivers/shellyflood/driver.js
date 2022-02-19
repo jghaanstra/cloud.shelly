@@ -12,7 +12,10 @@ class ShellyFloodDriver extends Driver {
     this.config = {
       name: 'Shelly Flood',
       battery: true,
-      hostname: ['shellyflood-']
+      gen: 'gen1',
+      communication: 'coap',
+      hostname: ['shellyflood-'],
+      type: ['SHWT-1']
     }
   }
 

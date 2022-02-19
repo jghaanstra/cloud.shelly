@@ -12,8 +12,10 @@ class Shelly1lCloudDriver extends Driver {
     this.config = {
       name: 'Shelly 1L Cloud',
       battery: false,
+      gen: 'gen1',
+      communication: 'cloud',
       hostname: ['shelly1l-'],
-      code: ['SHSW-L']
+      type: ['SHSW-L']
     }
   }
 

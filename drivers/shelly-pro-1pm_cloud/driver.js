@@ -12,8 +12,10 @@ class ShellyPro1PMCloudDriver extends Driver {
     this.config = {
       name: 'Shelly Pro 1PM Cloud',
       battery: false,
+      gen: 'gen2',
+      communication: 'cloud',
       hostname: ['ShellyPro1PM-'],
-      code: ['SPSW-001PE16EU']
+      type: ['SPSW-001PE16EU']
     }
   }
 

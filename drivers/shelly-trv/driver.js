@@ -12,7 +12,10 @@ class ShellyTRVDriver extends Driver {
     this.config = {
       name: 'Shelly TRV',
       battery: true,
-      hostname: ['shellytrv-']
+      gen: 'gen1',
+      communication: 'coap',
+      hostname: ['shellytrv-'],
+      type: ['SHTRV-01']
     }
   }
 

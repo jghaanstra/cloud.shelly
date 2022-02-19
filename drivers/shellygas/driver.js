@@ -12,7 +12,10 @@ class ShellyGasDriver extends Driver {
     this.config = {
       name: 'Shelly Gas',
       battery: false,
-      hostname: ['shellygas-']
+      gen: 'gen1',
+      communication: 'coap',
+      hostname: ['shellygas-'],
+      type: ['SHGS-1']
     }
   }
 

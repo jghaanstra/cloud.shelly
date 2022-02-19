@@ -12,7 +12,10 @@ class ShellyPlugSDriver extends Driver {
     this.config = {
       name: 'Shelly Plug S',
       battery: false,
-      hostname: ['shellyplug-s-']
+      gen: 'gen1',
+      communication: 'coap',
+      hostname: ['shellyplug-s-'],
+      type: ['SHPLG-S']
     }
   }
 

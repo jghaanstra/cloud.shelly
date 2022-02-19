@@ -10,9 +10,12 @@ class ShellyPro2RollerShutterDriver extends Driver {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly Pro 2 RollerShutter',
+      name: 'Shelly Pro 2 Roller Shutter',
       battery: false,
-      hostname: ['ShellyPro2-']
+      gen: 'gen2',
+      communication: 'websocket',
+      hostname: ['ShellyPro2-'],
+      type: ['SPSW-002XE16EU']
     }
   }
 

@@ -12,7 +12,10 @@ class Shellyi4Driver extends Driver {
     this.config = {
       name: 'Shelly Plus i4',
       battery: false,
-      hostname: ['shellyplusi4-', 'ShellyPlusI4-']
+      gen: 'gen2',
+      communication: 'websocket',
+      hostname: ['shellyplusi4-', 'ShellyPlusI4-'],
+      type: ['SNSN-0024X']
     }
   }
 

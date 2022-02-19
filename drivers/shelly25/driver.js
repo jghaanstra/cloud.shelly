@@ -12,7 +12,10 @@ class Shelly25Driver extends Driver {
     this.config = {
       name: 'Shelly 2.5 Relay',
       battery: false,
-      hostname: ['shellyswitch25-']
+      gen: 'gen1',
+      communication: 'coap',
+      hostname: ['shellyswitch25-'],
+      type: ['SHSW-25']
     }
   }
 

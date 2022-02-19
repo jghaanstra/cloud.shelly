@@ -12,7 +12,10 @@ class Shellyi3Driver extends Driver {
     this.config = {
       name: 'Shelly i3',
       battery: false,
-      hostname: ['shellyi3-']
+      gen: 'gen1',
+      communication: 'coap',
+      hostname: ['shellyi3-'],
+      type: ['SHIX3-1']
     }
   }
 

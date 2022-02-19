@@ -12,8 +12,10 @@ class ShellyVintageCloudDriver extends Driver {
     this.config = {
       name: 'Shelly Vintage Cloud',
       battery: false,
+      gen: 'gen1',
+      communication: 'cloud',
       hostname: ['ShellyVintage-'],
-      code: ['SHVIN-1']
+      type: ['SHVIN-1']
     }
   }
 

@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.7.0",
+  "version": "3.8.0",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -2099,15 +2099,6 @@
               }
             },
             {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
               "id": "password",
               "type": "password",
               "value": "",
@@ -2156,10 +2147,32 @@
       },
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -2178,36 +2191,7 @@
         "small": "./assets/drivers/shelly-plus-1/images/small.jpg"
       },
       "class": "socket",
-      "id": "shelly-plus-1_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shelly-plus-1_cloud"
     },
     {
       "icon": "/drivers/shelly-plus-1pm/assets/icon.svg",
@@ -2327,15 +2311,6 @@
               }
             },
             {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
               "id": "password",
               "type": "password",
               "value": "",
@@ -2386,10 +2361,32 @@
       },
       "pair": [
         {
-          "id": "cloud_pairing_form"
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
         },
         {
-          "id": "add_device"
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
         }
       ],
       "platforms": [
@@ -2408,36 +2405,7 @@
         "small": "./assets/drivers/shelly-plus-1pm/images/small.jpg"
       },
       "class": "socket",
-      "id": "shelly-plus-1pm_cloud",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "server_address",
-              "type": "text",
-              "value": "https://shelly-8-eu.shelly.cloud",
-              "label": {
-                "en": "Server Address",
-                "nl": "Server adres"
-              }
-            },
-            {
-              "id": "cloud_device_id",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Cloud Device ID",
-                "nl": "Cloud Device ID"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shelly-plus-1pm_cloud"
     },
     {
       "icon": "/drivers/shelly-plus-2pm/assets/icon.svg",
@@ -2516,15 +2484,6 @@
               "label": {
                 "en": "IP Address",
                 "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
               }
             },
             {
@@ -2631,15 +2590,6 @@
               "label": {
                 "en": "IP Address",
                 "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
               }
             },
             {
@@ -2784,15 +2734,6 @@
               "label": {
                 "en": "IP Address",
                 "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
               }
             },
             {
@@ -2958,15 +2899,6 @@
               }
             },
             {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
               "id": "password",
               "type": "password",
               "value": "",
@@ -3117,15 +3049,6 @@
               }
             },
             {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
               "id": "password",
               "type": "password",
               "value": "",
@@ -3227,15 +3150,6 @@
               "label": {
                 "en": "IP Address",
                 "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
               }
             },
             {
@@ -3417,15 +3331,6 @@
               }
             },
             {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
               "id": "password",
               "type": "password",
               "value": "",
@@ -3529,15 +3434,6 @@
               "label": {
                 "en": "IP Address",
                 "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
               }
             },
             {
@@ -7217,15 +7113,6 @@
               "label": {
                 "en": "IP Address",
                 "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
               }
             },
             {

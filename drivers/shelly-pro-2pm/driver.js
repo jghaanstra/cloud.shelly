@@ -10,9 +10,12 @@ class ShellyPro2PMDriver extends Driver {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly Pro 2PM',
+      name: 'Shelly Pro 2PM Relay',
       battery: false,
-      hostname: ['ShellyPro2PM-']
+      gen: 'gen2',
+      communication: 'websocket',
+      hostname: ['ShellyPro2PM-'],
+      type: ['SPSW-002PE16EU']
     }
   }
 

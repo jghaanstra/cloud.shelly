@@ -10,12 +10,12 @@ class Shelly1CloudDriver extends Driver {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly (Plus) 1 Cloud',
+      name: 'Shelly 1 Cloud',
       battery: false,
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shelly1-'],
-      code: ['SHSW-1']
+      type: ['SHSW-1']
     }
   }
 

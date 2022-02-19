@@ -12,7 +12,10 @@ class Shelly1lDriver extends Driver {
     this.config = {
       name: 'Shelly 1L',
       battery: false,
-      hostname: ['shelly1l-']
+      gen: 'gen1',
+      communication: 'coap',
+      hostname: ['shelly1l-'],
+      type: ['SHSW-L']
     }
   }
 

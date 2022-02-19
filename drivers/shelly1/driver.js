@@ -14,7 +14,8 @@ class Shelly1Driver extends Driver {
       battery: false,
       gen: 'gen1',
       communication: 'coap',
-      hostname: ['shelly1-']
+      hostname: ['shelly1-'],
+      type: ['SHSW-1']
     }
   }
 

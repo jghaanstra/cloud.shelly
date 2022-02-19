@@ -12,7 +12,10 @@ class ShellySmokeDriver extends Driver {
     this.config = {
       name: 'Shelly Smoke',
       battery: true,
-      hostname: ['shellysmoke-']
+      gen: 'gen1',
+      communication: 'coap',
+      hostname: ['shellysmoke-'],
+      type: ['SHSM-01', 'SHSM-02']
     }
   }
 

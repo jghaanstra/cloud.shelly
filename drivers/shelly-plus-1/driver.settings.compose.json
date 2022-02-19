@@ -11,10 +11,6 @@
         "$extends": "address"
       },
       {
-        "id": "username",
-        "$extends": "username"
-      },
-      {
         "id": "password",
         "$extends": "password"
       }

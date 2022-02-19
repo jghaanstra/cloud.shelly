@@ -6,7 +6,7 @@ const jwt_decode = require('jwt-decode');
 
 class ShellyCloudDriver extends OAuth2Driver {
 
-  // TODO: use onPair(session) to be able to add custom pairing template for 2 channel devices
+  // TODO: use onPair(session) to be able to add custom pairing template for 2 channel devices, also check the pair config of 2 channel devices
 
   async onPairListDevices({ oAuth2Client }) {
     try {
@@ -21,10 +21,8 @@ class ShellyCloudDriver extends OAuth2Driver {
             var device_code = value._dev_info.code; // get the device code
             if (value._dev_info.gen === "G1") { // get the IP address to allow device identification in the pairing wizard, property location depends on device generation
               var device_ip = value.wifi_sta.ip;
-              var gen = 'gen1';
             } else if (value._dev_info.gen === "G2") {
               var device_ip = value.wifi.sta_ip;
-              var gen = 'gen2';
             }
             if (this.config.code.some((host) => { return device_code.startsWith(host) })) { // filter only device for the chosen driver
               devices.push({
@@ -42,7 +40,7 @@ class ShellyCloudDriver extends OAuth2Driver {
                   type: device_code,
                   battery: this.config.battery,
                   sdk: 3,
-                  gen: gen,
+                  gen: this.config.gen,
                   communication: 'cloud'
                 }
               });

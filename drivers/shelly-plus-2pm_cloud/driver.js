@@ -10,12 +10,12 @@ class ShellyPlus2PMCloudDriver extends Driver {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly Plus 2PM Cloud',
+      name: 'Shelly Plus 2PM Relay Cloud',
       battery: false,
       gen: 'gen2',
       communication: 'cloud',
       hostname: ['ShellyPlus2PM-'],
-      code: ['SNSW-002P16EU']
+      type: ['SNSW-002P16EU']
     }
   }
 

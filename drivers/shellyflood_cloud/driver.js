@@ -12,8 +12,10 @@ class ShellyFloodCloudDriver extends Driver {
     this.config = {
       name: 'Shelly Flood',
       battery: true,
+      gen: 'gen1',
+      communication: 'cloud',
       hostname: ['shellyflood-'],
-      code: ['SHWT-1']
+      type: ['SHWT-1']
     }
   }
 

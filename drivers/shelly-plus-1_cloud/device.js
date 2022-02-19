@@ -6,7 +6,7 @@ const Util = require('../../lib/util.js');
 
 class ShellyPlus1CloudDevice extends Device {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.callbacks = [

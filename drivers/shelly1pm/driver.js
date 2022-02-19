@@ -15,7 +15,7 @@ class Shelly1pmDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shelly1pm-'],
-      code: ['SHSW-PM']
+      type: ['SHSW-PM']
     }
   }
 

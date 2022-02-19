@@ -12,8 +12,10 @@ class ShellyButton1CloudDriver extends Driver {
     this.config = {
       name: 'Shelly Button 1 Cloud',
       battery: true,
+      gen: 'gen1',
+      communication: 'cloud',
       hostname: ['shellybutton1-', 'shellybutton2-'],
-      code: ['SHBTN-1', 'SHBTN-2']
+      type: ['SHBTN-1', 'SHBTN-2']
     }
   }
 

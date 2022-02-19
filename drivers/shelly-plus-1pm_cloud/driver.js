@@ -6,7 +6,7 @@ const Util = require('../../lib/util.js');
 
 class ShellyPlus1PMCloudDriver extends Driver {
 
-  onInit() {
+  onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
@@ -15,7 +15,7 @@ class ShellyPlus1PMCloudDriver extends Driver {
       gen: 'gen2',
       communication: 'cloud',
       hostname: ['shellyplus1pm-', 'ShellyPlus1PM-'],
-      code: ['SNSW-001P16EU']
+      type: ['SNSW-001P16EU']
     }
   }
 
