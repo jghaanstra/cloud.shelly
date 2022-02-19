@@ -63,7 +63,7 @@
         "en": "Select Shelly 2",
         "nl": "Selecteer Shelly 2"
       },
-      "filter": "driver_id=shelly-pro-2_rollershutter|shelly-pro-2pm_rollershutter|shelly2-rollershutter|shelly25-rollershutter"
+      "filter": "driver_id=shelly-plus-2pm-rollershutter|shelly-pro-2-rollershutter|shelly-pro-2pm-rollershutter|shelly2-rollershutter|shelly25-rollershutter"
     }
   ],
   "platforms": ["local"]
