@@ -14,15 +14,6 @@
           "value": "^shelly1-"
         }
       }
-    ],
-    [
-      {
-        "field": "host",
-        "match": {
-          "type": "regex",
-          "value": "^ShellyPlus1-"
-        }
-      }
     ]
   ]
 }

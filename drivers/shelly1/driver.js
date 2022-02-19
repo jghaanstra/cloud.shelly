@@ -10,9 +10,11 @@ class Shelly1Driver extends Driver {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly (Plus) 1',
+      name: 'Shelly 1',
       battery: false,
-      hostname: ['shelly1-', 'shellyplus1-', 'ShellyPlus1-']
+      gen: 'gen1',
+      communication: 'coap',
+      hostname: ['shelly1-']
     }
   }
 

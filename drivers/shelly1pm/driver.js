@@ -10,9 +10,12 @@ class Shelly1pmDriver extends Driver {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.config = {
-      name: 'Shelly (Plus) 1PM',
+      name: 'Shelly 1PM',
       battery: false,
-      hostname: ['shelly1pm-', 'shellyplus1pm-', 'ShellyPlus1PM-']
+      gen: 'gen1',
+      communication: 'coap',
+      hostname: ['shelly1pm-'],
+      code: ['SHSW-PM']
     }
   }
 

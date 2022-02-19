@@ -1,7 +1,7 @@
 {
   "name": {
-    "en": "Shelly (Plus) 1PM",
-    "nl": "Shelly (Plus) 1PM"
+    "en": "Shelly 1PM",
+    "nl": "Shelly 1PM"
   },
   "images": {
     "large": "./assets/drivers/shelly1pm/images/large.jpg",

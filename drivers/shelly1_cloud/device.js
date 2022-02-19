@@ -9,10 +9,7 @@ class Shelly1CloudDevice extends Device {
   onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    this.callbacks = [
-      'shortpush',
-      'longpush'
-    ];
+    this.callbacks = [];
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
