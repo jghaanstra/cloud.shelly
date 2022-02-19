@@ -25,6 +25,11 @@ class ShellyPlus1CloudDevice extends Device {
 
     this.setAvailable();
 
+    // TODO: REMOVE AFTER SOME RELEASES AND AFTER GEN HAS BECOME AVAILABLE IN THE INTEGRATOR API CALLBACK
+    if (this.getStoreValue('gen') == undefined || this.getStoreValue('gen') == null) {
+      this.setStoreValue('gen', 'gen2');
+    }
+
     this.bootSequence();
 
     // CAPABILITY LISTENERS
