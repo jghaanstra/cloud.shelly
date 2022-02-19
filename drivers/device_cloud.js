@@ -9,6 +9,9 @@ class ShellyCloudDevice extends OAuth2Device {
 
   async onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
+
+    // make sure the device is registered and allow cloud websocket with refreshed token
+    this.oAuth2Client.registerDevice();
   }
 
   async bootSequence() {
@@ -25,7 +28,7 @@ class ShellyCloudDevice extends OAuth2Device {
 
   }
 
-  async onAdded() {
+  async onOAuth2Added() {
 
     // update device collection and start cloud websocket listener (if needed)
     if (this.getStoreValue('channel') === 0) {
@@ -39,12 +42,16 @@ class ShellyCloudDevice extends OAuth2Device {
 
   }
 
-  async onDeleted() {
+  async onOAuth2Deleted() {
     try {
       return await this.homey.app.updateShellyCollection();
     } catch (error) {
       this.log(error);
     }
+  }
+
+  async onOAuth2Uninit() {
+    this.oAuth2Client.unregisterDevice();
   }
 
 }
