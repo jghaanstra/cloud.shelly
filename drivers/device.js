@@ -1248,10 +1248,12 @@ class ShellyDevice extends Homey.Device {
           this.updateCapabilityValue('alarm_smoke', value, channel);
           break;
         case 'input0':
-          let input_1 = value === 0 ? false : true;
-          if (input_1 !== this.getCapabilityValue('input_1')) {
-            this.updateCapabilityValue('input_1', input_1, channel);
-            if (input_1) {
+          if (typeof value == 'number') {
+            value = value === 0 ? false : true;
+          }
+          if (value !== this.getCapabilityValue('input_1')) {
+            this.updateCapabilityValue('input_1', value, channel);
+            if (value) {
               this.homey.flow.getDeviceTriggerCard('triggerInput1On').trigger(this, {}, {});
             } else {
               this.homey.flow.getDeviceTriggerCard('triggerInput1Off').trigger(this, {}, {});
@@ -1260,11 +1262,13 @@ class ShellyDevice extends Homey.Device {
           }
           break;
         case 'input1':
+          if (typeof value == 'number') {
+            value = value === 0 ? false : true;
+          }
           if (!this.hasCapability('input_2')) {
-            let input_1_1 = value === 0 ? false : true;
-            if (input_1_1 !== this.getCapabilityValue('input_1')) {
-              this.updateCapabilityValue('input_1', input_1_1, channel);
-              if (input_1_1) {
+            if (value !== this.getCapabilityValue('input_1')) {
+              this.updateCapabilityValue('input_1', value, channel);
+              if (value) {
                 this.homey.flow.getDeviceTriggerCard('triggerInput1On').trigger(this, {}, {});
               } else {
                 this.homey.flow.getDeviceTriggerCard('triggerInput1Off').trigger(this, {}, {});
@@ -1272,10 +1276,9 @@ class ShellyDevice extends Homey.Device {
               this.homey.flow.getDeviceTriggerCard('triggerInput1Changed').trigger(this, {}, {});
             }
           } else {
-            let input_2 = value === 0 ? false : true;
-            if (input_2 !== this.getCapabilityValue('input_2')) {
-              this.updateCapabilityValue('input_2', input_2, channel);
-              if (input_2) {
+            if (value !== this.getCapabilityValue('input_2')) {
+              this.updateCapabilityValue('input_2', value, channel);
+              if (value) {
                 this.homey.flow.getDeviceTriggerCard('triggerInput2On').trigger(this, {}, {});
               } else {
                 this.homey.flow.getDeviceTriggerCard('triggerInput2Off').trigger(this, {}, {});
@@ -1285,10 +1288,12 @@ class ShellyDevice extends Homey.Device {
           }
           break;
         case 'input2':
-          let input_3 = value === 0 ? false : true;
-          if (input_3 != this.getCapabilityValue('input_3')) {
-            this.updateCapabilityValue('input_3', input_3, channel);
-            if (input_3) {
+          if (typeof value == 'number') {
+            value = value === 0 ? false : true;
+          }
+          if (value != this.getCapabilityValue('input_3')) {
+            this.updateCapabilityValue('input_3', value, channel);
+            if (value) {
               this.homey.flow.getDeviceTriggerCard('triggerInput3On').trigger(this, {}, {});
             } else {
               this.homey.flow.getDeviceTriggerCard('triggerInput3Off').trigger(this, {}, {});
@@ -1297,10 +1302,12 @@ class ShellyDevice extends Homey.Device {
           }
           break;
         case 'input3':
-          let input_4 = value === 0 ? false : true;
-          if (input_4 != this.getCapabilityValue('input_4')) {
-            this.updateCapabilityValue('input_4', input_4, channel);
-            if (input_4) {
+          if (typeof value == 'number') {
+            value = value === 0 ? false : true;
+          }
+          if (value != this.getCapabilityValue('input_4')) {
+            this.updateCapabilityValue('input_4', value, channel);
+            if (value) {
               this.homey.flow.getDeviceTriggerCard('triggerInput4On').trigger(this, {}, {});
             } else {
               this.homey.flow.getDeviceTriggerCard('triggerInput4Off').trigger(this, {}, {});
