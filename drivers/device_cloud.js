@@ -9,37 +9,51 @@ class ShellyCloudDevice extends OAuth2Device {
 
   async onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
-
-    // make sure the device is registered and allow cloud websocket with refreshed token
-    this.oAuth2Client.registerDevice();
   }
 
   async bootSequence() {
+    try {
 
-    // update initial device status on init
-    this.homey.setTimeout(async () => {
-      const device_data = await this.oAuth2Client.getCloudDevices(this.getSetting('cloud_server'));
-      if (this.getStoreValue('gen') === 'gen1') {
-        this.parseStatusUpdate(device_data.data.devices_status[this.getData().id])
-      } else if (this.getStoreValue('gen') === 'gen2') {
-        this.parseStatusUpdateGen2(device_data.data.devices_status[this.getData().id])
+      // TODO: test sending different commands, for instance with the RGBW2
+
+      // TODO: REMOVE THIS AFTER SOME RELEASES
+      // MIGRATING SETTINGS FOR ALREADY PAIRED CLOUD DEVICES
+      if (this.getSetting('server_address') && (this.getSetting('cloud_server') == null || this.getSetting('cloud_server') == undefined)) {
+        this.setSettings({cloud_server: this.getSetting('server_address')});
       }
-    }, this.util.getRandomTimeout(10));
 
+      // TODO: make sure the device is registered and allow cloud websocket with refreshed token to avoid trying to open a websocket connection with an expired oauth session
+      //this.oAuth2Client.registerDevice();
+
+      // update initial device status on init
+      this.homey.setTimeout(async () => {
+        const device_data = await this.oAuth2Client.getCloudDevices(this.getSetting('cloud_server'));
+        const device_id = this.getSetting('cloud_device_id').toString(16);
+        if (this.getStoreValue('gen') === 'gen1') {
+          this.parseStatusUpdate(device_data.data.devices_status[device_id])
+        } else if (this.getStoreValue('gen') === 'gen2') {
+          this.parseStatusUpdateGen2(device_data.data.devices_status[device_id])
+        }
+      }, this.util.getRandomTimeout(10));
+    } catch (error) {
+      this.log(error);
+    }
   }
 
   async onOAuth2Added() {
-
-    // update device collection and start cloud websocket listener (if needed)
-    if (this.getStoreValue('channel') === 0) {
-      this.homey.setTimeout(async () => {
-        await this.homey.app.updateShellyCollection();
-        await this.util.sleep(2000);
-        this.homey.app.websocketCloudListener();
-        return;
-      }, 1000);
+    try {
+      // update device collection and start cloud websocket listener (if needed)
+      if (this.getStoreValue('channel') === 0) {
+        this.homey.setTimeout(async () => {
+          await this.homey.app.updateShellyCollection();
+          await this.util.sleep(2000);
+          this.homey.app.websocketCloudListener();
+          return;
+        }, 1000);
+      }
+    } catch (error) {
+      this.log(error);
     }
-
   }
 
   async onOAuth2Deleted() {
@@ -51,7 +65,11 @@ class ShellyCloudDevice extends OAuth2Device {
   }
 
   async onOAuth2Uninit() {
-    this.oAuth2Client.unregisterDevice();
+    try {
+      // TODO: create some logic for deregistering the oauthclient
+    } catch (error) {
+      this.log(error);
+    }
   }
 
 }

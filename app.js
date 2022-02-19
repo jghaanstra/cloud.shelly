@@ -387,6 +387,7 @@ class ShellyApp extends OAuth2App {
   // CLOUD: OPEN WEBSOCKET FOR PROCESSING CLOUD DEVICES STATUS UPDATES
   async websocketCloudListener() {
     try {
+      // TODO: this sometimes fails on app restart, how to make sure there is a fresh oauthclient?
       const client = await this.getFirstSavedOAuth2Client();
       const oauth_token = await client.getToken();
       this.cloudAccessToken = oauth_token.access_token;
@@ -414,8 +415,7 @@ class ShellyApp extends OAuth2App {
             const result = JSON.parse(data);
 
             if (result.event === 'Shelly:StatusOnChange') {
-              const device_id = result.device.id.toString(16); // convert regular device id to cloud device id to allow matching
-              const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(device_id));
+              const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.device.id));
               for (const filteredShelly of filteredShellies) {
                 if (result.device.gen === 'G1') {
                   filteredShelly.device.parseStatusUpdate(result.status);

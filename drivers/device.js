@@ -1017,9 +1017,11 @@ class ShellyDevice extends Homey.Device {
       }
 
       // FIRMWARE UPDATE AVAILABLE
-      if (result.sys.available_updates.hasOwnProperty("stable")) {
-        this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": result.sys.available_updates.stable.version });
-        this.setStoreValue("latest_firmware", result.sys.available_updates.stable.version);
+      if (result.hasOwnProperty("sys")) {
+        if (result.sys.available_updates.hasOwnProperty("stable")) {
+          this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": result.sys.available_updates.stable.version });
+          this.setStoreValue("latest_firmware", result.sys.available_updates.stable.version);
+        }
       }
     } catch (error) {
       if (!this.getStoreValue('battery')) {
