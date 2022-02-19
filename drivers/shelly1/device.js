@@ -35,9 +35,15 @@ class Shelly1Device extends Device {
     this.setAvailable();
 
     // TODO: REMOVE THIS AFTER SOME RELEASES
-    this.setStoreValue('gen', 'gen1');
-    this.setStoreValue('communication', 'coap');
-    this.setStoreValue('channel', 0);
+    if (this.getStoreValue('type') !== 'SNSW-001X16EU') {
+      this.setStoreValue('gen', 'gen1');
+      this.setStoreValue('communication', 'coap');
+      this.setStoreValue('channel', 0);
+    } else {
+      this.setStoreValue('gen', 'gen2');
+      this.setStoreValue('communication', 'websocket');
+      this.setStoreValue('channel', 0);
+    }
 
     this.bootSequence();
 
