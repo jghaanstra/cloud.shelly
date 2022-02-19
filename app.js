@@ -218,9 +218,9 @@ class ShellyApp extends OAuth2App {
         if (args.device.getCapabilityValue('windowcoverings_state') !== 'idle') {
           return await args.device.triggerCapabilityListener('windowcoverings_state', 'idle');
         } else if (args.device.getStoreValue('last_action') === 'up') {
-          return await args.device.triggerCapabilityListener('windowcoverings_state', 'up');
-        } else if (args.device.getStoreValue('last_action') === 'down') {
           return await args.device.triggerCapabilityListener('windowcoverings_state', 'down');
+        } else if (args.device.getStoreValue('last_action') === 'down') {
+          return await args.device.triggerCapabilityListener('windowcoverings_state', 'up');
         } else {
           return Promise.reject(error);
         }
