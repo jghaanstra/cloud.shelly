@@ -25,7 +25,6 @@ class ShellyPlugSCloudDevice extends Device {
 
   }
 
-
 }
 
 module.exports = ShellyPlugSCloudDevice;

@@ -9,14 +9,7 @@ class Shelly1pmDevice extends Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    if (this.getStoreValue('communication') === 'websocket') {
-      this.callbacks = [
-        'shortpush',
-        'longpush'
-      ];
-    } else {
-      this.callbacks = [];
-    }
+    this.callbacks = [];
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');

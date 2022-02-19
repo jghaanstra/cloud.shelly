@@ -1,0 +1,24 @@
+{
+  "name": {
+    "en": "Shelly Plus 1PM",
+    "nl": "Shelly Plus 1PM"
+  },
+  "images": {
+    "xlarge": "./assets/drivers/shelly-plus-1pm/images/xlarge.jpg",
+    "large": "./assets/drivers/shelly-plus-1pm/images/large.jpg",
+    "small": "./assets/drivers/shelly-plus-1pm/images/small.jpg"
+  },
+  "class": "socket",
+  "discovery": "shelly-plus-1pm",
+  "$extends": [
+    "shelly1"
+  ],
+  "capabilities": [
+    "onoff",
+    "measure_power",
+    "meter_power",
+    "measure_temperature",
+    "input_1",
+    "rssi"
+  ]
+}

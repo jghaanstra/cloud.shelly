@@ -9,14 +9,7 @@ class Shelly1Device extends Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    if (this.getStoreValue('communication') === 'websocket') {
-      this.callbacks = [
-        'shortpush',
-        'longpush'
-      ];
-    } else {
-      this.callbacks = [];
-    }
+    this.callbacks = [];
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
@@ -27,23 +20,12 @@ class Shelly1Device extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerTemperature2');
     this.homey.flow.getDeviceTriggerCard('triggerTemperature3');
 
-    // ADD DEVICE TEMPERATURE WHEN AVAILABLE
-    if (this.getStoreValue('communication') === 'websocket' && !this.hasCapability('measure_temperature')) {
-      this.addCapability('measure_temperature');
-    }
-
     this.setAvailable();
 
     // TODO: REMOVE THIS AFTER SOME RELEASES
-    if (this.getStoreValue('type') !== 'SNSW-001X16EU') {
-      this.setStoreValue('gen', 'gen1');
-      this.setStoreValue('communication', 'coap');
-      this.setStoreValue('channel', 0);
-    } else {
-      this.setStoreValue('gen', 'gen2');
-      this.setStoreValue('communication', 'websocket');
-      this.setStoreValue('channel', 0);
-    }
+    this.setStoreValue('gen', 'gen1');
+    this.setStoreValue('communication', 'coap');
+    this.setStoreValue('channel', 0);
 
     this.bootSequence();
 
