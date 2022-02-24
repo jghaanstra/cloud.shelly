@@ -25,7 +25,7 @@ class ShellyRGBW2ColorDevice extends Device {
 
     // CAPABILITY LISTENERS
     this.registerCapabilityListener('onoff', async (value) => {
-      const path = value ? '/color/0?turn=on' : '/color/0?turn=off';
+      const path = value ? '/color/'+ this.getStoreValue('channel') +'?turn=on' : '/color/'+ this.getStoreValue('channel') +'?turn=off';
       return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
@@ -38,10 +38,10 @@ class ShellyRGBW2ColorDevice extends Device {
       } else {
         if (!this.getCapabilityValue('onoff')) {
           const dim = value === 0 ? 1 : value * 100;
-          return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?turn=on&brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?turn=on&gain='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         } else {
           const dim = value === 0 ? 1 : value * 100;
-          return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?gain='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         }
       }
     });
@@ -56,7 +56,7 @@ class ShellyRGBW2ColorDevice extends Device {
         this.updateCapabilityValue('onoff.whitemode', false);
       }
 
-      return await this.util.sendCommand('/color/0?white='+ white, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?white='+ white, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     });
 
     this.registerMultipleCapabilityListener(['light_hue', 'light_saturation' ], async ( valueObj, optsObj ) => {
@@ -73,16 +73,16 @@ class ShellyRGBW2ColorDevice extends Device {
       let color = tinycolor.fromRatio({ h: hue_value, s: saturation_value, v: this.getCapabilityValue('dim') });
       let rgbcolor = color.toRgb();
       await this.setCapabilityValue('light_mode', 'color');
-      return await this.util.sendCommand('/color/0?red='+ Number(rgbcolor.r) +'&green='+ Number(rgbcolor.g) +'&blue='+ Number(rgbcolor.b) +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?red='+ Number(rgbcolor.r) +'&green='+ Number(rgbcolor.g) +'&blue='+ Number(rgbcolor.b) +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     }, 500);
 
     this.registerCapabilityListener('onoff.whitemode', async (value) => {
       if (value) {
         this.setCapabilityValue('light_mode', 'temperature');
-        return await this.util.sendCommand('/color/0?gain=0&white=255', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?gain=0&white=255', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       } else {
         this.setCapabilityValue("light_mode", 'color');
-        return await this.util.sendCommand('/color/0?gain=100&white=0', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?gain=100&white=0', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       }
     });
 
