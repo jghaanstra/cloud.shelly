@@ -4,7 +4,7 @@
     "name": "http",
     "protocol": "tcp"
   },
-  "id": "{{txt.id}}",
+  "id": "{{host}}",
   "conditions": [
     [
       {

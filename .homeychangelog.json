@@ -427,5 +427,8 @@
   },
   "3.7.2": {
     "en": "This release contains a breaking change for Shelly Plus 1 and Shelly Plus 1PM devices. The devices need to be re-paired due to architectural changes in the app allowing for better maintenance. The release also adds support for Shelly Plus 2PM in relay mode for Homey Pro and Homey Cloud/Beta and in roller shutter mode for Homey Pro. It also fixes an issue with correct status updates for the inputs on Plus/Pro devices. And it contains code refactoring."
+  },
+  "3.7.3": {
+    "en": "This release fixes some small issues. Push actions events for Shelly 1PM should be registered again on Homey Pro. Decimal numbers are allowed for manually setting the external temperature for the Shelly TRV on Homey Pro and the dimming of the Shelly RGBW2 should be working again on Homey Pro."
   }
 }

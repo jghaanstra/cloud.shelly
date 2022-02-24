@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.7.2",
+  "version": "3.7.3",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -1420,7 +1420,7 @@
             },
             "min": -50,
             "max": 100,
-            "step": 11,
+            "step": 0.01,
             "label": "°C"
           }
         ],
@@ -8929,7 +8929,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -8948,7 +8948,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9138,7 +9138,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9176,7 +9176,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9195,7 +9195,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9214,7 +9214,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9280,7 +9280,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9299,7 +9299,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9318,7 +9318,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9337,7 +9337,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9356,7 +9356,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9375,7 +9375,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9394,7 +9394,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9413,7 +9413,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9432,7 +9432,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9451,7 +9451,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9508,7 +9508,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9527,7 +9527,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9546,7 +9546,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
@@ -9565,7 +9565,7 @@
         "name": "http",
         "protocol": "tcp"
       },
-      "id": "{{txt.id}}",
+      "id": "{{host}}",
       "conditions": [
         [
           {
