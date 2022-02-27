@@ -415,14 +415,13 @@ class ShellyApp extends OAuth2App {
   // CLOUD: OPEN WEBSOCKET FOR PROCESSING CLOUD DEVICES STATUS UPDATES
   async websocketCloudListener() {
     try {
-      // TODO: this sometimes fails on app restart, how to make sure there is a fresh oauthclient?
-      const client = await this.getFirstSavedOAuth2Client();
-      const oauth_token = await client.getToken();
-      this.cloudAccessToken = oauth_token.access_token;
-      const cloud_details = await jwt_decode(oauth_token.access_token);
-      this.cloudServer = cloud_details.user_api_url.replace('https://', '');
-
       if (this.ws == null || this.ws.readyState === WebSocket.CLOSED) {
+        const client = await this.getFirstSavedOAuth2Client();
+        const oauth_token = await client.getToken();
+        this.cloudAccessToken = oauth_token.access_token;
+        const cloud_details = await jwt_decode(oauth_token.access_token);
+        this.cloudServer = cloud_details.user_api_url.replace('https://', '');
+
         this.ws = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ this.cloudAccessToken, {perMessageDeflate: false});
 
         this.ws.on('open', () => {
@@ -495,7 +494,7 @@ class ShellyApp extends OAuth2App {
         clearTimeout(this.wsReconnectTimeout);
         this.wsReconnectTimeout = this.homey.setTimeout(async () => {
           if (!this.wsConnected) {
-            this.websocketCloudListener(this.cloudAccessToken);
+            this.websocketCloudListener();
           }
         }, 5000);
       }

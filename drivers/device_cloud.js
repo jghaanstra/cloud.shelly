@@ -25,12 +25,6 @@ class ShellyCloudDevice extends OAuth2Device {
         this.removeCapability('rssi');
       }
 
-      // TODO: REMOVE THIS AFTER SOME RELEASES
-      // MIGRATING INTEGRATOR CLOUD DEVICES TO OAUTH2 CLOUD DEVICES
-      if (this.getStoreValue('OAuth2ConfigId') == null) {
-        throw new Error(this.homey.__('device.oauth2_repairing'));
-      }
-
       // MAKE SURE THERE IS A VALID OAUTH2CLIENT (ALSO FOR OPENING A WEBSOCKET BASED ON getFirstSavedOAuth2Client)
       this.oAuth2Client = this.homey.app.getOAuth2Client({
         sessionId: this.getStoreValue('OAuth2SessionId'),
@@ -46,9 +40,10 @@ class ShellyCloudDevice extends OAuth2Device {
         } else if (this.getStoreValue('gen') === 'gen2') {
           this.parseStatusUpdateGen2(device_data.data.devices_status[device_id])
         }
+        this.homey.app.websocketCloudListener();
       }, this.util.getRandomTimeout(10));
     } catch (error) {
-      this.setUnavailable(error);
+
       this.log(error);
     }
   }
