@@ -15,7 +15,8 @@ class ShellyMotionCloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shellymotionsensor-'],
-      type: ['SHMOS-01']
+      type: ['SHMOS-01'],
+      channels: 1
     }
   }
 

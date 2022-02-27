@@ -9,7 +9,7 @@
   },
   "class": "socket",
   "$extends": [
-    "shelly1_cloud"
+    "defaults_cloud_multi_channel"
   ],
   "capabilities": [
     "onoff",
@@ -46,28 +46,5 @@
         "nl": "ADC Voltage"
       }
     }
-  },
-  "pair": [
-    {
-      "id": "login_oauth2",
-      "template": "login_oauth2",
-      "options": {
-        "hint": "Log in with your Shelly account in the new window.",
-        "button": "Log In"
-      }
-    },
-    {
-      "id": "list_devices",
-      "template": "list_devices",
-      "options": {
-        "singular": true
-      },
-      "navigation": {
-        "next": "add_device"
-      }
-    },
-    {
-      "id": "add_device"
-    }
-  ]
+  }
 }

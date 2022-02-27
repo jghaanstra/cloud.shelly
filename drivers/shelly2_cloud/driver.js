@@ -15,7 +15,19 @@ class Shelly2CloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shelly2-'],
-      type: ['SHSW-21']
+      type: ['SHSW-21'],
+      channels: 2,
+      capabilities_1: [
+        "onoff",
+        "measure_power",
+        "meter_power",
+        "input_1",
+        "rssi"
+      ],
+      capabilities_2: [
+        "onoff",
+        "input_1"
+      ]
     }
   }
 

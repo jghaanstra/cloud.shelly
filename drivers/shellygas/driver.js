@@ -15,7 +15,8 @@ class ShellyGasDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellygas-'],
-      type: ['SHGS-1']
+      type: ['SHGS-1'],
+      channels: 1
     }
   }
 

@@ -102,15 +102,14 @@ class ShellyDriver extends Homey.Driver {
 
     session.setHandler('manual_pairing', async (data) => {
       try {
-
         switch(this.config.gen) {
           case 'gen1':
-            var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
+            var result = await this.util.sendCommand('/shelly', data.address, '', '');
             var id = result.device.hostname;
             var type = result.type;
             break;
           case 'gen2':
-            var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
+            var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', data.address, '', '');
             var id = result.id;
             var type = result.model;
             break;
@@ -163,9 +162,9 @@ class ShellyDriver extends Homey.Driver {
         if (deviceArray.store.communication === 'coap') {
           const unicast = await this.util.setUnicast(deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
           deviceArray.store.unicast = true;
-          return Promise.resolve(deviceArray);
+          return Promise.resolve({device: deviceArray, config: this.config});
         } else {
-          return Promise.resolve(deviceArray);
+          return Promise.resolve({device: deviceArray, config: this.config});
         }
       } catch (error) {
         return Promise.reject(error);

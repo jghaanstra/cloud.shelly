@@ -3,10 +3,25 @@
 const Homey = require('homey');
 const { OAuth2Driver } = require('homey-oauth2app');
 const jwt_decode = require('jwt-decode');
+let selectedDevice = {};
 
 class ShellyCloudDriver extends OAuth2Driver {
 
-  // TODO: use onPair(session) to be able to add custom pairing template for 2 channel devices, also check the pair config of 2 channel devices
+  async onPair(socket) {
+    await super.onPair(socket);
+
+    socket.setHandler('list_devices_selection', async (data) => {
+      return selectedDevice = data[0];
+    });
+
+    socket.setHandler('multi_channel_cloud', async () => {
+      try {
+        return Promise.resolve({device: selectedDevice, config: this.config});
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    });
+  }
 
   async onPairListDevices({ oAuth2Client }) {
     try {
@@ -24,7 +39,7 @@ class ShellyCloudDriver extends OAuth2Driver {
             } else if (value._dev_info.gen === "G2") {
               var device_ip = value.wifi.sta_ip;
             }
-            if (this.config.code.some((host) => { return device_code.startsWith(host) })) { // filter only device for the chosen driver
+            if (this.config.type.some((host) => { return device_code.startsWith(host) })) { // filter only device for the chosen driver
               devices.push({
                 name: this.config.name+ ' ['+ device_ip +']',
                 data: {

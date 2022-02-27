@@ -14,8 +14,9 @@ class ShellyPro1PMDriver extends Driver {
       battery: false,
       gen: 'gen2',
       communication: 'websocket',
-      hostname: ['ShellyPro1PM-'],
-      type: ['SPSW-001PE16EU']
+      hostname: ['shellypro1pm-', 'ShellyPro1PM-'],
+      type: ['SPSW-001PE16EU'],
+      channels: 1
     }
   }
 

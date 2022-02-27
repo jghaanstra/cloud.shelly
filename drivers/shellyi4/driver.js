@@ -15,7 +15,8 @@ class Shellyi4Driver extends Driver {
       gen: 'gen2',
       communication: 'websocket',
       hostname: ['shellyplusi4-', 'ShellyPlusI4-'],
-      type: ['SNSN-0024X']
+      type: ['SNSN-0024X'],
+      channels: 1
     }
   }
 

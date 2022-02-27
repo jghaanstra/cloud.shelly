@@ -15,7 +15,23 @@ class ShellyRGBW2WhiteDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellyrgbw2-'],
-      type: ['SHRGBW2']
+      type: ['SHRGBW2'],
+      channels: 4,
+      capabilities_1: [
+        "onoff",
+        "dim",
+        "measure_power",
+        "meter_power",
+        "input_1",
+        "rssi"
+      ],
+      capabilities_2: [
+        "onoff",
+        "dim",
+        "measure_power",
+        "meter_power",
+        "input_1"
+      ]
     }
   }
 

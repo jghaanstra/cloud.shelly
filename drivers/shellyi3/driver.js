@@ -15,7 +15,8 @@ class Shellyi3Driver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellyi3-'],
-      type: ['SHIX3-1']
+      type: ['SHIX3-1'],
+      channels: 1
     }
   }
 

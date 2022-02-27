@@ -15,7 +15,8 @@ class ShellyDuoDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['ShellyBulbDuo-'],
-      type: ['SHBDUO-1']
+      type: ['SHBDUO-1'],
+      channels: 1
     }
   }
 

@@ -14,16 +14,28 @@ class ShellyCloudDevice extends OAuth2Device {
   async bootSequence() {
     try {
 
-      // TODO: test sending different commands, for instance with the RGBW2
-
       // TODO: REMOVE THIS AFTER SOME RELEASES
-      // MIGRATING SETTINGS FOR ALREADY PAIRED CLOUD DEVICES
-      if (this.getSetting('server_address') && (this.getSetting('cloud_server') == null || this.getSetting('cloud_server') == undefined)) {
-        this.setSettings({cloud_server: this.getSetting('server_address')});
+      if (this.getStoreValue('channel') !== 0 && this.hasCapability('rssi')) {
+        this.removeCapability('rssi');
       }
 
-      // TODO: make sure the device is registered and allow cloud websocket with refreshed token to avoid trying to open a websocket connection with an expired oauth session
-      //this.oAuth2Client.registerDevice();
+      // TODO: REMOVE THIS AFTER SOME RELEASES
+      // MIGRATING INTEGRATOR CLOUD DEVICES TO OAUTH2 CLOUD DEVICES
+      if (this.getStoreValue('OAuth2ConfigId') == null) {
+
+        // migrate settings
+        if (this.getSetting('server_address') && (this.getSetting('cloud_server') == null || this.getSetting('cloud_server') == undefined)) {
+          this.setSettings({cloud_server: this.getSetting('server_address')});
+        }
+
+        throw new Error(this.homey.__('device.oauth2_repairing'));
+      }
+
+      // MAKE SURE THERE IS A VALID OAUTH2CLIENT (ALSO FOR OPENING A WEBSOCKET BASED ON getFirstSavedOAuth2Client)
+      this.oAuth2Client = this.homey.app.getOAuth2Client({
+        sessionId: this.getStoreValue('OAuth2SessionId'),
+        configId: this.getStoreValue('OAuth2ConfigId'),
+      });
 
       // update initial device status on init
       this.homey.setTimeout(async () => {
@@ -36,6 +48,7 @@ class ShellyCloudDevice extends OAuth2Device {
         }
       }, this.util.getRandomTimeout(10));
     } catch (error) {
+      this.setUnavailable(error);
       this.log(error);
     }
   }
@@ -58,15 +71,9 @@ class ShellyCloudDevice extends OAuth2Device {
 
   async onOAuth2Deleted() {
     try {
-      return await this.homey.app.updateShellyCollection();
-    } catch (error) {
-      this.log(error);
-    }
-  }
-
-  async onOAuth2Uninit() {
-    try {
-      // TODO: create some logic for deregistering the oauthclient
+      await this.homey.app.updateShellyCollection();
+      await this.util.sleep(2000);
+      return await this.homey.app.websocketClose();
     } catch (error) {
       this.log(error);
     }

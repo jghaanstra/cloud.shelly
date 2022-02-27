@@ -15,7 +15,8 @@ class Shelly1lDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shelly1l-'],
-      type: ['SHSW-L']
+      type: ['SHSW-L'],
+      channels: 1
     }
   }
 

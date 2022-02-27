@@ -1,7 +1,7 @@
 <script type="text/javascript">
   Homey.emit('add_device', {})
-    .then(device => {
-      Homey.createDevice(device);
+    .then(result => {
+      Homey.createDevice(result.device);
       Homey.done();
     })
     .catch(error => {

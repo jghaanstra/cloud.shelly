@@ -15,7 +15,8 @@ class ShellyButton1CloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shellybutton1-', 'shellybutton2-'],
-      type: ['SHBTN-1', 'SHBTN-2']
+      type: ['SHBTN-1', 'SHBTN-2'],
+      channels: 1
     }
   }
 

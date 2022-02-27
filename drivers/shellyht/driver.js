@@ -15,7 +15,8 @@ class ShellyhtDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellyht-'],
-      type: ['SHHT-1']
+      type: ['SHHT-1'],
+      channels: 1
     }
   }
 

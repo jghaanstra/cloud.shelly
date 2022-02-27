@@ -15,7 +15,8 @@ class ShellydwCloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shellydw-'],
-      type: ['SHDW-1', 'SHDW-2']
+      type: ['SHDW-1', 'SHDW-2'],
+      channels: 1
     }
   }
 

@@ -15,7 +15,8 @@ class ShellyButton1Driver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellybutton1-', 'shellybutton2-'],
-      type: ['SHBTN-1', 'SHBTN-2']
+      type: ['SHBTN-1', 'SHBTN-2'],
+      channels: 1
     }
   }
 

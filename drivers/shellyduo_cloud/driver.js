@@ -15,7 +15,8 @@ class ShellyDuoCloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['ShellyBulbDuo-'],
-      type: ['SHBDUO-1']
+      type: ['SHBDUO-1'],
+      channels: 1
     }
   }
 

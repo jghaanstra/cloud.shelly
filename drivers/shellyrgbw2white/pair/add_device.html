@@ -2,31 +2,36 @@
   try {
     Homey.emit('add_device', {})
       .then(result => {
-        var i;
-        for (i = 0; i < 5; i++) {
-          var deviceid = i + 1;
-          if (i < 4) {
+        for (let i = 0; i <= result.config.channels; i++) {
+          if (i < result.config.channels) {
+            var device_id = i + 1;
+            if (i === 0) {
+              var capabilities = result.config.capabilities_1
+            } else {
+              var capabilities = result.config.capabilities_2
+            }
             Homey.createDevice({
-              name: 'Shelly RGBW2 White ' + deviceid,
+      				name: result.config.name + ' ' + device_id,
       				data: {
-                id: result.data.id + '-channel-' + i
+                id: result.device.data.id + '-channel-' + i
               },
-      				settings: {
-                address  : result.settings.address,
-                username : result.settings.username,
-                password : result.settings.password
+              settings: {
+                address  : result.device.settings.address,
+                username : result.device.settings.username,
+                password : result.device.settings.password
               },
+              capabilities: capabilities,
               store: {
-                main_device: result.data.id,
+                main_device: result.device.data.id,
                 channel: i,
-                type: result.store.type,
-                battery: result.store.battery,
-                unicast: result.store.unicast,
+                type: result.device.store.type,
+                battery: result.device.store.battery,
+                unicast: result.device.store.unicast,
                 sdk: 3,
-                gen: result.store.gen,
-                communication: result.store.communication
+                gen: result.device.store.gen,
+                communication: result.device.store.communication
               },
-              icon: result.icon
+              icon: result.device.icon
       			});
           } else {
             Homey.done()

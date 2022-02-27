@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+      "declaration": true,
+      "allowJs": true,
+      "checkJs": true,
+      "noEmitOnError": false,
+      "sourceMap": true,
+      "strictNullChecks": true,
+      "esModuleInterop": true,
+      "alwaysStrict": true,
+      "target": "es6",
+      "module": "commonjs",
+      "outDir": "dist",
+      "lib": [
+          "es6",
+          "dom"
+      ]
+  },
+  "files": ["index.ts"],
+  "include": ["./lib", "./test", "./models"]
+}

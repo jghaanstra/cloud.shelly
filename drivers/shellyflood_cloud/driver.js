@@ -15,7 +15,8 @@ class ShellyFloodCloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shellyflood-'],
-      type: ['SHWT-1']
+      type: ['SHWT-1'],
+      channels: 1
     }
   }
 

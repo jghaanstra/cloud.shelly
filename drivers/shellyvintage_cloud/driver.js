@@ -15,7 +15,8 @@ class ShellyVintageCloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['ShellyVintage-'],
-      type: ['SHVIN-1']
+      type: ['SHVIN-1'],
+      channels: 1
     }
   }
 

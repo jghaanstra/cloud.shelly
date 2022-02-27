@@ -10,35 +10,12 @@
   },
   "class": "socket",
   "$extends": [
-    "defaults_cloud"
+    "defaults_cloud_multi_channel"
   ],
   "capabilities": [
     "onoff",
     "measure_temperature",
     "input_1",
     "rssi"
-  ],
-  "pair": [
-    {
-      "id": "login_oauth2",
-      "template": "login_oauth2",
-      "options": {
-        "hint": "Log in with your Shelly account in the new window.",
-        "button": "Log In"
-      }
-    },
-    {
-      "id": "list_devices",
-      "template": "list_devices",
-      "options": {
-        "singular": true
-      },
-      "navigation": {
-        "next": "add_device"
-      }
-    },
-    {
-      "id": "add_device"
-    }
   ]
 }

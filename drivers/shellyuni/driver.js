@@ -15,7 +15,18 @@ class ShellyUniDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellyuni-'],
-      type: ['SHUNI-1']
+      type: ['SHUNI-1'],
+      channels: 2,
+      capabilities_1: [
+        "onoff",
+        "measure_voltage",
+        "input_1",
+        "rssi"
+      ],
+      capabilities_2: [
+        "onoff",
+        "input_1"
+      ]
     }
   }
 

@@ -15,7 +15,24 @@ class Shelly4ProCloudDriver extends Driver {
       gen: 'gen2',
       communication: 'cloud',
       hostname: ['shelly4pro-', 'shellypro4pm-', 'ShellyPro4PM-'],
-      type: ['SPSW-004PE16EU']
+      type: ['SPSW-004PE16EU'],
+      channels: 4,
+      capabilities_1: [
+        "onoff",
+        "measure_power",
+        "meter_power",
+        "measure_voltage",
+        "input_1",
+        "measure_temperature",
+        "rssi"
+      ],
+      capabilities_2: [
+        "onoff",
+        "measure_power",
+        "meter_power",
+        "measure_voltage",
+        "input_1"
+      ]
     }
   }
 

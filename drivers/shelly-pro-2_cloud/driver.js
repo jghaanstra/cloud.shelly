@@ -14,8 +14,20 @@ class ShellyPro2CloudDriver extends Driver {
       battery: false,
       gen: 'gen2',
       communication: 'cloud',
-      hostname: ['ShellyPro2-'],
-      type: ['SPSW-002XE16EU']
+      hostname: ['shellypro2-', 'ShellyPro2-'],
+      type: ['SPSW-002XE16EU'],
+      channels: 2,
+      capabilities_1: [
+        "onoff",
+        "measure_temperature",
+        "input_1",
+        "rssi"
+      ],
+      capabilities_2: [
+        "onoff",
+        "measure_temperature",
+        "input_1"
+      ]
     }
   }
 

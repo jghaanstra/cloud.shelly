@@ -1,0 +1,27 @@
+{
+  "name": {
+    "en": "Shelly Pro 2PM Roller Shutter",
+    "nl": "Shelly Pro 2PM Roller Shutter"
+  },
+  "images": {
+    "xlarge": "./assets/drivers/shelly-pro-2/images/xlarge.jpg",
+    "large": "./assets/drivers/shelly-pro-2/images/large.jpg",
+    "small": "./assets/drivers/shelly-pro-2/images/small.jpg"
+  },
+  "class": "socket",
+  "$extends": [
+    "defaults_cloud"
+  ],
+  "capabilities": [
+    "windowcoverings_state",
+    "windowcoverings_set",
+    "measure_power",
+    "meter_power",
+    "measure_voltage",
+    "measure_current",
+    "measure_temperature",
+    "input_1",
+    "input_2",
+    "rssi"
+  ]
+}

@@ -15,7 +15,8 @@ class ShellyAirDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellyair-'],
-      type: ['SHAIR-1']
+      type: ['SHAIR-1'],
+      channels: 1
     }
   }
 

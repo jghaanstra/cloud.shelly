@@ -14,8 +14,9 @@ class ShellyPro2RollerShutterDriver extends Driver {
       battery: false,
       gen: 'gen2',
       communication: 'websocket',
-      hostname: ['ShellyPro2-'],
-      type: ['SPSW-002XE16EU']
+      hostname: ['shellypro2-', 'ShellyPro2-'],
+      type: ['SPSW-002XE16EU'],
+      channels: 1
     }
   }
 

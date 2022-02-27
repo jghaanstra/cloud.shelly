@@ -18,7 +18,7 @@ class ShellyTRVDevice extends Device {
     this.bootSequence();
 
     // CAPABILITY LISTENERS
-    this.registerCapabilityListener("onoff", this.onCapabilityValvePosition.bind(this));
+    this.registerCapabilityListener("valve_position", this.onCapabilityValvePosition.bind(this));
     this.registerCapabilityListener("valve_mode", this.onCapabilityValveMode.bind(this));
     this.registerCapabilityListener("target_temperature", this.onCapabilityTargetTemperature.bind(this));
 

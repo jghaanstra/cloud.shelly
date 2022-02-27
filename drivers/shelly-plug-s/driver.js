@@ -15,7 +15,8 @@ class ShellyPlugSDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellyplug-s-'],
-      type: ['SHPLG-S']
+      type: ['SHPLG-S'],
+      channels: 1
     }
   }
 

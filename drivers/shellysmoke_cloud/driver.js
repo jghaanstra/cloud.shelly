@@ -15,7 +15,8 @@ class ShellySmokeCloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shellysmoke-'],
-      type: ['SHSM-01', 'SHSM-02']
+      type: ['SHSM-01', 'SHSM-02'],
+      channels: 1
     }
   }
 

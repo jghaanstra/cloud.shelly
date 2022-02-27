@@ -15,7 +15,8 @@ class ShellyBulbDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellybulb-', 'shellycolorbulb-'],
-      type: ['SHCB-1', 'SHCL-255', 'SHBLB-1']
+      type: ['SHCB-1', 'SHCL-255', 'SHBLB-1'],
+      channels: 1
     }
   }
 

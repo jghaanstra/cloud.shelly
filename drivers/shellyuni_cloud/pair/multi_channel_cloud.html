@@ -1,0 +1,46 @@
+<script type="text/javascript">
+  try {
+    Homey.emit('multi_channel_cloud', {})
+      .then(result => {
+        for (let i = 0; i <= result.config.channels; i++) {
+          if (i < result.config.channels) {
+            var device_id = i + 1;
+            if (i === 0) {
+              var capabilities = result.config.capabilities_1
+            } else {
+              var capabilities = result.config.capabilities_2
+            }
+            Homey.createDevice({
+      				name: result.config.name + ' ' + device_id,
+      				data: {
+                id: result.device.data.id + '-channel-' + i
+              },
+      				settings: {
+                cloud_server: result.device.settings.cloud_server,
+                cloud_device_id: result.device.settings.cloud_device_id
+              },
+              capabilities: capabilities,
+              store: {
+                main_device: result.device.data.id,
+                channel: i,
+                type: result.device.store.type,
+                battery: result.device.store.battery,
+                sdk: 3,
+                gen: result.device.store.gen,
+                communication: result.device.store.communication,
+                OAuth2SessionId: result.device.store.OAuth2SessionId,
+                OAuth2ConfigId: result.device.store.OAuth2ConfigId
+              },
+              icon: result.device.icon
+      			});
+          } else {
+            Homey.emit('add_device');
+            Homey.done()
+          }
+    		}
+      })
+  } catch (error) {
+    Homey.alert(error);
+    Homey.done();
+  }
+</script>

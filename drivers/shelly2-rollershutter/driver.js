@@ -15,7 +15,8 @@ class Shelly2RollerShutterDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shelly2-'],
-      type: ['SHSW-21']
+      type: ['SHSW-21'],
+      channels: 1
     }
   }
 

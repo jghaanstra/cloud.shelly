@@ -105,7 +105,16 @@ class ShellyDevice extends Homey.Device {
           }
         }
         case 'cloud': {
-          break;
+          switch (value) {
+            case 'idle':
+              return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'roller', command_param: 'go', command_value: 'stop', deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+            case 'up':
+              return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'roller', command_param: 'go', command_value: 'open', deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+            case 'down':
+              return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'roller', command_param: 'go', command_value: 'close', deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+            default:
+              return Promise.reject('State not recognized ...');
+          }
         }
         default:
           break;
@@ -127,8 +136,7 @@ class ShellyDevice extends Homey.Device {
           return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(value*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         }
         case 'cloud':
-
-          break;
+          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'roller_to_pos', command_param: 'pos', command_value: Math.round(value*100), deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
         default:
           break;
       }
@@ -271,9 +279,13 @@ class ShellyDevice extends Homey.Device {
   /* boot sequence */
   async bootSequence() {
     try {
-      if (this.getStoreValue('communication') === 'cloud') {
-        // nothing to do here
-      } else if (this.getStoreValue('communication') === 'websocket') {
+
+      // TODO: REMOVE THIS AFTER SOME RELEASES
+      if (this.getStoreValue('channel') !== 0 && this.hasCapability('rssi')) {
+        this.removeCapability('rssi');
+      }
+
+      if (this.getStoreValue('communication') === 'websocket') {
         if (this.getStoreValue('channel') === 0) {
           this.ws = null;
           this.connected = false;
@@ -967,6 +979,11 @@ class ShellyDevice extends Homey.Device {
           this.updateCapabilityValue('measure_voltage', component.voltage, channel);
         }
 
+        /* measure_current */
+        if (component.hasOwnProperty("current") && this.hasCapability('measure_current')) {
+          this.updateCapabilityValue('measure_current', component.current, channel);
+        }
+
         /* measure_temperature (device temperature) */
         if (component.hasOwnProperty("temperature") && this.hasCapability('measure_temperature')) {
           this.updateCapabilityValue('measure_temperature', component.temperature.tC, 0);
@@ -1109,6 +1126,7 @@ class ShellyDevice extends Homey.Device {
         case 'current2':
           this.updateCapabilityValue('measure_current', value, channel);
           break;
+        case 'voltage':
         case 'voltage0':
         case 'voltage1':
         case 'voltage2':
@@ -1130,10 +1148,10 @@ class ShellyDevice extends Homey.Device {
         case 'temp':
           this.updateCapabilityValue('measure_temperature', value, channel);
           break;
-        case 'targetTemp':
+        case 'targetTemperature':
           this.updateCapabilityValue('target_temperature', value, channel);
           break;
-        case 'valvePos':
+        case 'valvePosition':
           if (value != this.getCapabilityValue('valve_position')) {
             this.updateCapabilityValue('valve_position', value, channel);
             this.homey.flow.getDeviceTriggerCard('triggerValvePosition').trigger(this, {'position': value}, {})

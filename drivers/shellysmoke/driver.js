@@ -15,7 +15,8 @@ class ShellySmokeDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellysmoke-'],
-      type: ['SHSM-01', 'SHSM-02']
+      type: ['SHSM-01', 'SHSM-02'],
+      channels: 1
     }
   }
 

@@ -15,7 +15,22 @@ class Shelly25CloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shellyswitch25-'],
-      type: ['SHSW-25']
+      type: ['SHSW-25'],
+      channels: 2,
+      capabilities_1: [
+        "onoff",
+        "measure_power",
+        "meter_power",
+        "measure_temperature",
+        "input_1",
+        "rssi"
+      ],
+      capabilities_2: [
+        "onoff",
+        "measure_power",
+        "meter_power",
+        "input_1"
+      ]
     }
   }
 

@@ -24,10 +24,7 @@ class ShellyRGBW2ColorDevice extends Device {
     this.bootSequence();
 
     // CAPABILITY LISTENERS
-    this.registerCapabilityListener('onoff', async (value) => {
-      const path = value ? '/color/'+ this.getStoreValue('channel') +'?turn=on' : '/color/'+ this.getStoreValue('channel') +'?turn=off';
-      return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    });
+    this.registerCapabilityListener("onoff", this.onCapabilityOnoffLight.bind(this));
 
     this.registerCapabilityListener('dim', async (value, opts) => {
       if (opts.duration === undefined || typeof opts.duration == 'undefined') {

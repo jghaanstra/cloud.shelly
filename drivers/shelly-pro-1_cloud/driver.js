@@ -14,8 +14,9 @@ class ShellyPro1CloudDriver extends Driver {
       battery: false,
       gen: 'gen2',
       communication: 'cloud',
-      hostname: ['ShellyPro1-'],
-      type: ['SPSW-001XE16EU']
+      hostname: ['shellypro1-', 'ShellyPro1-'],
+      type: ['SPSW-001XE16EU'],
+      channels: 1
     }
   }
 

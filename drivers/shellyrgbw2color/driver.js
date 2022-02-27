@@ -15,7 +15,8 @@ class ShellyRGBW2ColorDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellyrgbw2-'],
-      type: ['SHRGBW2']
+      type: ['SHRGBW2'],
+      channels: 1
     }
   }
 

@@ -15,7 +15,8 @@ class ShellyhtCloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shellyht-'],
-      type: ['SHHT-1']
+      type: ['SHHT-1'],
+      channels: 1
     }
   }
 

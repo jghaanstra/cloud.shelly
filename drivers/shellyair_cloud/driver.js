@@ -15,7 +15,8 @@ class ShellyAirCloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shellyair-'],
-      type: ['SHAIR-1']
+      type: ['SHAIR-1'],
+      channels: 1
     }
   }
 

@@ -15,7 +15,8 @@ class ShellyDimmerCloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shellydimmer-', 'shellydimmer2-'],
-      type: ['SHDM-1', 'SHDM-2']
+      type: ['SHDM-1', 'SHDM-2'],
+      channels: 1
     }
   }
 

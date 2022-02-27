@@ -15,7 +15,8 @@ class ShellyRGBW2ColorCloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shellyrgbw2-'],
-      type: ['SHRGBW2']
+      type: ['SHRGBW2'],
+      channels: 1
     }
   }
 

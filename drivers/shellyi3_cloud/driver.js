@@ -15,7 +15,8 @@ class Shellyi3DriverCloud extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shellyi3-'],
-      type: ['SHIX3-1']
+      type: ['SHIX3-1'],
+      channels: 1
     }
   }
 

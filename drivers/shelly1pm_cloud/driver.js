@@ -15,7 +15,8 @@ class Shelly1pmCloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shelly1pm-'],
-      type: ['SHSW-PM']
+      type: ['SHSW-PM'],
+      channels: 1
     }
   }
 

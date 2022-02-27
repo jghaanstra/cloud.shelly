@@ -10,23 +10,16 @@
   },
   "class": "socket",
   "$extends": [
-    "defaults_cloud"
+    "defaults_cloud_multi_channel"
   ],
   "capabilities": [
     "onoff",
     "measure_power",
     "meter_power",
+    "measure_voltage",
+    "measure_current",
     "measure_temperature",
     "input_1",
     "rssi"
-  ],
-  "pair": [
-    {
-      "id": "cloud_pairing_form",
-      "$template": "cloud_pairing_form"
-    },
-    {
-      "id": "add_device"
-    }
   ]
 }

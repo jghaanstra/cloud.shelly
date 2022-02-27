@@ -15,7 +15,8 @@ class ShellyPlus1CloudDriver extends Driver {
       gen: 'gen2',
       communication: 'cloud',
       hostname: ['shellyplus1-', 'ShellyPlus1-'],
-      type: ['SNSW-001X16EU']
+      type: ['SNSW-001X16EU'],
+      channels: 1
     }
   }
 

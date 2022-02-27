@@ -15,7 +15,26 @@ class Shelly3EmDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellyem3-'],
-      type: ['SHEM-3']
+      type: ['SHEM-3'],
+      channels: 3,
+      capabilities_1: [
+        "onoff",
+        "measure_power",
+        "meter_power_factor",
+        "measure_current",
+        "measure_voltage",
+        "meter_power_returned",
+        "meter_power",
+        "rssi"
+      ],
+      capabilities_2: [
+        "measure_power",
+        "meter_power_factor",
+        "measure_current",
+        "measure_voltage",
+        "meter_power_returned",
+        "meter_power"
+      ]
     }
   }
 

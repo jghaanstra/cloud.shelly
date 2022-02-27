@@ -15,7 +15,8 @@ class ShellyTRVDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellytrv-'],
-      type: ['SHTRV-01']
+      type: ['SHTRV-01'],
+      channels: 1
     }
   }
 

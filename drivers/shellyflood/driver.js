@@ -15,7 +15,8 @@ class ShellyFloodDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellyflood-'],
-      type: ['SHWT-1']
+      type: ['SHWT-1'],
+      channels: 1
     }
   }
 

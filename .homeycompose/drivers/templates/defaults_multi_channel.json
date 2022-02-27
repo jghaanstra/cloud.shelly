@@ -1,0 +1,60 @@
+{
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "options": {
+        "singular": true
+      },
+      "navigation": {
+        "next": "icon_select"
+      }
+    },
+    {
+      "id": "icon_select",
+      "$template": "icon_select"
+    },
+    {
+      "id": "get_device",
+      "$template": "get_device"
+    },
+    {
+      "id": "login_credentials",
+      "template": "login_credentials",
+      "options": {
+        "logo": "../../../assets/shelly-logo.png",
+        "usernameLabel": {
+          "en": "Username (admin for gen2 devices)",
+          "nl": "Gebruikersnaam (admin voor gen2 devices)"
+        },
+        "usernamePlaceholder": {
+          "en": "Username",
+          "nl": "Gebruikersnaam"
+        },
+        "PasswordLabel": {
+          "en": "Password",
+          "nl": "Wachtwoord"
+        },
+        "usernamePlaceholder": {
+          "en": "Password",
+          "nl": "Wachtwoord"
+        }
+      }
+    },
+    {
+      "id": "add_device",
+      "$template": "multi_channel"
+    },
+    {
+      "id": "select_pairing",
+      "$template": "select_pairing"
+    },
+    {
+      "id": "manual_pairing",
+      "$template": "manual_pairing"
+    }
+  ],
+  "platforms": [ "local" ],
+  "connectivity": [ "lan" ]
+}

@@ -64,7 +64,8 @@
     "overvoltage": "Error: overvoltage.",
     "overtemp": "Error: device temperature to high.",
     "overcurrent": "Error: overcurrent.",
-    "maximum_dim_duration": "Shelly devices have a maximum of 5 seconds dim duration"
+    "maximum_dim_duration": "Shelly devices have a maximum of 5 seconds dim duration",
+    "oauth2_repairing": "Device needs to be re-authenticated due to cloud communication changes, use the re-pair from the device maintenance settings in Homey to re-authenticate."
   },
   "driver": {
     "wrongdevice": "The Shelly device you are trying to pair does not match with the selected Shelly device in the pairing wizard."

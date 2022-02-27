@@ -15,7 +15,23 @@ class ShellyRGBW2WhiteCloudDriver extends Driver {
       gen: 'gen1',
       communication: 'cloud',
       hostname: ['shellyrgbw2-'],
-      type: ['SHRGBW2']
+      type: ['SHRGBW2'],
+      channels: 4,
+      capabilities_1: [
+        "onoff",
+        "dim",
+        "measure_power",
+        "meter_power",
+        "input_1",
+        "rssi"
+      ],
+      capabilities_2: [
+        "onoff",
+        "dim",
+        "measure_power",
+        "meter_power",
+        "input_1"
+      ]
     }
   }
 

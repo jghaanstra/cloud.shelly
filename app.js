@@ -13,7 +13,7 @@ class ShellyApp extends OAuth2App {
   static OAUTH2_CLIENT = ShellyOAuth2Client;
   static OAUTH2_DEBUG = false;
   static OAUTH2_MULTI_SESSION = false;
-  static OAUTH2_DRIVERS = ['shelly-plug-s_cloud', 'shelly-plug_cloud', 'shelly-plus-1_cloud', 'shelly-plus-1pm_cloud', 'shelly-plus-2pm_cloud', 'shelly-pro-1_cloud', 'shelly-pro-1pm_cloud', 'shelly-pro-2_cloud', 'shelly-pro-2pm_cloud', 'shelly1_cloud', 'shelly1l_cloud', 'shelly1pm_cloud', 'shelly25_cloud', 'shelly2_cloud', 'shelly3em_cloud', 'shelly4pro_cloud', 'shellyair_cloud', 'shellybulb_cloud', 'shellybutton1_cloud', 'shellydimmer_cloud', 'shellyduo_cloud', 'shellydw_cloud', 'shellyem_cloud', 'shellyflood_cloud', 'shellyht_cloud', 'shellyi3_cloud', 'shellyi4_cloud', 'shellymotion_cloud', 'shellyrgbw2color_cloud', 'shellyrgbw2white_cloud', 'shellysmoke_cloud', 'shellyuni_cloud', 'shellyvintage_cloud'];
+  static OAUTH2_DRIVERS = ['shelly-plug-s_cloud', 'shelly-plug_cloud', 'shelly-plus-1_cloud', 'shelly-plus-1pm_cloud', 'shelly-plus-2pm-rollershutter_cloud', 'shelly-plus-2pm_cloud', 'shelly-pro-1_cloud', 'shelly-pro-1pm_cloud', 'shelly-pro-2-rollershutter_cloud', 'shelly-pro-2_cloud', 'shelly-pro-2pm-rollershutter_cloud', 'shelly-pro-2pm_cloud', 'shelly1_cloud', 'shelly1l_cloud', 'shelly1pm_cloud', 'shelly2-rollershutter_cloud', 'shelly25-rollershutter_cloud', 'shelly25_cloud', 'shelly2_cloud', 'shelly3em_cloud', 'shelly4pro_cloud', 'shellyair_cloud', 'shellybulb_cloud', 'shellybutton1_cloud', 'shellydimmer_cloud', 'shellyduo_cloud', 'shellydw_cloud', 'shellyem_cloud', 'shellyflood_cloud', 'shellyht_cloud', 'shellyi3_cloud', 'shellyi4_cloud', 'shellymotion_cloud', 'shellyrgbw2color_cloud', 'shellyrgbw2white_cloud', 'shellysmoke_cloud', 'shellyuni_cloud', 'shellyvintage_cloud'];
 
   async onOAuth2Init() {
     this.log('Initializing Shelly App ...');
@@ -136,7 +136,7 @@ class ShellyApp extends OAuth2App {
             return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Reboot", "params": {"delay_ms": 0} }));
           }
           case 'cloud': {
-            // TODO: add this functionality (including the flow card platforms setting)
+            // cloud does not support these commands
             break;
           }
         }
@@ -152,7 +152,7 @@ class ShellyApp extends OAuth2App {
             return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Update" }));
           }
           case 'cloud': {
-            // TODO: add this functionality (including the flow card platforms setting)
+            // cloud does not support these commands
             break;
           }
         }
@@ -426,7 +426,7 @@ class ShellyApp extends OAuth2App {
         this.ws = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ this.cloudAccessToken, {perMessageDeflate: false});
 
         this.ws.on('open', () => {
-          this.log('Websocket for oauth cloud devices opened.');
+          this.log('Websocket for cloud devices opened');
           this.wsConnected = true;
 
           // start sending pings every 2 minutes to check the connection status
@@ -443,7 +443,8 @@ class ShellyApp extends OAuth2App {
             const result = JSON.parse(data);
 
             if (result.event === 'Shelly:StatusOnChange') {
-              const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(result.device.id));
+              const device_id = result.device.id.toString(16);
+              const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(device_id));
               for (const filteredShelly of filteredShellies) {
                 if (result.device.gen === 'G1') {
                   filteredShelly.device.parseStatusUpdate(result.status);
@@ -488,8 +489,6 @@ class ShellyApp extends OAuth2App {
           }, 500);
         });
 
-      } else {
-        throw new Error('No cloud server details yet.');
       }
     } catch (error) {
       if (error.message !== 'No OAuth2 Client Found') {
@@ -522,6 +521,21 @@ class ShellyApp extends OAuth2App {
         this.ws.close();
       }
 
+      return Promise.reject(error);
+    }
+  }
+
+  // CLOUD: CLOSE WEBSOCKET IF NOT NEEDED
+  async websocketClose() {
+    try {
+      const filteredShellies = this.shellyDevices.filter(shelly => shelly.communication.includes('cloud'));
+      if (filteredShellies.length === 0) {
+        this.log('Closing websocket because there are no more cloud devices paired');
+        this.ws.close();
+      }
+      return Promise.resolve(true);
+    } catch (error) {
+      this.log(error);
       return Promise.reject(error);
     }
   }
