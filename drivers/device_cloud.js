@@ -15,6 +15,12 @@ class ShellyCloudDevice extends OAuth2Device {
     try {
 
       // TODO: REMOVE THIS AFTER SOME RELEASES
+      // migrate settings
+      if (this.getSetting('server_address') && (this.getSetting('cloud_server') == null || this.getSetting('cloud_server') == undefined)) {
+        this.setSettings({cloud_server: this.getSetting('server_address')});
+      }
+
+      // TODO: REMOVE THIS AFTER SOME RELEASES
       if (this.getStoreValue('channel') !== 0 && this.hasCapability('rssi')) {
         this.removeCapability('rssi');
       }
@@ -22,12 +28,6 @@ class ShellyCloudDevice extends OAuth2Device {
       // TODO: REMOVE THIS AFTER SOME RELEASES
       // MIGRATING INTEGRATOR CLOUD DEVICES TO OAUTH2 CLOUD DEVICES
       if (this.getStoreValue('OAuth2ConfigId') == null) {
-
-        // migrate settings
-        if (this.getSetting('server_address') && (this.getSetting('cloud_server') == null || this.getSetting('cloud_server') == undefined)) {
-          this.setSettings({cloud_server: this.getSetting('server_address')});
-        }
-
         throw new Error(this.homey.__('device.oauth2_repairing'));
       }
 
