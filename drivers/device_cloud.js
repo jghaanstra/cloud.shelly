@@ -26,10 +26,12 @@ class ShellyCloudDevice extends OAuth2Device {
       }
 
       // MAKE SURE THERE IS A VALID OAUTH2CLIENT (ALSO FOR OPENING A WEBSOCKET BASED ON getFirstSavedOAuth2Client)
-      this.oAuth2Client = this.homey.app.getOAuth2Client({
-        sessionId: this.getStoreValue('OAuth2SessionId'),
-        configId: this.getStoreValue('OAuth2ConfigId'),
-      });
+      if (this.getStoreValue('OAuth2ConfigId') !== null) {
+        this.oAuth2Client = this.homey.app.getOAuth2Client({
+          sessionId: this.getStoreValue('OAuth2SessionId'),
+          configId: this.getStoreValue('OAuth2ConfigId'),
+        });
+      }
 
       // update initial device status on init
       this.homey.setTimeout(async () => {
