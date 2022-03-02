@@ -15,7 +15,7 @@ class ShellyMotionDriver extends Driver {
       gen: 'gen1',
       communication: 'coap',
       hostname: ['shellymotionsensor-'],
-      type: ['SHMOS-01'],
+      type: ['SHMOS-01', 'SHMOS-02'],
       channels: 1
     }
   }

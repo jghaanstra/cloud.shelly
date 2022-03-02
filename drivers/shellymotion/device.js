@@ -13,6 +13,10 @@ class ShellyMotionDevice extends Device {
 
     this.setAvailable();
 
+    if (this.getStoreValue('type') === 'SHMOS-02' && !this.hasCapability('measure_temperature')) {
+      this.addCapability('measure_temperature');
+    }
+
     this.bootSequence();
 
   }
