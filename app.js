@@ -210,7 +210,7 @@ class ShellyApp extends OAuth2App {
         return args.device.triggerCapabilityListener("onoff.whitemode", false);
       })
 
-    // SHELLY (PRO) 2(.5)(PM) ROLLER SHUTTER
+    // ROLLER SHUTTERS
     this.homey.flow.getActionCard('moveRollerShutter')
       .registerRunListener(async (args) => {
         if (args.direction == 'open') {
@@ -222,10 +222,16 @@ class ShellyApp extends OAuth2App {
           args.device.setCapabilityValue('windowcoverings_state','down');
           var gen2_method = 'Cover.Close';
         }
-        if (args.device.getStoreValue('communication') === 'websocket') {
-          return await args.device.ws.send(JSON.stringify({"id": this.getCommandId(), "method": method, "params": {"id": this.getStoreValue('channel'), "duration": args.move_duration} }));
-        } else {
-          return await this.util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.move_duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        switch(args.device.getStoreValue('communication')) {
+          case 'coap': {
+            return await this.util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.move_duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          }
+          case 'websocket': {
+            return await args.device.ws.send(JSON.stringify({"id": this.getCommandId(), "method": gen2_method, "params": {"id": this.getStoreValue('channel'), "duration": args.move_duration} }));
+          }
+          case 'cloud': {
+            return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'roller', command_param: 'go', command_value: args.direction, timer_param: 'duration', timer: args.move_duration, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
+          }
         }
       })
 
@@ -330,23 +336,25 @@ class ShellyApp extends OAuth2App {
         try {
           //this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'with IP address', device.host);
           if (this.shellyDevices.length > 0) {
-            const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(device.id));
-            if (filteredShellies.length > 0) {
-              if (filteredShellies.length === 1) {
-                var deviceid = filteredShellies[0].id;
+            const filteredShelliesCoap = this.shellyDevices.filter(shelly => shelly.id.includes(device.id)); // filter total device collection based on incoming device id
+            let coap_device_id;
+            let coap_device;
+            if (filteredShelliesCoap.length > 0) {
+              if (filteredShelliesCoap.length === 1) {
+                coap_device = filteredShelliesCoap[0].device; // when there is 1 filtered device it's not multi channel
               } else {
                 const channel = prop.slice(prop.length - 1);
                 if(isNaN(channel)) {
-                  var deviceid = filteredShellies[0].main_device+'-channel-0';
+                  coap_device_id = filteredShelliesCoap[0].main_device+'-channel-0'; // when the capability does not have a ending channel number it's targeted at channel 0
                 } else {
-                  var deviceid = filteredShellies[0].main_device+'-channel-'+channel;
+                  coap_device_id = filteredShelliesCoap[0].main_device+'-channel-'+channel; // when the capability does have a ending channel number set it to the correct channel
                 }
+                const filteredShellyCoap = filteredShelliesCoap.filter(shelly => shelly.id.includes(coap_device_id)); // filter the filtered shellies with the correct channel device id
+                coap_device = filteredShellyCoap[0].device;
               }
-              const filteredShelly = filteredShellies.filter(shelly => shelly.id.includes(deviceid));
-              const homeydevice = filteredShelly[0].device;
-              homeydevice.parseCapabilityUpdate(prop, newValue);
-              if (homeydevice.getSetting('address') !== device.host) {
-                homeydevice.setSettings({address: device.host});
+              coap_device.parseCapabilityUpdate(prop, newValue);
+              if (coap_device.getSetting('address') !== device.host) {
+                coap_device.setSettings({address: device.host});
               }
               return;
             }
@@ -440,15 +448,14 @@ class ShellyApp extends OAuth2App {
         this.ws.on('message', async (data) => {
           try {
             const result = JSON.parse(data);
-
             if (result.event === 'Shelly:StatusOnChange') {
-              const device_id = result.device.id.toString(16);
-              const filteredShellies = this.shellyDevices.filter(shelly => shelly.id.includes(device_id));
-              for (const filteredShelly of filteredShellies) {
+              const ws_device_id = result.device.id.toString(16);
+              const filteredShelliesWs = this.shellyDevices.filter(shelly => shelly.id.includes(ws_device_id));
+              for (const filteredShellyWs of filteredShelliesWs) {
                 if (result.device.gen === 'G1') {
-                  filteredShelly.device.parseStatusUpdate(result.status);
+                  filteredShellyWs.device.parseStatusUpdate(result.status);
                 } else if (result.device.gen === 'G2') {
-                  filteredShelly.device.parseStatusUpdateGen2(result.status);
+                  filteredShellyWs.device.parseStatusUpdateGen2(result.status);
                 }
                 await this.util.sleep(250);
               }

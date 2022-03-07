@@ -285,6 +285,16 @@ class ShellyDevice extends Homey.Device {
         this.removeCapability('rssi');
       }
 
+      // TODO: REMOVE THIS AFTER SOME RELEASES
+      if (this.getStoreValue('main_device') == null || this.getStoreValue('main_device') == undefined) {
+        if (this.getData().id.includes('channel')) {
+          const main_device = this.getData().id.slice(-0, -10);
+          this.setStoreValue('main_device', main_device)
+        } else {
+          this.setStoreValue('main_device', this.getData().id);
+        }
+      }
+
       if (this.getStoreValue('communication') === 'websocket') {
         if (this.getStoreValue('channel') === 0) {
           this.ws = null;
