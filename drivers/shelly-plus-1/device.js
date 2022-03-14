@@ -10,8 +10,9 @@ class ShellyPlus1Device extends Device {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.callbacks = [
-      'shortpush',
-      'longpush'
+      'single_push',
+      'long_push',
+      'double_push'
     ];
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');

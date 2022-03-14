@@ -9,10 +9,11 @@ class Shelly4ProDevice extends Device {
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    if (this.getStoreValue('communication') === 'websocket') {
+    if (this.getStoreValue('type') === 'SPSW-004PE16EU') {
       this.callbacks = [
-        'shortpush',
-        'longpush'
+        'single_push',
+        'long_push',
+        'double_push'
       ];
     } else {
       this.callbacks = [];

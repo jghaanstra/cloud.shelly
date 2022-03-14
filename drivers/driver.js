@@ -42,7 +42,7 @@ class ShellyDriver extends Homey.Driver {
           session.showView('select_pairing');
         }
       } catch (error) {
-        this.log(error);
+        this.error(error);
         return Promise.reject(error);
       }
     });
@@ -104,9 +104,9 @@ class ShellyDriver extends Homey.Driver {
       try {
         switch(this.config.gen) {
           case 'gen1':
-            var result = await this.util.sendCommand('/shelly', data.address, '', '');
+            var result = await this.util.sendCommand('/settings', data.address, data.username, data.password);
             var id = result.device.hostname;
-            var type = result.type;
+            var type = result.device.type;
             break;
           case 'gen2':
             var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', data.address, '', '');

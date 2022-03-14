@@ -33,7 +33,7 @@ class ShellyDevice extends Device {
       await this.homey.app.updateShellyCollection();
       return;
     } catch (error) {
-      this.log(error);
+      this.error(error);
     }
   }
 
@@ -89,19 +89,32 @@ class ShellyDevice extends Device {
             });
           } else if (result.method === 'NotifyEvent') { /* parse event updates */
             result.params.events.forEach((event) => {
-              var channel = event.id;
-              if (channel === 0) {
-                this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(event.event)}, {"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(event.event)});
-              } else {
+              let device;
+              let action_event;
+              let channel = event.id;
+
+              // get the right device
+              if (channel === 0 || this.hasCapability('input_2')) { // if channel is 0 or device is not a multichannel device in Homey we have the right device
+                device = this;
+              } else { // get the right device based on the channel
                 const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
-                const device = this.driver.getDevice({id: device_id });
-                this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(event.event)}, {"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(event.event)});
+                device = this.driver.getDevice({id: device_id });
               }
+
+              // get the right action
+              if (channel === 0 && !device.hasCapability('input_2')) {
+                action_event = this.util.getActionEventDescription(event.event, this.getStoreValue('communication'), this.getStoreValue('gen'));
+              } else {
+                const event_channel = channel + 1;
+                action_event = this.util.getActionEventDescription(event.event, this.getStoreValue('communication'), this.getStoreValue('gen')) + '_' + event_channel;
+              }
+
+              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": action_event}, {"id": device.getData().id, "device": device.getName(), "action": action_event});
             });
           }
         }
       } catch (error) {
-        this.log(error);
+        this.error(error);
       }
     });
 
@@ -118,7 +131,7 @@ class ShellyDevice extends Device {
     });
 
     this.ws.on('error', (error) => {
-      this.log(error);
+      this.error(error);
       this.ws.close();
     });
 

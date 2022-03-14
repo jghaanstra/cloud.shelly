@@ -436,5 +436,11 @@
   },
   "3.8.1": {
     "en": "This release includes a breaking change for Homey Cloud / Beta users. The way Homey Beta/Cloud connected devices communicate with Shelly Cloud has changed, this requires you to remove and re-pair all your Homey Cloud / Beta connected Shelly devices. Sorry for the inconvenience but this is very much needed for future development. The release also adds all roller shutter devices for Homey Cloud / Beta. A firmware update action card for Shelly Plus/Pro devices for Homey Pro has been added. Some device icons for new Plus and Pro devices have been updated. And it contains lots and lots of code improvements."
+  },
+  "3.9.0": {
+    "en": "The release contains a breaking change. Action events for Plus/Pro devices have been updated to be able to add double push event. Due to this change you will need to update all flows using the generic action event trigger for Plus/Pro devices. The release also fixes action events of the Shelly i4 and manual pairing where auto discovery is not available."
+  },
+  "3.9.1": {
+    "en": "The release contains a breaking change. Action events for Plus/Pro devices have been updated to be able to add double push event. Due to this change you will need to update all flows using the generic action event trigger for Plus/Pro devices. The release also fixes action events of the Shelly i4 and manual pairing where auto discovery is not available."
   }
 }

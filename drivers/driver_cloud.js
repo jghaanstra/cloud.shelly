@@ -65,7 +65,7 @@ class ShellyCloudDriver extends OAuth2Driver {
       });
       return devices;
     } catch (error) {
-      this.log(error);
+      this.error(error);
       return Promise.reject(error);
     }
   }

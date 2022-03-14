@@ -360,8 +360,8 @@ class ShellyApp extends OAuth2App {
             }
           }
         } catch (error) {
-          this.log('Error processing CoAP message for device', device.id, 'of type', device.type, 'with IP address', device.host, 'on capability', prop, 'with old value', oldValue, 'to new value', newValue);
-          this.log(error);
+          this.error('Error processing CoAP message for device', device.id, 'of type', device.type, 'with IP address', device.host, 'on capability', prop, 'with old value', oldValue, 'to new value', newValue);
+          this.error(error);
         }
       })
 
@@ -376,7 +376,7 @@ class ShellyApp extends OAuth2App {
             }
           }
         } catch (error) {
-          this.log(error);
+          this.error(error);
         }
       })
     });
@@ -398,7 +398,7 @@ class ShellyApp extends OAuth2App {
         return Promise.resolve(true);
       }
     } catch(error) {
-      this.log(error);
+      this.error(error);
       return Promise.reject(error);
     }
   }
@@ -410,7 +410,7 @@ class ShellyApp extends OAuth2App {
       this.shellyDevices = newShellyDevices;
       return Promise.resolve(true);
     } catch(error) {
-      this.log(error);
+      this.error(error);
       return Promise.reject(error);
     }
   }
@@ -448,6 +448,7 @@ class ShellyApp extends OAuth2App {
         this.ws.on('message', async (data) => {
           try {
             const result = JSON.parse(data);
+            console.log(result);
             if (result.event === 'Shelly:StatusOnChange') {
               const ws_device_id = result.device.id.toString(16);
               const filteredShelliesWs = this.shellyDevices.filter(shelly => shelly.id.includes(ws_device_id));
@@ -462,7 +463,7 @@ class ShellyApp extends OAuth2App {
             }
 
           } catch (error) {
-            this.log(error);
+            this.error(error);
           }
         });
 
@@ -479,12 +480,12 @@ class ShellyApp extends OAuth2App {
         });
 
         this.ws.on('error', (error) => {
-          this.log('Websocket error:', error);
+          this.error('Websocket error:', error);
           this.ws.close();
         });
 
         this.ws.on('close', (code, reason) => {
-          this.log('Websocket closed due to reasoncode:', code);
+          this.error('Websocket closed due to reasoncode:', code);
           clearTimeout(this.wsPingInterval);
           this.wsConnected = false;
 
@@ -517,8 +518,8 @@ class ShellyApp extends OAuth2App {
     	}
       return Promise.resolve(true);
     } catch (error) {
-      this.log('Websocket error sending command');
-      this.log(error);
+      this.error('Websocket error sending command');
+      this.error(error);
 
       if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
         this.wsConnected = false;
@@ -541,7 +542,7 @@ class ShellyApp extends OAuth2App {
       }
       return Promise.resolve(true);
     } catch (error) {
-      this.log(error);
+      this.error(error);
       return Promise.reject(error);
     }
   }

@@ -10,30 +10,18 @@ class Shellyi4Device extends Device {
     if (!this.util) this.util = new Util({homey: this.homey});
 
     this.callbacks = [
-      'shortpush_1',
-      'longpush_1',
-      'double_shortpush_1',
-      'triple_shortpush_1',
-      'shortpush_longpush_1',
-      'longpush_shortpush_1',
-      'shortpush_2',
-      'longpush_2',
-      'double_shortpush_2',
-      'triple_shortpush_2',
-      'shortpush_longpush_2',
-      'longpush_shortpush_2',
-      'shortpush_3',
-      'longpush_3',
-      'double_shortpush_3',
-      'triple_shortpush_3',
-      'shortpush_longpush_3',
-      'longpush_shortpush_3',
-      'shortpush_4',
-      'longpush_4',
-      'double_shortpush_4',
-      'triple_shortpush_4',
-      'shortpush_longpush_4',
-      'longpush_shortpush_4'
+      'single_push_1',
+      'long_push_1',
+      'double_push_1',
+      'single_push_2',
+      'long_push_2',
+      'double_push_2',
+      'single_push_3',
+      'long_push_3',
+      'double_push_3',
+      'single_push_4',
+      'long_push_4',
+      'double_push_4'
     ];
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');

@@ -45,7 +45,7 @@ class ShellyCloudDevice extends OAuth2Device {
         this.homey.app.websocketCloudListener();
       }, this.util.getRandomTimeout(10));
     } catch (error) {
-      this.log(error);
+      this.error(error);
     }
   }
 
@@ -61,7 +61,7 @@ class ShellyCloudDevice extends OAuth2Device {
         }, 1000);
       }
     } catch (error) {
-      this.log(error);
+      this.error(error);
     }
   }
 
@@ -71,7 +71,7 @@ class ShellyCloudDevice extends OAuth2Device {
       await this.util.sleep(2000);
       return await this.homey.app.websocketClose();
     } catch (error) {
-      this.log(error);
+      this.error(error);
     }
   }
 
