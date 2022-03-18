@@ -12,7 +12,9 @@ class ShellyPro2Device extends Device {
     this.callbacks = [
       'single_push',
       'long_push',
-      'double_push'
+      'double_push',
+      'btn_down',
+      'btn_up'
     ];
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');

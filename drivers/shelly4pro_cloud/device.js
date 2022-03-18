@@ -9,7 +9,7 @@ class Shelly4ProCloudDevice extends Device {
   onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
 
-    if (this.getStoreValue('type') === 'SPSW-004PE16EU') {
+    if (this.getStoreValue('type') === 'SPSW-004PE16EU' || this.getStoreValue('type') === 'SHPSW04P') {
       this.callbacks = [
         'single_push',
         'long_push',

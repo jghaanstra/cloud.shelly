@@ -88,7 +88,7 @@ class ShellyDevice extends Device {
               }
             });
           } else if (result.method === 'NotifyEvent') { /* parse event updates */
-            result.params.events.forEach((event) => {
+            result.params.events.forEach(async (event) => {
               let device;
               let action_event;
               let channel = event.id;
@@ -103,13 +103,13 @@ class ShellyDevice extends Device {
 
               // get the right action
               if (channel === 0 && !device.hasCapability('input_2')) {
-                action_event = this.util.getActionEventDescription(event.event, this.getStoreValue('communication'), this.getStoreValue('gen'));
+                action_event = await this.util.getActionEventDescription(event.event, device.getStoreValue('communication'), device.getStoreValue('gen'));
               } else {
                 const event_channel = channel + 1;
-                action_event = this.util.getActionEventDescription(event.event, this.getStoreValue('communication'), this.getStoreValue('gen')) + '_' + event_channel;
+                action_event = await this.util.getActionEventDescription(event.event, device.getStoreValue('communication'), device.getStoreValue('gen')) + '_' + event_channel;
               }
 
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": action_event}, {"id": device.getData().id, "device": device.getName(), "action": action_event});
+              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": action_event }, {"id": device.getData().id, "device": device.getName(), "action": action_event });
             });
           }
         }

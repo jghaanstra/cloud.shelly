@@ -442,5 +442,8 @@
   },
   "3.9.1": {
     "en": "The release contains a breaking change. Action events for Plus/Pro devices have been updated to be able to add double push event. Due to this change you will need to update all flows using the generic action event trigger for Plus/Pro devices. The release also fixes action events of the Shelly i4 and manual pairing where auto discovery is not available."
+  },
+  "3.9.2": {
+    "en": "This release adds support for short- and long push events for Shelly 1 on Homey Pro and Homey Cloud and for button down and button up events for Plus and Pro devices on Homey Pro. It also contains some code improvements that caused log cluttering."
   }
 }

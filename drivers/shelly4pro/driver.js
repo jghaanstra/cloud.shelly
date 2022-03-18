@@ -22,6 +22,7 @@ class Shelly4ProDriver extends Driver {
         "measure_power",
         "meter_power",
         "measure_voltage",
+        "measure_current",
         "input_1",
         "measure_temperature",
         "rssi"
@@ -31,6 +32,7 @@ class Shelly4ProDriver extends Driver {
         "measure_power",
         "meter_power",
         "measure_voltage",
+        "measure_current",
         "input_1"
       ]
     }

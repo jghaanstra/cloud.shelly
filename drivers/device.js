@@ -346,8 +346,12 @@ class ShellyDevice extends Homey.Device {
   async updateCapabilityValue(capability, value, channel = 0) {
     try {
       if (channel === 0) {
-        if (value != this.getCapabilityValue(capability)) {
-          this.setCapabilityValue(capability, value);
+        if (this.hasCapability(capability)) {
+          if (value != this.getCapabilityValue(capability)) {
+            this.setCapabilityValue(capability, value);
+          }
+        } else {
+          this.addCapability(capability);
         }
       } else {
         const device_id = this.getStoreValue('main_device') + '-channel-' + channel;

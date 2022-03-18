@@ -448,7 +448,6 @@ class ShellyApp extends OAuth2App {
         this.ws.on('message', async (data) => {
           try {
             const result = JSON.parse(data);
-            console.log(result);
             if (result.event === 'Shelly:StatusOnChange') {
               const ws_device_id = result.device.id.toString(16);
               const filteredShelliesWs = this.shellyDevices.filter(shelly => shelly.id.includes(ws_device_id));
