@@ -159,20 +159,19 @@ class ShellyDevice extends Homey.Device {
             break
           }
           case 'coap': {
+            const dim_coap = value === 0 ? 1 : value * 100;
             if (!this.getCapabilityValue('onoff')) {
-              const dim_coap = value === 0 ? 1 : value * 100;
-              return await this.util.sendCommand('/light/0?turn=on&brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+              return await this.util.sendCommand('/light/0?turn=on&brightness='+ dim_coap +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
             } else {
-              const dim = value === 0 ? 1 : value * 100;
-              return await this.util.sendCommand('/light/0?brightness='+ dim +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+              return await this.util.sendCommand('/light/0?brightness='+ dim_coap +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
             }
           }
           case 'cloud': {
             if (!this.getCapabilityValue('onoff')) {
               this.setCapabilityValue('onoff', true);
             }
-            const dim = value === 0 ? 1 : value * 100;
-            return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'brightness', command_value: dim, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+            const dim_cloud = value === 0 ? 1 : value * 100;
+            return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'brightness', command_value: dim_cloud, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
           }
           default:
             break;

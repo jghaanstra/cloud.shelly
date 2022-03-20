@@ -445,5 +445,8 @@
   },
   "3.9.2": {
     "en": "This release adds support for short- and long push events for Shelly 1 on Homey Pro and Homey Cloud and for button down and button up events for Plus and Pro devices on Homey Pro. It also contains some code improvements that caused log cluttering."
+  },
+  "3.9.3": {
+    "en": "This release adds support for short- and long push events for Shelly 1 on Homey Pro and Homey Cloud and for button down and button up events for Plus and Pro devices on Homey Pro. It also contains some code improvements that caused log cluttering and fixes a bug with setting the dim level when a light is powered off for GEN1 devices on Homey Pro."
   }
 }
