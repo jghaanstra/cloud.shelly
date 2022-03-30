@@ -25,13 +25,13 @@ class ShellyDevice extends Homey.Device {
   async onCapabilityOnoff(value, opts) {
     try {
       switch(this.getStoreValue('communication')) {
-        case 'websocket':{
+        case 'websocket': {
           if (this.getStoreValue('channel') === 0) {
-            return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value} }));
+            return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value }, "auth": this.getStoreValue('digest_auth_websocket') }));
           } else {
             const device_id = this.getStoreValue('main_device') + '-channel-0';
             const device = this.driver.getDevice({id: device_id });
-            return await device.ws.send(JSON.stringify({"id": device.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value} }));
+            return await device.ws.send(JSON.stringify({"id": device.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value}, "auth": this.getStoreValue('digest_auth_websocket') }));
           }
         }
         case 'coap': {
@@ -83,11 +83,11 @@ class ShellyDevice extends Homey.Device {
         case 'websocket': {
           switch (value) {
             case 'idle':
-              return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.Stop", "params": {"id": this.getStoreValue('channel')} }));
+              return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.Stop", "params": {"id": this.getStoreValue('channel')}, "auth": this.getStoreValue('digest_auth_websocket') }));
             case 'up':
-              return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.Open", "params": {"id": this.getStoreValue('channel')} }));
+              return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.Open", "params": {"id": this.getStoreValue('channel')}, "auth": this.getStoreValue('digest_auth_websocket') }));
             case 'down':
-              return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.Close", "params": {"id": this.getStoreValue('channel')} }));
+              return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.Close", "params": {"id": this.getStoreValue('channel')}, "auth": this.getStoreValue('digest_auth_websocket') }));
             default:
               return Promise.reject('State not recognized ...');
           }
@@ -130,7 +130,7 @@ class ShellyDevice extends Homey.Device {
       this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
       switch(this.getStoreValue('communication')) {
         case 'websocket': {
-          return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.GoToPosition", "params": {"id": this.getStoreValue('channel'), "pos": Math.round(value*100)} }));
+          return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.GoToPosition", "params": {"id": this.getStoreValue('channel'), "pos": Math.round(value*100)}, "auth": this.getStoreValue('digest_auth_websocket') }));
         }
         case 'coap': {
           return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(value*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
@@ -278,27 +278,12 @@ class ShellyDevice extends Homey.Device {
   /* boot sequence */
   async bootSequence() {
     try {
-
-      // TODO: REMOVE THIS AFTER SOME RELEASES
-      if (this.getStoreValue('channel') !== 0 && this.hasCapability('rssi')) {
-        this.removeCapability('rssi');
-      }
-
-      // TODO: REMOVE THIS AFTER SOME RELEASES
-      if (this.getStoreValue('main_device') == null || this.getStoreValue('main_device') == undefined) {
-        if (this.getData().id.includes('channel')) {
-          const main_device = this.getData().id.slice(-0, -10);
-          this.setStoreValue('main_device', main_device)
-        } else {
-          this.setStoreValue('main_device', this.getData().id);
-        }
-      }
-
       if (this.getStoreValue('communication') === 'websocket') {
         if (this.getStoreValue('channel') === 0) {
           this.ws = null;
           this.connected = false;
           this.commandId = 0;
+          this.setStoreValue('digest_auth_websocket', '{}');
           this.connectWebsocket();
         }
         this.homey.setTimeout(() => {
@@ -367,7 +352,7 @@ class ShellyDevice extends Homey.Device {
   async pollDevice() {
     try {
       if (this.getStoreValue('communication') === 'websocket') {
-        let result = await this.util.sendCommand('/rpc/Shelly.GetStatus', this.getSetting('address'), this.getSetting('password'));
+        let result = await this.util.sendRPCCommand('/rpc/Shelly.GetStatus', this.getSetting('address'), this.getSetting('password'));
         if (!this.getAvailable()) { this.setAvailable(); }
         this.parseStatusUpdateGen2(result);
       } else {
@@ -380,14 +365,12 @@ class ShellyDevice extends Homey.Device {
         this.setUnavailable(this.homey.__('device.unreachable') + error.message);
         this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.message});
         this.error(error);
-      } else {
-        this.log(this.getData().id +' is probably asleep and disconnected');
       }
     }
   }
 
   /* generic status updates parser for polling over local HTTP REST API */
-  async parseStatusUpdate(result) {
+  async parseStatusUpdate(result = {}) {
     try {
       let channel = this.getStoreValue('channel') || 0;
 
@@ -934,14 +917,12 @@ class ShellyDevice extends Homey.Device {
         this.setUnavailable(this.homey.__('device.unreachable') + error.message);
         this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.message});
         this.error(error);
-      } else {
-        this.log(this.getData().id +' is probably asleep and disconnected');
       }
     }
   }
 
   /* generic status updates parser for polling over local HTTP REST API and Cloud for GEN2 */
-  async parseStatusUpdateGen2(result) {
+  async parseStatusUpdateGen2(result = {}) {
     try {
       let channel = this.getStoreValue('channel') || 0;
 
@@ -1123,8 +1104,6 @@ class ShellyDevice extends Homey.Device {
         this.setUnavailable(this.homey.__('device.unreachable') + error.message);
         this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.message});
         this.error(error);
-      } else {
-        this.log(this.getData().id +' is probably asleep and disconnected');
       }
     }
   }

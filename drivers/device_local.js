@@ -54,6 +54,29 @@ class ShellyDevice extends Device {
       try {
         const result = JSON.parse(data);
 
+        if (result.hasOwnProperty("error")) {
+          if (result.error.hasOwnProperty("code")) {
+            if (result.error.code === 401) {
+              if (this.digestRetries == undefined) {
+                this.digestRetries = 0;
+              }
+              if (this.digestRetries < 2) {
+                this.digestRetries++;
+                let error_message = JSON.parse(result.error.message);
+                let ha1 = this.util.createHash(this.getSetting('username') +":" + error_message.realm + ":" + this.getSetting('password'));
+                let ha2 = "6370ec69915103833b5222b368555393393f098bfbfbb59f47e0590af135f062"; // createHash("dummy_method:dummy_uri");
+                let cnonce = String(Math.floor(Math.random() * 10e8));
+                let digest = ha1 +":"+ error_message.nonce +":"+ error_message.nc +":"+ cnonce +":auth:"+ ha2;
+                let response = this.util.createHash(digest);
+                let auth = JSON.parse('{"realm":"'+ error_message.realm +'", "username":"admin", "nonce":'+ error_message.nonce +', "cnonce":'+ cnonce +', "response":"'+ response +'", "algorithm":"SHA-256"}');
+                this.setStoreValue('digest_auth_websocket', auth);
+              }
+            }
+          }
+        } else {
+          this.digestRetries = 0;
+        }
+
         if (result.hasOwnProperty("method")) {
           if (result.method === 'NotifyStatus') { /* parse capability status updates */
             const components_list = Object.entries(result.params);
@@ -80,7 +103,13 @@ class ShellyDevice extends Device {
                     }
                   } else if (component.startsWith('input')) { /* parse input data */
                     let input = component.replace(":", "");
-                    this.parseCapabilityUpdate(input, value, channel);
+                    if (channel === 0 || this.hasCapability('input_2')) { // if channel is 0 or device is not a multichannel device in Homey we need to hard set channel to 0 to update the capability of this
+                      this.parseCapabilityUpdate(input, value, 0);
+                    } else {
+                      const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
+                      device = this.driver.getDevice({id: device_id });
+                      device.parseCapabilityUpdate(input, value, channel);
+                    }
                   } else {
                     this.parseCapabilityUpdate(capability, value, channel);
                   }

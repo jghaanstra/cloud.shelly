@@ -133,7 +133,13 @@ class ShellyApp extends OAuth2App {
             return await this.util.sendCommand('/reboot', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           }
           case 'websocket': {
-            return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Reboot", "params": {"delay_ms": 0} }));
+            if (args.device.getStoreValue('channel') === 0) {
+              return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Reboot", "params": {"delay_ms": 0}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
+            } else {
+              const device_id = args.device.getStoreValue('main_device') + '-channel-0';
+              const device = this.driver.getDevice({id: device_id });
+              return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Reboot", "params": {"delay_ms": 0}, "auth": device.getStoreValue('digest_auth_websocket') }));
+            }
           }
           case 'cloud': {
             // cloud does not support these commands
@@ -149,7 +155,36 @@ class ShellyApp extends OAuth2App {
             return await this.util.sendCommand('/ota?update=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           }
           case 'websocket': {
-            return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Update" }));
+            if (args.device.getStoreValue('channel') === 0) {
+              return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Update", "auth": args.device.getStoreValue('digest_auth_websocket') }));
+            } else {
+              const device_id = args.device.getStoreValue('main_device') + '-channel-0';
+              const device = this.driver.getDevice({id: device_id });
+              return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Update", "auth": device.getStoreValue('digest_auth_websocket') }));
+            }
+          }
+          case 'cloud': {
+            // cloud does not support these commands
+            break;
+          }
+        }
+      })
+
+    this.homey.flow.getActionCard('actionEcoMode')
+      .registerRunListener(async (args) => {
+        switch(args.device.getStoreValue('communication')) {
+          case 'coap': {
+            return await this.util.sendCommand('/settings?eco_mode_enabled='+ args.eco_mode, args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          }
+          case 'websocket': {
+            const eco_mode = args.eco_mode === 'false' ? false : true;
+            if (args.device.getStoreValue('channel') === 0) {
+              return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Sys.SetConfig", "params": {"config": {"device": {"eco_mode": eco_mode} } } }));
+            } else {
+              const device_id = args.device.getStoreValue('main_device') + '-channel-0';
+              const device = this.driver.getDevice({id: device_id });
+              return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Sys.SetConfig", "params": {"config": {"device": {"eco_mode": eco_mode} } } }));
+            }
           }
           case 'cloud': {
             // cloud does not support these commands
@@ -167,7 +202,13 @@ class ShellyApp extends OAuth2App {
           }
           case 'websocket': {
             const onoff = args.switch === "1" ? true : false;
-            return await args.device.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": onoff, "toggle": args.timer} }));
+            if (args.device.getStoreValue('channel') === 0) {
+              return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "toggle": args.timer}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
+            } else {
+              const device_id = args.device.getStoreValue('main_device') + '-channel-0';
+              const device = this.driver.getDevice({id: device_id });
+              return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "toggle": args.timer}, "auth": device.getStoreValue('digest_auth_websocket') }));
+            }
           }
           case 'cloud': {
             const onoff = args.switch === "1" ? true : false;
@@ -185,7 +226,13 @@ class ShellyApp extends OAuth2App {
           }
           case 'websocket': {
             const onoff = args.switch === "1" ? true : false;
-            return await args.device.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": onoff, "transition": args.transition} }));
+            if (args.device.getStoreValue('channel') === 0) {
+              return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "transition": args.transition}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
+            } else {
+              const device_id = args.device.getStoreValue('main_device') + '-channel-0';
+              const device = this.driver.getDevice({id: device_id });
+              return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "transition": args.transition}, "auth": device.getStoreValue('digest_auth_websocket') }));
+            }
           }
           case 'cloud': {
             const onoff = args.switch === "1" ? true : false;
@@ -227,7 +274,7 @@ class ShellyApp extends OAuth2App {
             return await this.util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.move_duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           }
           case 'websocket': {
-            return await args.device.ws.send(JSON.stringify({"id": this.getCommandId(), "method": gen2_method, "params": {"id": this.getStoreValue('channel'), "duration": args.move_duration} }));
+            return await args.device.ws.send(JSON.stringify({"id": this.getCommandId(), "method": gen2_method, "params": {"id": this.getStoreValue('channel'), "duration": args.move_duration}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
           }
           case 'cloud': {
             return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'roller', command_param: 'go', command_value: args.direction, timer_param: 'duration', timer: args.move_duration, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
@@ -452,10 +499,12 @@ class ShellyApp extends OAuth2App {
               const ws_device_id = result.device.id.toString(16);
               const filteredShelliesWs = this.shellyDevices.filter(shelly => shelly.id.includes(ws_device_id));
               for (const filteredShellyWs of filteredShelliesWs) {
-                if (result.device.gen === 'G1') {
-                  filteredShellyWs.device.parseStatusUpdate(result.status);
-                } else if (result.device.gen === 'G2') {
-                  filteredShellyWs.device.parseStatusUpdateGen2(result.status);
+                if (result.hasOwnProperty("status")) {
+                  if (result.device.gen === 'G1') {
+                    filteredShellyWs.device.parseStatusUpdate(result.status);
+                  } else if (result.device.gen === 'G2') {
+                    filteredShellyWs.device.parseStatusUpdateGen2(result.status);
+                  }
                 }
                 await this.util.sleep(250);
               }

@@ -65,7 +65,7 @@
       "Shelly Vintage"
     ]
   },
-  "version": "3.9.3",
+  "version": "3.9.4",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -949,6 +949,55 @@
       }
     ],
     "actions": [
+      {
+        "id": "actionEcoMode",
+        "title": {
+          "en": "Switch Eco Mode",
+          "nl": "Schakel Eco modus"
+        },
+        "titleFormatted": {
+          "en": "Switch eco mode to [[eco_mode]]",
+          "nl": "Wijzig eco modus naar [[eco_mode]]"
+        },
+        "args": [
+          {
+            "name": "eco_mode",
+            "type": "dropdown",
+            "title": {
+              "en": "Eco Mode",
+              "nl": "Eco Modus"
+            },
+            "values": [
+              {
+                "id": "false",
+                "label": {
+                  "en": "Disable",
+                  "nl": "Uitschakelen"
+                }
+              },
+              {
+                "id": "true",
+                "label": {
+                  "en": "Enable",
+                  "nl": "Inschakelen"
+                }
+              }
+            ]
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly-plus-1|shelly-plus-1pm|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-pro-1|shelly-pro-1pm|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly3em|shelly4pro|shellyair|shellybulb|shellydimmer|shellyduo|shellyem|shellygas|shellyi3|shellyi4|shellyrgbw2color|shellyrgbw2white|shellyuni|shellyvintage"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
       {
         "id": "actionOTAUpdate",
         "title": {
