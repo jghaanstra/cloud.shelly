@@ -31,7 +31,7 @@ class ShellyDevice extends Homey.Device {
           } else {
             const device_id = this.getStoreValue('main_device') + '-channel-0';
             const device = this.driver.getDevice({id: device_id });
-            return await device.ws.send(JSON.stringify({"id": device.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value}, "auth": this.getStoreValue('digest_auth_websocket') }));
+            return await device.ws.send(JSON.stringify({"id": device.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value}, "auth": device.getStoreValue('digest_auth_websocket') }));
           }
         }
         case 'coap': {

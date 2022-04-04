@@ -90,5 +90,7 @@ ShellyCloudDevice.prototype.onCapabilityLightTemperature = Device.prototype.onCa
 ShellyCloudDevice.prototype.onCapabilityValvePosition = Device.prototype.onCapabilityValvePosition;
 ShellyCloudDevice.prototype.onCapabilityValveMode = Device.prototype.onCapabilityValveMode;
 ShellyCloudDevice.prototype.onCapabilityTargetTemperature = Device.prototype.onCapabilityTargetTemperature;
+ShellyCloudDevice.prototype.updateDeviceRgb = Device.prototype.updateDeviceRgb;
+ShellyCloudDevice.prototype.rollerState = Device.prototype.rollerState;
 
 module.exports = ShellyCloudDevice;

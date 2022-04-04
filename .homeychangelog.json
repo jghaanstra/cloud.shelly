@@ -451,5 +451,8 @@
   },
   "3.9.4": {
     "en": "This release adds support for password authentication for Plus/Pro devices on Homey Pro. It also adds an action card for setting the eco mode of powered Shelly devices on Homey Pro and fixes an issue with the inputs for the Shelly i4."
+  },
+  "3.9.5": {
+    "en": "This release adds a generic update all firmware action card for Homey Pro. It also fixes an issue with roller shutters on Homey Cloud and an issue with authentication for multichannel Plus/Pro devices on Homey Pro."
   }
 }

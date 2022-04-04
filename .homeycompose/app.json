@@ -33,7 +33,9 @@
       "Shelly RGBW2",
       "Shelly Smoke",
       "Shelly Uni",
-      "Shelly Vintage"
+      "Shelly Vintage",
+      "Shelly TRV",
+      "Shelly Valve"
     ],
     "nl": [
       "Shelly",
@@ -61,10 +63,12 @@
       "Shelly RGBW2",
       "Shelly Smoke",
       "Shelly Uni",
-      "Shelly Vintage"
+      "Shelly Vintage",
+      "Shelly TRV",
+      "Shelly radiator"
     ]
   },
-  "version": "3.9.4",
+  "version": "3.9.5",
   "compatibility": ">=5.0.0",
   "platforms": [ "local", "cloud" ],
   "author": {

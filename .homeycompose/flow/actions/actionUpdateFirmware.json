@@ -1,0 +1,38 @@
+{
+  "id": "actionUpdateFirmware",
+  "title": {
+    "en": "Update firmware all devices",
+    "nl": "Firmware alle apparaten updaten"
+  },
+  "titleFormatted": {
+    "en": "Update firmware all devices to latest [[stage]]",
+    "nl": "Update firmware naar laatste versie [[stage]]"
+  },
+  "args": [
+    {
+      "name": "stage",
+      "type": "dropdown",
+      "title": {
+        "en": "Firmware",
+        "nl": "Firmware"
+      },
+      "values": [
+        {
+          "id": "stable",
+          "label": {
+            "en": "Stable",
+            "nl": "Stabiel"
+          }
+        },
+        {
+          "id": "beta",
+          "label": {
+            "en": "Beta",
+            "nl": "Beta"
+          }
+        }
+      ]
+    }
+  ],
+  "platforms": ["local"]
+}

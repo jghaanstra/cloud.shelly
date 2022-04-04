@@ -128,223 +128,320 @@ class ShellyApp extends OAuth2App {
 
     this.homey.flow.getActionCard('actionReboot')
       .registerRunListener(async (args) => {
-        switch(args.device.getStoreValue('communication')) {
-          case 'coap': {
-            return await this.util.sendCommand('/reboot', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-          }
-          case 'websocket': {
-            if (args.device.getStoreValue('channel') === 0) {
-              return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Reboot", "params": {"delay_ms": 0}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
-            } else {
-              const device_id = args.device.getStoreValue('main_device') + '-channel-0';
-              const device = this.driver.getDevice({id: device_id });
-              return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Reboot", "params": {"delay_ms": 0}, "auth": device.getStoreValue('digest_auth_websocket') }));
+        try {
+          switch(args.device.getStoreValue('communication')) {
+            case 'coap': {
+              return await this.util.sendCommand('/reboot', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+            }
+            case 'websocket': {
+              if (args.device.getStoreValue('channel') === 0) {
+                return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Reboot", "params": {"delay_ms": 0}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
+              } else {
+                const device_id = args.device.getStoreValue('main_device') + '-channel-0';
+                const device = this.driver.getDevice({id: device_id });
+                return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Reboot", "params": {"delay_ms": 0}, "auth": device.getStoreValue('digest_auth_websocket') }));
+              }
+            }
+            case 'cloud': {
+              // cloud does not support these commands
+              break;
             }
           }
-          case 'cloud': {
-            // cloud does not support these commands
-            break;
-          }
+        } catch (error) {
+          return Promise.reject(error);
         }
       })
 
     this.homey.flow.getActionCard('actionOTAUpdate')
       .registerRunListener(async (args) => {
-        switch(args.device.getStoreValue('communication')) {
-          case 'coap': {
-            return await this.util.sendCommand('/ota?update=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-          }
-          case 'websocket': {
-            if (args.device.getStoreValue('channel') === 0) {
-              return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Update", "auth": args.device.getStoreValue('digest_auth_websocket') }));
-            } else {
-              const device_id = args.device.getStoreValue('main_device') + '-channel-0';
-              const device = this.driver.getDevice({id: device_id });
-              return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Update", "auth": device.getStoreValue('digest_auth_websocket') }));
+        try {
+          switch(args.device.getStoreValue('communication')) {
+            case 'coap': {
+              return await this.util.sendCommand('/ota?update=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+            }
+            case 'websocket': {
+              if (args.device.getStoreValue('channel') === 0) {
+                return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Update", "auth": args.device.getStoreValue('digest_auth_websocket') }));
+              } else {
+                const device_id = args.device.getStoreValue('main_device') + '-channel-0';
+                const device = this.driver.getDevice({id: device_id });
+                return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Update", "auth": device.getStoreValue('digest_auth_websocket') }));
+              }
+            }
+            case 'cloud': {
+              // cloud does not support these commands
+              break;
             }
           }
-          case 'cloud': {
-            // cloud does not support these commands
-            break;
-          }
+        } catch (error) {
+          return Promise.reject(error);
         }
       })
 
     this.homey.flow.getActionCard('actionEcoMode')
       .registerRunListener(async (args) => {
-        switch(args.device.getStoreValue('communication')) {
-          case 'coap': {
-            return await this.util.sendCommand('/settings?eco_mode_enabled='+ args.eco_mode, args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-          }
-          case 'websocket': {
-            const eco_mode = args.eco_mode === 'false' ? false : true;
-            if (args.device.getStoreValue('channel') === 0) {
-              return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Sys.SetConfig", "params": {"config": {"device": {"eco_mode": eco_mode} } } }));
-            } else {
-              const device_id = args.device.getStoreValue('main_device') + '-channel-0';
-              const device = this.driver.getDevice({id: device_id });
-              return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Sys.SetConfig", "params": {"config": {"device": {"eco_mode": eco_mode} } } }));
+        try {
+          switch(args.device.getStoreValue('communication')) {
+            case 'coap': {
+              return await this.util.sendCommand('/settings?eco_mode_enabled='+ args.eco_mode, args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+            }
+            case 'websocket': {
+              const eco_mode = args.eco_mode === 'false' ? false : true;
+              if (args.device.getStoreValue('channel') === 0) {
+                return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Sys.SetConfig", "params": {"config": {"device": {"eco_mode": eco_mode} } } }));
+              } else {
+                const device_id = args.device.getStoreValue('main_device') + '-channel-0';
+                const device = this.driver.getDevice({id: device_id });
+                return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Sys.SetConfig", "params": {"config": {"device": {"eco_mode": eco_mode} } } }));
+              }
+            }
+            case 'cloud': {
+              // cloud does not support these commands
+              break;
             }
           }
-          case 'cloud': {
-            // cloud does not support these commands
-            break;
+        } catch (error) {
+          return Promise.reject(error);
+        }
+      })
+
+    this.homey.flow.getActionCard('actionUpdateFirmware')
+      .registerRunListener(async (args) => {
+        try {
+          const drivers = Object.values(this.homey.drivers.getDrivers());
+          for (const driver of drivers) {
+            const devices = driver.getDevices();
+            for (const device of devices) {
+              if (device.getStoreValue('channel') === 0 && device.getStoreValue('battery') === false) {
+                switch (device.getStoreValue('communication')) {
+                  case 'coap': {
+                    const path = args.stage === 'stable' ? '/ota?update=true' : '/ota?update=true&beta=true';
+                    await this.util.sendCommand(path, device.getSetting('address'), device.getSetting('username'), device.getSetting('password'));
+                  }
+                  case 'websocket': {
+                    await device.ws.send(JSON.stringify({"id": device.getCommandId(), "method": "Shelly.Update", "params": {"stage": args.stage}, "auth": device.getStoreValue('digest_auth_websocket') }));
+                  }
+                  case 'default': {
+                    break;
+                  }
+                }
+              }
+            }
+            return Promise.resolve(true);
           }
+        } catch (error) {
+          return Promise.reject(error);
         }
       })
 
     this.homey.flow.getActionCard('flipbackSwitch')
       .registerRunListener(async (args) => {
-        switch(args.device.getStoreValue('communication')) {
-          case 'coap': {
-            const onoff = args.switch === "1" ? 'on' : 'off';
-            return await this.util.sendCommand('/relay/'+ args.device.getStoreValue('channel') +'?turn='+ onoff +'&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-          }
-          case 'websocket': {
-            const onoff = args.switch === "1" ? true : false;
-            if (args.device.getStoreValue('channel') === 0) {
-              return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "toggle": args.timer}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
-            } else {
-              const device_id = args.device.getStoreValue('main_device') + '-channel-0';
-              const device = this.driver.getDevice({id: device_id });
-              return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "toggle": args.timer}, "auth": device.getStoreValue('digest_auth_websocket') }));
+        try {
+          switch(args.device.getStoreValue('communication')) {
+            case 'coap': {
+              const onoff = args.switch === "1" ? 'on' : 'off';
+              return await this.util.sendCommand('/relay/'+ args.device.getStoreValue('channel') +'?turn='+ onoff +'&timer='+ args.timer +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+            }
+            case 'websocket': {
+              const onoff = args.switch === "1" ? true : false;
+              if (args.device.getStoreValue('channel') === 0) {
+                return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "toggle": args.timer}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
+              } else {
+                const device_id = args.device.getStoreValue('main_device') + '-channel-0';
+                const device = this.driver.getDevice({id: device_id });
+                return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "toggle": args.timer}, "auth": device.getStoreValue('digest_auth_websocket') }));
+              }
+            }
+            case 'cloud': {
+              const onoff = args.switch === "1" ? true : false;
+              return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'relay', command_param: 'turn', command_value: onoff, timer_param: 'timeout', timer: args.timer, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
             }
           }
-          case 'cloud': {
-            const onoff = args.switch === "1" ? true : false;
-            return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'relay', command_param: 'turn', command_value: onoff, timer_param: 'timeout', timer: args.timer, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
-          }
+        } catch (error) {
+          return Promise.reject(error);
         }
       })
 
     this.homey.flow.getActionCard('onOffTransition')
       .registerRunListener(async (args) => {
-        switch(args.device.getStoreValue('communication')) {
-          case 'coap': {
-            const onoff = args.switch === "1" ? 'on' : 'off';
-            return await this.util.sendCommand('/light/'+ args.device.getStoreValue('channel') +'?turn='+ onoff +'&transition='+ args.transition +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-          }
-          case 'websocket': {
-            const onoff = args.switch === "1" ? true : false;
-            if (args.device.getStoreValue('channel') === 0) {
-              return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "transition": args.transition}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
-            } else {
-              const device_id = args.device.getStoreValue('main_device') + '-channel-0';
-              const device = this.driver.getDevice({id: device_id });
-              return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "transition": args.transition}, "auth": device.getStoreValue('digest_auth_websocket') }));
+        try {
+          switch(args.device.getStoreValue('communication')) {
+            case 'coap': {
+              const onoff = args.switch === "1" ? 'on' : 'off';
+              return await this.util.sendCommand('/light/'+ args.device.getStoreValue('channel') +'?turn='+ onoff +'&transition='+ args.transition +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+            }
+            case 'websocket': {
+              const onoff = args.switch === "1" ? true : false;
+              if (args.device.getStoreValue('channel') === 0) {
+                return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "transition": args.transition}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
+              } else {
+                const device_id = args.device.getStoreValue('main_device') + '-channel-0';
+                const device = this.driver.getDevice({id: device_id });
+                return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "transition": args.transition}, "auth": device.getStoreValue('digest_auth_websocket') }));
+              }
+            }
+            case 'cloud': {
+              const onoff = args.switch === "1" ? true : false;
+              return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'light', command_param: 'turn', command_value: onoff, timer_param: 'transition', timer: args.transition, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
             }
           }
-          case 'cloud': {
-            const onoff = args.switch === "1" ? true : false;
-            return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'light', command_param: 'turn', command_value: onoff, timer_param: 'transition', timer: args.transition, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
-          }
+        } catch (error) {
+          return Promise.reject(error);
         }
       })
 
     // SHELLY RGBW2
     this.homey.flow.getActionCard('effectRGBW2Color')
       .registerRunListener(async (args) => {
-        return await this.util.sendCommand('/color/0?turn=on&effect='+ Number(args.effect) +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        try {
+          return await this.util.sendCommand('/color/0?turn=on&effect='+ Number(args.effect) +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
     this.homey.flow.getActionCard('actionRGBW2EnableWhiteMode')
       .registerRunListener(async (args) => {
-        return args.device.triggerCapabilityListener("onoff.whitemode", true);
+        try {
+          return await args.device.triggerCapabilityListener("onoff.whitemode", true);
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
     this.homey.flow.getActionCard('actionRGBW2DisableWhiteMode')
       .registerRunListener(async (args) => {
-        return args.device.triggerCapabilityListener("onoff.whitemode", false);
+        try {
+          return await args.device.triggerCapabilityListener("onoff.whitemode", false);
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
     // ROLLER SHUTTERS
     this.homey.flow.getActionCard('moveRollerShutter')
       .registerRunListener(async (args) => {
-        if (args.direction == 'open') {
-          args.device.setStoreValue('last_action', 'up');
-          args.device.setCapabilityValue('windowcoverings_state','up');
-          var gen2_method = 'Cover.Open';
-        } else if (args.direction == 'close') {
-          args.device.setStoreValue('last_action', 'down');
-          args.device.setCapabilityValue('windowcoverings_state','down');
-          var gen2_method = 'Cover.Close';
-        }
-        switch(args.device.getStoreValue('communication')) {
-          case 'coap': {
-            return await this.util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.move_duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        try {
+          if (args.direction == 'open') {
+            args.device.setStoreValue('last_action', 'up');
+            args.device.setCapabilityValue('windowcoverings_state','up');
+            var gen2_method = 'Cover.Open';
+          } else if (args.direction == 'close') {
+            args.device.setStoreValue('last_action', 'down');
+            args.device.setCapabilityValue('windowcoverings_state','down');
+            var gen2_method = 'Cover.Close';
           }
-          case 'websocket': {
-            return await args.device.ws.send(JSON.stringify({"id": this.getCommandId(), "method": gen2_method, "params": {"id": this.getStoreValue('channel'), "duration": args.move_duration}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
+          switch(args.device.getStoreValue('communication')) {
+            case 'coap': {
+              return await this.util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.move_duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+            }
+            case 'websocket': {
+              return await args.device.ws.send(JSON.stringify({"id": this.getCommandId(), "method": gen2_method, "params": {"id": this.getStoreValue('channel'), "duration": args.move_duration}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
+            }
+            case 'cloud': {
+              return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'roller', command_param: 'go', command_value: args.direction, timer_param: 'duration', timer: args.move_duration, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
+            }
           }
-          case 'cloud': {
-            return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'roller', command_param: 'go', command_value: args.direction, timer_param: 'duration', timer: args.move_duration, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
-          }
+        } catch (error) {
+          return Promise.reject(error);
         }
       })
 
     this.homey.flow.getActionCard('moveRollerShutterOffset')
       .registerRunListener(async (args) => {
-        if (args.direction == 'open') {
-          args.device.setStoreValue('last_action', 'up');
-          args.device.setCapabilityValue('windowcoverings_state','up');
-        } else if (args.direction == 'close') {
-          args.device.setStoreValue('last_action', 'down');
-          args.device.setCapabilityValue('windowcoverings_state','down');
+        try {
+          if (args.direction == 'open') {
+            args.device.setStoreValue('last_action', 'up');
+            args.device.setCapabilityValue('windowcoverings_state','up');
+          } else if (args.direction == 'close') {
+            args.device.setStoreValue('last_action', 'down');
+            args.device.setCapabilityValue('windowcoverings_state','down');
+          }
+          return await this.util.sendCommand('/roller/0?go='+ args.direction +'&offset='+ args.offset +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } catch (error) {
+          return Promise.reject(error);
         }
-        return await this.util.sendCommand('/roller/0?go='+ args.direction +'&offset='+ args.offset +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
       })
 
     this.homey.flow.getActionCard('rollerShutterIntelligentAction')
       .registerRunListener(async (args) => {
-        if (args.device.getCapabilityValue('windowcoverings_state') !== 'idle') {
-          return await args.device.triggerCapabilityListener('windowcoverings_state', 'idle');
-        } else if (args.device.getStoreValue('last_action') === 'up') {
-          return await args.device.triggerCapabilityListener('windowcoverings_state', 'down');
-        } else if (args.device.getStoreValue('last_action') === 'down') {
-          return await args.device.triggerCapabilityListener('windowcoverings_state', 'up');
-        } else {
+        try {
+          if (args.device.getCapabilityValue('windowcoverings_state') !== 'idle') {
+            return await args.device.triggerCapabilityListener('windowcoverings_state', 'idle');
+          } else if (args.device.getStoreValue('last_action') === 'up') {
+            return await args.device.triggerCapabilityListener('windowcoverings_state', 'down');
+          } else if (args.device.getStoreValue('last_action') === 'down') {
+            return await args.device.triggerCapabilityListener('windowcoverings_state', 'up');
+          } else {
+            return Promise.reject('Invalid state');
+          }
+        } catch (error) {
           return Promise.reject(error);
         }
       })
 
     this.homey.flow.getActionCard('moveRollerShutterPreviousPosition')
       .registerRunListener(async (args) => {
-        let position = args.device.getStoreValue('previous_position');
-        if (position == undefined) {
-			    return Promise.reject('previous position has not been set yet');
-		    } else {
-          return await args.device.triggerCapabilityListener('windowcoverings_set', position);
+        try {
+          let position = args.device.getStoreValue('previous_position');
+          if (position == undefined) {
+  			    return Promise.reject('previous position has not been set yet');
+  		    } else {
+            return await args.device.triggerCapabilityListener('windowcoverings_set', position);
+          }
+        } catch (error) {
+          return Promise.reject(error);
         }
   	  })
 
     // SHELLY GAS
     this.homey.flow.getActionCard('actionGasSetVolume')
       .registerRunListener(async (args) => {
-        return await this.util.sendCommand('/settings/?set_volume='+ args.volume +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        try {
+          return await this.util.sendCommand('/settings/?set_volume='+ args.volume +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
     this.homey.flow.getActionCard('actionGasMute')
       .registerRunListener(async (args) => {
-        return await this.util.sendCommand('/mute', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        try {
+          return await this.util.sendCommand('/mute', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
     this.homey.flow.getActionCard('actionGasUnmute')
       .registerRunListener(async (args) => {
-        return await this.util.sendCommand('/unmute', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        try {
+          return await this.util.sendCommand('/unmute', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
     this.homey.flow.getActionCard('actionGasTest')
       .registerRunListener(async (args) => {
-        return await this.util.sendCommand('/self_test', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        try {
+          return await this.util.sendCommand('/self_test', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
     // SHELLY TRV
     this.homey.flow.getConditionCard('conditionValveMode')
       .registerRunListener(async (args) => {
-        if (args.profile.id === args.device.getCapabilityValue("valve_mode")) {
-          return true;
-        } else {
-          return false;
+        try {
+          if (args.profile.id === args.device.getCapabilityValue("valve_mode")) {
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          return Promise.reject(error);
         }
       })
       .getArgument('profile')
@@ -354,15 +451,23 @@ class ShellyApp extends OAuth2App {
 
     this.homey.flow.getActionCard('actionValvePosition')
       .registerRunListener(async (args) => {
-        return await this.util.sendCommand('/thermostat/0?pos='+ args.position +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        try {
+          return await this.util.sendCommand('/thermostat/0?pos='+ args.position +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
     this.homey.flow.getActionCard('actionValveMode')
       .registerRunListener(async (args) => {
-        if (args.profile === "0") {
-          return await this.util.sendCommand('/thermostat/0?schedule=false', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-        } else {
-          return await this.util.sendCommand('/thermostat/0?schedule=true&schedule_profile='+ args.profile.id +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        try {
+          if (args.profile === "0") {
+            return await this.util.sendCommand('/thermostat/0?schedule=false', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          } else {
+            return await this.util.sendCommand('/thermostat/0?schedule=true&schedule_profile='+ args.profile.id +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          }
+        } catch (error) {
+          return Promise.reject(error);
         }
       })
       .getArgument('profile')
@@ -372,7 +477,11 @@ class ShellyApp extends OAuth2App {
 
     this.homey.flow.getActionCard('actionMeasuredExtTemp')
       .registerRunListener(async (args) => {
-        return await this.util.sendCommand('/ext_t?temp='+ args.temperature +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        try {
+          return await this.util.sendCommand('/ext_t?temp='+ args.temperature +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
     // COAP: COAP LISTENER FOR PROCESSING INCOMING MESSAGES
