@@ -522,10 +522,10 @@ class ShellyDevice extends Homey.Device {
 
         /* windowcoverings_set */
         if (result.rollers[channel].hasOwnProperty("current_pos")) {
-          var windowcoverings_set = result.rollers[channel].current_pos / 100;
+          const windowcoverings_set = this.util.clamp(result.rollers[channel].current_pos, 0, 100) / 100;
           if (windowcoverings_set !== this.getCapabilityValue('windowcoverings_set')) {
             this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
-            this.updateCapabilityValue('windowcoverings_set', result.rollers[channel].current_pos);
+            this.updateCapabilityValue('windowcoverings_set', windowcoverings_set);
           }
         }
 
@@ -746,7 +746,7 @@ class ShellyDevice extends Homey.Device {
           }
 
           // action event for gen1 cloud devices
-          if (this.getStoreValue('communication') === 'cloud' && result.inputs[0].event_cnt > 0 && (result.inputs[0].event_cnt > this.getStoreValue('event_cnt')) && result.inputs[0].event) {
+          if (this.getStoreValue('communication') === 'cloud' && this.getStoreValue('event_cnt') !== null && result.inputs[0].event_cnt > 0 && result.inputs[0].event_cnt > this.getStoreValue('event_cnt') && result.inputs[0].event) {
             if (this.hasCapability('input_1') && this.hasCapability('input_2')) {
               var action0 = this.util.getActionEventDescription(result.inputs[0].event, this.getStoreValue('communication'), this.getStoreValue('gen')) + '_1';
             } else {
@@ -754,6 +754,8 @@ class ShellyDevice extends Homey.Device {
             }
             this.setStoreValue('event_cnt', result.inputs[0].event_cnt);
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action0 }, {"id": this.getData().id, "device": this.getName(), "action": action0 });
+          } else if (this.getStoreValue('event_cnt') === null) {
+            this.setStoreValue('event_cnt', result.inputs[0].event_cnt);
           }
         }
 
@@ -771,10 +773,12 @@ class ShellyDevice extends Homey.Device {
           }
 
           // action events for gen1 cloud devices
-          if (this.getStoreValue('communication') === 'cloud' && result.inputs[1].event_cnt > 0 && (result.inputs[1].event_cnt > this.getStoreValue('event_cnt')) && result.inputs[1].event) {
+          if (this.getStoreValue('communication') === 'cloud' && this.getStoreValue('event_cnt') !== null && result.inputs[1].event_cnt > 0 && result.inputs[1].event_cnt > this.getStoreValue('event_cnt') && result.inputs[1].event) {
             var action1 = this.util.getActionEventDescription(result.inputs[1].event, this.getStoreValue('communication'), this.getStoreValue('gen')) + '_2';
             this.setStoreValue('event_cnt', result.inputs[1].event_cnt);
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action1 }, {"id": this.getData().id, "device": this.getName(), "action": action1 });
+          } else if (this.getStoreValue('event_cnt') === null) {
+            this.setStoreValue('event_cnt', result.inputs[0].event_cnt);
           }
         } else if (result.inputs.hasOwnProperty([1]) && this.hasCapability('input_1') && this.getStoreValue('channel') === 1) {
             let input_2_1 = result.inputs[1].input == 1 ? true : false;
@@ -789,10 +793,12 @@ class ShellyDevice extends Homey.Device {
             }
 
           // action events for gen1 cloud devices
-          if (this.getStoreValue('communication') === 'cloud' && result.inputs[1].event_cnt > 0 && (result.inputs[1].event_cnt > this.getStoreValue('event_cnt')) && result.inputs[1].event) {
+          if (this.getStoreValue('communication') === 'cloud' && this.getStoreValue('event_cnt') !== null && result.inputs[1].event_cnt > 0 && result.inputs[1].event_cnt > this.getStoreValue('event_cnt') && result.inputs[1].event) {
             var action1 = this.util.getActionEventDescription(result.inputs[1].event, this.getStoreValue('communication'), this.getStoreValue('gen'));
             this.setStoreValue('event_cnt', result.inputs[1].event_cnt);
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action1 }, {"id": this.getData().id, "device": this.getName(), "action": action1 });
+          } else if (this.getStoreValue('event_cnt') === null) {
+            this.setStoreValue('event_cnt', result.inputs[0].event_cnt);
           }
         }
 
@@ -810,10 +816,12 @@ class ShellyDevice extends Homey.Device {
           }
 
           // input/action events for cloud devices
-          if (this.getStoreValue('communication') === 'cloud' && result.inputs[2].event_cnt > 0 && (result.inputs[2].event_cnt > this.getStoreValue('event_cnt')) && result.inputs[2].event) {
+          if (this.getStoreValue('communication') === 'cloud' && this.getStoreValue('event_cnt') !== null && result.inputs[2].event_cnt > 0 && result.inputs[2].event_cnt > this.getStoreValue('event_cnt') && result.inputs[2].event) {
             const action2 = await this.util.getActionEventDescription(result.inputs[2].event, this.getStoreValue('communication'), this.getStoreValue('gen')) + '_3';
             this.setStoreValue('event_cnt', result.inputs[2].event_cnt);
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action2 }, {"id": this.getData().id, "device": this.getName(), "action": action2 });
+          } else if (this.getStoreValue('event_cnt') === null) {
+            this.setStoreValue('event_cnt', result.inputs[0].event_cnt);
           }
         }
 
@@ -946,7 +954,7 @@ class ShellyDevice extends Homey.Device {
 
         /* windowcoverings_set */
         if (result["cover:"+channel].hasOwnProperty("current_pos") && this.hasCapability('windowcoverings_set')) {
-          let windowcoverings_set = result["cover:"+channel].current_pos / 100;
+          const windowcoverings_set = this.util.clamp(result["cover:"+channel].current_pos, 0, 100) / 100;
           this.updateCapabilityValue('windowcoverings_set', windowcoverings_set, channel);
         }
 
@@ -1219,7 +1227,7 @@ class ShellyDevice extends Homey.Device {
           break;
         case 'rollerPosition':
         case 'current_pos':
-          let windowcoverings_set = value / 100;
+          let windowcoverings_set = this.util.clamp(value, 0, 100) / 100;
           this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
           this.updateCapabilityValue('windowcoverings_set', windowcoverings_set, channel);
           break;

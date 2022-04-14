@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.9.5",
+  "version": "3.9.6",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -6143,6 +6143,7 @@
       "class": "button",
       "capabilities": [
         "measure_battery",
+        "input_1",
         "rssi"
       ],
       "energy": {

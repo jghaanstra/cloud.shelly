@@ -13,6 +13,7 @@
   ],
   "capabilities": [
     "measure_battery",
+    "input_1",
     "rssi"
   ],
   "energy": {

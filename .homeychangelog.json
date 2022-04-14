@@ -454,5 +454,8 @@
   },
   "3.9.5": {
     "en": "This release adds a generic update all firmware action card for Homey Pro. It also fixes an issue with roller shutters on Homey Cloud and an issue with authentication for multichannel Plus/Pro devices on Homey Pro."
+  },
+  "3.9.6": {
+    "en": "The release fixes the following issues. Fix for out of range errors for GEN1 roller shutter devices on Homey Pro and Homey Cloud. Fix for button events of Shelly Button 1 for Homey Cloud and fix for action events being triggered right after app update or directly after pairing a device on Homey Cloud."
   }
 }
