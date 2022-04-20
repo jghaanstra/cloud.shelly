@@ -457,5 +457,8 @@
   },
   "3.9.6": {
     "en": "The release fixes the following issues. Fix for out of range errors for GEN1 roller shutter devices on Homey Pro and Homey Cloud. Fix for button events of Shelly Button 1 for Homey Cloud and fix for action events being triggered right after app update or directly after pairing a device on Homey Cloud."
+  },
+  "3.9.7": {
+    "en": "Code improvements for upcoming Homey firmware 7.4.x. No functional changes."
   }
 }

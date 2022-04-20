@@ -447,7 +447,8 @@ class ShellyDevice extends Homey.Device {
 
         /* measure_battery */
         if (result.bat.hasOwnProperty("value") && this.hasCapability('measure_battery')) {
-          this.updateCapabilityValue('measure_battery', result.bat.value);
+          const measure_battery = this.util.clamp(result.bat.value, 0, 100);
+          this.updateCapabilityValue('measure_battery', measure_battery);
         }
 
         /* measure_voltage */
@@ -671,7 +672,9 @@ class ShellyDevice extends Homey.Device {
 
         /* tilt */
         if (result.accel.hasOwnProperty("tilt") && this.hasCapability('tilt')) {
-          this.updateCapabilityValue('tilt', result.accel.tilt);
+          if(!isNaN(result.accel.tilt)) {
+            this.updateCapabilityValue('tilt', result.accel.tilt);
+          }
         }
 
       }
@@ -1205,6 +1208,7 @@ class ShellyDevice extends Homey.Device {
           }
           break;
         case 'battery':
+          let measure_battery = this.util.clamp(value, 0, 100);
           this.updateCapabilityValue('measure_battery', value, channel);
           break;
         case 'tC':
@@ -1306,7 +1310,7 @@ class ShellyDevice extends Homey.Device {
           this.updateCapabilityValue('alarm_water', value, channel);
           break;
         case 'tilt':
-          if (value != this.getCapabilityValue('tilt')) {
+          if (!isNaN(value) && value != this.getCapabilityValue('tilt')) {
             this.updateCapabilityValue('tilt', value, channel);
             this.homey.flow.getDeviceTriggerCard('triggerTilt').trigger(this, {'tilt': value}, {});
           }
