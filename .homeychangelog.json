@@ -460,5 +460,8 @@
   },
   "3.9.7": {
     "en": "Code improvements for upcoming Homey firmware 7.4.x. No functional changes."
+  },
+  "3.9.8": {
+    "en": "Code improvements for upcoming Homey firmware 7.4.x. No functional changes."
   }
 }

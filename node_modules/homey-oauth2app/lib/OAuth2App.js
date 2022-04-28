@@ -47,8 +47,8 @@ class OAuth2App extends Homey.App {
     }
 
     if (this.constructor.OAUTH2_CLIENT.API_URL
-     && this.constructor.OAUTH2_CLIENT.TOKEN_URL
-     && this.constructor.OAUTH2_CLIENT.AUTHORIZATION_URL) {
+      && this.constructor.OAUTH2_CLIENT.TOKEN_URL
+      && this.constructor.OAUTH2_CLIENT.AUTHORIZATION_URL) {
       this.setOAuth2Config();
     }
 
@@ -114,12 +114,12 @@ class OAuth2App extends Homey.App {
     }
 
     if (!client
-     || (client !== OAuth2Client && (client.prototype instanceof OAuth2Client) !== true)) {
+      || (client !== OAuth2Client && (client.prototype instanceof OAuth2Client) !== true)) {
       throw new OAuth2Error('Invalid Client, must extend OAuth2Client');
     }
 
     if (!token
-     || (token !== OAuth2Token && (token.prototype instanceof OAuth2Token) !== true)) {
+      || (token !== OAuth2Token && (token.prototype instanceof OAuth2Token) !== true)) {
       throw new OAuth2Error('Invalid Token, must extend OAuth2Token');
     }
 
@@ -299,7 +299,7 @@ class OAuth2App extends Homey.App {
     const savedSessions = this.getSavedOAuth2Sessions();
     const savedSession = savedSessions[sessionId];
     if (savedSession
-     && savedSession.configId === configId) {
+      && savedSession.configId === configId) {
       delete savedSessions[sessionId];
       this.homey.settings.set(SETTINGS_KEY, savedSessions);
 
@@ -326,10 +326,8 @@ class OAuth2App extends Homey.App {
     // create a client from storage if available
     const savedSessions = this.getSavedOAuth2Sessions();
     if (savedSessions && savedSessions[sessionId]) {
-      const {
-        token,
-        title,
-      } = savedSessions[sessionId];
+      let { token } = savedSessions[sessionId];
+      const { title } = savedSessions[sessionId];
 
       const {
         token: Token,
@@ -339,7 +337,10 @@ class OAuth2App extends Homey.App {
         sessionId,
         configId,
       });
-      client.setToken({ token: new Token(token) });
+
+      if (token) token = new Token(token);
+
+      client.setToken({ token });
       client.setTitle({ title });
 
       this.tryCleanSession({
@@ -367,7 +368,9 @@ class OAuth2App extends Homey.App {
     savedSessions[sessionId] = {
       configId,
       title,
-      token: token.toJSON(),
+      token: (token instanceof OAuth2Token)
+        ? token.toJSON()
+        : null,
     };
     this.homey.settings.set(SETTINGS_KEY, savedSessions);
   }

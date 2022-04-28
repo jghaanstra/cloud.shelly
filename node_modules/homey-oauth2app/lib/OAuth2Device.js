@@ -88,6 +88,12 @@ class OAuth2Device extends Homey.Device {
     this.oAuth2Client.on('save', () => {
       this.onOAuth2Saved().catch(this.error);
     });
+    this.oAuth2Client.on('destroy', () => {
+      this.onOAuth2Destroyed().catch(this.error);
+    });
+    this.oAuth2Client.on('expired', () => {
+      this.onOAuth2Expired().catch(this.error);
+    });
 
     await this.onOAuth2Init();
   }
@@ -140,6 +146,24 @@ class OAuth2Device extends Homey.Device {
    */
   async onOAuth2Saved() {
     // Extend me
+  }
+
+  /**
+   * @description
+   * > This method can be extended
+   * @returns {Promise<void>}
+   */
+  async onOAuth2Destroyed() {
+    await this.setUnavailable('The session has been revoked. Please re-authorize.');
+  }
+
+  /**
+   * @description
+   * > This method can be extended
+   * @returns {Promise<void>}
+   */
+  async onOAuth2Expired() {
+    await this.setUnavailable('The session has expired. Please re-authorize.');
   }
 
   /**

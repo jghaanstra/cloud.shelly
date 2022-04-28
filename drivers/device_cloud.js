@@ -14,17 +14,6 @@ class ShellyCloudDevice extends OAuth2Device {
   async bootSequence() {
     try {
 
-      // TODO: REMOVE THIS AFTER SOME RELEASES
-      if (this.getStoreValue('channel') !== 0 && this.hasCapability('rssi')) {
-        this.removeCapability('rssi');
-      }
-
-      // TODO: REMOVE THIS AFTER THE NEXT RELEASE
-      // migrate settings
-      if (this.getSetting('server_address') && (this.getSetting('cloud_server') == null || this.getSetting('cloud_server') == undefined)) {
-        this.setSettings({cloud_server: this.getSetting('server_address')});
-      }
-
       // MAKE SURE THERE IS A VALID OAUTH2CLIENT (ALSO FOR OPENING A WEBSOCKET BASED ON getFirstSavedOAuth2Client)
       if (this.getStoreValue('OAuth2ConfigId') !== null) {
         this.oAuth2Client = this.homey.app.getOAuth2Client({

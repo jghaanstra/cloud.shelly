@@ -91,7 +91,7 @@ class ShellyDevice extends Device {
                   value.forEach((element) => {
                     const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
                     const device = this.driver.getDevice({id: device_id });
-                    this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": this.homey.__(element)});
+                    this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": this.homey.__(element)}).catch(error => { this.error(error) });
                   });
                 } else if (capability !== 'component' && capability !== 'id' && capability !== 'source') {
 
@@ -139,7 +139,7 @@ class ShellyDevice extends Device {
                   action_event = await this.util.getActionEventDescription(event.event, device.getStoreValue('communication'), device.getStoreValue('gen')) + '_' + event_channel;
                 }
 
-                this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": action_event }, {"id": device.getData().id, "device": device.getName(), "action": action_event });
+                this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": action_event }, {"id": device.getData().id, "device": device.getName(), "action": action_event }).catch(error => { this.error(error) });
               } catch (error) {
                 this.error(error);
               }
