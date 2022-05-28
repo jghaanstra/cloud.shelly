@@ -20,6 +20,7 @@
   "pair": [
     {
       "id": "start",
+      "$template": "start",
       "navigation": {
         "next": "login_oauth2"
       }

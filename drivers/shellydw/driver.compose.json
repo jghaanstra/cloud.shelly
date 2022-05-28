@@ -24,6 +24,7 @@
   "pair": [
     {
       "id": "start",
+      "$template": "start",
       "navigation": {
         "next": "list_devices"
       }

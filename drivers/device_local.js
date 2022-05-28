@@ -15,7 +15,8 @@ class ShellyDevice extends Device {
   async onDeleted() {
     try {
       clearInterval(this.pollingInterval);
-      if (this.getStoreValue('communication') === 'websocket') {
+      // TODO: eventually remove this once the firmware for outbound websockets has been rolled out
+      if (this.getStoreValue('communication') === 'websocket' && !this.getStoreValue('wsserver')) {
         clearTimeout(this.pingWsTimeout);
         if (this.getStoreValue('channel') === 0 && this.ws.readyState !== WebSocket.CLOSED) {
           this.ws.close();
@@ -121,7 +122,7 @@ class ShellyDevice extends Device {
               try {
                 let device;
                 let action_event;
-                let channel = event.id;
+                let channel = event.id || 0;
 
                 // get the right device
                 if (channel === 0 || this.hasCapability('input_2')) { // if channel is 0 or device is not a multichannel device in Homey we have the right device

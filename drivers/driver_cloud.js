@@ -28,6 +28,7 @@ class ShellyCloudDriver extends OAuth2Driver {
       const oauth_token = await oAuth2Client.getToken();
       const cloud_details = await jwt_decode(oauth_token.access_token);
       const cloud_server = cloud_details.user_api_url.replace('https://', '');
+      if (cloud_server === null) throw "No valid cloud server address found, please try again.";
       const devices_data = await oAuth2Client.getCloudDevices(cloud_server);
       var devices = [];
       Object.entries(devices_data.data.devices_status).forEach(([key, value]) => {

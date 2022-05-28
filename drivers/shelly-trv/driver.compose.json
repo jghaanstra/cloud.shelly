@@ -21,6 +21,12 @@
     "valve_mode",
     "rssi"
   ],
+  "capabilitiesOptions": {
+  	"target_temperature": {
+  		"min": 5,
+  		"max": 30
+  	}
+  },
   "pair": [
     {
       "id": "start",

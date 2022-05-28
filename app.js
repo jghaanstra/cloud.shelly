@@ -23,6 +23,9 @@ class ShellyApp extends OAuth2App {
     // VARIABLES GENERIC
     this.shellyDevices = [];
 
+    // VARIABLES WEBSOCKET
+    this.wss = null;
+
     // VARIABLES CLOUD
     this.cloudInstall = false;
     this.cloudServer = null;
@@ -30,7 +33,7 @@ class ShellyApp extends OAuth2App {
     this.ws = null;
     this.wsConnected = false;
 
-    // CLOUD: COPEN WEBSOCKET
+    // CLOUD: OPEN CLOUD WEBSOCKET
     this.homey.setTimeout(async () => {
       this.websocketCloudListener();
     }, 2000);
@@ -42,14 +45,22 @@ class ShellyApp extends OAuth2App {
 
     // COAP: START COAP LISTENER FOR RECEIVING STATUS UPDATES
     this.homey.setTimeout(async () => {
-      this.cloudInstall = await this.util.getCloudInstall();
-      if (!this.cloudInstall) {
+      let gen1 = await this.util.getDeviceType('gen1');
+      if (gen1) {
         if (!this.homey.settings.get('general_coap')) {
           this.log('CoAP listener for gen1 LAN devices started.');
           shellies.start();
         } else {
           this.log('CoAP listener not started, the CoAP listener has been disabled from the app settings');
         }
+      }
+    }, 23000);
+
+    // WEBSOCKET: INITIALLY START WEBSOCKET SERVER AND LISTEN FOR GEN2 UPDATES
+    this.homey.setTimeout(async () => {
+      let gen2 = await this.util.getDeviceType('gen2');
+      if (gen2) {
+        this.websocketLocalListener();
       }
     }, 25000);
 
@@ -73,7 +84,8 @@ class ShellyApp extends OAuth2App {
           (state.id == args.shelly.id && args.action.id === 999) ||
           (args.shelly.id === 'all' && state.action == action) ||
           (args.shelly.id === 'all' && args.action.id === 999) ||
-          ((state.id === args.shelly.id || args.shelly === undefined) && (state.action === action || args.action === undefined))
+          ((state.id === args.shelly.id || args.shelly === undefined) && (state.action === action || args.action === undefined)) &&
+          state.action !== 'n/a'
         ) {
           return Promise.resolve(true);
         } else {
@@ -134,13 +146,7 @@ class ShellyApp extends OAuth2App {
               return await this.util.sendCommand('/reboot', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
             }
             case 'websocket': {
-              if (args.device.getStoreValue('channel') === 0) {
-                return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Reboot", "params": {"delay_ms": 0}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
-              } else {
-                const device_id = args.device.getStoreValue('main_device') + '-channel-0';
-                const device = this.driver.getDevice({id: device_id });
-                return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Reboot", "params": {"delay_ms": 0}, "auth": device.getStoreValue('digest_auth_websocket') }));
-              }
+              return await this.util.sendRPCCommand('/rpc/Shelly.Reboot', args.device.getSetting('address'), args.device.getSetting('password'));
             }
             case 'cloud': {
               // cloud does not support these commands
@@ -160,13 +166,7 @@ class ShellyApp extends OAuth2App {
               return await this.util.sendCommand('/ota?update=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
             }
             case 'websocket': {
-              if (args.device.getStoreValue('channel') === 0) {
-                return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Update", "auth": args.device.getStoreValue('digest_auth_websocket') }));
-              } else {
-                const device_id = args.device.getStoreValue('main_device') + '-channel-0';
-                const device = this.driver.getDevice({id: device_id });
-                return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Shelly.Update", "auth": device.getStoreValue('digest_auth_websocket') }));
-              }
+              return await this.util.sendRPCCommand('/rpc/Shelly.Update', args.device.getSetting('address'), args.device.getSetting('password'));
             }
             case 'cloud': {
               // cloud does not support these commands
@@ -187,13 +187,7 @@ class ShellyApp extends OAuth2App {
             }
             case 'websocket': {
               const eco_mode = args.eco_mode === 'false' ? false : true;
-              if (args.device.getStoreValue('channel') === 0) {
-                return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Sys.SetConfig", "params": {"config": {"device": {"eco_mode": eco_mode} } } }));
-              } else {
-                const device_id = args.device.getStoreValue('main_device') + '-channel-0';
-                const device = this.driver.getDevice({id: device_id });
-                return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Sys.SetConfig", "params": {"config": {"device": {"eco_mode": eco_mode} } } }));
-              }
+              return await this.util.sendRPCCommand('/rpc', args.device.getSetting('address'), args.device.getSetting('password'), 'POST', {"id": args.device.getCommandId(), "method": "Sys.SetConfig", "params": {"config": {"device": {"eco_mode": eco_mode} } } });
             }
             case 'cloud': {
               // cloud does not support these commands
@@ -219,7 +213,7 @@ class ShellyApp extends OAuth2App {
                     await this.util.sendCommand(path, device.getSetting('address'), device.getSetting('username'), device.getSetting('password'));
                   }
                   case 'websocket': {
-                    await device.ws.send(JSON.stringify({"id": device.getCommandId(), "method": "Shelly.Update", "params": {"stage": args.stage}, "auth": device.getStoreValue('digest_auth_websocket') }));
+                    await this.util.sendRPCCommand('/rpc/Shelly.Update?stage='+ args.stage, device.getSetting('address'), device.getSetting('password'));
                   }
                   case 'default': {
                     break;
@@ -244,13 +238,7 @@ class ShellyApp extends OAuth2App {
             }
             case 'websocket': {
               const onoff = args.switch === "1" ? true : false;
-              if (args.device.getStoreValue('channel') === 0) {
-                return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "toggle": args.timer}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
-              } else {
-                const device_id = args.device.getStoreValue('main_device') + '-channel-0';
-                const device = this.driver.getDevice({id: device_id });
-                return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "toggle": args.timer}, "auth": device.getStoreValue('digest_auth_websocket') }));
-              }
+              return await this.util.sendRPCCommand('/rpc/Switch.Set?id='+ args.device.getStoreValue('channel') +'&on='+ onoff +'&toggle_after='+ args.timer, args.device.getSetting('address'), args.device.getSetting('password'));
             }
             case 'cloud': {
               const onoff = args.switch === "1" ? true : false;
@@ -272,13 +260,7 @@ class ShellyApp extends OAuth2App {
             }
             case 'websocket': {
               const onoff = args.switch === "1" ? true : false;
-              if (args.device.getStoreValue('channel') === 0) {
-                return await args.device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "transition": args.transition}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
-              } else {
-                const device_id = args.device.getStoreValue('main_device') + '-channel-0';
-                const device = this.driver.getDevice({id: device_id });
-                return await device.ws.send(JSON.stringify({"id": args.device.getCommandId(), "method": "Switch.Set", "params": {"id": args.device.getStoreValue('channel'), "on": onoff, "transition": args.transition}, "auth": device.getStoreValue('digest_auth_websocket') }));
-              }
+              return await this.util.sendRPCCommand('/rpc/Switch.Set?id='+ args.device.getStoreValue('channel') +'&on='+ onoff +'&transition='+ args.transition, args.device.getSetting('address'), args.device.getSetting('password'));
             }
             case 'cloud': {
               const onoff = args.switch === "1" ? true : false;
@@ -336,7 +318,7 @@ class ShellyApp extends OAuth2App {
               return await this.util.sendCommand('/roller/0?go='+ args.direction +'&duration='+ args.move_duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
             }
             case 'websocket': {
-              return await args.device.ws.send(JSON.stringify({"id": this.getCommandId(), "method": gen2_method, "params": {"id": this.getStoreValue('channel'), "duration": args.move_duration}, "auth": args.device.getStoreValue('digest_auth_websocket') }));
+              return await this.util.sendRPCCommand('/rpc/'+ gen2_method +'?id='+ args.device.getStoreValue('channel') +'&duration='+ args.move_duration, args.device.getSetting('address'), args.device.getSetting('password'));
             }
             case 'cloud': {
               return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'roller', command_param: 'go', command_value: args.direction, timer_param: 'duration', timer: args.move_duration, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
@@ -576,7 +558,54 @@ class ShellyApp extends OAuth2App {
     return this.shellyDevices;
   }
 
-  // CLOUD: OPEN WEBSOCKET FOR PROCESSING CLOUD DEVICES STATUS UPDATES
+  // WEBSOCKET: START WEBSOCKET SERVER AND LISTEN FOR GEN2 UPDATES
+  async websocketLocalListener() {
+    try {
+      if (this.wss === null) {
+        this.wss = new WebSocket.Server({ port: 6113 });
+        this.wss.on("connection", (wsserver, req) => {
+
+          wsserver.send('{"jsonrpc":"2.0", "id":1, "src":"wsserver", "method":"Shelly.GetStatus"}');
+
+          wsserver.on("message", async (data) => {
+            const result = JSON.parse(data);
+            if (result.hasOwnProperty('method')) {
+              if (result.method === 'NotifyFullStatus') {
+                const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src));
+                for (const filteredShellyWss of filteredShelliesWss) {
+                  if (result.hasOwnProperty("params")) {
+                    filteredShellyWss.device.parseStatusUpdateGen2(result.params);
+                  }
+                }
+              }
+            }
+          });
+        });
+
+        this.wss.on('error', (error) => {
+          this.error('Websocket Server error:', error);
+          this.wss.close();
+        });
+
+        this.wss.on('close', (code, reason) => {
+          this.error('Websocket Server closed due to reasoncode:', code);
+
+          // retry connection after 500 miliseconds
+          clearTimeout(this.wssReconnectTimeout);
+          this.wssReconnectTimeout = this.homey.setTimeout(async () => {
+            this.websocketLocalListener();
+          }, 500);
+        });
+      }
+    } catch (error) {
+      clearTimeout(this.wssReconnectTimeout);
+      this.wssReconnectTimeout = this.homey.setTimeout(async () => {
+        this.websocketLocalListener();
+      }, 5000);
+    }
+  }
+
+  // CLOUD: OPEN CLOUD WEBSOCKET FOR PROCESSING CLOUD DEVICES STATUS UPDATES
   async websocketCloudListener() {
     try {
       if (this.ws == null || this.ws.readyState === WebSocket.CLOSED) {
@@ -708,6 +737,7 @@ class ShellyApp extends OAuth2App {
     clearTimeout(this.wsPingInterval);
     clearTimeout(this.wsPingTimeout);
     clearTimeout(this.wsReconnectTimeout);
+    clearTimeout(this.wssReconnectTimeout);
     shellies.stop();
     if (this.ws.readyState !== WebSocket.CLOSED) {
       this.ws.close();

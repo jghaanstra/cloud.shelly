@@ -463,5 +463,8 @@
   },
   "3.9.8": {
     "en": "Code improvements for upcoming Homey firmware 7.4.x. No functional changes."
+  },
+  "3.9.9": {
+    "en": "This release fixes handling inputs on multichannel devices on Homey Cloud. It also fixes various capabilities being out of range on both Homey Pro and Homey Cloud. A there is some better error handling when connecting to Shelly Cloud for Homey Cloud."
   }
 }

@@ -18,7 +18,7 @@
     "testing" : "Connectietest succesvol, je kan het Shelly apparaat nu verbinden.",
     "connect": "Verbind",
     "success": "Shelly apparaat succesvol toegevoegd",
-    "startpairing": "Koppel het apparaat eerst met de Shelly smartphone app. Druk daarna op de fysieke knop op in je Shelly sensor of verwijder en herplaats de batterij om het apparaat wakker te maken. Wacht tot de LED aan blijft, de Shelly is dan verbonden met je WiFi netwerk. Klik vervolgens op de volgende knop hieronder.",
+    "startpairing": "Koppel het apparaat eerst met de Shelly smartphone app. Druk daarna op de fysieke knop op in je Shelly sensor of verwijder en herplaats de batterij om het apparaat wakker te maken. Klik vervolgens op de volgende knop hieronder.",
     "startpairingbutton": "Koppel het apparaat eerst met de Shelly smartphone app. Verbind een USB kabel aan de knop om er zeker van te zijn dat deze stroom heeft en verbonden is met WiFi voordat je verder gaat.",
     "startpairingmotion": "Koppel het apparaat eerst met de Shelly smartphone app. Herstart je Shelly bewegingssensor via de webinterface en ga verder met de pairing wizard direct nadat de sensor is herstart.",
     "startpairingtrv": "Koppel het apparaat eerst met de Shelly smartphone app en installeer de radiatorknop volgens de instructies. Druk daarna kort de resetknop naast de USB-C oplader met een pin om er zeker van te zijn dat de TRV uit de slaapstand is. Vervolg daarna de pairing wizard.",

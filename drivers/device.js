@@ -3,6 +3,7 @@
 const Homey = require('homey');
 const Util = require('../lib/util.js');
 const WebSocket = require('ws');
+const semver = require('semver');
 const tinycolor = require("tinycolor2");
 
 class ShellyDevice extends Homey.Device {
@@ -12,10 +13,24 @@ class ShellyDevice extends Homey.Device {
   }
 
   async onAdded() {
+
+    // gen1 + gen2: initially poll the device status
+    this.homey.setTimeout(async () => {
+      this.pollDevice();
+    }, 1000 * this.getStoreValue('channel'));
+
+    // gen1 + gen2: update Shelly collection
     if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
       this.homey.setTimeout(async () => {
         return await this.homey.app.updateShellyCollection();
       }, 2000);
+    }
+
+    // gen2: start websocket server if device has thje server configured during pairing
+    if (this.getStoreValue('wsserver')) {
+      this.homey.setTimeout(async () => {
+        this.homey.app.websocketLocalListener();
+      }, 4000);
     }
   }
 
@@ -26,13 +41,7 @@ class ShellyDevice extends Homey.Device {
     try {
       switch(this.getStoreValue('communication')) {
         case 'websocket': {
-          if (this.getStoreValue('channel') === 0) {
-            return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value }, "auth": this.getStoreValue('digest_auth_websocket') }));
-          } else {
-            const device_id = this.getStoreValue('main_device') + '-channel-0';
-            const device = this.driver.getDevice({id: device_id });
-            return await device.ws.send(JSON.stringify({"id": device.getCommandId(), "method": "Switch.Set", "params": {"id": this.getStoreValue('channel'), "on": value}, "auth": device.getStoreValue('digest_auth_websocket') }));
-          }
+          return await this.util.sendRPCCommand('/rpc/Switch.Set?id='+ this.getStoreValue("channel") +'&on='+ value, this.getSetting('address'), this.getSetting('password'));
         }
         case 'coap': {
           const path = value ? '/relay/'+ this.getStoreValue("channel") +'?turn=on' : '/relay/'+ this.getStoreValue("channel") +'?turn=off';
@@ -83,11 +92,11 @@ class ShellyDevice extends Homey.Device {
         case 'websocket': {
           switch (value) {
             case 'idle':
-              return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.Stop", "params": {"id": this.getStoreValue('channel')}, "auth": this.getStoreValue('digest_auth_websocket') }));
+              return await this.util.sendRPCCommand('/rpc/Cover.Stop?id='+ this.getStoreValue("channel"), this.getSetting('address'), this.getSetting('password'));
             case 'up':
-              return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.Open", "params": {"id": this.getStoreValue('channel')}, "auth": this.getStoreValue('digest_auth_websocket') }));
+              return await this.util.sendRPCCommand('/rpc/Cover.Open?id='+ this.getStoreValue("channel"), this.getSetting('address'), this.getSetting('password'));
             case 'down':
-              return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.Close", "params": {"id": this.getStoreValue('channel')}, "auth": this.getStoreValue('digest_auth_websocket') }));
+              return await this.util.sendRPCCommand('/rpc/Cover.Close?id='+ this.getStoreValue("channel"), this.getSetting('address'), this.getSetting('password'));
             default:
               return Promise.reject('State not recognized ...');
           }
@@ -130,7 +139,7 @@ class ShellyDevice extends Homey.Device {
       this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
       switch(this.getStoreValue('communication')) {
         case 'websocket': {
-          return await this.ws.send(JSON.stringify({"id": this.getCommandId(), "method": "Cover.GoToPosition", "params": {"id": this.getStoreValue('channel'), "pos": Math.round(value*100)}, "auth": this.getStoreValue('digest_auth_websocket') }));
+          return await this.util.sendRPCCommand('/rpc/Cover.GoToPosition?id='+ this.getStoreValue("channel") +'&pos'+ Math.round(value*100), this.getSetting('address'), this.getSetting('password'));
         }
         case 'coap': {
           return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(value*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
@@ -279,47 +288,51 @@ class ShellyDevice extends Homey.Device {
   async bootSequence() {
     try {
       if (this.getStoreValue('communication') === 'websocket') {
-        if (this.getStoreValue('channel') === 0) {
-          this.ws = null;
-          this.connected = false;
-          this.commandId = 0;
-          this.setStoreValue('digest_auth_websocket', '{}');
-          this.connectWebsocket();
+
+        // gen2 devices with no available firmware version
+        // TODO: replace this after some version with a solution that updates the firmware version from parseStatusUpdateGen2() once supported
+        if (this.getStoreValue('fw_version') === null ) {
+          const result = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
+          this.setStoreValue('fw_version', result.ver);
         }
-        this.homey.setTimeout(() => {
-          this.pollDevice();
-        }, this.util.getRandomTimeout(10));
-        if ((this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) && this.getStoreValue('battery') !== true) {
-          this.pollingInterval = this.homey.setInterval(() => {
-            this.pollDevice();
-          }, 60000);
+
+        // gen2 devices with outbound websocket firmware
+        if (this.getStoreValue('wsserver')) {
+          // nothing to do here as the websocket server is started on app.OnInit() or after device.onAdded()
+        // gen2 devices without outbound websocket firwmare
         } else {
+          if (this.getStoreValue('channel') === 0) {
+            // TODO: eventually remove this once the firmware for outbound websockets has been rolled out
+            if (!this.getStoreValue('battery')) {
+              this.ws = null;
+              this.connected = false;
+              this.commandId = 0;
+              this.connectWebsocket();
+            }
+            this.setStoreValue('digest_auth_websocket', '{}');
+          }
+        }
+
+        // all powered gen2: start polling for all non-battery operated gen2 devices
+        if (!this.getStoreValue('battery')) {
           this.pollingInterval = this.homey.setInterval(() => {
             this.pollDevice();
           }, (60000 + (1000 * this.getStoreValue('channel'))));
         }
+
+      // gen1 devices
       } else {
-        if (this.homey.settings.get('general_coap')) { /* CoAP is disabled */
-          if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
-            this.pollingInterval = this.homey.setInterval(() => {
-              this.pollDevice();
-            }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
-          } else {
-            this.pollingInterval = this.homey.setInterval(() => {
-              this.homey.setTimeout(async () => {
-                await this.pollDevice();
-              }, this.getStoreValue('channel') * 1500);
-            }, this.homey.settings.get('general_polling_frequency') * 1000 || 5000);
-          }
-        } else { /* CoAP is enabled */
-          let channel = this.getStoreValue('channel') || 0;
-          this.homey.setTimeout(() => {
-            this.pollDevice();
-          }, this.util.getRandomTimeout(10));
+        if (this.homey.settings.get('general_coap')) { // CoAP is disabled
+          var polling_frequency = this.homey.settings.get('general_polling_frequency') * 1000 || 5000;
+        } else { // CoAP is enabled
+          var polling_frequency = 60000;
+        }
+        if (!this.getStoreValue('battery')) {
           this.pollingInterval = this.homey.setInterval(() => {
             this.pollDevice();
-          }, (60000 + (1000 * channel)));
+          }, (polling_frequency + (1000 * this.getStoreValue('channel'))));
         }
+
       }
     } catch (error) {
       this.error(error);
@@ -372,6 +385,7 @@ class ShellyDevice extends Homey.Device {
   /* generic status updates parser for polling over local HTTP REST API */
   async parseStatusUpdate(result = {}) {
     try {
+      if (!this.getAvailable()) { this.setAvailable(); }
       let channel = this.getStoreValue('channel') || 0;
 
       // RELAYS (onoff)
@@ -487,8 +501,9 @@ class ShellyDevice extends Homey.Device {
         /* valve_position */
         if (result.thermostats[channel].hasOwnProperty("pos") && this.hasCapability('valve_position')) {
           if (result.thermostats[channel].pos != this.getCapabilityValue('valve_position')) {
-            this.updateCapabilityValue('valve_position', result.thermostats[channel].pos);
-            this.homey.flow.getDeviceTriggerCard('triggerValvePosition').trigger(this, {'position': result.thermostats[channel].pos}, {}).catch(error => { this.error(error) });
+            const valve_position = this.util.clamp(result.thermostats[channel].pos, 0, 100);
+            this.updateCapabilityValue('valve_position', valve_position);
+            this.homey.flow.getDeviceTriggerCard('triggerValvePosition').trigger(this, {'position': valve_position}, {}).catch(error => { this.error(error) });
           }
         }
 
@@ -503,7 +518,8 @@ class ShellyDevice extends Homey.Device {
 
         /* target_temperature */
         if (result.thermostats[channel].hasOwnProperty("target_t") && this.hasCapability('measure_temperature')) {
-          this.updateCapabilityValue('target_temperature', result.thermostats[channel].target_t.value);
+          const target_temperature = this.util.clamp(result.thermostats[channel].target_t.value, 4, 35);
+          this.updateCapabilityValue('target_temperature', target_temperature);
         }
 
         /* measure_temperature */
@@ -909,6 +925,16 @@ class ShellyDevice extends Homey.Device {
 
       // firmware update available?
       if (result.hasOwnProperty("update")) {
+
+        const regex = /(?<=\/v)(.*?)(?=\-)/gm;
+        const version_data = regex.exec(result.update.old_version);
+        const fw_version = version_data[0];
+        if (this.getStoreValue('fw_version') === null) {
+          this.setStoreValue('fw_version', fw_version);
+        } else if (semver.gt(fw_version, this.getStoreValue('fw_version'))) {
+          this.setStoreValue('fw_version', fw_version);
+        }
+
         if (result.update.has_update === true && (this.getStoreValue('latest_firmware') !== result.update.new_version)) {
           this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": result.update.new_version}).catch(error => { this.error(error) });
           this.setStoreValue("latest_firmware", result.update.new_version);
@@ -935,13 +961,14 @@ class ShellyDevice extends Homey.Device {
   /* generic status updates parser for polling over local HTTP REST API and Cloud for GEN2 */
   async parseStatusUpdateGen2(result = {}) {
     try {
+      if (!this.getAvailable()) { this.setAvailable(); }
       let channel = this.getStoreValue('channel') || 0;
 
       // SWITCH component
       if (result.hasOwnProperty("switch:"+ channel)) {
 
         /* onoff */
-        if (result["switch:"+channel].hasOwnProperty("output") && this.hasCapability('onoff')) {
+        if (result["switch:"+channel].hasOwnProperty("output")) {
           this.updateCapabilityValue('onoff', result["switch:"+channel].output, channel);
         }
 
@@ -951,7 +978,7 @@ class ShellyDevice extends Homey.Device {
       if (result.hasOwnProperty("cover:"+ channel)) {
 
         /* windowcoverings_state */
-        if (result["cover:"+channel].hasOwnProperty("current_pos") && this.hasCapability('windowcoverings_state')) {
+        if (result["cover:"+channel].hasOwnProperty("state") && this.hasCapability('windowcoverings_state')) {
           this.rollerState(result["cover:"+channel].state);
         }
 
@@ -969,12 +996,12 @@ class ShellyDevice extends Homey.Device {
         let component = result.hasOwnProperty("switch:"+ channel) ? result["switch:"+ channel] : result["cover:"+ channel];
 
         /* measure_power */
-        if (component.hasOwnProperty("apower") && this.hasCapability('measure_power')) {
+        if (component.hasOwnProperty("apower")) {
           this.updateCapabilityValue('measure_power', component.apower, channel);
         }
 
         /* meter_power */
-        if (component.hasOwnProperty("aenergy") && this.hasCapability('meter_power')) {
+        if (component.hasOwnProperty("aenergy")) {
           if (component.aenergy.hasOwnProperty("total")) {
             let meter_power = component.aenergy.total / 1000;
             this.updateCapabilityValue('meter_power', meter_power, channel);
@@ -982,45 +1009,85 @@ class ShellyDevice extends Homey.Device {
         }
 
         /* measure_voltage */
-        if (component.hasOwnProperty("voltage") && this.hasCapability('measure_voltage')) {
+        if (component.hasOwnProperty("voltage")) {
           this.updateCapabilityValue('measure_voltage', component.voltage, channel);
         }
 
         /* measure_current */
-        if (component.hasOwnProperty("current") && this.hasCapability('measure_current')) {
+        if (component.hasOwnProperty("current")) {
           this.updateCapabilityValue('measure_current', component.current, channel);
         }
 
         /* measure_temperature (device temperature) */
-        if (component.hasOwnProperty("temperature") && this.hasCapability('measure_temperature')) {
+        if (component.hasOwnProperty("temperature")) {
           this.updateCapabilityValue('measure_temperature', component.temperature.tC, 0);
         }
 
       }
 
+      // DEVICE POWER
+      if (result.hasOwnProperty("devicepower:"+ channel)) {
+
+        // measure_battery and measure_voltage for battery operated devices
+        if (result["devicepower:"+channel].hasOwnProperty("battery")) {
+
+          /* measure_battery */
+          if (result["devicepower:"+channel].battery.hasOwnProperty("percent")) {
+            this.updateCapabilityValue('measure_battery', result["devicepower:"+channel].battery.percent, channel);
+          }
+
+          /* measure_voltage */
+          if (result["devicepower:"+channel].battery.hasOwnProperty("V")) {
+            this.updateCapabilityValue('measure_voltage', result["devicepower:"+channel].battery.V, channel);
+          }
+
+        }
+
+      }
+
+      // TEMPERATURE
+      if (result.hasOwnProperty("temperature:"+ channel)) {
+        if (result["temperature:"+channel].hasOwnProperty("tC")) {
+          this.updateCapabilityValue('measure_temperature', result["temperature:"+channel].tC, channel);
+        }
+      }
+
+      // HUMIDITY
+      if (result.hasOwnProperty("humidity:"+ channel)) {
+        if (result["humidity:"+channel].hasOwnProperty("rh")) {
+          this.updateCapabilityValue('measure_humidity', result["humidity:"+channel].rh, channel);
+        }
+      }
+
       // INPUTS
-      if (result.hasOwnProperty("input:"+ channel) && this.hasCapability('input_1')) {
-        if (result["input:"+channel].hasOwnProperty("state") && result["input:"+channel].state !== null) {
-          this.updateCapabilityValue('input_1', result["input:"+channel].state, channel);
+      if (result.hasOwnProperty("input:0") && this.hasCapability('input_1')) {
+        if (result["input:0"].hasOwnProperty("state") && result["input:0"].state !== null) {
+          this.updateCapabilityValue('input_1', result["input:0"].state, channel);
         }
       }
 
-      if (result.hasOwnProperty("input:"+ channel) && this.hasCapability('input_2')) {
-        if (result["input:"+channel].hasOwnProperty("state") && result["input:"+channel].state !== null) {
-          this.updateCapabilityValue('input_2', result["input:"+channel].state, channel);
+      if (result.hasOwnProperty("input:1") && this.hasCapability('input_2')) {
+        if (result["input:1"].hasOwnProperty("state") && result["input:1"].state !== null) {
+          this.updateCapabilityValue('input_2', result["input:1"].state, channel);
         }
+      } else if (!this.hasCapability('input_2') && channel !== 0) {
+        this.updateCapabilityValue('input_1', result["input:1"].state, channel);
       }
 
-      if (result.hasOwnProperty("input:"+ channel) && this.hasCapability('input_3')) {
-        if (result["input:"+channel].hasOwnProperty("state") && result["input:"+channel].state !== null) {
-          this.updateCapabilityValue('input_3', result["input:"+channel].state, channel);
+      if (result.hasOwnProperty("input:2") && this.hasCapability('input_3')) {
+        if (result["input:2"].hasOwnProperty("state") && result["input:2"].state !== null) {
+          this.updateCapabilityValue('input_3', result["input:2"].state, channel);
         }
+      } else if (!this.hasCapability('input_3') && channel !== 0) {
+        this.updateCapabilityValue('input_1', result["input:2"].state, channel);
       }
 
-      if (result.hasOwnProperty("input:"+ channel) && this.hasCapability('input_4')) {
-        if (result["input:"+channel].hasOwnProperty("state") && result["input:"+channel].state !== null) {
-          this.updateCapabilityValue('input_4', result["input:"+channel].state, channel);
+      if (result.hasOwnProperty("input:3") && this.hasCapability('input_4')) {
+        if (result["input:3"].hasOwnProperty("state") && result["input:3"].state !== null) {
+          this.updateCapabilityValue('input_4', result["input:3"].state, channel);
         }
+      } else if (!this.hasCapability('input_4') && channel !== 0) {
+        this.updateCapabilityValue('input_1', result["input:3"].state, channel);
       }
 
       // ACTION EVENTS (for GEN2 cloud devices only)
@@ -1093,7 +1160,7 @@ class ShellyDevice extends Homey.Device {
       if (result.hasOwnProperty("wifi")) {
 
         /* rssi */
-        if (result.wifi.hasOwnProperty("rssi") && this.hasCapability("rssi")) {
+        if (result.wifi.hasOwnProperty("rssi")) {
           this.updateCapabilityValue('rssi', result.wifi.rssi);
         }
 
@@ -1114,6 +1181,8 @@ class ShellyDevice extends Homey.Device {
       if (!this.getStoreValue('battery')) {
         this.setUnavailable(this.homey.__('device.unreachable') + error.message);
         this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.message}).catch(error => { this.error(error) });
+        this.error(error);
+      } else {
         this.error(error);
       }
     }
@@ -1218,11 +1287,13 @@ class ShellyDevice extends Homey.Device {
           this.updateCapabilityValue('measure_temperature', value, channel);
           break;
         case 'targetTemperature':
-          this.updateCapabilityValue('target_temperature', value, channel);
+          let target_temperature = this.util.clamp(value, 4, 35);
+          this.updateCapabilityValue('target_temperature', target_temperature, channel);
           break;
         case 'valvePosition':
           if (value != this.getCapabilityValue('valve_position')) {
-            this.updateCapabilityValue('valve_position', value, channel);
+            let valve_position = this.util.clamp(value, 0, 100);
+            this.updateCapabilityValue('valve_position', valve_position, channel);
             this.homey.flow.getDeviceTriggerCard('triggerValvePosition').trigger(this, {'position': value}, {}).catch(error => { this.error(error) });
           }
           break;
@@ -1518,6 +1589,7 @@ class ShellyDevice extends Homey.Device {
     try {
       switch(value) {
         case 'stop':
+        case 'stopped':
           var windowcoverings_state = 'idle'
           break;
         case 'open':
@@ -1530,7 +1602,7 @@ class ShellyDevice extends Homey.Device {
           var windowcoverings_state = 'down';
           break;
         default:
-          var windowcoverings_state = value;
+          break;
       }
       if (windowcoverings_state !== 'idle' && windowcoverings_state !== this.getStoreValue('last_action')) {
         this.setStoreValue('last_action', windowcoverings_state);

@@ -24,14 +24,19 @@ class ShellyCloudDevice extends OAuth2Device {
 
       // update initial device status on init
       this.homey.setTimeout(async () => {
-        const device_data = await this.oAuth2Client.getCloudDevices(this.getSetting('cloud_server'));
-        const device_id = this.getSetting('cloud_device_id').toString(16);
-        if (this.getStoreValue('gen') === 'gen1') {
-          this.parseStatusUpdate(device_data.data.devices_status[device_id])
-        } else if (this.getStoreValue('gen') === 'gen2') {
-          this.parseStatusUpdateGen2(device_data.data.devices_status[device_id])
+        try {
+          if (this.getSetting('cloud_server') === null) throw "No valid cloud server address found, skipping initial device update.";
+          const device_data = await this.oAuth2Client.getCloudDevices(this.getSetting('cloud_server'));
+          const device_id = this.getSetting('cloud_device_id').toString(16);
+          if (this.getStoreValue('gen') === 'gen1') {
+            this.parseStatusUpdate(device_data.data.devices_status[device_id])
+          } else if (this.getStoreValue('gen') === 'gen2') {
+            this.parseStatusUpdateGen2(device_data.data.devices_status[device_id])
+          }
+          this.homey.app.websocketCloudListener();
+        } catch (error) {
+          this.error(error);
         }
-        this.homey.app.websocketCloudListener();
       }, this.util.getRandomTimeout(10));
     } catch (error) {
       this.error(error);
