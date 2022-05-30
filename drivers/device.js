@@ -342,9 +342,9 @@ class ShellyDevice extends Homey.Device {
   /* updating capabilities */
   async updateCapabilityValue(capability, value, channel = 0) {
     try {
-      if (channel === 0) {
+      if (Number(channel) === 0) {
         if (this.hasCapability(capability)) {
-          if (value != this.getCapabilityValue(capability)) {
+          if (value !== this.getCapabilityValue(capability) && value !== null) {
             this.setCapabilityValue(capability, value);
           }
         } else {
@@ -353,7 +353,13 @@ class ShellyDevice extends Homey.Device {
       } else {
         const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
         const device = this.driver.getDevice({id: device_id });
-        device.updateCapabilityValue(capability, value);
+        if (device.hasCapability(capability)) {
+          if (value !== device.getCapabilityValue(capability) && value !== null) {
+            device.setCapabilityValue(capability, value);
+          }
+        } else {
+          device.addCapability(capability);
+        }
       }
     } catch (error) {
       this.error('Trying to update capability', capability, 'with value', value, 'for device', this.getData().id);
@@ -926,13 +932,17 @@ class ShellyDevice extends Homey.Device {
       // firmware update available?
       if (result.hasOwnProperty("update")) {
 
-        const regex = /(?<=\/v)(.*?)(?=\-)/gm;
-        const version_data = regex.exec(result.update.old_version);
-        const fw_version = version_data[0];
-        if (this.getStoreValue('fw_version') === null) {
-          this.setStoreValue('fw_version', fw_version);
-        } else if (semver.gt(fw_version, this.getStoreValue('fw_version'))) {
-          this.setStoreValue('fw_version', fw_version);
+        if (result.update.hasOwnProperty("old_version")) {
+          const regex = /(?<=\/v)(.*?)(?=\-)/gm;
+          const version_data = regex.exec(result.update.old_version);
+          if (version_data !== null) {
+            const fw_version = version_data[0];
+            if (this.getStoreValue('fw_version') === null) {
+              this.setStoreValue('fw_version', fw_version);
+            } else if (semver.gt(fw_version, this.getStoreValue('fw_version'))) {
+              this.setStoreValue('fw_version', fw_version);
+            }
+          }
         }
 
         if (result.update.has_update === true && (this.getStoreValue('latest_firmware') !== result.update.new_version)) {

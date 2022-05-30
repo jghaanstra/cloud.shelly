@@ -466,5 +466,8 @@
   },
   "3.9.9": {
     "en": "This release fixes handling inputs on multichannel devices on Homey Cloud. It also fixes various capabilities being out of range on both Homey Pro and Homey Cloud. A there is some better error handling when connecting to Shelly Cloud for Homey Cloud."
+  },
+  "3.9.10": {
+    "en": "Small bugfixes causing some devices to appear as offline after the latest release."
   }
 }
