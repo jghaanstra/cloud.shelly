@@ -2,7 +2,6 @@
 
 const Homey = require('homey');
 const Util = require('../lib/util.js');
-const semver = require('semver');
 
 class ShellyDriver extends Homey.Driver {
 
@@ -61,15 +60,11 @@ class ShellyDriver extends Homey.Driver {
             var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
             var auth = result.auth;
             var type = result.type;
-            const regex = /(?<=\/v)(.*?)(?=\-)/gm;
-            const version_data = regex.exec(result.fw);
-            var fw_version = version_data[0];
             break;
           case 'gen2':
             var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
             var auth = result.auth_en;
             var type = result.model;
-            var fw_version = result.ver;
             break;
         }
 
@@ -92,8 +87,7 @@ class ShellyDriver extends Homey.Driver {
             battery: this.config.battery,
             sdk: 3,
             gen: this.config.gen,
-            communication: this.config.communication,
-            fw_version: fw_version
+            communication: this.config.communication
           },
           icon: deviceIcon
         }
@@ -114,15 +108,11 @@ class ShellyDriver extends Homey.Driver {
             var result = await this.util.sendCommand('/settings', data.address, data.username, data.password);
             var id = result.device.hostname;
             var type = result.device.type;
-            const regex = /(?<=\/v)(.*?)(?=\-)/gm;
-            const version_data = regex.exec(result.fw);
-            var fw_version = version_data[0];
             break;
           case 'gen2':
             var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', data.address, '', '');
             var id = result.id;
             var type = result.model;
-            var fw_version = result.ver;
             break;
         }
 
@@ -146,8 +136,7 @@ class ShellyDriver extends Homey.Driver {
               battery: this.config.battery,
               sdk: 3,
               gen: this.config.gen,
-              communication: this.config.communication,
-              fw_version: fw_version
+              communication: this.config.communication
             }
           }
           return Promise.resolve(deviceArray);
@@ -176,9 +165,11 @@ class ShellyDriver extends Homey.Driver {
           const unicast = await this.util.setUnicast(deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
           deviceArray.store.unicast = true;
           return Promise.resolve({device: deviceArray, config: this.config});
-        } else if (deviceArray.store.communication === 'websocket' && (semver.gt(deviceArray.store.fw_version, '0.11.0') || deviceArray.store.battery === true)) { // TODO: make this match the new firmware version that supports outbound websockets
-          const wsserver = await this.util.setWsServer(deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
-          deviceArray.store.wsserver = true;
+        } else if (deviceArray.store.communication === 'websocket') { // TODO: make this match the new firmware version that supports outbound websockets
+          const result = await this.util.setWsServer(deviceArray.settings.address, deviceArray.settings.password);
+          if (result === 'OK') {
+            deviceArray.store.wsserver = true;
+          }
           return Promise.resolve({device: deviceArray, config: this.config});
         } else {
           return Promise.resolve({device: deviceArray, config: this.config});

@@ -469,5 +469,8 @@
   },
   "3.9.10": {
     "en": "Small bugfixes causing some devices to appear as offline after the latest release."
+  },
+  "3.9.11": {
+    "en": "This release fixes two issues. There is a fix for multichannel Plus and Pro devices on Homey Cloud and Homey Pro and a fix for some devices appearing as offline due to an error in status updates on Homey Pro."
   }
 }

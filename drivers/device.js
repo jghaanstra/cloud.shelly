@@ -289,10 +289,10 @@ class ShellyDevice extends Homey.Device {
     try {
       if (this.getStoreValue('communication') === 'websocket') {
 
-        // gen2 devices with no available firmware version
-        // TODO: replace this after some version with a solution that updates the firmware version from parseStatusUpdateGen2() once supported
-        if (this.getStoreValue('fw_version') === null ) {
+        // gen 2 device init for non battery powered devices
+        if (!this.getStoreValue('battery')) {
           const result = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
+          this.setStoreValue('type', result.model);
           this.setStoreValue('fw_version', result.ver);
         }
 
@@ -322,6 +322,19 @@ class ShellyDevice extends Homey.Device {
 
       // gen1 devices
       } else {
+
+        // gen 1 device init for non battery powered devices
+        if (!this.getStoreValue('battery')) {
+          const result = await this.util.sendCommand('/shelly', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          this.setStoreValue('type', result.type);
+          const regex = /(?<=\/v)(.*?)(?=\-)/gm;
+          const version_data = regex.exec(result.fw);
+          if (version_data !== null) {
+            this.setStoreValue('fw_version', version_data[0]);
+          }
+        }
+
+        // gen 1 polling
         if (this.homey.settings.get('general_coap')) { // CoAP is disabled
           var polling_frequency = this.homey.settings.get('general_polling_frequency') * 1000 || 5000;
         } else { // CoAP is enabled
@@ -344,7 +357,7 @@ class ShellyDevice extends Homey.Device {
     try {
       if (Number(channel) === 0) {
         if (this.hasCapability(capability)) {
-          if (value !== this.getCapabilityValue(capability) && value !== null) {
+          if (value !== this.getCapabilityValue(capability) && value !== null && value !== 'null') {
             this.setCapabilityValue(capability, value);
           }
         } else {
@@ -371,11 +384,11 @@ class ShellyDevice extends Homey.Device {
   async pollDevice() {
     try {
       if (this.getStoreValue('communication') === 'websocket') {
-        let result = await this.util.sendRPCCommand('/rpc/Shelly.GetStatus', this.getSetting('address'), this.getSetting('password'));
+        const result = await this.util.sendRPCCommand('/rpc/Shelly.GetStatus', this.getSetting('address'), this.getSetting('password'));
         if (!this.getAvailable()) { this.setAvailable(); }
         this.parseStatusUpdateGen2(result);
       } else {
-        let result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        const result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         if (!this.getAvailable()) { this.setAvailable(); }
         this.parseStatusUpdate(result);
       }
@@ -932,19 +945,6 @@ class ShellyDevice extends Homey.Device {
       // firmware update available?
       if (result.hasOwnProperty("update")) {
 
-        if (result.update.hasOwnProperty("old_version")) {
-          const regex = /(?<=\/v)(.*?)(?=\-)/gm;
-          const version_data = regex.exec(result.update.old_version);
-          if (version_data !== null) {
-            const fw_version = version_data[0];
-            if (this.getStoreValue('fw_version') === null) {
-              this.setStoreValue('fw_version', fw_version);
-            } else if (semver.gt(fw_version, this.getStoreValue('fw_version'))) {
-              this.setStoreValue('fw_version', fw_version);
-            }
-          }
-        }
-
         if (result.update.has_update === true && (this.getStoreValue('latest_firmware') !== result.update.new_version)) {
           this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": result.update.new_version}).catch(error => { this.error(error) });
           this.setStoreValue("latest_firmware", result.update.new_version);
@@ -1076,28 +1076,34 @@ class ShellyDevice extends Homey.Device {
         }
       }
 
-      if (result.hasOwnProperty("input:1") && this.hasCapability('input_2')) {
+      if (result.hasOwnProperty("input:1")) {
         if (result["input:1"].hasOwnProperty("state") && result["input:1"].state !== null) {
-          this.updateCapabilityValue('input_2', result["input:1"].state, channel);
+          if (this.hasCapability('input_2') && channel === 0) {
+            this.updateCapabilityValue('input_2', result["input:1"].state, channel);
+          } else if (this.hasCapability('input_1') && channel === 1) {
+            this.updateCapabilityValue('input_1', result["input:1"].state, channel);
+          }
         }
-      } else if (!this.hasCapability('input_2') && channel !== 0) {
-        this.updateCapabilityValue('input_1', result["input:1"].state, channel);
       }
 
-      if (result.hasOwnProperty("input:2") && this.hasCapability('input_3')) {
+      if (result.hasOwnProperty("input:2")) {
         if (result["input:2"].hasOwnProperty("state") && result["input:2"].state !== null) {
-          this.updateCapabilityValue('input_3', result["input:2"].state, channel);
+          if (this.hasCapability('input_3') && channel === 0) {
+            this.updateCapabilityValue('input_3', result["input:2"].state, channel);
+          } else if (this.hasCapability('input_1') && channel === 2) {
+            this.updateCapabilityValue('input_1', result["input:2"].state, channel);
+          }
         }
-      } else if (!this.hasCapability('input_3') && channel !== 0) {
-        this.updateCapabilityValue('input_1', result["input:2"].state, channel);
       }
 
-      if (result.hasOwnProperty("input:3") && this.hasCapability('input_4')) {
+      if (result.hasOwnProperty("input:3")) {
         if (result["input:3"].hasOwnProperty("state") && result["input:3"].state !== null) {
-          this.updateCapabilityValue('input_4', result["input:3"].state, channel);
+          if (this.hasCapability('input_4') && channel === 0) {
+            this.updateCapabilityValue('input_4', result["input:3"].state, channel);
+          } else if (this.hasCapability('input_1') && channel === 3) {
+            this.updateCapabilityValue('input_1', result["input:3"].state, channel);
+          }
         }
-      } else if (!this.hasCapability('input_4') && channel !== 0) {
-        this.updateCapabilityValue('input_1', result["input:3"].state, channel);
       }
 
       // ACTION EVENTS (for GEN2 cloud devices only)

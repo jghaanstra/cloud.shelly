@@ -563,19 +563,31 @@ class ShellyApp extends OAuth2App {
     try {
       if (this.wss === null) {
         this.wss = new WebSocket.Server({ port: 6113 });
+        this.log('Websocket server for gen2 devices with outbound websockets started');
         this.wss.on("connection", (wsserver, req) => {
 
-          wsserver.send('{"jsonrpc":"2.0", "id":1, "src":"wsserver", "method":"Shelly.GetStatus"}');
+          wsserver.send('{"jsonrpc":"2.0", "id":1, "src":"wsserver-getdeviceinfo", "method":"Shelly.GetDeviceInfo"}');
 
           wsserver.on("message", async (data) => {
             const result = JSON.parse(data);
             if (result.hasOwnProperty('method')) {
-              if (result.method === 'NotifyFullStatus') {
+              if (result.method === 'NotifyFullStatus') { // parse full status updates
+                //TODO: am I getting an inital status update?
+                console.log(result);
                 const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src));
                 for (const filteredShellyWss of filteredShelliesWss) {
                   if (result.hasOwnProperty("params")) {
+                    console.log(result.params);
                     filteredShellyWss.device.parseStatusUpdateGen2(result.params);
                   }
+                }
+              }
+            } else if (result.dst === 'wsserver-getdeviceinfo') { // parse device info request after each (re)connect
+              const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src));
+              for (const filteredShellyWss of filteredShelliesWss) {
+                if (result.hasOwnProperty("result")) {
+                  filteredShellyWss.device.setStoreValue('type', result.result.model);
+                  filteredShellyWss.device.setStoreValue('fw_version', result.result.ver);
                 }
               }
             }
