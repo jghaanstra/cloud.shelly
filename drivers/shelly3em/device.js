@@ -14,8 +14,6 @@ class Shelly3EmDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned');
     this.homey.flow.getDeviceTriggerCard('triggerMeterPowerFactor');
 
-    this.setAvailable();
-
     this.bootSequence();
 
     // CAPABILITY LISTENERS

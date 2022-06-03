@@ -13,8 +13,6 @@ class ShellydwDevice extends Device {
 
     this.homey.flow.getDeviceTriggerCard('triggerTilt');
 
-    this.setAvailable();
-
     this.bootSequence();
 
   }

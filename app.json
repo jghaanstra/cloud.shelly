@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.9.11",
+  "version": "3.9.12",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -900,10 +900,6 @@
         "title": {
           "en": "Input 4 !{{is|isn't}} on",
           "nl": "Input 4 !{{is|is niet}} aan"
-        },
-        "titleFormatted": {
-          "en": "Input 4 !{{is|isn't}} on for [[device]]",
-          "nl": "Input 4 !{{is|is niet}} aan voor [[device]]"
         },
         "args": [
           {

@@ -37,8 +37,6 @@ class Shellyi4DeviceCloud extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput4Off');
     this.homey.flow.getDeviceTriggerCard('triggerInput4Changed');
 
-    this.setAvailable();
-
     this.bootSequence();
 
   }

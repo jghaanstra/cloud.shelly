@@ -12,9 +12,7 @@ class ShellyEmDevice extends Device {
     this.callbacks = [];
 
     this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned');
-
-    this.setAvailable();
-
+    
     this.bootSequence();
 
     // CAPABILITY LISTENERS

@@ -17,11 +17,13 @@ class ShellyDevice extends Device {
       clearInterval(this.pollingInterval);
       // TODO: eventually remove this once the firmware for outbound websockets has been rolled out
       if (this.getStoreValue('communication') === 'websocket' && !this.getStoreValue('wsserver')) {
-        clearTimeout(this.pingWsTimeout);
         if (this.getStoreValue('channel') === 0 && this.ws.readyState !== WebSocket.CLOSED) {
           this.ws.close();
         }
-        clearTimeout(this.reconnectWsTimeout);
+        this.homey.setTimeout(() => {
+          clearTimeout(this.pingWsTimeout);
+          clearTimeout(this.reconnectWsTimeout);
+        }, 2000);
       }
       if (this.getStoreValue('communication') === 'coap') {
         await this.util.sendCommand('/settings?coiot_enable=false', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));

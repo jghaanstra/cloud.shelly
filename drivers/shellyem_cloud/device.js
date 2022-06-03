@@ -13,8 +13,6 @@ class ShellyEmCloudDevice extends Device {
 
     this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned');
 
-    this.setAvailable();
-
     this.bootSequence();
 
     // CAPABILITY LISTENERS

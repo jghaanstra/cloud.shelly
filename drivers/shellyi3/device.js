@@ -40,8 +40,6 @@ class Shellyi3Device extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput3Off');
     this.homey.flow.getDeviceTriggerCard('triggerInput3Changed');
 
-    this.setAvailable();
-
     this.bootSequence();
 
   }

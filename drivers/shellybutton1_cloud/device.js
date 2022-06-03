@@ -16,8 +16,6 @@ class ShellyButton1CloudDevice extends Device {
       'longpush'
     ];
 
-    this.setAvailable();
-
     this.bootSequence();
 
   }

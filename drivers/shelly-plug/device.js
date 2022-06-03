@@ -11,8 +11,6 @@ class ShellyPlugDevice extends Device {
 
     this.callbacks = [];
 
-    this.setAvailable();
-
     this.bootSequence();
 
     // CAPABILITY LISTENERS

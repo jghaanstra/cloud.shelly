@@ -11,8 +11,6 @@ class ShellyhtDevice extends Device {
 
     this.callbacks = [];
 
-    this.setAvailable();
-
     this.bootSequence();
 
   }

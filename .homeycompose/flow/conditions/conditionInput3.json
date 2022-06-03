@@ -4,10 +4,6 @@
     "en": "Input 4 !{{is|isn't}} on",
     "nl": "Input 4 !{{is|is niet}} aan"
   },
-  "titleFormatted": {
-    "en": "Input 4 !{{is|isn't}} on for [[device]]",
-    "nl": "Input 4 !{{is|is niet}} aan voor [[device]]"
-  },
   "args": [
     {
       "name": "device",

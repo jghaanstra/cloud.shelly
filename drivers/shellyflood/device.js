@@ -11,8 +11,6 @@ class ShellyFloodDevice extends Device {
 
     this.callbacks = [];
 
-    this.setAvailable();
-
     this.bootSequence();
 
   }

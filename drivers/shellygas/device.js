@@ -13,8 +13,6 @@ class ShellyGasDevice extends Device {
 
     this.homey.flow.getDeviceTriggerCard('triggerGasConcentration');
 
-    this.setAvailable();
-
     this.bootSequence();
 
   }

@@ -23,8 +23,6 @@ class ShellyDimmerCloudDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput2Off');
     this.homey.flow.getDeviceTriggerCard('triggerInput2Changed');
 
-    this.setAvailable();
-
     this.bootSequence();
 
     // CAPABILITY LISTENERS

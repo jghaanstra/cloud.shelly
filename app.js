@@ -34,14 +34,14 @@ class ShellyApp extends OAuth2App {
     this.wsConnected = false;
 
     // CLOUD: OPEN CLOUD WEBSOCKET
-    this.homey.setTimeout(async () => {
+    this.homey.setTimeout(() => {
       this.websocketCloudListener();
     }, 2000);
 
     // COAP, CLOUD & GEN2 WEBSOCKETS: INITIALLY UPDATE THE SHELLY COLLECTION FOR MATCHING INCOMING STATUS UPDATES
-    this.homey.setTimeout(async () => {
-      await this.updateShellyCollection();
-    }, 20000);
+    this.homey.setTimeout(() => {
+      this.updateShellyCollection();
+    }, 15000);
 
     // COAP: START COAP LISTENER FOR RECEIVING STATUS UPDATES
     this.homey.setTimeout(async () => {
@@ -53,14 +53,18 @@ class ShellyApp extends OAuth2App {
         } else {
           this.log('CoAP listener not started, the CoAP listener has been disabled from the app settings');
         }
+      } else {
+        this.log('CoAP listener not started as no gen 1 devices where found during app init');
       }
-    }, 23000);
+    }, 25000);
 
     // WEBSOCKET: INITIALLY START WEBSOCKET SERVER AND LISTEN FOR GEN2 UPDATES
     this.homey.setTimeout(async () => {
       let gen2 = await this.util.getDeviceType('gen2');
       if (gen2) {
         this.websocketLocalListener();
+      } else {
+        this.log('Websocket server for gen2 devices with outbound websockets not started as no gen2 devices where found during app init');
       }
     }, 25000);
 
@@ -472,7 +476,7 @@ class ShellyApp extends OAuth2App {
 
       device.on('change', (prop, newValue, oldValue) => {
         try {
-          //this.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'with IP address', device.host);
+          //console.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'with IP address', device.host);
           if (this.shellyDevices.length > 0) {
             const filteredShelliesCoap = this.shellyDevices.filter(shelly => shelly.id.includes(device.id)); // filter total device collection based on incoming device id
             let coap_device_id;
@@ -572,12 +576,9 @@ class ShellyApp extends OAuth2App {
             const result = JSON.parse(data);
             if (result.hasOwnProperty('method')) {
               if (result.method === 'NotifyFullStatus') { // parse full status updates
-                //TODO: am I getting an inital status update?
-                console.log(result);
                 const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src));
                 for (const filteredShellyWss of filteredShelliesWss) {
                   if (result.hasOwnProperty("params")) {
-                    console.log(result.params);
                     filteredShellyWss.device.parseStatusUpdateGen2(result.params);
                   }
                 }
@@ -630,7 +631,7 @@ class ShellyApp extends OAuth2App {
         this.ws = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ this.cloudAccessToken, {perMessageDeflate: false});
 
         this.ws.on('open', () => {
-          this.log('Websocket for cloud devices opened');
+          this.log('Cloud websocket for cloud devices opened');
           this.wsConnected = true;
 
           // start sending pings every 2 minutes to check the connection status
@@ -678,12 +679,12 @@ class ShellyApp extends OAuth2App {
         });
 
         this.ws.on('error', (error) => {
-          this.error('Websocket error:', error);
+          this.error('Cloud websocket error:', error);
           this.ws.close();
         });
 
         this.ws.on('close', (code, reason) => {
-          this.error('Websocket closed due to reasoncode:', code);
+          this.error('Cloud websocket closed due to reasoncode:', code);
           clearTimeout(this.wsPingInterval);
           this.wsConnected = false;
 
@@ -703,6 +704,8 @@ class ShellyApp extends OAuth2App {
             this.websocketCloudListener();
           }
         }, 5000);
+      } else {
+        this.log('Cloud websocket for cloud devices not opened as no oauth2 clients (cloud connected device) where found');
       }
     }
   }

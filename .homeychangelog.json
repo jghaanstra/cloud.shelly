@@ -472,5 +472,8 @@
   },
   "3.9.11": {
     "en": "This release fixes two issues. There is a fix for multichannel Plus and Pro devices on Homey Cloud and Homey Pro and a fix for some devices appearing as offline due to an error in status updates on Homey Pro."
+  },
+  "3.9.12": {
+    "en": "This release fixes the following bugs. Fix for a bug with the Shelly Motion sensor not updating on Homey Pro. Fix for a bug where battery operated devices would not come online after an app update for Homey Pro and Homey Cloud. And fix for a bug for setting the roller shutter position on Plus devices for Homey Pro."
   }
 }

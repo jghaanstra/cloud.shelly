@@ -17,8 +17,6 @@ class ShellyRGBW2WhiteCloudDevice extends Device {
 
     this.setAvailable();
 
-    this.bootSequence();
-
     // CAPABILITY LISTENERS
     this.registerCapabilityListener("onoff", this.onCapabilityOnoffLight.bind(this));
     this.registerCapabilityListener("dim", this.onCapabilityDim.bind(this));

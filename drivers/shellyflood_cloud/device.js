@@ -11,8 +11,6 @@ class ShellyFloodCloudDevice extends Device {
 
     this.callbacks = [];
 
-    this.setAvailable();
-
     this.bootSequence();
 
   }

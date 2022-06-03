@@ -20,9 +20,6 @@ class ShellyPro2PMDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Changed');
-
-    this.setAvailable();
-
     this.bootSequence();
 
     // CAPABILITY LISTENERS

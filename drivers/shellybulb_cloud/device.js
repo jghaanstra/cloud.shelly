@@ -14,8 +14,6 @@ class ShellyBulbCloudDevice extends Device {
 
     this.setAvailable();
 
-    this.bootSequence();
-
     // CAPABILITY LISTENERS
     this.registerCapabilityListener("onoff", this.onCapabilityOnoffLight.bind(this));
 

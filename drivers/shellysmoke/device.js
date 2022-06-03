@@ -11,8 +11,6 @@ class ShellySmokeDevice extends Device {
 
     this.callbacks = [];
 
-    this.setAvailable();
-
     this.bootSequence();
 
   }

@@ -13,8 +13,6 @@ class ShellyTRVDevice extends Device {
 
     this.homey.flow.getDeviceTriggerCard('triggerValvePosition');
 
-    this.setAvailable();
-
     this.bootSequence();
 
     // CAPABILITY LISTENERS

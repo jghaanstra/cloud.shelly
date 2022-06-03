@@ -19,8 +19,6 @@ class ShellyRGBW2ColorCloudDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Changed');
 
-    this.setAvailable();
-
     this.bootSequence();
 
     // CAPABILITY LISTENERS

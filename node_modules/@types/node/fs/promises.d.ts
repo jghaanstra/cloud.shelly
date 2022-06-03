@@ -11,6 +11,7 @@
 declare module 'fs/promises' {
     import { Abortable } from 'node:events';
     import { Stream } from 'node:stream';
+    import { ReadableStream } from 'node:stream/web';
     import {
         Stats,
         BigIntStats,
@@ -42,11 +43,11 @@ declare module 'fs/promises' {
         mode?: Mode | undefined;
         flag?: OpenMode | undefined;
     }
-    interface FileReadResult<T extends ArrayBufferView> {
+    interface FileReadResult<T extends NodeJS.ArrayBufferView> {
         bytesRead: number;
         buffer: T;
     }
-    interface FileReadOptions<T extends ArrayBufferView = Buffer> {
+    interface FileReadOptions<T extends NodeJS.ArrayBufferView = Buffer> {
         /**
          * @default `Buffer.alloc(0xffff)`
          */
@@ -207,8 +208,31 @@ declare module 'fs/promises' {
          * integer, the current file position will remain unchanged.
          * @return Fulfills upon success with an object with two properties:
          */
-        read<T extends ArrayBufferView>(buffer: T, offset?: number | null, length?: number | null, position?: number | null): Promise<FileReadResult<T>>;
-        read<T extends ArrayBufferView = Buffer>(options?: FileReadOptions<T>): Promise<FileReadResult<T>>;
+        read<T extends NodeJS.ArrayBufferView>(buffer: T, offset?: number | null, length?: number | null, position?: number | null): Promise<FileReadResult<T>>;
+        read<T extends NodeJS.ArrayBufferView = Buffer>(options?: FileReadOptions<T>): Promise<FileReadResult<T>>;
+        /**
+         * Returns a `ReadableStream` that may be used to read the files data.
+         *
+         * An error will be thrown if this method is called more than once or is called after the `FileHandle` is closed
+         * or closing.
+         *
+         * ```js
+         * import { open } from 'node:fs/promises';
+         *
+         * const file = await open('./some/file/to/read');
+         *
+         * for await (const chunk of file.readableWebStream())
+         *   console.log(chunk);
+         *
+         * await file.close();
+         * ```
+         *
+         * While the `ReadableStream` will read the file to completion, it will not close the `FileHandle` automatically. User code must still call the `fileHandle.close()` method.
+         *
+         * @since v17.0.0
+         * @experimental
+         */
+        readableWebStream(): ReadableStream;
         /**
          * Asynchronously reads the entire contents of a file.
          *
@@ -487,7 +511,7 @@ declare module 'fs/promises' {
      * @param [mode=0o666] Sets the file mode (permission and sticky bits) if the file is created.
      * @return Fulfills with a {FileHandle} object.
      */
-    function open(path: PathLike, flags: string | number, mode?: Mode): Promise<FileHandle>;
+    function open(path: PathLike, flags?: string | number, mode?: Mode): Promise<FileHandle>;
     /**
      * Renames `oldPath` to `newPath`.
      * @since v10.0.0
@@ -1043,7 +1067,7 @@ declare module 'fs/promises' {
      * disappears in the directory.
      *
      * All the `caveats` for `fs.watch()` also apply to `fsPromises.watch()`.
-     * @since v15.9.0
+     * @since v15.9.0, v14.18.0
      * @return of objects with the properties:
      */
     function watch(

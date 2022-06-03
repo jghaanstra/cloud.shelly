@@ -16,8 +16,6 @@ class Shelly3EmCloudDevice extends Device {
 
     this.setAvailable();
 
-    this.bootSequence();
-
     // CAPABILITY LISTENERS
     this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
 
