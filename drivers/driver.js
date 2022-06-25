@@ -130,7 +130,7 @@ class ShellyDriver extends Homey.Driver {
             store: {
               main_device: id,
               channel: 0,
-              type: this.config.type,
+              type: type,
               unicast: false,
               wsserver: false,
               battery: this.config.battery,
