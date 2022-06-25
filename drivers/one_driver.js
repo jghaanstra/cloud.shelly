@@ -15,7 +15,6 @@ class ShellyOneDriver extends Homey.Driver {
     let unpairedShellies = 0;
     let selectedDeviceId;
     let deviceArray = {};
-    let deviceIcon = 'icon.svg';
 
     session.setHandler('list_devices', async (data) => {
       try {
@@ -24,7 +23,7 @@ class ShellyOneDriver extends Homey.Driver {
         const shellyDevices = await this.util.getShellies('collection');
 
         /* fill devices object with discovered devices */
-        const devices = Object.values(discoveryResults).map(async (discoveryResult) => {
+        const devices = Object.values(discoveryResults).map(discoveryResult => {
 
           /* match discovery result with already paired Shellies to determine if there are unpaired devices */
           if (shellyDevices.length === 0) {
@@ -34,23 +33,18 @@ class ShellyOneDriver extends Homey.Driver {
             if (pairedShelly.length === 0) {
               unpairedShellies++
             }
-          }
-
-          /* get device config based on hostname of discovered device */
-          const hostname = discoveryResult.host.substr(0, t2.lastIndexOf("-") + 1);
-          const device_config = await this.util.getDeviceConfig(hostname);
+          }          
 
           /* save all discovered devices (Homey will do it's on filtering for already paired devices) */
           return {
-            name: device_config.name+ ' ['+ discoveryResult.address +']',
+            name: discoveryResult.host + ' ['+ discoveryResult.address +']',
             data: {
               id: discoveryResult.host
-            },
-            config: device_config
+            }
           };
         });
 
-        /* return the results if there are unpaired Shelly devices or show the manual pairing wizard */
+        /* return the devices if there are unpaired Shelly devices or else show the manual pairing wizard */
         if (unpairedShellies > 0) {
           return devices;
         } else {
@@ -70,7 +64,11 @@ class ShellyOneDriver extends Homey.Driver {
       try {
         const discoveryResult = discoveryResults[selectedDeviceId];
 
-        switch(discoveryResult.config.gen) {
+        /* get device config based on hostname of discovered device */
+        const hostname = discoveryResult.host.substr(0, discoveryResult.host.lastIndexOf("-") + 1);
+        const device_config = await this.util.getDeviceConfig(hostname);
+
+        switch(device_config.gen) {
           case 'gen1':
             var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
             var auth = result.auth;
@@ -84,7 +82,7 @@ class ShellyOneDriver extends Homey.Driver {
         }
 
         deviceArray = {
-          name: discoveryResult.config.name+ ' ['+ discoveryResult.address +']',
+          name: device_config.name + ' ['+ discoveryResult.address +']',
           data: {
             id: discoveryResult.host,
           },
@@ -93,20 +91,20 @@ class ShellyOneDriver extends Homey.Driver {
             username : '',
             password : ''
           },
-          capabilities: discoveryResult.config.capabilities_1,
+          capabilities: device_config.capabilities_1,
+          capabilitiesOptions: device_config.capability_options,
           store: {
             main_device: discoveryResult.host,
             channel: 0,
             type: type,
             unicast: false,
             wsserver: false,
-            battery: discoveryResult.config.battery,
+            battery: device_config.battery,
             sdk: 3,
-            gen: discoveryResult.config.gen,
-            communication: discoveryResult.config.communication,
-            capability_options: discoveryResult.config.capability_options
+            gen: device_config.gen,
+            communication: device_config.communication
           },
-          icon: discoveryResult.config.icon
+          icon: device_config.icon
         }
         if (auth) {
           session.showView('login_credentials');
@@ -134,34 +132,36 @@ class ShellyOneDriver extends Homey.Driver {
             break;
         }
 
-        if (this.config.hostname.some( (host) => { return id.startsWith(host); } )) {
-          deviceArray = {
-            name: this.config.name+ ' ['+ data.address +']',
-            data: {
-              id: id,
-            },
-            settings: {
-              address  : data.address,
-              username : data.username,
-              password : data.password
-            },
-            store: {
-              main_device: id,
-              channel: 0,
-              type: this.config.type,
-              unicast: false,
-              wsserver: false,
-              battery: this.config.battery,
-              sdk: 3,
-              gen: this.config.gen,
-              communication: this.config.communication,
-              capability_options: discoveryResult.config.capability_options
-            }
+        /* get device config based on hostname of discovered device */
+        const hostname = id.substr(0, id.lastIndexOf("-") + 1);
+        const device_config = await this.util.getDeviceConfig(hostname);
+
+        deviceArray = {
+          name: device_config.name+ ' ['+ data.address +']',
+          data: {
+            id: id,
+          },
+          settings: {
+            address  : data.address,
+            username : data.username,
+            password : data.password
+          },
+          capabilities: device_config.capabilities_1,
+          capabilitiesOptions: device_config.capability_options,
+          store: {
+            main_device: id,
+            channel: 0,
+            type: type,
+            unicast: false,
+            wsserver: false,
+            battery: device_config.battery,
+            sdk: 3,
+            gen: device_config.gen,
+            communication: device_config.communication
           }
-          return Promise.resolve(deviceArray);
-        } else {
-          return Promise.reject(this.homey.__('driver.wrongdevice'));
         }
+        return Promise.resolve(deviceArray);
+
       } catch (error) {
         return Promise.reject(error);
       }

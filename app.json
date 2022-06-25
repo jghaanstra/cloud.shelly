@@ -1732,8 +1732,9 @@
         "nl": "Shelly apparaat"
       },
       "images": {
+        "small": "./assets/drivers/shelly/images/small.jpg",
         "large": "./assets/drivers/shelly/images/large.jpg",
-        "small": "./assets/drivers/shelly/images/small.jpg"
+        "xlarge": "./assets/drivers/shelly/images/xlarge.jpg"
       },
       "class": "other",
       "discovery": "shelly",
@@ -1768,8 +1769,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",

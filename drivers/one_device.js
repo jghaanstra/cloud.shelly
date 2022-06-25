@@ -14,11 +14,6 @@ class ShellyOneDevice extends Homey.Device {
 
   async onAdded() {
 
-    // TODO: check if this works
-    for (const [key, value] of Object.entries(this.getStoreValue('capability_options'))) {
-      this.setCapabilityOptions(key, value);
-    }
-
     // gen1 + gen2: initially poll the device status
     this.homey.setTimeout(async () => {
       this.pollDevice();
