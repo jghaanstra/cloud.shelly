@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.9.12",
+  "version": "3.10.0",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -2836,6 +2836,112 @@
         "rssi"
       ],
       "id": "shelly-plus-2pm_cloud"
+    },
+    {
+      "icon": "/drivers/shelly-plus-ht/assets/icon.svg",
+      "pair": [
+        {
+          "id": "start",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png"
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "name": {
+        "en": "Shelly Plus HT",
+        "nl": "Shelly Plus HT"
+      },
+      "images": {
+        "xlarge": "./assets/drivers/shelly-plus-ht/images/xlarge.jpg",
+        "large": "./assets/drivers/shelly-plus-ht/images/large.jpg",
+        "small": "./assets/drivers/shelly-plus-ht/images/small.jpg"
+      },
+      "class": "sensor",
+      "discovery": "shelly-plus-ht",
+      "capabilities": [
+        "measure_temperature",
+        "measure_humidity",
+        "measure_battery",
+        "measure_voltage",
+        "rssi"
+      ],
+      "energy": {
+        "batteries": [
+          "AA",
+          "AA",
+          "AA",
+          "AA"
+        ]
+      },
+      "deprecated": true,
+      "id": "shelly-plus-ht",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "icon": "/drivers/shelly-pro-1/assets/icon.svg",
@@ -9197,6 +9303,25 @@
             "match": {
               "type": "regex",
               "value": "^ShellyPlus2PM-"
+            }
+          }
+        ]
+      ]
+    },
+    "shelly-plus-ht": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "http",
+        "protocol": "tcp"
+      },
+      "id": "{{host}}",
+      "conditions": [
+        [
+          {
+            "field": "host",
+            "match": {
+              "type": "regex",
+              "value": "^ShellyPlusHT-"
             }
           }
         ]

@@ -14,6 +14,11 @@ class Shelly3EmCloudDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned');
     this.homey.flow.getDeviceTriggerCard('triggerMeterPowerFactor');
 
+    // TODO: REMOVE AFTER SOME RELEASES
+    if (!this.hasCapability('meter_power.total')) {
+      this.addCapability('meter_power.total');
+    }
+
     this.setAvailable();
 
     // CAPABILITY LISTENERS

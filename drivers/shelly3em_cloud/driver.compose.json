@@ -18,9 +18,18 @@
     "measure_current",
     "measure_voltage",
     "meter_power",
+    "meter_power.total",
     "meter_power_returned",
     "rssi"
   ],
+  "capabilitiesOptions": {
+    "meter_power.total": {
+      "title": {
+        "en": "Total Energy",
+        "nl": "Energie totaal"
+      }
+    }
+  },
   "energy": {
     "cumulative": true
   }

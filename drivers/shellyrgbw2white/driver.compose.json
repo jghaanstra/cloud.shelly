@@ -16,6 +16,7 @@
     "onoff",
     "dim",
     "measure_power",
+    "measure_power.total",
     "meter_power",
     "input_1",
     "rssi"
@@ -25,6 +26,12 @@
 			"opts": {
 				"duration": true
 			}
-		}
+		},
+    "measure_power.total": {
+      "title": {
+        "en": "Total Power",
+        "nl": "Totaal vermogen"
+      }
+    }
   }
 }

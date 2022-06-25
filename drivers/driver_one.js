@@ -3,7 +3,7 @@
 const Homey = require('homey');
 const Util = require('../lib/util.js');
 
-class ShellyDriver extends Homey.Driver {
+class ShellyDriverOne extends Homey.Driver {
 
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
@@ -198,4 +198,4 @@ class ShellyDriver extends Homey.Driver {
 
 }
 
-module.exports = ShellyDriver;
+module.exports = ShellyDriverOne;

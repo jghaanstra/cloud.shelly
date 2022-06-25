@@ -34,9 +34,9 @@ class ShellyCloudDevice extends OAuth2Device {
           const device_data = await this.oAuth2Client.getCloudDevices(this.getSetting('cloud_server'));
           const device_id = this.getSetting('cloud_device_id').toString(16);
           if (this.getStoreValue('gen') === 'gen1') {
-            this.parseStatusUpdate(device_data.data.devices_status[device_id])
+            this.parseFullStatusUpdateGen1(device_data.data.devices_status[device_id])
           } else if (this.getStoreValue('gen') === 'gen2') {
-            this.parseStatusUpdateGen2(device_data.data.devices_status[device_id])
+            this.parseFullStatusUpdateGen2(device_data.data.devices_status[device_id])
           }
           this.homey.app.websocketCloudListener();
         } catch (error) {
@@ -77,8 +77,8 @@ class ShellyCloudDevice extends OAuth2Device {
 }
 
 ShellyCloudDevice.prototype.updateCapabilityValue = Device.prototype.updateCapabilityValue;
-ShellyCloudDevice.prototype.parseStatusUpdate = Device.prototype.parseStatusUpdate;
-ShellyCloudDevice.prototype.parseStatusUpdateGen2 = Device.prototype.parseStatusUpdateGen2;
+ShellyCloudDevice.prototype.parseFullStatusUpdateGen1 = Device.prototype.parseFullStatusUpdateGen1;
+ShellyCloudDevice.prototype.parseFullStatusUpdateGen2 = Device.prototype.parseFullStatusUpdateGen2;
 ShellyCloudDevice.prototype.parseCapabilityUpdate = Device.prototype.parseCapabilityUpdate;
 ShellyCloudDevice.prototype.onCapabilityOnoff = Device.prototype.onCapabilityOnoff;
 ShellyCloudDevice.prototype.onCapabilityOnoffLight = Device.prototype.onCapabilityOnoffLight;

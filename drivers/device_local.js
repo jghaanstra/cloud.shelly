@@ -15,9 +15,17 @@ class ShellyDevice extends Device {
   async onDeleted() {
     try {
       clearInterval(this.pollingInterval);
+
+      /* disable CoAP for gen1 devices */
+      if (this.getStoreValue('communication') === 'coap' && this.getStoreValue('channel') === 0) {
+        await this.util.sendCommand('/settings?coiot_enable=false', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        await this.util.sendCommand('/reboot', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      }
+
       // TODO: eventually remove this once the firmware for outbound websockets has been rolled out
-      if (this.getStoreValue('communication') === 'websocket' && !this.getStoreValue('wsserver')) {
-        if (this.getStoreValue('channel') === 0 && this.ws.readyState !== WebSocket.CLOSED) {
+      /* disconnect to device websocket server for gen2 devices */
+      if (this.getStoreValue('communication') === 'websocket' && this.getStoreValue('channel') === 0 && !this.getStoreValue('wsserver')) {
+        if (this.ws.readyState !== WebSocket.CLOSED) {
           this.ws.close();
         }
         this.homey.setTimeout(() => {
@@ -25,14 +33,19 @@ class ShellyDevice extends Device {
           clearTimeout(this.reconnectWsTimeout);
         }, 2000);
       }
-      if (this.getStoreValue('communication') === 'coap') {
-        await this.util.sendCommand('/settings?coiot_enable=false', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        await this.util.sendCommand('/reboot', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+
+      /* disable inboud websockets for gen2 devices */
+      if (this.getStoreValue('communication') === 'websocket' && this.getStoreValue('channel') === 0 && this.getStoreValue('wsserver')) {
+        const payload = '{"id":0, "method":"ws.setconfig", "params":{"config":{"ssl_ca":"*", "server":"", "enable":false}}}';
+        const settings = await this.util.sendRPCCommand('/rpc', this.getSetting('address'), this.getSetting('password'), 'POST', payload);
+        const reboot = await this.util.sendRPCCommand('/rpc/Shelly.Reboot', this.getSetting('address'), this.getSetting('password'));
       }
-      if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
+      
+      if (this.getStoreValue('channel') === 0) {
         const iconpath = "/userdata/" + this.getData().id +".svg";
         await this.util.removeIcon(iconpath);
       }
+
       await this.homey.app.updateShellyCollection();
       return;
     } catch (error) {
@@ -55,6 +68,8 @@ class ShellyDevice extends Device {
 
     this.ws.on('message', (data) => {
       try {
+        if (!this.getAvailable()) { this.setAvailable(); }
+
         const result = JSON.parse(data);
 
         if (result.hasOwnProperty("error")) {
@@ -80,75 +95,8 @@ class ShellyDevice extends Device {
           this.digestRetries = 0;
         }
 
-        if (result.hasOwnProperty("method")) {
-          if (result.method === 'NotifyStatus') { /* parse capability status updates */
-            const components_list = Object.entries(result.params);
-            const components = components_list.map(([component, options]) => { return { component, ...options }; });
+        this.parseSingleStatusUpdateGen2(result);
 
-            components.forEach((element) => {
-              var component = element.component;
-              var channel = element.id
-
-              for (const [capability, value] of Object.entries(element)) {
-                if (capability === 'errors') { /* handle device errors */
-                  value.forEach((element) => {
-                    const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
-                    const device = this.driver.getDevice({id: device_id });
-                    this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": this.homey.__(element)}).catch(error => { this.error(error) });
-                  });
-                } else if (capability !== 'component' && capability !== 'id' && capability !== 'source') {
-
-                  if (typeof value === 'object' && value !== null) { /* parse aenergy and device temperature data */
-                    for (const [capability, values] of Object.entries(value)) {
-                      if (capability !== 'by_minute' && capability !== 'minute_ts' && capability !== 'tF') {
-                        this.parseCapabilityUpdate(capability, values, channel);
-                      }
-                    }
-                  } else if (component.startsWith('input')) { /* parse input data */
-                    let input = component.replace(":", "");
-                    if (channel === 0 || this.hasCapability('input_2')) { // if channel is 0 or device is not a multichannel device in Homey we need to hard set channel to 0 to update the capability of this
-                      this.parseCapabilityUpdate(input, value, 0);
-                    } else {
-                      const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
-                      device = this.driver.getDevice({id: device_id });
-                      device.parseCapabilityUpdate(input, value, channel);
-                    }
-                  } else {
-                    this.parseCapabilityUpdate(capability, value, channel);
-                  }
-                }
-              }
-            });
-          } else if (result.method === 'NotifyEvent') { /* parse event updates */
-            result.params.events.forEach(async (event) => {
-              try {
-                let device;
-                let action_event;
-                let channel = event.id || 0;
-
-                // get the right device
-                if (channel === 0 || this.hasCapability('input_2')) { // if channel is 0 or device is not a multichannel device in Homey we have the right device
-                  device = this;
-                } else { // get the right device based on the channel
-                  const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
-                  device = this.driver.getDevice({id: device_id });
-                }
-
-                // get the right action
-                if (channel === 0 && !device.hasCapability('input_2')) {
-                  action_event = await this.util.getActionEventDescription(event.event, device.getStoreValue('communication'), device.getStoreValue('gen'));
-                } else {
-                  const event_channel = channel + 1;
-                  action_event = await this.util.getActionEventDescription(event.event, device.getStoreValue('communication'), device.getStoreValue('gen')) + '_' + event_channel;
-                }
-
-                this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": action_event }, {"id": device.getData().id, "device": device.getName(), "action": action_event }).catch(error => { this.error(error) });
-              } catch (error) {
-                this.error(error);
-              }
-            });
-          }
-        }
       } catch (error) {
         this.error(error);
       }

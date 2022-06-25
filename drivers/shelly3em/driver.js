@@ -25,6 +25,7 @@ class Shelly3EmDriver extends Driver {
         "measure_voltage",
         "meter_power_returned",
         "meter_power",
+        "meter_power.total",
         "rssi"
       ],
       capabilities_2: [

@@ -15,6 +15,11 @@ class ShellyRGBW2WhiteCloudDevice extends Device {
     this.homey.flow.getDeviceTriggerCard('triggerInput1Off');
     this.homey.flow.getDeviceTriggerCard('triggerInput1Changed');
 
+    // TODO: REMOVE AFTER SOME RELEASES
+    if (!this.hasCapability('measure_power.total')) {
+      this.addCapability('measure_power.total');
+    }
+
     this.setAvailable();
 
     // CAPABILITY LISTENERS

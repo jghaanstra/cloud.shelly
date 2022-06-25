@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="960px"
+   height="960px"
+   viewBox="0 0 960 960"
+   version="1.1"
+   id="svg842"
+   sodipodi:docname="icon.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs846" />
+  <sodipodi:namedview
+     id="namedview844"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.6046875"
+     inkscape:cx="675.55556"
+     inkscape:cy="482.06718"
+     inkscape:window-width="2560"
+     inkscape:window-height="1369"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Shelly-gas" />
+  <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+  <title
+     id="title836">Shelly gas</title>
+  <desc
+     id="desc838">Created with Sketch.</desc>
+  <g
+     id="Shelly-gas"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd">
+    <path
+       d="M 715,1 C 848.4099,1 956.8126,108.0686 958.96731,240.96501 L 959,245 V 715 C 959,848.4099 851.93141,956.8126 719.03499,958.96731 L 715,959 H 245 C 111.5901,959 3.1874019,851.93141 1.032689,719.03499 L 1,715 V 245 C 1,111.5901 108.0686,3.1874019 240.96501,1.032689 L 245,1 Z m 0,40 H 245 C 133.46057,41 42.828811,130.51637 41.02733,241.62649 L 41,245 v 470 c 0,111.53943 89.51637,202.17119 200.62649,203.97267 L 245,919 h 470 c 111.53943,0 202.17119,-89.51637 203.97267,-200.62649 L 919,715 V 245 C 919,133.46057 829.48363,42.828811 718.37351,41.02733 Z m -13.6,19 c 53.38032,0 103.43354,21.170726 140.43141,58.16859 C 878.4593,154.79648 899.575,204.21992 900,256.9996 V 258.6 701.4 c 0,53.38032 -21.17073,103.43354 -58.16859,140.43141 C 805.20352,878.4593 755.78008,899.575 703.0004,900 H 701.4 258.6 C 205.21968,900 155.16646,878.82927 118.16859,841.83141 81.540704,805.20352 60.424997,755.78008 60,703.0004 V 701.4 258.6 C 60,205.21968 81.170726,155.16646 118.16859,118.16859 154.79648,81.540704 204.21992,60.424997 256.9996,60 H 258.6 Z m 0,20 H 258.6 C 210.57853,80 165.59505,99.026407 132.31073,132.31073 99.35925,165.26221 80.381954,209.68003 80,257.16028 V 258.6 701.4 c 0,48.02147 19.026407,93.00495 52.31073,126.28927 32.95148,32.95148 77.3693,51.92878 124.84955,52.31073 H 258.6 701.4 c 48.02147,0 93.00495,-19.02641 126.28927,-52.31073 C 860.64075,794.73779 879.61805,750.31997 880,702.83972 V 701.4 258.6 C 880,210.57853 860.97359,165.59505 827.68927,132.31073 794.73779,99.35925 750.31997,80.381954 702.83972,80 Z"
+       id="Shape"
+       fill="#000000"
+       fill-rule="nonzero"
+       sodipodi:nodetypes="sccsccsccsccscsccsccsccsccssccssccssccssccscssccssccssccsscc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:400px;line-height:125%;font-family:ArrowsCustom;-inkscape-font-specification:ArrowsCustom;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="125.68476"
+       y="568.88892"
+       id="text4170"><tspan
+         sodipodi:role="line"
+         id="tspan4168"
+         x="125.68476"
+         y="568.88892"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:400px;font-family:Impact;-inkscape-font-specification:Impact">21.5</tspan></text>
+  </g>
+  <metadata
+     id="metadata27726">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Shelly gas</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

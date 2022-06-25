@@ -562,7 +562,7 @@ class ShellyApp extends OAuth2App {
     return this.shellyDevices;
   }
 
-  // WEBSOCKET: START WEBSOCKET SERVER AND LISTEN FOR GEN2 UPDATES
+  // WEBSOCKET: START WEBSOCKET SERVER AND LISTEN FOR INBOUND GEN2 UPDATES
   async websocketLocalListener() {
     try {
       if (this.wss === null) {
@@ -575,11 +575,13 @@ class ShellyApp extends OAuth2App {
           wsserver.on("message", async (data) => {
             const result = JSON.parse(data);
             if (result.hasOwnProperty('method')) {
-              if (result.method === 'NotifyFullStatus') { // parse full status updates
-                const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src));
-                for (const filteredShellyWss of filteredShelliesWss) {
-                  if (result.hasOwnProperty("params")) {
-                    filteredShellyWss.device.parseStatusUpdateGen2(result.params);
+              const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src));
+              for (const filteredShellyWss of filteredShelliesWss) {
+                if (result.hasOwnProperty("params")) {
+                  if (result.method === 'NotifyFullStatus') { // parse full status updates
+                    filteredShellyWss.device.parseFullStatusUpdateGen2(result.params);
+                  } else if (result.method === 'NotifyStatus') {
+                    filteredShellyWss.device.parseSingleStatusUpdateGen2(result);
                   }
                 }
               }
@@ -652,9 +654,9 @@ class ShellyApp extends OAuth2App {
               for (const filteredShellyWs of filteredShelliesWs) {
                 if (result.hasOwnProperty("status")) {
                   if (result.device.gen === 'G1') {
-                    filteredShellyWs.device.parseStatusUpdate(result.status);
+                    filteredShellyWs.device.parseFullStatusUpdateGen1(result.status);
                   } else if (result.device.gen === 'G2') {
-                    filteredShellyWs.device.parseStatusUpdateGen2(result.status);
+                    filteredShellyWs.device.parseFullStatusUpdateGen2(result.status);
                   }
                 }
                 await this.util.sleep(250);

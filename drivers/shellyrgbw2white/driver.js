@@ -21,6 +21,7 @@ class ShellyRGBW2WhiteDriver extends Driver {
         "onoff",
         "dim",
         "measure_power",
+        "measure_power.total",
         "meter_power",
         "input_1",
         "rssi"
