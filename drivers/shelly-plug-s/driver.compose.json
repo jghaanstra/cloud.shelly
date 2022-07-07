@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shelly-plug-s/images/small.jpg"
   },
   "class": "socket",
-  "discovery": "shelly-plug-s",
   "$extends": [
     "defaults"
   ],
@@ -26,5 +25,6 @@
         "nl": "Apparaat temperatuur"
       }
     }
-  }
+  },
+  "deprecated": true
 }

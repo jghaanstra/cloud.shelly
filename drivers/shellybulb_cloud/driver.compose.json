@@ -19,5 +19,6 @@
     "light_saturation",
     "light_mode",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

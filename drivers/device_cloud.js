@@ -9,6 +9,31 @@ class ShellyCloudDevice extends OAuth2Device {
 
   async onOAuth2Init() {
     if (!this.util) this.util = new Util({homey: this.homey});
+
+    // ADDING CAPABILITY LISTENERS
+    this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
+    this.registerCapabilityListener("dim", this.onCapabilityDim.bind(this));
+    this.registerCapabilityListener("light_temperature", this.onCapabilityLightTemperature.bind(this));
+    this.registerMultipleCapabilityListener(['light_hue', 'light_saturation'], this.onMultipleCapabilityListenerSatHue.bind(this), 500);
+    this.registerCapabilityListener("light_mode", this.onCapabilityLightMode.bind(this));
+    this.registerCapabilityListener("onoff.whitemode", this.onCapabilityOnoffWhiteMode.bind(this));
+    this.registerCapabilityListener("windowcoverings_state", this.onCapabilityWindowcoveringsState.bind(this));
+    this.registerCapabilityListener("windowcoverings_set", this.onCapabilityWindowcoveringsSet.bind(this));
+    this.registerCapabilityListener("valve_position", this.onCapabilityValvePosition.bind(this));
+    this.registerCapabilityListener("valve_mode", this.onCapabilityValveMode.bind(this));
+    this.registerCapabilityListener("target_temperature", this.onCapabilityTargetTemperature.bind(this));
+
+    // BOOT SEQUENCE
+    this.bootSequence();
+
+    // REGISTERING DEVICE TRIGGER CARDS
+    this.homey.setTimeout(() => {
+      if (this.getStoreValue('config') !== null || this.getStoreValue('config') !== undefined) {
+        for (const trigger of this.getStoreValue('config').triggers) {
+          this.homey.flow.getDeviceTriggerCard(trigger);
+        }
+      }
+    }, 2000);
   }
 
   async bootSequence() {
@@ -86,6 +111,9 @@ ShellyCloudDevice.prototype.onCapabilityWindowcoveringsState = Device.prototype.
 ShellyCloudDevice.prototype.onCapabilityWindowcoveringsSet = Device.prototype.onCapabilityWindowcoveringsSet;
 ShellyCloudDevice.prototype.onCapabilityDim = Device.prototype.onCapabilityDim;
 ShellyCloudDevice.prototype.onCapabilityLightTemperature = Device.prototype.onCapabilityLightTemperature;
+ShellyCloudDevice.prototype.onMultipleCapabilityListenerSatHue = Device.prototype.onMultipleCapabilityListenerSatHue;
+ShellyCloudDevice.prototype.onCapabilityLightMode = Device.prototype.onCapabilityLightMode;
+ShellyCloudDevice.prototype.onCapabilityOnoffWhiteMode = Device.prototype.onCapabilityOnoffWhiteMode;
 ShellyCloudDevice.prototype.onCapabilityValvePosition = Device.prototype.onCapabilityValvePosition;
 ShellyCloudDevice.prototype.onCapabilityValveMode = Device.prototype.onCapabilityValveMode;
 ShellyCloudDevice.prototype.onCapabilityTargetTemperature = Device.prototype.onCapabilityTargetTemperature;

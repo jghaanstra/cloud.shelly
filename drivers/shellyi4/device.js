@@ -13,23 +13,15 @@ class Shellyi4Device extends Device {
       'single_push_1',
       'long_push_1',
       'double_push_1',
-      'btn_down_1',
-      'btn_up_1',
       'single_push_2',
       'long_push_2',
       'double_push_2',
-      'btn_down_2',
-      'btn_up_2',
       'single_push_3',
       'long_push_3',
       'double_push_3',
-      'btn_down_3',
-      'btn_up_3',
       'single_push_4',
       'long_push_4',
-      'double_push_4',
-      'btn_down_4',
-      'btn_up_4',
+      'double_push_4'
     ];
 
     this.homey.flow.getDeviceTriggerCard('triggerInput1On');

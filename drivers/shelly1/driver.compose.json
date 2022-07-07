@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shelly1/images/small.jpg"
   },
   "class": "socket",
-  "discovery": "shelly1",
   "$extends": [
     "shelly1"
   ],
@@ -16,5 +15,6 @@
     "onoff",
     "input_1",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

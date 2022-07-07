@@ -22,6 +22,7 @@ class ShellyApp extends OAuth2App {
 
     // VARIABLES GENERIC
     this.shellyDevices = [];
+    this.newShellyDevices = [];
 
     // VARIABLES WEBSOCKET
     this.wss = null;
@@ -69,7 +70,7 @@ class ShellyApp extends OAuth2App {
     }, 25000);
 
     // COAP, CLOUD & GEN2 WEBSOCKETS: UPDATE THE SHELLY COLLECTION REGULARLY
-    this.homey.setInterval(async () => {
+    this.shellyCollectionInterval = this.homey.setInterval(async () => {
       await this.updateShellyCollection();
     }, 900000);
 
@@ -548,8 +549,8 @@ class ShellyApp extends OAuth2App {
   // COAP & GEN2 WEBSOCKETS: UPDATE COLLECTION OF DEVICES
   async updateShellyCollection() {
     try {
-      let newShellyDevices = await this.util.getShellies('collection');
-      this.shellyDevices = newShellyDevices;
+      this.newShellyDevices = await this.util.getShellies('collection');
+      this.shellyDevices = this.newShellyDevices;
       return Promise.resolve(true);
     } catch(error) {
       this.error(error);
@@ -751,7 +752,8 @@ class ShellyApp extends OAuth2App {
   }
 
   async onUninit() {
-    clearTimeout(this.wsPingInterval);
+    clearInterval(this.shellyCollectionInterval);
+    clearInterval(this.wsPingInterval);
     clearTimeout(this.wsPingTimeout);
     clearTimeout(this.wsReconnectTimeout);
     clearTimeout(this.wssReconnectTimeout);

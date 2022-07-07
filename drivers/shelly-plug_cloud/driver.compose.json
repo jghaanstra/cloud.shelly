@@ -16,5 +16,6 @@
     "measure_power",
     "meter_power",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

@@ -266,6 +266,38 @@
         ]
       },
       {
+        "id": "triggerGasConcentration",
+        "title": {
+          "en": "Gas concentration changed",
+          "nl": "Gas concentratie gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "ppm",
+            "type": "number",
+            "title": {
+              "en": "Parts per million",
+              "nl": "Delen per miljoen"
+            },
+            "example": 3452
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shellygas&capabilities=gas_concentration"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
         "id": "triggerInput1Changed",
         "title": {
           "en": "Input 1 changed",
@@ -279,7 +311,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plus-1|shelly-plus-1_cloud|shelly-plus-1pm|shelly-plus-1pm_cloud|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-plus-2pm_cloud|shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly-pro-2pm_cloud|shelly1|shelly1L|shelly1_cloud|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly25_cloud|shelly2_cloud|shelly4pro|shelly4pro_cloud|shellyair|shellyair_cloud|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
+            "filter": "driver_id=shelly|shelly_cloud|shelly-plus-1|shelly-plus-1_cloud|shelly-plus-1pm|shelly-plus-1pm_cloud|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-plus-2pm_cloud|shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly-pro-2pm_cloud|shelly1|shelly1L|shelly1_cloud|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly25_cloud|shelly2_cloud|shelly4pro|shelly4pro_cloud|shellyair|shellyair_cloud|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
           }
         ],
         "platforms": [
@@ -301,7 +333,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plus-1|shelly-plus-1_cloud|shelly-plus-1pm|shelly-plus-1pm_cloud|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-plus-2pm_cloud|shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly-pro-2pm_cloud|shelly1|shelly1L|shelly1_cloud|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly25_cloud|shelly2_cloud|shelly4pro|shelly4pro_cloud|shellyair|shellyair_cloud|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
+            "filter": "driver_id=shelly|shelly_cloud|shelly-plus-1|shelly-plus-1_cloud|shelly-plus-1pm|shelly-plus-1pm_cloud|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-plus-2pm_cloud|shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly-pro-2pm_cloud|shelly1|shelly1L|shelly1_cloud|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly25_cloud|shelly2_cloud|shelly4pro|shelly4pro_cloud|shellyair|shellyair_cloud|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
           }
         ],
         "platforms": [
@@ -323,7 +355,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plus-1|shelly-plus-1_cloud|shelly-plus-1pm|shelly-plus-1pm_cloud|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-plus-2pm_cloud|shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly-pro-2pm_cloud|shelly1|shelly1L|shelly1_cloud|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly25_cloud|shelly2_cloud|shelly4pro|shelly4pro_cloud|shellyair|shellyair_cloud|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
+            "filter": "driver_id=shelly|shelly_cloud|shelly-plus-1|shelly-plus-1_cloud|shelly-plus-1pm|shelly-plus-1pm_cloud|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-plus-2pm_cloud|shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly-pro-2pm_cloud|shelly1|shelly1L|shelly1_cloud|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly25_cloud|shelly2_cloud|shelly4pro|shelly4pro_cloud|shellyair|shellyair_cloud|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
           }
         ],
         "platforms": [
@@ -345,7 +377,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plus-2pm-rollershutter|shelly-pro-2_rollershutter|shelly-pro-2pm_rollershutter|shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_2"
+            "filter": "driver_id=shelly|shelly_cloud|shelly-plus-2pm-rollershutter|shelly-pro-2_rollershutter|shelly-pro-2pm_rollershutter|shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_2"
           }
         ],
         "platforms": [
@@ -367,7 +399,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plus-2pm-rollershutter|shelly-pro-2_rollershutter|shelly-pro-2pm_rollershutter|shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_2"
+            "filter": "driver_id=shelly|shelly_cloud|shelly-plus-2pm-rollershutter|shelly-pro-2_rollershutter|shelly-pro-2pm_rollershutter|shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_2"
           }
         ],
         "platforms": [
@@ -389,7 +421,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plus-2pm-rollershutter|shelly-pro-2_rollershutter|shelly-pro-2pm_rollershutter|shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_2"
+            "filter": "driver_id=shelly|shelly_cloud|shelly-plus-2pm-rollershutter|shelly-pro-2_rollershutter|shelly-pro-2pm_rollershutter|shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_2"
           }
         ],
         "platforms": [
@@ -411,7 +443,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_3"
+            "filter": "driver_id=shelly|shelly_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_3"
           }
         ],
         "platforms": [
@@ -433,7 +465,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_3"
+            "filter": "driver_id=shelly|shelly_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_3"
           }
         ],
         "platforms": [
@@ -455,7 +487,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_3"
+            "filter": "driver_id=shelly|shelly_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_3"
           }
         ],
         "platforms": [
@@ -477,7 +509,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi4|shellyi4_cloud&capabilities=input_4"
+            "filter": "driver_id=shelly|shelly_cloud|shellyi4|shellyi4_cloud&capabilities=input_4"
           }
         ],
         "platforms": [
@@ -499,7 +531,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi4|shellyi4_cloud&capabilities=input_4"
+            "filter": "driver_id=shelly|shelly_cloud|shellyi4|shellyi4_cloud&capabilities=input_4"
           }
         ],
         "platforms": [
@@ -521,7 +553,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi4|shellyi4_cloud&capabilities=input_4"
+            "filter": "driver_id=shelly|shelly_cloud|shellyi4|shellyi4_cloud&capabilities=input_4"
           }
         ],
         "platforms": [
@@ -543,7 +575,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud&capabilities=input_external"
+            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud&capabilities=input_external"
           }
         ],
         "platforms": [
@@ -565,7 +597,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud&capabilities=input_external"
+            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud&capabilities=input_external"
           }
         ],
         "platforms": [
@@ -598,7 +630,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyem|shellyem_cloud|shelly3em|shelly3em_cloud&capabilities=reactive_power"
+            "filter": "driver_id=shelly|shelly_cloud|shellyem|shellyem_cloud|shelly3em|shelly3em_cloud&capabilities=reactive_power"
           }
         ],
         "platforms": [
@@ -631,7 +663,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyem|shellyem_cloud|shelly3em|shelly3em_cloud&capabilities=meter_power_returned"
+            "filter": "driver_id=shelly|shelly_cloud|shellyem|shellyem_cloud|shelly3em|shelly3em_cloud&capabilities=meter_power_returned"
           }
         ],
         "platforms": [
@@ -664,7 +696,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shellair|shellyuni|shellyuni_cloud&capabilities=measure_temperature.1"
+            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shellair|shellyuni|shellyuni_cloud&capabilities=measure_temperature.1"
           }
         ],
         "platforms": [
@@ -697,7 +729,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shellyair|shellyuni|shellyuni_cloud&capabilities=measure_temperature.2"
+            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shellyair|shellyuni|shellyuni_cloud&capabilities=measure_temperature.2"
           }
         ],
         "platforms": [
@@ -730,7 +762,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shellyair|shellyuni|shellyuni_cloud&capabilities=measure_temperature.3"
+            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shellyair|shellyuni|shellyuni_cloud&capabilities=measure_temperature.3"
           }
         ],
         "platforms": [
@@ -763,7 +795,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellydw"
+            "filter": "driver_id=shelly|shelly_cloud|shellydw&capabilities=tilt"
           }
         ],
         "platforms": [
@@ -790,37 +822,13 @@
         ],
         "args": [
           {
-            "type": "device",
             "name": "device",
-            "filter": "driver_id=shelly-trv"
-          }
-        ],
-        "platforms": [
-          "local"
-        ]
-      },
-      {
-        "id": "triggerGasConcentration",
-        "title": {
-          "en": "Gas concentration changed",
-          "nl": "Gas concentratie gewijzigd"
-        },
-        "tokens": [
-          {
-            "name": "ppm",
-            "type": "number",
-            "title": {
-              "en": "Parts per million",
-              "nl": "Delen per miljoen"
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
             },
-            "example": 3452
-          }
-        ],
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shellygas"
+            "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
           }
         ],
         "platforms": [
@@ -843,7 +851,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plus-1|shelly-plus-1_cloud|shelly-plus-1pm|shelly-plus-1pm_cloud|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-plus-2pm_cloud|shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly-pro-2pm_cloud|shelly1|shelly1L|shelly1_cloud|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly25_cloud|shelly2_cloud|shelly4pro|shelly4pro_cloud|shellyair|shellyair_cloud|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
+            "filter": "driver_id=shelly|shelly_cloud|shelly-plus-1|shelly-plus-1_cloud|shelly-plus-1pm|shelly-plus-1pm_cloud|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-plus-2pm_cloud|shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly-pro-2pm_cloud|shelly1|shelly1L|shelly1_cloud|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly25_cloud|shelly2_cloud|shelly4pro|shelly4pro_cloud|shellyair|shellyair_cloud|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
           }
         ],
         "platforms": [
@@ -865,7 +873,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plus-2pm-rollershutter|shelly-pro-2_rollershutter|shelly-pro-2pm_rollershutter|shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_2"
+            "filter": "driver_id=shelly|shelly_cloud|shelly-plus-2pm-rollershutter|shelly-pro-2_rollershutter|shelly-pro-2pm_rollershutter|shelly1L|shelly1l_cloud|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_2"
           }
         ],
         "platforms": [
@@ -887,7 +895,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_3"
+            "filter": "driver_id=shelly|shelly_cloud|shellyi3|shellyi3_cloud|shellyi4|shellyi4_cloud&capabilities=input_3"
           }
         ],
         "platforms": [
@@ -909,7 +917,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellyi4|shellyi4_cloud&capabilities=input_4"
+            "filter": "driver_id=shelly|shelly_cloud|shellyi4|shellyi4_cloud&capabilities=input_4"
           }
         ],
         "platforms": [
@@ -929,11 +937,6 @@
         },
         "args": [
           {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shelly-trv"
-          },
-          {
             "name": "profile",
             "type": "autocomplete",
             "title": {
@@ -944,7 +947,19 @@
               "en": "Select profile ...",
               "nl": "Selecteer profiel ..."
             }
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
           }
+        ],
+        "platforms": [
+          "local"
         ]
       }
     ],
@@ -991,7 +1006,147 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly-plus-1|shelly-plus-1pm|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-pro-1|shelly-pro-1pm|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly3em|shelly4pro|shellyair|shellybulb|shellydimmer|shellyduo|shellyem|shellygas|shellyi3|shellyi4|shellyrgbw2color|shellyrgbw2white|shellyuni|shellyvintage"
+            "filter": "driver_id=shelly|shelly-plug|shelly-plug-s|shelly-plus-1|shelly-plus-1pm|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-pro-1|shelly-pro-1pm|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly3em|shelly4pro|shellyair|shellybulb|shellydimmer|shellyduo|shellyem|shellygas|shellyi3|shellyi4|shellyrgbw2color|shellyrgbw2white|shellyuni|shellyvintage"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "actionGasMute",
+        "title": {
+          "en": "Mute alarm",
+          "nl": "Dempen alarm"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shellygas&capabilities=gas_concentration"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "actionGasSetVolume",
+        "title": {
+          "en": "Set alarm volume",
+          "nl": "Instellen alarm volume"
+        },
+        "titleFormatted": {
+          "en": "Set alarm volume to [[volume]]",
+          "nl": "Instellen alarm volume naar [[volume]]"
+        },
+        "args": [
+          {
+            "name": "volume",
+            "title": {
+              "en": "Volume",
+              "nl": "Volume"
+            },
+            "type": "range",
+            "min": 0,
+            "max": 11,
+            "step": 1
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shellygas&capabilities=gas_concentration"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "actionGasTest",
+        "title": {
+          "en": "Test alarm",
+          "nl": "Alarm testen"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shellygas&capabilities=gas_concentration"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "actionGasUnmute",
+        "title": {
+          "en": "Unmute alarm",
+          "nl": "Dempen alarm uitschakelen"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shellygas&capabilities=gas_concentration"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "actionMeasuredExtTemp",
+        "title": {
+          "en": "Manually set measured temperature",
+          "nl": "Handmatig instellen gemeten temperatuur"
+        },
+        "titleFormatted": {
+          "en": "Manually set measure temperature to [[temperature]]",
+          "nl": "Handmatig instellen gemeten temperatuur op [[temperature]]"
+        },
+        "args": [
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur"
+            },
+            "placeholder": {
+              "en": "Degrees Celcius",
+              "nl": "Graden celcius"
+            },
+            "min": -50,
+            "max": 100,
+            "step": 0.01,
+            "label": "°C"
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
           }
         ],
         "platforms": [
@@ -1012,7 +1167,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly-plus-1|shelly-plus-1pm|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-pro-1|shelly-pro-1pm|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly-trv|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly3em|shelly4pro|shellyair|shellybulb|shellydimmer|shellyduo|shellyem|shellygas|shellyi3|shellyi4|shellymotion|shellyrgbw2color|shellyrgbw2white|shellysmoke|shellyuni|shellyvintage"
+            "filter": "driver_id=shelly|shelly-plug|shelly-plug-s|shelly-plus-1|shelly-plus-1pm|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-pro-1|shelly-pro-1pm|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly-trv|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly3em|shelly4pro|shellyair|shellybulb|shellydimmer|shellyduo|shellyem|shellygas|shellyi3|shellyi4|shellymotion|shellyrgbw2color|shellyrgbw2white|shellysmoke|shellyuni|shellyvintage"
           }
         ],
         "platforms": [
@@ -1033,11 +1188,55 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly-plus-1|shelly-plus-1pm|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-pro-1|shelly-pro-1pm|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly-trv|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly3em|shelly4pro|shellyair|shellybulb|shellydimmer|shellyduo|shellyem|shellygas|shellyi3|shellyi4|shellymotion|shellyrgbw2color|shellyrgbw2white|shellysmoke|shellyuni|shellyvintage"
+            "filter": "driver_id=shelly|shelly-plug|shelly-plug-s|shelly-plus-1|shelly-plus-1pm|shelly-plus-2pm|shelly-plus-2pm-rollershutter|shelly-pro-1|shelly-pro-1pm|shelly-pro-2|shelly-pro-2-rollershutter|shelly-pro-2pm|shelly-pro-2pm-rollershutter|shelly-trv|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly3em|shelly4pro|shellyair|shellybulb|shellydimmer|shellyduo|shellyem|shellygas|shellyi3|shellyi4|shellymotion|shellyrgbw2color|shellyrgbw2white|shellysmoke|shellyuni|shellyvintage"
           }
         ],
         "platforms": [
           "local"
+        ]
+      },
+      {
+        "id": "actionRGBW2DisableWhiteMode",
+        "title": {
+          "en": "Disable white mode",
+          "nl": "Uitschakelen wit modus"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud|shellyrgbw2color&capabilities=onoff.whitemode"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "actionRGBW2EnableWhiteMode",
+        "title": {
+          "en": "Enable white mode",
+          "nl": "Inschakelen wit modus"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud|shellyrgbw2color&capabilities=onoff.whitemode"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
         ]
       },
       {
@@ -1074,6 +1273,168 @@
                 }
               }
             ]
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "actionValveMode",
+        "title": {
+          "en": "Set valve profile",
+          "nl": "Instellen radiator profiel"
+        },
+        "titleFormatted": {
+          "en": "Set valve profile to [[profile]]",
+          "nl": "Instellen radiator profiel naar [[profile]]"
+        },
+        "args": [
+          {
+            "name": "profile",
+            "type": "autocomplete",
+            "title": {
+              "en": "Profile",
+              "nl": "Profiel"
+            },
+            "placeholder": {
+              "en": "Select profile ...",
+              "nl": "Selecteer profiel ..."
+            }
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "actionValvePosition",
+        "title": {
+          "en": "Manually set valve",
+          "nl": "Handmatig afsluitklep instellen"
+        },
+        "titleFormatted": {
+          "en": "Manually set valve position to [[position]]",
+          "nl": "Handmatig instellen radiator positie naar [[position]]"
+        },
+        "args": [
+          {
+            "name": "position",
+            "type": "range",
+            "title": {
+              "en": "Position",
+              "nl": "Positie"
+            },
+            "min": 0,
+            "max": 100,
+            "step": 0.1,
+            "label": "%"
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "effectRGBW2Color",
+        "title": {
+          "en": "Switch Effect",
+          "nl": "Effect schakelen"
+        },
+        "titleFormatted": {
+          "en": "Switch effect to [[effect]]",
+          "nl": "Effect schakelen naar [[effect]]"
+        },
+        "args": [
+          {
+            "name": "effect",
+            "title": {
+              "en": "Effect",
+              "nl": "Effect"
+            },
+            "type": "dropdown",
+            "placeholder": {
+              "en": "Effect",
+              "nl": "Effect"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Turn Effect Off",
+                  "nl": "Uitschakelen effect"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Meteor shower",
+                  "nl": "Meteoriet regen"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "Gradual change",
+                  "nl": "Geleidelijk veranderen"
+                }
+              },
+              {
+                "id": "3",
+                "label": {
+                  "en": "Breath",
+                  "nl": "Ademen"
+                }
+              },
+              {
+                "id": "4",
+                "label": {
+                  "en": "Flash",
+                  "nl": "Flitsen"
+                }
+              },
+              {
+                "id": "5",
+                "label": {
+                  "en": "Gradual On/Off",
+                  "nl": "Geleidelijk Aan/Uit"
+                }
+              },
+              {
+                "id": "6",
+                "label": {
+                  "en": "Red/Green change",
+                  "nl": "Rood/Groen verandering"
+                }
+              }
+            ]
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shellyrgbw2color&capabilities=onoff.whitemode"
           }
         ],
         "platforms": [
@@ -1144,7 +1505,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plug|shelly-plug-s|shelly-plug-s_cloud|shelly-plug_cloud|shelly-plus-1|shelly-plus-1_cloud|shelly-plus-1pm|shelly-plus-1pm_cloud|shelly-plus-2pm|shelly-plus-2pm_cloud|shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm_cloud|shelly1|shelly1L|shelly1_cloud|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly25|shelly25_cloud|shelly2_cloud|shellyem|shellyem_cloud|shellyuni|shellyuni_cloud"
+            "filter": "driver_id=shelly|shelly_cloud|shelly-plug|shelly-plug-s|shelly-plug-s_cloud|shelly-plug_cloud|shelly-plus-1|shelly-plus-1_cloud|shelly-plus-1pm|shelly-plus-1pm_cloud|shelly-plus-2pm|shelly-plus-2pm_cloud|shelly-pro-1|shelly-pro-1_cloud|shelly-pro-1pm|shelly-pro-1pm_cloud|shelly-pro-2|shelly-pro-2_cloud|shelly-pro-2pm|shelly-pro-2pm_cloud|shelly1|shelly1L|shelly1_cloud|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly25|shelly25_cloud|shelly2_cloud|shellyem|shellyem_cloud|shellyuni|shellyuni_cloud&capabilities=onoff|input_1"
           }
         ],
         "platforms": [
@@ -1217,7 +1578,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly-plus-2pm-rollershutter|shelly-plus-2pm-rollershutter_cloud|shelly-pro-2-rollershutter|shelly-pro-2-rollershutter_cloud|shelly-pro-2pm-rollershutter|shelly-pro-2pm-rollershutter_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud"
+            "filter": "driver_id=shelly|shelly_cloud|shelly-plus-2pm-rollershutter|shelly-plus-2pm-rollershutter_cloud|shelly-pro-2-rollershutter|shelly-pro-2-rollershutter_cloud|shelly-pro-2pm-rollershutter|shelly-pro-2pm-rollershutter_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud&capabilities=windowcoverings_set"
           }
         ],
         "platforms": [
@@ -1290,7 +1651,7 @@
               "en": "Select Shelly 2",
               "nl": "Selecteer Shelly 2"
             },
-            "filter": "driver_id=shelly2-rollershutter|shelly25-rollershutter"
+            "filter": "driver_id=shelly|shelly_cloud|shelly2-rollershutter|shelly25-rollershutter&capabilities=windowcoverings_set"
           }
         ],
         "platforms": [
@@ -1315,7 +1676,7 @@
               "en": "Select Shelly 2",
               "nl": "Selecteer Shelly 2"
             },
-            "filter": "driver_id=shelly-plus-2pm-rollershutter|shelly-plus-2pm-rollershutter_cloud|shelly-pro-2-rollershutter|shelly-pro-2-rollershutter_cloud|shelly-pro-2pm-rollershutter|shelly-pro-2pm-rollershutter_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud"
+            "filter": "driver_id=shelly|shelly_cloud|shelly-plus-2pm-rollershutter|shelly-plus-2pm-rollershutter_cloud|shelly-pro-2-rollershutter|shelly-pro-2-rollershutter_cloud|shelly-pro-2pm-rollershutter|shelly-pro-2pm-rollershutter_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud&capabilities=windowcoverings_set"
           }
         ],
         "platforms": [
@@ -1384,7 +1745,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shellydimmer|shellyduo|shellyrgbw2color|shellyrgbw2white|shellyvintage"
+            "filter": "driver_id=shelly|shellydimmer|shellyduo|shellyrgbw2color|shellyrgbw2white|shellyvintage&capabilities=dim"
           }
         ],
         "platforms": [
@@ -1409,323 +1770,184 @@
               "en": "Select Shelly 2",
               "nl": "Selecteer Shelly 2"
             },
-            "filter": "driver_id=shelly-plus-2pm-rollershutter|shelly-plus-2pm-rollershutter_cloud|shelly-pro-2-rollershutter|shelly-pro-2-rollershutter_cloud|shelly-pro-2pm-rollershutter|shelly-pro-2pm-rollershutter_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud"
+            "filter": "driver_id=shelly|shelly_cloud|shelly-plus-2pm-rollershutter|shelly-plus-2pm-rollershutter_cloud|shelly-pro-2-rollershutter|shelly-pro-2-rollershutter_cloud|shelly-pro-2pm-rollershutter|shelly-pro-2pm-rollershutter_cloud|shelly2-rollershutter|shelly2-rollershutter_cloud|shelly25-rollershutter|shelly25-rollershutter_cloud&capabilities=windowcoverings_set"
           }
         ],
         "platforms": [
           "local",
           "cloud"
-        ]
-      },
-      {
-        "id": "actionValvePosition",
-        "title": {
-          "en": "Manually set valve",
-          "nl": "Handmatig afsluitklep instellen"
-        },
-        "titleFormatted": {
-          "en": "Manually set valve position to [[position]]",
-          "nl": "Handmatig instellen radiator positie naar [[position]]"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shelly-trv"
-          },
-          {
-            "name": "position",
-            "type": "range",
-            "title": {
-              "en": "Position",
-              "nl": "Positie"
-            },
-            "min": 0,
-            "max": 100,
-            "step": 0.1,
-            "label": "%"
-          }
-        ],
-        "platforms": [
-          "local"
-        ]
-      },
-      {
-        "id": "actionValveMode",
-        "title": {
-          "en": "Set valve profile",
-          "nl": "Instellen radiator profiel"
-        },
-        "titleFormatted": {
-          "en": "Set valve profile to [[profile]]",
-          "nl": "Instellen radiator profiel naar [[profile]]"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shelly-trv"
-          },
-          {
-            "name": "profile",
-            "type": "autocomplete",
-            "title": {
-              "en": "Profile",
-              "nl": "Profiel"
-            },
-            "placeholder": {
-              "en": "Select profile ...",
-              "nl": "Selecteer profiel ..."
-            }
-          }
-        ],
-        "platforms": [
-          "local"
-        ]
-      },
-      {
-        "id": "actionMeasuredExtTemp",
-        "title": {
-          "en": "Manually set measured temperature",
-          "nl": "Handmatig instellen gemeten temperatuur"
-        },
-        "titleFormatted": {
-          "en": "Manually set measure temperature to [[temperature]]",
-          "nl": "Handmatig instellen gemeten temperatuur op [[temperature]]"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shelly-trv"
-          },
-          {
-            "name": "temperature",
-            "type": "number",
-            "title": {
-              "en": "Temperature",
-              "nl": "Temperatuur"
-            },
-            "placeholder": {
-              "en": "Degrees Celcius",
-              "nl": "Graden celcius"
-            },
-            "min": -50,
-            "max": 100,
-            "step": 0.01,
-            "label": "°C"
-          }
-        ],
-        "platforms": [
-          "local"
-        ]
-      },
-      {
-        "id": "actionGasMute",
-        "title": {
-          "en": "Mute alarm",
-          "nl": "Dempen alarm"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shellygas"
-          }
-        ],
-        "platforms": [
-          "local"
-        ]
-      },
-      {
-        "id": "actionGasSetVolume",
-        "title": {
-          "en": "Set alarm volume",
-          "nl": "Instellen alarm volume"
-        },
-        "titleFormatted": {
-          "en": "Set alarm volume to [[volume]]",
-          "nl": "Instellen alarm volume naar [[volume]]"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shellygas"
-          },
-          {
-            "name": "volume",
-            "title": {
-              "en": "Volume",
-              "nl": "Volume"
-            },
-            "type": "range",
-            "min": 0,
-            "max": 11,
-            "step": 1
-          }
-        ],
-        "platforms": [
-          "local"
-        ]
-      },
-      {
-        "id": "actionGasTest",
-        "title": {
-          "en": "Test alarm",
-          "nl": "Alarm testen"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shellygas"
-          }
-        ],
-        "platforms": [
-          "local"
-        ]
-      },
-      {
-        "id": "actionGasUnmute",
-        "title": {
-          "en": "Unmute alarm",
-          "nl": "Dempen alarm uitschakelen"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shellygas"
-          }
-        ],
-        "platforms": [
-          "local"
-        ]
-      },
-      {
-        "id": "actionRGBW2DisableWhiteMode",
-        "title": {
-          "en": "Disable white mode",
-          "nl": "Uitschakelen wit modus"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shellyrgbw2color"
-          }
-        ],
-        "platforms": [
-          "local",
-          "cloud"
-        ]
-      },
-      {
-        "id": "actionRGBW2EnableWhiteMode",
-        "title": {
-          "en": "Enable white mode",
-          "nl": "Inschakelen wit modus"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shellyrgbw2color"
-          }
-        ],
-        "platforms": [
-          "local",
-          "cloud"
-        ]
-      },
-      {
-        "id": "effectRGBW2Color",
-        "title": {
-          "en": "Switch Effect",
-          "nl": "Effect schakelen"
-        },
-        "titleFormatted": {
-          "en": "Switch effect to [[effect]]",
-          "nl": "Effect schakelen naar [[effect]]"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=shellyrgbw2color"
-          },
-          {
-            "name": "effect",
-            "title": {
-              "en": "Effect",
-              "nl": "Effect"
-            },
-            "type": "dropdown",
-            "placeholder": {
-              "en": "Effect",
-              "nl": "Effect"
-            },
-            "values": [
-              {
-                "id": "0",
-                "label": {
-                  "en": "Turn Effect Off",
-                  "nl": "Uitschakelen effect"
-                }
-              },
-              {
-                "id": "1",
-                "label": {
-                  "en": "Meteor shower",
-                  "nl": "Meteoriet regen"
-                }
-              },
-              {
-                "id": "2",
-                "label": {
-                  "en": "Gradual change",
-                  "nl": "Geleidelijk veranderen"
-                }
-              },
-              {
-                "id": "3",
-                "label": {
-                  "en": "Breath",
-                  "nl": "Ademen"
-                }
-              },
-              {
-                "id": "4",
-                "label": {
-                  "en": "Flash",
-                  "nl": "Flitsen"
-                }
-              },
-              {
-                "id": "5",
-                "label": {
-                  "en": "Gradual On/Off",
-                  "nl": "Geleidelijk Aan/Uit"
-                }
-              },
-              {
-                "id": "6",
-                "label": {
-                  "en": "Red/Green change",
-                  "nl": "Rood/Groen verandering"
-                }
-              }
-            ]
-          }
-        ],
-        "platforms": [
-          "local"
         ]
       }
     ]
   },
   "drivers": [
+    {
+      "name": {
+        "en": "Shelly Device",
+        "nl": "Shelly apparaat"
+      },
+      "images": {
+        "small": "./assets/drivers/shelly/images/small.jpg",
+        "large": "./assets/drivers/shelly/images/large.jpg",
+        "xlarge": "./assets/drivers/shelly/images/xlarge.jpg"
+      },
+      "class": "other",
+      "discovery": "shelly",
+      "capabilities": [
+        "rssi"
+      ],
+      "icon": "/drivers/shelly/assets/icon.svg",
+      "pair": [
+        {
+          "id": "shelly",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "icon_select"
+          }
+        },
+        {
+          "id": "icon_select"
+        },
+        {
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Username",
+              "nl": "Gebruikersnaam"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
+        }
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "lan"
+      ],
+      "id": "shelly",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "address",
+              "type": "text",
+              "value": "0.0.0.0",
+              "label": {
+                "en": "IP Address",
+                "nl": "IP adres"
+              }
+            },
+            {
+              "id": "username",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Username",
+                "nl": "Gebruikersnaam"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Shelly Cloud Device",
+        "nl": "Shelly Cloud apparaat"
+      },
+      "images": {
+        "small": "./assets/drivers/shelly/images/small.jpg",
+        "large": "./assets/drivers/shelly/images/large.jpg",
+        "xlarge": "./assets/drivers/shelly/images/xlarge.jpg"
+      },
+      "class": "other",
+      "capabilities": [
+        "rssi"
+      ],
+      "icon": "/drivers/shelly _cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "id": "shelly _cloud"
+    },
     {
       "icon": "/drivers/shelly-plug/assets/icon.svg",
       "pair": [
@@ -1755,8 +1977,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -1789,13 +2011,13 @@
         "small": "./assets/drivers/shelly-plug/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly-plug",
       "capabilities": [
         "onoff",
         "measure_power",
         "meter_power",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-plug",
       "settings": [
         {
@@ -1865,8 +2087,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -1899,7 +2121,6 @@
         "small": "./assets/drivers/shelly-plug-s/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly-plug-s",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -1915,6 +2136,7 @@
           }
         }
       },
+      "deprecated": true,
       "id": "shelly-plug-s",
       "settings": [
         {
@@ -1973,12 +2195,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -2017,6 +2238,7 @@
           }
         }
       },
+      "deprecated": true,
       "id": "shelly-plug-s_cloud"
     },
     {
@@ -2037,12 +2259,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -2072,6 +2293,7 @@
         "meter_power",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-plug_cloud"
     },
     {
@@ -2170,7 +2392,7 @@
         "small": "./assets/drivers/shelly-plus-1/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly-plus-1",
+      "deprecated": true,
       "id": "shelly-plus-1",
       "settings": [
         {
@@ -2282,6 +2504,7 @@
         "small": "./assets/drivers/shelly-plus-1/images/small.jpg"
       },
       "class": "socket",
+      "deprecated": true,
       "id": "shelly-plus-1_cloud"
     },
     {
@@ -2384,7 +2607,7 @@
         "small": "./assets/drivers/shelly-plus-1pm/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly-plus-1pm",
+      "deprecated": true,
       "id": "shelly-plus-1pm",
       "settings": [
         {
@@ -2500,6 +2723,7 @@
         "small": "./assets/drivers/shelly-plus-1pm/images/small.jpg"
       },
       "class": "socket",
+      "deprecated": true,
       "id": "shelly-plus-1pm_cloud"
     },
     {
@@ -2531,8 +2755,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -2566,7 +2790,6 @@
         "small": "./assets/drivers/shelly-plus-2pm/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly-plus-2pm",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -2577,6 +2800,7 @@
         "input_1",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-plus-2pm",
       "settings": [
         {
@@ -2637,8 +2861,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -2672,7 +2896,6 @@
         "small": "./assets/drivers/shelly-plus-2pm/images/small.jpg"
       },
       "class": "windowcoverings",
-      "discovery": "shelly-plus-2pm",
       "capabilities": [
         "windowcoverings_state",
         "windowcoverings_set",
@@ -2685,6 +2908,7 @@
         "input_2",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-plus-2pm-rollershutter",
       "settings": [
         {
@@ -2734,12 +2958,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -2776,6 +2999,7 @@
         "input_2",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-plus-2pm-rollershutter_cloud"
     },
     {
@@ -2796,11 +3020,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "multi_channel_cloud"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "multi_channel_cloud"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -2835,113 +3059,8 @@
         "input_1",
         "rssi"
       ],
-      "id": "shelly-plus-2pm_cloud"
-    },
-    {
-      "icon": "/drivers/shelly-plus-ht/assets/icon.svg",
-      "pair": [
-        {
-          "id": "start",
-          "navigation": {
-            "next": "list_devices"
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "icon_select"
-          }
-        },
-        {
-          "id": "icon_select"
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "lan"
-      ],
-      "name": {
-        "en": "Shelly Plus HT",
-        "nl": "Shelly Plus HT"
-      },
-      "images": {
-        "xlarge": "./assets/drivers/shelly-plus-ht/images/xlarge.jpg",
-        "large": "./assets/drivers/shelly-plus-ht/images/large.jpg",
-        "small": "./assets/drivers/shelly-plus-ht/images/small.jpg"
-      },
-      "class": "sensor",
-      "discovery": "shelly-plus-ht",
-      "capabilities": [
-        "measure_temperature",
-        "measure_humidity",
-        "measure_battery",
-        "measure_voltage",
-        "rssi"
-      ],
-      "energy": {
-        "batteries": [
-          "AA",
-          "AA",
-          "AA",
-          "AA"
-        ]
-      },
       "deprecated": true,
-      "id": "shelly-plus-ht",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            }
-          ]
-        }
-      ]
+      "id": "shelly-plus-2pm_cloud"
     },
     {
       "icon": "/drivers/shelly-pro-1/assets/icon.svg",
@@ -2972,8 +3091,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -3007,13 +3126,13 @@
         "small": "./assets/drivers/shelly-pro-1/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly-pro-1",
       "capabilities": [
         "onoff",
         "measure_temperature",
         "input_1",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-pro-1",
       "settings": [
         {
@@ -3063,12 +3182,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -3099,6 +3217,7 @@
         "input_1",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-pro-1_cloud"
     },
     {
@@ -3130,8 +3249,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -3165,7 +3284,6 @@
         "small": "./assets/drivers/shelly-pro-1pm/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly-pro-1pm",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -3176,6 +3294,7 @@
         "input_1",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-pro-1pm",
       "settings": [
         {
@@ -3225,12 +3344,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -3265,6 +3383,7 @@
         "input_1",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-pro-1pm_cloud"
     },
     {
@@ -3296,8 +3415,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -3331,13 +3450,13 @@
         "small": "./assets/drivers/shelly-pro-2/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly-pro-2",
       "capabilities": [
         "onoff",
         "measure_temperature",
         "input_1",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-pro-2",
       "settings": [
         {
@@ -3398,8 +3517,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -3433,7 +3552,6 @@
         "small": "./assets/drivers/shelly-pro-2/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly-pro-2",
       "capabilities": [
         "windowcoverings_state",
         "windowcoverings_set",
@@ -3442,6 +3560,7 @@
         "input_2",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-pro-2-rollershutter",
       "settings": [
         {
@@ -3491,12 +3610,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -3529,6 +3647,7 @@
         "input_2",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-pro-2-rollershutter_cloud"
     },
     {
@@ -3549,11 +3668,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "multi_channel_cloud"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "multi_channel_cloud"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -3584,6 +3703,7 @@
         "input_1",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-pro-2_cloud"
     },
     {
@@ -3615,8 +3735,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -3650,7 +3770,6 @@
         "small": "./assets/drivers/shelly-pro-2pm/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly-pro-2pm",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -3661,6 +3780,7 @@
         "input_1",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-pro-2pm",
       "settings": [
         {
@@ -3721,8 +3841,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -3756,7 +3876,6 @@
         "small": "./assets/drivers/shelly-pro-2/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly-pro-2pm",
       "capabilities": [
         "windowcoverings_state",
         "windowcoverings_set",
@@ -3769,6 +3888,7 @@
         "input_2",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-pro-2pm-rollershutter",
       "settings": [
         {
@@ -3804,39 +3924,55 @@
       "icon": "/drivers/shelly-pro-2pm-rollershutter_cloud/assets/icon.svg",
       "pair": [
         {
-          "id": "login_oauth2",
-          "template": "login_oauth2",
-          "options": {
-            "hint": "Log in with your Shelly account in the new window.",
-            "button": "Log In"
-          }
-        },
-        {
           "id": "list_devices",
           "template": "list_devices",
           "options": {
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "icon_select"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "repair": [
+          "id": "icon_select"
+        },
         {
-          "id": "login_oauth2",
-          "template": "login_oauth2"
+          "id": "get_device"
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "../../../assets/shelly-logo.png",
+            "usernameLabel": {
+              "en": "Username (admin for gen2 devices)",
+              "nl": "Gebruikersnaam (admin voor gen2 devices)"
+            },
+            "usernamePlaceholder": {
+              "en": "Username",
+              "nl": "Gebruikersnaam"
+            },
+            "PasswordLabel": {
+              "en": "Password",
+              "nl": "Wachtwoord"
+            }
+          }
+        },
+        {
+          "id": "add_device"
+        },
+        {
+          "id": "select_pairing"
+        },
+        {
+          "id": "manual_pairing"
         }
       ],
       "platforms": [
-        "cloud"
+        "local"
       ],
       "connectivity": [
-        "cloud"
+        "lan"
       ],
       "name": {
         "en": "Shelly Pro 2PM Roller Shutter",
@@ -3860,6 +3996,7 @@
         "input_2",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-pro-2pm-rollershutter_cloud"
     },
     {
@@ -3880,11 +4017,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "multi_channel_cloud"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "multi_channel_cloud"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -3919,6 +4056,7 @@
         "input_1",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly-pro-2pm_cloud"
     },
     {
@@ -3979,7 +4117,6 @@
         "small": "./assets/drivers/shelly-trv/images/small.jpg"
       },
       "class": "heater",
-      "discovery": "shelly-trv",
       "capabilities": [
         "target_temperature",
         "measure_temperature",
@@ -3999,6 +4136,7 @@
           "INTERNAL"
         ]
       },
+      "deprecated": true,
       "id": "shelly-trv",
       "settings": [
         {
@@ -4133,7 +4271,7 @@
         "small": "./assets/drivers/shelly1/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly1",
+      "deprecated": true,
       "id": "shelly1",
       "settings": [
         {
@@ -4254,7 +4392,7 @@
         "small": "./assets/drivers/shelly1l/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly1l",
+      "deprecated": true,
       "id": "shelly1L",
       "settings": [
         {
@@ -4373,6 +4511,7 @@
         "small": "./assets/drivers/shelly1/images/small.jpg"
       },
       "class": "socket",
+      "deprecated": true,
       "id": "shelly1_cloud"
     },
     {
@@ -4457,6 +4596,7 @@
         "small": "./assets/drivers/shelly1l/images/small.jpg"
       },
       "class": "socket",
+      "deprecated": true,
       "id": "shelly1l_cloud"
     },
     {
@@ -4556,7 +4696,7 @@
         "small": "./assets/drivers/shelly1pm/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly1pm",
+      "deprecated": true,
       "id": "shelly1pm",
       "settings": [
         {
@@ -4678,6 +4818,7 @@
         "small": "./assets/drivers/shelly1pm/images/small.jpg"
       },
       "class": "socket",
+      "deprecated": true,
       "id": "shelly1pm_cloud"
     },
     {
@@ -4709,8 +4850,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -4743,7 +4884,6 @@
         "small": "./assets/drivers/shelly2/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly2",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -4751,6 +4891,7 @@
         "input_1",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly2",
       "settings": [
         {
@@ -4820,8 +4961,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -4854,7 +4995,6 @@
         "small": "./assets/drivers/shelly2-rollershutter/images/small.jpg"
       },
       "class": "windowcoverings",
-      "discovery": "shelly2",
       "capabilities": [
         "windowcoverings_state",
         "windowcoverings_set",
@@ -4864,6 +5004,7 @@
         "input_2",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly2-rollershutter",
       "settings": [
         {
@@ -4922,12 +5063,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -4960,6 +5100,7 @@
         "input_2",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly2-rollershutter_cloud"
     },
     {
@@ -4991,8 +5132,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -5025,7 +5166,6 @@
         "small": "./assets/drivers/shelly25/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly25",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -5034,6 +5174,7 @@
         "input_1",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly25",
       "settings": [
         {
@@ -5103,8 +5244,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -5137,7 +5278,6 @@
         "small": "./assets/drivers/shelly25-rollershutter/images/small.jpg"
       },
       "class": "windowcoverings",
-      "discovery": "shelly25",
       "capabilities": [
         "windowcoverings_state",
         "windowcoverings_set",
@@ -5148,6 +5288,7 @@
         "input_2",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly25-rollershutter",
       "settings": [
         {
@@ -5206,12 +5347,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -5245,6 +5385,7 @@
         "input_2",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly25-rollershutter_cloud"
     },
     {
@@ -5265,11 +5406,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "multi_channel_cloud"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "multi_channel_cloud"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -5301,6 +5442,7 @@
         "input_1",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly25_cloud"
     },
     {
@@ -5321,11 +5463,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "multi_channel_cloud"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "multi_channel_cloud"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -5356,6 +5498,7 @@
         "input_1",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly2_cloud"
     },
     {
@@ -5387,8 +5530,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -5421,7 +5564,6 @@
         "small": "./assets/drivers/shelly3em/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly3em",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -5429,12 +5571,22 @@
         "measure_current",
         "measure_voltage",
         "meter_power",
+        "meter_power.total",
         "meter_power_returned",
         "rssi"
       ],
+      "capabilitiesOptions": {
+        "meter_power.total": {
+          "title": {
+            "en": "Total Energy",
+            "nl": "Energie totaal"
+          }
+        }
+      },
       "energy": {
         "cumulative": true
       },
+      "deprecated": true,
       "id": "shelly3em",
       "settings": [
         {
@@ -5511,11 +5663,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "multi_channel_cloud"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "multi_channel_cloud"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -5546,12 +5698,22 @@
         "measure_current",
         "measure_voltage",
         "meter_power",
+        "meter_power.total",
         "meter_power_returned",
         "rssi"
       ],
+      "capabilitiesOptions": {
+        "meter_power.total": {
+          "title": {
+            "en": "Total Energy",
+            "nl": "Energie totaal"
+          }
+        }
+      },
       "energy": {
         "cumulative": true
       },
+      "deprecated": true,
       "id": "shelly3em_cloud"
     },
     {
@@ -5583,8 +5745,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -5617,7 +5779,6 @@
         "small": "./assets/drivers/shelly4pro/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shelly4pro",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -5628,6 +5789,7 @@
         "measure_temperature",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly4pro",
       "settings": [
         {
@@ -5686,11 +5848,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "multi_channel_cloud"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "multi_channel_cloud"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -5723,6 +5885,7 @@
         "measure_temperature",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shelly4pro_cloud"
     },
     {
@@ -5754,8 +5917,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -5788,7 +5951,6 @@
         "small": "./assets/drivers/shellyair/images/small.jpg"
       },
       "class": "sensor",
-      "discovery": "shellyair",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -5809,6 +5971,7 @@
           }
         }
       },
+      "deprecated": true,
       "id": "shellyair",
       "settings": [
         {
@@ -5867,12 +6030,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -5916,6 +6078,7 @@
           }
         }
       },
+      "deprecated": true,
       "id": "shellyair_cloud"
     },
     {
@@ -5947,8 +6110,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -5981,7 +6144,6 @@
         "small": "./assets/drivers/shellybulb/images/small.jpg"
       },
       "class": "light",
-      "discovery": "shellybulb",
       "capabilities": [
         "onoff",
         "dim",
@@ -5991,6 +6153,7 @@
         "light_mode",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shellybulb",
       "settings": [
         {
@@ -6049,12 +6212,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -6087,6 +6249,7 @@
         "light_mode",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shellybulb_cloud"
     },
     {
@@ -6146,7 +6309,6 @@
         "small": "./assets/drivers/shellybutton1/images/small.jpg"
       },
       "class": "button",
-      "discovery": "shellybutton1",
       "capabilities": [
         "measure_battery",
         "rssi"
@@ -6156,6 +6318,7 @@
           "INTERNAL"
         ]
       },
+      "deprecated": true,
       "id": "shellybutton1",
       "settings": [
         {
@@ -6259,6 +6422,7 @@
           "INTERNAL"
         ]
       },
+      "deprecated": true,
       "id": "shellybutton1_cloud"
     },
     {
@@ -6290,8 +6454,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -6324,7 +6488,6 @@
         "small": "./assets/drivers/shellydimmer/images/small.jpg"
       },
       "class": "light",
-      "discovery": "shellydimmer",
       "capabilities": [
         "onoff",
         "dim",
@@ -6342,6 +6505,7 @@
           }
         }
       },
+      "deprecated": true,
       "id": "shellydimmer",
       "settings": [
         {
@@ -6400,12 +6564,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -6446,6 +6609,7 @@
           }
         }
       },
+      "deprecated": true,
       "id": "shellydimmer_cloud"
     },
     {
@@ -6477,8 +6641,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -6511,7 +6675,6 @@
         "small": "./assets/drivers/shellyduo/images/small.jpg"
       },
       "class": "light",
-      "discovery": "shellyduo",
       "capabilities": [
         "onoff",
         "dim",
@@ -6527,6 +6690,7 @@
           }
         }
       },
+      "deprecated": true,
       "id": "shellyduo",
       "settings": [
         {
@@ -6585,12 +6749,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -6622,6 +6785,7 @@
         "meter_power",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shellyduo_cloud"
     },
     {
@@ -6681,7 +6845,6 @@
         "small": "./assets/drivers/shellydw/images/small.jpg"
       },
       "class": "sensor",
-      "discovery": "shellydw",
       "capabilities": [
         "alarm_contact",
         "measure_luminance",
@@ -6697,6 +6860,7 @@
           "CR123A"
         ]
       },
+      "deprecated": true,
       "id": "shellydw",
       "settings": [
         {
@@ -6805,6 +6969,7 @@
           "CR123A"
         ]
       },
+      "deprecated": true,
       "id": "shellydw_cloud"
     },
     {
@@ -6836,8 +7001,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -6870,7 +7035,6 @@
         "small": "./assets/drivers/shellyem/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shellyem",
       "capabilities": [
         "onoff",
         "measure_power",
@@ -6882,6 +7046,7 @@
       "energy": {
         "cumulative": true
       },
+      "deprecated": true,
       "id": "shellyem",
       "settings": [
         {
@@ -6958,11 +7123,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "multi_channel_cloud"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "multi_channel_cloud"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -6997,6 +7162,7 @@
       "energy": {
         "cumulative": true
       },
+      "deprecated": true,
       "id": "shellyem_cloud"
     },
     {
@@ -7056,7 +7222,6 @@
         "small": "./assets/drivers/shellyflood/images/small.jpg"
       },
       "class": "sensor",
-      "discovery": "shellyflood",
       "capabilities": [
         "alarm_water",
         "measure_temperature",
@@ -7068,6 +7233,7 @@
           "CR123A"
         ]
       },
+      "deprecated": true,
       "id": "shellyflood",
       "settings": [
         {
@@ -7172,6 +7338,7 @@
           "CR123A"
         ]
       },
+      "deprecated": true,
       "id": "shellyflood_cloud"
     },
     {
@@ -7203,8 +7370,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -7237,12 +7404,12 @@
         "small": "./assets/drivers/shellygas/images/small.jpg"
       },
       "class": "sensor",
-      "discovery": "shellygas",
       "capabilities": [
         "alarm_smoke",
         "gas_concentration",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shellygas",
       "settings": [
         {
@@ -7340,7 +7507,6 @@
         "small": "./assets/drivers/shellyht/images/small.jpg"
       },
       "class": "sensor",
-      "discovery": "shellyht",
       "capabilities": [
         "measure_humidity",
         "measure_temperature",
@@ -7352,6 +7518,7 @@
           "CR123A"
         ]
       },
+      "deprecated": true,
       "id": "shellyht",
       "settings": [
         {
@@ -7456,6 +7623,7 @@
           "CR123A"
         ]
       },
+      "deprecated": true,
       "id": "shellyht_cloud"
     },
     {
@@ -7487,8 +7655,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -7521,13 +7689,13 @@
         "small": "./assets/drivers/shellyi3/images/small.jpg"
       },
       "class": "other",
-      "discovery": "shellyi3",
       "capabilities": [
         "input_1",
         "input_2",
         "input_3",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shellyi3",
       "settings": [
         {
@@ -7586,12 +7754,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -7621,6 +7788,7 @@
         "input_3",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shellyi3_cloud"
     },
     {
@@ -7652,8 +7820,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -7687,7 +7855,6 @@
         "small": "./assets/drivers/shellyi4/images/small.jpg"
       },
       "class": "other",
-      "discovery": "shellyi4",
       "capabilities": [
         "input_1",
         "input_2",
@@ -7695,6 +7862,7 @@
         "input_4",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shellyi4",
       "settings": [
         {
@@ -7744,12 +7912,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -7781,6 +7948,7 @@
         "input_4",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shellyi4_cloud"
     },
     {
@@ -7840,7 +8008,6 @@
         "small": "./assets/drivers/shellymotion/images/small.jpg"
       },
       "class": "sensor",
-      "discovery": "shellymotion",
       "capabilities": [
         "alarm_motion",
         "measure_luminance",
@@ -7853,6 +8020,7 @@
           "INTERNAL"
         ]
       },
+      "deprecated": true,
       "id": "shellymotion",
       "settings": [
         {
@@ -7958,6 +8126,7 @@
           "INTERNAL"
         ]
       },
+      "deprecated": true,
       "id": "shellymotion_cloud"
     },
     {
@@ -7989,8 +8158,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -8023,7 +8192,6 @@
         "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
       },
       "class": "light",
-      "discovery": "shellyrgbw2",
       "capabilities": [
         "onoff",
         "dim",
@@ -8056,6 +8224,7 @@
           }
         }
       },
+      "deprecated": true,
       "id": "shellyrgbw2color",
       "settings": [
         {
@@ -8114,12 +8283,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -8170,6 +8338,7 @@
           }
         }
       },
+      "deprecated": true,
       "id": "shellyrgbw2color_cloud"
     },
     {
@@ -8201,8 +8370,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -8235,11 +8404,11 @@
         "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
       },
       "class": "light",
-      "discovery": "shellyrgbw2",
       "capabilities": [
         "onoff",
         "dim",
         "measure_power",
+        "measure_power.total",
         "meter_power",
         "input_1",
         "rssi"
@@ -8249,8 +8418,15 @@
           "opts": {
             "duration": true
           }
+        },
+        "measure_power.total": {
+          "title": {
+            "en": "Total Power",
+            "nl": "Totaal vermogen"
+          }
         }
       },
+      "deprecated": true,
       "id": "shellyrgbw2white",
       "settings": [
         {
@@ -8309,11 +8485,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "multi_channel_cloud"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "multi_channel_cloud"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -8341,10 +8517,20 @@
         "onoff",
         "dim",
         "measure_power",
+        "measure_power.total",
         "meter_power",
         "input_1",
         "rssi"
       ],
+      "capabilitiesOptions": {
+        "measure_power.total": {
+          "title": {
+            "en": "Total Power",
+            "nl": "Totaal vermogen"
+          }
+        }
+      },
+      "deprecated": true,
       "id": "shellyrgbw2white_cloud"
     },
     {
@@ -8404,7 +8590,6 @@
         "small": "./assets/drivers/shellysmoke/images/small.jpg"
       },
       "class": "sensor",
-      "discovery": "shellysmoke",
       "capabilities": [
         "alarm_smoke",
         "measure_temperature",
@@ -8416,6 +8601,7 @@
           "AA"
         ]
       },
+      "deprecated": true,
       "id": "shellysmoke",
       "settings": [
         {
@@ -8520,6 +8706,7 @@
           "AA"
         ]
       },
+      "deprecated": true,
       "id": "shellysmoke_cloud"
     },
     {
@@ -8551,8 +8738,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -8585,7 +8772,6 @@
         "small": "./assets/drivers/shellyuni/images/small.jpg"
       },
       "class": "socket",
-      "discovery": "shellyuni",
       "capabilities": [
         "onoff",
         "measure_temperature.1",
@@ -8622,6 +8808,7 @@
           }
         }
       },
+      "deprecated": true,
       "id": "shellyuni",
       "settings": [
         {
@@ -8680,11 +8867,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "multi_channel_cloud"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "multi_channel_cloud"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -8744,6 +8931,7 @@
           }
         }
       },
+      "deprecated": true,
       "id": "shellyuni_cloud"
     },
     {
@@ -8797,7 +8985,6 @@
         "small": "./assets/drivers/shellyvintage/images/small.jpg"
       },
       "class": "light",
-      "discovery": "shellyvintage",
       "capabilities": [
         "onoff",
         "dim",
@@ -8812,6 +8999,7 @@
           }
         }
       },
+      "deprecated": true,
       "id": "shellyvintage",
       "settings": [
         {
@@ -8870,12 +9058,11 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_devices"
+            "next": "add_device_cloud"
           }
         },
         {
-          "id": "add_devices",
-          "template": "add_devices"
+          "id": "add_device_cloud"
         }
       ],
       "repair": [
@@ -8906,6 +9093,7 @@
         "meter_power",
         "rssi"
       ],
+      "deprecated": true,
       "id": "shellyvintage_cloud"
     }
   ],
@@ -9213,7 +9401,7 @@
     }
   },
   "discovery": {
-    "shelly-plug": {
+    "shelly": {
       "type": "mdns-sd",
       "mdns-sd": {
         "name": "http",
@@ -9226,662 +9414,7 @@
             "field": "host",
             "match": {
               "type": "regex",
-              "value": "^shellyplug-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly-plug-s": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellyplug-s-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly-plus-1": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^ShellyPlus1-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly-plus-1pm": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^ShellyPlus1PM-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly-plus-2pm": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^ShellyPlus2PM-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly-plus-ht": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^ShellyPlusHT-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly-pro-1": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^ShellyPro1-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly-pro-1pm": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^ShellyPro1PM-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly-pro-2": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^ShellyPro2-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly-pro-2pm": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^ShellyPro2PM-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly-trv": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellytrv-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly1": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shelly1-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly1l": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shelly1l-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly1pm": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shelly1pm-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly2": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellyswitch-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly25": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellyswitch25-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly3em": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellyem3-"
-            }
-          }
-        ]
-      ]
-    },
-    "shelly4pro": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shelly4pro-"
-            }
-          }
-        ],
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^ShellyPro4PM-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellyair": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellyair-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellybulb": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellybulb-|shellycolorbulb-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellybutton1": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellybutton1-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellydimmer": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellydimmer2?-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellyduo": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^ShellyBulbDuo-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellydw": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellydw2?-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellyem": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellyem-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellyflood": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellyflood-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellygas": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellygas-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellyht": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellyht-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellyi3": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellyix3-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellyi4": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^ShellyPlusI4-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellymotion": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellymotionsensor-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellyrgbw2": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellyrgbw2-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellysmoke": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellysmoke-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellyuni": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^shellyuni-"
-            }
-          }
-        ]
-      ]
-    },
-    "shellyvintage": {
-      "type": "mdns-sd",
-      "mdns-sd": {
-        "name": "http",
-        "protocol": "tcp"
-      },
-      "id": "{{host}}",
-      "conditions": [
-        [
-          {
-            "field": "host",
-            "match": {
-              "type": "regex",
-              "value": "^ShellyVintage-"
+              "value": "^shelly"
             }
           }
         ]

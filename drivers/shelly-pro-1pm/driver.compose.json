@@ -9,7 +9,6 @@
     "small": "./assets/drivers/shelly-pro-1pm/images/small.jpg"
   },
   "class": "socket",
-  "discovery": "shelly-pro-1pm",
   "$extends": [
     "defaults"
   ],
@@ -22,5 +21,6 @@
     "measure_temperature",
     "input_1",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

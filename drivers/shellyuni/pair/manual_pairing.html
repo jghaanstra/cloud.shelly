@@ -13,12 +13,14 @@ $(function() {
 		var inputaddress = $('#address').val();
 		var inputusername = $('#username').val();
 		var inputpassword = $('#password').val();
+    var inputgeneration = $('input[name="gen"]:checked').val();
 
 		if (inputaddress != '') {
 			var data = {
 				address: inputaddress,
 				username: inputusername,
-				password: inputpassword
+				password: inputpassword,
+        gen: inputgeneration
 			};
 
       Homey.emit('manual_pairing', data)
@@ -96,6 +98,12 @@ $(function() {
 	<div class="form-group">
 		<label for="password" data-i18n="pair.password">Password</label>
 		<input type="password" class="form-control" id="password">
+	</div>
+  <div class="form-group">
+    <input type="radio" id="gen1" name="gen" value="gen1" checked>
+    <label for="male">First Generation</label><br>
+    <input type="radio" id="gen2" name="gen" value="gen2">
+    <label for="male">Second Generation</label>
 	</div>
 	<div class="form-group buttons">
 		<button id="test-connection" class="button" data-i18n="pair.test">Test Connection</button>

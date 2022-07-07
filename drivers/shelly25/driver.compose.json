@@ -8,9 +8,8 @@
     "small": "./assets/drivers/shelly25/images/small.jpg"
   },
   "class": "socket",
-  "discovery": "shelly25",
   "$extends": [
-    "defaults_multi_channel"
+    "defaults"
   ],
   "capabilities": [
     "onoff",
@@ -19,5 +18,6 @@
     "measure_temperature",
     "input_1",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

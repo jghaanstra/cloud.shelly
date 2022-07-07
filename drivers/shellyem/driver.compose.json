@@ -8,9 +8,8 @@
     "small": "./assets/drivers/shellyem/images/small.jpg"
   },
   "class": "socket",
-  "discovery": "shellyem",
   "$extends": [
-    "defaults_multi_channel"
+    "defaults"
   ],
   "capabilities": [
     "onoff",
@@ -22,5 +21,6 @@
   ],
   "energy": {
     "cumulative": true
-  }
+  },
+  "deprecated": true
 }

@@ -9,14 +9,14 @@
     "small": "./assets/drivers/shelly-pro-2/images/small.jpg"
   },
   "class": "socket",
-  "discovery": "shelly-pro-2",
   "$extends": [
-    "defaults_multi_channel"
+    "defaults"
   ],
   "capabilities": [
     "onoff",
     "measure_temperature",
     "input_1",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

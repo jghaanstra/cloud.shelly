@@ -13,9 +13,7 @@ class Shelly4ProDevice extends Device {
       this.callbacks = [
         'single_push',
         'long_push',
-        'double_push',
-        'btn_down',
-        'btn_up'
+        'double_push'
       ];
     } else {
       this.callbacks = [];

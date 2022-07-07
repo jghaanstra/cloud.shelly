@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shellydimmer/images/small.jpg"
   },
   "class": "light",
-  "discovery": "shellydimmer",
   "$extends": [
     "defaults"
   ],
@@ -28,5 +27,6 @@
 				"duration": true
 			}
 		}
-  }
+  },
+  "deprecated": true
 }

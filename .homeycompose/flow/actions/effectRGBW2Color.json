@@ -1,0 +1,86 @@
+{
+  "id": "effectRGBW2Color",
+  "title": {
+    "en": "Switch Effect",
+    "nl": "Effect schakelen"
+  },
+  "titleFormatted": {
+    "en": "Switch effect to [[effect]]",
+    "nl": "Effect schakelen naar [[effect]]"
+  },
+  "args": [
+    {
+      "name": "effect",
+      "title": {
+        "en": "Effect",
+        "nl": "Effect"
+      },
+      "type": "dropdown",
+      "placeholder": {
+        "en": "Effect",
+        "nl": "Effect"
+      },
+      "values": [
+        {
+          "id": "0",
+          "label": {
+            "en": "Turn Effect Off",
+            "nl": "Uitschakelen effect"
+          }
+        },
+        {
+          "id": "1",
+          "label": {
+            "en": "Meteor shower",
+            "nl": "Meteoriet regen"
+          }
+        },
+        {
+          "id": "2",
+          "label": {
+            "en": "Gradual change",
+            "nl": "Geleidelijk veranderen"
+          }
+        },
+        {
+          "id": "3",
+          "label": {
+            "en": "Breath",
+            "nl": "Ademen"
+          }
+        },
+        {
+          "id": "4",
+          "label": {
+            "en": "Flash",
+            "nl": "Flitsen"
+          }
+        },
+        {
+          "id": "5",
+          "label": {
+            "en": "Gradual On/Off",
+            "nl": "Geleidelijk Aan/Uit"
+          }
+        },
+        {
+          "id": "6",
+          "label": {
+            "en": "Red/Green change",
+            "nl": "Rood/Groen verandering"
+          }
+        }
+      ]
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shellyrgbw2color&capabilities=onoff.whitemode"
+    }
+  ],
+  "platforms": ["local"]
+}

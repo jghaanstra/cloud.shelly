@@ -2,42 +2,50 @@
   try {
     Homey.emit('add_device', {})
       .then(result => {
-        for (let i = 0; i <= result.config.channels; i++) {
-          if (i < result.config.channels) {
-            var device_id = i + 1;
-            if (i === 0) {
-              var capabilities = result.config.capabilities_1
+        if (result.store.config.channels === 1) { // add with deviceArray for single channel devices
+          Homey.createDevice(result);
+          Homey.done();
+        } else {
+          for (let i = 0; i <= result.store.config.channels; i++) { // add with custom loop for multi-channel devices
+            if (i < result.store.config.channels) {
+              var device_id = i + 1;
+              if (i === 0) {
+                var capabilities = result.store.config.capabilities_1;
+              } else {
+                var capabilities = result.store.config.capabilities_2;
+              }
+              Homey.createDevice({
+                name: device_id +' - '+ result.name,
+                data: {
+                  id: result.data.id + '-channel-' + i
+                },
+                settings: {
+                  address  : result.settings.address,
+                  username : result.settings.username,
+                  password : result.settings.password
+                },
+                capabilities: capabilities,
+                capabilitiesOptions: result.capability_options,
+                energy: result.energy,
+                store: {
+                  config: result.store.config,
+                  main_device: result.data.id,
+                  channel: i,
+                  type: result.store.type,
+                  battery: result.store.battery,
+                  unicast: result.store.unicast,
+                  wsserver: result.store.wsserver,
+                  sdk: 3,
+                  gen: result.store.gen,
+                  communication: result.store.communication
+                },
+                icon: result.icon
+              });
             } else {
-              var capabilities = result.config.capabilities_2
+              Homey.done()
             }
-            Homey.createDevice({
-      				name: result.config.name + ' ' + device_id,
-      				data: {
-                id: result.device.data.id + '-channel-' + i
-              },
-              settings: {
-                address  : result.device.settings.address,
-                username : result.device.settings.username,
-                password : result.device.settings.password
-              },
-              capabilities: capabilities,
-              store: {
-                main_device: result.device.data.id,
-                channel: i,
-                type: result.device.store.type,
-                battery: result.device.store.battery,
-                unicast: result.device.store.unicast,
-                wsserver: result.device.store.wsserver,
-                sdk: 3,
-                gen: result.device.store.gen,
-                communication: result.device.store.communication
-              },
-              icon: result.device.icon
-      			});
-          } else {
-            Homey.done()
           }
-    		}
+        }
       })
   } catch (error) {
     Homey.alert(error);

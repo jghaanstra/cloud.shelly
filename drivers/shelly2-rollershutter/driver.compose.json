@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shelly2-rollershutter/images/small.jpg"
   },
   "class": "windowcoverings",
-  "discovery": "shelly2",
   "$extends": [
     "defaults"
   ],
@@ -20,5 +19,6 @@
     "input_1",
     "input_2",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

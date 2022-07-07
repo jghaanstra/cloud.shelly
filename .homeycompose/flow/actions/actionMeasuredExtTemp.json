@@ -1,0 +1,39 @@
+{
+  "id": "actionMeasuredExtTemp",
+  "title": {
+    "en": "Manually set measured temperature",
+    "nl": "Handmatig instellen gemeten temperatuur"
+  },
+  "titleFormatted": {
+    "en": "Manually set measure temperature to [[temperature]]",
+    "nl": "Handmatig instellen gemeten temperatuur op [[temperature]]"
+  },
+  "args": [
+    {
+      "name": "temperature",
+      "type": "number",
+      "title": {
+        "en": "Temperature",
+        "nl": "Temperatuur"
+      },
+      "placeholder": {
+        "en": "Degrees Celcius",
+        "nl": "Graden celcius"
+      },
+      "min": -50,
+      "max": 100,
+      "step": 0.01,
+      "label": "°C"
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
+    }
+  ],
+  "platforms": ["local"]
+}

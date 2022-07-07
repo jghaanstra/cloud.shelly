@@ -52,5 +52,6 @@
     "batteries": [
       "AA"
     ]
-  }
+  },
+  "deprecated": true
 }

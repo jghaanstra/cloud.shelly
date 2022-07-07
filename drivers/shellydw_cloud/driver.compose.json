@@ -56,5 +56,6 @@
       "CR123A",
       "CR123A"
     ]
-  }
+  },
+  "deprecated": true
 }

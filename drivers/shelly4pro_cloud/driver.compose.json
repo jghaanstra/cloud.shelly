@@ -9,7 +9,7 @@
   },
   "class": "socket",
   "$extends": [
-    "defaults_cloud_multi_channel"
+    "defaults_cloud"
   ],
   "capabilities": [
     "onoff",
@@ -19,5 +19,6 @@
     "input_1",
     "measure_temperature",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

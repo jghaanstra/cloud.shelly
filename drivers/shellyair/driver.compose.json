@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shellyair/images/small.jpg"
   },
   "class": "sensor",
-  "discovery": "shellyair",
   "$extends": [
     "defaults"
   ],
@@ -31,5 +30,6 @@
         "nl": "Apparaat temperatuur"
       }
     }
-  }
+  },
+  "deprecated": true
 }

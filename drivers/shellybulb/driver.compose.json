@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shellybulb/images/small.jpg"
   },
   "class": "light",
-  "discovery": "shellybulb",
   "$extends": [
     "defaults"
   ],
@@ -20,5 +19,6 @@
     "light_saturation",
     "light_mode",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

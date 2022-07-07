@@ -1,0 +1,35 @@
+{
+  "id": "actionValveMode",
+  "title": {
+    "en": "Set valve profile",
+    "nl": "Instellen radiator profiel"
+  },
+  "titleFormatted": {
+    "en": "Set valve profile to [[profile]]",
+    "nl": "Instellen radiator profiel naar [[profile]]"
+  },
+  "args": [
+    {
+      "name": "profile",
+      "type": "autocomplete",
+      "title": {
+        "en": "Profile",
+        "nl": "Profiel"
+      },
+      "placeholder": {
+        "en": "Select profile ...",
+        "nl": "Selecteer profiel ..."
+      }
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
+    }
+  ],
+  "platforms": ["local"]
+}

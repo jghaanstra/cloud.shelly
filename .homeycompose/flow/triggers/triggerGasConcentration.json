@@ -1,0 +1,30 @@
+{
+  "id": "triggerGasConcentration",
+  "title": {
+    "en": "Gas concentration changed",
+    "nl": "Gas concentratie gewijzigd"
+  },
+  "tokens": [
+    {
+      "name": "ppm",
+      "type": "number",
+      "title": {
+        "en": "Parts per million",
+        "nl": "Delen per miljoen"
+      },
+      "example": 3452
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shellygas&capabilities=gas_concentration"
+    }
+  ],
+  "platforms": ["local"]
+}

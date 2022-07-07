@@ -1,0 +1,35 @@
+{
+  "id": "actionValvePosition",
+  "title": {
+    "en": "Manually set valve",
+    "nl": "Handmatig afsluitklep instellen"
+  },
+  "titleFormatted": {
+    "en": "Manually set valve position to [[position]]",
+    "nl": "Handmatig instellen radiator positie naar [[position]]"
+  },
+  "args": [
+    {
+      "name": "position",
+      "type": "range",
+      "title": {
+        "en": "Position",
+        "nl": "Positie"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 0.1,
+      "label": "%"
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
+    }
+  ],
+  "platforms": ["local"]
+}

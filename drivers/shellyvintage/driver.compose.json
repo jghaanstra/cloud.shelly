@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shellyvintage/images/small.jpg"
   },
   "class": "light",
-  "discovery": "shellyvintage",
   "$extends": [
     "defaults"
   ],
@@ -63,5 +62,6 @@
       "id": "manual_pairing",
       "$template": "manual_pairing"
     }
-  ]
+  ],
+  "deprecated": true
 }

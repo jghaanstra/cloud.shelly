@@ -9,7 +9,6 @@
     "small": "./assets/drivers/shelly-plus-2pm/images/small.jpg"
   },
   "class": "windowcoverings",
-  "discovery": "shelly-plus-2pm",
   "$extends": [
     "defaults"
   ],
@@ -24,5 +23,6 @@
     "input_1",
     "input_2",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

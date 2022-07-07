@@ -9,7 +9,6 @@
     "small": "./assets/drivers/shelly-pro-2/images/small.jpg"
   },
   "class": "socket",
-  "discovery": "shelly-pro-2pm",
   "$extends": [
     "defaults"
   ],
@@ -24,5 +23,6 @@
     "input_1",
     "input_2",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

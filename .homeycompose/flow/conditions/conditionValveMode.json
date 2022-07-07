@@ -1,0 +1,35 @@
+{
+  "id": "conditionValveMode",
+  "title": {
+    "en": "Valve profile !{{is|is not}}",
+    "nl": "Radiator profiel !{{is|is niet}}"
+  },
+  "titleFormatted": {
+    "en": "Valve profile !{{is|is not}} [[profile]]",
+    "nl": "Radiator profiel !{{is|is niet}} [[profile]]"
+  },
+  "args": [
+    {
+      "name": "profile",
+      "type": "autocomplete",
+      "title": {
+        "en": "Profile",
+        "nl": "Profiel"
+      },
+      "placeholder": {
+        "en": "Select profile ...",
+        "nl": "Selecteer profiel ..."
+      }
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
+    }
+  ],
+  "platforms": ["local"]
+}

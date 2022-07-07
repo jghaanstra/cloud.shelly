@@ -1,0 +1,34 @@
+{
+  "id": "actionGasSetVolume",
+  "title": {
+    "en": "Set alarm volume",
+    "nl": "Instellen alarm volume"
+  },
+  "titleFormatted": {
+    "en": "Set alarm volume to [[volume]]",
+    "nl": "Instellen alarm volume naar [[volume]]"
+  },
+  "args": [
+    {
+      "name": "volume",
+      "title": {
+        "en": "Volume",
+        "nl": "Volume"
+      },
+      "type": "range",
+      "min": 0,
+      "max": 11,
+      "step": 1
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shellygas&capabilities=gas_concentration"
+    }
+  ],
+  "platforms": ["local"]
+}

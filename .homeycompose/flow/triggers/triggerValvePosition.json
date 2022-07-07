@@ -1,0 +1,30 @@
+{
+  "id": "triggerValvePosition",
+  "title": {
+    "en": "Valve position changed",
+    "nl": "Afsluitklep positie gewijzigd"
+  },
+  "tokens": [
+    {
+      "name": "position",
+      "type": "number",
+      "title": {
+        "en": "Position",
+        "nl": "Positie"
+      },
+      "example": 5.0
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
+    }
+  ],
+  "platforms": ["local"]
+}

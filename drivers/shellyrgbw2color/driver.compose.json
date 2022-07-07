@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
   },
   "class": "light",
-  "discovery": "shellyrgbw2",
   "$extends": [
     "defaults"
   ],
@@ -43,5 +42,6 @@
         "nl": "Wit modus schakelen"
       }
     }
-  }
+  },
+  "deprecated": true
 }

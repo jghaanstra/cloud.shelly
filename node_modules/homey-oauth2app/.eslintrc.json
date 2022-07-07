@@ -1,3 +1,7 @@
 {
-  "extends": "athom"
+  "extends": "athom",
+  "env": {
+    "jest/globals": true
+  },
+  "plugins": ["jest"]
 }
