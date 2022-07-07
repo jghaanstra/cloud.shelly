@@ -10,7 +10,7 @@
   },
   "class": "socket",
   "$extends": [
-    "defaults_cloud"
+    "defaults"
   ],
   "capabilities": [
     "windowcoverings_state",
@@ -23,5 +23,6 @@
     "input_1",
     "input_2",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

@@ -35,10 +35,6 @@
         "PasswordLabel": {
           "en": "Password",
           "nl": "Wachtwoord"
-        },
-        "usernamePlaceholder": {
-          "en": "Password",
-          "nl": "Wachtwoord"
         }
       }
     },

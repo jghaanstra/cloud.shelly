@@ -27,5 +27,6 @@
 				"duration": true
 			}
 		}
-  }
+  },
+  "deprecated": true
 }

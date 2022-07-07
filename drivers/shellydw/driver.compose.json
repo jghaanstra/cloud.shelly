@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shellydw/images/small.jpg"
   },
   "class": "sensor",
-  "discovery": "shellydw",
   "$extends": [
     "defaults"
   ],
@@ -72,5 +71,6 @@
       "CR123A",
       "CR123A"
     ]
-  }
+  },
+  "deprecated": true
 }

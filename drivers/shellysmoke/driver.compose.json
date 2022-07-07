@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shellysmoke/images/small.jpg"
   },
   "class": "sensor",
-  "discovery": "shellysmoke",
   "$extends": [
     "defaults"
   ],
@@ -68,5 +67,6 @@
     "batteries": [
       "AA"
     ]
-  }
+  },
+  "deprecated": true
 }

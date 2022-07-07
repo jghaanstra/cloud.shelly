@@ -1,0 +1,19 @@
+{
+  "id": "actionRGBW2EnableWhiteMode",
+    "title": {
+      "en": "Enable white mode",
+      "nl": "Inschakelen wit modus"
+    },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shelly_cloud|shellyrgbw2color&capabilities=onoff.whitemode"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

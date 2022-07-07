@@ -5,7 +5,6 @@ const { EventEmitter } = require('events');
 const querystring = require('querystring');
 
 const fetch = require('node-fetch');
-const PromiseQueue = require('promise-queue');
 
 const OAuth2Error = require('./OAuth2Error');
 const OAuth2Token = require('./OAuth2Token');
@@ -74,7 +73,6 @@ class OAuth2Client extends EventEmitter {
     this._scopes = scopes;
 
     this._token = null;
-    this._pq = new PromiseQueue(1);
   }
 
   /*
@@ -145,7 +143,7 @@ class OAuth2Client extends EventEmitter {
     query,
     headers,
   }) {
-    return this._queueRequest({
+    return this._executeRequest({
       method: 'GET',
       path,
       query,
@@ -165,7 +163,7 @@ class OAuth2Client extends EventEmitter {
     query,
     headers,
   }) {
-    return this._queueRequest({
+    return this._executeRequest({
       method: 'delete',
       path,
       query,
@@ -189,7 +187,7 @@ class OAuth2Client extends EventEmitter {
     body,
     headers,
   }) {
-    return this._queueRequest({
+    return this._executeRequest({
       method: 'POST',
       path,
       query,
@@ -215,7 +213,7 @@ class OAuth2Client extends EventEmitter {
     body,
     headers,
   }) {
-    return this._queueRequest({
+    return this._executeRequest({
       method: 'PATCH',
       path,
       query,
@@ -241,7 +239,7 @@ class OAuth2Client extends EventEmitter {
     body,
     headers,
   }) {
-    return this._queueRequest({
+    return this._executeRequest({
       method: 'PUT',
       path,
       query,
@@ -273,16 +271,6 @@ class OAuth2Client extends EventEmitter {
     return undefined;
   }
 
-  /**
-   * @param req
-   * @returns {Promise<*>}
-   * @private
-   */
-  async _queueRequest(req) {
-    return this._pq.add(() => {
-      return this._executeRequest({ req });
-    });
-  }
 
   /**
    * @param {object} args
@@ -291,14 +279,18 @@ class OAuth2Client extends EventEmitter {
    * @returns {Promise<void|*>}
    * @private
    */
-  async _executeRequest({
+  async _executeRequest(
     req,
     didRefreshToken = false,
-  }) {
+  ) {
     const {
       url,
       opts,
     } = await this.onBuildRequest(req);
+
+    if (this._refreshingToken) {
+      await this._refreshingToken;
+    }
 
     // log request
     this.debug('[req]', opts.method, url);
@@ -770,10 +762,10 @@ class OAuth2Client extends EventEmitter {
           opts,
           response,
         });
-        return this._executeRequest({
+        return this._executeRequest(
           req,
-          didRefreshToken: true,
-        });
+          true,
+        );
       }
     }
 

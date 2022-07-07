@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shellyi3/images/small.jpg"
   },
   "class": "other",
-  "discovery": "shellyi3",
   "$extends": [
     "defaults"
   ],
@@ -17,5 +16,6 @@
     "input_2",
     "input_3",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

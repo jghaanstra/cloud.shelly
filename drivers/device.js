@@ -3,15 +3,41 @@
 const Homey = require('homey');
 const Util = require('../lib/util.js');
 const WebSocket = require('ws');
-const semver = require('semver');
 const tinycolor = require("tinycolor2");
 
 class ShellyDevice extends Homey.Device {
 
   onInit() {
     if (!this.util) this.util = new Util({homey: this.homey});
+    
+    // ADDING CAPABILITY LISTENERS
+    this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
+    this.registerCapabilityListener("dim", this.onCapabilityDim.bind(this));
+    this.registerCapabilityListener("light_temperature", this.onCapabilityLightTemperature.bind(this));
+    this.registerMultipleCapabilityListener(['light_hue', 'light_saturation'], this.onMultipleCapabilityListenerSatHue.bind(this), 500);
+    this.registerCapabilityListener("light_mode", this.onCapabilityLightMode.bind(this));
+    this.registerCapabilityListener("onoff.whitemode", this.onCapabilityOnoffWhiteMode.bind(this));
+    this.registerCapabilityListener("windowcoverings_state", this.onCapabilityWindowcoveringsState.bind(this));
+    this.registerCapabilityListener("windowcoverings_set", this.onCapabilityWindowcoveringsSet.bind(this));
+    this.registerCapabilityListener("valve_position", this.onCapabilityValvePosition.bind(this));
+    this.registerCapabilityListener("valve_mode", this.onCapabilityValveMode.bind(this));
+    this.registerCapabilityListener("target_temperature", this.onCapabilityTargetTemperature.bind(this));
+
+    // BOOT SEQUENCE
+    this.bootSequence();
+
+    // REGISTERING DEVICE TRIGGER CARDS
+    this.homey.setTimeout(() => {
+      if (this.getStoreValue('config') !== null || this.getStoreValue('config') !== undefined) {
+        for (const trigger of this.getStoreValue('config').triggers) {
+          this.homey.flow.getDeviceTriggerCard(trigger);
+        }
+      }
+    }, 2000);
+
   }
 
+  /* onAdded() */
   async onAdded() {
 
     // gen1 + gen2: initially poll the device status
@@ -32,6 +58,91 @@ class ShellyDevice extends Homey.Device {
         this.homey.app.websocketLocalListener();
       }, 4000);
     }
+
+  }
+
+  /* boot sequence */
+  async bootSequence() {
+    try {
+
+      // initially set the device as available
+      this.homey.setTimeout(async () => {
+        this.setAvailable();
+      }, 1000);
+
+      // TODO: REMOVE AFTER SOME RELEASES
+      /* save the device config under the device store */
+      if (this.getStoreValue('config') === null || this.getStoreValue('config') === undefined) {
+        const hostname = this.getStoreValue('main_device').substr(0, this.getStoreValue('main_device').lastIndexOf("-") + 1);
+        const device_config = await this.util.getDeviceConfig(hostname);
+        if (Object.keys(device_config).length !== 0) {
+          this.setStoreValue('config', device_config);
+        } else {
+          this.log(this.getData().id + ' has no valid device config to set');
+        }
+      }
+
+      if (this.getStoreValue('communication') === 'websocket') {
+
+        // gen 2 device init for non battery powered devices
+        if (!this.getStoreValue('battery')) {
+          const result = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
+          this.setStoreValue('type', result.model);
+          this.setStoreValue('fw_version', result.ver);
+        }
+
+        // gen2 devices with outbound websocket firmware
+        if (this.getStoreValue('wsserver')) {
+          // nothing to do here as the websocket server is started on app.OnInit() or after device.onAdded()
+        // gen2 devices without outbound websocket firwmare
+        } else {
+          if (this.getStoreValue('channel') === 0) {
+            // TODO: eventually remove this once the firmware for outbound websockets has been rolled out
+            if (!this.getStoreValue('battery')) {
+              this.ws = null;
+              this.connected = false;
+              this.commandId = 0;
+              this.connectWebsocket();
+            }
+            this.setStoreValue('digest_auth_websocket', '{}');
+          }
+        }
+
+        // all powered gen2: start polling for all non-battery operated gen2 devices
+        if (!this.getStoreValue('battery')) {
+          this.pollingInterval = this.homey.setInterval(() => {
+            this.pollDevice();
+          }, (60000 + (1000 * this.getStoreValue('channel'))));
+        }
+      } else {
+
+        // gen 1 device init for non battery powered devices
+        if (!this.getStoreValue('battery')) {
+          const result = await this.util.sendCommand('/shelly', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          this.setStoreValue('type', result.type);
+          const regex = /(?<=\/v)(.*?)(?=\-)/gm;
+          const version_data = regex.exec(result.fw);
+          if (version_data !== null) {
+            this.setStoreValue('fw_version', version_data[0]);
+          }
+        }
+
+        // gen 1 polling
+        if (this.homey.settings.get('general_coap')) { // CoAP is disabled
+          var polling_frequency = this.homey.settings.get('general_polling_frequency') * 1000 || 5000;
+        } else { // CoAP is enabled
+          var polling_frequency = 60000;
+        }
+        if (!this.getStoreValue('battery')) {
+          this.pollingInterval = this.homey.setInterval(() => {
+            this.pollDevice();
+          }, (polling_frequency + (1000 * this.getStoreValue('channel'))));
+        }
+
+      }
+    } catch (error) {
+      this.error(error);
+    }
   }
 
   // CAPABILITY LISTENERS
@@ -41,15 +152,22 @@ class ShellyDevice extends Homey.Device {
     try {
       switch(this.getStoreValue('communication')) {
         case 'websocket': {
-          return await this.util.sendRPCCommand('/rpc/Switch.Set?id='+ this.getStoreValue("channel") +'&on='+ value, this.getSetting('address'), this.getSetting('password'));
+          let component_websocket = this.getClass() === 'light' ? 'Light' : 'Switch';
+          return await this.util.sendRPCCommand('/rpc/'+ component_websocket +'.Set?id='+ this.getStoreValue("channel") +'&on='+ value, this.getSetting('address'), this.getSetting('password'));
         }
         case 'coap': {
-          const path = value ? '/relay/'+ this.getStoreValue("channel") +'?turn=on' : '/relay/'+ this.getStoreValue("channel") +'?turn=off';
-          return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          if (this.getClass() === 'light') {
+            const light_config = this.getStoreValue('config').extra.light;
+            var onoff_light_path = value ? '/'+ light_config.light_endpoint +'/'+ this.getStoreValue("channel") +'?turn=on' : '/'+ light_config.light_endpoint +'/'+ this.getStoreValue("channel") +'?turn=off';
+          } else {
+            var onoff_light_path = value ? '/relay/'+ this.getStoreValue("channel") +'?turn=on' : '/relay/'+ this.getStoreValue("channel") +'?turn=off';
+          }
+          return await this.util.sendCommand(onoff_light_path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         }
         case 'cloud': {
+          const component_cloud = this.getClass() === 'light' ? 'light' : 'relay';
           const onoff = value ? 'on' : 'off';
-          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'relay', command_param: 'turn', command_value: onoff, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: component_cloud, command_param: 'turn', command_value: onoff, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
         }
         default:
           break;
@@ -64,7 +182,7 @@ class ShellyDevice extends Homey.Device {
     try {
       switch(this.getStoreValue('communication')) {
         case 'websocket': {
-          break;
+          return await this.util.sendRPCCommand('/rpc/Light.Set?id='+ this.getStoreValue("channel") +'&on='+ value, this.getSetting('address'), this.getSetting('password'));
         }
         case 'coap': {
           const path = value ? '/light/'+ this.getStoreValue("channel") +'?turn=on' : '/light/'+ this.getStoreValue("channel") +'?turn=off';
@@ -163,16 +281,28 @@ class ShellyDevice extends Homey.Device {
       if (opts.duration > 5000 ) {
         return Promise.reject(this.homey.__('device.maximum_dim_duration'));
       } else {
+
         switch(this.getStoreValue('communication')) {
           case 'websocket': {
-            break
+            const dim_websocket = value === 0 ? 1 : value * 100;
+            return await this.util.sendRPCCommand('/rpc/Light.Set?id='+ this.getStoreValue("channel") +'&on=true&brightness='+ dim_websocket, this.getSetting('address'), this.getSetting('password'));
           }
           case 'coap': {
             const dim_coap = value === 0 ? 1 : value * 100;
+            const light_config = this.getStoreValue('config').extra.light;
+            let dim_component = light_config.dim_component;
+
+            /* dim gain or brightness depending on light_mode for Shelly Bulb (RGBW) */
+            if (this.getStoreValue('config').name === 'Shelly Bulb' || this.getStoreValue('config').name === 'Shelly Bulb RGBW') {
+              if (this.getCapabilityValue('light_mode') === 'color') {
+                dim_component = 'gain';
+              }
+            }
+
             if (!this.getCapabilityValue('onoff')) {
-              return await this.util.sendCommand('/light/0?turn=on&brightness='+ dim_coap +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+              return await this.util.sendCommand('/'+ light_config.light_endpoint +'/'+ this.getStoreValue('channel') +'?turn=on&'+ dim_component +'='+ dim_coap +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
             } else {
-              return await this.util.sendCommand('/light/0?brightness='+ dim_coap +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+              return await this.util.sendCommand('/'+ light_config.light_endpoint +'/'+ this.getStoreValue('channel') +'?'+ dim_component +'='+ dim_coap +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
             }
           }
           case 'cloud': {
@@ -185,6 +315,7 @@ class ShellyDevice extends Homey.Device {
           default:
             break;
         }
+
       }
     } catch (error) {
       this.error(error);
@@ -199,8 +330,28 @@ class ShellyDevice extends Homey.Device {
           break
         }
         case 'coap': {
-          const white = 100 - (value * 100);
-          return await this.util.sendCommand('/light/0?white='+ white +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          /* update light_mode if available */
+          if (this.hasCapability('light_mode')) {
+            this.triggerCapabilityListener('light_mode', 'temperature');
+          }
+
+          /* set light_temperature depending of device model */
+          if (this.getStoreValue('config').name === 'Shelly Duo') {
+            const duo_white = 100 - (value * 100);
+            return await this.util.sendCommand('/light/0?white='+ duo_white +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          } else if (this.getStoreValue('config').name === 'Shelly Bulb' || this.getStoreValue('config').name === 'Shelly Bulb RGBW') {
+            const light_temperature = Number(this.util.denormalize(value, 3000, 6500));
+            return await this.util.sendCommand('/light/0?temp='+ light_temperature +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          } else if (this.getStoreValue('config').name === 'Shelly RGBW2 Color') {
+            const rgbw2_white = Number(this.util.denormalize(value, 0, 255));
+            if (rgbw2_white > 125 && !this.getCapabilityValue('onoff.whitemode')) {
+              this.updateCapabilityValue('onoff.whitemode', true);
+            } else if (rgbw2_white <= 125 && this.getCapabilityValue('onoff.whitemode')) {
+              this.updateCapabilityValue('onoff.whitemode', false);
+            }
+            return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?white='+ rgbw2_white, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          }
+
         }
         case 'cloud': {
           const white = 100 - (value * 100);
@@ -213,6 +364,46 @@ class ShellyDevice extends Homey.Device {
       this.error(error);
     }
   }
+
+  /* light_hue, light_saturation */
+  async onMultipleCapabilityListenerSatHue(valueObj, optsObj) {
+    if (typeof valueObj.light_hue !== 'undefined') {
+      var hue_value = valueObj.light_hue;
+    } else {
+      var hue_value = this.getCapabilityValue('light_hue');
+    }
+    if (typeof valueObj.light_saturation !== 'undefined') {
+      var saturation_value = valueObj.light_saturation;
+    } else {
+      var saturation_value = this.getCapabilityValue('light_saturation');
+    }
+    const light_config = this.getStoreValue('config').extra.light;
+    const color = tinycolor.fromRatio({ h: hue_value, s: saturation_value, v: this.getCapabilityValue('dim') });
+    const rgbcolor = color.toRgb();
+    if (this.getCapabilityValue('light_mode') !== 'color') {
+      await this.triggerCapabilityListener('light_mode', 'color');
+    }
+    return await this.util.sendCommand('/'+ light_config.light_endpoint +'/'+ this.getStoreValue('channel') +'?red='+ Number(rgbcolor.r) +'&green='+ Number(rgbcolor.g) +'&blue='+ Number(rgbcolor.b) +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+  }
+
+  /* light_mode */
+  async onCapabilityLightMode(value, opts) {
+    if (this.getStoreValue('config').name === 'Shelly Bulb' || this.getStoreValue('config').name === 'Shelly Bulb RGBW') {
+      const light_mode = value === 'temperature' ? 'white' : 'color';
+      return await this.util.sendCommand('/settings/?mode='+ light_mode +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    }
+  }
+
+  /* onoff.whitemode */
+  async onCapabilityOnoffWhiteMode(value) {
+    if (value) {
+      this.setCapabilityValue('light_mode', 'temperature');
+      return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?gain=0&white=255', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    } else {
+      this.setCapabilityValue("light_mode", 'color');
+      return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?gain=100&white=0', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    }
+  };
 
   /* valve_position */
   async onCapabilityValvePosition(value, opts) {
@@ -283,80 +474,6 @@ class ShellyDevice extends Homey.Device {
 
 
   // HELPER FUNCTIONS
-
-  /* boot sequence */
-  async bootSequence() {
-    try {
-
-      // initially set the device as available
-      this.homey.setTimeout(async () => {
-        this.setAvailable();
-      }, 1000);
-
-      if (this.getStoreValue('communication') === 'websocket') {
-
-        // gen 2 device init for non battery powered devices
-        if (!this.getStoreValue('battery')) {
-          const result = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
-          this.setStoreValue('type', result.model);
-          this.setStoreValue('fw_version', result.ver);
-        }
-
-        // gen2 devices with outbound websocket firmware
-        if (this.getStoreValue('wsserver')) {
-          // nothing to do here as the websocket server is started on app.OnInit() or after device.onAdded()
-        // gen2 devices without outbound websocket firwmare
-        } else {
-          if (this.getStoreValue('channel') === 0) {
-            // TODO: eventually remove this once the firmware for outbound websockets has been rolled out
-            if (!this.getStoreValue('battery')) {
-              this.ws = null;
-              this.connected = false;
-              this.commandId = 0;
-              this.connectWebsocket();
-            }
-            this.setStoreValue('digest_auth_websocket', '{}');
-          }
-        }
-
-        // all powered gen2: start polling for all non-battery operated gen2 devices
-        if (!this.getStoreValue('battery')) {
-          this.pollingInterval = this.homey.setInterval(() => {
-            this.pollDevice();
-          }, (60000 + (1000 * this.getStoreValue('channel'))));
-        }
-
-      // gen1 devices
-      } else {
-
-        // gen 1 device init for non battery powered devices
-        if (!this.getStoreValue('battery')) {
-          const result = await this.util.sendCommand('/shelly', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-          this.setStoreValue('type', result.type);
-          const regex = /(?<=\/v)(.*?)(?=\-)/gm;
-          const version_data = regex.exec(result.fw);
-          if (version_data !== null) {
-            this.setStoreValue('fw_version', version_data[0]);
-          }
-        }
-
-        // gen 1 polling
-        if (this.homey.settings.get('general_coap')) { // CoAP is disabled
-          var polling_frequency = this.homey.settings.get('general_polling_frequency') * 1000 || 5000;
-        } else { // CoAP is enabled
-          var polling_frequency = 60000;
-        }
-        if (!this.getStoreValue('battery')) {
-          this.pollingInterval = this.homey.setInterval(() => {
-            this.pollDevice();
-          }, (polling_frequency + (1000 * this.getStoreValue('channel'))));
-        }
-
-      }
-    } catch (error) {
-      this.error(error);
-    }
-  }
 
   /* updating capabilities */
   async updateCapabilityValue(capability, value, channel = 0) {
@@ -1399,6 +1516,7 @@ class ShellyDevice extends Homey.Device {
         case 'voltage0':
         case 'voltage1':
         case 'voltage2':
+        case 'V':
           this.updateCapabilityValue('measure_voltage', value, channel);
           break;
         case 'overPower':
@@ -1409,6 +1527,7 @@ class ShellyDevice extends Homey.Device {
           }
           break;
         case 'battery':
+        case 'percent':
           let measure_battery = this.util.clamp(value, 0, 100);
           this.updateCapabilityValue('measure_battery', measure_battery, channel);
           break;
@@ -1687,6 +1806,7 @@ class ShellyDevice extends Homey.Device {
           break;
         case 'humidity':
         case 'externalHumidity':
+        case 'rh':
           this.updateCapabilityValue('measure_humidity', value, channel);
           break;
         case 'rollerStopReason':

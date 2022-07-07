@@ -9,7 +9,6 @@
     "small": "./assets/drivers/shelly-plus-1pm/images/small.jpg"
   },
   "class": "socket",
-  "discovery": "shelly-plus-1pm",
   "$extends": [
     "shelly1"
   ],
@@ -22,5 +21,6 @@
     "measure_temperature",
     "input_1",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

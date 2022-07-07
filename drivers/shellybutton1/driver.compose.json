@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shellybutton1/images/small.jpg"
   },
   "class": "button",
-  "discovery": "shellybutton1",
   "$extends": [
     "defaults"
   ],
@@ -65,5 +64,6 @@
       "id": "manual_pairing",
       "$template": "manual_pairing"
     }
-  ]
+  ],
+  "deprecated": true
 }

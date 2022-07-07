@@ -16,5 +16,6 @@
     "input_2",
     "input_3",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

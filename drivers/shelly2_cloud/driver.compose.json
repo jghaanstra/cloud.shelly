@@ -9,7 +9,7 @@
   },
   "class": "socket",
   "$extends": [
-    "defaults_cloud_multi_channel"
+    "defaults_cloud"
   ],
   "capabilities": [
     "onoff",
@@ -17,5 +17,6 @@
     "meter_power",
     "input_1",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

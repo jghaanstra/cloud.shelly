@@ -16,6 +16,13 @@
   "icon": "{{driverAssetsPath}}/icon.svg",
   "pair": [
     {
+      "id": "shelly",
+      "$template": "shelly",
+      "navigation": {
+        "next": "list_devices"
+      }
+    },
+    {
       "id": "list_devices",
       "template": "list_devices",
       "options": {

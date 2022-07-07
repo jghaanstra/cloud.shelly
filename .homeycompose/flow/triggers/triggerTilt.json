@@ -23,7 +23,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shellydw"
+      "filter": "driver_id=shelly|shelly_cloud|shellydw&capabilities=tilt"
     }
   ],
   "platforms": ["local", "cloud"]

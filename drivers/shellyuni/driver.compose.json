@@ -8,9 +8,8 @@
     "small": "./assets/drivers/shellyuni/images/small.jpg"
   },
   "class": "socket",
-  "discovery": "shellyuni",
   "$extends": [
-    "defaults_multi_channel"
+    "defaults"
   ],
   "capabilities": [
     "onoff",
@@ -47,5 +46,6 @@
         "nl": "ADC Voltage"
       }
     }
-  }
+  },
+  "deprecated": true
 }

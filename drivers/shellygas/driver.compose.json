@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shellygas/images/small.jpg"
   },
   "class": "sensor",
-  "discovery": "shellygas",
   "$extends": [
     "defaults"
   ],
@@ -16,5 +15,6 @@
     "alarm_smoke",
     "gas_concentration",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

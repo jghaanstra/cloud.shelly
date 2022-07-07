@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shelly1l/images/small.jpg"
   },
   "class": "socket",
-  "discovery": "shelly1l",
   "$extends": [
     "shelly1"
   ],
@@ -28,5 +27,6 @@
         "nl": "Apparaat temperatuur"
       }
     }
-  }
+  },
+  "deprecated": true
 }

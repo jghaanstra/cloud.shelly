@@ -19,8 +19,14 @@ class ShellyDriver extends Homey.Driver {
 
     session.setHandler('list_devices', async (data) => {
       try {
+
+        /* get already paired Shelly devices */
         const shellyDevices = await this.util.getShellies('collection');
+
+        /* fill devices object with discovered devices */
         const devices = Object.values(discoveryResults).map(discoveryResult => {
+
+          /* match discovery result with already paired Shellies to determine if there are unpaired devices */
           if (shellyDevices.length === 0) {
             unpairedShellies++
           } else if (shellyDevices.length > 0) {
@@ -28,14 +34,18 @@ class ShellyDriver extends Homey.Driver {
             if (pairedShelly.length === 0) {
               unpairedShellies++
             }
-          }
+          }          
+
+          /* save all discovered devices (Homey will do it's on filtering for already paired devices) */
           return {
-            name: this.config.name+ ' ['+ discoveryResult.address +']',
+            name: discoveryResult.host + ' ['+ discoveryResult.address +']',
             data: {
               id: discoveryResult.host
             }
           };
         });
+
+        /* return the devices if there are unpaired Shelly devices or else show the manual pairing wizard */
         if (unpairedShellies > 0) {
           return devices;
         } else {
@@ -55,21 +65,53 @@ class ShellyDriver extends Homey.Driver {
       try {
         const discoveryResult = discoveryResults[selectedDeviceId];
 
-        switch(this.config.gen) {
+        /* get device config based on hostname of the discovered device */
+        const hostname = discoveryResult.host.substr(0, discoveryResult.host.lastIndexOf("-") + 1);
+        let device_config = await this.util.getDeviceConfig(hostname);
+
+        if (typeof device_config === 'undefined') {
+          this.log('No device config found for device with hostname', hostname);
+          throw new Error(this.homey.__('pair.no_device_config'));
+        }
+
+        switch(device_config.gen) {
           case 'gen1':
             var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
             var auth = result.auth;
             var type = result.type;
+
+            /* update device config if it's a roller shutter */
+            if (result.hasOwnProperty("num_rollers")) {
+              if (Number(result.num_rollers) > 0) {
+                device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+              }
+            }
+
+            /* update device config if it's a RGBW2 in white mode */
+            if (device_config.name === 'Shelly RGBW2 Color') {
+              if (result.num_outputs === 4) {
+                device_config = await this.util.getDeviceConfig(hostname + 'white-');
+              }
+            }
+
             break;
           case 'gen2':
             var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
             var auth = result.auth_en;
             var type = result.model;
+
+            /* update device config if it's a roller shutter */
+            if (result.hasOwnProperty("profile")) {
+              if (result.profile === "cover") {
+                device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+              }
+            }
             break;
         }
 
         deviceArray = {
-          name: this.config.name+ ' ['+ discoveryResult.address +']',
+          name: device_config.name + ' ['+ discoveryResult.address +']',
+          class: device_config.class,
           data: {
             id: discoveryResult.host,
           },
@@ -78,18 +120,22 @@ class ShellyDriver extends Homey.Driver {
             username : '',
             password : ''
           },
+          capabilities: device_config.capabilities_1,
+          capabilitiesOptions: device_config.capability_options,
+          energy: device_config.energy,
           store: {
+            config: device_config,
             main_device: discoveryResult.host,
             channel: 0,
             type: type,
             unicast: false,
             wsserver: false,
-            battery: this.config.battery,
+            battery: device_config.battery,
             sdk: 3,
-            gen: this.config.gen,
-            communication: this.config.communication
+            gen: device_config.gen,
+            communication: device_config.communication
           },
-          icon: deviceIcon
+          icon: device_config.icon
         }
         if (auth) {
           session.showView('login_credentials');
@@ -103,7 +149,7 @@ class ShellyDriver extends Homey.Driver {
 
     session.setHandler('manual_pairing', async (data) => {
       try {
-        switch(this.config.gen) {
+        switch(data.gen) {
           case 'gen1':
             var result = await this.util.sendCommand('/settings', data.address, data.username, data.password);
             var id = result.device.hostname;
@@ -113,36 +159,69 @@ class ShellyDriver extends Homey.Driver {
             var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', data.address, '', '');
             var id = result.id;
             var type = result.model;
+
+            /* update device config if it's a roller shutter */
+            if (result.hasOwnProperty("profile")) {
+              if (result.profile === "cover") {
+                device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+              }
+            }
             break;
         }
 
-        if (this.config.hostname.some( (host) => { return id.startsWith(host); } )) {
-          deviceArray = {
-            name: this.config.name+ ' ['+ data.address +']',
-            data: {
-              id: id,
-            },
-            settings: {
-              address  : data.address,
-              username : data.username,
-              password : data.password
-            },
-            store: {
-              main_device: id,
-              channel: 0,
-              type: this.config.type,
-              unicast: false,
-              wsserver: false,
-              battery: this.config.battery,
-              sdk: 3,
-              gen: this.config.gen,
-              communication: this.config.communication
-            }
-          }
-          return Promise.resolve(deviceArray);
-        } else {
-          return Promise.reject(this.homey.__('driver.wrongdevice'));
+        /* get device config based on hostname / id */
+        const hostname = id.substr(0, id.lastIndexOf("-") + 1);
+        let device_config = await this.util.getDeviceConfig(hostname);
+
+        if (typeof device_config === 'undefined') {
+          this.log('No device config found for device with hostname', hostname);
+          throw new Error(this.homey.__('pair.no_device_config'));
         }
+
+        /* update gen1 device config if it's a roller shutter */
+        if (data.gen === 'gen1' && result.hasOwnProperty("mode")) {
+          if (result.mode === "roller") {
+            device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+          }
+        }
+
+        /* update device config if it's a RGBW2 in white mode */
+        if (device_config.name === 'Shelly RGBW2 Color') {
+          if (result.mode === 'white') {
+            device_config = await this.util.getDeviceConfig(hostname + 'white-');
+          }
+        }
+
+        deviceArray = {
+          name: device_config.name+ ' ['+ data.address +']',
+          class: device_config.class,
+          data: {
+            id: id,
+          },
+          settings: {
+            address  : data.address,
+            username : data.username,
+            password : data.password
+          },
+          capabilities: device_config.capabilities_1,
+          capabilitiesOptions: device_config.capability_options,
+          energy: device_config.energy,
+          store: {
+            config: device_config,
+            main_device: id,
+            channel: 0,
+            type: type,
+            unicast: false,
+            wsserver: false,
+            battery: device_config.battery,
+            sdk: 3,
+            gen: device_config.gen,
+            communication: device_config.communication
+          },
+          icon: device_config.icon
+        }
+        return Promise.resolve(deviceArray);
+
       } catch (error) {
         return Promise.reject(error);
       }
@@ -164,24 +243,19 @@ class ShellyDriver extends Homey.Driver {
         if (deviceArray.store.communication === 'coap') {
           const unicast = await this.util.setUnicast(deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
           deviceArray.store.unicast = true;
-          return Promise.resolve({device: deviceArray, config: this.config});
+          return Promise.resolve(deviceArray);
         } else if (deviceArray.store.communication === 'websocket') {
           const result = await this.util.setWsServer(deviceArray.settings.address, deviceArray.settings.password);
           if (result === 'OK') {
             deviceArray.store.wsserver = true;
           }
-          return Promise.resolve({device: deviceArray, config: this.config});
+          return Promise.resolve(deviceArray);
         } else {
-          return Promise.resolve({device: deviceArray, config: this.config});
+          return Promise.resolve(deviceArray);
         }
       } catch (error) {
         return Promise.reject(error);
       }
-    });
-
-    session.setHandler('setIcon', async (data) => {
-      deviceIcon = data.icon;
-      return Promise.resolve(true);
     });
 
     session.setHandler('save_icon', async (data) => {

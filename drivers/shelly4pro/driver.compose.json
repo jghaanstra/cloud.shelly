@@ -8,9 +8,8 @@
     "small": "./assets/drivers/shelly4pro/images/small.jpg"
   },
   "class": "socket",
-  "discovery": "shelly4pro",
   "$extends": [
-    "defaults_multi_channel"
+    "defaults"
   ],
   "capabilities": [
     "onoff",
@@ -21,5 +20,6 @@
     "input_1",
     "measure_temperature",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

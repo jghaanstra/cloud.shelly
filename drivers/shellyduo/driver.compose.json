@@ -8,7 +8,6 @@
     "small": "./assets/drivers/shellyduo/images/small.jpg"
   },
   "class": "light",
-  "discovery": "shellyduo",
   "$extends": [
     "defaults"
   ],
@@ -26,5 +25,6 @@
 				"duration": true
 			}
 		}
-  }
+  },
+  "deprecated": true
 }

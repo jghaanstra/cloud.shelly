@@ -25,5 +25,6 @@
         "nl": "Apparaat temperatuur"
       }
     }
-  }
+  },
+  "deprecated": true
 }

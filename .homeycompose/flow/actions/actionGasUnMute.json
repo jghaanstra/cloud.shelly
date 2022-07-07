@@ -1,0 +1,19 @@
+{
+  "id": "actionGasUnmute",
+  "title": {
+    "en": "Unmute alarm",
+    "nl": "Dempen alarm uitschakelen"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shellygas&capabilities=gas_concentration"
+    }
+  ],
+  "platforms": ["local"]
+}

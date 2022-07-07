@@ -15,5 +15,6 @@
     "onoff",
     "input_1",
     "rssi"
-  ]
+  ],
+  "deprecated": true
 }

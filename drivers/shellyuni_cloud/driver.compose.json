@@ -9,7 +9,7 @@
   },
   "class": "socket",
   "$extends": [
-    "defaults_cloud_multi_channel"
+    "defaults_cloud"
   ],
   "capabilities": [
     "onoff",
@@ -46,5 +46,6 @@
         "nl": "ADC Voltage"
       }
     }
-  }
+  },
+  "deprecated": true
 }

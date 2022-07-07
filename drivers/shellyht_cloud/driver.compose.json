@@ -52,5 +52,6 @@
     "batteries": [
       "CR123A"
     ]
-  }
+  },
+  "deprecated": true
 }
