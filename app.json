@@ -2357,8 +2357,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -2572,8 +2572,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -4237,8 +4237,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -4358,8 +4358,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
@@ -4662,8 +4662,8 @@
               "nl": "Gebruikersnaam (admin voor gen2 devices)"
             },
             "usernamePlaceholder": {
-              "en": "Password",
-              "nl": "Wachtwoord"
+              "en": "Username",
+              "nl": "Gebruikersnaam"
             },
             "PasswordLabel": {
               "en": "Password",
