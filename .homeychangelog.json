@@ -475,5 +475,11 @@
   },
   "3.9.12": {
     "en": "This release fixes the following bugs. Fix for a bug with the Shelly Motion sensor not updating on Homey Pro. Fix for a bug where battery operated devices would not come online after an app update for Homey Pro and Homey Cloud. And fix for a bug for setting the roller shutter position on Plus devices for Homey Pro."
+  },
+  "3.10.0": {
+    "en": "Important message: this release contains some non-breaking but fundamental changes. All previous device drivers have been deprecated for both Homey Pro and Homey Cloud. They have been replaced by a single unified driver for all Shelly devices. Your already paired devices will continu to function but new devices should be paired with this new driver. This will make adding future devices to the ever growing collection of Shelly devices a lot easier. The release also adds total energy consumption for Shelly 3EM for Homey Pro and Cloud, total power consumption for Shelly RGBW2 for Homey Pro and Cloud, includes a fix for Shelly TRV target temperature being out of bounds and causing an app crash and has some various minor code improvements."
+  },
+  "3.10.1": {
+    "en": "Important message: this release contains some non-breaking but fundamental changes. All previous device drivers have been deprecated for both Homey Pro and Homey Cloud. They have been replaced by a single unified driver for all Shelly devices. Your already paired devices will continu to function but new devices should be paired with this new driver. This will make adding future devices to the ever growing collection of Shelly devices a lot easier. The release also adds total energy consumption for Shelly 3EM for Homey Pro and Cloud, total power consumption for Shelly RGBW2 for Homey Pro and Cloud, includes a fix for Shelly TRV target temperature being out of bounds and causing an app crash and has some various minor code improvements."
   }
 }

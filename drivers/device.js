@@ -70,18 +70,6 @@ class ShellyDevice extends Homey.Device {
         this.setAvailable();
       }, 1000);
 
-      // TODO: REMOVE AFTER SOME RELEASES
-      /* save the device config under the device store */
-      if (this.getStoreValue('config') === null || this.getStoreValue('config') === undefined) {
-        const hostname = this.getStoreValue('main_device').substr(0, this.getStoreValue('main_device').lastIndexOf("-") + 1);
-        const device_config = await this.util.getDeviceConfig(hostname);
-        if (Object.keys(device_config).length !== 0) {
-          this.setStoreValue('config', device_config);
-        } else {
-          this.log(this.getData().id + ' has no valid device config to set');
-        }
-      }
-
       if (this.getStoreValue('communication') === 'websocket') {
 
         // gen 2 device init for non battery powered devices
@@ -94,8 +82,7 @@ class ShellyDevice extends Homey.Device {
         // gen2 devices with outbound websocket firmware
         if (this.getStoreValue('wsserver')) {
           // nothing to do here as the websocket server is started on app.OnInit() or after device.onAdded()
-        // gen2 devices without outbound websocket firwmare
-        } else {
+        } else { // gen2 devices without outbound websocket firwmare
           if (this.getStoreValue('channel') === 0) {
             // TODO: eventually remove this once the firmware for outbound websockets has been rolled out
             if (!this.getStoreValue('battery')) {
@@ -140,6 +127,49 @@ class ShellyDevice extends Homey.Device {
         }
 
       }
+
+      // TODO: REMOVE AFTER SOME RELEASES
+      /* save the device config under the device store */
+      if (this.getStoreValue('config') === null || this.getStoreValue('config') === undefined) {
+        const hostname = this.getStoreValue('main_device').substr(0, this.getStoreValue('main_device').lastIndexOf("-") + 1);
+        let device_config = await this.util.getDeviceConfig(hostname);
+        if (typeof device_config !== 'undefined') {
+
+          /* update gen1 device config if it's a roller shutter */
+          if (device_config.name === 'Shelly 2' || device_config.name === 'Shelly 2.5') {
+            const result = await this.util.sendCommand('/settings', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+            if (result.hasOwnProperty("mode")) {
+              if (result.mode === "roller") {
+                device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+              }
+            }
+          }
+
+          /* update gen2 device config if it's a roller shutter */
+          if (device_config.name === 'Shelly Plus 2PM' || device_config.name === 'Shelly Pro 2' || device_config.name === 'Shelly Pro 2PM') {
+            const result = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
+            if (result.hasOwnProperty("profile")) {
+              if (result.profile === "cover") {
+                device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+              }
+            }
+          }
+
+          /* update device config if it's a RGBW2 in white mode */
+          if (device_config.name === 'Shelly RGBW2 Color') {
+            const result = await this.util.sendCommand('/settings', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+            if (result.mode === 'white') {
+              device_config = await this.util.getDeviceConfig(hostname + 'white-');
+            }
+          }
+
+          this.setStoreValue('config', device_config);
+        } else {
+          this.log(this.getData().id + ' has no valid device config to set');
+        }        
+      }
+      // END TODO
+
     } catch (error) {
       this.error(error);
     }

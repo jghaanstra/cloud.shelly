@@ -159,13 +159,6 @@ class ShellyDriver extends Homey.Driver {
             var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', data.address, '', '');
             var id = result.id;
             var type = result.model;
-
-            /* update device config if it's a roller shutter */
-            if (result.hasOwnProperty("profile")) {
-              if (result.profile === "cover") {
-                device_config = await this.util.getDeviceConfig(hostname + 'roller-');
-              }
-            }
             break;
         }
 
@@ -181,6 +174,13 @@ class ShellyDriver extends Homey.Driver {
         /* update gen1 device config if it's a roller shutter */
         if (data.gen === 'gen1' && result.hasOwnProperty("mode")) {
           if (result.mode === "roller") {
+            device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+          }
+        }
+
+        /* update gen2 device config if it's a roller shutter */
+        if (data.gen === 'gen2' && result.hasOwnProperty("profile")) {
+          if (result.profile === "cover") {
             device_config = await this.util.getDeviceConfig(hostname + 'roller-');
           }
         }
