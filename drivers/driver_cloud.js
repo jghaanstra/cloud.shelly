@@ -45,12 +45,34 @@ class ShellyCloudDriver extends OAuth2Driver {
             }
 
             /* get device config based on device type of the discovered devices */
-            const device_config = await this.util.getDeviceConfig('type', device_code);
+            let device_config = this.util.getDeviceConfig('type', device_code);
+
+            /* update device config if it's a gen1 roller shutter */
+            if (value._dev_info.gen === "G1" && (device_code === 'SHSW-21' || device_code === 'SHSW-25')) {
+              if (value.hasOwnProperty("rollers")) {
+                device_config = this.util.getDeviceConfig(device_config.hostname[0] + 'roller-');
+              }
+            }
+
+            /* update device config if it's a gen1 RGBW2 in white mode */
+            if (value._dev_info.gen === "G1" && device_code === 'SHRGBW2') {
+              if (value.mode === 'white') {
+                device_config = this.util.getDeviceConfig(device_config.hostname[0] + 'white-');
+              }
+            }
+
+            /* update device config if it's a gen2 roller shutter */
+            if (value._dev_info.gen === "G2" && (device_code === 'SNSW-002P16EU' || device_code === 'SPSW-002XE16EU' || device_code === 'SPSW-202XE16EU' || device_code === 'SPSW-002PE16EU' || device_code === 'SPSW-202PE16EU')) {
+              if (value.hasOwnProperty("cover:0")) {
+                device_config = this.util.getDeviceConfig(device_config.hostname[0] + 'roller-');
+              }
+            }
+
             device_config.communication = 'cloud';
 
             if (typeof device_config === 'undefined') {
-              this.log('No device config found for device with hostname', hostname);
-              throw new Error(this.homey.__('pair.no_device_config'));
+              this.error('No device config found for device with hostname', hostname);
+              throw new Error(this.homey.__('pair.no_device_config') + ' Device has hostname:' + hostname);
             }
     
             devices.push({

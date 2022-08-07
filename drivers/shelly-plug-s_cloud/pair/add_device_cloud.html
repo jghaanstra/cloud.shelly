@@ -1,8 +1,8 @@
 <script type="text/javascript">
   try {
-    Homey.emit('add_device', {})
+    Homey.emit('add_device_cloud', {})
       .then(result => {
-        if (result.store.config.channels === 1) { // add with deviceArray for single channel devices
+        if (result.store.config.channels === 1) { // add with default result for single channel devices
           Homey.createDevice(result);
           Homey.done();
         } else {
