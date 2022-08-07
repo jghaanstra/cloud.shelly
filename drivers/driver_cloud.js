@@ -44,11 +44,6 @@ class ShellyCloudDriver extends OAuth2Driver {
               var device_ip = value.wifi.sta_ip;
             }
 
-            /*
-            TODO: lijst van todos voor one cloud driver
-            * oplossing voor pairing multi channel cloud device
-            */
-
             /* get device config based on device type of the discovered devices */
             const device_config = await this.util.getDeviceConfig('type', device_code);
             device_config.communication = 'cloud';

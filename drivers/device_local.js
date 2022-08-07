@@ -20,7 +20,7 @@ class ShellyDevice extends Device {
 
       // TODO: eventually remove this once the firmware for outbound websockets has been rolled out
       /* disconnect to device websocket server for gen2 devices */
-      if (this.getStoreValue('communication') === 'websocket' && this.getStoreValue('channel') === 0 && !this.getStoreValue('wsserver')) {
+      if (this.getStoreValue('communication') === 'websocket' && this.getStoreValue('channel') === 0 && !this.getStoreValue('wsserver') && this.ws !== undefined && this.ws !== null) {
         if (this.ws.readyState !== WebSocket.CLOSED) {
           this.ws.close();
         }
