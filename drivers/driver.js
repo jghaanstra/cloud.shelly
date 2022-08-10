@@ -81,8 +81,14 @@ class ShellyDriver extends Homey.Driver {
             var type = result.type;
 
             /* update device config if it's a roller shutter */
-            if (result.hasOwnProperty("num_rollers")) {
-              if (Number(result.num_rollers) > 0) {
+            if (result.hasOwnProperty("num_rollers") && result.hasOwnProperty("mode")) {
+              if (result.mode === 'roller') {
+                device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+              }
+            } else if (result.hasOwnProperty("num_rollers")) {
+              // fallback for devices with fw < 1.12 but will not work with authentication
+              let settings = await this.util.sendCommand('/settings', discoveryResult.address, '', '');
+              if (settings.mode === 'roller') {
                 device_config = await this.util.getDeviceConfig(hostname + 'roller-');
               }
             }

@@ -63,12 +63,14 @@ class ShellyCloudDevice extends OAuth2Device {
             // TODO: REMOVE AFTER SOME RELEASES
             /* save the device config under the device store */
             if (this.getStoreValue('config') === null || this.getStoreValue('config') === undefined) {
-              if ( typeof device_data.data.devices_status[device_id] !== 'undefined') {
+              if (typeof device_data.data.devices_status[device_id] !== 'undefined') {
                 let device_config = await this.util.getDeviceConfig('hostname', device_data.data.devices_status[device_id]._dev_info.code);
                 if (typeof device_config !== 'undefined') {
 
                   /* update gen1 device config if it's a roller shutter */
                   if (device_config.name === 'Shelly 2' || device_config.name === 'Shelly 2.5') {
+
+                    // TODO: check if this contains the new mode parameter and use that
                     if (device_data.data.devices_status[device_id].hasOwnProperty("rollers")) {
                       device_config = await this.util.getDeviceConfig(device_config.hostname + 'roller-');
                     }

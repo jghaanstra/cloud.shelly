@@ -514,6 +514,7 @@ class ShellyDevice extends Homey.Device {
             this.setCapabilityValue(capability, value);
           }
         } else {
+          this.log('adding capability '+ capability +' to '+ this.getData().id +' as the device seems to be values for this capability ...');
           this.addCapability(capability);
         }
       } else {
@@ -1597,11 +1598,11 @@ class ShellyDevice extends Homey.Device {
           this.updateCapabilityValue('dim', dim, channel);
           break;
         case 'mode':
-          if (this.getStoreValue('type') === 'SHTRV-01') {
-            this.updateCapabilityValue('valve_mode', value.toString());
-          } else {
+          if (this.getClass() === 'light') {
             let light_mode = value === 'white' ? 'temperature' : 'color';
             this.updateCapabilityValue('light_mode', light_mode, channel);
+          } else if (this.getClass() === 'heater') {
+            this.updateCapabilityValue('valve_mode', value.toString());
           }
           break;
         case 'colorTemperature':
