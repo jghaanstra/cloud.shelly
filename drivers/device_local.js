@@ -10,7 +10,7 @@ class ShellyDevice extends Device {
   /* onDeleted() */
   async onDeleted() {
     try {
-      clearInterval(this.pollingInterval);
+      this.homey.clearInterval(this.pollingInterval);
 
       /* disable CoAP for gen1 devices */
       if (this.getStoreValue('communication') === 'coap' && this.getStoreValue('channel') === 0) {
@@ -25,8 +25,8 @@ class ShellyDevice extends Device {
           this.ws.close();
         }
         this.homey.setTimeout(() => {
-          clearTimeout(this.pingWsTimeout);
-          clearTimeout(this.reconnectWsTimeout);
+          this.homey.clearTimeout(this.pingWsTimeout);
+          this.homey.clearTimeout(this.reconnectWsTimeout);
         }, 2000);
       }
 

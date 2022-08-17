@@ -65,10 +65,10 @@ class ShellyRGBW2ColorCloudDevice extends Device {
     this.registerCapabilityListener('onoff.whitemode', async (value) => {
       if (value) {
         this.setCapabilityValue('light_mode', 'temperature');
-        return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', gain: 0, white: 255, command_value: white, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+        return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-WhiteMode', command: 'light', gain: 0, white: 255, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
       } else {
         this.setCapabilityValue("light_mode", 'color');
-        return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', gain: 100, white: 0, command_value: white, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+        return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-WhiteMode', command: 'light', gain: 100, white: 0, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
       }
     });
 

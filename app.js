@@ -72,7 +72,7 @@ class ShellyApp extends OAuth2App {
     // COAP, CLOUD & GEN2 WEBSOCKETS: UPDATE THE SHELLY COLLECTION REGULARLY
     this.shellyCollectionInterval = this.homey.setInterval(async () => {
       await this.updateShellyCollection();
-    }, 900000);
+    }, 3600000);
 
     // GENERIC FLOWCARDS
     this.homey.flow.getTriggerCard('triggerDeviceOffline');
@@ -752,14 +752,17 @@ class ShellyApp extends OAuth2App {
   }
 
   async onUninit() {
-    clearInterval(this.shellyCollectionInterval);
-    clearInterval(this.wsPingInterval);
-    clearTimeout(this.wsPingTimeout);
-    clearTimeout(this.wsReconnectTimeout);
-    clearTimeout(this.wssReconnectTimeout);
+    this.homey.clearInterval(this.shellyCollectionInterval);
+    this.homey.clearInterval(this.wsPingInterval);
+    this.homey.clearTimeout(this.wsPingTimeout);
+    this.homey.clearTimeout(this.wsReconnectTimeout);
+    this.homey.clearTimeout(this.wssReconnectTimeout);
     shellies.stop();
     if (this.ws.readyState !== WebSocket.CLOSED) {
       this.ws.close();
+    }
+    if (this.wss.readyState !== WebSocket.CLOSED) {
+      this.wss.close();
     }
   }
 

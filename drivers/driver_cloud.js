@@ -71,8 +71,8 @@ class ShellyCloudDriver extends OAuth2Driver {
             device_config.communication = 'cloud';
 
             if (typeof device_config === 'undefined') {
-              this.error('No device config found for device with hostname', hostname);
-              throw new Error(this.homey.__('pair.no_device_config') + ' Device has hostname:' + hostname);
+              this.error('No device config found for device with device code', device_code);
+              throw new Error(this.homey.__('pair.no_device_config') + ' Device has device code:' + device_code);
             }
     
             devices.push({

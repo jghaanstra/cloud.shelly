@@ -16,6 +16,7 @@
               }
               Homey.createDevice({
                 name: device_id +' - '+ result.name,
+                class: result.class,
                 data: {
                   id: result.data.id + '-channel-' + i
                 },

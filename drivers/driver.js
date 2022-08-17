@@ -12,7 +12,6 @@ class ShellyDriver extends Homey.Driver {
   onPair(session) {
     const discoveryStrategy = this.getDiscoveryStrategy();
     const discoveryResults = discoveryStrategy.getDiscoveryResults();
-    let unpairedShellies = 0;
     let selectedDeviceId;
     let deviceArray = {};
     let deviceIcon = 'icon.svg';
@@ -22,27 +21,36 @@ class ShellyDriver extends Homey.Driver {
 
         /* get already paired Shelly devices */
         const shellyDevices = await this.util.getShellies('collection');
+        let unpairedShellies = 0;
 
         /* fill devices object with discovered devices */
         const devices = Object.values(discoveryResults).map(discoveryResult => {
+          let needsPairing = false;
 
           /* match discovery result with already paired Shellies to determine if there are unpaired devices */
-          if (shellyDevices.length === 0) {
+          if (shellyDevices.length === 0) { // no paired shellies
             unpairedShellies++
+            needsPairing = true;
           } else if (shellyDevices.length > 0) {
             const pairedShelly = shellyDevices.filter(shelly => shelly.id.includes(discoveryResult.host));
-            if (pairedShelly.length === 0) {
+            if (pairedShelly.length === 0) { // paired shellies available but this ID has not been paired yet
               unpairedShellies++
+              needsPairing = true;
             }
+          }
+
+          
+          if (needsPairing) {
+            return {
+              name: discoveryResult.host + ' ['+ discoveryResult.address +']',
+              data: {
+                id: discoveryResult.host
+              }
+            };
+          } else { // do not return already paired devices
+            return {};
           }          
 
-          /* save all discovered devices (Homey will do it's on filtering for already paired devices) */
-          return {
-            name: discoveryResult.host + ' ['+ discoveryResult.address +']',
-            data: {
-              id: discoveryResult.host
-            }
-          };
         });
 
         /* return the devices if there are unpaired Shelly devices or else show the manual pairing wizard */
@@ -247,10 +255,14 @@ class ShellyDriver extends Homey.Driver {
     session.setHandler('add_device', async (data) => {
       try {
         if (deviceArray.store.communication === 'coap') {
+          const settings = await this.util.sendCommand('/settings', deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
+          deviceArray.name = settings.name;
           const unicast = await this.util.setUnicast(deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
           deviceArray.store.unicast = true;
           return Promise.resolve(deviceArray);
         } else if (deviceArray.store.communication === 'websocket') {
+          const settings = await this.util.sendRPCCommand('/rpc/Shelly.GetConfig', deviceArray.settings.address, deviceArray.settings.password);
+          deviceArray.name = settings.sys.device.name;
           const result = await this.util.setWsServer(deviceArray.settings.address, deviceArray.settings.password);
           if (result === 'OK') {
             deviceArray.store.wsserver = true;
