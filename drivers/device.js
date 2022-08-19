@@ -132,7 +132,7 @@ class ShellyDevice extends Homey.Device {
       /* save the device config under the device store */
       if (this.getStoreValue('config') === null || this.getStoreValue('config') === undefined) {
         const hostname = this.getStoreValue('main_device').substr(0, this.getStoreValue('main_device').lastIndexOf("-") + 1);
-        let device_config = await this.util.getDeviceConfig(hostname);
+        let device_config = this.util.getDeviceConfig(hostname);
         if (typeof device_config !== 'undefined') {
 
           /* update gen1 device config if it's a roller shutter */
@@ -140,7 +140,7 @@ class ShellyDevice extends Homey.Device {
             const result = await this.util.sendCommand('/settings', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
             if (result.hasOwnProperty("mode")) {
               if (result.mode === "roller") {
-                device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+                device_config = this.util.getDeviceConfig(hostname + 'roller-');
               }
             }
           }
@@ -150,7 +150,7 @@ class ShellyDevice extends Homey.Device {
             const result = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
             if (result.hasOwnProperty("profile")) {
               if (result.profile === "cover") {
-                device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+                device_config = this.util.getDeviceConfig(hostname + 'roller-');
               }
             }
           }
@@ -159,7 +159,7 @@ class ShellyDevice extends Homey.Device {
           if (device_config.name === 'Shelly RGBW2 Color') {
             const result = await this.util.sendCommand('/settings', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
             if (result.mode === 'white') {
-              device_config = await this.util.getDeviceConfig(hostname + 'white-');
+              device_config = this.util.getDeviceConfig(hostname + 'white-');
             }
           }
 

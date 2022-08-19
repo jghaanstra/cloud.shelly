@@ -1,6 +1,6 @@
 {
   "name": "cloud.shelly",
-  "version": "3.10.13",
+  "version": "3.10.14",
   "description": "Homey app for controlling Shelly devices",
   "main": "app.js",
   "scripts": {

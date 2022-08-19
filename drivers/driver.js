@@ -75,7 +75,7 @@ class ShellyDriver extends Homey.Driver {
 
         /* get device config based on hostname of the discovered device */
         const hostname = discoveryResult.host.substr(0, discoveryResult.host.lastIndexOf("-") + 1);
-        let device_config = await this.util.getDeviceConfig(hostname);
+        let device_config = this.util.getDeviceConfig(hostname);
 
         if (typeof device_config === 'undefined') {
           this.log('No device config found for device with hostname', hostname);
@@ -91,20 +91,20 @@ class ShellyDriver extends Homey.Driver {
             /* update device config if it's a roller shutter */
             if (result.hasOwnProperty("num_rollers") && result.hasOwnProperty("mode")) {
               if (result.mode === 'roller') {
-                device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+                device_config = this.util.getDeviceConfig(hostname + 'roller-');
               }
             } else if (result.hasOwnProperty("num_rollers")) {
               // fallback for devices with fw < 1.12 but will not work with authentication
               let settings = await this.util.sendCommand('/settings', discoveryResult.address, '', '');
               if (settings.mode === 'roller') {
-                device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+                device_config = this.util.getDeviceConfig(hostname + 'roller-');
               }
             }
 
             /* update device config if it's a RGBW2 in white mode */
             if (device_config.name === 'Shelly RGBW2 Color') {
               if (result.num_outputs === 4) {
-                device_config = await this.util.getDeviceConfig(hostname + 'white-');
+                device_config = this.util.getDeviceConfig(hostname + 'white-');
               }
             }
 
@@ -117,7 +117,7 @@ class ShellyDriver extends Homey.Driver {
             /* update device config if it's a roller shutter */
             if (result.hasOwnProperty("profile")) {
               if (result.profile === "cover") {
-                device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+                device_config = this.util.getDeviceConfig(hostname + 'roller-');
               }
             }
             break;
@@ -178,7 +178,7 @@ class ShellyDriver extends Homey.Driver {
 
         /* get device config based on hostname / id */
         const hostname = id.substr(0, id.lastIndexOf("-") + 1);
-        let device_config = await this.util.getDeviceConfig(hostname);
+        let device_config = this.util.getDeviceConfig(hostname);
 
         if (typeof device_config === 'undefined') {
           this.log('No device config found for device with hostname', hostname);
@@ -188,21 +188,21 @@ class ShellyDriver extends Homey.Driver {
         /* update gen1 device config if it's a roller shutter */
         if (data.gen === 'gen1' && result.hasOwnProperty("mode")) {
           if (result.mode === "roller") {
-            device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+            device_config = this.util.getDeviceConfig(hostname + 'roller-');
           }
         }
 
         /* update gen2 device config if it's a roller shutter */
         if (data.gen === 'gen2' && result.hasOwnProperty("profile")) {
           if (result.profile === "cover") {
-            device_config = await this.util.getDeviceConfig(hostname + 'roller-');
+            device_config = this.util.getDeviceConfig(hostname + 'roller-');
           }
         }
 
         /* update device config if it's a RGBW2 in white mode */
         if (device_config.name === 'Shelly RGBW2 Color') {
           if (result.mode === 'white') {
-            device_config = await this.util.getDeviceConfig(hostname + 'white-');
+            device_config = this.util.getDeviceConfig(hostname + 'white-');
           }
         }
 

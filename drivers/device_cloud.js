@@ -64,7 +64,7 @@ class ShellyCloudDevice extends OAuth2Device {
             /* save the device config under the device store */
             if (this.getStoreValue('config') === null || this.getStoreValue('config') === undefined) {
               if (typeof device_data.data.devices_status[device_id] !== 'undefined') {
-                let device_config = await this.util.getDeviceConfig('hostname', device_data.data.devices_status[device_id]._dev_info.code);
+                let device_config = this.util.getDeviceConfig('hostname', device_data.data.devices_status[device_id]._dev_info.code);
                 if (typeof device_config !== 'undefined') {
 
                   /* update gen1 device config if it's a roller shutter */
@@ -72,7 +72,7 @@ class ShellyCloudDevice extends OAuth2Device {
 
                     // TODO: check if this contains the new mode parameter and use that
                     if (device_data.data.devices_status[device_id].hasOwnProperty("rollers")) {
-                      device_config = await this.util.getDeviceConfig(device_config.hostname + 'roller-');
+                      device_config = this.util.getDeviceConfig(device_config.hostname + 'roller-');
                     }
                   }
 
@@ -80,7 +80,7 @@ class ShellyCloudDevice extends OAuth2Device {
                   if (device_config.name === 'Shelly RGBW2 Color') {
                     if (device_data.data.devices_status[device_id].hasOwnProperty("mode")) {
                       if (device_data.data.devices_status[device_id].mode === 'white') {
-                        device_config = await this.util.getDeviceConfig(device_config.hostname + 'white-');
+                        device_config = this.util.getDeviceConfig(device_config.hostname + 'white-');
                       }
                     }
                   }
@@ -101,13 +101,13 @@ class ShellyCloudDevice extends OAuth2Device {
             /* save the device config under the device store */
             if (this.getStoreValue('config') === null || this.getStoreValue('config') === undefined) {
               if ( typeof device_data.data.devices_status[device_id] !== 'undefined') {
-                let device_config = await this.util.getDeviceConfig('hostname', device_data.data.devices_status[device_id]._dev_info.code);
+                let device_config = this.util.getDeviceConfig('hostname', device_data.data.devices_status[device_id]._dev_info.code);
                 if (typeof device_config !== 'undefined') {
 
                   /* update gen2 device config if it's a roller shutter */
                   if (device_config.name === 'Shelly Plus 2PM' || device_config.name === 'Shelly Pro 2' || device_config.name === 'Shelly Pro 2PM') {
                     if (device_data.data.devices_status[device_id].hasOwnProperty("cover:0")) {
-                      device_config = await this.util.getDeviceConfig(device_config.hostname + 'roller-');
+                      device_config = this.util.getDeviceConfig(device_config.hostname + 'roller-');
                     }
                   }
 
