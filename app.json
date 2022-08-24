@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.10.15",
+  "version": "3.11.0",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",

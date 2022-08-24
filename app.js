@@ -104,7 +104,11 @@ class ShellyApp extends OAuth2App {
       return await this.util.getShellies('flowcard');
     });
     listenerCallbacks.getArgument('action').registerAutocompleteListener(async (query, args) => {
-      return await this.util.getActions(args.shelly.actions);
+      try {
+        return await this.util.getActions(args.shelly.actions);
+      } catch (error) {
+        return Promise.reject(error);
+      }
     });
 
     this.homey.flow.getConditionCard('conditionInput0')
@@ -433,7 +437,11 @@ class ShellyApp extends OAuth2App {
       })
       .getArgument('profile')
         .registerAutocompleteListener(async (query, args) => {
-          return await this.util.getTrvProfiles(args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          try {
+            return await this.util.getTrvProfiles(args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          } catch (error) {
+            return Promise.reject(error);
+          }
         })
 
     this.homey.flow.getActionCard('actionValvePosition')
@@ -459,7 +467,11 @@ class ShellyApp extends OAuth2App {
       })
       .getArgument('profile')
         .registerAutocompleteListener(async (query, args) => {
-          return await this.util.getTrvProfiles(args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          try {
+            return await this.util.getTrvProfiles(args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          } catch (error) {
+            return Promise.reject(error);
+          }
         })
 
     this.homey.flow.getActionCard('actionMeasuredExtTemp')

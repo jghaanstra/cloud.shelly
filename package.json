@@ -1,6 +1,6 @@
 {
   "name": "cloud.shelly",
-  "version": "3.10.15",
+  "version": "3.10.16",
   "description": "Homey app for controlling Shelly devices",
   "main": "app.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "homey-oauth2app": "^3.3.0",
     "http-auth-client": "^0.4.1",
     "jwt-decode": "^3.1.2",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^3.2.10",
     "shellies": "^1.7.0",
     "tinycolor2": "^1.4.2",
     "ws": "^7.5.7"

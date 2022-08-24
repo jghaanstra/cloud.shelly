@@ -397,42 +397,56 @@ class ShellyDevice extends Homey.Device {
 
   /* light_hue, light_saturation */
   async onMultipleCapabilityListenerSatHue(valueObj, optsObj) {
-    if (typeof valueObj.light_hue !== 'undefined') {
-      var hue_value = valueObj.light_hue;
-    } else {
-      var hue_value = this.getCapabilityValue('light_hue');
-    }
-    if (typeof valueObj.light_saturation !== 'undefined') {
-      var saturation_value = valueObj.light_saturation;
-    } else {
-      var saturation_value = this.getCapabilityValue('light_saturation');
-    }
-    const light_config = this.getStoreValue('config').extra.light;
-    const color = tinycolor.fromRatio({ h: hue_value, s: saturation_value, v: this.getCapabilityValue('dim') });
-    const rgbcolor = color.toRgb();
-    if (this.getCapabilityValue('light_mode') !== 'color') {
-      await this.triggerCapabilityListener('light_mode', 'color');
-    }
-    return await this.util.sendCommand('/'+ light_config.light_endpoint +'/'+ this.getStoreValue('channel') +'?red='+ Number(rgbcolor.r) +'&green='+ Number(rgbcolor.g) +'&blue='+ Number(rgbcolor.b) +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    try {
+      if (typeof valueObj.light_hue !== 'undefined') {
+        var hue_value = valueObj.light_hue;
+      } else {
+        var hue_value = this.getCapabilityValue('light_hue');
+      }
+      if (typeof valueObj.light_saturation !== 'undefined') {
+        var saturation_value = valueObj.light_saturation;
+      } else {
+        var saturation_value = this.getCapabilityValue('light_saturation');
+      }
+      const light_config = this.getStoreValue('config').extra.light;
+      const color = tinycolor.fromRatio({ h: hue_value, s: saturation_value, v: this.getCapabilityValue('dim') });
+      const rgbcolor = color.toRgb();
+      if (this.getCapabilityValue('light_mode') !== 'color') {
+        await this.triggerCapabilityListener('light_mode', 'color');
+      }
+      return await this.util.sendCommand('/'+ light_config.light_endpoint +'/'+ this.getStoreValue('channel') +'?red='+ Number(rgbcolor.r) +'&green='+ Number(rgbcolor.g) +'&blue='+ Number(rgbcolor.b) +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    } catch (error) {
+      this.error(error);
+    }    
   }
 
   /* light_mode */
   async onCapabilityLightMode(value, opts) {
-    if (this.getStoreValue('config').name === 'Shelly Bulb' || this.getStoreValue('config').name === 'Shelly Bulb RGBW') {
-      const light_mode = value === 'temperature' ? 'white' : 'color';
-      return await this.util.sendCommand('/settings/?mode='+ light_mode +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    try {
+      if (this.getStoreValue('config').name === 'Shelly Bulb' || this.getStoreValue('config').name === 'Shelly Bulb RGBW') {
+        const light_mode = value === 'temperature' ? 'white' : 'color';
+        return await this.util.sendCommand('/settings/?mode='+ light_mode +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      }
+    } catch (error) {
+      this.error(error);
     }
   }
 
   /* onoff.whitemode */
   async onCapabilityOnoffWhiteMode(value) {
-    if (value) {
-      this.setCapabilityValue('light_mode', 'temperature');
-      return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?gain=0&white=255', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-    } else {
-      this.setCapabilityValue("light_mode", 'color');
-      return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?gain=100&white=0', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    try {
+      if (value) {
+        this.setCapabilityValue('light_mode', 'temperature');
+        return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?gain=0&white=255', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      } else {
+        this.setCapabilityValue("light_mode", 'color');
+        return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?gain=100&white=0', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      }
+    } catch (error) {
+      this.error(error);
     }
+
+    
   };
 
   /* valve_position */
