@@ -1153,14 +1153,6 @@ class ShellyDevice extends Homey.Device {
         }
       }
 
-      // update unicast
-      if (this.getStoreValue('communication') === 'coap' && !this.getStoreValue('unicast') === true && this.getStoreValue('battery') === false && this.getStoreValue('type') !== 'SHSW-44') {
-        const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        if (result === 'OK') {
-          this.setStoreValue("unicast", true);
-        }
-      }
-
     } catch (error) {
       if (!this.getStoreValue('battery')) {
         this.setUnavailable(this.homey.__('device.unreachable') + error.message);
@@ -1490,14 +1482,6 @@ class ShellyDevice extends Homey.Device {
   async parseCapabilityUpdate(capability, value, channel = 0) {
     try {
       if (!this.getAvailable()) { this.setAvailable(); }
-
-      // update unicast for battery devices
-      if (this.getStoreValue('battery') === true && !this.getStoreValue('unicast') === true) {
-        const result = await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        if (result === 'OK') {
-          this.setStoreValue("unicast", true);
-        }
-      }
 
       switch(capability) {
         case 'output':

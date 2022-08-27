@@ -45,7 +45,8 @@
   },
   "util": {
     "400": "Error 400: invalid API request, please send a diagnostic report from the app settings to the developer to help solve this issue.",
-    "401": "Error 401: user credentials are missing or this user is not authorized, make sure you have copied the correct user credentials as entered in the Shelly smartphone app or Webinterface.",
+    "401": "Error 401: user credentials are missing or this user is not authorized, make sure you have copied the correct user credentials as entered in the Shelly smartphone app or webinterface.",
+    "404": "Error 404: device not found, check the network connection and configuration and make sure the Shelly is online and reachable for Homey.",
     "502": "Timeout error: make sure you have entered the correct IP address and that the Shelly device is online.",
     "500": "Error 500: internal server error",
     "unknownerror": "Unknown error, are you sure you have entered the correct IP address and Homey is on the same network as the Shelly device? Please check your settings and try again.",

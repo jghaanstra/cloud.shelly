@@ -69,8 +69,8 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.10.16",
-  "compatibility": ">=5.0.0",
+  "version": "3.11.0",
+  "compatibility": ">=8.0.0",
   "platforms": [
     "local",
     "cloud"
@@ -1232,6 +1232,44 @@
               "nl": "Selecteer Shelly"
             },
             "filter": "driver_id=shelly|shelly_cloud|shellyrgbw2color&capabilities=onoff.whitemode"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "actionSetCumulative",
+        "title": {
+          "en": "Set device energy cumulative property",
+          "nl": "Instellen apparaat cumulatieve energie eigenschap"
+        },
+        "titleFormatted": {
+          "en": "Change cumulative energy to [[cumulative]]",
+          "nl": "Wijzig cumulatieve energie naar [[cumulative]]"
+        },
+        "hint": {
+          "en": "You can mark this device measuring the cumulative energy usage. Default is true.",
+          "nl": "Je kan een apparaat instellen op het meten van cumulatief energieverbruik. Standaard is true."
+        },
+        "args": [
+          {
+            "name": "cumulative",
+            "type": "checkbox",
+            "title": {
+              "en": "Cumulative Energy",
+              "nl": "Cumulatieve energy"
+            }
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_returned"
           }
         ],
         "platforms": [

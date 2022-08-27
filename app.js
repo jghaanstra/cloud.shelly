@@ -482,6 +482,16 @@ class ShellyApp extends OAuth2App {
           return Promise.reject(error);
         }
       })
+    
+    // EM & 3EM
+    this.homey.flow.getActionCard('actionSetCumulative')
+    .registerRunListener(async (args) => {
+      try {
+        return await args.device.setSettings({ cumulative: args.cumulative });
+      } catch (error) {
+        return Promise.reject(error);
+      }
+    })
 
     // COAP: COAP LISTENER FOR PROCESSING INCOMING MESSAGES
     shellies.on('discover', device => {
