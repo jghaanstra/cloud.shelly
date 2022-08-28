@@ -529,5 +529,8 @@
   },
   "3.11.0": {
     "en": "Upcoming breaking change: the next release will remove all old Plus/Pro drivers, please migrate to the new unified driver before updating to version 3.12.0 which will be released early september. This release adds an action card for the Shelly EM and 3EM to change the energy cumulative behaviour. The default is true but this allows you to change it to false. It also contains other minor improvements."
+  },
+  "3.11.1": {
+    "en": "Upcoming breaking change: the next release will remove all old Plus/Pro drivers for both Homey Pro and Cloud. Please migrate to the new unified driver before updating to version 3.12.0 which will be released early september. This release fixes an issue with devices not responding on Homey Cloud in certain scenarios. It also adds an action card for the Shelly EM and 3EM to change the energy cumulative behaviour. The default is true but this allows you to change it to false. It also contains other minor improvements."
   }
 }

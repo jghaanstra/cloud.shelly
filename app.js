@@ -647,8 +647,8 @@ class ShellyApp extends OAuth2App {
   async websocketCloudListener() {
     try {
       if (this.ws == null || this.ws.readyState === WebSocket.CLOSED) {
-        const client = await this.getFirstSavedOAuth2Client();
-        const oauth_token = await client.getToken();
+        const client = this.getFirstSavedOAuth2Client();
+        const oauth_token = client.getToken();
         this.cloudAccessToken = oauth_token.access_token;
         const cloud_details = await jwt_decode(oauth_token.access_token);
         this.cloudServer = cloud_details.user_api_url.replace('https://', '');
@@ -723,6 +723,7 @@ class ShellyApp extends OAuth2App {
       }
     } catch (error) {
       if (error.message !== 'No OAuth2 Client Found') {
+        this.log(error);
         clearTimeout(this.wsReconnectTimeout);
         this.wsReconnectTimeout = this.homey.setTimeout(async () => {
           if (!this.wsConnected) {
