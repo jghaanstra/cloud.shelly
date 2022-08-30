@@ -19,47 +19,24 @@ class ShellyDriver extends Homey.Driver {
     session.setHandler('list_devices', async (data) => {
       try {
 
-        /* get already paired Shelly devices */
+        /* get already paired Shelly devices and remove them from discoveryResults */
         const shellyDevices = await this.util.getShellies('collection');
-        let unpairedShellies = 0;
+        for (const shellyDevice of shellyDevices){
+          delete discoveryResults[shellyDevice.main_device];
+        }
 
         /* fill devices object with discovered devices */
         const devices = Object.values(discoveryResults).map(discoveryResult => {
-
-          if (discoveryResult === undefined || discoveryResult === null) {
-            this.error('discoveryResult is not defined, logging discoveryResults object.');
-            this.error(JSON.stringify(discoveryResults));
-          } else {
-            let needsPairing = false;
-
-            /* match discovery result with already paired Shellies to determine if there are unpaired devices */
-            if (shellyDevices.length === 0) { // no paired shellies
-              unpairedShellies++
-              needsPairing = true;
-            } else if (shellyDevices.length > 0) {
-              const pairedShelly = shellyDevices.filter(shelly => shelly.id.includes(discoveryResult.host));
-              if (pairedShelly.length === 0) { // paired shellies available but this ID has not been paired yet
-                unpairedShellies++
-                needsPairing = true;
-              }
+          return {
+            name: discoveryResult.host + ' ['+ discoveryResult.address +']',
+            data: {
+              id: discoveryResult.host
             }
-
-            if (needsPairing) {
-              return {
-                name: discoveryResult.host + ' ['+ discoveryResult.address +']',
-                data: {
-                  id: discoveryResult.host
-                }
-              };
-            } else { // do not return already paired devices
-              return {};
-            } 
-          }      
-
+          };
         });
 
         /* return the devices if there are unpaired Shelly devices or else show the manual pairing wizard */
-        if (unpairedShellies > 0) {
+        if (devices.length > 0) {
           return devices;
         } else {
           session.showView('select_pairing');

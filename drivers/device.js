@@ -26,9 +26,13 @@ class ShellyDevice extends Homey.Device {
     // BOOT SEQUENCE
     this.bootSequence();
 
-    // REGISTERING DEVICE TRIGGER CARDS
-    this.homey.setTimeout(() => {
+    // REFRESHING DEVICE CONFIG AND REGISTERING DEVICE TRIGGER CARDS
+    this.homey.setTimeout(async () => {
       if (this.getStoreValue('config') !== null || this.getStoreValue('config') !== undefined) {
+        const hostname = this.getStoreValue('main_device').substr(0, this.getStoreValue('main_device').lastIndexOf("-") + 1);
+        let device_config = this.util.getDeviceConfig(hostname);
+        await this.setStoreValue('config', device_config);
+
         for (const trigger of this.getStoreValue('config').triggers) {
           this.homey.flow.getDeviceTriggerCard(trigger);
         }
@@ -621,6 +625,7 @@ class ShellyDevice extends Homey.Device {
           /* meter_power.total */
           if (result.emeters.hasOwnProperty("total_power") && this.hasCapability('meter_power.total')) {
             this.updateCapabilityValue('meter_power.total', result.emeters.total_power);
+            this.homey.flow.getDeviceTriggerCard('triggerMeterPowerTotal').trigger(this, {'power': result.emeters.total_power}, {}).catch(error => { this.error(error) });
           }
 
           /* meter_power_returned */
@@ -628,11 +633,13 @@ class ShellyDevice extends Homey.Device {
             let meter_power_returned = result.emeters[channel].total_returned / 1000;
             let meter_power_returned_rounded = Number(meter_power_returned.toFixed(3));
             this.updateCapabilityValue('meter_power_returned', meter_power_returned_rounded);
+            this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned').trigger(this, {'energy': meter_power_returned_rounded}, {}).catch(error => { this.error(error) });
           }
 
           /* power factor */
           if (result.emeters[channel].hasOwnProperty("pf") && this.hasCapability('meter_power_factor')) {
-            this.updateCapabilityValue('meter_power_returned', result.emeters[channel].pf);
+            this.updateCapabilityValue('meter_power_factor', result.emeters[channel].pf);
+            this.homey.flow.getDeviceTriggerCard('triggerMeterPowerFactor').trigger(this, {'pf': value}, {}).catch(error => { this.error(error) });
           }
 
           /* measure_current */

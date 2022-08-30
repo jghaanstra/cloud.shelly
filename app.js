@@ -713,11 +713,11 @@ class ShellyApp extends OAuth2App {
           clearTimeout(this.wsPingInterval);
           this.wsConnected = false;
 
-          // retry connection after 500 miliseconds
+          // retry connection after 2000 miliseconds
           clearTimeout(this.wsReconnectTimeout);
           this.wsReconnectTimeout = this.homey.setTimeout(async () => {
             this.websocketCloudListener();
-          }, 500);
+          }, 2000);
         });
 
       }

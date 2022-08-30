@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.11.2",
+  "version": "3.11.3",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -664,6 +664,39 @@
               "nl": "Selecteer Shelly"
             },
             "filter": "driver_id=shelly|shelly_cloud|shellyem|shellyem_cloud|shelly3em|shelly3em_cloud&capabilities=meter_power_returned"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "triggerMeterPowerTotal",
+        "title": {
+          "en": "Total Power",
+          "nl": "Totale power"
+        },
+        "tokens": [
+          {
+            "name": "power",
+            "type": "number",
+            "title": {
+              "en": "Wh",
+              "nl": "Wh"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power.total"
           }
         ],
         "platforms": [
