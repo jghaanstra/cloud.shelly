@@ -28,14 +28,13 @@ class ShellyDevice extends Homey.Device {
 
     // REFRESHING DEVICE CONFIG AND REGISTERING DEVICE TRIGGER CARDS
     this.homey.setTimeout(async () => {
-      if (this.getStoreValue('config') !== null || this.getStoreValue('config') !== undefined) {
-        const hostname = this.getStoreValue('main_device').substr(0, this.getStoreValue('main_device').lastIndexOf("-") + 1);
-        let device_config = this.util.getDeviceConfig(hostname);
-        await this.setStoreValue('config', device_config);
-
+      try {
+        await this.updateDeviceConfig();
         for (const trigger of this.getStoreValue('config').triggers) {
           this.homey.flow.getDeviceTriggerCard(trigger);
         }
+      } catch (error) {
+        this.error(error);
       }
     }, 2000);
 
@@ -131,48 +130,6 @@ class ShellyDevice extends Homey.Device {
         }
 
       }
-
-      // TODO: REMOVE AFTER SOME RELEASES
-      /* save the device config under the device store */
-      if (this.getStoreValue('config') === null || this.getStoreValue('config') === undefined) {
-        const hostname = this.getStoreValue('main_device').substr(0, this.getStoreValue('main_device').lastIndexOf("-") + 1);
-        let device_config = this.util.getDeviceConfig(hostname);
-        if (typeof device_config !== 'undefined') {
-
-          /* update gen1 device config if it's a roller shutter */
-          if (device_config.name === 'Shelly 2' || device_config.name === 'Shelly 2.5') {
-            const result = await this.util.sendCommand('/settings', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-            if (result.hasOwnProperty("mode")) {
-              if (result.mode === "roller") {
-                device_config = this.util.getDeviceConfig(hostname + 'roller-');
-              }
-            }
-          }
-
-          /* update gen2 device config if it's a roller shutter */
-          if (device_config.name === 'Shelly Plus 2PM' || device_config.name === 'Shelly Pro 2' || device_config.name === 'Shelly Pro 2PM') {
-            const result = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
-            if (result.hasOwnProperty("profile")) {
-              if (result.profile === "cover") {
-                device_config = this.util.getDeviceConfig(hostname + 'roller-');
-              }
-            }
-          }
-
-          /* update device config if it's a RGBW2 in white mode */
-          if (device_config.name === 'Shelly RGBW2 Color') {
-            const result = await this.util.sendCommand('/settings', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-            if (result.mode === 'white') {
-              device_config = this.util.getDeviceConfig(hostname + 'white-');
-            }
-          }
-
-          this.setStoreValue('config', device_config);
-        } else {
-          this.log(this.getData().id + ' has no valid device config to set');
-        }        
-      }
-      // END TODO
 
     } catch (error) {
       this.error(error);
@@ -1905,6 +1862,50 @@ class ShellyDevice extends Homey.Device {
 
   getCommandId() {
     return this.commandId++
+  }
+
+  async updateDeviceConfig() {
+    try {
+      const hostname = this.getStoreValue('main_device').substr(0, this.getStoreValue('main_device').lastIndexOf("-") + 1);
+      let device_config = this.util.getDeviceConfig(hostname);
+      if (typeof device_config !== 'undefined') {
+  
+        /* update gen1 device config if it's a roller shutter */
+        if (device_config.name === 'Shelly 2' || device_config.name === 'Shelly 2.5') {
+          const result = await this.util.sendCommand('/settings', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          if (result.hasOwnProperty("mode")) {
+            if (result.mode === "roller") {
+              device_config = this.util.getDeviceConfig(hostname + 'roller-');
+            }
+          }
+        }
+  
+        /* update gen2 device config if it's a roller shutter */
+        if (device_config.name === 'Shelly Plus 2PM' || device_config.name === 'Shelly Pro 2' || device_config.name === 'Shelly Pro 2PM') {
+          const result = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
+          if (result.hasOwnProperty("profile")) {
+            if (result.profile === "cover") {
+              device_config = this.util.getDeviceConfig(hostname + 'roller-');
+            }
+          }
+        }
+  
+        /* update device config if it's a RGBW2 in white mode */
+        if (device_config.name === 'Shelly RGBW2 Color') {
+          const result = await this.util.sendCommand('/settings', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          if (result.mode === 'white') {
+            device_config = this.util.getDeviceConfig(hostname + 'white-');
+          }
+        }
+  
+        this.setStoreValue('config', device_config);
+        return Promise.resolve(true);
+      } else {
+        return Promise.reject(this.getData().id + ' has no valid device config to set');
+      }  
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 
 }
