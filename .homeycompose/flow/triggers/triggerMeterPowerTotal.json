@@ -1,8 +1,8 @@
 {
   "id": "triggerMeterPowerTotal",
   "title": {
-    "en": "Total Power",
-    "nl": "Totale power"
+    "en": "Total Power changed",
+    "nl": "Totale power gewijzigd"
   },
   "tokens": [
     {

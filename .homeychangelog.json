@@ -538,5 +538,8 @@
   },
   "3.11.3": {
     "en": "Upcoming breaking change: the next release will remove all old Plus/Pro drivers for both Homey Pro and Cloud. Please migrate to the new unified driver before updating to version 3.12.0 which will be released early september. This release fixes an issue with pairing devices on Homey Pro where it shows already paired devices from the old drivers. It also fixes an issue with the total enery returned capability of the 3EM and adds a triggercard for Total Meter Power for the 3EM."
+  },
+  "3.11.4": {
+    "en": "Upcoming breaking change: the next release will remove all old Plus/Pro drivers for both Homey Pro and Cloud. Please migrate to the new unified driver before updating to version 3.12.0 which will be released early september. This release fixes an issue with pairing devices on Homey Pro where it shows already paired devices from the old drivers. It also fixes an issue with the total enery returned capability of the 3EM and adds a triggercard for Total Meter Power for the 3EM."
   }
 }

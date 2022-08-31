@@ -639,7 +639,7 @@ class ShellyDevice extends Homey.Device {
           /* power factor */
           if (result.emeters[channel].hasOwnProperty("pf") && this.hasCapability('meter_power_factor')) {
             this.updateCapabilityValue('meter_power_factor', result.emeters[channel].pf);
-            this.homey.flow.getDeviceTriggerCard('triggerMeterPowerFactor').trigger(this, {'pf': value}, {}).catch(error => { this.error(error) });
+            this.homey.flow.getDeviceTriggerCard('triggerMeterPowerFactor').trigger(this, {'pf': result.emeters[channel].pf}, {}).catch(error => { this.error(error) });
           }
 
           /* measure_current */
