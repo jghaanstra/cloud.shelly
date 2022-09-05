@@ -24,10 +24,12 @@ class ShellyDevice extends Device {
         if (this.ws.readyState !== WebSocket.CLOSED) {
           this.ws.close();
         }
+      }
+      if (this.getStoreValue('communication') === 'websocket') {
         this.homey.setTimeout(() => {
           this.homey.clearTimeout(this.pingWsTimeout);
           this.homey.clearTimeout(this.reconnectWsTimeout);
-        }, 2000);
+        }, 1000);
       }
 
       /* disable inboud websockets for gen2 devices */
@@ -49,21 +51,35 @@ class ShellyDevice extends Device {
     }
   }
 
+  async onUninit() {
+    try {
+      this.homey.clearInterval(this.pollingInterval);
+
+      if (this.getStoreValue('communication') === 'websocket') {
+        this.homey.clearTimeout(this.pingWsTimeout);
+        this.homey.clearTimeout(this.reconnectWsTimeout);
+      }
+
+      return await this.homey.app.updateShellyCollection();
+    } catch (error) {
+      this.error(error);
+    }
+  }
+
   // HELPER FUNCTIONS
 
   /* websocket for gen2 devices */
   async connectWebsocket() {
+    try {
+      this.ws = new WebSocket('ws://'+ this.getSetting("address") +'/rpc', {perMessageDeflate: false});
 
-    this.ws = new WebSocket('ws://'+ this.getSetting("address") +'/rpc', {perMessageDeflate: false});
-
-    this.ws.on('open', () => {
-      this.connected = true;
-      this.ws.send(JSON.stringify({"id": 0, "src": this.getData().id, "method": "Shelly.GetStatus"}));
-      this.log('Websocket for gen2 LAN device opened:', this.getData().id);
-    });
-
-    this.ws.on('message', (data) => {
-      try {
+      this.ws.on('open', () => {
+        this.connected = true;
+        this.ws.send(JSON.stringify({"id": 0, "src": this.getData().id, "method": "Shelly.GetStatus"}));
+        this.log('Websocket for gen2 LAN device opened:', this.getData().id);
+      });
+  
+      this.ws.on('message', (data) => {
         if (!this.getAvailable()) { this.setAvailable(); }
 
         const result = JSON.parse(data);
@@ -93,35 +109,35 @@ class ShellyDevice extends Device {
 
         this.parseSingleStatusUpdateGen2(result);
 
-      } catch (error) {
+      });
+  
+      this.ws.on('ping', () => {
+        clearTimeout(this.pingWsTimeout);
+        this.pingWsTimeout = this.homey.setTimeout(() => {
+          if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
+            this.connected = false;
+            this.connectWebsocket();
+          } else {
+            this.ws.close();
+          }
+        }, 120 * 1000);
+      });
+  
+      this.ws.on('error', (error) => {
         this.error(error);
-      }
-    });
-
-    this.ws.on('ping', () => {
-      clearTimeout(this.pingWsTimeout);
-      this.pingWsTimeout = this.homey.setTimeout(() => {
-        if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
-          this.connected = false;
+        this.ws.close();
+      });
+  
+      this.ws.on('close', () => {
+        clearTimeout(this.reconnectWsTimeout);
+        this.connected = false;
+        this.reconnectWsTimeout = this.homey.setTimeout(() => {
           this.connectWebsocket();
-        } else {
-          this.ws.close();
-        }
-      }, 120 * 1000);
-    });
-
-    this.ws.on('error', (error) => {
+        }, 30 * 1000);
+      });
+    } catch (error) {
       this.error(error);
-      this.ws.close();
-    });
-
-    this.ws.on('close', () => {
-      clearTimeout(this.reconnectWsTimeout);
-      this.connected = false;
-      this.reconnectWsTimeout = this.homey.setTimeout(() => {
-        this.connectWebsocket();
-      }, 30 * 1000);
-    });
+    }
   }
 
 }

@@ -8,60 +8,61 @@ const tinycolor = require("tinycolor2");
 class ShellyDevice extends Homey.Device {
 
   onInit() {
-    if (!this.util) this.util = new Util({homey: this.homey});
+    try {
+      if (!this.util) this.util = new Util({homey: this.homey});
     
-    // ADDING CAPABILITY LISTENERS
-    this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
-    this.registerCapabilityListener("dim", this.onCapabilityDim.bind(this));
-    this.registerCapabilityListener("light_temperature", this.onCapabilityLightTemperature.bind(this));
-    this.registerMultipleCapabilityListener(['light_hue', 'light_saturation'], this.onMultipleCapabilityListenerSatHue.bind(this), 500);
-    this.registerCapabilityListener("light_mode", this.onCapabilityLightMode.bind(this));
-    this.registerCapabilityListener("onoff.whitemode", this.onCapabilityOnoffWhiteMode.bind(this));
-    this.registerCapabilityListener("windowcoverings_state", this.onCapabilityWindowcoveringsState.bind(this));
-    this.registerCapabilityListener("windowcoverings_set", this.onCapabilityWindowcoveringsSet.bind(this));
-    this.registerCapabilityListener("valve_position", this.onCapabilityValvePosition.bind(this));
-    this.registerCapabilityListener("valve_mode", this.onCapabilityValveMode.bind(this));
-    this.registerCapabilityListener("target_temperature", this.onCapabilityTargetTemperature.bind(this));
+      // ADDING CAPABILITY LISTENERS
+      this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
+      this.registerCapabilityListener("dim", this.onCapabilityDim.bind(this));
+      this.registerCapabilityListener("light_temperature", this.onCapabilityLightTemperature.bind(this));
+      this.registerMultipleCapabilityListener(['light_hue', 'light_saturation'], this.onMultipleCapabilityListenerSatHue.bind(this), 500);
+      this.registerCapabilityListener("light_mode", this.onCapabilityLightMode.bind(this));
+      this.registerCapabilityListener("onoff.whitemode", this.onCapabilityOnoffWhiteMode.bind(this));
+      this.registerCapabilityListener("windowcoverings_state", this.onCapabilityWindowcoveringsState.bind(this));
+      this.registerCapabilityListener("windowcoverings_set", this.onCapabilityWindowcoveringsSet.bind(this));
+      this.registerCapabilityListener("valve_position", this.onCapabilityValvePosition.bind(this));
+      this.registerCapabilityListener("valve_mode", this.onCapabilityValveMode.bind(this));
+      this.registerCapabilityListener("target_temperature", this.onCapabilityTargetTemperature.bind(this));
 
-    // BOOT SEQUENCE
-    this.bootSequence();
+      // BOOT SEQUENCE
+      this.bootSequence();
 
-    // REFRESHING DEVICE CONFIG AND REGISTERING DEVICE TRIGGER CARDS
-    this.homey.setTimeout(async () => {
-      try {
+      // REFRESHING DEVICE CONFIG AND REGISTERING DEVICE TRIGGER CARDS
+      this.homey.setTimeout(async () => {
         await this.updateDeviceConfig();
         for (const trigger of this.getStoreValue('config').triggers) {
           this.homey.flow.getDeviceTriggerCard(trigger);
         }
-      } catch (error) {
-        this.error(error);
-      }
-    }, 2000);
-
+      }, 2000);
+    } catch (error) {
+      this.error(error);
+    }
   }
 
   /* onAdded() */
   async onAdded() {
-
-    // gen1 + gen2: initially poll the device status
-    this.homey.setTimeout(async () => {
-      this.pollDevice();
-    }, 1000 * this.getStoreValue('channel'));
-
-    // gen1 + gen2: update Shelly collection
-    if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
+    try {
+      // gen1 + gen2: initially poll the device status
       this.homey.setTimeout(async () => {
-        return await this.homey.app.updateShellyCollection();
-      }, 2000);
-    }
+        this.pollDevice();
+      }, 1000 * this.getStoreValue('channel'));
 
-    // gen2: start websocket server if device has the server configured during pairing
-    if (this.getStoreValue('wsserver')) {
-      this.homey.setTimeout(async () => {
-        this.homey.app.websocketLocalListener();
-      }, 4000);
-    }
+      // gen1 + gen2: update Shelly collection
+      if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
+        this.homey.setTimeout(async () => {
+          return await this.homey.app.updateShellyCollection();
+        }, 2000);
+      }
 
+      // gen2: start websocket server if device has the server configured during pairing
+      if (this.getStoreValue('wsserver')) {
+        this.homey.setTimeout(async () => {
+          this.homey.app.websocketLocalListener();
+        }, 4000);
+      }
+    } catch (error) {
+      this.error(error);
+    }
   }
 
   /* boot sequence */
@@ -489,7 +490,7 @@ class ShellyDevice extends Homey.Device {
             this.setCapabilityValue(capability, value);
           }
         } else {
-          this.log('adding capability '+ capability +' to '+ this.getData().id +' as the device seems to be values for this capability ...');
+          this.log('adding capability '+ capability +' to '+ this.getData().id +' as the device seems to have values for this capability ...');
           this.addCapability(capability);
         }
       } else {
@@ -500,7 +501,7 @@ class ShellyDevice extends Homey.Device {
             device.setCapabilityValue(capability, value);
           }
         } else {
-          this.log('adding capability '+ capability +' to '+ device.getData().id +' as the device seems to be values for this capability ...');
+          this.log('adding capability '+ capability +' to '+ device.getData().id +' as the device seems to have values for this capability ...');
           device.addCapability(capability);
         }
       }
@@ -1324,9 +1325,7 @@ class ShellyDevice extends Homey.Device {
       }
 
       // DEVICE TEMPERATURE
-      if (result.hasOwnProperty("systemp") && this.hasCapability('measure_temperature') && this.getStoreValue('channel') === 0) {
-
-        /* measure_temperature */
+      if (result.hasOwnProperty("systemp") && this.hasCapability('measure_temperature') && channel === 0) {
         this.updateCapabilityValue('measure_temperature', result.systemp.tC, 0);
       }
 
@@ -1334,7 +1333,7 @@ class ShellyDevice extends Homey.Device {
       if (result.hasOwnProperty("wifi")) {
 
         /* rssi */
-        if (result.wifi.hasOwnProperty("rssi")) {
+        if (result.wifi.hasOwnProperty("rssi") && this.hasCapability('rssi') && channel === 0) {
           this.updateCapabilityValue('rssi', result.wifi.rssi);
         }
 

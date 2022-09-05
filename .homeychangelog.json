@@ -544,5 +544,8 @@
   },
   "3.11.5": {
     "en": "Upcoming breaking change: the next release will remove all old Plus/Pro drivers for both Homey Pro and Cloud. Please migrate to the new unified driver before updating to version 3.12.0 which will be released early september. This release contains a fix for controlling the RGBW2 White on Homey Pro."
+  },
+  "3.11.6": {
+    "en": "Upcoming breaking change: the next release will remove all old Plus/Pro drivers for both Homey Pro and Cloud. Please migrate to the new unified driver before updating to version 3.12.0 which will be released early september. This release fixes an issue with status updates for multichannel devices on Homey Pro. It also contains some minor code improvements."
   }
 }
