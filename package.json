@@ -1,6 +1,6 @@
 {
   "name": "cloud.shelly",
-  "version": "3.11.6",
+  "version": "3.11.7",
   "description": "Homey app for controlling Shelly devices",
   "main": "app.js",
   "scripts": {
@@ -20,6 +20,7 @@
   },
   "homepage": "https://apps.athom.com/app/cloud.shelly",
   "dependencies": {
+    "crypto": "^1.0.1",
     "homey-oauth2app": "^3.5.0",
     "http-auth-client": "^0.4.1",
     "jwt-decode": "^3.1.2",

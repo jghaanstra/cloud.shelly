@@ -29,9 +29,13 @@ class ShellyDevice extends Homey.Device {
 
       // REFRESHING DEVICE CONFIG AND REGISTERING DEVICE TRIGGER CARDS
       this.homey.setTimeout(async () => {
-        await this.updateDeviceConfig();
-        for (const trigger of this.getStoreValue('config').triggers) {
-          this.homey.flow.getDeviceTriggerCard(trigger);
+        try {
+          await this.updateDeviceConfig();
+          for (const trigger of this.getStoreValue('config').triggers) {
+            this.homey.flow.getDeviceTriggerCard(trigger);
+          }
+        } catch (error) {
+          this.log(error);
         }
       }, 2000);
     } catch (error) {

@@ -80,35 +80,38 @@ class ShellyDevice extends Device {
       });
   
       this.ws.on('message', (data) => {
-        if (!this.getAvailable()) { this.setAvailable(); }
+        try {
+          if (!this.getAvailable()) { this.setAvailable(); }
 
-        const result = JSON.parse(data);
+          const result = JSON.parse(data);
 
-        if (result.hasOwnProperty("error")) {
-          if (result.error.hasOwnProperty("code")) {
-            if (result.error.code === 401) {
-              if (this.digestRetries == undefined) {
-                this.digestRetries = 0;
-              }
-              if (this.digestRetries < 2) {
-                this.digestRetries++;
-                let error_message = JSON.parse(result.error.message);
-                let ha1 = this.util.createHash(this.getSetting('username') +":" + error_message.realm + ":" + this.getSetting('password'));
-                let ha2 = "6370ec69915103833b5222b368555393393f098bfbfbb59f47e0590af135f062"; // createHash("dummy_method:dummy_uri");
-                let cnonce = String(Math.floor(Math.random() * 10e8));
-                let digest = ha1 +":"+ error_message.nonce +":"+ error_message.nc +":"+ cnonce +":auth:"+ ha2;
-                let response = this.util.createHash(digest);
-                let auth = JSON.parse('{"realm":"'+ error_message.realm +'", "username":"admin", "nonce":'+ error_message.nonce +', "cnonce":'+ cnonce +', "response":"'+ response +'", "algorithm":"SHA-256"}');
-                this.setStoreValue('digest_auth_websocket', auth);
+          if (result.hasOwnProperty("error")) {
+            if (result.error.hasOwnProperty("code")) {
+              if (result.error.code === 401) {
+                if (this.digestRetries == undefined) {
+                  this.digestRetries = 0;
+                }
+                if (this.digestRetries < 2) {
+                  this.digestRetries++;
+                  let error_message = JSON.parse(result.error.message);
+                  let ha1 = this.util.createHash(this.getSetting('username') +":" + error_message.realm + ":" + this.getSetting('password'));
+                  let ha2 = "6370ec69915103833b5222b368555393393f098bfbfbb59f47e0590af135f062"; // createHash("dummy_method:dummy_uri");
+                  let cnonce = String(Math.floor(Math.random() * 10e8));
+                  let digest = ha1 +":"+ error_message.nonce +":"+ error_message.nc +":"+ cnonce +":auth:"+ ha2;
+                  let response = this.util.createHash(digest);
+                  let auth = JSON.parse('{"realm":"'+ error_message.realm +'", "username":"admin", "nonce":'+ error_message.nonce +', "cnonce":'+ cnonce +', "response":"'+ response +'", "algorithm":"SHA-256"}');
+                  this.setStoreValue('digest_auth_websocket', auth);
+                }
               }
             }
+          } else {
+            this.digestRetries = 0;
           }
-        } else {
-          this.digestRetries = 0;
+
+          this.parseSingleStatusUpdateGen2(result);
+        } catch (error) {
+          this.log(error);
         }
-
-        this.parseSingleStatusUpdateGen2(result);
-
       });
   
       this.ws.on('ping', () => {
