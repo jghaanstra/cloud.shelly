@@ -47,26 +47,38 @@ class ShellyDevice extends Homey.Device {
   async onAdded() {
     try {
       // gen1 + gen2: initially poll the device status
-      this.homey.setTimeout(async () => {
+      this.homey.setTimeout(() => {
         this.pollDevice();
       }, 1000 * this.getStoreValue('channel'));
 
       // gen1 + gen2: update Shelly collection
-      if (this.getStoreValue('channel') === 0 || this.getStoreValue('channel') == null) {
+      if (this.getStoreValue('channel') === 0) {
         this.homey.setTimeout(async () => {
           return await this.homey.app.updateShellyCollection();
         }, 2000);
       }
 
+      // gen1: (re)start coap
+      if (this.getStoreValue('communication') === 'coap') {
+        this.homey.setTimeout(() => {
+          this.homey.app.restartCoapListener();
+        }, 4000);
+      }
+
       // gen2: start websocket server if device has the server configured during pairing
       if (this.getStoreValue('wsserver')) {
-        this.homey.setTimeout(async () => {
+        this.homey.setTimeout(() => {
           this.homey.app.websocketLocalListener();
         }, 4000);
       }
     } catch (error) {
       this.error(error);
     }
+  }
+
+  /* onSettings */
+  async onSettings({ oldSettings, newSettings, changedKeys }) {
+    return await this.homey.app.updateShellyCollection();
   }
 
   /* boot sequence */

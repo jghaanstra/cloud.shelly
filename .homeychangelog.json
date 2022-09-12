@@ -550,5 +550,8 @@
   },
   "3.11.7": {
     "en": "Upcoming breaking change: the next release will remove all old Plus/Pro drivers for both Homey Pro and Cloud. Please migrate to the new unified driver before updating to version 3.12.0 which will be released early september. This release fixes an issue with status updates for multichannel devices on Homey Pro. It also contains some minor code improvements."
+  },
+  "3.12.0": {
+    "en": "Breaking change: This release removes the previously deprecated drivers for all Shelly Plus/Pro devices on Homey Pro and Homey Cloud. If you have missed or ignored previous communication about this, you will have to re-pair these devices with the new generic Shelly device driver. The release also contains some minor performance improvements and the support for specific hardware revisions of Pro devices."
   }
 }

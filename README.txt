@@ -28,7 +28,7 @@ Shelly Button 1
 Shelly Button 2
 Shelly Air
 Shelly Flood
-Shelly Gas
+Shelly Gas (only Homey Pro)
 Shelly Smoke
 Shelly Bulb
 Shelly Bulb RGBW

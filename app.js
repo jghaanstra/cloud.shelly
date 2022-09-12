@@ -13,7 +13,7 @@ class ShellyApp extends OAuth2App {
   static OAUTH2_CLIENT = ShellyOAuth2Client;
   static OAUTH2_DEBUG = false;
   static OAUTH2_MULTI_SESSION = false;
-  static OAUTH2_DRIVERS = ['shelly_cloud', 'shelly-plug-s_cloud', 'shelly-plug_cloud', 'shelly-plus-1_cloud', 'shelly-plus-1pm_cloud', 'shelly-plus-2pm-rollershutter_cloud', 'shelly-plus-2pm_cloud', 'shelly-pro-1_cloud', 'shelly-pro-1pm_cloud', 'shelly-pro-2-rollershutter_cloud', 'shelly-pro-2_cloud', 'shelly-pro-2pm-rollershutter_cloud', 'shelly-pro-2pm_cloud', 'shelly1_cloud', 'shelly1l_cloud', 'shelly1pm_cloud', 'shelly2-rollershutter_cloud', 'shelly25-rollershutter_cloud', 'shelly25_cloud', 'shelly2_cloud', 'shelly3em_cloud', 'shelly4pro_cloud', 'shellyair_cloud', 'shellybulb_cloud', 'shellybutton1_cloud', 'shellydimmer_cloud', 'shellyduo_cloud', 'shellydw_cloud', 'shellyem_cloud', 'shellyflood_cloud', 'shellyht_cloud', 'shellyi3_cloud', 'shellyi4_cloud', 'shellymotion_cloud', 'shellyrgbw2color_cloud', 'shellyrgbw2white_cloud', 'shellysmoke_cloud', 'shellyuni_cloud', 'shellyvintage_cloud'];
+  static OAUTH2_DRIVERS = ['shelly_cloud', 'shelly-plug-s_cloud', 'shelly-plug_cloud', 'shelly1_cloud', 'shelly1l_cloud', 'shelly1pm_cloud', 'shelly2-rollershutter_cloud', 'shelly25-rollershutter_cloud', 'shelly25_cloud', 'shelly2_cloud', 'shelly3em_cloud', 'shelly4pro_cloud', 'shellyair_cloud', 'shellybulb_cloud', 'shellybutton1_cloud', 'shellydimmer_cloud', 'shellyduo_cloud', 'shellydw_cloud', 'shellyem_cloud', 'shellyflood_cloud', 'shellyht_cloud', 'shellyi3_cloud', 'shellymotion_cloud', 'shellyrgbw2color_cloud', 'shellyrgbw2white_cloud', 'shellysmoke_cloud', 'shellyuni_cloud', 'shellyvintage_cloud'];
 
   async onOAuth2Init() {
     try {
@@ -23,7 +23,6 @@ class ShellyApp extends OAuth2App {
   
       // VARIABLES GENERIC
       this.shellyDevices = [];
-      this.newShellyDevices = [];
   
       // VARIABLES WEBSOCKET
       this.wss = null;
@@ -41,8 +40,9 @@ class ShellyApp extends OAuth2App {
       }, 2000);
   
       // COAP, CLOUD & GEN2 WEBSOCKETS: INITIALLY UPDATE THE SHELLY COLLECTION FOR MATCHING INCOMING STATUS UPDATES
-      this.homey.setTimeout(() => {
-        this.updateShellyCollection();
+      this.homey.setTimeout(async () => {
+        await this.updateShellyCollection();
+        this.log('Shelly collection has been updated ...');
       }, 15000);
   
       // COAP: START COAP LISTENER FOR RECEIVING STATUS UPDATES
@@ -50,15 +50,15 @@ class ShellyApp extends OAuth2App {
         let gen1 = await this.util.getDeviceType('gen1');
         if (gen1) {
           if (!this.homey.settings.get('general_coap')) {
-            this.log('CoAP listener for gen1 LAN devices started.');
+            this.log('CoAP listener for gen1 LAN devices started ...');
             shellies.start();
           } else {
-            this.log('CoAP listener not started, the CoAP listener has been disabled from the app settings');
+            this.log('CoAP listener not started, the CoAP listener has been disabled from the app settings ...');
           }
         } else {
-          this.log('CoAP listener not started as no gen 1 devices where found during app init');
+          this.log('CoAP listener not started as no gen 1 devices where found during app init ...');
         }
-      }, 25000);
+      }, 20000);
   
       // WEBSOCKET: INITIALLY START WEBSOCKET SERVER AND LISTEN FOR GEN2 UPDATES
       this.homey.setTimeout(async () => {
@@ -66,14 +66,9 @@ class ShellyApp extends OAuth2App {
         if (gen2) {
           this.websocketLocalListener();
         } else {
-          this.log('Websocket server for gen2 devices with outbound websockets not started as no gen2 devices where found during app init');
+          this.log('Websocket server for gen2 devices with outbound websockets not started as no gen2 devices where found during app init ...');
         }
       }, 25000);
-  
-      // COAP, CLOUD & GEN2 WEBSOCKETS: UPDATE THE SHELLY COLLECTION REGULARLY
-      this.shellyCollectionInterval = this.homey.setInterval(async () => {
-        await this.updateShellyCollection();
-      }, 3600000);
   
       // GENERIC FLOWCARDS
       this.homey.flow.getTriggerCard('triggerDeviceOffline');
@@ -551,7 +546,7 @@ class ShellyApp extends OAuth2App {
     }
   }
 
-  // COAP: UPDATE SETTINGS AND START/STOP COAP LISTENER
+  // COAP: UPDATE APP SETTINGS AND START/STOP COAP LISTENER
   async updateSettings(settings) {
     try {
       if (settings.general_coap) {
@@ -575,8 +570,7 @@ class ShellyApp extends OAuth2App {
   // COAP & GEN2 WEBSOCKETS: UPDATE COLLECTION OF DEVICES
   async updateShellyCollection() {
     try {
-      this.newShellyDevices = await this.util.getShellies('collection');
-      this.shellyDevices = this.newShellyDevices;
+      this.shellyDevices = await this.util.getShellies('collection');
       return Promise.resolve(true);
     } catch(error) {
       this.error(error);
@@ -584,17 +578,12 @@ class ShellyApp extends OAuth2App {
     }
   }
 
-  // COAP & GEN2 WEBSOCKETS: RETURN PAIRED DEVICES
-  async getShellyCollection() {
-    return this.shellyDevices;
-  }
-
   // WEBSOCKET: START WEBSOCKET SERVER AND LISTEN FOR INBOUND GEN2 UPDATES
   async websocketLocalListener() {
     try {
       if (this.wss === null) {
         this.wss = new WebSocket.Server({ port: 6113 });
-        this.log('Websocket server for gen2 devices with outbound websockets started');
+        this.log('Websocket server for gen2 devices with outbound websockets started ...');
         this.wss.on("connection", (wsserver, req) => {
 
           wsserver.send('{"jsonrpc":"2.0", "id":1, "src":"wsserver-getdeviceinfo", "method":"Shelly.GetDeviceInfo"}');
@@ -662,7 +651,7 @@ class ShellyApp extends OAuth2App {
         this.ws = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ this.cloudAccessToken, {perMessageDeflate: false});
 
         this.ws.on('open', () => {
-          this.log('Cloud websocket for cloud devices opened');
+          this.log('Cloud websocket for cloud devices opened ...');
           this.wsConnected = true;
 
           // start sending pings every 2 minutes to check the connection status
@@ -737,8 +726,22 @@ class ShellyApp extends OAuth2App {
           }
         }, 5000);
       } else {
-        this.log('Cloud websocket for cloud devices not opened as no oauth2 clients (cloud connected device) where found');
+        this.log('Cloud websocket for cloud devices not opened as no oauth2 clients (cloud connected device) where found ...');
       }
+    }
+  }
+
+  // COAP: (RE)START LISTENER
+  async restartCoapListener() {
+    try {
+      this.log('CoAP listener for gen1 LAN devices (re)started after adding a device ...');
+      shellies.stop();
+      this.homey.setTimeout(async () => {
+        shellies.start();
+      }, 1000);
+      return Promise.resolve(true);
+    } catch (error) {
+      return Promise.reject(error);
     }
   }
 
@@ -782,7 +785,6 @@ class ShellyApp extends OAuth2App {
 
   async onUninit() {
     try {
-      this.homey.clearInterval(this.shellyCollectionInterval);
       this.homey.clearInterval(this.wsPingInterval);
       this.homey.clearTimeout(this.wsPingTimeout);
       this.homey.clearTimeout(this.wsReconnectTimeout);

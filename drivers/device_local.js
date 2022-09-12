@@ -44,8 +44,7 @@ class ShellyDevice extends Device {
         await this.util.removeIcon(iconpath);
       }
 
-      await this.homey.app.updateShellyCollection();
-      return;
+      return await this.homey.app.updateShellyCollection();
     } catch (error) {
       this.error(error);
     }
