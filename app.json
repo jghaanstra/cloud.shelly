@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.12.0",
+  "version": "3.12.1",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -333,7 +333,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly25_cloud|shelly2_cloud|shelly4pro|shelly4pro_cloud|shellyair|shellyair_cloud|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
+            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1L|shelly1_cloud|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly25_cloud|shelly2_cloud|shelly4pro|shelly4pro_cloud|shellyair|shellyair_cloud|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
           }
         ],
         "platforms": [

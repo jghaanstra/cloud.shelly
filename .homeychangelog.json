@@ -553,5 +553,8 @@
   },
   "3.12.0": {
     "en": "Breaking change: This release removes the previously deprecated drivers for all Shelly Plus/Pro devices on Homey Pro and Homey Cloud. If you have missed or ignored previous communication about this, you will have to re-pair these devices with the new generic Shelly device driver. The release also contains some minor performance improvements and the support for specific hardware revisions of Pro devices."
+  },
+  "3.12.1": {
+    "en": "This release fixes a bug where the Input Turned Off trigger card is not available for some gen1 devices that have not been paired yet with the new generic driver."
   }
 }
