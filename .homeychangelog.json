@@ -556,5 +556,8 @@
   },
   "3.12.1": {
     "en": "This release fixes a bug where the Input Turned Off trigger card is not available for some gen1 devices that have not been paired yet with the new generic driver."
+  },
+  "3.12.2": {
+    "en": "This release fixes an issue of not being able to select a device in the generic action event trigger card. "
   }
 }
