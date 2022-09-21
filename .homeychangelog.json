@@ -559,5 +559,8 @@
   },
   "3.12.2": {
     "en": "This release fixes an issue of not being able to select a device in the generic action event trigger card. "
+  },
+  "3.12.3": {
+    "en": "This release fixes an issue with action events for recently paired Plus/Pro devices on Homey Pro. It also fixes an issue with Plus/Pro devices loosing connection on Homey Pro when authentication has been enabled."
   }
 }

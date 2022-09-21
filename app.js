@@ -597,7 +597,7 @@ class ShellyApp extends OAuth2App {
                   if (result.hasOwnProperty("params")) {
                     if (result.method === 'NotifyFullStatus') { // parse full status updates
                       filteredShellyWss.device.parseFullStatusUpdateGen2(result.params);
-                    } else if (result.method === 'NotifyStatus') {
+                    } else if (result.method === 'NotifyStatus' || result.method === 'NotifyEvent') {
                       filteredShellyWss.device.parseSingleStatusUpdateGen2(result);
                     }
                   }

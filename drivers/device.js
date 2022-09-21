@@ -1427,7 +1427,7 @@ class ShellyDevice extends Homey.Device {
               let channel = event.id || 0;
 
               // get the right device
-              if (channel === 0 || this.hasCapability('input_2')) { // if channel is 0 or device is not a multichannel device in Homey we have the right device
+              if (channel === 0 || this.hasCapability('input_2')) { // if channel is 0 or device has multiple inputs but is not a multichannel device in Homey we have the right device
                 device = this;
               } else { // get the right device based on the channel
                 const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
