@@ -562,5 +562,8 @@
   },
   "3.12.3": {
     "en": "This release fixes an issue with action events for recently paired Plus/Pro devices on Homey Pro. It also fixes an issue with Plus/Pro devices loosing connection on Homey Pro when authentication has been enabled."
+  },
+  "3.12.4": {
+    "en": "This release fixes an issue with the Valve position changed trigger card not being available for the Shelly TRV when still paired with the deprecated driver. It also contains a code change in an attempt to fix a memory leak for users with multichannel devices."
   }
 }
