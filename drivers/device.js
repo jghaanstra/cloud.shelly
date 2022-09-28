@@ -511,7 +511,9 @@ class ShellyDevice extends Homey.Device {
         }
       } else {
         const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
-        const device = this.driver.getDevice({id: device_id });
+        const shellies = this.homey.app.getShellyCollection();
+        const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
+        const device = shelly[0].device;
         if (device.hasCapability(capability)) {
           if (value !== device.getCapabilityValue(capability) && value !== null && value !== 'null' && value !== 'undefined' && value !== undefined) {
             device.setCapabilityValue(capability, value);
@@ -1303,7 +1305,9 @@ class ShellyDevice extends Homey.Device {
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action_event_2}, {"id": this.getData().id, "device": this.getName(), "action": action_event_2}).catch(error => { this.error(error) });
             } else {
               const device_id = this.getStoreValue('main_device') + '-channel-1';
-              const device = this.driver.getDevice({id: device_id });
+              const shellies = this.homey.app.getShellyCollection();
+              const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
+              const device = shelly[0].device;
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:1"].ev, this.getStoreValue('communication'), this.getStoreValue('gen'))}, {"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:1"].ev, this.getStoreValue('communication'), this.getStoreValue('gen'))}).catch(error => { this.error(error) });
             }
           }
@@ -1318,7 +1322,9 @@ class ShellyDevice extends Homey.Device {
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action_event_3}, {"id": this.getData().id, "device": this.getName(), "action": action_event_3}).catch(error => { this.error(error) });
             } else {
               const device_id = this.getStoreValue('main_device') + '-channel-2';
-              const device = this.driver.getDevice({id: device_id });
+              const shellies = this.homey.app.getShellyCollection();
+              const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
+              const device = shelly[0].device;
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:2"].ev, this.getStoreValue('communication'), this.getStoreValue('gen'))}, {"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:2"].ev, this.getStoreValue('communication'), this.getStoreValue('gen'))}).catch(error => { this.error(error) });
             }
           }
@@ -1333,7 +1339,9 @@ class ShellyDevice extends Homey.Device {
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action_event_4}, {"id": this.getData().id, "device": this.getName(), "action": action_event_4}).catch(error => { this.error(error) });
             } else {
               const device_id = this.getStoreValue('main_device') + '-channel-3';
-              const device = this.driver.getDevice({id: device_id });
+              const shellies = this.homey.app.getShellyCollection();
+              const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
+              const device = shelly[0].device;
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:3"].ev, this.getStoreValue('communication'), this.getStoreValue('gen'))}, {"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:3"].ev, this.getStoreValue('communication'), this.getStoreValue('gen'))}).catch(error => { this.error(error) });
             }
           }
@@ -1393,7 +1401,9 @@ class ShellyDevice extends Homey.Device {
               if (capability === 'errors') { /* handle device errors */
                 value.forEach((element) => {
                   const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
-                  const device = this.driver.getDevice({id: device_id });
+                  const shellies = this.homey.app.getShellyCollection();
+                  const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
+                  const device = shelly[0].device;
                   this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": this.homey.__(element)}).catch(error => { this.error(error) });
                 });
               } else if (capability !== 'component' && capability !== 'id' && capability !== 'source') {
@@ -1410,7 +1420,9 @@ class ShellyDevice extends Homey.Device {
                     this.parseCapabilityUpdate(input, value, 0);
                   } else {
                     const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
-                    const device = this.driver.getDevice({id: device_id });
+                    const shellies = this.homey.app.getShellyCollection();
+                    const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
+                    const device = shelly[0].device;
                     device.parseCapabilityUpdate(input, value, channel);
                   }
                 } else {
@@ -1431,7 +1443,9 @@ class ShellyDevice extends Homey.Device {
                 device = this;
               } else { // get the right device based on the channel
                 const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
-                device = this.driver.getDevice({id: device_id });
+                const shellies = this.homey.app.getShellyCollection();
+                const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
+                device = shelly[0].device;
               }
 
               // get the right action

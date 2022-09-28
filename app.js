@@ -567,17 +567,6 @@ class ShellyApp extends OAuth2App {
     }
   }
 
-  // COAP & GEN2 WEBSOCKETS: UPDATE COLLECTION OF DEVICES
-  async updateShellyCollection() {
-    try {
-      this.shellyDevices = await this.util.getShellies('collection');
-      return Promise.resolve(true);
-    } catch(error) {
-      this.error(error);
-      return Promise.reject(error);
-    }
-  }
-
   // WEBSOCKET: START WEBSOCKET SERVER AND LISTEN FOR INBOUND GEN2 UPDATES
   async websocketLocalListener() {
     try {
@@ -735,7 +724,9 @@ class ShellyApp extends OAuth2App {
   async restartCoapListener() {
     try {
       this.log('CoAP listener for gen1 LAN devices (re)started after adding a device ...');
-      shellies.stop();
+      if (shellies !== null) {
+        shellies.stop();
+      }
       this.homey.setTimeout(async () => {
         shellies.start();
       }, 1000);
@@ -781,6 +772,22 @@ class ShellyApp extends OAuth2App {
       this.error(error);
       return Promise.reject(error);
     }
+  }
+
+  // ALL: UPDATE COLLECTION OF DEVICES
+  async updateShellyCollection() {
+    try {
+      this.shellyDevices = await this.util.getShellies('collection');
+      return Promise.resolve(true);
+    } catch(error) {
+      this.error(error);
+      return Promise.reject(error);
+    }
+  }
+
+  // ALL: RETURN PAIRED DEVICES
+  getShellyCollection() {
+    return this.shellyDevices;
   }
 
   async onUninit() {
