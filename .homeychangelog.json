@@ -565,5 +565,8 @@
   },
   "3.12.4": {
     "en": "This release fixes an issue with the Valve position changed trigger card not being available for the Shelly TRV when still paired with the deprecated driver. It also contains a code change in an attempt to fix a memory leak for users with multichannel devices."
+  },
+  "3.13.0": {
+    "en": "Fix for action event trigger card showing an error when users has skipped major updates and broken the upgrade path for Homey Pro and Homey Cloud. Also some improvements in the cloud connection to better handle invalid oauth2 sessions for Homey Cloud. "
   }
 }

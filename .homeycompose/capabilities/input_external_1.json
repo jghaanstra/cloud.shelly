@@ -1,0 +1,20 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "State of External Input 1",
+    "nl": "Status van externe input 1"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "insightsTitleFalse": {
+    "en": "External input 1 turned off",
+    "nl": "Externe input 1 uitgeschakeld"
+  },
+  "insightsTitleTrue": {
+    "en": "External input 1 turned on",
+    "nl": "Externe input 1 ingeschakeld"
+  },
+  "icon": "/assets/input_switch.svg"
+}

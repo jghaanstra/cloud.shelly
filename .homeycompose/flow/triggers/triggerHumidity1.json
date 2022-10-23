@@ -1,0 +1,30 @@
+{
+  "id": "triggerHumidity1",
+  "title": {
+    "en": "Humidity Sensor 1 has changed",
+    "nl": "Vochtsensor 1 is veranderd"
+  },
+  "tokens": [
+    {
+      "name": "humidity",
+      "type": "number",
+      "title": {
+        "en": "Humidity",
+        "nl": "Vocht"
+      },
+      "example": 5
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_humidity.1"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "triggerPlusInputExternal3On",
+  "title": {
+    "en": "External input 3 turned on",
+    "nl": "Externe input 3 aangezet"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_3"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

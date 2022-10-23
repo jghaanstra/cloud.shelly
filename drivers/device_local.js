@@ -127,7 +127,6 @@ class ShellyDevice extends Device {
   
       this.ws.on('error', (error) => {
         this.error(error);
-        this.ws.close();
       });
   
       this.ws.on('close', () => {
