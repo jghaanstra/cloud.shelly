@@ -1,0 +1,39 @@
+{
+  "id": "actionCustomCommand",
+  "title": {
+    "en": "Send Command",
+    "nl": "Verstuur commando"
+  },
+  "titleFormatted": {
+    "en": "Send command [[command]]",
+    "nl": "Verstuur commando [[command]]"
+  },
+  "hint": {
+    "en": "Use this card to send a custom API command. This is an advanced card, use at your own risk. Only enter the command after the default path (for gen1 everything after http://ip/ and for gen2 everyting after http://ip/rpc/). Use the API documentation to get the right the command ",
+    "nl": "Gebruik deze actie om een maatwerk API commando te versturen. Dit is geadvanceerde functionaliteit, op eigen risico gebruiken. Voer allen het command achter het standaard pad in (voor gen1 is is alles achter http://ip/ en voor gen2 is dit alles achter http://ip/rpc/). Gebruik de API documentatie voor het achterhalen van het juiste commando."
+  },
+  "args": [
+    {
+      "name": "command",
+      "type": "text",
+      "title": {
+        "en": "Command",
+        "nl": "Commando"
+      },
+      "placeholder": {
+        "en": "Command",
+        "nl": "Commando"
+      }
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shelly-plug"
+    }
+  ],
+  "platforms": ["local"]
+}

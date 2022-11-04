@@ -293,10 +293,12 @@ class ShellyDevice extends Homey.Device {
         switch(this.getStoreValue('communication')) {
           case 'websocket': {
             const dim_websocket = value === 0 ? 1 : value * 100;
-            return await this.util.sendRPCCommand('/rpc/Light.Set?id='+ this.getStoreValue("channel") +'&on=true&brightness='+ dim_websocket, this.getSetting('address'), this.getSetting('password'));
+            const onoff_websocket = value === 0 ? false : true;
+            return await this.util.sendRPCCommand('/rpc/Light.Set?id='+ this.getStoreValue("channel") +'&on='+ onoff_websocket +'&brightness='+ dim_websocket, this.getSetting('address'), this.getSetting('password'));
           }
           case 'coap': {
             const dim_coap = value === 0 ? 1 : value * 100;
+            const onoff_coap = value === 0 ? 'off' : 'on';
             const light_config = this.getStoreValue('config').extra.light;
             let dim_component = light_config.dim_component;
 
@@ -308,14 +310,16 @@ class ShellyDevice extends Homey.Device {
             }
 
             if (!this.getCapabilityValue('onoff')) {
-              return await this.util.sendCommand('/'+ light_config.light_endpoint +'/'+ this.getStoreValue('channel') +'?turn=on&'+ dim_component +'='+ dim_coap +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+              return await this.util.sendCommand('/'+ light_config.light_endpoint +'/'+ this.getStoreValue('channel') +'?turn='+ onoff_coap +'&'+ dim_component +'='+ dim_coap +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
             } else {
               return await this.util.sendCommand('/'+ light_config.light_endpoint +'/'+ this.getStoreValue('channel') +'?'+ dim_component +'='+ dim_coap +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
             }
           }
           case 'cloud': {
-            if (!this.getCapabilityValue('onoff')) {
+            if (!this.getCapabilityValue('onoff') && value !== 0) {
               this.setCapabilityValue('onoff', true);
+            } else if (this.getCapabilityValue('onoff') && value === 0) {
+              this.setCapabilityValue('onoff', false);
             }
             const dim_cloud = value === 0 ? 1 : value * 100;
             return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'brightness', command_value: dim_cloud, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);

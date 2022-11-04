@@ -28,17 +28,11 @@ class ShellyApp extends OAuth2App {
       this.wss = null;
   
       // VARIABLES CLOUD GEN1 & GEN2
-      this.cloudInstall = false;
       this.cloudServer = null;
       this.cloudAccessToken = null;
       this.ws = null;
       this.wsConnected = false;
       this.debouncer = 0;
-  
-      // CLOUD GEN1 & GEN2: OPEN CLOUD WEBSOCKET
-      this.homey.setTimeout(() => {
-        this.websocketCloudListener();
-      }, 2000);
   
       // ALL: INITIALLY UPDATE THE SHELLY COLLECTION FOR MATCHING INCOMING STATUS UPDATES
       this.homey.setTimeout(async () => {
@@ -47,29 +41,33 @@ class ShellyApp extends OAuth2App {
       }, 15000);
   
       // COAP GEN1: START COAP LISTENER FOR RECEIVING STATUS UPDATES
-      this.homey.setTimeout(async () => {
-        let gen1 = await this.util.getDeviceType('gen1');
-        if (gen1) {
-          if (!this.homey.settings.get('general_coap')) {
-            this.log('CoAP listener for gen1 LAN devices started ...');
-            shellies.start();
+      if (this.homey.platform !== "cloud") {
+        this.homey.setTimeout(async () => {
+          let gen1 = await this.util.getDeviceType('gen1');
+          if (gen1) {
+            if (!this.homey.settings.get('general_coap')) {
+              this.log('CoAP listener for gen1 LAN devices started ...');
+              shellies.start();
+            } else {
+              this.log('CoAP listener not started, the CoAP listener has been disabled from the app settings ...');
+            }
           } else {
-            this.log('CoAP listener not started, the CoAP listener has been disabled from the app settings ...');
+            this.log('CoAP listener not started as no gen 1 devices where found during app init ...');
           }
-        } else {
-          this.log('CoAP listener not started as no gen 1 devices where found during app init ...');
-        }
-      }, 20000);
-  
+        }, 20000);
+      }
+      
       // WEBSOCKET GEN2: INITIALLY START WEBSOCKET SERVER AND LISTEN FOR GEN2 UPDATES
-      this.homey.setTimeout(async () => {
-        let gen2 = await this.util.getDeviceType('gen2');
-        if (gen2) {
-          this.websocketLocalListener();
-        } else {
-          this.log('Websocket server for gen2 devices with outbound websockets not started as no gen2 devices where found during app init ...');
-        }
-      }, 25000);
+      if (this.homey.platform !== "cloud") {
+        this.homey.setTimeout(async () => {
+          let gen2 = await this.util.getDeviceType('gen2');
+          if (gen2) {
+            this.websocketLocalListener();
+          } else {
+            this.log('Websocket server for gen2 devices with outbound websockets not started as no gen2 devices where found during app init ...');
+          }
+        }, 25000);
+      }
   
       // GENERIC FLOWCARDS
       this.homey.flow.getTriggerCard('triggerDeviceOffline');
@@ -153,6 +151,26 @@ class ShellyApp extends OAuth2App {
               }
               case 'websocket': {
                 return await this.util.sendRPCCommand('/rpc/Shelly.Reboot', args.device.getSetting('address'), args.device.getSetting('password'));
+              }
+              case 'cloud': {
+                // cloud does not support these commands
+                break;
+              }
+            }
+          } catch (error) {
+            return Promise.reject(error);
+          }
+        })
+
+      this.homey.flow.getActionCard('actionCustomCommand')
+        .registerRunListener(async (args) => {
+          try {
+            switch(args.device.getStoreValue('communication')) {
+              case 'coap': {
+                return await this.util.sendCommand('/'+ args.command, args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+              }
+              case 'websocket': {
+                return await this.util.sendRPCCommand('/rpc/'+ args.command, args.device.getSetting('address'), args.device.getSetting('password'));
               }
               case 'cloud': {
                 // cloud does not support these commands
@@ -587,6 +605,9 @@ class ShellyApp extends OAuth2App {
                   if (result.hasOwnProperty("params")) {
                     if (result.method === 'NotifyFullStatus') { // parse full status updates
                       filteredShellyWss.device.parseFullStatusUpdateGen2(result.params);
+                      if (filteredShellyWss.device.getSetting('address') !== result.params.wifi.sta_ip) {
+                        filteredShellyWss.device.setSettings({address: result.params.wifi.sta_ip});
+                      }
                     } else if (result.method === 'NotifyStatus' || result.method === 'NotifyEvent') {
                       filteredShellyWss.device.parseSingleStatusUpdateGen2(result);
                     }
@@ -784,8 +805,10 @@ class ShellyApp extends OAuth2App {
     try {
       const filteredShellies = this.shellyDevices.filter(shelly => shelly.communication.includes('cloud'));
       if (filteredShellies.length === 0) {
-        this.log('Closing websocket because there are no more cloud devices paired');
-        this.ws.close();
+        if (this.ws !== null && this.ws.readyState !== WebSocket.CLOSED) {
+          this.log('Closing websocket because there are no more cloud devices paired');
+          this.ws.close();
+        }
       }
       return Promise.resolve(true);
     } catch (error) {

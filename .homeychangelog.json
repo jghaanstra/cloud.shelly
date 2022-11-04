@@ -568,5 +568,8 @@
   },
   "3.13.0": {
     "en": "Fix for action event trigger card showing an error when users has skipped major updates and broken the upgrade path for Homey Pro and Homey Cloud. Also some improvements in the cloud connection to better handle invalid oauth2 sessions for Homey Cloud. "
+  },
+  "3.13.1": {
+    "en": "This release adds an action card for sending custom commands using the API documentation on Homey Pro. This is for advanced users only! It also adds functionality to automatically turn of a light when setting dim to 0 on Homey Pro and Homey Cloud. And it introduces a mechanism for updating the IP address for gen2 devices when an incoming status updates doest match the registered IP address of the Shelly device. You should still use static IP addresses for your devices though."
   }
 }
