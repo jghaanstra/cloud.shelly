@@ -1,0 +1,19 @@
+{
+  "id": "actionResetTotals",
+  "title": {
+    "en": "Reset energy totals",
+    "nl": "Resetten energie totalen"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_returned"
+    }
+  ],
+  "platforms": ["local"]
+}

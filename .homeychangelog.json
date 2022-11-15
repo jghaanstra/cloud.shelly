@@ -571,5 +571,8 @@
   },
   "3.13.1": {
     "en": "This release adds an action card for sending custom commands using the API documentation on Homey Pro. This is for advanced users only! It also adds functionality to automatically turn of a light when setting dim to 0 on Homey Pro and Homey Cloud. And it introduces a mechanism for updating the IP address for gen2 devices when an incoming status updates doest match the registered IP address of the Shelly device. You should still use static IP addresses for your devices though."
+  },
+  "3.13.2": {
+    "en": "This release fixes an issue with Homey Cloud and devices not being updated. It also fixes an issue with setting dim and color on the RGBW2 for Homey Cloud. And it adds an action card for reseting the energy totals of the Shelly EM and Shelly 3EM on Homey Pro."
   }
 }

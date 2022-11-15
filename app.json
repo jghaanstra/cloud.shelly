@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.13.1",
+  "version": "3.13.2",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -1560,6 +1560,27 @@
               "nl": "Selecteer Shelly"
             },
             "filter": "driver_id=shelly|shelly-plug|shelly-plug-s|shelly-trv|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly3em|shelly4pro|shellyair|shellybulb|shellydimmer|shellyduo|shellyem|shellygas|shellyi3|shellymotion|shellyrgbw2color|shellyrgbw2white|shellysmoke|shellyuni|shellyvintage"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "actionResetTotals",
+        "title": {
+          "en": "Reset energy totals",
+          "nl": "Resetten energie totalen"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_returned"
           }
         ],
         "platforms": [

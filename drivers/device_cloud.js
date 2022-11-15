@@ -29,11 +29,14 @@ class ShellyCloudDevice extends OAuth2Device {
 
       // REGISTERING DEVICE TRIGGER CARDS
       this.homey.setTimeout(() => {
-        if (this.getStoreValue('config') !== null || this.getStoreValue('config') !== undefined) {
+        try {
           for (const trigger of this.getStoreValue('config').triggers) {
             this.homey.flow.getDeviceTriggerCard(trigger);
           }
+        } catch (error) {
+          this.error(error);
         }
+        
       }, 2000);
     } catch (error) {
       this.error(error);

@@ -289,6 +289,15 @@ class ShellyDevice extends Homey.Device {
       if (opts.duration > 5000 ) {
         return Promise.reject(this.homey.__('device.maximum_dim_duration'));
       } else {
+        const light_config = this.getStoreValue('config').extra.light;
+        let dim_component = light_config.dim_component;
+
+         /* dim gain or brightness depending on light_mode for Shelly Bulb (RGBW) */
+        if (this.getStoreValue('config').name === 'Shelly Bulb' || this.getStoreValue('config').name === 'Shelly Bulb RGBW') {
+          if (this.getCapabilityValue('light_mode') === 'color') {
+            dim_component = 'gain';
+          }
+        }
 
         switch(this.getStoreValue('communication')) {
           case 'websocket': {
@@ -299,15 +308,8 @@ class ShellyDevice extends Homey.Device {
           case 'coap': {
             const dim_coap = value === 0 ? 1 : value * 100;
             const onoff_coap = value === 0 ? 'off' : 'on';
-            const light_config = this.getStoreValue('config').extra.light;
-            let dim_component = light_config.dim_component;
-
-            /* dim gain or brightness depending on light_mode for Shelly Bulb (RGBW) */
-            if (this.getStoreValue('config').name === 'Shelly Bulb' || this.getStoreValue('config').name === 'Shelly Bulb RGBW') {
-              if (this.getCapabilityValue('light_mode') === 'color') {
-                dim_component = 'gain';
-              }
-            }
+            
+           
 
             if (!this.getCapabilityValue('onoff')) {
               return await this.util.sendCommand('/'+ light_config.light_endpoint +'/'+ this.getStoreValue('channel') +'?turn='+ onoff_coap +'&'+ dim_component +'='+ dim_coap +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
@@ -322,7 +324,7 @@ class ShellyDevice extends Homey.Device {
               this.setCapabilityValue('onoff', false);
             }
             const dim_cloud = value === 0 ? 1 : value * 100;
-            return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'brightness', command_value: dim_cloud, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+            return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: dim_component, command_value: dim_cloud, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
           }
           default:
             break;
@@ -393,10 +395,23 @@ class ShellyDevice extends Homey.Device {
       const light_config = this.getStoreValue('config').extra.light;
       const color = tinycolor.fromRatio({ h: hue_value, s: saturation_value, v: this.getCapabilityValue('dim') });
       const rgbcolor = color.toRgb();
-      if (this.getCapabilityValue('light_mode') !== 'color') {
-        await this.triggerCapabilityListener('light_mode', 'color');
+      switch(this.getStoreValue('communication')) {
+        case 'websocket': {
+          return;
+        }
+        case 'coap': {
+          if (this.getCapabilityValue('light_mode') !== 'color') {
+            await this.triggerCapabilityListener('light_mode', 'color');
+          }
+          return await this.util.sendCommand('/'+ light_config.light_endpoint +'/'+ this.getStoreValue('channel') +'?red='+ Number(rgbcolor.r) +'&green='+ Number(rgbcolor.g) +'&blue='+ Number(rgbcolor.b) +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        }
+        case 'cloud': {
+          await this.setCapabilityValue('light_mode', 'color');
+          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-RGB', command: 'light', command_param: 'rbg', red: Number(rgbcolor.r), green: Number(rgbcolor.g), blue: Number(rgbcolor.b), deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+        }
+        default:
+          break;
       }
-      return await this.util.sendCommand('/'+ light_config.light_endpoint +'/'+ this.getStoreValue('channel') +'?red='+ Number(rgbcolor.r) +'&green='+ Number(rgbcolor.g) +'&blue='+ Number(rgbcolor.b) +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
     } catch (error) {
       this.error(error);
     }    
@@ -405,10 +420,25 @@ class ShellyDevice extends Homey.Device {
   /* light_mode */
   async onCapabilityLightMode(value, opts) {
     try {
-      if (this.getStoreValue('config').name === 'Shelly Bulb' || this.getStoreValue('config').name === 'Shelly Bulb RGBW') {
-        const light_mode = value === 'temperature' ? 'white' : 'color';
-        return await this.util.sendCommand('/settings/?mode='+ light_mode +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+      switch(this.getStoreValue('communication')) {
+        case 'websocket': {
+          return;
+        }
+        case 'coap': {
+          if (this.getStoreValue('config').name === 'Shelly Bulb' || this.getStoreValue('config').name === 'Shelly Bulb RGBW') {
+            const light_mode = value === 'temperature' ? 'white' : 'color';
+            return await this.util.sendCommand('/settings/?mode='+ light_mode +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          }
+        }
+        case 'cloud': {
+          return;
+        }
+        default:
+          break;
       }
+
+
+      
     } catch (error) {
       this.error(error);
     }

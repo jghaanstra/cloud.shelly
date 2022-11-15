@@ -84,8 +84,7 @@ class ShellyApp extends OAuth2App {
             (state.id == args.shelly.id && args.action.id === 999) ||
             (args.shelly.id === 'all' && state.action == action) ||
             (args.shelly.id === 'all' && args.action.id === 999) ||
-            ((state.id === args.shelly.id || args.shelly === undefined) && (state.action === action || args.action === undefined)) &&
-            state.action !== 'n/a'
+            ((state.id === args.shelly.id || args.shelly === undefined) && (state.action === action || args.action === undefined)) && state.action !== 'n/a' && state.action !== 'n/a_1' && state.action !== 'n/a_2' && state.action !== 'n/a_3' && state.action !== 'n/a_4'
           ) {
             return Promise.resolve(true);
           } else {
@@ -507,6 +506,15 @@ class ShellyApp extends OAuth2App {
           return Promise.reject(error);
         }
       })
+
+      this.homey.flow.getActionCard('actionResetTotals')
+      .registerRunListener(async (args) => {
+        try {
+          return await this.util.sendCommand('/emeter/'+ args.device.getStoreValue('channel') +'?reset_totals=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } catch (error) {
+          return Promise.reject(error);
+        }
+      })
   
       // COAP GEN1: COAP LISTENER FOR PROCESSING INCOMING MESSAGES
       shellies.on('discover', device => {
@@ -680,7 +688,7 @@ class ShellyApp extends OAuth2App {
           try {
             const result = JSON.parse(data);
             if (result.event === 'Shelly:StatusOnChange') {
-              const ws_device_id = result.device.id.toString(16);
+              const ws_device_id = Number(result.device.id).toString(16);
               const filteredShelliesWs = this.shellyDevices.filter(shelly => shelly.id.includes(ws_device_id));
               for (const filteredShellyWs of filteredShelliesWs) {
                 if (result.hasOwnProperty("status")) {
