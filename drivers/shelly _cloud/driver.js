@@ -2,6 +2,6 @@
 
 const Driver = require('../driver_cloud.js');
 
-class ShellyCloudDriver extends Driver {}
+class ShellyCloudDeprecatedDriver extends Driver {}
 
-module.exports = ShellyCloudDriver;
+module.exports = ShellyCloudDeprecatedDriver;

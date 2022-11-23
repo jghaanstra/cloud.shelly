@@ -574,5 +574,8 @@
   },
   "3.13.2": {
     "en": "This release fixes an issue with Homey Cloud and devices not being updated. It also fixes an issue with setting dim and color on the RGBW2 for Homey Cloud. And it adds an action card for reseting the energy totals of the Shelly EM and Shelly 3EM on Homey Pro."
+  },
+  "3.14.0": {
+    "en": "IMPORTANT: the current generic cloud driver for cloud connected devices is deprecated and replaced by a new generic cloud driver. There is an issue with the current generic cloud driver resulting in custom trigger cards not being available for devices paired with this driver. Unfortunately there is no way to resolve this programmatically. You are asked to re-pair your cloud connected devices on Homey Cloud. The deprecated driver will be removed early next year resulting in devices connected with this driver to fail. "
   }
 }

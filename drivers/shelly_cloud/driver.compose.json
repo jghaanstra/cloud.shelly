@@ -44,6 +44,5 @@
     }
   ],
   "platforms": [ "cloud" ],
-  "connectivity": [ "cloud" ],
-  "deprecated": true
+  "connectivity": [ "cloud" ]
 }

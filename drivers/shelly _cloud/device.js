@@ -2,6 +2,6 @@
 
 const Device = require('../device_cloud.js');
 
-class ShellyCloudDevice extends Device {}
+class ShellyCloudDeprecatedDevice extends Device {}
 
-module.exports = ShellyCloudDevice;
+module.exports = ShellyCloudDeprecatedDevice;

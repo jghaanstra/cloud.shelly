@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.13.2",
+  "version": "3.14.0",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -2375,6 +2375,7 @@
       "connectivity": [
         "cloud"
       ],
+      "deprecated": true,
       "id": "shelly _cloud"
     },
     {
@@ -4553,6 +4554,58 @@
       ],
       "deprecated": true,
       "id": "shelly4pro_cloud"
+    },
+    {
+      "name": {
+        "en": "Shelly Cloud Device",
+        "nl": "Shelly Cloud apparaat"
+      },
+      "images": {
+        "small": "./assets/drivers/shelly/images/small.jpg",
+        "large": "./assets/drivers/shelly/images/large.jpg",
+        "xlarge": "./assets/drivers/shelly/images/xlarge.jpg"
+      },
+      "class": "other",
+      "capabilities": [
+        "rssi"
+      ],
+      "icon": "/drivers/shelly_cloud/assets/icon.svg",
+      "pair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2",
+          "options": {
+            "hint": "Log in with your Shelly account in the new window.",
+            "button": "Log In"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_device_cloud"
+          }
+        },
+        {
+          "id": "add_device_cloud"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_oauth2",
+          "template": "login_oauth2"
+        }
+      ],
+      "platforms": [
+        "cloud"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "id": "shelly_cloud"
     },
     {
       "icon": "/drivers/shellyair/assets/icon.svg",

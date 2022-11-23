@@ -613,8 +613,10 @@ class ShellyApp extends OAuth2App {
                   if (result.hasOwnProperty("params")) {
                     if (result.method === 'NotifyFullStatus') { // parse full status updates
                       filteredShellyWss.device.parseFullStatusUpdateGen2(result.params);
-                      if (filteredShellyWss.device.getSetting('address') !== result.params.wifi.sta_ip) {
-                        filteredShellyWss.device.setSettings({address: result.params.wifi.sta_ip});
+                      if (result.params.wifi.sta_ip !== null) { // update IP address if it does not match the device
+                        if (filteredShellyWss.device.getSetting('address') !== String(result.params.wifi.sta_ip)) {
+                          filteredShellyWss.device.setSettings({address: String(result.params.wifi.sta_ip)});
+                        }
                       }
                     } else if (result.method === 'NotifyStatus' || result.method === 'NotifyEvent') {
                       filteredShellyWss.device.parseSingleStatusUpdateGen2(result);
