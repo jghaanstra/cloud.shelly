@@ -329,11 +329,11 @@ class ShellyApp extends OAuth2App {
           try {
             if (args.direction == 'open') {
               args.device.setStoreValue('last_action', 'up');
-              args.device.setCapabilityValue('windowcoverings_state','up');
+              args.device.updateCapabilityValue('windowcoverings_state','up');
               var gen2_method = 'Cover.Open';
             } else if (args.direction == 'close') {
               args.device.setStoreValue('last_action', 'down');
-              args.device.setCapabilityValue('windowcoverings_state','down');
+              args.device.updateCapabilityValue('windowcoverings_state','down');
               var gen2_method = 'Cover.Close';
             }
             switch(args.device.getStoreValue('communication')) {
@@ -357,10 +357,10 @@ class ShellyApp extends OAuth2App {
           try {
             if (args.direction == 'open') {
               args.device.setStoreValue('last_action', 'up');
-              args.device.setCapabilityValue('windowcoverings_state','up');
+              args.device.updateCapabilityValue('windowcoverings_state','up');
             } else if (args.direction == 'close') {
               args.device.setStoreValue('last_action', 'down');
-              args.device.setCapabilityValue('windowcoverings_state','down');
+              args.device.updateCapabilityValue('windowcoverings_state','down');
             }
             return await this.util.sendCommand('/roller/0?go='+ args.direction +'&offset='+ args.offset +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
@@ -553,20 +553,6 @@ class ShellyApp extends OAuth2App {
           }
         })
   
-        device.on('offline', () => {
-          try {
-            if (this.shellyDevices.length > 0) {
-              const offlineShellies = this.shellyDevices.filter(shelly => shelly.id.includes(device.id));
-              if (offlineShellies.length > 0) {
-                Object.keys(offlineShellies).forEach(key => {
-                  this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.id, "device_error": 'Device is offline'});
-                });
-              }
-            }
-          } catch (error) {
-            this.error(error);
-          }
-        })
       });
     } catch (error) {
       this.log(error);

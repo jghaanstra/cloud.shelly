@@ -1,0 +1,30 @@
+{
+  "id": "triggerPlusInputAnalogExternal1Changed",
+  "title": {
+    "en": "External analog input 1 changed",
+    "nl": "Externe analoge input 1 gewijzigd"
+  },
+  "tokens": [
+    {
+      "name": "percentage",
+      "type": "number",
+      "title": {
+        "en": "Percentage",
+        "nl": "Percentage"
+      },
+      "example": 5
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shelly_cloud&capabilities=input_analog_external_1"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

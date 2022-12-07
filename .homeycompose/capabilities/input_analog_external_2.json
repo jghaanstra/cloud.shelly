@@ -1,0 +1,20 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "State of External Analog Input 2",
+    "nl": "Status van externe analoge input 2"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "insightsTitleFalse": {
+    "en": "External analog input 2 turned off",
+    "nl": "Externe analoge input 2 uitgeschakeld"
+  },
+  "insightsTitleTrue": {
+    "en": "External analog input 2 turned on",
+    "nl": "Externe analoge input 2 ingeschakeld"
+  },
+  "icon": "/assets/input_switch.svg"
+}
