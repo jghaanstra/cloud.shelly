@@ -43,7 +43,6 @@ class ShellyDriver extends Homey.Driver {
         }
       } catch (error) {
         this.error(error);
-        return Promise.reject(error);
       }
     });
 
@@ -147,7 +146,7 @@ class ShellyDriver extends Homey.Driver {
           }
         }
       } catch (error) {
-        return Promise.reject(error);
+        this.error(error);
       }
     });
 
@@ -227,7 +226,7 @@ class ShellyDriver extends Homey.Driver {
         return Promise.resolve(deviceArray);
 
       } catch (error) {
-        return Promise.reject(error);
+        this.error(error);
       }
     });
 
@@ -266,7 +265,7 @@ class ShellyDriver extends Homey.Driver {
           return Promise.resolve(deviceArray);
         }
       } catch (error) {
-        return Promise.reject(error);
+        this.error(error);
       }
     });
 
@@ -276,7 +275,7 @@ class ShellyDriver extends Homey.Driver {
         deviceIcon = "../../../userdata/"+ selectedDeviceId +".svg";
         return Promise.resolve(true);
       } catch (error) {
-        return Promise.reject(error);
+        this.error(error);
       }
     });
 

@@ -548,13 +548,15 @@ class ShellyDevice extends Homey.Device {
         const shellies = this.homey.app.getShellyCollection();
         const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
         const device = shelly[0].device;
-        if (device.hasCapability(capability)) {
-          if (value !== device.getCapabilityValue(capability) && value !== null && value !== 'null' && value !== 'undefined' && value !== undefined) {
-            device.setCapabilityValue(capability, value);
+        if (device) {
+          if (device.hasCapability(capability)) {
+            if (value !== device.getCapabilityValue(capability) && value !== null && value !== 'null' && value !== 'undefined' && value !== undefined) {
+              device.setCapabilityValue(capability, value);
+            }
+          } else {
+            this.log('adding capability '+ capability +' to '+ device.getData().id +' as the device seems to have values for this capability ...');
+            device.addCapability(capability);
           }
-        } else {
-          this.log('adding capability '+ capability +' to '+ device.getData().id +' as the device seems to have values for this capability ...');
-          device.addCapability(capability);
         }
       }
     } catch (error) {
@@ -2091,7 +2093,6 @@ class ShellyDevice extends Homey.Device {
       return Promise.resolve(true);
     } catch(error) {
       this.error(error);
-      return Promise.reject(error);
     }
   }
 
@@ -2183,7 +2184,7 @@ class ShellyDevice extends Homey.Device {
         return Promise.reject(this.getData().id + ' has no valid device config to set');
       }  
     } catch (error) {
-      return Promise.reject(error);
+      this.error(error);
     }
   }
 

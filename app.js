@@ -91,7 +91,7 @@ class ShellyApp extends OAuth2App {
             return Promise.resolve(false);
           }
         } catch (error) {
-          return Promise.reject(error);
+          this.error(error)
         }
       });
       listenerCallbacks.getArgument('shelly').registerAutocompleteListener(async (query, args) => {
@@ -101,7 +101,7 @@ class ShellyApp extends OAuth2App {
         try {
           return await this.util.getActions(args.shelly.actions);
         } catch (error) {
-          return Promise.reject(error);
+          this.error(error)
         }
       });
   
@@ -157,7 +157,7 @@ class ShellyApp extends OAuth2App {
               }
             }
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
 
@@ -177,7 +177,7 @@ class ShellyApp extends OAuth2App {
               }
             }
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -197,7 +197,7 @@ class ShellyApp extends OAuth2App {
               }
             }
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -218,7 +218,7 @@ class ShellyApp extends OAuth2App {
               }
             }
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -247,7 +247,7 @@ class ShellyApp extends OAuth2App {
               return Promise.resolve(true);
             }
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -269,7 +269,7 @@ class ShellyApp extends OAuth2App {
               }
             }
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -291,7 +291,7 @@ class ShellyApp extends OAuth2App {
               }
             }
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -301,7 +301,7 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendCommand('/color/0?turn=on&effect='+ Number(args.effect) +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -310,7 +310,7 @@ class ShellyApp extends OAuth2App {
           try {
             return await args.device.triggerCapabilityListener("onoff.whitemode", true);
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -319,7 +319,7 @@ class ShellyApp extends OAuth2App {
           try {
             return await args.device.triggerCapabilityListener("onoff.whitemode", false);
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -348,7 +348,7 @@ class ShellyApp extends OAuth2App {
               }
             }
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -364,7 +364,7 @@ class ShellyApp extends OAuth2App {
             }
             return await this.util.sendCommand('/roller/0?go='+ args.direction +'&offset='+ args.offset +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -381,7 +381,7 @@ class ShellyApp extends OAuth2App {
               return Promise.reject('Invalid state');
             }
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -395,7 +395,7 @@ class ShellyApp extends OAuth2App {
               return await args.device.triggerCapabilityListener('windowcoverings_set', position);
             }
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -405,7 +405,7 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendCommand('/settings/?set_volume='+ args.volume +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -414,7 +414,7 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendCommand('/mute', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -423,7 +423,7 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendCommand('/unmute', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -432,7 +432,7 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendCommand('/self_test', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -446,7 +446,7 @@ class ShellyApp extends OAuth2App {
               return false;
             }
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
         .getArgument('profile')
@@ -454,7 +454,7 @@ class ShellyApp extends OAuth2App {
             try {
               return await this.util.getTrvProfiles(args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
             } catch (error) {
-              return Promise.reject(error);
+              this.error(error)
             }
           })
   
@@ -463,7 +463,7 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendCommand('/thermostat/0?pos='+ args.position +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
   
@@ -476,7 +476,7 @@ class ShellyApp extends OAuth2App {
               return await this.util.sendCommand('/thermostat/0?schedule=true&schedule_profile='+ args.profile.id +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
             }
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
         .getArgument('profile')
@@ -484,7 +484,7 @@ class ShellyApp extends OAuth2App {
             try {
               return await this.util.getTrvProfiles(args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
             } catch (error) {
-              return Promise.reject(error);
+              this.error(error)
             }
           })
   
@@ -493,7 +493,7 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendCommand('/ext_t?temp='+ args.temperature +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            return Promise.reject(error);
+            this.error(error)
           }
         })
       
@@ -503,7 +503,7 @@ class ShellyApp extends OAuth2App {
         try {
           return await args.device.setEnergy({ cumulative: args.cumulative });
         } catch (error) {
-          return Promise.reject(error);
+          this.error(error)
         }
       })
 
@@ -512,7 +512,7 @@ class ShellyApp extends OAuth2App {
         try {
           return await this.util.sendCommand('/emeter/'+ args.device.getStoreValue('channel') +'?reset_totals=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         } catch (error) {
-          return Promise.reject(error);
+          this.error(error)
         }
       })
   
@@ -541,9 +541,9 @@ class ShellyApp extends OAuth2App {
                   coap_device = filteredShellyCoap[0].device;
                 }
                 coap_device.parseCapabilityUpdate(prop, newValue);
-                if (coap_device.getSetting('address') !== device.host) {
-                  coap_device.setSettings({address: device.host});
-                }
+                // if (coap_device.getSetting('address') !== device.host) {
+                //   coap_device.setSettings({address: device.host});
+                // }
                 return;
               }
             }
@@ -576,7 +576,6 @@ class ShellyApp extends OAuth2App {
       }
     } catch(error) {
       this.error(error);
-      return Promise.reject(error);
     }
   }
 
@@ -767,7 +766,7 @@ class ShellyApp extends OAuth2App {
       }, 1000);
       return Promise.resolve(true);
     } catch (error) {
-      return Promise.reject(error);
+      this.error(error)
     }
   }
 
@@ -791,8 +790,6 @@ class ShellyApp extends OAuth2App {
       } else if (this.wsConnected) {
         this.ws.close();
       }
-
-      return Promise.reject(error);
     }
   }
 
@@ -809,7 +806,6 @@ class ShellyApp extends OAuth2App {
       return Promise.resolve(true);
     } catch (error) {
       this.error(error);
-      return Promise.reject(error);
     }
   }
 
@@ -820,7 +816,6 @@ class ShellyApp extends OAuth2App {
       return Promise.resolve(true);
     } catch(error) {
       this.error(error);
-      return Promise.reject(error);
     }
   }
 
