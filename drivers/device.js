@@ -309,8 +309,6 @@ class ShellyDevice extends Homey.Device {
             const dim_coap = value === 0 ? 1 : value * 100;
             const onoff_coap = value === 0 ? 'off' : 'on';
             
-           
-
             if (!this.getCapabilityValue('onoff')) {
               return await this.util.sendCommand('/'+ light_config.light_endpoint +'/'+ this.getStoreValue('channel') +'?turn='+ onoff_coap +'&'+ dim_component +'='+ dim_coap +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
             } else {
@@ -1187,7 +1185,7 @@ class ShellyDevice extends Homey.Device {
       if (!this.getAvailable()) { this.setAvailable(); }
       let channel = this.getStoreValue('channel') || 0;
 
-      // SWITCH component
+      // SWITCH COMPONENT
       if (result.hasOwnProperty("switch:"+ channel)) {
 
         /* onoff */
@@ -1209,6 +1207,22 @@ class ShellyDevice extends Homey.Device {
         if (result["cover:"+channel].hasOwnProperty("current_pos") && this.hasCapability('windowcoverings_set')) {
           const windowcoverings_set = this.util.clamp(result["cover:"+channel].current_pos, 0, 100) / 100;
           this.updateCapabilityValue('windowcoverings_set', windowcoverings_set, channel);
+        }
+
+      }
+
+      // LIGHT COMPONENT
+      if (result.hasOwnProperty("light:"+ channel)) {
+
+        /* onoff */
+        if (result["light:"+channel].hasOwnProperty("output")) {
+          this.updateCapabilityValue('onoff', result["light:"+channel].output, channel);
+        }
+
+        /* dim */
+        if (result["light:"+channel].hasOwnProperty("brightness")) {
+          let brightness = result["light:"+channel].brightness / 100;
+          this.updateCapabilityValue('dim', brightness, channel);
         }
 
       }
@@ -1245,6 +1259,31 @@ class ShellyDevice extends Homey.Device {
         if (component.hasOwnProperty("temperature")) {
           this.updateCapabilityValue('measure_temperature', component.temperature.tC, 0);
         }
+
+      }
+
+      // PRO 3EM instantaneous readings
+      if (result.hasOwnProperty("em:0")) {
+
+        /* measure_power */
+        this.updateCapabilityValue('measure_power', result["em:0"].a_act_power, 0);
+        this.updateCapabilityValue('measure_power', result["em:0"].b_act_power, 1);
+        this.updateCapabilityValue('measure_power', result["em:0"].c_act_power, 2);
+
+        /* meter_power_factor */
+        this.parseCapabilityUpdate('a_pf', result["em:0"].a_pf, 0);
+        this.parseCapabilityUpdate('b_pf', result["em:0"].b_pf, 1);
+        this.parseCapabilityUpdate('c_pf', result["em:0"].c_pf, 2);
+
+        /* measure_current */
+        this.updateCapabilityValue('measure_current', result["em:0"].a_current, 0);
+        this.updateCapabilityValue('measure_current', result["em:0"].b_current, 1);
+        this.updateCapabilityValue('measure_current', result["em:0"].c_current, 2);
+
+        /* measure_voltage */
+        this.updateCapabilityValue('measure_voltage', result["em:0"].a_voltage, 0);
+        this.updateCapabilityValue('measure_voltage', result["em:0"].b_voltage, 1);
+        this.updateCapabilityValue('measure_voltage', result["em:0"].c_voltage, 2);
 
       }
 
@@ -1615,6 +1654,7 @@ class ShellyDevice extends Homey.Device {
                     } else if (channel === 0 || this.hasCapability('input_2')) { // if channel is 0 or device is not a multichannel device in Homey we need to hard set channel to 0 to update the capability of this
                       this.parseCapabilityUpdate(input, value, 0);
                     } else {
+                      // TODO: cant this be improved?
                       const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
                       const shellies = this.homey.app.getShellyCollection();
                       const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
@@ -1631,29 +1671,44 @@ class ShellyDevice extends Homey.Device {
         } else if (result.method === 'NotifyEvent') { /* parse event updates */
           result.params.events.forEach(async (event) => {
             try {
-              let device;
-              let action_event;
-              let channel = event.id || 0;
 
-              // get the right device
-              if (channel === 0 || this.hasCapability('input_2')) { // if channel is 0 or device has multiple inputs but is not a multichannel device in Homey we have the right device
-                device = this;
-              } else { // get the right device based on the channel
-                const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
-                const shellies = this.homey.app.getShellyCollection();
-                const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
-                device = shelly[0].device;
+              if (event.component.startsWith('input') || event.component === undefined) { // parse input events
+                let device;
+                let action_event;
+                let channel = event.id || 0;
+
+                // get the right device
+                if (channel === 0 || this.hasCapability('input_2')) { // if channel is 0 or device has multiple inputs but is not a multichannel device in Homey we have the right device
+                  device = this;
+                } else { // get the right device based on the channel
+                  const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
+                  const shellies = this.homey.app.getShellyCollection();
+                  const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
+                  device = shelly[0].device;
+                }
+
+                // get the right action
+                if (channel === 0 && !device.hasCapability('input_2')) {
+                  action_event = await this.util.getActionEventDescription(event.event, device.getStoreValue('communication'), device.getStoreValue('gen'));
+                } else {
+                  const event_channel = channel + 1;
+                  action_event = await this.util.getActionEventDescription(event.event, device.getStoreValue('communication'), device.getStoreValue('gen')) + '_' + event_channel;
+                }
+
+                this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": action_event }, {"id": device.getData().id, "device": device.getName(), "action": action_event }).catch(error => { this.error(error) });
+              } else if (event.component.startsWith('emdata')) { // parse emdata events
+
+                /* meter_power */
+                this.parseCapabilityUpdate('energyCounter0', event.data.values[0][0], 0);
+                this.parseCapabilityUpdate('energyCounter1', event.data.values[0][16], 1);
+                this.parseCapabilityUpdate('energyCounter2', event.data.values[0][32], 2);
+
+                /* meter_power_returned */
+                this.parseCapabilityUpdate('energyReturned0', event.data.values[0][2], 0);
+                this.parseCapabilityUpdate('energyReturned1', event.data.values[0][18], 1);
+                this.parseCapabilityUpdate('energyReturned2', event.data.values[0][34], 2);
+
               }
-
-              // get the right action
-              if (channel === 0 && !device.hasCapability('input_2')) {
-                action_event = await this.util.getActionEventDescription(event.event, device.getStoreValue('communication'), device.getStoreValue('gen'));
-              } else {
-                const event_channel = channel + 1;
-                action_event = await this.util.getActionEventDescription(event.event, device.getStoreValue('communication'), device.getStoreValue('gen')) + '_' + event_channel;
-              }
-
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": action_event }, {"id": device.getData().id, "device": device.getName(), "action": action_event }).catch(error => { this.error(error) });
             } catch (error) {
               this.error(error);
             }
@@ -1693,11 +1748,20 @@ class ShellyDevice extends Homey.Device {
         case 'power3':
           this.updateCapabilityValue('measure_power', value, channel);
           break;
+        case 'a_act_power':
+          this.updateCapabilityValue('measure_power', value, 0);
+          break;
+        case 'b_act_power':
+          this.updateCapabilityValue('measure_power', value, 1);
+          break;
+        case 'c_act_power':
+          this.updateCapabilityValue('measure_power', value, 2);
+          break;
         case 'energyCounter0':
         case 'energyCounter1':
         case 'energyCounter2':
         case 'energyCounter3':
-          if (this.getStoreValue('type') === 'SHEM' || this.getStoreValue('type') === 'SHEM-3') {
+          if (this.getStoreValue('type') === 'SHEM' || this.getStoreValue('type') === 'SHEM-3' || this.getStoreValue('type') === 'SPEM-003CEBEU') {
             var meter_power = value / 1000;
           } else {
             var meter_power = value * 0.000017;
@@ -1726,11 +1790,32 @@ class ShellyDevice extends Homey.Device {
             this.homey.flow.getDeviceTriggerCard('triggerMeterPowerFactor').trigger(this, {'pf': value}, {}).catch(error => { this.error(error) });
           }
           break;
+        case 'a_pf':
+          this.updateCapabilityValue('meter_power_factor', value, 0);
+          this.homey.flow.getDeviceTriggerCard('triggerMeterPowerFactor').trigger(this, {'pf': value}, {}).catch(error => { this.error(error) });
+          break;
+        case 'b_pf':
+          this.updateCapabilityValue('meter_power_factor', value, 1);
+          this.homey.flow.getDeviceTriggerCard('triggerMeterPowerFactor').trigger(this, {'pf': value}, {}).catch(error => { this.error(error) });
+          break;
+        case 'c_pf':
+          this.updateCapabilityValue('meter_power_factor', value, 2);
+          this.homey.flow.getDeviceTriggerCard('triggerMeterPowerFactor').trigger(this, {'pf': value}, {}).catch(error => { this.error(error) });
+          break;
         case 'current':
         case 'current0':
         case 'current1':
         case 'current2':
           this.updateCapabilityValue('measure_current', value, channel);
+          break;
+        case 'a_current':
+          this.updateCapabilityValue('measure_current', value, 0);
+          break;
+        case 'b_current':
+          this.updateCapabilityValue('measure_current', value, 1);
+          break;
+        case 'c_current':
+          this.updateCapabilityValue('measure_current', value, 2);
           break;
         case 'voltage':
         case 'voltage0':
@@ -1738,6 +1823,15 @@ class ShellyDevice extends Homey.Device {
         case 'voltage2':
         case 'V':
           this.updateCapabilityValue('measure_voltage', value, channel);
+          break;
+        case 'a_voltage':
+          this.updateCapabilityValue('measure_voltage', value, 0);
+          break;
+        case 'b_voltage':
+          this.updateCapabilityValue('measure_voltage', value, 1);
+          break;
+        case 'c_voltage':
+          this.updateCapabilityValue('measure_voltage', value, 2);
           break;
         case 'overPower':
         case 'overPower0':
