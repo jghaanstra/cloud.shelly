@@ -47,6 +47,11 @@ class ShellyCloudDriver extends OAuth2Driver {
             /* get device config based on device type of the discovered devices */
             let device_config = this.util.getDeviceConfig('type', device_code);
 
+            if (typeof device_config === 'undefined') {
+              this.error('No device config found for device with device code', device_code);
+              throw new Error(this.homey.__('pair.no_device_config') + ' Device has device code:' + device_code);
+            }
+
             /* update device config if it's a gen1 roller shutter */
             if (value._dev_info.gen === "G1" && (device_code === 'SHSW-21' || device_code === 'SHSW-25')) {
               if (value.hasOwnProperty("rollers")) {

@@ -586,5 +586,11 @@
   },
   "3.15.0": {
     "en": "Add support for the Shelly Plus Wall Dimmer US for Homey Pro and Cloud."
+  },
+  "3.15.1": {
+    "en": "Better error handling, no functional changes."
+  },
+  "3.15.2": {
+    "en": "This release adds support for the Shelly Pro 3EM. It also fixes an issue for Shelly Plus 2PM with new hard revision not being visible in the pairing wizard on Homey Cloud. And there are small code improvements included."
   }
 }

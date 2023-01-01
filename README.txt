@@ -46,6 +46,7 @@ Shelly Plus 2PM
 Shelly Plus Humidity/Temperature
 Shelly Plus i4
 Shelly Plus i4DC
+Shelly Plus Wall Dimmer US
 
 Pro
 -------------
@@ -54,4 +55,5 @@ Shelly Pro 1PM
 Shelly Pro 2
 Shelly Pro 2PM
 Shelly Pro 3
+Shelly Pro 3EM
 Shelly Pro 4PM
