@@ -592,5 +592,8 @@
   },
   "3.15.2": {
     "en": "This release adds support for the Shelly Pro 3EM. It also fixes an issue for Shelly Plus 2PM with new hard revision not being visible in the pairing wizard on Homey Cloud. And there are small code improvements included."
+  },
+  "3.16.0": {
+    "en": "Breaking change for Homey Cloud: the previously deprecated generic cloud driver has been removed as announced some time ago. Re-pair your devices if you havent already. This release also adds support for the Plus Plug S and Plus Smoke."
   }
 }

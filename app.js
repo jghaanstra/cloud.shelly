@@ -435,6 +435,16 @@ class ShellyApp extends OAuth2App {
             this.error(error)
           }
         })
+
+      // PLUS SMOKE
+      this.homey.flow.getActionCard('actionSmokeMute')
+        .registerRunListener(async (args) => {
+          try {
+            return await this.util.sendRPCCommand('/rpc/Smoke.Mute?id='+ args.device.getStoreValue('channel'), args.device.getSetting('address'), args.device.getSetting('password'));
+          } catch (error) {
+            this.error(error)
+          }
+        })
   
       // SHELLY TRV
       this.homey.flow.getConditionCard('conditionValveMode')

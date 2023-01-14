@@ -1193,6 +1193,13 @@ class ShellyDevice extends Homey.Device {
           this.updateCapabilityValue('onoff', result["switch:"+channel].output, channel);
         }
 
+        /* temperature (component) */
+        if (result["switch:"+channel].hasOwnProperty("temperature")) {
+          if (result["switch:"+channel].temperature.hasOwnProperty("tC")) {
+            this.updateCapabilityValue('measure_temperature', result["switch:"+channel].temperature.tC, channel);
+          }
+        }
+
       }
 
       // COVER / ROLLERSHUTTER COMPONENT
@@ -1209,6 +1216,13 @@ class ShellyDevice extends Homey.Device {
           this.updateCapabilityValue('windowcoverings_set', windowcoverings_set, channel);
         }
 
+        /* temperature (component) */
+        if (result["cover:"+channel].hasOwnProperty("temperature")) {
+          if (result["cover:"+channel].temperature.hasOwnProperty("tC")) {
+            this.updateCapabilityValue('measure_temperature', result["cover:"+channel].temperature.tC, channel);
+          }
+        }
+
       }
 
       // LIGHT COMPONENT
@@ -1223,6 +1237,13 @@ class ShellyDevice extends Homey.Device {
         if (result["light:"+channel].hasOwnProperty("brightness")) {
           let brightness = result["light:"+channel].brightness / 100;
           this.updateCapabilityValue('dim', brightness, channel);
+        }
+
+        /* temperature (component) */
+        if (result["light:"+channel].hasOwnProperty("temperature")) {
+          if (result["light:"+channel].temperature.hasOwnProperty("tC")) {
+            this.updateCapabilityValue('measure_temperature', result["light:"+channel].temperature.tC, channel);
+          }
         }
 
       }
@@ -1318,6 +1339,13 @@ class ShellyDevice extends Homey.Device {
       if (result.hasOwnProperty("humidity:"+ channel)) {
         if (result["humidity:"+channel].hasOwnProperty("rh")) {
           this.updateCapabilityValue('measure_humidity', result["humidity:"+channel].rh, channel);
+        }
+      }
+
+      // SMOKE
+      if (result.hasOwnProperty("smoke:"+ channel)) {
+        if (result["smoke:"+channel].hasOwnProperty("alarm")) {
+          this.updateCapabilityValue('alarm_smoke', result["smoke:"+channel].alarm, channel);
         }
       }
 
@@ -1662,6 +1690,8 @@ class ShellyDevice extends Homey.Device {
                       device.parseCapabilityUpdate(input, value, channel);
                     }
                   }
+                } else if (component.startsWith('smoke') && capability === 'alarm')  {
+                  this.parseCapabilityUpdate('alarm_smoke', value, channel);
                 } else {
                   this.parseCapabilityUpdate(capability, value, channel);
                 }
@@ -1971,6 +2001,7 @@ class ShellyDevice extends Homey.Device {
           }
           break;
         case 'smoke':
+        case 'alarm_smoke':
           value = value === 1 || value ? true : false;
           this.updateCapabilityValue('alarm_smoke', value, channel);
           break;

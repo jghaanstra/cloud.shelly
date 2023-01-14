@@ -1,0 +1,19 @@
+{
+  "id": "actionSmokeMute",
+  "title": {
+    "en": "Mute alarm",
+    "nl": "Dempen alarm"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly&capabilities=devicePlusSmoke"
+    }
+  ],
+  "platforms": ["local"]
+}

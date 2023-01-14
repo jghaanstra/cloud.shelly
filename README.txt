@@ -47,6 +47,8 @@ Shelly Plus Humidity/Temperature
 Shelly Plus i4
 Shelly Plus i4DC
 Shelly Plus Wall Dimmer US
+Shelly Plus Plug S
+Shelly Plus Smoke
 
 Pro
 -------------

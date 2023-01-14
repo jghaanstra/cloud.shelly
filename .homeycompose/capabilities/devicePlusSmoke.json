@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Plus Smoke",
+    "nl": "Plus Smoke"
+  },
+  "getable": false,
+  "setable": false,
+  "uiComponent": null,
+  "insights": false,
+  "icon": "/assets/icon.svg"
+}
