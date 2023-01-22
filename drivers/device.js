@@ -10,10 +10,6 @@ class ShellyDevice extends Homey.Device {
   onInit() {
     try {
       if (!this.util) this.util = new Util({homey: this.homey});
-
-      // VARIABLES GENERIC
-      this.pollingFrequency = 60000;
-      this.pollingFailures = 0;
     
       // ADDING CAPABILITY LISTENERS
       this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
@@ -50,6 +46,11 @@ class ShellyDevice extends Homey.Device {
   /* onAdded() */
   async onAdded() {
     try {
+      // gen1 + gen2: initially poll the device status
+      this.homey.setTimeout(() => {
+        this.pollDevice();
+      }, 1000 * this.getStoreValue('channel'));
+
       // gen1 + gen2: update Shelly collection
       if (this.getStoreValue('channel') === 0) {
         this.homey.setTimeout(async () => {
@@ -65,7 +66,7 @@ class ShellyDevice extends Homey.Device {
       }
 
       // gen2: start websocket server if device has the server configured during pairing
-      if (this.getStoreValue('communication') === 'websocket' && this.getStoreValue('wsserver')) {
+      if (this.getStoreValue('wsserver')) {
         this.homey.setTimeout(() => {
           this.homey.app.websocketLocalListener();
         }, 4000);
@@ -89,31 +90,65 @@ class ShellyDevice extends Homey.Device {
         await this.setAvailable();
       }, 1000);
 
-      // gen1 + gen2: initially poll device status for powered devices
-      if (!this.getStoreValue('battery')) {
-        this.homey.setTimeout(() => {
-          this.pollDevice();
-        }, 2000 * this.getStoreValue('channel'));
-      }
+      if (this.getStoreValue('communication') === 'websocket') {
 
-      // gen1 + gen2: start polling powered devices on regular interval
-      if (this.getStoreValue('communication') === 'coap' && this.homey.settings.get('general_coap')) { // CoAP is disabled
-        this.pollingFrequency = this.homey.settings.get('general_polling_frequency') * 1000 || 5000;
-      }
-
-      if (!this.getStoreValue('battery')) {
-        this.pollingInterval = this.homey.setInterval(() => {
-          this.pollDevice();
-        }, (this.pollingFrequency + (1000 * this.getStoreValue('channel'))));
-      }
-
-      // TODO: remove this in the next big release, switched from server-client to client-server communication
-      if (this.getStoreValue('communication') === 'websocket' && !this.getStoreValue('wsserver')) {
-        const result = await this.util.setWsServer(this.getSetting('address'), this.getSetting('password'));
-        if (result === 'OK') {
-          this.setStoreValue('wsserver', true);
+        // gen 2 device init for non battery powered devices
+        if (!this.getStoreValue('battery')) {
+          const result = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
+          await this.setStoreValue('type', result.model);
+          await this.setStoreValue('fw_version', result.ver);
         }
-      } 
+
+        // gen2 devices with outbound websocket firmware
+        if (this.getStoreValue('wsserver')) {
+          // nothing to do here as the websocket server is started on app.OnInit() or after device.onAdded()
+        } else { // gen2 devices without outbound websocket firwmare
+          if (this.getStoreValue('channel') === 0) {
+            // TODO: eventually remove this once the firmware for outbound websockets has been rolled out
+            if (!this.getStoreValue('battery')) {
+              this.ws = null;
+              this.connected = false;
+              this.commandId = 0;
+              this.connectWebsocket();
+            }
+            await this.setStoreValue('digest_auth_websocket', '{}');
+          }
+        }
+
+        // all powered gen2: start polling for all non-battery operated gen2 devices
+        if (!this.getStoreValue('battery')) {
+          this.pollingInterval = this.homey.setInterval(() => {
+            this.pollDevice();
+          }, (60000 + (1000 * this.getStoreValue('channel'))));
+        }
+      } else {
+
+        // gen 1 device init for non battery powered devices
+        if (!this.getStoreValue('battery')) {
+          const result = await this.util.sendCommand('/shelly', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          if (result) {
+            await this.setStoreValue('type', result.type);
+            const regex = /(?<=\/v)(.*?)(?=\-)/gm;
+            const version_data = regex.exec(result.fw);
+            if (version_data !== null) {
+              await this.setStoreValue('fw_version', version_data[0]);
+            }
+          }
+        }
+
+        // gen 1 polling
+        if (this.homey.settings.get('general_coap')) { // CoAP is disabled
+          var polling_frequency = this.homey.settings.get('general_polling_frequency') * 1000 || 5000;
+        } else { // CoAP is enabled
+          var polling_frequency = 60000;
+        }
+        if (!this.getStoreValue('battery')) {
+          this.pollingInterval = this.homey.setInterval(() => {
+            this.pollDevice();
+          }, (polling_frequency + (1000 * this.getStoreValue('channel'))));
+        }
+
+      }
 
     } catch (error) {
       this.error(error);
@@ -502,11 +537,11 @@ class ShellyDevice extends Homey.Device {
       if (Number(channel) === 0) {
         if (this.hasCapability(capability)) {
           if (value !== this.getCapabilityValue(capability) && value !== null && value !== 'null' && value !== 'undefined' && value !== undefined) {
-            return await this.setCapabilityValue(capability, value);
+            await this.setCapabilityValue(capability, value);
           }
         } else {
           this.log('adding capability '+ capability +' to '+ this.getData().id +' as the device seems to have values for this capability ...');
-          return this.addCapability(capability);
+          this.addCapability(capability);
         }
       } else {
         const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
@@ -516,11 +551,11 @@ class ShellyDevice extends Homey.Device {
         if (device) {
           if (device.hasCapability(capability)) {
             if (value !== device.getCapabilityValue(capability) && value !== null && value !== 'null' && value !== 'undefined' && value !== undefined) {
-              return await device.setCapabilityValue(capability, value);
+              await device.setCapabilityValue(capability, value);
             }
           } else {
             this.log('adding capability '+ capability +' to '+ device.getData().id +' as the device seems to have values for this capability ...');
-            return device.addCapability(capability);
+            device.addCapability(capability);
           }
         }
       }
@@ -541,20 +576,13 @@ class ShellyDevice extends Homey.Device {
         this.parseFullStatusUpdateGen1(result);
       }
     } catch (error) {
-
-      /* mark as unavailable and trigger the device offline trigger card */
-      if (this.getAvailable()) {
-        this.setUnavailable(this.homey.__('device.unreachable') + error.message).catch(error => { this.error(error) });
-        this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.message}).catch(error => { this.error(error) });
+      if (!this.getStoreValue('battery')) {
+        if (this.getAvailable()) {
+          this.setUnavailable(this.homey.__('device.unreachable') + error.message);
+          this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.message}).catch(error => { this.error(error) });
+        }
+        this.error(error);
       }
-
-      /* stop polling on devices that are unreachable over REST after 5 failures */
-      this.pollingFailures++;
-      if (this.pollingFailures >= 5) {
-        this.homey.clearInterval(this.pollingInterval);
-      }
-
-      this.error(error);
     }
   }
 
@@ -1148,7 +1176,9 @@ class ShellyDevice extends Homey.Device {
       }
 
     } catch (error) {
-      this.error(error);
+      if (!this.getStoreValue('battery')) {
+        this.error(error);
+      }
     }
   }
 
@@ -1610,7 +1640,9 @@ class ShellyDevice extends Homey.Device {
         }
       }
     } catch (error) {
-      this.error(error);
+      if (!this.getStoreValue('battery')) {
+        this.error(error);
+      }
     }
   }
 
@@ -2242,39 +2274,13 @@ class ShellyDevice extends Homey.Device {
 
   async updateDeviceConfig() {
     try {
-
-      let result = {};
-
-      /* get device settings */
-      if (this.getStoreValue('communication') === 'coap' && !this.getStoreValue('battery')) {
-        result = await this.util.sendCommand('/settings', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      } else if (this.getStoreValue('communication') === 'websocket' && !this.getStoreValue('battery')) {
-        result = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
-      }
-
-      /* update device data from settings */
-      if (this.getStoreValue('communication') === 'coap' && !this.getStoreValue('battery')) {
-        if (result) {
-          await this.setStoreValue('type', result.device.type);
-          const regex = /(?<=\/v)(.*?)(?=\-)/gm;
-          const version_data = regex.exec(result.fw);
-          if (version_data !== null) {
-            await this.setStoreValue('fw_version', version_data[0]);
-          }
-        }
-      } else if (this.getStoreValue('communication') === 'websocket' && !this.getStoreValue('battery')) {
-        await this.setStoreValue('type', result.model);
-        await this.setStoreValue('fw_version', result.ver);
-      }
-
-      /* update device config from defined config */
       const hostname = this.getStoreValue('main_device').substr(0, this.getStoreValue('main_device').lastIndexOf("-") + 1);
       let device_config = this.util.getDeviceConfig(hostname);
-
       if (typeof device_config !== 'undefined') {
   
         /* update gen1 device config if it's a roller shutter */
         if (device_config.name === 'Shelly 2' || device_config.name === 'Shelly 2.5') {
+          const result = await this.util.sendCommand('/settings', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
           if (result.hasOwnProperty("mode")) {
             if (result.mode === "roller") {
               device_config = this.util.getDeviceConfig(hostname + 'roller-');
@@ -2284,6 +2290,7 @@ class ShellyDevice extends Homey.Device {
   
         /* update gen2 device config if it's a roller shutter */
         if (device_config.name === 'Shelly Plus 2PM' || device_config.name === 'Shelly Pro 2' || device_config.name === 'Shelly Pro 2PM') {
+          const result = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
           if (result.hasOwnProperty("profile")) {
             if (result.profile === "cover") {
               device_config = this.util.getDeviceConfig(hostname + 'roller-');
@@ -2293,6 +2300,7 @@ class ShellyDevice extends Homey.Device {
   
         /* update device config if it's a RGBW2 in white mode */
         if (device_config.name === 'Shelly RGBW2 Color') {
+          const result = await this.util.sendCommand('/settings', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
           if (result.mode === 'white') {
             device_config = this.util.getDeviceConfig(hostname + 'white-');
           }

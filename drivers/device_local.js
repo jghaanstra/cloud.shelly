@@ -3,8 +3,6 @@
 const Homey = require('homey');
 const Device = require('./device.js');
 const Util = require('../lib/util.js');
-
-// TODO: remove this in the next big release, switched from server-client to client-server communication
 const WebSocket = require('ws');
 
 class ShellyDevice extends Device {
@@ -20,7 +18,7 @@ class ShellyDevice extends Device {
         await this.util.sendCommand('/reboot', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       }
 
-      // TODO: remove this in the next big release, switched from server-client to client-server communication
+      // TODO: eventually remove this once the firmware for outbound websockets has been rolled out
       /* disconnect to device websocket server for gen2 devices */
       if (this.getStoreValue('communication') === 'websocket' && this.getStoreValue('channel') === 0 && !this.getStoreValue('wsserver') && this.ws !== undefined && this.ws !== null) {
         if (this.ws.readyState !== WebSocket.CLOSED) {
@@ -56,7 +54,6 @@ class ShellyDevice extends Device {
     try {
       this.homey.clearInterval(this.pollingInterval);
 
-      // TODO: remove this in the next big release, switched from server-client to client-server communication
       if (this.getStoreValue('communication') === 'websocket') {
         this.homey.clearTimeout(this.pingWsTimeout);
         this.homey.clearTimeout(this.reconnectWsTimeout);
@@ -72,7 +69,6 @@ class ShellyDevice extends Device {
 
   /* websocket for gen2 devices */
   async connectWebsocket() {
-    // TODO: remove this in the next big release, switched from server-client to client-server communication
     try {
       this.ws = new WebSocket('ws://'+ this.getSetting("address") +'/rpc', {perMessageDeflate: false});
 

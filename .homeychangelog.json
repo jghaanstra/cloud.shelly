@@ -598,5 +598,17 @@
   },
   "3.16.1": {
     "en": "This release contains a fix for disabling the heating schedule for Shelly TRV on Homey Pro. It also contains a fix for button events for Shelly Button on Homey Cloud. And it includes some code refactoring for polling devices that have networking issues."
+  },
+  "3.16.2": {
+    "en": "Fix issue with the app crashing after the previous release in certain use cases."
+  },
+  "3.16.3": {
+    "en": "Fix issue with the app crashing after the previous release in certain use cases."
+  },
+  "3.16.4": {
+    "en": "Fix issue with the app crashing after the previous release in certain use cases."
+  },
+  "3.16.5": {
+    "en": "This release contains a fix for disabling the heating schedule for Shelly TRV on Homey Pro. It also contains a fix for button events for Shelly Button on Homey Cloud. It also reverts some code refactoring causing app crashes."
   }
 }
