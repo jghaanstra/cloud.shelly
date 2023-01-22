@@ -480,7 +480,7 @@ class ShellyApp extends OAuth2App {
       this.homey.flow.getActionCard('actionValveMode')
         .registerRunListener(async (args) => {
           try {
-            if (args.profile === "0") {
+            if (args.profile.id === "0") {
               return await this.util.sendCommand('/thermostat/0?schedule=false', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
             } else {
               return await this.util.sendCommand('/thermostat/0?schedule=true&schedule_profile='+ args.profile.id +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
@@ -551,9 +551,9 @@ class ShellyApp extends OAuth2App {
                   coap_device = filteredShellyCoap[0].device;
                 }
                 coap_device.parseCapabilityUpdate(prop, newValue);
-                // if (coap_device.getSetting('address') !== device.host) {
-                //   coap_device.setSettings({address: device.host});
-                // }
+                if (coap_device.getSetting('address') !== device.host) {
+                  coap_device.setSettings({address: device.host});
+                }
                 return;
               }
             }

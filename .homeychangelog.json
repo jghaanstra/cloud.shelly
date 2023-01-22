@@ -595,5 +595,8 @@
   },
   "3.16.0": {
     "en": "Breaking change for Homey Cloud: the previously deprecated generic cloud driver has been removed as announced some time ago. Re-pair your devices if you havent already. This release also adds support for the Plus Plug S and Plus Smoke."
+  },
+  "3.16.1": {
+    "en": "This release contains a fix for disabling the heating schedule for Shelly TRV on Homey Pro. It also contains a fix for button events for Shelly Button on Homey Cloud. And it includes some code refactoring for polling devices that have networking issues."
   }
 }
