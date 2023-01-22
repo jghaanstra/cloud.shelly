@@ -610,5 +610,8 @@
   },
   "3.16.5": {
     "en": "This release contains a fix for disabling the heating schedule for Shelly TRV on Homey Pro. It also contains a fix for button events for Shelly Button on Homey Cloud. It also reverts some code refactoring causing app crashes."
+  },
+  "3.17.0": {
+    "en": "Code refactoring, no functional changes."
   }
 }
