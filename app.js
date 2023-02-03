@@ -294,9 +294,18 @@ class ShellyApp extends OAuth2App {
             this.error(error)
           }
         })
+
+      this.homey.flow.getActionCard('actionColorEffect') 
+      .registerRunListener(async (args) => {
+        try {
+          return await this.util.sendCommand('/color/0?turn=on&effect='+ args.effect +'&duration='+ args.duration, args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+        } catch (error) {
+          this.error(error)
+        }
+      })
   
       // SHELLY RGBW2
-      this.homey.flow.getActionCard('effectRGBW2Color')
+      this.homey.flow.getActionCard('effectRGBW2Color') /* deprecated and replaced by more generic actionColorEffect */
         .registerRunListener(async (args) => {
           try {
             return await this.util.sendCommand('/color/0?turn=on&effect='+ Number(args.effect) +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));

@@ -50,9 +50,12 @@
             }
           }
         }
+      }).catch(error => {
+        Homey.alert(error.message);
+        Homey.done()
       })
   } catch (error) {
-    Homey.alert(error);
+    Homey.alert(error.message);
     Homey.done();
   }
 </script>

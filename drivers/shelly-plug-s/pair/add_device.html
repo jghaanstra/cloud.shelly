@@ -43,13 +43,16 @@
                 icon: result.icon
               });
             } else {
-              Homey.done()
+              Homey.done();
             }
           }
         }
+      }).catch(error => {
+        Homey.alert(Homey.__("pair.error") + error.message);
+        Homey.done()
       })
   } catch (error) {
-    Homey.alert(error);
-    Homey.done();
+    Homey.alert(Homey.__("pair.error") + error.message);
+    Homey.done()
   }
 </script>

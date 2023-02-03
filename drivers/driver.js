@@ -245,27 +245,22 @@ class ShellyDriver extends Homey.Driver {
       try {
         if (deviceArray.store.communication === 'coap') {
           const settings = await this.util.sendCommand('/settings', deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
-          if (settings.name !== null) {
-            deviceArray.name = settings.name;
-          }
+          if (settings.name !== null) { deviceArray.name = settings.name; }
           const unicast = await this.util.setUnicast(deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
           deviceArray.store.unicast = true;
           return Promise.resolve(deviceArray);
         } else if (deviceArray.store.communication === 'websocket') {
           const settings = await this.util.sendRPCCommand('/rpc/Shelly.GetConfig', deviceArray.settings.address, deviceArray.settings.password);
-          if (settings.sys.device.name !== null) {
-            deviceArray.name = settings.sys.device.name;
-          }
+          if (settings.sys.device.name !== null) { deviceArray.name = settings.sys.device.name; }
           const result = await this.util.setWsServer(deviceArray.settings.address, deviceArray.settings.password);
-          if (result === 'OK') {
-            deviceArray.store.wsserver = true;
-          }
+          deviceArray.store.wsserver = true;
           return Promise.resolve(deviceArray);
         } else {
           return Promise.resolve(deviceArray);
         }
       } catch (error) {
-        this.error(error);
+        this.error(error.message);
+        return Promise.reject(error);
       }
     });
 

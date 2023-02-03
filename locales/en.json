@@ -33,15 +33,7 @@
     "default_icon": "Use default",
     "save": "Save",
     "intro_vintage_icon": "Select which icon you want to use for your Shelly Vintage.",
-    "title_cloud_pairing": "Pair Shelly over the cloud",
-    "instructions_cloud_pairing": "You are about to pair a Shelly device over the cloud. Please follow these steps:",
-    "instructions_cloud_pairing_step_1": "Visit the Shelly Integrator Portal using this",
-    "instructions_cloud_pairing_step_2": "Log into this portal with your Shelly cloud credentials.",
-    "instructions_cloud_pairing_step_3": "Find the device you wish to pair making sure it's of the same model which you are currently pairing in Homey (if your device is not listed here you will have to enable the cloud connection through the device webinterface of the Shelly smartphone app first).",
-    "instructions_cloud_pairing_step_4": "In the Shelly Integrator Portal click the device you wish to pair and enable the cloud integrator and control settings for that device.",
-    "instructions_cloud_pairing_step_5": "Click save in the Shelly Integrator Portal and afterwards click the test connection button in this pairing wizard.",
-    "instructions_cloud_pairing_step_6": "If you see the correct device ID shown below you can click the next button to continu pairing the device.",
-    "no_integrator_url": "Unable to create Shelly Integrator Portal URL."
+    "error": "An error occured when trying to add the device. This usually happens when the device is not on the latest firmware, a battery powered device is not kept awake during pairing or there are networking issues. See the pairing instructions in the support topic on the community forum. The error is: "
   },
   "util": {
     "400": "Error 400: invalid API request, please send a diagnostic report from the app settings to the developer to help solve this issue.",
@@ -52,14 +44,6 @@
     "unknownerror": "Unknown error, are you sure you have entered the correct IP address and Homey is on the same network as the Shelly device? Please check your settings and try again.",
     "any_device": "With Any Device",
     "any_action": "With Any Action"
-  },
-  "connect": {
-    "intro": "Using the Shelly RGBW2 in CW/WW mode enables you to connect 2 LED strips as follows:",
-    "single": "If you only attach one LED strip or you want to always keep the two channels in sync, you should check 'Use as single device'.",
-    "device-type": "Set the Device Type in the Shelly app to 'Color'",
-    "strip1": "Strip 1: CW pin to R terminal, WW pin to G terminal",
-    "strip2": "Strip 2: CW pin to B terminal, WW pin to W terminal",
-    "warning": "With this setup, controlling the LED strips with the Shelly apps is not practical."
   },
   "device": {
     "unreachable": "Device is unreachable: ",

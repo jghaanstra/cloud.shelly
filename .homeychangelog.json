@@ -613,5 +613,8 @@
   },
   "3.17.0": {
     "en": "Code refactoring, no functional changes."
+  },
+  "3.17.1": {
+    "en": "This release brings improvements to energy usage of the Shelly 3EM Pro. It also improves error handling during pairing of devices and points people to the pairing instructions. And it deprecates a action card for setting a color effect for the RGBW2. This card is replaced by a more generic action card which can also be used on the Shelly Bulb RGBW."
   }
 }

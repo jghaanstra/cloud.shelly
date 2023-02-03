@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.17.0",
+  "version": "3.17.1",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -1394,6 +1394,84 @@
     ],
     "actions": [
       {
+        "id": "actionColorEffect",
+        "title": {
+          "en": "Switch Effect",
+          "nl": "Effect schakelen"
+        },
+        "titleFormatted": {
+          "en": "Switch effect to [[effect]] in [[transition]] seconds",
+          "nl": "Effect schakelen naar [[effect]] in [[transition]] seconden"
+        },
+        "args": [
+          {
+            "name": "effect",
+            "title": {
+              "en": "Effect",
+              "nl": "Effect"
+            },
+            "type": "dropdown",
+            "placeholder": {
+              "en": "Effect",
+              "nl": "Effect"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Turn Effect Off",
+                  "nl": "Uitschakelen effect"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "Meteor shower",
+                  "nl": "Meteoriet regen"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "Gradual change",
+                  "nl": "Geleidelijk veranderen"
+                }
+              },
+              {
+                "id": "3",
+                "label": {
+                  "en": "Flash",
+                  "nl": "Flitsen"
+                }
+              }
+            ]
+          },
+          {
+            "name": "transition",
+            "type": "number",
+            "title": {
+              "en": "Transition in seconds",
+              "nl": "Transitie in seconden"
+            },
+            "min": 1,
+            "max": 5000,
+            "step": 1
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly&capabilities=light_hue,deviceGen1"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
         "id": "actionCustomCommand",
         "title": {
           "en": "Send Command",
@@ -1989,7 +2067,8 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "deprecated": true
       },
       {
         "id": "flipbackSwitch",
@@ -7724,6 +7803,30 @@
     }
   ],
   "capabilities": {
+    "deviceGen1": {
+      "type": "string",
+      "title": {
+        "en": "Device Generation 1",
+        "nl": "Device Generation 1"
+      },
+      "getable": false,
+      "setable": false,
+      "uiComponent": null,
+      "insights": false,
+      "icon": "/assets/icon.svg"
+    },
+    "deviceGen2": {
+      "type": "string",
+      "title": {
+        "en": "Device Generation 2",
+        "nl": "Device Generation 2"
+      },
+      "getable": false,
+      "setable": false,
+      "uiComponent": null,
+      "insights": false,
+      "icon": "/assets/icon.svg"
+    },
     "devicePlusSmoke": {
       "type": "string",
       "title": {
@@ -7971,22 +8074,6 @@
         "nl": "Externe input 3 ingeschakeld"
       },
       "icon": "/assets/input_switch.svg"
-    },
-    "meter_power_consumed": {
-      "type": "number",
-      "title": {
-        "en": "Total Consumed Energy",
-        "nl": "Totaal verbruikte energie"
-      },
-      "getable": true,
-      "setable": false,
-      "uiComponent": "sensor",
-      "insights": true,
-      "icon": "/assets/meter_power_consumed.svg",
-      "units": {
-        "en": "Wh",
-        "nl": "Wh"
-      }
     },
     "meter_power_factor": {
       "type": "number",

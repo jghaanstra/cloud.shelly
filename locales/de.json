@@ -1,0 +1,72 @@
+{
+  "pair": {
+    "title": "Shelly Gerät hinzufügen",
+    "nosettings": "Bitte füllen Sie alle erforderlichen Felder aus.",
+    "intro": "Geben Sie die IP-Adresse und, falls konfiguriert, Ihren Benutzernamen und Ihr Passwort für Ihr Shelly Gerät ein.",
+    "intro-relay": "Binden Sie Ihr Shelly2(.5) Gerät als Gerät mit zwei Relaisschaltern an (dies kann in der Shelly Smartphone-App konfiguriert werden). Geben Sie die IP-Adresse und, falls konfiguriert, Ihren Benutzernamen und Ihr Passwort für Ihr Shelly 2 Gerät ein.",
+    "intro-rollershutter": "Binden Sie Ihr Shelly2(.5) Gerät als Gerät mit zwei Rollladen-Schalter (dies kann in der Shelly Smartphone-App konfiguriert werden). Geben Sie die IP-Adresse und, falls konfiguriert, Ihren Benutzernamen und Ihr Passwort für Ihr Shelly 2 Gerät ein.",
+    "address": "IP-Adresse",
+    "username": "Benutzername",
+    "password": "Passwort",
+    "single": "Als einzelnes Gerät verwenden",
+    "polling": "Polling-Frequenz",
+    "hostname": "Shelly Hostname:",
+    "device": "Shelly Gerät:",
+    "deviceid": "Shelly Gerät-ID:",
+    "type": "Shelly Gerätetyp:",
+    "test" : "Verbindung testen",
+    "testing" : "Verbindungstest erfolgreich, Sie können jetzt das Shelly Gerät verbinden.",
+    "connect": "Verbinden",
+    "success": "Shelly Gerät erfolgreich hinzugefügt",
+    "no_device_config": "Keine geeignete Gerätekonfiguration gefunden. Dieses Gerät wird möglicherweise noch nicht unterstützt, bitte melden Sie dies dem Entwickler.",
+    "startpairing": "Verknüpfen Sie das Gerät zunächst mit der Shelly Smartphone-App. Drücken Sie dann auf den physischen Knopf auf Ihrem Shelly-Sensor oder entfernen und wieder einfügen Sie den Akku, um das Gerät zu wecken. Dann können Sie unten auf die Schaltfläche Weiter klicken.",
+    "startpairingbutton": "Pairen Sie das Gerät zuerst mit der Shelly Smartphone-App. Schließen Sie ein USB-Kabel an die Taste an, um sicherzustellen, dass sie mit Strom versorgt und mit Ihrem WiFi verbunden ist, bevor Sie fortfahren.",
+    "startpairingmotion": "Pairen Sie das Gerät zuerst mit der Shelly Smartphone-App. Über die Web-Schnittstelle starten Sie Ihren Shelly Bewegungssensor neu und führen Sie diesen Pairing-Assistenten direkt nach dem Neustart des Sensors fort.",
+    "startpairingtrv": "Pairen Sie das Gerät zuerst mit der Shelly Smartphone-App und montieren Sie es gemäß den Anweisungen. Drücken Sie dann kurz auf den Reset-Knopf neben dem USB-C-Ladegerät mit einer Pin, um sicherzustellen, dass das Gerät aktiv ist. Führen Sie den Pairing-Assistenten fort.",
+    "startpairingshelly": "Verwenden Sie diesen Pairing-Assistenten, um jedes Shelly-Gerät zu pairn. Stellen Sie sicher, dass Ihre Shelly-Geräte mit Ihrem Wi-Fi verbunden sind, bevor Sie fortfahren. Sie können dies über die Shelly Smartphone-App tun. Wenn Sie ein batteriebetriebenes Gerät pairn möchten, wecken Sie es durch Drücken des Wake-Up-Knopfs auf oder verbinden Sie es mit USB-Strom. Wenn Sie beim Pairing von Geräten mit Homey Probleme haben, überprüfen Sie Ihre Netzwerkeinstellungen, starten Sie das Gerät neu und versuchen Sie es erneut.",
+    "titleselection": "Was möchtest du tun?",
+    "nodevices": "Es wurden keine Geräte gefunden. Sie können es erneut versuchen oder eine manuelle Pairing-Methode verwenden, wenn Sie die IP-Adresse Ihres Shelly-Geräts kennen.",
+    "again": "Erneut versuchen",
+    "manual": "Manuelles Pairing",
+    "title_icon_select": "Wähle ein Icon",
+    "intro_upload": "Wenn Sie ein benutzerdefiniertes Icon für Ihr Gerät verwenden möchten, können Sie es hier hochladen. Das Icon muss im .svg-Format vorliegen.",
+    "default_icon": "Standardicon verwenden",
+    "save": "Speichern",
+    "intro_vintage_icon": "Wählen Sie das Symbol aus, das Sie für Ihre Shelly Vintage verwenden möchten.",
+    "error": "Beim Versuch, das Gerät hinzuzufügen, ist ein Fehler aufgetreten. Dies geschieht normalerweise, wenn das Gerät nicht auf der neuesten Firmware ist, ein batteriebetriebenes Gerät während des Pairings nicht aktiv bleibt oder es Netzwerkprobleme gibt. Sehen Sie die Pairing-Anweisungen im Support-Thema im Community-Forum. Die Fehler ist: "
+  },
+  "util": {
+    "400": "Fehler 400: ungültige API-Anforderung, senden Sie bitte einen Diagnosebericht aus den Einstellungen der App an den Entwickler, um dieses Problem zu lösen.",
+    "401": "Fehler 401: Benutzeranmeldeinformationen fehlen oder dieser Benutzer ist nicht berechtigt, stellen Sie sicher, dass Sie die richtigen Benutzeranmeldeinformationen wie in der Shelly-Smartphone-App oder im Webinterface eingegeben haben.",
+    "404": "Fehler 404: Gerät nicht gefunden, überprüfen Sie die Netzwerkverbindung und Konfiguration und stellen Sie sicher, dass das Shelly online und für Homey erreichbar ist.",
+    "502": "Timeout-Fehler: Stellen Sie sicher, dass Sie die richtige IP-Adresse eingegeben haben und dass das Shelly-Gerät online ist.",
+    "500": "Fehler 500: Interner Serverfehler",
+    "unknownerror": "Unbekannter Fehler, sind Sie sicher, dass Sie die richtige IP-Adresse eingegeben haben und Homey im gleichen Netzwerk wie das Shelly-Gerät ist? Überprüfen Sie Ihre Einstellungen und versuchen Sie es erneut.",
+    "any_device": "Mit jedem Gerät",
+    "any_action": "Mit jeder Aktion"
+  },
+  "device": {
+    "unreachable": "Gerät ist nicht erreichbar: ",
+    "overpower": "Fehler: Gerät ist überlastet.",
+    "overvoltage": "Fehler: Überspannung.",
+    "overtemp": "Fehler: Gerätentemperatur zu hoch.",
+    "overcurrent": "Fehler: Überstrom.",
+    "maximum_dim_duration": "Shelly-Geräte haben eine maximale Dimm-Dauer von 5 Sekunden",
+    "oauth2_repairing": "Aufgrund von Änderungen bei den Kommunikations-Cloud muss das Gerät neu authentifiziert werden, verwenden Sie hierfür das Neu-Kopplungs-Feature aus den Wartungseinstellungen in Homey."
+  },
+  "driver": {
+    "wrongdevice": "Das Shelly-Gerät, mit dem Sie versuchen zu koppeln, entspricht nicht dem ausgewählten Shelly-Gerät im Kopplungs-Assistenten."
+  },
+  "settings": {
+    "title": "Shelly Einstellungen",
+    "General": "Allgemeine Einstellungen",
+    "intro-coap": "Wenn Sie dies deaktivieren, wird der CoAP-Listener gestoppt und auf das HTTP-Polling umgeschaltet. Dies kann auf einigen Netzwerken, bei denen CoAP nicht funktioniert, nützlich sein. Beachten Sie, dass Geräteaktualisierungen langsamer sein werden und dass dadurch auch die Aktionsereignisse (wie kurzes Drücken usw.) deaktiviert werden. Bitte starten Sie die App oder Homey neu, nachdem Sie diese Einstellung geändert haben, damit sie wirksam wird.",
+    "coap": "CoAP deaktivieren?",
+    "polling": "Polling-Frequenz in Sekunden",
+    "success": "Einstellungen wurden erfolgreich gespeichert.",
+    "save": "Speichern"
+  },
+  "app": {
+    "no_pairing_device_found": "Kein Gerät zum Koppeln gefunden, stellen Sie sicher, dass Sie die oben beschriebenen Schritte ausführen."
+  }
+}

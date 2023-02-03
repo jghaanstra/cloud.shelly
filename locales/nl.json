@@ -33,15 +33,7 @@
     "default_icon": "Gebruik standaard",
     "save": "Opslaan",
     "intro_vintage_icon": "Selecteer welk icoon die je wilt gebruiken voor je Shelly Vintage.",
-    "title_cloud_pairing": "Koppel Shelly over de cloud",
-    "instructions_cloud_pairing": "Je staat op het punt om een Shelly cloud apparaat te koppelen. Volg hiervoor deze stappen:",
-    "instructions_cloud_pairing_step_1": "Bezoek de Shelly Integrator Portal via deze",
-    "instructions_cloud_pairing_step_2": "Log in op dit portal met je Shelly cloud credentials.",
-    "instructions_cloud_pairing_step_3": "Vind het apparaat die je wil koppelen waarbij je ervoor zorgt dat dit apparaat van hetzelfde model is als het model dat je aan het toevoegen bent (als je apparaat niet wordt getoond in de lijst zal je deze eerst met de cloud moeten worden verbonden via de webinterface of de Shelly smartphone app).",
-    "instructions_cloud_pairing_step_4": "Klik op het apparaat in de Shelly Integrator Portal en schakel de cloud integrator en apparaat control settings in voor dit apparaat.",
-    "instructions_cloud_pairing_step_5": "Klik op Save in de Shelly Integrator Portal en klik vervolgens op de test connectie knop in deze pairing wizard.",
-    "instructions_cloud_pairing_step_6": "Als je hieronder het juiste apparaat ID ziet kan je op de volgende knop klikken om verder te gaan met het koppelen van het apparaat.",
-    "no_integrator_url": "Niet gelukt om Shelly Integrator Portal URL samen te stellen."
+    "error": "Er is een fout opgetreden tijdens het toevoegen. Dit gebeurt veelal als het apparaat niet de laatste firmware bevat, als een batterij gevoed apparaat niet wakker worden gehouden tijdens het pairen of als er netwerk problemen zijn. Bekijk de pairing instructies in het support topic op het community forum. De error is: "
   },
   "util": {
     "400": "Error 400: ongeldige API request, verstuur aub vanuit de app instellingen een diagnostisch report naar de ontwikkelaar om te helpen om dit issue op te lossen.",
@@ -52,14 +44,6 @@
     "unknownerror": "Onbekende fout, weet je zeker dat je het juist IP adres hebt opgegeven en dat het Shelly apparaat op hetzelfde netwerk zit als Homey? Controleer a.u.b. je instellingen en probeer het nog eens.",
     "any_device": "Voor elk apparaat",
     "any_action": "Bij elke actie"
-  },
-  "connect": {
-    "intro": "Als je de Shelly RGBW2 in CW/WW mode gebruikt, kan je als volgt twee LED-strips aansluiten:",
-    "single": "Als je maar één LED strip aansluit of je wil de twee kanalen altijd gesynchroniseerd houden, moet je 'Gebruik als één device' aanvinken.",
-    "device-type": "Zet het Device Type in the Shelly app op 'Color'",
-    "strip1": "Strip 1: CW draad op R pin, WW draad op G pin",
-    "strip2": "Strip 2: CW draad op B pin, WW draad op W pin",
-    "warning": "Met deze setup is het bedienen van de LED-strips via de Shelly apps niet handig te doen."
   },
   "device": {
     "unreachable": "Apparaat is onbereikbaar: ",
