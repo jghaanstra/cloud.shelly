@@ -105,20 +105,15 @@ class ShellyDevice extends Homey.Device {
 
       // gen1 + gen2: start polling mains powered devices on regular interval
       if (!this.getStoreValue('battery')) {
-        if (this.getStoreValue('communication') === 'coap' && this.homey.settings.get('general_coap')) { // CoAP is disabled
-          let polling_frequency = this.homey.settings.get('general_polling_frequency') * 1000 || 5000;
+        if (!this.homey.settings.get('general_polling')) { // polling is not disabled
           this.pollingInterval = this.homey.setInterval(() => {
             this.pollDevice();
-          }, (polling_frequency + (1000 * this.getStoreValue('channel'))));
-        } else {
-          this.pollingInterval = this.homey.setInterval(() => {
-            this.pollDevice();
-          }, (60000 + (1000 * this.getStoreValue('channel'))));
+          }, (60000 + this.util.getRandomTimeout(20)));
         }
       }
 
     } catch (error) {
-      this.error(error);
+      this.error(error.message);
     }
   }
 
@@ -556,7 +551,7 @@ class ShellyDevice extends Homey.Device {
         this.homey.clearInterval(this.pollingInterval);
       }
 
-      this.error(error);
+      this.error(error.message);
     }
   }
 

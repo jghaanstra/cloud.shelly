@@ -60,9 +60,8 @@
   "settings": {
     "title": "Shelly instellingen",
     "general": "Algemene instellingen",
-    "intro-coap": "CoAP uitschakelen zal de CoAP listener stoppen en overschakelen naar HTTP polling. Dit kan handig zijn voor sommige netwerken waar CoAP niet werkt. Wees je ervan bewust dat hierdoor updates langzamer binnen komen en ook de input en action event (zoals short push etc.) functionaliteit uitschakelt. Herstart de app of Homey om de wijziging daadwerkelijk toe te passen.",
-    "coap": "Uitschakelen CoAP?",
-    "polling": "Polling frequentie in seconden",
+    "intro": "Enkele gebruikers ervaren netwerkgerelateerde problemen waarbij Homey aangesloten Shelly apparaten niet kan bereiken. Hiervoor bestaan meerdere oorzaken maar het pollen van deze apparaten helpt niet bij de stabiliteit van de app in deze scenario's. Dit is een geavanceerde instelling om polling voor alle apparaten uit te schakelen en alleen te vertrouwen op statusupdates van de apparaten zelf. Bepaalde functies die afhankelijk zijn van polling werken niet meer, dus het wordt niet aanbevolen om onderstaande checkbox aan te vinken. Gebruik het alleen als laatste redmiddel!",
+    "polling": "Uitschakelen polling",
     "success": "Instellingen zijn succesvol opgeslagen.",
     "save": "Opslaan"
   },

@@ -45,12 +45,8 @@ class ShellyApp extends OAuth2App {
         this.homey.setTimeout(async () => {
           let gen1 = await this.util.getDeviceType('gen1');
           if (gen1) {
-            if (!this.homey.settings.get('general_coap')) {
-              this.log('CoAP listener for gen1 LAN devices started ...');
-              shellies.start();
-            } else {
-              this.log('CoAP listener not started, the CoAP listener has been disabled from the app settings ...');
-            }
+            shellies.start();
+            this.log('CoAP listener for gen1 LAN devices started ...');
           } else {
             this.log('CoAP listener not started as no gen 1 devices where found during app init ...');
           }
@@ -578,19 +574,24 @@ class ShellyApp extends OAuth2App {
     }
   }
 
-  // COAP GEN1: UPDATE APP SETTINGS AND START/STOP COAP LISTENER
+  // COAP GEN1 & WEBSOCKET GEN 2: UPDATE APP SETTINGS AND START/STOP POLLING
   async updateSettings(settings) {
     try {
-      if (settings.general_coap) {
-        this.log('CoAP listener has been disabled from the app settings and the listener is now stopped');
-        shellies.stop();
+      if (settings.general_polling) {
+        this.log('Polling has been disabled from the app settings and the polling interval is now cleared');
+        this.shellyDevices.forEach((device) => {
+          this.homey.clearInterval(device.device.pollingInterval);
+        });
         return Promise.resolve(true);
       } else {
-        this.log('CoAP listener has been enabled from the app settings and the listener is now (re)started');
-        shellies.stop();
-        this.homey.setTimeout(async () => {
-          shellies.start();
-        }, 4000);
+        this.log('Polling has been enabled from the app settings and polling interval is now set');
+        this.shellyDevices.forEach((device) => {
+          device.device.pollingInterval = this.homey.setInterval(() => {
+            if (!device.device.getStoreValue('battery')) {
+              device.device.pollDevice();
+            }
+          }, (60000 + this.util.getRandomTimeout(20)));
+        });
         return Promise.resolve(true);
       }
     } catch(error) {

@@ -39,14 +39,10 @@
 
     <fieldset class="shelly-general">
       <legend data-i18n="settings.general">General Settings</legend>
-      <p data-i18n="settings.intro-coap">Users with a lot (20+) Shelly devices may experience the app crashing when using device updates over CoAP. Disabling this will prevent the app from crashing and will switch to HTTP polling fallback. Beware that this also disables the input and action events (like short push etc).</p>
+      <p data-i18n="settings.intro">Users with a lot (20+) Shelly devices may experience the app crashing when using device updates over CoAP. Disabling this will prevent the app from crashing and will switch to HTTP polling fallback. Beware that this also disables the input and action events (like short push etc).</p>
       <div class="form-group">
-      <label for="coap" data-i18n="settings.coap">Disable CoAP?</label>
-      <input type="checkbox" class="form-control" id="coap">
-      </div>
-      <div class="form-group">
-      <label for="port" data-i18n="settings.polling">Polling Frequency</label>
-      <input type="number" class="form-control" id="polling" placeholder="5" min="5" max="3600">
+      <label for="polling" data-i18n="settings.polling">Disable polling</label>
+      <input type="checkbox" class="form-control" id="polling">
       </div>
       <div class="messages messages-general">
       <p class="shelly-ok shelly-status" style="color: #008C23;"><i class="fa fa-check"></i> <span class="shelly-ok-msg" data-i18n="settings.success">Settings have been saved succesfully.</span></p>
@@ -59,20 +55,9 @@
 
     <script type="text/javascript">
       function onHomeyReady(Homey) {
-        Homey.get('general_coap')
-          .then(coap => {
-            document.getElementById('coap').checked = coap;
-          })
-          .catch(error => {
-            return console.error('Could not get CoAP setting', error);
-          })
-        Homey.get('general_polling_frequency')
-          .then(polling => {
-            document.getElementById('polling').value = polling;
-          })
-          .catch(error => {
-            return console.error('Could not get polling frequency', error);
-          })
+        Homey.get('general_polling')
+          .then(polling => { document.getElementById('polling').checked = polling; })
+          .catch(error => { return console.error('Could not get polling setting', error.message); })
 
         document.getElementById("save-general").addEventListener("click", function(elem) {
           save(Homey);
@@ -83,11 +68,10 @@
       }
 
       function save(Homey) {
-        Homey.set('general_coap', document.getElementById('coap').checked);
-        Homey.set('general_polling_frequency', document.getElementById('polling').value);
+        Homey.set('general_polling', document.getElementById('polling').checked);
 
         Homey.api('PUT', '/updatesettings/', {
-          "general_coap": document.getElementById('coap').checked
+          "general_polling": document.getElementById('polling').checked
         })
           .then(result => {
             document.getElementsByClassName('shelly-ok')[0].style.display = 'block';
