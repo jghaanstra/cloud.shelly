@@ -58,7 +58,7 @@ class ShellyDriver extends Homey.Driver {
           this.error('selected device from discoveryResults is not defined, logging discoveryResults object and selectedDeviceId.');
           this.error('selectedDeviceId:', selectedDeviceId);
           this.error(JSON.stringify(discoveryResults));
-          throw new Error('Selected device from discoveryResults is undefined, please send a diagnostic report to the developer.')
+          throw new Error('Selected device from discoveryResults is undefined, please send a diagnostic report to the developer. Device ID is', selectedDeviceId);
         } else {
 
           /* get device config based on hostname of the discovered device */
@@ -66,7 +66,7 @@ class ShellyDriver extends Homey.Driver {
           let device_config = this.util.getDeviceConfig(hostname);
 
           if (typeof device_config === 'undefined') {
-            this.log('No device config found for device with hostname', hostname);
+            this.error('No device config found for device with hostname', hostname);
             throw new Error(this.homey.__('pair.no_device_config') + ' Device has hostname:' + hostname);
           }
 

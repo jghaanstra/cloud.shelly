@@ -1,0 +1,19 @@
+{
+  "id": "triggerPlusInputExternal4Changed",
+  "title": {
+    "en": "External input 4 changed",
+    "nl": "Externe input 4 gewijzigd"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_4"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

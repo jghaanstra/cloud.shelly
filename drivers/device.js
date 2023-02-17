@@ -14,11 +14,9 @@ class ShellyDevice extends Homey.Device {
       // VARIABLES GENERIC
       this.pollingFailures = 0;
 
-      // TODO: REMOVE THIS WITH THE NEXT RELEASE
-      if (this.getStoreValue('gen') === 'gen2') {
-        if (!this.hasCapability('deviceGen2')) { this.addCapability('deviceGen2') };
-      } else {
-        if (!this.hasCapability('deviceGen1')) { this.addCapability('deviceGen1') };
+      // TODO: remove this after the next release
+      if (this.getStoreValue('type') === 'SHRGBW2' && this.hasCapability('light_hue')) {
+        if (!this.hasCapability('dim.white')) { this.addCapability('dim.white') };
       }
     
       // ADDING CAPABILITY LISTENERS
@@ -27,6 +25,7 @@ class ShellyDevice extends Homey.Device {
       this.registerCapabilityListener("light_temperature", this.onCapabilityLightTemperature.bind(this));
       this.registerMultipleCapabilityListener(['light_hue', 'light_saturation'], this.onMultipleCapabilityListenerSatHue.bind(this), 500);
       this.registerCapabilityListener("light_mode", this.onCapabilityLightMode.bind(this));
+      this.registerCapabilityListener("dim.white", this.onCapabilityDimWhite.bind(this));
       this.registerCapabilityListener("onoff.whitemode", this.onCapabilityOnoffWhiteMode.bind(this));
       this.registerCapabilityListener("windowcoverings_state", this.onCapabilityWindowcoveringsState.bind(this));
       this.registerCapabilityListener("windowcoverings_set", this.onCapabilityWindowcoveringsSet.bind(this));
@@ -341,6 +340,21 @@ class ShellyDevice extends Homey.Device {
     }
   }
 
+  /* dim.white */
+  async onCapabilityDimWhite(value, opts) {
+    try {
+      const dim_white = Number(this.util.denormalize(value, 0, 255));
+      if (dim_white > 125 && !this.getCapabilityValue('onoff.whitemode')) {
+        this.updateCapabilityValue('onoff.whitemode', true);
+      } else if (dim_white <= 125 && this.getCapabilityValue('onoff.whitemode')) {
+        this.updateCapabilityValue('onoff.whitemode', false);
+      }
+      return await this.util.sendCommand('/color/'+ this.getStoreValue('channel') +'?white='+ dim_white, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+    } catch (error) {
+      this.error(error);
+    }
+  }
+
   /* light_hue, light_saturation */
   async onMultipleCapabilityListenerSatHue(valueObj, optsObj) {
     try {
@@ -538,6 +552,7 @@ class ShellyDevice extends Homey.Device {
         this.parseFullStatusUpdateGen1(result);
       }
     } catch (error) {
+      this.error(error.message);
 
       /* mark as unavailable and trigger the device offline trigger card */
       if (this.getAvailable()) {
@@ -546,19 +561,22 @@ class ShellyDevice extends Homey.Device {
       }
       
       /* stop polling on devices that are unreachable over REST after 5 failures */
+      
       this.pollingFailures++;
-      if (this.pollingFailures >= 5) {
+      if (this.pollingFailures >= 10) {
+        this.error('Killing polling for device', this.getName(), 'with IP', this.getSetting('address'), 'of type', this.getStoreValue('type'), 'due to 10 polling failures' );
         this.homey.clearInterval(this.pollingInterval);
+        /* make the device available again to avoid users from complaining about the app (read Homey) not being able to access their Shelly */
+        if (!this.getAvailable()) { await this.setAvailable(); };
       }
-
-      this.error(error.message);
+      
     }
   }
 
   /* generic full status parser for polling over HTTP and cloud status updates for gen1 */
   async parseFullStatusUpdateGen1(result = {}) {
     try {
-      if (!this.getAvailable()) { await this.setAvailable(); }
+      if (!this.getAvailable()) { await this.setAvailable(); };
       let channel = this.getStoreValue('channel') || 0;
 
       // RELAYS (onoff)
@@ -1421,6 +1439,30 @@ class ShellyDevice extends Homey.Device {
         }
       }
 
+      /* add-on temperature 4 */
+      if (result.hasOwnProperty("temperature:103") && channel === 0) {
+        if (this.hasCapability('measure_temperature.4')) {
+          if (this.getCapabilityValue('measure_temperature.4') !== result["temperature:103"].tC) {
+            this.updateCapabilityValue('measure_temperature.4', result["temperature:103"].tC, channel);
+            this.homey.flow.getDeviceTriggerCard('triggerTemperature4').trigger(this, {'temperature': result["temperature:103"].tC}, {}).catch(error => { this.error(error) });
+          }
+        } else {
+          this.addCapability('measure_temperature.4');
+        }
+      }
+
+      /* add-on temperature 5 */
+      if (result.hasOwnProperty("temperature:104") && channel === 0) {
+        if (this.hasCapability('measure_temperature.5')) {
+          if (this.getCapabilityValue('measure_temperature.5') !== result["temperature:104"].tC) {
+            this.updateCapabilityValue('measure_temperature.5', result["temperature:104"].tC, channel);
+            this.homey.flow.getDeviceTriggerCard('triggerTemperature5').trigger(this, {'temperature': result["temperature:104"].tC}, {}).catch(error => { this.error(error) });
+          }
+        } else {
+          this.addCapability('measure_temperature.5');
+        }
+      }
+
       /* add-on humidity 1 */
       if (result.hasOwnProperty("humidity:100") && channel === 0) {
         if (this.hasCapability('measure_humidity.1')) {
@@ -1454,6 +1496,30 @@ class ShellyDevice extends Homey.Device {
           }
         } else {
           this.addCapability('measure_humidity.3');
+        }
+      }
+
+      /* add-on humidity 4 */
+      if (result.hasOwnProperty("humidity:103") && channel === 0) {
+        if (this.hasCapability('measure_humidity.4')) {
+          if (this.getCapabilityValue('measure_humidity.4') !== result["temperature:103"].tC) {
+            this.updateCapabilityValue('measure_humidity.4', result["humidity:103"].rh, channel);
+            this.homey.flow.getDeviceTriggerCard('triggerHumidity4').trigger(this, {'humidity': result["temperature:103"].rh}, {}).catch(error => { this.error(error) });
+          }
+        } else {
+          this.addCapability('measure_humidity.4');
+        }
+      }
+
+      /* add-on humidity 5 */
+      if (result.hasOwnProperty("humidity:104") && channel === 0) {
+        if (this.hasCapability('measure_humidity.5')) {
+          if (this.getCapabilityValue('measure_humidity.5') !== result["temperature:104"].tC) {
+            this.updateCapabilityValue('measure_humidity.5', result["humidity:104"].rh, channel);
+            this.homey.flow.getDeviceTriggerCard('triggerHumidity4').trigger(this, {'humidity': result["temperature:104"].rh}, {}).catch(error => { this.error(error) });
+          }
+        } else {
+          this.addCapability('measure_humidity.5');
         }
       }
 
@@ -1539,7 +1605,62 @@ class ShellyDevice extends Homey.Device {
             this.addCapability('input_external_3');
           }
         }
+      }
 
+      /* add-on input 4 */
+      if (result.hasOwnProperty("input:103") && channel === 0) {
+        if (result["input:103"].type === 'analog') {
+          if (this.hasCapability('input_analog_external_4')) {
+            if (this.getCapabilityValue('input_analog_external_4') !== result["input:103"].percent) {
+              this.updateCapabilityValue('input_analog_external_4', result["input:103"].precent, 0);
+              this.homey.flow.getDeviceTriggerCard('triggerPlusInputAnalogExternal4Changed').trigger(this, {'percentage': result["input:103"].precent}, {}).catch(error => { this.error(error) });
+            }
+          } else {
+            this.addCapability('input_analog_external_4');
+          }
+        } else {
+          if (this.hasCapability('input_external_4')) {
+            if (this.getCapabilityValue('input_external_4') !== result["input:103"].state) {
+              this.updateCapabilityValue('input_external_4', result["input:103"].state, 0);
+              this.homey.flow.getDeviceTriggerCard('triggerPlusInputExternal4Changed').trigger(this, {}, {}).catch(error => { this.error(error) });
+              if (result["input:103"].state) {
+                this.homey.flow.getDeviceTriggerCard('triggerPlusInputExternal4On').trigger(this, {}, {}).catch(error => { this.error(error) });
+              } else {
+                this.homey.flow.getDeviceTriggerCard('triggerPlusInputExternal4Off').trigger(this, {}, {}).catch(error => { this.error(error) });
+              }
+            }
+          } else {
+            this.addCapability('input_external_4');
+          }
+        }
+      }
+
+      /* add-on input 5 */
+      if (result.hasOwnProperty("input:104") && channel === 0) {
+        if (result["input:104"].type === 'analog') {
+          if (this.hasCapability('input_analog_external_5')) {
+            if (this.getCapabilityValue('input_analog_external_5') !== result["input:104"].percent) {
+              this.updateCapabilityValue('input_analog_external_5', result["input:104"].precent, 0);
+              this.homey.flow.getDeviceTriggerCard('triggerPlusInputAnalogExternal5Changed').trigger(this, {'percentage': result["input:104"].precent}, {}).catch(error => { this.error(error) });
+            }
+          } else {
+            this.addCapability('input_analog_external_5');
+          }
+        } else {
+          if (this.hasCapability('input_external_5')) {
+            if (this.getCapabilityValue('input_external_5') !== result["input:104"].state) {
+              this.updateCapabilityValue('input_external_5', result["input:104"].state, 0);
+              this.homey.flow.getDeviceTriggerCard('triggerPlusInputExternal5Changed').trigger(this, {}, {}).catch(error => { this.error(error) });
+              if (result["input:104"].state) {
+                this.homey.flow.getDeviceTriggerCard('triggerPlusInputExternal5On').trigger(this, {}, {}).catch(error => { this.error(error) });
+              } else {
+                this.homey.flow.getDeviceTriggerCard('triggerPlusInputExternal5Off').trigger(this, {}, {}).catch(error => { this.error(error) });
+              }
+            }
+          } else {
+            this.addCapability('input_external_5');
+          }
+        }
       }
 
       // ACTION EVENTS (for GEN2 cloud devices only)
@@ -1672,7 +1793,7 @@ class ShellyDevice extends Homey.Device {
                   if (typeof value === 'number') { // external inputs of type analog
                     this.parseCapabilityUpdate(input+"_analog", value, 0);
                   } else {
-                    if (channel === 100 || channel === 101 || channel === 102 || channel === 103) { // external inputs of type switch or button
+                    if (channel === 100 || channel === 101 || channel === 102 || channel === 103 || channel === 104) { // external inputs of type switch or button
                       this.parseCapabilityUpdate(input, value, 0);
                     } else if (channel === 0 || this.hasCapability('input_2')) { // if channel is 0 or device is not a multichannel device in Homey we need to hard set channel to 0 to update the capability of this device
                       this.parseCapabilityUpdate(input, value, 0);
@@ -2201,6 +2322,28 @@ class ShellyDevice extends Homey.Device {
             }
           }
           break;
+        case 'input103':
+          if (value != this.getCapabilityValue('input_external_4')) {
+            this.updateCapabilityValue('input_external_4', value, 0);
+            this.homey.flow.getDeviceTriggerCard('triggerPlusInputExternal4Changed').trigger(this, {}, {}).catch(error => { this.error(error) });
+            if (value) {
+              this.homey.flow.getDeviceTriggerCard('triggerPlusInputExternal4On').trigger(this, {}, {}).catch(error => { this.error(error) });
+            } else {
+              this.homey.flow.getDeviceTriggerCard('triggerPlusInputExternal4Off').trigger(this, {}, {}).catch(error => { this.error(error) });
+            }
+          }
+          break;
+        case 'input104':
+          if (value != this.getCapabilityValue('input_external_5')) {
+            this.updateCapabilityValue('input_external_5', value, 0);
+            this.homey.flow.getDeviceTriggerCard('triggerPlusInputExternal5Changed').trigger(this, {}, {}).catch(error => { this.error(error) });
+            if (value) {
+              this.homey.flow.getDeviceTriggerCard('triggerPlusInputExternal5On').trigger(this, {}, {}).catch(error => { this.error(error) });
+            } else {
+              this.homey.flow.getDeviceTriggerCard('triggerPlusInputExternal5Off').trigger(this, {}, {}).catch(error => { this.error(error) });
+            }
+          }
+          break;
         case 'input100_analog':
           if (value != this.getCapabilityValue('input_analog_external_1')) {
             this.updateCapabilityValue('input_analog_external_1', value, 0);
@@ -2217,6 +2360,18 @@ class ShellyDevice extends Homey.Device {
           if (value != this.getCapabilityValue('input_analog_external_3')) {
             this.updateCapabilityValue('input_analog_external_3', value, 0);
             this.homey.flow.getDeviceTriggerCard('triggerPlusInputAnalogExternal3Changed').trigger(this, {'percentage': value}, {}).catch(error => { this.error(error) });
+          }
+          break;
+        case 'input103_analog':
+          if (value != this.getCapabilityValue('input_analog_external_4')) {
+            this.updateCapabilityValue('input_analog_external_4', value, 0);
+            this.homey.flow.getDeviceTriggerCard('triggerPlusInputAnalogExternal4Changed').trigger(this, {'percentage': value}, {}).catch(error => { this.error(error) });
+          }
+          break;
+        case 'input104_analog':
+          if (value != this.getCapabilityValue('input_analog_external_5')) {
+            this.updateCapabilityValue('input_analog_external_5', value, 0);
+            this.homey.flow.getDeviceTriggerCard('triggerPlusInputAnalogExternal5Changed').trigger(this, {'percentage': value}, {}).catch(error => { this.error(error) });
           }
           break;
         case 'humidity':

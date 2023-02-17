@@ -619,5 +619,8 @@
   },
   "3.17.2": {
     "en": "This release spreads the polling of devices a bit more as some Homeys seem to struggle with polling a lot of devices resulting in network errors. It also replaces an advanced setting for disabling CoAP with disabling polling. Changing this settings is not recommended and should only be used as a last resort."
+  },
+  "3.17.3": {
+    "en": "This release adds the missing sensors for the gen2 Shelly AddOn module. It also fixes the pairing of a Shelly Plus 2PM in cover mode and adds a dim slider for the white level on the RGBW2. "
   }
 }

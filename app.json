@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.17.2",
+  "version": "3.17.3",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -389,6 +389,72 @@
               "nl": "Selecteer Shelly"
             },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_humidity.3"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "triggerHumidity4",
+        "title": {
+          "en": "Humidity Sensor 4 has changed",
+          "nl": "Vochtsensor 4 is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "humidity",
+            "type": "number",
+            "title": {
+              "en": "Humidity",
+              "nl": "Vocht"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_humidity.4"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "triggerHumidity5",
+        "title": {
+          "en": "Humidity Sensor 5 has changed",
+          "nl": "Vochtsensor 5 is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "humidity",
+            "type": "number",
+            "title": {
+              "en": "Humidity",
+              "nl": "Vocht"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_humidity.5"
           }
         ],
         "platforms": [
@@ -903,6 +969,72 @@
         ]
       },
       {
+        "id": "triggerPlusInputAnalogExternal4Changed",
+        "title": {
+          "en": "External analog input 4 changed",
+          "nl": "Externe analoge input 4 gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "percentage",
+            "type": "number",
+            "title": {
+              "en": "Percentage",
+              "nl": "Percentage"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=input_analog_external_4"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "triggerPlusInputAnalogExternal5Changed",
+        "title": {
+          "en": "External analog input 5 changed",
+          "nl": "Externe analoge input 5 gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "percentage",
+            "type": "number",
+            "title": {
+              "en": "Percentage",
+              "nl": "Percentage"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=input_analog_external_5"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
         "id": "triggerPlusInputExternal1Changed",
         "title": {
           "en": "External input 1 changed",
@@ -1101,6 +1233,138 @@
         ]
       },
       {
+        "id": "triggerPlusInputExternal4Changed",
+        "title": {
+          "en": "External input 4 changed",
+          "nl": "Externe input 4 gewijzigd"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_4"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "triggerPlusInputExternal4Off",
+        "title": {
+          "en": "External input 4 turned off",
+          "nl": "Externe input 4 uitgezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_4"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "triggerPlusInputExternal4On",
+        "title": {
+          "en": "External input 4 turned on",
+          "nl": "Externe input 4 aangezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_4"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "triggerPlusInputExternal5Changed",
+        "title": {
+          "en": "External input 5 changed",
+          "nl": "Externe input 5 gewijzigd"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_5"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "triggerPlusInputExternal5Off",
+        "title": {
+          "en": "External input 5 turned off",
+          "nl": "Externe input 5 uitgezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_5"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "triggerPlusInputExternal5On",
+        "title": {
+          "en": "External input 5 turned on",
+          "nl": "Externe input 5 aangezet"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_5"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
         "id": "triggerTemperature1",
         "title": {
           "en": "Temperature Sensor 1 has changed",
@@ -1192,6 +1456,72 @@
               "nl": "Selecteer Shelly"
             },
             "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1_cloud|shelly1L|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shellyair|shellyuni|shellyuni_cloud&capabilities=measure_temperature.3"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "triggerTemperature4",
+        "title": {
+          "en": "Temperature Sensor 4 has changed",
+          "nl": "Temperatuursensor 4 is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_temperature.4"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
+        "id": "triggerTemperature5",
+        "title": {
+          "en": "Temperature Sensor 5 has changed",
+          "nl": "Temperatuursensor 5 is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "temperature",
+            "type": "number",
+            "title": {
+              "en": "Temperature",
+              "nl": "Temperatuur"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_temperature.5"
           }
         ],
         "platforms": [
@@ -7995,6 +8325,46 @@
       },
       "icon": "/assets/input_switch.svg"
     },
+    "input_analog_external_4": {
+      "type": "boolean",
+      "title": {
+        "en": "State of External Analog Input 4",
+        "nl": "Status van externe analoge input 4"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleFalse": {
+        "en": "External analog input 4 turned off",
+        "nl": "Externe analoge input 4 uitgeschakeld"
+      },
+      "insightsTitleTrue": {
+        "en": "External analog input 4 turned on",
+        "nl": "Externe analoge input 4 ingeschakeld"
+      },
+      "icon": "/assets/input_switch.svg"
+    },
+    "input_analog_external_5": {
+      "type": "boolean",
+      "title": {
+        "en": "State of External Analog Input 5",
+        "nl": "Status van externe analoge input 5"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleFalse": {
+        "en": "External analog input 5 turned off",
+        "nl": "Externe analoge input 5 uitgeschakeld"
+      },
+      "insightsTitleTrue": {
+        "en": "External analog input 5 turned on",
+        "nl": "Externe analoge input 5 ingeschakeld"
+      },
+      "icon": "/assets/input_switch.svg"
+    },
     "input_external": {
       "type": "boolean",
       "title": {
@@ -8072,6 +8442,46 @@
       "insightsTitleTrue": {
         "en": "External input 3 turned on",
         "nl": "Externe input 3 ingeschakeld"
+      },
+      "icon": "/assets/input_switch.svg"
+    },
+    "input_external_4": {
+      "type": "boolean",
+      "title": {
+        "en": "State of External Input 4",
+        "nl": "Status van externe input 4"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleFalse": {
+        "en": "External input 4 turned off",
+        "nl": "Externe input 4 uitgeschakeld"
+      },
+      "insightsTitleTrue": {
+        "en": "External input 4 turned on",
+        "nl": "Externe input 4 ingeschakeld"
+      },
+      "icon": "/assets/input_switch.svg"
+    },
+    "input_external_5": {
+      "type": "boolean",
+      "title": {
+        "en": "State of External Input 5",
+        "nl": "Status van externe input 5"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleFalse": {
+        "en": "External input 5 turned off",
+        "nl": "Externe input 5 uitgeschakeld"
+      },
+      "insightsTitleTrue": {
+        "en": "External input 5 turned on",
+        "nl": "Externe input 5 ingeschakeld"
       },
       "icon": "/assets/input_switch.svg"
     },
