@@ -622,5 +622,8 @@
   },
   "3.17.3": {
     "en": "This release adds the missing sensors for the gen2 Shelly AddOn module. It also fixes the pairing of a Shelly Plus 2PM in cover mode and adds a dim slider for the white level on the RGBW2. "
+  },
+  "3.17.4": {
+    "en": "This release adds the missing sensors for the gen2 Shelly AddOn module. It also fixes the pairing of a Shelly Plus 2PM in cover mode and adds a dim slider for the white level on the RGBW2. As last it does not show devices as offline anymore after a certain amount a reconnects."
   }
 }
