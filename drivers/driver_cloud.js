@@ -67,10 +67,8 @@ class ShellyCloudDriver extends OAuth2Driver {
             }
 
             /* update device config if it's a gen2 roller shutter */
-            if (value._dev_info.gen === "G2" && (device_code === 'SNSW-002P16EU' || device_code === 'SPSW-002XE16EU' || device_code === 'SPSW-202XE16EU' || device_code === 'SPSW-002PE16EU' || device_code === 'SPSW-202PE16EU')) {
-              if (value.hasOwnProperty("cover:0")) {
-                device_config = this.util.getDeviceConfig(device_config.hostname[0] + 'roller-');
-              }
+            if (value._dev_info.gen === "G2" && value.hasOwnProperty("cover:0")) {
+              device_config = this.util.getDeviceConfig(device_config.hostname[0] + 'roller-');
             }
 
             device_config.communication = 'cloud';

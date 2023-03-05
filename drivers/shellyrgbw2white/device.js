@@ -17,6 +17,15 @@ class ShellyRGBW2WhiteDevice extends Device {
 
     this.bootSequence();
 
+    // REFRESHING DEVICE CONFIG AND REGISTERING DEVICE TRIGGER CARDS
+    this.homey.setTimeout(async () => {
+      try {
+        await this.updateDeviceConfig();
+      } catch (error) {
+        this.log(error);
+      }
+    }, 2000);
+
     // CAPABILITY LISTENERS
     this.registerCapabilityListener('onoff', async (value) => {
       const path = value ? '/white/'+ this.getStoreValue("channel") +'?turn=on' : '/white/'+ this.getStoreValue("channel") +'?turn=off';

@@ -14,7 +14,6 @@ class ShellyDriver extends Homey.Driver {
     const discoveryResults = discoveryStrategy.getDiscoveryResults();
     let selectedDeviceId;
     let deviceArray = {};
-    let deviceIcon = 'icon.svg';
 
     session.setHandler('list_devices', async (data) => {
       try {
@@ -142,7 +141,7 @@ class ShellyDriver extends Homey.Driver {
           if (auth) {
             session.showView('login_credentials');
           } else {
-            session.showView('add_device');
+            session.showView('icon_select');
           }
         }
       } catch (error) {
@@ -267,7 +266,7 @@ class ShellyDriver extends Homey.Driver {
     session.setHandler('save_icon', async (data) => {
       try {
         const result = await this.util.uploadIcon(data, selectedDeviceId);
-        deviceIcon = "../../../userdata/"+ selectedDeviceId +".svg";
+        deviceArray.icon = "../../../userdata/"+ selectedDeviceId +".svg";
         return Promise.resolve(true);
       } catch (error) {
         this.error(error);

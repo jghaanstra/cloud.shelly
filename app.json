@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.17.4",
+  "version": "3.18.3",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -2519,7 +2519,7 @@
             "name": "move_duration",
             "type": "number",
             "min": 0.1,
-            "max": 3600,
+            "max": 300,
             "step": 0.1,
             "title": {
               "en": "Duration in seconds",
@@ -2770,11 +2770,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -2797,6 +2794,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -2864,11 +2864,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -2891,6 +2888,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -2974,11 +2974,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -3001,6 +2998,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -3361,11 +3361,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -3388,6 +3385,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -3482,11 +3482,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -3509,6 +3506,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -3786,11 +3786,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -3813,6 +3810,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -3974,11 +3974,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -4001,6 +3998,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -4085,11 +4085,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -4112,6 +4109,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -4256,11 +4256,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -4283,6 +4280,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -4368,11 +4368,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -4395,6 +4392,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -4654,11 +4654,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -4681,6 +4678,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -4869,11 +4869,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -4896,6 +4893,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -5093,11 +5093,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -5120,6 +5117,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -5286,11 +5286,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -5313,6 +5310,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -5630,11 +5630,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -5657,6 +5654,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -5817,11 +5817,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -5844,6 +5841,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -6177,11 +6177,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -6204,6 +6201,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -6546,11 +6546,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -6573,6 +6570,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -6831,11 +6831,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -6858,6 +6855,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -7174,11 +7174,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -7201,6 +7198,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -7386,11 +7386,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -7413,6 +7410,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"
@@ -7754,11 +7754,8 @@
             "singular": true
           },
           "navigation": {
-            "next": "icon_select"
+            "next": "get_device"
           }
-        },
-        {
-          "id": "icon_select"
         },
         {
           "id": "get_device"
@@ -7781,6 +7778,9 @@
               "nl": "Wachtwoord"
             }
           }
+        },
+        {
+          "id": "icon_select"
         },
         {
           "id": "add_device"

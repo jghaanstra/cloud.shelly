@@ -15,6 +15,15 @@ class ShellyEmDevice extends Device {
     
     this.bootSequence();
 
+    // REFRESHING DEVICE CONFIG AND REGISTERING DEVICE TRIGGER CARDS
+    this.homey.setTimeout(async () => {
+      try {
+        await this.updateDeviceConfig();
+      } catch (error) {
+        this.log(error);
+      }
+    }, 2000);
+
     // CAPABILITY LISTENERS
     this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
 

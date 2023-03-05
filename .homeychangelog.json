@@ -625,5 +625,17 @@
   },
   "3.17.4": {
     "en": "This release adds the missing sensors for the gen2 Shelly AddOn module. It also fixes the pairing of a Shelly Plus 2PM in cover mode and adds a dim slider for the white level on the RGBW2. As last it does not show devices as offline anymore after a certain amount a reconnects."
+  },
+  "3.18.0": {
+    "en": "No functional changes but refactoring of the code that polls the devices for their status in an attempt to work around the issue where Homey shows devices as unreachable while they are online. "
+  },
+  "3.18.1": {
+    "en": "No functional changes but refactoring of the code that polls the devices for their status in an attempt to work around the issue where Homey shows devices as unreachable while they are online."
+  },
+  "3.18.2": {
+    "en": "No functional changes but refactoring of the code that polls the devices for their status in an attempt to work around the issue where Homey shows devices as unreachable while they are online."
+  },
+  "3.18.3": {
+    "en": "This release contains a fix for pairing a Shelly Plus 2PM in cover mode on Homey Cloud and a fix for setting a custom image which broke some releases ago. The biggest change however is the refactoring of the code that polls the devices for their status in an attempt to work around the issue where Homey shows devices as unreachable while they are online."
   }
 }

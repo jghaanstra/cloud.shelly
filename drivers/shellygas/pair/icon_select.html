@@ -19,13 +19,13 @@
   }
 
   $('#default-icon').click(function() {
-    Homey.nextView();
+    Homey.showView('add_device');
   });
 
   $('#save-icon').click(function() {
     Homey.emit('save_icon', imgBase64)
       .then(result => {
-        Homey.nextView();
+        Homey.showView('add_device');
       })
       .catch(error => {
         Homey.alert(error.message, 'error');
@@ -63,7 +63,9 @@
   }
   .buttons {
     position: absolute;
+    width: 90%;
     bottom: 0;
+    right: 10px;
     text-align: right;
   }
   .button:disabled {

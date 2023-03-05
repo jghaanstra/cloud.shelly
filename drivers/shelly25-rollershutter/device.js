@@ -20,6 +20,15 @@ class Shelly25RollerShutterDevice extends Device {
 
     this.bootSequence();
 
+    // REFRESHING DEVICE CONFIG AND REGISTERING DEVICE TRIGGER CARDS
+    this.homey.setTimeout(async () => {
+      try {
+        await this.updateDeviceConfig();
+      } catch (error) {
+        this.log(error);
+      }
+    }, 2000);
+
     // CAPABILITY LISTENERS
     this.registerCapabilityListener("windowcoverings_state", this.onCapabilityWindowcoveringsState.bind(this));
     this.registerCapabilityListener("windowcoverings_set", this.onCapabilityWindowcoveringsSet.bind(this));

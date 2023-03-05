@@ -29,12 +29,8 @@
         "singular": true
       },
       "navigation": {
-        "next": "icon_select"
+        "next": "get_device"
       }
-    },
-    {
-      "id": "icon_select",
-      "$template": "icon_select"
     },
     {
       "id": "get_device",
@@ -58,6 +54,10 @@
           "nl": "Wachtwoord"
         }
       }
+    },
+    {
+      "id": "icon_select",
+      "$template": "icon_select"
     },
     {
       "id": "add_device",
