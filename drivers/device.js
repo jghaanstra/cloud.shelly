@@ -517,8 +517,8 @@ class ShellyDevice extends Homey.Device {
         const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
         const shellies = this.homey.app.getShellyCollection();
         const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
-        const device = shelly[0].device;
-        if (device) {
+        if (shelly.length > 0) {
+          const device = shelly[0].device;
           if (device.hasCapability(capability)) {
             if (value !== device.getCapabilityValue(capability) && value !== null && value !== 'null' && value !== 'undefined' && value !== undefined) {
               await device.setCapabilityValue(capability, value);
@@ -530,7 +530,7 @@ class ShellyDevice extends Homey.Device {
         }
       }
     } catch (error) {
-      this.error('Trying to update capability', capability, 'with value', value, 'for (a channel of the) device', this.getData().id);
+      this.error('Trying to update capability', capability, 'with value', value, 'for channel', channel, 'of device', this.getData().id), 'with ip address', this.getSetting('address');
       this.error(error);
     }
   }
@@ -682,16 +682,20 @@ class ShellyDevice extends Homey.Device {
 
           /* meter_power.total */
           if (result.emeters.hasOwnProperty("total_power") && this.hasCapability('meter_power.total')) {
+            if (this.getCapabilityValue('meter_power.total') !== result.emeters.total_power) {
+              this.homey.flow.getDeviceTriggerCard('triggerMeterPowerTotal').trigger(this, {'power': result.emeters.total_power}, {}).catch(error => { this.error(error) });
+            }
             this.updateCapabilityValue('meter_power.total', result.emeters.total_power);
-            this.homey.flow.getDeviceTriggerCard('triggerMeterPowerTotal').trigger(this, {'power': result.emeters.total_power}, {}).catch(error => { this.error(error) });
           }
 
           /* meter_power_returned */
           if (result.emeters[channel].hasOwnProperty("total_returned") && this.hasCapability('meter_power_returned')) {
             let meter_power_returned = result.emeters[channel].total_returned / 1000;
             let meter_power_returned_rounded = Number(meter_power_returned.toFixed(3));
+            if (this.getCapabilityValue('meter_power_returned') !== meter_power_returned_rounded) {
+              this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned').trigger(this, {'energy': meter_power_returned_rounded}, {}).catch(error => { this.error(error) });
+            }
             this.updateCapabilityValue('meter_power_returned', meter_power_returned_rounded);
-            this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned').trigger(this, {'energy': meter_power_returned_rounded}, {}).catch(error => { this.error(error) });
           }
 
           /* power factor */
@@ -716,6 +720,9 @@ class ShellyDevice extends Homey.Device {
 
       // TOTAL_POWER (measure_power.total)
       if (result.hasOwnProperty("total_power") && this.hasCapability('measure_power.total')) {
+        if (this.getCapabilityValue('meter_power.total') !== result.total_power) {
+          this.homey.flow.getDeviceTriggerCard('triggerMeterPowerTotal').trigger(this, {'power': result.total_power}, {}).catch(error => { this.error(error) });
+        }
         this.updateCapabilityValue('measure_power.total', result.total_power);
       }
 
@@ -1354,7 +1361,11 @@ class ShellyDevice extends Homey.Device {
 
         /* meter_power.total */
         if (this.getStoreValue('channel') === 0) {
-          this.updateCapabilityValue('meter_power.total', result["emdata:0"].total_act, 0);
+          const meter_power_total = result["emdata:0"].total_act / 1000;
+          if (this.getCapabilityValue('meter_power.total') !== meter_power_total) {
+            this.updateCapabilityValue('meter_power.total', meter_power_total, 0);
+            this.homey.flow.getDeviceTriggerCard('triggerMeterPowerTotal').trigger(this, {'power': meter_power_total}, {}).catch(error => { this.error(error) });
+          }
         }
 
         /* meter_power.returned */
@@ -1364,7 +1375,11 @@ class ShellyDevice extends Homey.Device {
 
         /* meter_power.total_consumed */
         if (this.getStoreValue('channel') === 0) {
-          this.updateCapabilityValue('meter_power.total_returned', result["emdata:0"].total_act_ret, 0);
+          const meter_power_total_returned = result["emdata:0"].total_act_ret / 1000;
+          if (this.getCapabilityValue('meter_power.total_returned') !== meter_power_total_returned) {
+            this.updateCapabilityValue('meter_power.total_returned', meter_power_total_returned, 0);
+            this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned').trigger(this, {'energy': meter_power_total_returned}, {}).catch(error => { this.error(error) });
+          }
         }
 
       }
@@ -1973,7 +1988,10 @@ class ShellyDevice extends Homey.Device {
         case 'total_act':
           if (this.getStoreValue('channel') === 0) {
             const meter_power_total_act = value / 1000;
-            this.updateCapabilityValue('meter_power.total', meter_power_total_act, 0);
+            if (this.getCapabilityValue('meter_power.total') !== meter_power_total_act) {
+              this.updateCapabilityValue('meter_power.total', meter_power_total_act, 0);
+              this.homey.flow.getDeviceTriggerCard('triggerMeterPowerTotal').trigger(this, {'power': meter_power_total_act}, {}).catch(error => { this.error(error) });
+            }
           }
           break;
         case 'energyReturned0':
@@ -2001,7 +2019,10 @@ class ShellyDevice extends Homey.Device {
         case 'total_act_ret':
           if (this.getStoreValue('channel') === 0) {
             const meter_power_total_returned = value / 1000;
-            this.updateCapabilityValue('meter_power.total_returned', meter_power_total_returned, 0);
+            if (this.getCapabilityValue('meter_power.total_returned') !== meter_power_total_returned) {
+              this.updateCapabilityValue('meter_power.total_returned', meter_power_total_returned, 0);
+              this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned').trigger(this, {'energy': meter_power_total_returned}, {}).catch(error => { this.error(error) });
+            }
           }
           break;
         case 'powerFactor0':

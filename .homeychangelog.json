@@ -637,5 +637,8 @@
   },
   "3.18.3": {
     "en": "This release contains a fix for pairing a Shelly Plus 2PM in cover mode on Homey Cloud and a fix for setting a custom image which broke some releases ago. The biggest change however is the refactoring of the code that polls the devices for their status in an attempt to work around the issue where Homey shows devices as unreachable while they are online."
+  },
+  "3.18.4": {
+    "en": "This release fixes the the following issues. Fix for Total Power trigger card for 3EM on Homey Cloud. Fix setting roller shutter for x seconds action card on Homey Cloud. And a fix for total power and total power returned displayed in Wh instead of kWh."
   }
 }

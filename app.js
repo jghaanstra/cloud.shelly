@@ -336,10 +336,12 @@ class ShellyApp extends OAuth2App {
               args.device.setStoreValue('last_action', 'up');
               args.device.updateCapabilityValue('windowcoverings_state','up');
               var gen2_method = 'Cover.Open';
+              var cloud_direction = 'up';
             } else if (args.direction == 'close') {
               args.device.setStoreValue('last_action', 'down');
               args.device.updateCapabilityValue('windowcoverings_state','down');
               var gen2_method = 'Cover.Close';
+              var cloud_direction = 'down';
             }
             switch(args.device.getStoreValue('communication')) {
               case 'coap': {
@@ -349,7 +351,7 @@ class ShellyApp extends OAuth2App {
                 return await this.util.sendRPCCommand('/rpc/'+ gen2_method +'?id='+ args.device.getStoreValue('channel') +'&duration='+ args.move_duration, args.device.getSetting('address'), args.device.getSetting('password'));
               }
               case 'cloud': {
-                return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'roller', command_param: 'go', command_value: args.direction, timer_param: 'duration', timer: args.move_duration, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
+                return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'roller', command_param: 'go', command_value: cloud_direction, timer_param: 'duration', timer: args.move_duration, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
               }
             }
           } catch (error) {
