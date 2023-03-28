@@ -1,7 +1,7 @@
 {
   "name": {
-    "en": "Shelly Device",
-    "nl": "Shelly apparaat"
+    "en": "Any Shelly Device",
+    "nl": "Elk Shelly apparaat"
   },
   "images": {
     "small": "./assets/drivers/shelly/images/small.jpg",

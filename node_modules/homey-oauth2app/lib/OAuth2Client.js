@@ -618,9 +618,6 @@ class OAuth2Client extends EventEmitter {
       method: 'POST',
     });
     if (!response.ok) {
-      this._token = null;
-      this.emit('expired');
-      this.save();
       return this.onHandleRefreshTokenError({ response });
     }
 

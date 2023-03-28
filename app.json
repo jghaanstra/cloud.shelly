@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.18.4",
+  "version": "3.18.5",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -2742,8 +2742,8 @@
   "drivers": [
     {
       "name": {
-        "en": "Shelly Device",
-        "nl": "Shelly apparaat"
+        "en": "Any Shelly Device",
+        "nl": "Elk Shelly apparaat"
       },
       "images": {
         "small": "./assets/drivers/shelly/images/small.jpg",
@@ -5033,8 +5033,8 @@
     },
     {
       "name": {
-        "en": "Shelly Cloud Device",
-        "nl": "Shelly Cloud apparaat"
+        "en": "Any Shelly Cloud Device",
+        "nl": "Elk Shelly Cloud apparaat"
       },
       "images": {
         "small": "./assets/drivers/shelly/images/small.jpg",

@@ -1,7 +1,7 @@
 {
   "name": {
-    "en": "Shelly Cloud Device",
-    "nl": "Shelly Cloud apparaat"
+    "en": "Any Shelly Cloud Device",
+    "nl": "Elk Shelly Cloud apparaat"
   },
   "images": {
     "small": "./assets/drivers/shelly/images/small.jpg",

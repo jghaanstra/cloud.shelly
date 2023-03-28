@@ -719,11 +719,11 @@ class ShellyDevice extends Homey.Device {
       }
 
       // TOTAL_POWER (measure_power.total)
-      if (result.hasOwnProperty("total_power") && this.hasCapability('measure_power.total')) {
+      if (result.hasOwnProperty("total_power") && this.hasCapability('meter_power.total')) {
         if (this.getCapabilityValue('meter_power.total') !== result.total_power) {
+          this.updateCapabilityValue('measure_power.total', result.total_power);
           this.homey.flow.getDeviceTriggerCard('triggerMeterPowerTotal').trigger(this, {'power': result.total_power}, {}).catch(error => { this.error(error) });
         }
-        this.updateCapabilityValue('measure_power.total', result.total_power);
       }
 
       // BAT (measure_battery, measure_voltage)

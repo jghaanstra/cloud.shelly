@@ -640,5 +640,8 @@
   },
   "3.18.4": {
     "en": "This release fixes the the following issues. Fix for Total Power trigger card for 3EM on Homey Cloud. Fix setting roller shutter for x seconds action card on Homey Cloud. And a fix for total power and total power returned displayed in Wh instead of kWh."
+  },
+  "3.18.5": {
+    "en": "This release fixes an issue with the total power capability of 3EM not updating on Homey Cloud. It also includes some framework updates for fixes security vulnerabilities."
   }
 }
