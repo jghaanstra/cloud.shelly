@@ -1,8 +1,7 @@
 {
-  "id": "triggerMeterPowerReturned",
   "title": {
-    "en": "Returned Energy changed",
-    "nl": "Geretourneerde energie gewijzigd"
+    "en": "Total Returned Energy changed",
+    "nl": "Totaal geretourneerde energie gewijzigd"
   },
   "tokens": [
     {
@@ -23,7 +22,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly|shelly_cloud|shellyem|shellyem_cloud|shelly3em|shelly3em_cloud&capabilities=meter_power_returned|meter_power.returned"
+      "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power.total_returned"
     }
   ],
   "platforms": ["local", "cloud"]

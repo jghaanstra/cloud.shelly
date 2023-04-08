@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.18.5",
+  "version": "3.18.6",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -771,6 +771,39 @@
         ]
       },
       {
+        "id": "triggerMeasurePowerTotal",
+        "title": {
+          "en": "Total Power changed",
+          "nl": "Totale power gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "power",
+            "type": "number",
+            "title": {
+              "en": "Wh",
+              "nl": "Wh"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_power.total"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ]
+      },
+      {
         "id": "triggerMeterPowerFactor",
         "title": {
           "en": "Reactive power changed",
@@ -806,16 +839,16 @@
       {
         "id": "triggerMeterPowerReturned",
         "title": {
-          "en": "Total Returned Energy changed",
-          "nl": "Totaal geretourneerde energie gewijzigd"
+          "en": "Returned Energy changed",
+          "nl": "Geretourneerde energie gewijzigd"
         },
         "tokens": [
           {
             "name": "energy",
             "type": "number",
             "title": {
-              "en": "Wh",
-              "nl": "Wh"
+              "en": "kWh",
+              "nl": "kWh"
             },
             "example": 5
           }
@@ -828,7 +861,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shellyem|shellyem_cloud|shelly3em|shelly3em_cloud&capabilities=meter_power_returned|meter_power.total_returned"
+            "filter": "driver_id=shelly|shelly_cloud|shellyem|shellyem_cloud|shelly3em|shelly3em_cloud&capabilities=meter_power_returned|meter_power.returned"
           }
         ],
         "platforms": [
@@ -837,18 +870,51 @@
         ]
       },
       {
-        "id": "triggerMeterPowerTotal",
         "title": {
-          "en": "Total Power changed",
-          "nl": "Totale power gewijzigd"
+          "en": "Total Returned Energy changed",
+          "nl": "Totaal geretourneerde energie gewijzigd"
         },
         "tokens": [
           {
-            "name": "power",
+            "name": "energy",
             "type": "number",
             "title": {
-              "en": "Wh",
-              "nl": "Wh"
+              "en": "kWh",
+              "nl": "kWh"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power.total_returned"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "triggerMeterPowerReturnedTotal"
+      },
+      {
+        "id": "triggerMeterPowerTotal",
+        "title": {
+          "en": "Total Energy changed",
+          "nl": "Totale energie gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "energy",
+            "type": "number",
+            "title": {
+              "en": "kWh",
+              "nl": "kWh"
             },
             "example": 5
           }

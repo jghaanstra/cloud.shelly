@@ -1,16 +1,16 @@
 {
-  "id": "triggerMeterPowerTotal",
+  "id": "triggerMeasurePowerTotal",
   "title": {
-    "en": "Total Energy changed",
-    "nl": "Totale energie gewijzigd"
+    "en": "Total Power changed",
+    "nl": "Totale power gewijzigd"
   },
   "tokens": [
     {
-      "name": "energy",
+      "name": "power",
       "type": "number",
       "title": {
-        "en": "kWh",
-        "nl": "kWh"
+        "en": "Wh",
+        "nl": "Wh"
       },
       "example": 5
     }
@@ -23,7 +23,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power.total"
+      "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_power.total"
     }
   ],
   "platforms": ["local", "cloud"]

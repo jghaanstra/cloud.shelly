@@ -730,6 +730,7 @@ class ShellyApp extends OAuth2App {
 
         this.ws.on('error', (error) => {
           this.error('Cloud websocket error:', error.message);
+          this.error(error);
         });
 
         this.ws.on('close', (code, reason) => {
