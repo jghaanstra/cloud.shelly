@@ -39,9 +39,9 @@ class ShellyCloudDriver extends OAuth2Driver {
           if (value._dev_info.online) { // we only want to pair online devices to avoid users complaining about unreachable devices
             var device_code = value._dev_info.code; // get the device code
             if (value._dev_info.gen === "G1") { // get the IP address to allow device identification in the pairing wizard, it's location depends on device generation
-              var device_ip = value.wifi_sta.ip;
+              var device_ip = value.wifi_sta.ip || "";
             } else if (value._dev_info.gen === "G2") {
-              var device_ip = value.wifi.sta_ip;
+              var device_ip = value.wifi.sta_ip || "";
             }
 
             /* get device config based on device type of the discovered devices */

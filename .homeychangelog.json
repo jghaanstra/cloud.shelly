@@ -646,5 +646,8 @@
   },
   "3.18.6": {
     "en": "This release contains a fix for inconsistent measure and meter power capabilities on the Shelly 3EM and Shelly Pro 3EM. This fix requires you to re-pair the device if you are affected by this bug."
+  },
+  "3.18.7": {
+    "en": "This release fixes inconsistent measure and meter power capabilities on the Shelly 3EM. This fix requires you to re-pair the device if you are affected by this bug. It also changes the device class of the TRV from heater to themostat, flows depending on the device class will need to be updated."
   }
 }
