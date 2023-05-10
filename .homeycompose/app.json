@@ -68,7 +68,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.18.7",
+  "version": "3.19.0",
   "compatibility": ">=8.0.0",
   "platforms": [ "local", "cloud" ],
   "author": {
@@ -111,6 +111,9 @@
   "dependencies": {
     "net": "*"
   },
+  "permissions": [
+    "homey:wireless:ble"
+  ],
   "api": {
     "updateSettings": {
       "method": "put",

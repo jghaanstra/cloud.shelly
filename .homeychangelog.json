@@ -649,5 +649,8 @@
   },
   "3.18.7": {
     "en": "This release fixes inconsistent measure and meter power capabilities on the Shelly 3EM. This fix requires you to re-pair the device if you are affected by this bug. It also changes the device class of the TRV from heater to themostat, flows depending on the device class will need to be updated."
+  },
+  "3.19.0": {
+    "en": "This release adds support for Shelly Blu Button 1 and Shelly Blu DW on Homey Cloud and Homey Pro. Read the instructions on the forum on how to pair. The release also removes the deprecated drivers for Homey Cloud of battery operated devices. If you havent already you will need to re-pair them using the new generic driver."
   }
 }

@@ -28,6 +28,9 @@ class ShellyDevice extends Homey.Device {
       this.registerCapabilityListener("valve_mode", this.onCapabilityValveMode.bind(this));
       this.registerCapabilityListener("target_temperature", this.onCapabilityTargetTemperature.bind(this));
 
+      this.registerCapabilityListener("button.enable_ble_script", this.onMaintenanceEnableBLEPRoxy.bind(this));
+      this.registerCapabilityListener("button.disable_ble_script", this.onMaintenanceDisableBLEPRoxy.bind(this));
+
       // BOOT SEQUENCE
       this.bootSequence();
 
@@ -42,6 +45,7 @@ class ShellyDevice extends Homey.Device {
           this.log(error);
         }
       }, 2000);
+
     } catch (error) {
       this.error(error);
     }
@@ -493,6 +497,32 @@ class ShellyDevice extends Homey.Device {
         }
         default:
           break;
+      }
+    } catch (error) {
+      this.error(error);
+    }
+  }
+
+  // MAINTENANCE LISTENERS
+
+  /* enableBLEProxy */
+  async onMaintenanceEnableBLEPRoxy() {
+    try {
+      const scriptID = await this.util.enableBLEProxy(this.getStoreValue('ble_script_id'), this.getSetting('address'), this.getSetting('password'));
+      return await this.setStoreValue('ble_script_id', scriptID);
+    } catch (error) {
+      this.error(error);
+    }
+  }
+
+  /* disableBLEProxy */
+  async onMaintenanceDisableBLEPRoxy() {
+    try {
+      if (this.getStoreValue('ble_script_id')) {
+        await this.util.disableBLEProxy(this.getStoreValue('ble_script_id'), this.getSetting('address'), this.getSetting('password'));
+        return await this.setStoreValue('ble_script_id', 0);
+      } else {
+        this.error('Script not found');
       }
     } catch (error) {
       this.error(error);
@@ -1747,7 +1777,7 @@ class ShellyDevice extends Homey.Device {
             if (channel === 0 && this.hasCapability('input_2')) {
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action_event_1}, {"id": this.getData().id, "device": this.getName(), "action": action_event_1}).catch(error => { this.error(error) });
             } else {
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', 'gen2')}, {"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(result["v_eve:0"].ev, this.getStoreValue('communication'), this.getStoreValue('gen'))}).catch(error => { this.error(error) });
+              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', 'gen2')}, {"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', 'gen2')}).catch(error => { this.error(error) });
             }
           }
         }
@@ -1764,7 +1794,7 @@ class ShellyDevice extends Homey.Device {
               const shellies = this.homey.app.getShellyCollection();
               const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
               const device = shelly[0].device;
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:1"].ev, 'cloud', 'gen2')}, {"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:1"].ev, this.getStoreValue('communication'), this.getStoreValue('gen'))}).catch(error => { this.error(error) });
+              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:1"].ev, 'cloud', 'gen2')}, {"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:1"].ev, 'cloud', 'gen2')}).catch(error => { this.error(error) });
             }
           }
         }
@@ -1781,7 +1811,7 @@ class ShellyDevice extends Homey.Device {
               const shellies = this.homey.app.getShellyCollection();
               const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
               const device = shelly[0].device;
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:2"].ev, 'cloud', 'gen2')}, {"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:2"].ev, this.getStoreValue('communication'), this.getStoreValue('gen'))}).catch(error => { this.error(error) });
+              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:2"].ev, 'cloud', 'gen2')}, {"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:2"].ev, 'cloud', 'gen2')}).catch(error => { this.error(error) });
             }
           }
         }
@@ -1798,7 +1828,7 @@ class ShellyDevice extends Homey.Device {
               const shellies = this.homey.app.getShellyCollection();
               const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
               const device = shelly[0].device;
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:3"].ev, 'cloud', 'gen2')}, {"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:3"].ev, this.getStoreValue('communication'), this.getStoreValue('gen'))}).catch(error => { this.error(error) });
+              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:3"].ev, 'cloud', 'gen2')}, {"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:3"].ev, 'cloud', 'gen2')}).catch(error => { this.error(error) });
             }
           }
         }
@@ -1850,11 +1880,7 @@ class ShellyDevice extends Homey.Device {
             for (const [capability, value] of Object.entries(element)) {
               if (capability === 'errors') { /* handle device errors */
                 value.forEach((element) => {
-                  const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
-                  const shellies = this.homey.app.getShellyCollection();
-                  const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
-                  const device = shelly[0].device;
-                  this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": this.homey.__(element)}).catch(error => { this.error(error) });
+                  this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": this.homey.__(element)}).catch(error => { this.error(error) });
                 });
               } else if (capability !== 'component' && capability !== 'id' && capability !== 'source' && capability !== 'type') {
 
@@ -2552,10 +2578,14 @@ class ShellyDevice extends Homey.Device {
   async updateDeviceConfig() {
     try {
 
-      /* device specific updates */
-      // TODO: remove after the next release
-      if (this.getStoreValue('type') === 'SHTRV-01' && this.getClass() === 'heater') {
-        await this.setClass('thermostat');
+      /* update devices */
+
+      // TODO: remove after next big release
+      if (this.getStoreValue('gen') === 'gen2' && !this.getStoreValue('battery') && !this.hasCapability('button.enable_ble_script') && this.getStoreValue('channel') === 0) {
+        this.addCapability('button.enable_ble_script');
+        this.addCapability('button.disable_ble_script');
+        this.setCapabilityOptions('button.enable_ble_script', {"maintenanceAction": true, "title": {"en": "Start BLE Proxy", "nl": "Start BLE Proxy"}});
+        this.setCapabilityOptions('button.disable_ble_script', {"maintenanceAction": true, "title": {"en": "Stop BLE Proxy", "nl": "Stop BLE Proxy"}});
       }
 
       /* update device config */

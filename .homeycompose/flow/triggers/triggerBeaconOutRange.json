@@ -1,0 +1,18 @@
+{
+  "title": {
+    "en": "Beacon Out Of Range",
+    "nl": "Beacon buiten bereik"
+  },
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly_bluetooth&capabilities=beacon"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

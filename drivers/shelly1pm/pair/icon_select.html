@@ -19,13 +19,13 @@
   }
 
   $('#default-icon').click(function() {
-    Homey.showView('add_device');
+    Homey.nextView()
   });
 
   $('#save-icon').click(function() {
     Homey.emit('save_icon', imgBase64)
       .then(result => {
-        Homey.showView('add_device');
+        Homey.nextView()
       })
       .catch(error => {
         Homey.alert(error.message, 'error');

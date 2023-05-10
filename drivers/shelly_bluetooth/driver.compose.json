@@ -1,0 +1,44 @@
+{
+  "name": {
+    "en": "Any Shelly Bluetooth Device",
+    "nl": "Elk Shelly Bluetooth apparaat"
+  },
+  "images": {
+    "small": "./assets/drivers/shelly_bluetooth/images/small.jpg",
+    "large": "./assets/drivers/shelly_bluetooth/images/large.jpg"
+  },
+  "class": "other",
+  "capabilities": [
+    "rssi"
+  ],
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "pair": [
+    {
+      "id": "shelly_bluetooth",
+      "$template": "shelly_bluetooth",
+      "navigation": {
+        "next": "list_devices"
+      }
+    },
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "options": {
+        "singular": true
+      },
+      "navigation": {
+        "next": "icon_select"
+      }
+    },
+    {
+      "id": "icon_select",
+      "$template": "icon_select"
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ],
+  "platforms": [ "local" ],
+  "connectivity": [ "lan" ]
+}

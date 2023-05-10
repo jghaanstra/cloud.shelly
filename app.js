@@ -13,7 +13,7 @@ class ShellyApp extends OAuth2App {
   static OAUTH2_CLIENT = ShellyOAuth2Client;
   static OAUTH2_DEBUG = false;
   static OAUTH2_MULTI_SESSION = false;
-  static OAUTH2_DRIVERS = ['shelly_cloud', 'shelly-plug-s_cloud', 'shelly-plug_cloud', 'shelly1_cloud', 'shelly1l_cloud', 'shelly1pm_cloud', 'shelly2-rollershutter_cloud', 'shelly25-rollershutter_cloud', 'shelly25_cloud', 'shelly2_cloud', 'shelly3em_cloud', 'shelly4pro_cloud', 'shellyair_cloud', 'shellybulb_cloud', 'shellybutton1_cloud', 'shellydimmer_cloud', 'shellyduo_cloud', 'shellydw_cloud', 'shellyem_cloud', 'shellyflood_cloud', 'shellyht_cloud', 'shellyi3_cloud', 'shellymotion_cloud', 'shellyrgbw2color_cloud', 'shellyrgbw2white_cloud', 'shellysmoke_cloud', 'shellyuni_cloud', 'shellyvintage_cloud'];
+  static OAUTH2_DRIVERS = ['shelly_cloud', 'shelly-plug-s_cloud', 'shelly-plug_cloud', 'shelly1_cloud', 'shelly1l_cloud', 'shelly1pm_cloud', 'shelly2-rollershutter_cloud', 'shelly25-rollershutter_cloud', 'shelly25_cloud', 'shelly2_cloud', 'shelly3em_cloud', 'shellybulb_cloud', 'shellydimmer_cloud', 'shellyduo_cloud', 'shellyem_cloud', 'shellyi3_cloud', 'shellyrgbw2color_cloud', 'shellyrgbw2white_cloud', 'shellyuni_cloud', 'shellyvintage_cloud'];
 
   async onOAuth2Init() {
     try {
@@ -64,6 +64,19 @@ class ShellyApp extends OAuth2App {
           }
         }, 25000);
       }
+
+      // BLUETOOTH GEN2: LISTEN FOR BLE ADVERTISEMENTS
+      // TODO: This isnt actived as it works flaky due to Homey's Bluetoooth implementation
+      // if (this.homey.platform !== "cloud") {
+      //   this.homey.setTimeout(async () => {
+      //     let bluetooth = await this.util.getDeviceType('bluetooth');
+      //     if (bluetooth) {
+      //       this.bluetoothListener();
+      //     } else {
+      //       this.log('BLE listener not started as no Bluetooth devices have been paired ...');
+      //     }
+      //   }, 27000);
+      // }
   
       // GENERIC FLOWCARDS
       this.homey.flow.getTriggerCard('triggerDeviceOffline');
@@ -132,6 +145,15 @@ class ShellyApp extends OAuth2App {
         .registerRunListener(async (args) => {
           if (args.device) {
             return args.device.getCapabilityValue("input_4");
+          } else {
+            return false;
+          }
+        })
+
+      this.homey.flow.getConditionCard('conditionBeacon')
+        .registerRunListener(async (args) => {
+          if (args.device) {
+            return args.device.getCapabilityValue("beacon");
           } else {
             return false;
           }
@@ -607,36 +629,61 @@ class ShellyApp extends OAuth2App {
       if (this.wss === null) {
         this.wss = new WebSocket.Server({ port: 6113 });
         this.log('Websocket server for gen2 devices with outbound websockets started ...');
-        this.wss.on("connection", (wsserver, req) => {
+        this.wss.on("connection", async (wsserver, req) => {
 
-          wsserver.send('{"jsonrpc":"2.0", "id":1, "src":"wsserver-getdeviceinfo", "method":"Shelly.GetDeviceInfo"}');
+          wsserver.send('{"jsonrpc":"2.0", "id":1, "src":"wsserver-getdeviceinfo_onconnect", "method":"Shelly.GetDeviceInfo"}');
+          await this.util.sleep(1000);
+          wsserver.send('{"jsonrpc":"2.0", "id":1, "src":"wsserver-getfullstatus_onconnect", "method":"Shelly.GetStatus"}');
 
           wsserver.on("message", async (data) => {
             const result = JSON.parse(data);
-            if (result.hasOwnProperty('method')) {
-              const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src)).filter(shelly => shelly.channel === 0);
-              for (const filteredShellyWss of filteredShelliesWss) {
-                if (filteredShellyWss.device.getStoreValue('channel') === 0) { // only parse single status updates for channel 0 to avoid parsing the same updates for each channel on multichannel devices, the update will be assigned to the right channel later on
-                  if (result.hasOwnProperty("params")) {
-                    if (result.method === 'NotifyFullStatus') { // parse full status updates
-                      filteredShellyWss.device.parseFullStatusUpdateGen2(result.params);
-                      if (result.params.wifi.sta_ip !== null) { // update IP address if it does not match the device
-                        if (filteredShellyWss.device.getSetting('address') !== String(result.params.wifi.sta_ip)) {
-                          filteredShellyWss.device.setSettings({address: String(result.params.wifi.sta_ip)});
-                        }
-                      }
-                    } else if (result.method === 'NotifyStatus' || result.method === 'NotifyEvent') {
+            if (result.hasOwnProperty('method') && result.hasOwnProperty("params")) {
+              if (result.method === 'NotifyFullStatus') { // parse full status updates
+                const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src)).filter(shelly => shelly.channel === 0);
+                for (const filteredShellyWss of filteredShelliesWss) {
+                  filteredShellyWss.device.parseFullStatusUpdateGen2(result.params);
+                  if (result.params.wifi.sta_ip !== null) { // update IP address if it does not match the device
+                    if (filteredShellyWss.device.getSetting('address') !== String(result.params.wifi.sta_ip)) {
+                      filteredShellyWss.device.setSettings({address: String(result.params.wifi.sta_ip)});
+                    }
+                  }
+                }
+              } else if (result.method === 'NotifyStatus') { // parse single component updates
+                const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src)).filter(shelly => shelly.channel === 0);
+                for (const filteredShellyWss of filteredShelliesWss) {
+                  filteredShellyWss.device.parseSingleStatusUpdateGen2(result);
+                }
+              } else if (result.method === 'NotifyEvent') { // parse events not reflected in the status of a component including BLE Proxy events
+                for (const single_event of result.params.events) {
+                  if (single_event.event === 'NotifyBluetoothStatus') {
+                    const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(single_event.data.addr)).filter(shelly => shelly.channel === 0);
+                    for (const filteredShellyWss of filteredShelliesWss) {
+                      filteredShellyWss.device.parseBluetoothEvents(single_event.data);
+                    }
+                  } else {
+                    const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src)).filter(shelly => shelly.channel === 0);
+                    for (const filteredShellyWss of filteredShelliesWss) {
                       filteredShellyWss.device.parseSingleStatusUpdateGen2(result);
                     }
                   }
                 }
               }
-            } else if (result.dst === 'wsserver-getdeviceinfo') { // parse device info request after each (re)connect
+            } else if (result.dst === 'wsserver-wsserver-getdeviceinfo_onconnect') { // parse device info request after each (re)connect
               const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src));
               for (const filteredShellyWss of filteredShelliesWss) {
                 if (result.hasOwnProperty("result")) {
                   filteredShellyWss.device.setStoreValue('type', result.result.model);
                   filteredShellyWss.device.setStoreValue('fw_version', result.result.ver);
+                }
+              }
+            } else if (result.dst === 'wsserver-getfullstatus_onconnect') { // parse full initial status updates after each (re)connect
+              const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src)).filter(shelly => shelly.channel === 0);
+              for (const filteredShellyWss of filteredShelliesWss) {
+                filteredShellyWss.device.parseFullStatusUpdateGen2(result.result);
+                if (result.result.wifi.sta_ip !== null) { // update IP address if it does not match the device
+                  if (filteredShellyWss.device.getSetting('address') !== String(result.result.wifi.sta_ip)) {
+                    filteredShellyWss.device.setSettings({address: String(result.result.wifi.sta_ip)});
+                  }
                 }
               }
             }
@@ -697,13 +744,17 @@ class ShellyApp extends OAuth2App {
           try {
             const result = JSON.parse(data);
             if (result.event === 'Shelly:StatusOnChange') {
-              const ws_device_id = Number(result.device.id).toString(16);
+              if (result.device.gen !== 'GBLE') {
+                var ws_device_id = Number(result.device.id).toString(16);
+              } else {
+                var ws_device_id = result.device.id;
+              }
               const filteredShelliesWs = this.shellyDevices.filter(shelly => shelly.id.includes(ws_device_id));
               for (const filteredShellyWs of filteredShelliesWs) {
                 if (result.hasOwnProperty("status")) {
                   if (result.device.gen === 'G1') {
                     filteredShellyWs.device.parseFullStatusUpdateGen1(result.status);
-                  } else if (result.device.gen === 'G2') {
+                  } else if (result.device.gen === 'G2' || result.device.gen === 'GBLE') {
                     filteredShellyWs.device.parseFullStatusUpdateGen2(result.status);
                   }
                 }
@@ -777,6 +828,27 @@ class ShellyApp extends OAuth2App {
     }
   }
 
+  // BLUETOOTH: CONTINUOSLY LISTEN FOR BLE ADVERTISEMENTS
+  async bluetoothListener() {
+    try {
+      this.log('Bluetooth listener started ...');
+      clearTimeout(this.bleInterval);
+      this.bleInterval = this.homey.setInterval(async () => {
+        const advertisements = await this.homey.ble.discover().catch(this.error);
+        advertisements.forEach(advertisement => {
+          if (this.util.filterBLEDevices(advertisement.localName)) {
+            const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.includes(advertisement.address)).filter(shelly => shelly.channel === 0);
+            for (const filteredShellyWss of filteredShelliesWss) {
+              filteredShellyWss.device.parseBluetoothAdvertisement(advertisement);
+            }
+          }
+        });
+      }, 5000);
+    } catch (error) {
+      this.error(error);
+    }
+  }
+
   // COAP GEN1: (RE)START LISTENER
   async restartCoapListener() {
     try {
@@ -832,6 +904,20 @@ class ShellyApp extends OAuth2App {
     }
   }
 
+  // BLUETOOTH: STOP LISTENER IF NOT NEEDED
+  async bluetoothListenerClose() {
+    try {
+      const filteredShellies = this.shellyDevices.filter(shelly => shelly.communication.includes('bluetooth'));
+      if (filteredShellies.length === 0) {
+        this.log('Stopping BLE listener because there are no more Bluetooth devices paired');
+        this.homey.clearInterval(this.bleInterval);
+      }
+      return Promise.resolve(true);
+    } catch (error) {
+      this.error(error);
+    }
+  }
+
   // ALL: UPDATE COLLECTION OF DEVICES
   async updateShellyCollection() {
     try {
@@ -850,6 +936,7 @@ class ShellyApp extends OAuth2App {
   async onUninit() {
     try {
       this.homey.clearInterval(this.wsPingInterval);
+      this.homey.clearInterval(this.bleInterval);
       this.homey.clearTimeout(this.wsPingTimeout);
       this.homey.clearTimeout(this.wsReconnectTimeout);
       this.homey.clearTimeout(this.wssReconnectTimeout);

@@ -40,8 +40,13 @@ class ShellyCloudDriver extends OAuth2Driver {
             var device_code = value._dev_info.code; // get the device code
             if (value._dev_info.gen === "G1") { // get the IP address to allow device identification in the pairing wizard, it's location depends on device generation
               var device_ip = value.wifi_sta.ip || "";
+              var cloud_device_id = parseInt(String(key),16);
             } else if (value._dev_info.gen === "G2") {
               var device_ip = value.wifi.sta_ip || "";
+              var cloud_device_id = parseInt(String(key),16);
+            } else if (value._dev_info.gen === "GBLE") {
+              var device_ip = value._dev_info.id;
+              var cloud_device_id = value._dev_info.id;
             }
 
             /* get device config based on device type of the discovered devices */
@@ -86,7 +91,7 @@ class ShellyCloudDriver extends OAuth2Driver {
               },
               settings: {
                 cloud_server: cloud_server,
-                cloud_device_id: parseInt(String(key),16)
+                cloud_device_id: cloud_device_id
               },
               capabilities: device_config.capabilities_1,
               capabilitiesOptions: device_config.capability_options,

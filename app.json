@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.18.7",
+  "version": "3.19.0",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -115,6 +115,9 @@
   "dependencies": {
     "net": "*"
   },
+  "permissions": [
+    "homey:wireless:ble"
+  ],
   "api": {
     "updateSettings": {
       "method": "put",
@@ -124,6 +127,83 @@
   },
   "flow": {
     "triggers": [
+      {
+        "title": {
+          "en": "Beacon Changed",
+          "nl": "Beacon gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "status",
+            "type": "boolean",
+            "title": {
+              "en": "In Range",
+              "nl": "Binnen bereik"
+            },
+            "example": false
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly_bluetooth&capabilities=beacon"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "triggerBeaconChanged"
+      },
+      {
+        "title": {
+          "en": "Beacon In Range",
+          "nl": "Beacon binnen bereik"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly_bluetooth&capabilities=beacon"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "triggerBeaconInRange"
+      },
+      {
+        "title": {
+          "en": "Beacon Out Of Range",
+          "nl": "Beacon buiten bereik"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly_bluetooth&capabilities=beacon"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "triggerBeaconOutRange"
+      },
       {
         "id": "triggerCallbacks",
         "title": {
@@ -1620,7 +1700,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shellydw&capabilities=tilt"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_bluetooth|shellydw&capabilities=tilt"
           }
         ],
         "platforms": [
@@ -1662,6 +1742,28 @@
       }
     ],
     "conditions": [
+      {
+        "title": {
+          "en": "Beacon !{{is|isn't}} within range",
+          "nl": "Beacon !{{is|is niet}} binnen bereik"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly_bluetooth&capabilities=beacon"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "conditionBeacon"
+      },
       {
         "id": "conditionInput0",
         "title": {
@@ -2808,8 +2910,8 @@
   "drivers": [
     {
       "name": {
-        "en": "Any Shelly Device",
-        "nl": "Elk Shelly apparaat"
+        "en": "Any Shelly WiFi Device",
+        "nl": "Elk Shelly WiFi apparaat"
       },
       "images": {
         "small": "./assets/drivers/shelly/images/small.jpg",
@@ -5040,14 +5142,24 @@
       ]
     },
     {
-      "icon": "/drivers/shelly4pro_cloud/assets/icon.svg",
+      "name": {
+        "en": "Any Shelly Bluetooth Device",
+        "nl": "Elk Shelly Bluetooth apparaat"
+      },
+      "images": {
+        "small": "./assets/drivers/shelly_bluetooth/images/small.jpg",
+        "large": "./assets/drivers/shelly_bluetooth/images/large.jpg"
+      },
+      "class": "other",
+      "capabilities": [
+        "rssi"
+      ],
+      "icon": "/drivers/shelly_bluetooth/assets/icon.svg",
       "pair": [
         {
-          "id": "login_oauth2",
-          "template": "login_oauth2",
-          "options": {
-            "hint": "Log in with your Shelly account in the new window.",
-            "button": "Log In"
+          "id": "shelly_bluetooth",
+          "navigation": {
+            "next": "list_devices"
           }
         },
         {
@@ -5057,45 +5169,24 @@
             "singular": true
           },
           "navigation": {
-            "next": "add_device_cloud"
+            "next": "icon_select"
           }
         },
         {
-          "id": "add_device_cloud"
-        }
-      ],
-      "repair": [
+          "id": "icon_select"
+        },
         {
-          "id": "login_oauth2",
-          "template": "login_oauth2"
+          "id": "add_devices",
+          "template": "add_devices"
         }
       ],
       "platforms": [
-        "cloud"
+        "local"
       ],
       "connectivity": [
-        "cloud"
+        "lan"
       ],
-      "name": {
-        "en": "Shelly Pro 4(PM)",
-        "nl": "Shelly Pro 4(PM)"
-      },
-      "images": {
-        "large": "./assets/drivers/shelly4pro/images/large.jpg",
-        "small": "./assets/drivers/shelly4pro/images/small.jpg"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff",
-        "measure_power",
-        "meter_power",
-        "measure_voltage",
-        "input_1",
-        "measure_temperature",
-        "rssi"
-      ],
-      "deprecated": true,
-      "id": "shelly4pro_cloud"
+      "id": "shelly_bluetooth"
     },
     {
       "name": {
@@ -5272,75 +5363,6 @@
           ]
         }
       ]
-    },
-    {
-      "icon": "/drivers/shellyair_cloud/assets/icon.svg",
-      "pair": [
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2",
-          "options": {
-            "hint": "Log in with your Shelly account in the new window.",
-            "button": "Log In"
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "add_device_cloud"
-          }
-        },
-        {
-          "id": "add_device_cloud"
-        }
-      ],
-      "repair": [
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2"
-        }
-      ],
-      "platforms": [
-        "cloud"
-      ],
-      "connectivity": [
-        "cloud"
-      ],
-      "name": {
-        "en": "Shelly Air",
-        "nl": "Shelly Air"
-      },
-      "images": {
-        "large": "./assets/drivers/shellyair/images/large.jpg",
-        "small": "./assets/drivers/shellyair/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "onoff",
-        "measure_power",
-        "meter_power",
-        "measure_temperature",
-        "measure_temperature.1",
-        "measure_temperature.2",
-        "measure_temperature.3",
-        "measure_humidity",
-        "input_1",
-        "rssi"
-      ],
-      "capabilitiesOptions": {
-        "measure_temperature": {
-          "title": {
-            "en": "Device Temperature",
-            "nl": "Apparaat temperatuur"
-          }
-        }
-      },
-      "deprecated": true,
-      "id": "shellyair_cloud"
     },
     {
       "icon": "/drivers/shellybulb/assets/icon.svg",
@@ -5619,72 +5641,6 @@
           ]
         }
       ]
-    },
-    {
-      "icon": "/drivers/shellybutton1_cloud/assets/icon.svg",
-      "pair": [
-        {
-          "id": "start",
-          "navigation": {
-            "next": "login_oauth2"
-          }
-        },
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2",
-          "options": {
-            "hint": "Log in with your Shelly account in the new window.",
-            "button": "Log In"
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "repair": [
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2"
-        }
-      ],
-      "platforms": [
-        "cloud"
-      ],
-      "connectivity": [
-        "cloud"
-      ],
-      "name": {
-        "en": "Shelly Button 1",
-        "nl": "Shelly Button 1"
-      },
-      "images": {
-        "large": "./assets/drivers/shellybutton1/images/large.jpg",
-        "small": "./assets/drivers/shellybutton1/images/small.jpg"
-      },
-      "class": "button",
-      "capabilities": [
-        "measure_battery",
-        "input_1",
-        "rssi"
-      ],
-      "energy": {
-        "batteries": [
-          "INTERNAL"
-        ]
-      },
-      "deprecated": true,
-      "id": "shellybutton1_cloud"
     },
     {
       "icon": "/drivers/shellydimmer/assets/icon.svg",
@@ -6053,12 +6009,6 @@
       "icon": "/drivers/shellydw/assets/icon.svg",
       "pair": [
         {
-          "id": "start",
-          "navigation": {
-            "next": "list_devices"
-          }
-        },
-        {
           "id": "list_devices",
           "template": "list_devices",
           "options": {
@@ -6161,77 +6111,6 @@
           ]
         }
       ]
-    },
-    {
-      "icon": "/drivers/shellydw_cloud/assets/icon.svg",
-      "pair": [
-        {
-          "id": "start",
-          "navigation": {
-            "next": "login_oauth2"
-          }
-        },
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2",
-          "options": {
-            "hint": "Log in with your Shelly account in the new window.",
-            "button": "Log In"
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "repair": [
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2"
-        }
-      ],
-      "platforms": [
-        "cloud"
-      ],
-      "connectivity": [
-        "cloud"
-      ],
-      "name": {
-        "en": "Shelly Door/Window Sensor (2)",
-        "nl": "Shelly Deur/Raam Sensor (2)"
-      },
-      "images": {
-        "large": "./assets/drivers/shellydw/images/large.jpg",
-        "small": "./assets/drivers/shellydw/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "alarm_contact",
-        "measure_luminance",
-        "measure_battery",
-        "measure_temperature",
-        "alarm_tamper",
-        "tilt",
-        "rssi"
-      ],
-      "energy": {
-        "batteries": [
-          "CR123A",
-          "CR123A"
-        ]
-      },
-      "deprecated": true,
-      "id": "shellydw_cloud"
     },
     {
       "icon": "/drivers/shellyem/assets/icon.svg",
@@ -6430,12 +6309,6 @@
       "icon": "/drivers/shellyflood/assets/icon.svg",
       "pair": [
         {
-          "id": "start",
-          "navigation": {
-            "next": "list_devices"
-          }
-        },
-        {
           "id": "list_devices",
           "template": "list_devices",
           "options": {
@@ -6534,73 +6407,6 @@
           ]
         }
       ]
-    },
-    {
-      "icon": "/drivers/shellyflood_cloud/assets/icon.svg",
-      "pair": [
-        {
-          "id": "start",
-          "navigation": {
-            "next": "login_oauth2"
-          }
-        },
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2",
-          "options": {
-            "hint": "Log in with your Shelly account in the new window.",
-            "button": "Log In"
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "repair": [
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2"
-        }
-      ],
-      "platforms": [
-        "cloud"
-      ],
-      "connectivity": [
-        "cloud"
-      ],
-      "name": {
-        "en": "Shelly Flood Sensor",
-        "nl": "Shelly Flood Sensor"
-      },
-      "images": {
-        "large": "./assets/drivers/shellyflood/images/large.jpg",
-        "small": "./assets/drivers/shellyflood/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "alarm_water",
-        "measure_temperature",
-        "measure_battery",
-        "rssi"
-      ],
-      "energy": {
-        "batteries": [
-          "CR123A"
-        ]
-      },
-      "deprecated": true,
-      "id": "shellyflood_cloud"
     },
     {
       "icon": "/drivers/shellygas/assets/icon.svg",
@@ -6715,12 +6521,6 @@
       "icon": "/drivers/shellyht/assets/icon.svg",
       "pair": [
         {
-          "id": "start",
-          "navigation": {
-            "next": "list_devices"
-          }
-        },
-        {
           "id": "list_devices",
           "template": "list_devices",
           "options": {
@@ -6819,73 +6619,6 @@
           ]
         }
       ]
-    },
-    {
-      "icon": "/drivers/shellyht_cloud/assets/icon.svg",
-      "pair": [
-        {
-          "id": "start",
-          "navigation": {
-            "next": "login_oauth2"
-          }
-        },
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2",
-          "options": {
-            "hint": "Log in with your Shelly account in the new window.",
-            "button": "Log In"
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "repair": [
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2"
-        }
-      ],
-      "platforms": [
-        "cloud"
-      ],
-      "connectivity": [
-        "cloud"
-      ],
-      "name": {
-        "en": "Shelly Humidity & Temperature",
-        "nl": "Shelly Humidity & Temperature"
-      },
-      "images": {
-        "large": "./assets/drivers/shellyht/images/large.jpg",
-        "small": "./assets/drivers/shellyht/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "measure_humidity",
-        "measure_temperature",
-        "measure_battery",
-        "rssi"
-      ],
-      "energy": {
-        "batteries": [
-          "CR123A"
-        ]
-      },
-      "deprecated": true,
-      "id": "shellyht_cloud"
     },
     {
       "icon": "/drivers/shellyi3/assets/icon.svg",
@@ -7161,74 +6894,6 @@
           ]
         }
       ]
-    },
-    {
-      "icon": "/drivers/shellymotion_cloud/assets/icon.svg",
-      "pair": [
-        {
-          "id": "start",
-          "navigation": {
-            "next": "login_oauth2"
-          }
-        },
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2",
-          "options": {
-            "hint": "Log in with your Shelly account in the new window.",
-            "button": "Log In"
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "repair": [
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2"
-        }
-      ],
-      "platforms": [
-        "cloud"
-      ],
-      "connectivity": [
-        "cloud"
-      ],
-      "name": {
-        "en": "Shelly Motion Sensor",
-        "nl": "Shelly Bewegingssensor"
-      },
-      "images": {
-        "large": "./assets/drivers/shellymotion/images/large.jpg",
-        "small": "./assets/drivers/shellymotion/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "alarm_motion",
-        "measure_luminance",
-        "measure_battery",
-        "alarm_tamper",
-        "rssi"
-      ],
-      "energy": {
-        "batteries": [
-          "INTERNAL"
-        ]
-      },
-      "deprecated": true,
-      "id": "shellymotion_cloud"
     },
     {
       "icon": "/drivers/shellyrgbw2color/assets/icon.svg",
@@ -7638,12 +7303,6 @@
       "icon": "/drivers/shellysmoke/assets/icon.svg",
       "pair": [
         {
-          "id": "start",
-          "navigation": {
-            "next": "list_devices"
-          }
-        },
-        {
           "id": "list_devices",
           "template": "list_devices",
           "options": {
@@ -7742,73 +7401,6 @@
           ]
         }
       ]
-    },
-    {
-      "icon": "/drivers/shellysmoke_cloud/assets/icon.svg",
-      "pair": [
-        {
-          "id": "start",
-          "navigation": {
-            "next": "login_oauth2"
-          }
-        },
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2",
-          "options": {
-            "hint": "Log in with your Shelly account in the new window.",
-            "button": "Log In"
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "repair": [
-        {
-          "id": "login_oauth2",
-          "template": "login_oauth2"
-        }
-      ],
-      "platforms": [
-        "cloud"
-      ],
-      "connectivity": [
-        "cloud"
-      ],
-      "name": {
-        "en": "Shelly Smoke Detector",
-        "nl": "Shelly Rook Detector"
-      },
-      "images": {
-        "large": "./assets/drivers/shellysmoke/images/large.jpg",
-        "small": "./assets/drivers/shellysmoke/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "alarm_smoke",
-        "measure_temperature",
-        "measure_battery",
-        "rssi"
-      ],
-      "energy": {
-        "batteries": [
-          "AA"
-        ]
-      },
-      "deprecated": true,
-      "id": "shellysmoke_cloud"
     },
     {
       "icon": "/drivers/shellyuni/assets/icon.svg",
@@ -8199,6 +7791,38 @@
     }
   ],
   "capabilities": {
+    "beacon": {
+      "type": "boolean",
+      "title": {
+        "en": "Beacon",
+        "nl": "Beacon"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "insightsTitleFalse": {
+        "en": "In Range",
+        "nl": "Binnen bereik"
+      },
+      "insightsTitleTrue": {
+        "en": "Out Range",
+        "nl": "Buiten bereik"
+      },
+      "icon": "/assets/beacon.svg"
+    },
+    "deviceBLU": {
+      "type": "string",
+      "title": {
+        "en": "BLU Device",
+        "nl": "BLU Device"
+      },
+      "getable": false,
+      "setable": false,
+      "uiComponent": null,
+      "insights": false,
+      "icon": "/assets/icon.svg"
+    },
     "deviceGen1": {
       "type": "string",
       "title": {
@@ -8618,8 +8242,8 @@
     "rssi": {
       "type": "number",
       "title": {
-        "en": "WiFi Signal",
-        "nl": "WiFi signaal"
+        "en": "Signal",
+        "nl": "Signaal"
       },
       "getable": true,
       "setable": false,

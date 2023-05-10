@@ -1,7 +1,7 @@
 {
   "name": {
-    "en": "Any Shelly Device",
-    "nl": "Elk Shelly apparaat"
+    "en": "Any Shelly WiFi Device",
+    "nl": "Elk Shelly WiFi apparaat"
   },
   "images": {
     "small": "./assets/drivers/shelly/images/small.jpg",

@@ -1,0 +1,29 @@
+{
+  "title": {
+    "en": "Beacon Changed",
+    "nl": "Beacon gewijzigd"
+  },
+  "tokens": [
+    {
+      "name": "status",
+      "type": "boolean",
+      "title": {
+        "en": "In Range",
+        "nl": "Binnen bereik"
+      },
+      "example": false
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly_bluetooth&capabilities=beacon"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

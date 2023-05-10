@@ -1,0 +1,20 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Beacon",
+    "nl": "Beacon"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "insightsTitleFalse": {
+    "en": "In Range",
+    "nl": "Binnen bereik"
+  },
+  "insightsTitleTrue": {
+    "en": "Out Range",
+    "nl": "Buiten bereik"
+  },
+  "icon": "/assets/beacon.svg"
+}

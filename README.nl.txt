@@ -59,3 +59,8 @@ Shelly Pro 2PM
 Shelly Pro 3
 Shelly Pro 3EM
 Shelly Pro 4PM
+
+Bluetooth
+-------------
+Shelly BLU Button 1
+Shelly BLU DoorWindow

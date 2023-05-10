@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "BLU Device",
+    "nl": "BLU Device"
+  },
+  "getable": false,
+  "setable": false,
+  "uiComponent": null,
+  "insights": false,
+  "icon": "/assets/icon.svg"
+}

@@ -6,7 +6,6 @@ const Util = require('../lib/util.js');
 
 class ShellyDevice extends Device {
 
-  /* onDeleted() */
   async onDeleted() {
     try {
       this.homey.clearInterval(this.pollingInterval);
@@ -17,11 +16,20 @@ class ShellyDevice extends Device {
         await this.util.sendCommand('/reboot', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       }
 
-      /* disable inboud websockets for gen2 devices */
-      if (this.getStoreValue('communication') === 'websocket' && this.getStoreValue('channel') === 0 && this.getStoreValue('wsserver')) {
-        const payload = '{"id":0, "method":"ws.setconfig", "params":{"config":{"ssl_ca":"*", "server":"", "enable":false}}}';
-        const settings = await this.util.sendRPCCommand('/rpc', this.getSetting('address'), this.getSetting('password'), 'POST', payload);
-        const reboot = await this.util.sendRPCCommand('/rpc/Shelly.Reboot', this.getSetting('address'), this.getSetting('password'));
+      if (this.getStoreValue('communication') === 'websocket' && this.getStoreValue('channel') === 0) {
+
+        /* disable inboud websockets for gen2 devices */
+        if (this.getStoreValue('wsserver')) {
+          const payload = '{"id":0, "method":"ws.setconfig", "params":{"config":{"ssl_ca":"*", "server":"", "enable":false}}}';
+          await this.util.sendRPCCommand('/rpc', this.getSetting('address'), this.getSetting('password'), 'POST', payload);
+        }
+        
+        /* remove BLE Proxy Script */
+        if (this.getStoreValue('ble_script_id') !== null && this.getStoreValue('ble_script_id') !== 0) {
+          await this.util.disableBLEProxy(this.getStoreValue('ble_script_id'), this.getSetting('address'), this.getSetting('password'));
+        }
+        
+        await this.util.sendRPCCommand('/rpc/Shelly.Reboot', this.getSetting('address'), this.getSetting('password'));
       }
       
       if (this.getStoreValue('channel') === 0) {
