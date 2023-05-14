@@ -652,5 +652,8 @@
   },
   "3.19.0": {
     "en": "This release adds support for Shelly Blu Button 1 and Shelly Blu DW on Homey Cloud and Homey Pro. Read the instructions on the forum on how to pair. The release also removes the deprecated drivers for Homey Cloud of battery operated devices. If you havent already you will need to re-pair them using the new generic driver."
+  },
+  "3.19.1": {
+    "en": "This release improves the behaviour of Shelly BLU devices paired with Homey Pro or Homey Cloud."
   }
 }

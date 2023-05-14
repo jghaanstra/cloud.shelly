@@ -1311,6 +1311,36 @@ class ShellyDevice extends Homey.Device {
 
       }
 
+      // WINDOW COMPONENT
+      if (result.hasOwnProperty("window:"+ channel)) {
+
+        /* alarm_contact */
+        if (result["window:"+channel].hasOwnProperty("open")) {
+          this.updateCapabilityValue('alarm_contact', result["window:"+channel].open, channel);
+        }
+
+      }
+
+      // LUX COMPONENT
+      if (result.hasOwnProperty("lux:"+ channel)) {
+
+        /* measure_luminance */
+        if (result["lux:"+channel].hasOwnProperty("lux")) {
+          this.updateCapabilityValue('measure_luminance', result["lux:"+channel].lux, channel);
+        }
+
+      }
+
+      // ROTATION COMPONENT
+      if (result.hasOwnProperty("rot:"+ channel)) {
+
+        /* tilt */
+        if (result["rot:"+channel].hasOwnProperty("rot")) {
+          this.updateCapabilityValue('tilt', result["rot:"+channel].rot, channel);
+        }
+
+      }
+
       // MEASURE POWER, METER POWER AND TEMPERATURE FOR SWITCH AND COVER COMPONENT
       if (result.hasOwnProperty("switch:"+ channel) || result.hasOwnProperty("cover:"+ channel) ) {
 
@@ -1442,7 +1472,9 @@ class ShellyDevice extends Homey.Device {
 
           /* measure_voltage */
           if (result["devicepower:"+channel].battery.hasOwnProperty("V")) {
-            this.updateCapabilityValue('measure_voltage', result["devicepower:"+channel].battery.V, channel);
+            if (result["devicepower:"+channel].battery.V !== null) {
+              this.updateCapabilityValue('measure_voltage', result["devicepower:"+channel].battery.V, channel);
+            }
           }
 
         }
@@ -1841,12 +1873,16 @@ class ShellyDevice extends Homey.Device {
 
       // RSSI
       if (result.hasOwnProperty("wifi")) {
-
-        /* rssi */
         if (result.wifi.hasOwnProperty("rssi") && this.hasCapability('rssi') && channel === 0) {
           this.updateCapabilityValue('rssi', result.wifi.rssi);
         }
-
+      }
+      if (result.hasOwnProperty("reporter")) {
+        if (result.reporter.hasOwnProperty("rssi")) {
+          if (result.reporter.hasOwnProperty("rssi") && channel === 0) {
+            this.updateCapabilityValue('rssi', result.reporter.rssi);
+          }
+        }
       }
 
       // FIRMWARE UPDATE AVAILABLE
@@ -1880,7 +1916,7 @@ class ShellyDevice extends Homey.Device {
             for (const [capability, value] of Object.entries(element)) {
               if (capability === 'errors') { /* handle device errors */
                 value.forEach((element) => {
-                  this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": this.homey.__(element)}).catch(error => { this.error(error) });
+                  this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": this.homey.__(element.toString())}).catch(error => { this.error(error) });
                 });
               } else if (capability !== 'component' && capability !== 'id' && capability !== 'source' && capability !== 'type') {
 

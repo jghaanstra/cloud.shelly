@@ -21,7 +21,7 @@ class ShellyBluetoothDevice extends Device {
       this.BTH = [];
       this.BTH[0x00] = { n: 'pid', t: this.uint8 };
       this.BTH[0x01] = { n: 'measure_battery', t: this.uint8, u: '%' };
-      this.BTH[0x05] = { n: 'measure_lux', t: this.uint24, f: 0.01 };
+      this.BTH[0x05] = { n: 'measure_luminance', t: this.uint24, f: 0.01 };
       this.BTH[0x1a] = { n: 'alarm_contact_door', t: this.uint8 };
       this.BTH[0x20] = { n: 'measure_humidity', t: this.uint8 };
       this.BTH[0x2d] = { n: 'alarm_contact_window', t: this.uint8 };
@@ -79,7 +79,7 @@ class ShellyBluetoothDevice extends Device {
           while (buffer.length > 0) {
             _bth = this.BTH[buffer.at(0)];
             if (typeof _bth === 'undefined') {
-              console.log('BTH: unknown type');
+              this.error('BTH: unknown type');
               break;
             }
             buffer = buffer.slice(1);
@@ -112,7 +112,7 @@ class ShellyBluetoothDevice extends Device {
 
   async onAdded() {
     try {
-      // await this.homey.app.bluetoothListener(); // TODO: This isnt actived as it works flaky due to Homey's Bluetoooth implementation
+      await this.homey.app.bluetoothListener(); // TODO: This isnt actived as it works flaky due to Homey's Bluetoooth implementation
       return await this.homey.app.updateShellyCollection();
     } catch (error) {
       this.error(error);
@@ -122,7 +122,7 @@ class ShellyBluetoothDevice extends Device {
   async onDeleted() {
     try {
       await this.homey.clearTimeout(this.timeOutBeacon);
-      // await this.homey.app.bluetoothListenerClose(); // TODO: This isnt actived as it works flaky due to Homey's Bluetoooth implementation
+      await this.homey.app.bluetoothListenerClose(); // TODO: This isnt actived as it works flaky due to Homey's Bluetoooth implementation
       if (this.getStoreValue('channel') === 0) {
         const iconpath = "/userdata/" + this.getData().id +".svg";
         await this.util.removeIcon(iconpath);
@@ -145,7 +145,7 @@ class ShellyBluetoothDevice extends Device {
   /* generic full status parser for BLU advertisements send over BLE Proxy websocket messages */
   async parseBluetoothEvents(result = {}) {
     try {
-      if (this.getStoreValue('ble_pid') === null || this.getStoreValue('ble_pid') < result.pid || (result.pid < 10 && this.getStoreValue('ble_pid') > 240)) {
+      if (this.getStoreValue('ble_pid') === null || this.getStoreValue('ble_pid') < result.pid || (result.pid < 10 && this.getStoreValue('ble_pid') > 240) || (this.getStoreValue('ble_pid') - result.pid >= 10)) {
         if (!this.getAvailable()) { await this.setAvailable(); }
         let channel = this.getStoreValue('channel') || 0;
 
@@ -155,21 +155,16 @@ class ShellyBluetoothDevice extends Device {
         }
 
         /* measure_lux */
-        if (result.hasOwnProperty("measure_lux")) {
-          this.updateCapabilityValue('measure_lux', result.measure_lux, channel);
-        }
-
-        /* measure_lux */
-        if (result.hasOwnProperty("measure_lux")) {
-          this.updateCapabilityValue('measure_lux', result.measure_lux, channel);
+        if (result.hasOwnProperty("measure_luminance")) {
+          this.updateCapabilityValue('measure_luminance', result.measure_luminance, channel);
         }
 
         /* alarm_contact */
         if (result.hasOwnProperty("alarm_contact_door")) {
-          this.updateCapabilityValue('alarm_contact', result.alarm_contact_door, channel);
+          this.updateCapabilityValue('alarm_contact', result.alarm_contact_door === 1 ? true : false, channel);
         }
         if (result.hasOwnProperty("alarm_contact_window")) {
-          this.updateCapabilityValue('alarm_contact', result.alarm_contact_window, channel);
+          this.updateCapabilityValue('alarm_contact', result.alarm_contact_window === 1 ? true : false, channel);
         }
 
         /* measure_humidity */
@@ -187,6 +182,13 @@ class ShellyBluetoothDevice extends Device {
           if (result.button !== 0) {
             const action_event = this.util.getActionEventDescription(result.button.toString(), 'bluetooth', 'gen2');
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action_event}, {"id": this.getData().id, "device": this.getName(), "action": action_event}).catch(error => { this.error(error) });
+          }
+        }
+
+        /* rssi */
+        if (result.hasOwnProperty("rssi")) {
+          if (result.rssi !== null) {
+            this.updateCapabilityValue('rssi', result.rssi, channel);
           }
         }
 

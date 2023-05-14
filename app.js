@@ -67,16 +67,16 @@ class ShellyApp extends OAuth2App {
 
       // BLUETOOTH GEN2: LISTEN FOR BLE ADVERTISEMENTS
       // TODO: This isnt actived as it works flaky due to Homey's Bluetoooth implementation
-      // if (this.homey.platform !== "cloud") {
-      //   this.homey.setTimeout(async () => {
-      //     let bluetooth = await this.util.getDeviceType('bluetooth');
-      //     if (bluetooth) {
-      //       this.bluetoothListener();
-      //     } else {
-      //       this.log('BLE listener not started as no Bluetooth devices have been paired ...');
-      //     }
-      //   }, 27000);
-      // }
+      if (this.homey.platform !== "cloud") {
+        this.homey.setTimeout(async () => {
+          let bluetooth = await this.util.getDeviceType('bluetooth');
+          if (bluetooth) {
+            this.bluetoothListener();
+          } else {
+            this.log('BLE listener not started as no Bluetooth devices have been paired ...');
+          }
+        }, 27000);
+      }
   
       // GENERIC FLOWCARDS
       this.homey.flow.getTriggerCard('triggerDeviceOffline');
@@ -623,7 +623,7 @@ class ShellyApp extends OAuth2App {
     }
   }
 
-  // WEBSOCKET GEN2: START WEBSOCKET SERVER AND LISTEN FOR INBOUND GEN2 UPDATES
+  // WEBSOCKET GEN2: START WEBSOCKET SERVER AND LISTEN FOR INBOUND GEN2 AND BLUETOOTH UPDATES
   async websocketLocalListener() {
     try {
       if (this.wss === null) {
