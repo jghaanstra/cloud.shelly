@@ -112,7 +112,7 @@ class ShellyBluetoothDevice extends Device {
 
   async onAdded() {
     try {
-      await this.homey.app.bluetoothListener(); // TODO: This isnt actived as it works flaky due to Homey's Bluetoooth implementation
+      await this.homey.app.bluetoothListener();
       return await this.homey.app.updateShellyCollection();
     } catch (error) {
       this.error(error);
@@ -122,7 +122,7 @@ class ShellyBluetoothDevice extends Device {
   async onDeleted() {
     try {
       await this.homey.clearTimeout(this.timeOutBeacon);
-      await this.homey.app.bluetoothListenerClose(); // TODO: This isnt actived as it works flaky due to Homey's Bluetoooth implementation
+      await this.homey.app.bluetoothListenerClose();
       if (this.getStoreValue('channel') === 0) {
         const iconpath = "/userdata/" + this.getData().id +".svg";
         await this.util.removeIcon(iconpath);
@@ -198,7 +198,11 @@ class ShellyBluetoothDevice extends Device {
             this.updateCapabilityValue('beacon', true, channel);
             await this.homey.clearTimeout(this.timeOutBeacon);
             this.timeOutBeacon = this.homey.setTimeout(async () => {
-              this.updateCapabilityValue('beacon', false, channel);
+              try {
+                this.updateCapabilityValue('beacon', false, channel);
+              } catch (error) {
+                this.error(error);
+              }
             }, this.getSetting('beaconTimeout') * 60 * 1000);
           }
         }
@@ -212,7 +216,6 @@ class ShellyBluetoothDevice extends Device {
 
   async parseBluetoothAdvertisement(advertisement) {
     try {
-      // TODO: This isnt actived as it works flaky due to Homey's Bluetoooth implementation
       if (advertisement.serviceData !== null) {
         advertisement.serviceData.forEach((element) => {
           const result = this.BTHomeDecoder.unpack(element.data);

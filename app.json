@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.19.1",
+  "version": "3.20.0",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -2336,7 +2336,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_returned"
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_returned|meter_power.returned"
           }
         ],
         "platforms": [
@@ -8174,6 +8174,22 @@
         "nl": "Externe input 5 ingeschakeld"
       },
       "icon": "/assets/input_switch.svg"
+    },
+    "measure_power_apparent": {
+      "type": "number",
+      "title": {
+        "en": "Apparent Power",
+        "nl": "Schijnbaar vermogen"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/reactive-power.svg",
+      "units": {
+        "en": "VA",
+        "nl": "VA"
+      }
     },
     "meter_power_factor": {
       "type": "number",

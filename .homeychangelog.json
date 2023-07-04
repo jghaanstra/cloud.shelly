@@ -655,5 +655,8 @@
   },
   "3.19.1": {
     "en": "This release improves the behaviour of Shelly BLU devices paired with Homey Pro or Homey Cloud."
+  },
+  "3.20.0": {
+    "en": "This release adds support for the Shelly Wall Display and Shelly Pro Dual Cover."
   }
 }

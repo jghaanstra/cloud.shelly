@@ -1,0 +1,16 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Apparent Power",
+    "nl": "Schijnbaar vermogen"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "insights": true,
+  "icon": "/assets/reactive-power.svg",
+  "units": {
+    "en": "VA",
+    "nl": "VA"
+  }
+}

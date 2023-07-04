@@ -36,19 +36,27 @@ class ShellyApp extends OAuth2App {
   
       // ALL: INITIALLY UPDATE THE SHELLY COLLECTION FOR MATCHING INCOMING STATUS UPDATES
       this.homey.setTimeout(async () => {
-        await this.updateShellyCollection();
-        this.log('Shelly collection has been updated ...');
+        try {
+          await this.updateShellyCollection();
+          this.log('Shelly collection has been updated ...');
+        } catch (error) {
+          this.error(error);
+        }
       }, 15000);
   
       // COAP GEN1: START COAP LISTENER FOR RECEIVING STATUS UPDATES
       if (this.homey.platform !== "cloud") {
         this.homey.setTimeout(async () => {
-          let gen1 = await this.util.getDeviceType('gen1');
-          if (gen1) {
-            shellies.start();
-            this.log('CoAP listener for gen1 LAN devices started ...');
-          } else {
-            this.log('CoAP listener not started as no gen 1 devices where found during app init ...');
+          try {
+            let gen1 = await this.util.getDeviceType('gen1');
+            if (gen1) {
+              shellies.start();
+              this.log('CoAP listener for gen1 LAN devices started ...');
+            } else {
+              this.log('CoAP listener not started as no gen 1 devices where found during app init ...');
+            }
+          } catch (error) {
+            this.error(error);
           }
         }, 20000);
       }
@@ -66,14 +74,18 @@ class ShellyApp extends OAuth2App {
       }
 
       // BLUETOOTH GEN2: LISTEN FOR BLE ADVERTISEMENTS
-      // TODO: This isnt actived as it works flaky due to Homey's Bluetoooth implementation
+      // TODO: This isnt working properly due to Homey's Bluetoooth implementation
       if (this.homey.platform !== "cloud") {
         this.homey.setTimeout(async () => {
-          let bluetooth = await this.util.getDeviceType('bluetooth');
-          if (bluetooth) {
-            this.bluetoothListener();
-          } else {
-            this.log('BLE listener not started as no Bluetooth devices have been paired ...');
+          try {
+            let bluetooth = await this.util.getDeviceType('bluetooth');
+            if (bluetooth) {
+              this.bluetoothListener();
+            } else {
+              this.log('BLE listener not started as no Bluetooth devices have been paired ...');
+            }
+          } catch (error) {
+            this.error(error);
           }
         }, 27000);
       }
@@ -639,7 +651,7 @@ class ShellyApp extends OAuth2App {
             const result = JSON.parse(data);
             if (result.hasOwnProperty('method') && result.hasOwnProperty("params")) {
               if (result.method === 'NotifyFullStatus') { // parse full status updates
-                const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src)).filter(shelly => shelly.channel === 0);
+                const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src.toLowerCase())).filter(shelly => shelly.channel === 0);
                 for (const filteredShellyWss of filteredShelliesWss) {
                   filteredShellyWss.device.parseFullStatusUpdateGen2(result.params);
                   if (result.params.wifi.sta_ip !== null) { // update IP address if it does not match the device
@@ -649,7 +661,7 @@ class ShellyApp extends OAuth2App {
                   }
                 }
               } else if (result.method === 'NotifyStatus') { // parse single component updates
-                const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src)).filter(shelly => shelly.channel === 0);
+                const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src.toLowerCase())).filter(shelly => shelly.channel === 0);
                 for (const filteredShellyWss of filteredShelliesWss) {
                   filteredShellyWss.device.parseSingleStatusUpdateGen2(result);
                 }
@@ -661,15 +673,15 @@ class ShellyApp extends OAuth2App {
                       filteredShellyWss.device.parseBluetoothEvents(single_event.data);
                     }
                   } else {
-                    const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src)).filter(shelly => shelly.channel === 0);
+                    const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src.toLowerCase())).filter(shelly => shelly.channel === 0);
                     for (const filteredShellyWss of filteredShelliesWss) {
                       filteredShellyWss.device.parseSingleStatusUpdateGen2(result);
                     }
                   }
                 }
               }
-            } else if (result.dst === 'wsserver-wsserver-getdeviceinfo_onconnect') { // parse device info request after each (re)connect
-              const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src));
+            } else if (result.dst === 'wsserver-getdeviceinfo_onconnect') { // parse device info request after each (re)connect
+              const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src.toLowerCase()));
               for (const filteredShellyWss of filteredShelliesWss) {
                 if (result.hasOwnProperty("result")) {
                   filteredShellyWss.device.setStoreValue('type', result.result.model);
@@ -677,7 +689,7 @@ class ShellyApp extends OAuth2App {
                 }
               }
             } else if (result.dst === 'wsserver-getfullstatus_onconnect') { // parse full initial status updates after each (re)connect
-              const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src)).filter(shelly => shelly.channel === 0);
+              const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src.toLowerCase())).filter(shelly => shelly.channel === 0);
               for (const filteredShellyWss of filteredShelliesWss) {
                 filteredShellyWss.device.parseFullStatusUpdateGen2(result.result);
                 if (result.result.wifi.sta_ip !== null) { // update IP address if it does not match the device
@@ -700,14 +712,22 @@ class ShellyApp extends OAuth2App {
           // retry connection after 500 miliseconds
           clearTimeout(this.wssReconnectTimeout);
           this.wssReconnectTimeout = this.homey.setTimeout(async () => {
-            this.websocketLocalListener();
+            try {
+              this.websocketLocalListener();
+            } catch (error) {
+              this.error(error);
+            }
           }, 500);
         });
       }
     } catch (error) {
       clearTimeout(this.wssReconnectTimeout);
       this.wssReconnectTimeout = this.homey.setTimeout(async () => {
-        this.websocketLocalListener();
+        try {
+          this.websocketLocalListener();
+        } catch (error) {
+          this.error(error);
+        }
       }, 5000);
     }
   }
@@ -770,11 +790,15 @@ class ShellyApp extends OAuth2App {
         this.ws.on('pong', () => {
           clearTimeout(this.wsPingTimeout);
           this.wsPingTimeout = this.homey.setTimeout(async () => {
-            if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
-              this.wsConnected = false;
-              this.websocketCloudListener();
-            } else if (this.wsConnected) {
-              this.ws.close();
+            try {
+              if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
+                this.wsConnected = false;
+                this.websocketCloudListener();
+              } else if (this.wsConnected) {
+                this.ws.close();
+              }
+            } catch (error) {
+              this.error(error);
             }
           }, 130 * 1000);
         });
@@ -794,11 +818,19 @@ class ShellyApp extends OAuth2App {
             // retry connection after 30 seconds and if not retried 10 times already
             if (this.debouncer < 10) {
               this.wsReconnectTimeout = this.homey.setTimeout(async () => {
-                this.websocketCloudListener();
+                try {
+                  this.websocketCloudListener();
+                } catch (error) {
+                  this.error(error);
+                }
               }, 30000);
             } else {
               this.wsReconnectTimeout = this.homey.setTimeout(async () => {
-                this.websocketCloudListener();
+                try {
+                  this.websocketCloudListener();
+                } catch (error) {
+                  this.error(error);
+                }
               }, 600000);
             }
           }          
@@ -811,14 +843,22 @@ class ShellyApp extends OAuth2App {
       if (error.message !== 'No OAuth2 Client Found') {
         if (this.debouncer < 10) {
           this.wsReconnectTimeout = this.homey.setTimeout(async () => {
-            if (!this.wsConnected) {
-              this.websocketCloudListener();
+            try {
+              if (!this.wsConnected) {
+                this.websocketCloudListener();
+              }
+            } catch (error) {
+              this.error(error);
             }
           }, 30000);
         } else {
           this.wsReconnectTimeout = this.homey.setTimeout(async () => {
-            if (!this.wsConnected) {
-              this.websocketCloudListener();
+            try {
+              if (!this.wsConnected) {
+                this.websocketCloudListener();
+              }
+            } catch (error) {
+              this.error(error);
             }
           }, 600000);
         }
@@ -835,14 +875,16 @@ class ShellyApp extends OAuth2App {
       clearTimeout(this.bleInterval);
       this.bleInterval = this.homey.setInterval(async () => {
         const advertisements = await this.homey.ble.discover().catch(this.error);
-        advertisements.forEach(advertisement => {
-          if (this.util.filterBLEDevices(advertisement.localName)) {
-            const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.includes(advertisement.address)).filter(shelly => shelly.channel === 0);
-            for (const filteredShellyWss of filteredShelliesWss) {
-              filteredShellyWss.device.parseBluetoothAdvertisement(advertisement);
+        if (Array.isArray(advertisements)) {
+          advertisements.forEach(advertisement => {
+            if (this.util.filterBLEDevices(advertisement.localName)) {
+              const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.includes(advertisement.address)).filter(shelly => shelly.channel === 0);
+              for (const filteredShellyWss of filteredShelliesWss) {
+                filteredShellyWss.device.parseBluetoothAdvertisement(advertisement);
+              }
             }
-          }
-        });
+          });
+        }
       }, 5000);
     } catch (error) {
       this.error(error);
@@ -857,7 +899,11 @@ class ShellyApp extends OAuth2App {
         shellies.stop();
       }
       this.homey.setTimeout(async () => {
-        shellies.start();
+        try {
+          shellies.start();
+        } catch (error) {
+          this.error(error);
+        }
       }, 1000);
       return Promise.resolve(true);
     } catch (error) {
