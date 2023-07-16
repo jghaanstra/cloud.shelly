@@ -1,0 +1,19 @@
+{
+  "id": "beacon_timeout",
+  "type": "number",
+  "value": 5,
+  "min": 1,
+  "max": 60,
+  "label": {
+    "en": "Beacon Timeout",
+    "nl": "Beacon Timeout"
+  },
+  "units": {
+    "en": "minutes",
+    "nl": "minuten"
+  },
+  "hint": {
+    "en": "Time before the device is marked as away. Useful for portable BLU devices which support beacon mode.",
+    "nl": "Tijd voordat een apparaat als niet thuis wordt aangemekt. Te gebruiken voor BLU apparaten die beacon mode ondersteunen."
+  }
+}

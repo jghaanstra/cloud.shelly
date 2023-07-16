@@ -94,13 +94,20 @@ class ShellyBluetoothDevice extends Device {
       }
 
       // REGISTERING DEVICE TRIGGER CARDS
-      this.homey.setTimeout(() => {
+      this.homey.setTimeout(async () => {
         try {
-          for (const trigger of this.getStoreValue('config').triggers) {
+          await this.updateDeviceConfig();
+          let triggers = [];
+          if (this.getStoreValue('channel') !== 0) {
+            triggers = this.getStoreValue('config').triggers_2
+          } else {
+            triggers = this.getStoreValue('config').triggers_1
+          }
+          for (const trigger of triggers) {
             this.homey.flow.getDeviceTriggerCard(trigger);
           }
         } catch (error) {
-          this.error(error);
+          this.log(error);
         }
       }, 2000);
 
@@ -195,15 +202,18 @@ class ShellyBluetoothDevice extends Device {
         /* beacon */
         if (this.hasCapability('beacon')) {
           if (!this.getCapabilityValue('beacon')) {
-            this.updateCapabilityValue('beacon', true, channel);
+            await this.triggerDeviceTriggerCard('beacon', true, channel, 'triggerBeaconInRange', {}, {});
+            await this.updateCapabilityValue('beacon', true, channel);
             await this.homey.clearTimeout(this.timeOutBeacon);
             this.timeOutBeacon = this.homey.setTimeout(async () => {
               try {
-                this.updateCapabilityValue('beacon', false, channel);
+                await this.triggerDeviceTriggerCard('beacon', false, channel, 'triggerBeaconOutRange', {}, {});
+                await this.triggerDeviceTriggerCard('beacon', false, channel, 'triggerBeaconChanged', {}, {});
+                await this.updateCapabilityValue('beacon', false, channel);
               } catch (error) {
                 this.error(error);
               }
-            }, this.getSetting('beaconTimeout') * 60 * 1000);
+            }, this.getSetting('beacon_timeout') * 60 * 1000);
           }
         }
 
@@ -241,5 +251,6 @@ class ShellyBluetoothDevice extends Device {
 ShellyBluetoothDevice.prototype.updateCapabilityValue = Device.prototype.updateCapabilityValue;
 ShellyBluetoothDevice.prototype.parseFullStatusUpdateGen2 = Device.prototype.parseFullStatusUpdateGen2;
 ShellyBluetoothDevice.prototype.parseCapabilityUpdate = Device.prototype.parseCapabilityUpdate;
+ShellyBluetoothDevice.prototype.triggerDeviceTriggerCard = Device.prototype.triggerDeviceTriggerCard;
 
 module.exports = ShellyBluetoothDevice;

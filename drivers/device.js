@@ -658,7 +658,7 @@ class ShellyDevice extends Homey.Device {
       /* mark as unavailable and trigger the device offline trigger card */
       if (this.getAvailable()) {
         this.setUnavailable(this.homey.__('device.unreachable') + error.message).catch(error => { this.error(error) });
-        this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.message}).catch(error => { this.error(error) });
+        this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.message.toString()}).catch(error => { this.error(error) });
       }
 
       /* handle multi-channel devices */
@@ -674,7 +674,7 @@ class ShellyDevice extends Homey.Device {
               if (device) {
                 if (device.getAvailable()) {
                   device.setUnavailable(device.homey.__('device.unreachable') + error.message).catch(error => { this.error(error) });
-                  device.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": error.message}).catch(error => { this.error(error) });
+                  device.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": error.message.toString()}).catch(error => { this.error(error) });
                 }
               }
             }
@@ -1190,7 +1190,7 @@ class ShellyDevice extends Homey.Device {
           this.addCapability('measure_temperature.1');
         } else if (result.ext_temperature.hasOwnProperty([0]) && this.hasCapability('measure_temperature.1')) {
           let temp1 = result.ext_temperature[0].tC;
-          if (temp1 != this.getCapabilityValue('measure_temperature.1')) {
+          if (typeof temp1 == 'number' && temp1 != this.getCapabilityValue('measure_temperature.1')) {
             this.updateCapabilityValue('measure_temperature.1', temp1);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature1').trigger(this, {'temperature': temp1}, {}).catch(error => { this.error(error) });
           }
@@ -1201,7 +1201,7 @@ class ShellyDevice extends Homey.Device {
           this.addCapability('measure_temperature.2');
         } else if (result.ext_temperature.hasOwnProperty([1]) && this.hasCapability('measure_temperature.2')) {
           let temp2 = result.ext_temperature[1].tC;
-          if (temp2 != this.getCapabilityValue('measure_temperature.2')) {
+          if (typeof temp2 == 'number' && temp2 != this.getCapabilityValue('measure_temperature.2')) {
             this.updateCapabilityValue('measure_temperature.2', temp2);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature2').trigger(this, {'temperature': temp2}, {}).catch(error => { this.error(error) });
           }
@@ -1212,7 +1212,7 @@ class ShellyDevice extends Homey.Device {
           this.addCapability('measure_temperature.3');
         } else if (result.ext_temperature.hasOwnProperty([2]) && this.hasCapability('measure_temperature.3')) {
           let temp3 = result.ext_temperature[2].tC;
-          if (temp3 != this.getCapabilityValue('measure_temperature.3')) {
+          if (typeof temp3 == 'number' && temp3 != this.getCapabilityValue('measure_temperature.3')) {
             this.updateCapabilityValue('measure_temperature.3', temp3);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature3').trigger(this, {'temperature': temp3}, {}).catch(error => { this.error(error) });
           }
@@ -2712,15 +2712,7 @@ class ShellyDevice extends Homey.Device {
   async updateDeviceConfig() {
     try {
 
-      /* update devices */
-
-      // TODO: remove after next big release
-      if (this.getStoreValue('gen') === 'gen2' && !this.getStoreValue('battery') && !this.hasCapability('button.enable_ble_script') && this.getStoreValue('channel') === 0) {
-        this.addCapability('button.enable_ble_script');
-        this.addCapability('button.disable_ble_script');
-        this.setCapabilityOptions('button.enable_ble_script', {"maintenanceAction": true, "title": {"en": "Start BLE Proxy", "nl": "Start BLE Proxy"}});
-        this.setCapabilityOptions('button.disable_ble_script', {"maintenanceAction": true, "title": {"en": "Stop BLE Proxy", "nl": "Stop BLE Proxy"}});
-      }
+      /* placeholder for update for specific devices */
 
       /* update device config */
       let result;

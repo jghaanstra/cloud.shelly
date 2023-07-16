@@ -661,5 +661,8 @@
   },
   "3.20.1": {
     "en": "This release fixes an issue for devices with inputs on Homey Cloud."
+  },
+  "3.20.2": {
+    "en": "This release contains some small fixes for the beacon mode of the Shelly BLU Button."
   }
 }

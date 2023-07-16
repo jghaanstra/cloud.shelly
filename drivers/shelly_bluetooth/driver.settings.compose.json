@@ -1,0 +1,15 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Device Settings",
+      "nl": "Apparaat instellingen"
+    },
+    "children": [
+      {
+        "id": "beacon_timeout",
+        "$extends": "beacon_timeout"
+      }
+    ]
+  }
+]

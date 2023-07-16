@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.20.1",
+  "version": "3.20.2",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -5186,7 +5186,37 @@
       "connectivity": [
         "lan"
       ],
-      "id": "shelly_bluetooth"
+      "id": "shelly_bluetooth",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "beacon_timeout",
+              "type": "number",
+              "value": 5,
+              "min": 1,
+              "max": 60,
+              "label": {
+                "en": "Beacon Timeout",
+                "nl": "Beacon Timeout"
+              },
+              "units": {
+                "en": "minutes",
+                "nl": "minuten"
+              },
+              "hint": {
+                "en": "Time before the device is marked as away. Useful for portable BLU devices which support beacon mode.",
+                "nl": "Tijd voordat een apparaat als niet thuis wordt aangemekt. Te gebruiken voor BLU apparaten die beacon mode ondersteunen."
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       "name": {
@@ -7806,7 +7836,7 @@
         "nl": "Binnen bereik"
       },
       "insightsTitleTrue": {
-        "en": "Out Range",
+        "en": "Out of Range",
         "nl": "Buiten bereik"
       },
       "icon": "/assets/beacon.svg"
