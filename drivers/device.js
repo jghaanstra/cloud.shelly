@@ -2072,11 +2072,11 @@ class ShellyDevice extends Homey.Device {
 
                 if (device) {
                   // get the right action
-                  if (channel === 0 && !device.hasCapability('input_2')) {
-                    action_event = this.util.getActionEventDescription(event.event, 'websocket', 'gen2');
-                  } else {
+                  if (channel === 0 && device.hasCapability('input_2')) { // if channel is 0 and device has multiple inputs but is not a multichannel device in Homey we need to add the channel to the action
                     const event_channel = channel + 1;
                     action_event = this.util.getActionEventDescription(event.event, 'websocket', 'gen2') + '_' + event_channel;
+                  } else {
+                    action_event = this.util.getActionEventDescription(event.event, 'websocket', 'gen2');
                   }
 
                   this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": action_event }, {"id": device.getData().id, "device": device.getName(), "action": action_event }).catch(error => { this.error(error) });

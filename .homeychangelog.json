@@ -664,5 +664,8 @@
   },
   "3.20.2": {
     "en": "This release contains some small fixes for the beacon mode of the Shelly BLU Button."
+  },
+  "3.20.3": {
+    "en": "This release fixes an issue with the action event triggercard for action events of Plus/Pro devices with multiple channels."
   }
 }
