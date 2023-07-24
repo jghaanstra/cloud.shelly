@@ -667,5 +667,8 @@
   },
   "3.20.3": {
     "en": "This release fixes an issue with the action event triggercard for action events of Plus/Pro devices with multiple channels."
+  },
+  "3.20.4": {
+    "en": "This release fixes an issue with action events for the Shelly i4 introduced with the previous release. It also fixes an issue with the beacon mode on Shelly BLU devices including the related triggercards."
   }
 }

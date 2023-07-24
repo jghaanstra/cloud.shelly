@@ -93,7 +93,7 @@ class ShellyBluetoothDevice extends Device {
         },
       }
 
-      // REGISTERING DEVICE TRIGGER CARDS
+      // REGISTERING DEVICE TRIGGER CARDS AND INITIALLY SET BEACON AS OFFLINE
       this.homey.setTimeout(async () => {
         try {
           await this.updateDeviceConfig();
@@ -106,6 +106,7 @@ class ShellyBluetoothDevice extends Device {
           for (const trigger of triggers) {
             this.homey.flow.getDeviceTriggerCard(trigger);
           }
+          await this.getCapabilityValue('beacon', false);
         } catch (error) {
           this.log(error);
         }
@@ -152,6 +153,7 @@ class ShellyBluetoothDevice extends Device {
   /* generic full status parser for BLU advertisements send over BLE Proxy websocket messages */
   async parseBluetoothEvents(result = {}) {
     try {
+
       if (this.getStoreValue('ble_pid') === null || this.getStoreValue('ble_pid') < result.pid || (result.pid < 10 && this.getStoreValue('ble_pid') > 240) || (this.getStoreValue('ble_pid') - result.pid >= 10)) {
         if (!this.getAvailable()) { await this.setAvailable(); }
         let channel = this.getStoreValue('channel') || 0;
@@ -203,12 +205,13 @@ class ShellyBluetoothDevice extends Device {
         if (this.hasCapability('beacon')) {
           if (!this.getCapabilityValue('beacon')) {
             await this.triggerDeviceTriggerCard('beacon', true, channel, 'triggerBeaconInRange', {}, {});
+            await this.triggerDeviceTriggerCard('beacon', true, channel, 'triggerBeaconChanged', {"status": true}, {"status": true});
             await this.updateCapabilityValue('beacon', true, channel);
             await this.homey.clearTimeout(this.timeOutBeacon);
             this.timeOutBeacon = this.homey.setTimeout(async () => {
               try {
                 await this.triggerDeviceTriggerCard('beacon', false, channel, 'triggerBeaconOutRange', {}, {});
-                await this.triggerDeviceTriggerCard('beacon', false, channel, 'triggerBeaconChanged', {}, {});
+                await this.triggerDeviceTriggerCard('beacon', false, channel, 'triggerBeaconChanged', {"status": false}, {"status": true});
                 await this.updateCapabilityValue('beacon', false, channel);
               } catch (error) {
                 this.error(error);

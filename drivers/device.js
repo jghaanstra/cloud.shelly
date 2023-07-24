@@ -2072,7 +2072,7 @@ class ShellyDevice extends Homey.Device {
 
                 if (device) {
                   // get the right action
-                  if (channel === 0 && device.hasCapability('input_2')) { // if channel is 0 and device has multiple inputs but is not a multichannel device in Homey we need to add the channel to the action
+                  if (device.getStoreValue('channel') === 0 && device.hasCapability('input_2')) { // if channel is 0 and device has multiple inputs but is not a multichannel device in Homey we need to add the channel to the action
                     const event_channel = channel + 1;
                     action_event = this.util.getActionEventDescription(event.event, 'websocket', 'gen2') + '_' + event_channel;
                   } else {
