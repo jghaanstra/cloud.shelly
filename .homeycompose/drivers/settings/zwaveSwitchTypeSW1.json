@@ -1,0 +1,40 @@
+{
+  "id": "zwaveSwitchTypeSW1",
+  "type": "dropdown",
+  "label": {
+    "en": "Switch Type Input 1",
+    "nl": "Schakelaar type ingang 1"
+  },
+  "value": "2",
+  "values": [
+    {
+      "id": "0",
+      "label": {
+        "en": "Momentary switch",
+        "nl": "Pulsdrukschakelaar"
+      }
+    },
+    {
+      "id": "1",
+      "label": {
+        "en": "Toggle switch (contact closed - ON / contact opened - OFF)",
+        "nl": "Tuimelschakelaar (contact closed - ON / contact opened - OFF)"
+      }
+    },
+    {
+      "id": "2",
+      "label": {
+        "en": "Toggle switch (device changes status when switch changes status)",
+        "nl": "Tuimelschakelaar (apparaat wijzigt status wanneer schakelaar status wijzigt)"
+      }
+    }
+  ],
+  "hint": {
+    "en": "This parameter (1) determines the type of switch connected to input 1.",
+    "nl": "Deze parameter (1) specificeert het type schakelaar dat is aangesloten op ingang 1."
+  },
+  "zwave": {
+    "index": 1,
+    "size": 1
+  }
+}

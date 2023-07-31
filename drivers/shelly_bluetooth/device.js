@@ -2,6 +2,6 @@
 
 const Device = require('../device_bluetooth.js');
 
-class ShellyDevice extends Device {}
+class ShellyBluetoothDevice extends Device {}
 
-module.exports = ShellyDevice;
+module.exports = ShellyBluetoothDevice;

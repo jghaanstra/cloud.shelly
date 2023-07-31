@@ -1,0 +1,25 @@
+{
+  "name": {
+    "en": "Shelly Wave 1PM",
+    "nl": "Shelly Wave 1PM"
+  },
+  "images": {
+    "small": "./assets/drivers/shelly_wave_1pm/images/small.jpg",
+    "large": "./assets/drivers/shelly_wave_1pm/images/large.jpg",
+    "xlarge": "./assets/drivers/shelly_wave_1pm/images/xlarge.jpg"
+  },
+  "class": "socket",
+  "capabilities": [
+    "onoff",
+    "measure_power",
+    "meter_power"
+  ],
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "zwave": {
+    "manufacturerId": 1120,
+    "productTypeId": [2],
+    "productId": [132]
+  },
+  "platforms": [ "local", "cloud" ],
+  "connectivity": [ "zwave" ]
+}

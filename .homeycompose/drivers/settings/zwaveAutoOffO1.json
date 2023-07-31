@@ -1,0 +1,25 @@
+{
+  "id": "zwaveAutoOffO1",
+  "type": "number",
+  "label": {
+    "en": "Auto OFF with timer",
+    "nl": "Automtisch UIT met timer"
+  },
+  "value": 0,
+  "attr": {
+    "min": 0,
+    "max": 32535
+  },
+  "units": {
+    "en": "seconds",
+    "nl": "seconden"
+  },
+  "hint": {
+    "en": "This parameter (19) defines the time after which the device is turned off automatically. Note: setting this parameter to zero will disable automatically turning off.",
+    "nl": "Deze parameter (19) bepaalt de tijd waarna het apparaat zichzelf automatisch uitzet. Let op: het instellen van deze parameter op nul schakelt het automatisch uit gaan uit."
+  },
+  "zwave": {
+    "index": 19,
+    "size": 2
+  }
+}

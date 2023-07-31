@@ -49,6 +49,7 @@ Shelly Plus i4DC
 Shelly Plus Wall Dimmer US
 Shelly Plus Plug S
 Shelly Plus Smoke
+Shelly Wall Panel
 
 Pro
 -------------
@@ -59,8 +60,14 @@ Shelly Pro 2PM
 Shelly Pro 3
 Shelly Pro 3EM
 Shelly Pro 4PM
+Shelly Pro Dual Cover
 
 Bluetooth
 -------------
 Shelly BLU Button 1
 Shelly BLU DoorWindow
+
+Zwave
+-------------
+Shelly Wave 1
+Shelly Wave 1PM (currently no energy measure)

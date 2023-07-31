@@ -1,0 +1,33 @@
+{
+  "id": "zwaveResetToDefault",
+  "type": "dropdown",
+  "label": {
+    "en": "Reset parameters to default",
+    "nl": "Reset parameters naar fabrieksinstellingen"
+  },
+  "value": "0",
+  "values": [
+    {
+      "id": "0",
+      "label": {
+        "en": "Do Not Reset",
+        "nl": "Niet resetten"
+      }
+    },
+    {
+      "id": "1",
+      "label": {
+        "en": "Reset parameters to default value",
+        "nl": "Reset parameters naar standaard waarde"
+      }
+    }
+  ],
+  "hint": {
+    "en": "This parameter (119) will reset all configuration parameters to factory default settings.",
+    "nl": "Deze parameter (119) reset alle configuratie parameters naar de fabrieksinstellingen."
+  },
+  "zwave": {
+    "index": 119,
+    "size": 1
+  }
+}

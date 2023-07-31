@@ -27,6 +27,7 @@ class ShellyBluetoothDevice extends Device {
       this.BTH[0x2d] = { n: 'alarm_contact_window', t: this.uint8 };
       this.BTH[0x3a] = { n: 'button', t: this.uint8 };
       this.BTH[0x3f] = { n: 'tilt', t: this.int16, f: 0.1 };
+      this.BTH[0x21] = { n: 'alarm_motion', t: this.uint8 };
 
       this.BTHomeDecoder = {
         utoi: (num, bitsz) => {
@@ -117,7 +118,6 @@ class ShellyBluetoothDevice extends Device {
     }
   }
 
-
   async onAdded() {
     try {
       await this.homey.app.bluetoothListener();
@@ -166,6 +166,11 @@ class ShellyBluetoothDevice extends Device {
         /* measure_lux */
         if (result.hasOwnProperty("measure_luminance")) {
           this.updateCapabilityValue('measure_luminance', result.measure_luminance, channel);
+        }
+
+        /* alarm_motion */
+        if (result.hasOwnProperty("alarm_motion")) {
+          this.updateCapabilityValue('alarm_motion', result.alarm_motion === 1 ? true : false, channel);
         }
 
         /* alarm_contact */
@@ -252,8 +257,6 @@ class ShellyBluetoothDevice extends Device {
 }
 
 ShellyBluetoothDevice.prototype.updateCapabilityValue = Device.prototype.updateCapabilityValue;
-ShellyBluetoothDevice.prototype.parseFullStatusUpdateGen2 = Device.prototype.parseFullStatusUpdateGen2;
-ShellyBluetoothDevice.prototype.parseCapabilityUpdate = Device.prototype.parseCapabilityUpdate;
 ShellyBluetoothDevice.prototype.triggerDeviceTriggerCard = Device.prototype.triggerDeviceTriggerCard;
 
 module.exports = ShellyBluetoothDevice;

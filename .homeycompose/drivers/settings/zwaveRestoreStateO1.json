@@ -1,0 +1,29 @@
+{
+  "id": "zwaveRestoreStateO1",
+  "type": "dropdown",
+  "label": {
+    "en": "Restore state of Output 1 after power failure",
+    "nl": "Herstel status van Ouitput 1 na stroom uitval"
+  },
+  "value": "0",
+  "values": [
+    {
+      "id": "0",
+      "label": {
+        "en": "Device saves last on/off status and restores it after a power failure",
+        "nl": "Apparaat hersteld on/off status na stroom uitval"
+      }
+    },
+    {
+      "id": "1",
+      "label": {
+        "en": "Device does not save on/off status and does not restore it after a power failure, it remains off",
+        "nl": "Standaard uit na stroom uitval"
+      }
+    }
+  ],
+  "zwave": {
+    "index": 17,
+    "size": 1
+  }
+}

@@ -1410,7 +1410,35 @@ class ShellyDevice extends Homey.Device {
 
       }
 
-      // PRO instantaneous power readings EM
+      // PLUS PM MEASURE POWER, METER POWER
+      if (result.hasOwnProperty("pm1:"+ channel)) {
+
+        /* measure_power */
+        if (result["pm1:"+channel].hasOwnProperty("apower")) {
+          this.updateCapabilityValue('measure_power', result["pm1:"+channel].apower, channel);
+        }
+
+        /* meter_power */
+        if (result["pm1:"+channel].hasOwnProperty("aenergy")) {
+          if (result["pm1:"+channel].aenergy.hasOwnProperty("total")) {
+            let meter_power = result["pm1:"+channel].aenergy.total / 1000;
+            this.updateCapabilityValue('meter_power', meter_power, channel);
+          }
+        }
+
+        /* measure_voltage */
+        if (result["pm1:"+channel].hasOwnProperty("voltage")) {
+          this.updateCapabilityValue('measure_voltage', result["pm1:"+channel].voltage, channel);
+        }
+
+        /* measure_current */
+        if (result["pm1:"+channel].hasOwnProperty("current")) {
+          this.updateCapabilityValue('measure_current', result["pm1:"+channel].current, channel);
+        }
+
+      }
+
+      // PRO EM instantaneous power readings
       if (result.hasOwnProperty("em:0")) {
 
         /* measure_power */
@@ -2051,7 +2079,7 @@ class ShellyDevice extends Homey.Device {
               }
             }
           });
-        } else if (result.method === 'NotifyEvent') { /* parse event updates */
+        } else if (result.method === 'NotifyEvent') { /* parse input/action event updates */
           result.params.events.forEach(async (event) => {
             try {
 

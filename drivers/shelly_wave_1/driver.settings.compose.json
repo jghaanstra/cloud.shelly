@@ -1,0 +1,44 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Switch-Output Settings",
+      "nl": "Switch-Output instellingen"
+    },
+    "children": [
+      {
+        "id": "zwaveSwitchTypeSW1",
+        "$extends": "zwaveSwitchTypeSW1"
+      },
+      {
+        "id": "zwaveContactTypeO1",
+        "$extends": "zwaveContactTypeO1"
+      },
+      {
+        "id": "zwaveRestoreStateO1",
+        "$extends": "zwaveRestoreStateO1"
+      },
+      {
+        "id": "zwaveAutoOffO1",
+        "$extends": "zwaveAutoOffO1"
+      },
+      {
+        "id": "zwaveAutoOnO1",
+        "$extends": "zwaveAutoOnO1"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Device Settings",
+      "nl": "Apparaat instellingen"
+    },
+    "children": [
+      {
+        "id": "zwaveResetToDefault",
+        "$extends": "zwaveResetToDefault"
+      }
+    ]
+  }
+]

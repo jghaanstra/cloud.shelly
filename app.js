@@ -871,7 +871,7 @@ class ShellyApp extends OAuth2App {
   // BLUETOOTH: CONTINUOSLY LISTEN FOR BLE ADVERTISEMENTS
   async bluetoothListener() {
     try {
-      this.log('Bluetooth listener started ...');
+      this.log('Bluetooth listener (re)started ...');
       clearTimeout(this.bleInterval);
       this.bleInterval = this.homey.setInterval(async () => {
         const advertisements = await this.homey.ble.discover().catch(this.error);

@@ -1,0 +1,23 @@
+{
+  "name": {
+    "en": "Shelly Wave 1",
+    "nl": "Shelly Wave 1"
+  },
+  "images": {
+    "small": "./assets/drivers/shelly_wave_1/images/small.jpg",
+    "large": "./assets/drivers/shelly_wave_1/images/large.jpg",
+    "xlarge": "./assets/drivers/shelly_wave_1/images/xlarge.jpg"
+  },
+  "class": "socket",
+  "capabilities": [
+    "onoff"
+  ],
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "zwave": {
+    "manufacturerId": 1120,
+    "productTypeId": [2],
+    "productId": [131]
+  },
+  "platforms": [ "local", "cloud" ],
+  "connectivity": [ "zwave" ]
+}
