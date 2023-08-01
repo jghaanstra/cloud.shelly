@@ -673,5 +673,8 @@
   },
   "3.21.0": {
     "en": "Add support for the Shelly Wave 1 and basis support for the Shelly Wave 1PM (currently without power/energy measurement)."
+  },
+  "3.21.1": {
+    "en": "This release fixes an issue with the beacon mode of BLU devices and it adds the names for the 4th and 5th add-on connected external temperature sensor. "
   }
 }
