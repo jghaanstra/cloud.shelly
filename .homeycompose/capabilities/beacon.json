@@ -9,12 +9,12 @@
   "uiComponent": "sensor",
   "insights": true,
   "insightsTitleFalse": {
-    "en": "In Range",
-    "nl": "Binnen bereik"
-  },
-  "insightsTitleTrue": {
     "en": "Out of Range",
     "nl": "Buiten bereik"
+  },
+  "insightsTitleTrue": {
+    "en": "In Range",
+    "nl": "Binnen bereik"
   },
   "icon": "/assets/beacon.svg"
 }

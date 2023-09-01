@@ -2,8 +2,8 @@
   "id": "zwaveAutoOnO1",
   "type": "number",
   "label": {
-    "en": "Auto ON with timer",
-    "nl": "Automtisch AAN met timer"
+    "en": "Auto ON O1 with timer",
+    "nl": "Automtisch AAN O1 met timer"
   },
   "value": 0,
   "attr": {
@@ -15,8 +15,8 @@
     "nl": "seconden"
   },
   "hint": {
-    "en": "This parameter (20) defines the time after which the device is turned on automatically after been turned on. Note: setting this parameter to zero will disable automatically turning on.",
-    "nl": "Deze parameter (20) bepaalt de tijd waarna het apparaat zichzelf automatisch aanzet na te zijn uitgeschakeld. Let op: het instellen van deze parameter op nul schakelt het automatisch aan gaan uit."
+    "en": "This parameter (20) defines the time after which output 1 is turned on automatically after been turned on. Note: setting this parameter to zero will disable automatically turning on.",
+    "nl": "Deze parameter (20) bepaalt de tijd waarna output 1 zichzelf automatisch aanzet na te zijn uitgeschakeld. Let op: het instellen van deze parameter op nul schakelt het automatisch aan gaan uit."
   },
   "zwave": {
     "index": 20,

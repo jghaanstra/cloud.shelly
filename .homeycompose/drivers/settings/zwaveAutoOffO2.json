@@ -1,0 +1,25 @@
+{
+  "id": "zwaveAutoOffO2",
+  "type": "number",
+  "label": {
+    "en": "Auto OFF O2 with timer",
+    "nl": "Automtisch UIT O2 met timer"
+  },
+  "value": 0,
+  "attr": {
+    "min": 0,
+    "max": 32535
+  },
+  "units": {
+    "en": "seconds",
+    "nl": "seconden"
+  },
+  "hint": {
+    "en": "This parameter (21) defines the time after which the output 2 is turned off automatically. Note: setting this parameter to zero will disable automatically turning off.",
+    "nl": "Deze parameter (21) bepaalt de tijd waarna output 2 zichzelf automatisch uitzet. Let op: het instellen van deze parameter op nul schakelt het automatisch uit gaan uit."
+  },
+  "zwave": {
+    "index": 21,
+    "size": 2
+  }
+}

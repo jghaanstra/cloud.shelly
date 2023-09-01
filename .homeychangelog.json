@@ -676,5 +676,8 @@
   },
   "3.21.1": {
     "en": "This release fixes an issue with the beacon mode of BLU devices and it adds the names for the 4th and 5th add-on connected external temperature sensor. "
+  },
+  "3.21.2": {
+    "en": "This release adds support for the Shelly Pro EM-50, Plus Mini, Plus 1 Mini, Plus 1PM Mini and the Shelly Blu Motion. It also adds untested support for the Shelly Wave 2PM excluding the energy capabilities (as this requires Athom to fix the zwave driver first)."
   }
 }

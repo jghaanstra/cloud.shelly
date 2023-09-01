@@ -1,0 +1,60 @@
+{
+  "name": {
+    "en": "Shelly Wave 2PM",
+    "nl": "Shelly Wave 2PM"
+  },
+  "images": {
+    "small": "./assets/drivers/shelly_wave_2pm/images/small.jpg",
+    "large": "./assets/drivers/shelly_wave_2pm/images/large.jpg"
+  },
+  "class": "socket",
+  "capabilities": [
+    "onoff",
+    "measure_power",
+    "meter_power"
+  ],
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "zwave": {
+    "manufacturerId": 1120,
+    "productTypeId": [2],
+    "productId": [129],
+    "associationGroups": [
+      1,
+      2,
+      3
+    ],
+    "multiChannelNodes": {
+      "1": {
+        "class": "socket",
+        "capabilities": [
+          "onoff",
+          "measure_power",
+          "meter_power"
+        ],
+        "icon": "{{driverAssetsPath}}/icon.svg",
+        "name": {
+          "en": "{{driverNameEn}} - Relay 1",
+          "nl": "{{driverNameNl}} - Relais 1"
+        },
+        "settings": []
+      },
+      "2": {
+        "class": "socket",
+        "capabilities": [
+          "onoff",
+          "measure_power",
+          "meter_power"
+        ],
+        "icon": "{{driverAssetsPath}}/icon.svg",
+        "name": {
+          "en": "{{driverNameEn}} - Relay 2",
+          "nl": "{{driverNameNl}} - Relais 2"
+        },
+        "settings": []
+      }
+    }
+  },
+  "platforms": [ "local", "cloud" ],
+  "connectivity": [ "zwave" ],
+  "deprecated": true
+}

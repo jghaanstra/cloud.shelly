@@ -1,0 +1,115 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Switch 1 - Output Settings",
+      "nl": "Switch 1 - Output instellingen"
+    },
+    "children": [
+      {
+        "id": "zwaveSwitchTypeSW1",
+        "$extends": "zwaveSwitchTypeSW1"
+      },
+      {
+        "id": "zwaveContactTypeO1",
+        "$extends": "zwaveContactTypeO1"
+      },
+      {
+        "id": "zwaveRestoreStateO1",
+        "$extends": "zwaveRestoreStateO1"
+      },
+      {
+        "id": "zwaveAutoOffO1",
+        "$extends": "zwaveAutoOffO1"
+      },
+      {
+        "id": "zwaveAutoOnO1",
+        "$extends": "zwaveAutoOnO1"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Switch 2 - Output Settings",
+      "nl": "Switch 2 - Output instellingen"
+    },
+    "children": [
+      {
+        "id": "zwaveSwitchTypeSW2",
+        "$extends": "zwaveSwitchTypeSW2"
+      },
+      {
+        "id": "zwaveContactTypeO2",
+        "$extends": "zwaveContactTypeO2"
+      },
+      {
+        "id": "zwaveRestoreStateO2",
+        "$extends": "zwaveRestoreStateO2"
+      },
+      {
+        "id": "zwaveAutoOffO2",
+        "$extends": "zwaveAutoOffO2"
+      },
+      {
+        "id": "zwaveAutoOnO2",
+        "$extends": "zwaveAutoOnO2"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Switch 1 - Power Settings",
+      "nl": "Switch 1 - Energie instellingen"
+    },
+    "children": [
+      {
+        "id": "zwavePowerReportOnChangeO1",
+        "$extends": "zwavePowerReportOnChangeO1"
+      },
+      {
+        "id": "zwaveMinimalTimePowerReportO1",
+        "$extends": "zwaveMinimalTimePowerReportO1"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Switch 2 - Power Settings",
+      "nl": "Switch 2 - Energie instellingen"
+    },
+    "children": [
+      {
+        "id": "zwavePowerReportOnChangeO2",
+        "$extends": "zwavePowerReportOnChangeO2"
+      },
+      {
+        "id": "zwaveMinimalTimePowerReportO2",
+        "$extends": "zwaveMinimalTimePowerReportO2"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Device Settings",
+      "nl": "Apparaat instellingen"
+    },
+    "children": [
+      {
+        "id": "zwaveReverseInputsO1O2",
+        "$extends": "zwaveReverseInputsO1O2"
+      },
+      {
+        "id": "zwaveReverseOutputsO1O2",
+        "$extends": "zwaveReverseOutputsO1O2"
+      },
+      {
+        "id": "zwaveResetToDefault",
+        "$extends": "zwaveResetToDefault"
+      }
+    ]
+  }
+]

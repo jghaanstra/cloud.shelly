@@ -1,9 +1,9 @@
 {
-  "id": "zwaveContactTypeO1",
+  "id": "zwaveContactTypeO2",
   "type": "dropdown",
   "label": {
-    "en": "Contact Type O1 - NO/NC",
-    "nl": "Contact type O1 - NO/NC"
+    "en": "Contact Type O2 - NO/NC",
+    "nl": "Contact type O2 - NO/NC"
   },
   "value": "0",
   "values": [
@@ -23,11 +23,11 @@
     }
   ],
   "hint": {
-    "en": "This parameter (23) defines the type of Relay contact type for Output 1.",
-    "nl": "Deze parameter (23) bepaalt het type van relay contact voor Output 1."
+    "en": "This parameter (24) defines the type of Relay contact type for Output 2.",
+    "nl": "Deze parameter (24) bepaalt het type van relay contact voor Output 2."
   },
     "zwave": {
-    "index": 23,
+    "index": 24,
     "size": 1
   }
 }

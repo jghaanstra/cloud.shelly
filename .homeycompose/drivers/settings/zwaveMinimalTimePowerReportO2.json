@@ -1,0 +1,25 @@
+{
+  "id": "zwaveMinimalTimePowerReportO2",
+  "type": "number",
+  "label": {
+    "en": "Minimal time between reports for O2",
+    "nl": "Minimale tijd tussen reporrts voor O2"
+  },
+  "value": 30,
+  "attr": {
+    "min": 10,
+    "max": 120
+  },
+  "units": {
+    "en": "%",
+    "nl": "%"
+  },
+  "hint": {
+    "en": "This parameter (40) defines the minimum time between sending reports to Homey for output 2.",
+    "nl": "Deze parameter (40) bepaalt de minimum tijd tussen status updates naar Homey voor output 2."
+  },
+  "zwave": {
+    "index": 40,
+    "size": 1
+  }
+}

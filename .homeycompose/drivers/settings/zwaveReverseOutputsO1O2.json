@@ -1,0 +1,33 @@
+{
+  "id": "zwaveReverseOutputsO1O2",
+  "type": "dropdown",
+  "label": {
+    "en": "Swap Outputs O1 & O2",
+    "nl": "Wissel Outputs O1 & O2"
+  },
+  "value": "0",
+  "values": [
+    {
+      "id": "0",
+      "label": {
+        "en": "Default",
+        "nl": "Standaard"
+      }
+    },
+    {
+      "id": "1",
+      "label": {
+        "en": "Reversed",
+        "nl": "Omgewisseld"
+      }
+    }
+  ],
+  "hint": {
+    "en": "This parameter (16) allows to swap the operation of outputs O1 and O2 without changing the wiring.",
+    "nl": "Deze parameter (16) maakt het mogelijk om outputs O1 en O2 om te wisselen zonder de bedrading aan te passen."
+  },
+    "zwave": {
+    "index": 16,
+    "size": 1
+  }
+}

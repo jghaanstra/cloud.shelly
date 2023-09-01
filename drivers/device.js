@@ -2742,14 +2742,6 @@ class ShellyDevice extends Homey.Device {
 
       /* placeholder for update for specific devices */
 
-      // TODO: remove after the next release
-      if (this.hasCapability('measure_temperature.4')) {
-        this.setCapabilityOptions("measure_temperature.4", {"title": {"en": "Temperature Sensor 4", "nl": "Temperatuursensor 4"}});
-      }
-      if (this.hasCapability('measure_temperature.5')) {
-        this.setCapabilityOptions("measure_temperature.5", {"title": {"en": "Temperature Sensor 5", "nl": "Temperatuursensor 5"}});
-      }
-
       /* update device config */
       let result;
 

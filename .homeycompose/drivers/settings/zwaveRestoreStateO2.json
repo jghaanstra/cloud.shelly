@@ -1,0 +1,29 @@
+{
+  "id": "zwaveRestoreStateO2",
+  "type": "dropdown",
+  "label": {
+    "en": "Restore state of O2 after power failure",
+    "nl": "Herstel status van O2 na stroom uitval"
+  },
+  "value": "0",
+  "values": [
+    {
+      "id": "0",
+      "label": {
+        "en": "Output 2 saves last on/off status and restores it after a power failure",
+        "nl": "Output 2 hersteld on/off status na stroom uitval"
+      }
+    },
+    {
+      "id": "1",
+      "label": {
+        "en": "Output 2 does not save on/off status and does not restore it after a power failure, it remains off",
+        "nl": "Output 2 is standaard uit na stroom uitval"
+      }
+    }
+  ],
+  "zwave": {
+    "index": 18,
+    "size": 1
+  }
+}

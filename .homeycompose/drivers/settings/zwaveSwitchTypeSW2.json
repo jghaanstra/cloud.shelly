@@ -1,9 +1,9 @@
 {
-  "id": "zwaveSwitchTypeSW1",
+  "id": "zwaveSwitchTypeSW2",
   "type": "dropdown",
   "label": {
-    "en": "Switch Type SW1",
-    "nl": "Schakelaar type SW1"
+    "en": "Switch Type SW2",
+    "nl": "Schakelaar type SW2"
   },
   "value": "2",
   "values": [
@@ -30,11 +30,11 @@
     }
   ],
   "hint": {
-    "en": "This parameter (1) determines the type of switch connected to input 1.",
-    "nl": "Deze parameter (1) specificeert het type schakelaar dat is aangesloten op input 1."
+    "en": "This parameter (2) determines the type of switch connected to input 2.",
+    "nl": "Deze parameter (2) specificeert het type schakelaar dat is aangesloten op input 2."
   },
   "zwave": {
-    "index": 1,
+    "index": 2,
     "size": 1
   }
 }

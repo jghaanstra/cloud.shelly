@@ -2,8 +2,8 @@
   "id": "zwavePowerReportOnChangeO1",
   "type": "number",
   "label": {
-    "en": "Power report on change for Output 1",
-    "nl": "Power report bij wijziging voor Output 1"
+    "en": "Power report on change for O1",
+    "nl": "Power report bij wijziging voor O1"
   },
   "value": 50,
   "attr": {
@@ -15,8 +15,8 @@
     "nl": "%"
   },
   "hint": {
-    "en": "This parameter (36) defines the minimum change in consumed power that will result in sending new report to Homey.",
-    "nl": "Deze parameter (36) bepaalt de minimum wijziging in stroomverbruik dat nodig is om een status update naar Homey te versturen."
+    "en": "This parameter (36) defines the minimum change in consumed power for output 1 that will result in sending new report to Homey.",
+    "nl": "Deze parameter (36) bepaalt de minimum wijziging in stroomverbruik voor output 1 dat nodig is om een status update naar Homey te versturen."
   },
   "zwave": {
     "index": 36,

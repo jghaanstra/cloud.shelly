@@ -158,6 +158,9 @@ class ShellyBluetoothDevice extends Device {
         if (!this.getAvailable()) { await this.setAvailable(); }
         let channel = this.getStoreValue('channel') || 0;
 
+        // update the PID to avoid processing double advertisements
+        await this.setStoreValue('ble_pid', result.pid);
+
         /* measure_battery */
         if (result.hasOwnProperty("measure_battery")) {
           this.updateCapabilityValue('measure_battery', result.measure_battery, channel);
@@ -208,26 +211,27 @@ class ShellyBluetoothDevice extends Device {
 
         /* beacon */
         if (this.hasCapability('beacon')) {
+          await this.homey.clearTimeout(this.timeOutBeacon);
+          this.timeOutBeacon = this.homey.setTimeout(async () => {
+            try {
+              if (this.getCapabilityValue('beacon')) {
+                await this.triggerDeviceTriggerCard('beacon', false, channel, 'triggerBeaconOutRange', {}, {});
+                await this.triggerDeviceTriggerCard('beacon', false, channel, 'triggerBeaconChanged', {"status": false}, {"status": false});
+                await this.updateCapabilityValue('beacon', false, channel);
+              }
+            } catch (error) {
+              this.error(error);
+            }
+          }, this.getSetting('beacon_timeout') * 60 * 1000);
+
           if (!this.getCapabilityValue('beacon')) {
             await this.triggerDeviceTriggerCard('beacon', true, channel, 'triggerBeaconInRange', {}, {});
             await this.triggerDeviceTriggerCard('beacon', true, channel, 'triggerBeaconChanged', {"status": true}, {"status": true});
             await this.updateCapabilityValue('beacon', true, channel);
           }
-
-          await this.homey.clearTimeout(this.timeOutBeacon);
-          this.timeOutBeacon = this.homey.setTimeout(async () => {
-            try {
-              await this.triggerDeviceTriggerCard('beacon', false, channel, 'triggerBeaconOutRange', {}, {});
-              await this.triggerDeviceTriggerCard('beacon', false, channel, 'triggerBeaconChanged', {"status": false}, {"status": true});
-              await this.updateCapabilityValue('beacon', false, channel);
-            } catch (error) {
-              this.error(error);
-            }
-          }, this.getSetting('beacon_timeout') * 60 * 1000);
         }
+        
 
-        // update the PID to avoid processing double advertisements
-        await this.setStoreValue('ble_pid', result.pid);
       }
     } catch (error) {
       this.error(error);
