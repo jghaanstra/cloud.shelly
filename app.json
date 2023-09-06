@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.21.2",
+  "version": "3.21.3",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -5884,7 +5884,6 @@
       "connectivity": [
         "zwave"
       ],
-      "deprecated": true,
       "id": "shelly_wave_2pm",
       "settings": [
         {
@@ -6338,8 +6337,8 @@
               "id": "zwaveReverseInputsO1O2",
               "type": "dropdown",
               "label": {
-                "en": "Swap Outputs O1 & O2",
-                "nl": "Wissel Outputs O1 & O2"
+                "en": "Swap Inputs SW1 & SW2",
+                "nl": "Wissel Inputs SW1 & SW2"
               },
               "value": "0",
               "values": [
@@ -6360,7 +6359,7 @@
               ],
               "hint": {
                 "en": "This parameter (6) allows to swap the operation of switches connected to inputs SW1 and SW2 without changing the wiring.",
-                "nl": "Deze parameter (6) maakt het mogelijk om inputs O1 en O2 om te wisselen zonder de bedrading aan te passen."
+                "nl": "Deze parameter (6) maakt het mogelijk om inputs SW1 en SW2 om te wisselen zonder de bedrading aan te passen."
               },
               "zwave": {
                 "index": 6,

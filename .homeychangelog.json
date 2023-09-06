@@ -679,5 +679,8 @@
   },
   "3.21.2": {
     "en": "This release adds support for the Shelly Pro EM-50, Plus Mini, Plus 1 Mini, Plus 1PM Mini and the Shelly Blu Motion. It also adds untested support for the Shelly Wave 2PM excluding the energy capabilities (as this requires Athom to fix the zwave driver first)."
+  },
+  "3.21.3": {
+    "en": "Enable support for the Shelly Wave 2PM."
   }
 }

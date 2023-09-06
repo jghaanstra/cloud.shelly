@@ -13,9 +13,6 @@ class ShellyZwaveDevice extends ZwaveDevice {
       // Make sure the device is recognised as a zwave device in the rest of the app
       await this.setStoreValue('communication', 'zwave');
 
-      // Get number of multi channel nodes
-      this.numberOfMultiChannelNodes = Object.keys(this.node.MultiChannelNodes || {}).length;
-
       // Register the device capabilities from the device driver
       await this.registerCapabilities();
 
