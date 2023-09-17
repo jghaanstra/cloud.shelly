@@ -219,6 +219,7 @@ class ShellyApp extends OAuth2App {
                 return await this.util.sendCommand('/ota?update=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
               }
               case 'websocket': {
+                await this.util.sendRPCCommand('/rpc/Shelly.CheckForUpdate', device.getSetting('address'), device.getSetting('password'));
                 return await this.util.sendRPCCommand('/rpc/Shelly.Update', args.device.getSetting('address'), args.device.getSetting('password'));
               }
               case 'cloud': {
@@ -266,6 +267,7 @@ class ShellyApp extends OAuth2App {
                       await this.util.sendCommand(path, device.getSetting('address'), device.getSetting('username'), device.getSetting('password'));
                     }
                     case 'websocket': {
+                      await this.util.sendRPCCommand('/rpc/Shelly.CheckForUpdate', device.getSetting('address'), device.getSetting('password'));
                       await this.util.sendRPCCommand('/rpc/Shelly.Update?stage='+ args.stage, device.getSetting('address'), device.getSetting('password'));
                     }
                     case 'default': {

@@ -36,7 +36,8 @@
  * ```
  * @see [source](https://github.com/nodejs/node/blob/v20.2.0/lib/vm.js)
  */
-declare module 'vm' {
+declare module 'node:vm' {
+    import { ImportAssertions } from 'node:module';
     interface Context extends NodeJS.Dict<any> {}
     interface BaseOptions {
         /**
@@ -66,7 +67,7 @@ declare module 'vm' {
          * Called during evaluation of this module when `import()` is called.
          * If this option is not specified, calls to `import()` will reject with `ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING`.
          */
-        importModuleDynamically?: ((specifier: string, script: Script, importAssertions: Object) => Module) | undefined;
+        importModuleDynamically?: ((specifier: string, script: Script, importAssertions: ImportAssertions) => Module) | undefined;
     }
     interface RunningScriptOptions extends BaseOptions {
         /**
@@ -889,6 +890,6 @@ declare module 'vm' {
         setExport(name: string, value: any): void;
     }
 }
-declare module 'node:vm' {
-    export * from 'vm';
+declare module 'vm' {
+    export * from 'node:vm';
 }

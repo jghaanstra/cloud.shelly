@@ -18,11 +18,7 @@
     "manufacturerId": 1120,
     "productTypeId": [2],
     "productId": [129],
-    "associationGroups": [
-      1,
-      2,
-      3
-    ],
+    "associationGroupsMultiChannel": [ 1 ],
     "multiChannelNodes": {
       "1": {
         "class": "socket",

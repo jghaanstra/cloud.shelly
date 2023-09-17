@@ -1,11 +1,10 @@
-// eslint-disable-next-line dt-header
+// eslint-disable-next-line @definitelytyped/dt-header
 // Type definitions for inspector
 
 // These definitions are auto-generated.
 // Please see https://github.com/DefinitelyTyped/DefinitelyTyped/pull/19330
 // for more information.
 
-// tslint:disable:max-line-length
 
 /**
  * The `node:inspector` module provides an API for interacting with the V8
@@ -24,7 +23,7 @@
  * ```
  * @see [source](https://github.com/nodejs/node/blob/v20.2.0/lib/inspector.js)
  */
-declare module 'inspector' {
+declare module 'node:inspector' {
     import EventEmitter = require('node:events');
     interface InspectorNotification<T> {
         method: string;
@@ -2706,8 +2705,9 @@ declare module 'inspector' {
      * @param [port='what was specified on the CLI'] Port to listen on for inspector connections. Optional.
      * @param [host='what was specified on the CLI'] Host to listen on for inspector connections. Optional.
      * @param [wait=false] Block until a client has connected. Optional.
+     * @returns Disposable that calls `inspector.close()`.
      */
-    function open(port?: number, host?: string, wait?: boolean): void;
+    function open(port?: number, host?: string, wait?: boolean): Disposable;
     /**
      * Deactivate the inspector. Blocks until there are no active connections.
      */
@@ -2742,7 +2742,7 @@ declare module 'inspector' {
 /**
  * The inspector module provides an API for interacting with the V8 inspector.
  */
-declare module 'node:inspector' {
-    import inspector = require('inspector');
+declare module 'inspector' {
+    import inspector = require('node:inspector');
     export = inspector;
 }

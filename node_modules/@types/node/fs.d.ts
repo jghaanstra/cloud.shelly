@@ -18,7 +18,7 @@
  * forms, and are accessible using both CommonJS syntax and ES6 Modules (ESM).
  * @see [source](https://github.com/nodejs/node/blob/v20.2.0/lib/fs.js)
  */
-declare module 'fs' {
+declare module 'node:fs' {
     import * as stream from 'node:stream';
     import { Abortable, EventEmitter } from 'node:events';
     import { URL } from 'node:url';
@@ -3618,15 +3618,28 @@ declare module 'fs' {
         fd?: number | promises.FileHandle | undefined;
         mode?: number | undefined;
         autoClose?: boolean | undefined;
-        /**
-         * @default false
-         */
         emitClose?: boolean | undefined;
         start?: number | undefined;
+        signal?: AbortSignal | null | undefined;
         highWaterMark?: number | undefined;
     }
+    interface FSImplementation {
+        open?: (...args: any[]) => any;
+        close?: (...args: any[]) => any;
+    }
+    interface CreateReadStreamFSImplementation extends FSImplementation {
+        read: (...args: any[]) => any;
+    }
+    interface CreateWriteStreamFSImplementation extends FSImplementation {
+        write: (...args: any[]) => any;
+        writev?: (...args: any[]) => any;
+    }
     interface ReadStreamOptions extends StreamOptions {
+        fs?: CreateReadStreamFSImplementation | null | undefined;
         end?: number | undefined;
+    }
+    interface WriteStreamOptions extends StreamOptions {
+        fs?: CreateWriteStreamFSImplementation | null | undefined;
     }
     /**
      * Unlike the 16 KiB default `highWaterMark` for a `stream.Readable`, the stream
@@ -3720,7 +3733,7 @@ declare module 'fs' {
      * If `options` is a string, then it specifies the encoding.
      * @since v0.1.31
      */
-    export function createWriteStream(path: PathLike, options?: BufferEncoding | StreamOptions): WriteStream;
+    export function createWriteStream(path: PathLike, options?: BufferEncoding | WriteStreamOptions): WriteStream;
     /**
      * Forces all currently queued I/O operations associated with the file to the
      * operating system's synchronized I/O completion state. Refer to the POSIX [`fdatasync(2)`](http://man7.org/linux/man-pages/man2/fdatasync.2.html) documentation for details. No arguments other
@@ -3900,6 +3913,36 @@ declare module 'fs' {
      * @return The number of bytes read.
      */
     export function readvSync(fd: number, buffers: ReadonlyArray<NodeJS.ArrayBufferView>, position?: number): number;
+
+    export interface OpenAsBlobOptions {
+        /**
+         * An optional mime type for the blob.
+         *
+         * @default 'undefined'
+         */
+        type?: string | undefined;
+    }
+
+    /**
+     * Returns a `Blob` whose data is backed by the given file.
+     *
+     * The file must not be modified after the `Blob` is created. Any modifications
+     * will cause reading the `Blob` data to fail with a `DOMException` error.
+     * Synchronous stat operations on the file when the `Blob` is created, and before
+     * each read in order to detect whether the file data has been modified on disk.
+     *
+     * ```js
+     * import { openAsBlob } from 'node:fs';
+     *
+     * const blob = await openAsBlob('the.file.txt');
+     * const ab = await blob.arrayBuffer();
+     * blob.stream();
+     * ```
+     * @since v19.8.0
+     * @experimental
+     */
+    export function openAsBlob(path: PathLike, options?: OpenAsBlobOptions): Promise<Blob>;
+
     export interface OpenDirOptions {
         /**
          * @default 'utf8'
@@ -4039,6 +4082,6 @@ declare module 'fs' {
      */
     export function cpSync(source: string | URL, destination: string | URL, opts?: CopySyncOptions): void;
 }
-declare module 'node:fs' {
-    export * from 'fs';
+declare module 'fs' {
+    export * from 'node:fs';
 }

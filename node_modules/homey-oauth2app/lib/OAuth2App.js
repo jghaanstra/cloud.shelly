@@ -94,8 +94,8 @@ class OAuth2App extends Homey.App {
   setOAuth2Config({
     configId = 'default',
     client = this.constructor.OAUTH2_CLIENT,
-    clientId = Homey.env.CLIENT_ID,
-    clientSecret = Homey.env.CLIENT_SECRET,
+    clientId = client.CLIENT_ID,
+    clientSecret = client.CLIENT_SECRET,
     apiUrl = client.API_URL,
     token = client.TOKEN,
     tokenUrl = client.TOKEN_URL,

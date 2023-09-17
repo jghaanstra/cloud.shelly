@@ -65,7 +65,7 @@
  * stalling the event loop while spawned processes complete.
  * @see [source](https://github.com/nodejs/node/blob/v20.2.0/lib/child_process.js)
  */
-declare module 'child_process' {
+declare module 'node:child_process' {
     import { ObjectEncodingOptions } from 'node:fs';
     import { EventEmitter, Abortable } from 'node:events';
     import * as net from 'node:net';
@@ -302,6 +302,11 @@ declare module 'child_process' {
          * @since v0.1.90
          */
         kill(signal?: NodeJS.Signals | number): boolean;
+        /**
+         * Calls {@link ChildProcess.kill} with `'SIGTERM'`.
+         * @since v20.5.0
+         */
+        [Symbol.dispose](): void;
         /**
          * When an IPC channel has been established between the parent and child (
          * i.e. when using {@link fork}), the `subprocess.send()` method can
@@ -1390,6 +1395,6 @@ declare module 'child_process' {
     function execFileSync(file: string, args: ReadonlyArray<string>, options: ExecFileSyncOptionsWithBufferEncoding): Buffer;
     function execFileSync(file: string, args?: ReadonlyArray<string>, options?: ExecFileSyncOptions): string | Buffer;
 }
-declare module 'node:child_process' {
-    export * from 'child_process';
+declare module 'child_process' {
+    export * from 'node:child_process';
 }

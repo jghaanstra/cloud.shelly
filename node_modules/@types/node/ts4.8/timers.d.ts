@@ -8,7 +8,7 @@
  * built around the Node.js [Event Loop](https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/#setimmediate-vs-settimeout).
  * @see [source](https://github.com/nodejs/node/blob/v20.2.0/lib/timers.js)
  */
-declare module 'timers' {
+declare module 'node:timers' {
     import { Abortable } from 'node:events';
     import { setTimeout as setTimeoutPromise, setImmediate as setImmediatePromise, setInterval as setIntervalPromise } from 'node:timers/promises';
     interface TimerOptions extends Abortable {
@@ -68,6 +68,11 @@ declare module 'timers' {
                  */
                 hasRef(): boolean;
                 _onImmediate: Function; // to distinguish it from the Timeout class
+                /**
+                 * Cancels the immediate. This is similar to calling `clearImmediate()`.
+                 * @since v20.5.0
+                 */
+                [Symbol.dispose](): void;
             }
             /**
              * This object is created internally and is returned from `setTimeout()` and `setInterval()`. It can be passed to either `clearTimeout()` or `clearInterval()` in order to cancel the
@@ -114,6 +119,11 @@ declare module 'timers' {
                  */
                 refresh(): this;
                 [Symbol.toPrimitive](): number;
+                /**
+                 * Cancels the timeout.
+                 * @since v20.5.0
+                 */
+                [Symbol.dispose](): void;
             }
         }
         /**
@@ -163,10 +173,10 @@ declare module 'timers' {
          * @param args Optional arguments to pass when the `callback` is called.
          * @return for use with {@link clearInterval}
          */
-        function setInterval<TArgs extends any[]>(callback: (...args: TArgs) => void, ms?: number, ...args: TArgs): NodeJS.Timer;
+        function setInterval<TArgs extends any[]>(callback: (...args: TArgs) => void, ms?: number, ...args: TArgs): NodeJS.Timeout;
         // util.promisify no rest args compability
         // tslint:disable-next-line void-return
-        function setInterval(callback: (args: void) => void, ms?: number): NodeJS.Timer;
+        function setInterval(callback: (args: void) => void, ms?: number): NodeJS.Timeout;
         namespace setInterval {
             const __promisify__: typeof setIntervalPromise;
         }
@@ -210,6 +220,6 @@ declare module 'timers' {
         function queueMicrotask(callback: () => void): void;
     }
 }
-declare module 'node:timers' {
-    export * from 'timers';
+declare module 'timers' {
+    export * from 'node:timers';
 }

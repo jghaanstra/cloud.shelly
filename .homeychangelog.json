@@ -682,5 +682,8 @@
   },
   "3.21.3": {
     "en": "Enable support for the Shelly Wave 2PM."
+  },
+  "3.21.4": {
+    "en": "This release adds support for the BLU Gateway and it adds an action card for devices with the meter power capability which allows it to set as cumulative. It fixes an issue with the upgrade firmware card for Plus/Pro devices by adding an extra firmware availability check. And it adds proper device icons for the BLU DW, BLU Motion, Pro 4PM, Pro Dual Cover and Wall Display."
   }
 }

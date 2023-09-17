@@ -69,7 +69,7 @@
       "Shelly radiator"
     ]
   },
-  "version": "3.21.3",
+  "version": "3.21.4",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -2336,7 +2336,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_returned|meter_power.returned"
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_returned|meter_power.returned|meter_power"
           }
         ],
         "platforms": [
@@ -5841,10 +5841,8 @@
         "productId": [
           129
         ],
-        "associationGroups": [
-          1,
-          2,
-          3
+        "associationGroupsMultiChannel": [
+          1
         ],
         "multiChannelNodes": {
           "1": {
