@@ -887,7 +887,7 @@ class ShellyApp extends OAuth2App {
             }
           });
         }
-      }, 5000);
+      }, 5100);
     } catch (error) {
       this.error(error);
     }

@@ -1480,9 +1480,9 @@ class ShellyDevice extends Homey.Device {
       if (result.hasOwnProperty("emdata:0")) {
 
         /* meter_power */
-        this.updateCapabilityValue('meter_power', result["emdata:0"].a_total_act_energy, 0);
-        this.updateCapabilityValue('meter_power', result["emdata:0"].b_total_act_energy, 1);
-        this.updateCapabilityValue('meter_power', result["emdata:0"].c_total_act_energy, 2);
+        this.updateCapabilityValue('meter_power', result["emdata:0"].a_total_act_energy / 1000, 0);
+        this.updateCapabilityValue('meter_power', result["emdata:0"].b_total_act_energy / 1000, 1);
+        this.updateCapabilityValue('meter_power', result["emdata:0"].c_total_act_energy / 1000, 2);
 
         /* meter_power.returned */
         const a_total_act_ret_energy = result["emdata:0"].a_total_act_ret_energy / 1000;
@@ -1545,7 +1545,7 @@ class ShellyDevice extends Homey.Device {
       if (result.hasOwnProperty("emdata1:"+ channel)) {
 
         /* meter_power */
-        this.updateCapabilityValue('meter_power', result["emdata1:"+channel].total_act_energy, channel);
+        this.updateCapabilityValue('meter_power', result["emdata1:"+channel].total_act_energy / 1000, channel);
 
         /* meter_power.returned */
         const total_act_ret_energy = result["emdata1:"+channel].total_act_ret_energy / 1000;

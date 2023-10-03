@@ -2,7 +2,7 @@
 
 const Device = require('../device_zwave.js');
 
-class ShellyWave1PMDevice extends Device {
+class ShellyWave1Device extends Device {
 
   async registerCapabilities() {
     try {
@@ -16,4 +16,4 @@ class ShellyWave1PMDevice extends Device {
 
 }
 
-module.exports = ShellyWave1PMDevice;
+module.exports = ShellyWave1Device;

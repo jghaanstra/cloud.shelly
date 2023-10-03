@@ -1,0 +1,29 @@
+{
+  "name": {
+    "en": "Shelly Wave Shutter",
+    "nl": "Shelly Wave Shutter"
+  },
+  "images": {
+    "small": "./assets/drivers/shelly_wave_shutter/images/small.jpg",
+    "large": "./assets/drivers/shelly_wave_shutter/images/large.jpg"
+  },
+  "class": "windowcoverings",
+  "capabilities": [
+    "windowcoverings_set",
+    "measure_power",
+    "meter_power"
+  ],
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "zwave": {
+    "manufacturerId": 1120,
+    "productTypeId": [3],
+    "productId": [130]
+  },
+  "associationGroups": [
+    1,
+    2,
+    3
+  ],
+  "platforms": [ "local", "cloud" ],
+  "connectivity": [ "zwave" ]
+}

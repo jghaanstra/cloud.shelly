@@ -685,5 +685,8 @@
   },
   "3.21.4": {
     "en": "This release adds support for the BLU Gateway and it adds an action card for devices with the meter power capability which allows it to set as cumulative. It fixes an issue with the upgrade firmware card for Plus/Pro devices by adding an extra firmware availability check. And it adds proper device icons for the BLU DW, BLU Motion, Pro 4PM, Pro Dual Cover and Wall Display."
+  },
+  "3.21.5": {
+    "en": "This release adds support for the Shelly Wave Shutter. It also fixes power/energy readings on Shelly Wave PM devices (credits to Caseda) and  incorrect energy reading on Plus/Pro devices with multiple channels."
   }
 }

@@ -24,6 +24,28 @@ class ShellyZwaveDevice extends ZwaveDevice {
     }
   }
 
+  async onSettings({oldSettings, newSettings, changedKeys}) {
+    try {
+      this.log('newSettings:', JSON.stringify(newSettings));
+
+      changedKeys.forEach(async (key) => {
+        
+          // Wave Shutter: add / remove windowcoverings_tilt_set based on venetian operating mode
+          if (key === 'zwaveShutterOperatingMode') {
+            if (newSettings.zwaveShutterOperatingMode !== 0 && !this.hasCapability('windowcoverings_tilt_set')) {
+              await this.addCapability('windowcoverings_tilt_set');
+            } else if (newSettings.zwaveShutterOperatingMode === 0 && this.hasCapability('windowcoverings_tilt_set')) {
+              await this.removeCapability('windowcoverings_tilt_set');
+            }
+          }
+
+      });
+
+    } catch (error) {
+      this.log(error);
+    }
+  }
+
 }
 
 module.exports = ShellyZwaveDevice;
