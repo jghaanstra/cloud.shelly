@@ -1,0 +1,30 @@
+{
+  "id": "triggerVoltmeter4",
+  "title": {
+    "en": "Voltagemeter 4 has changed",
+    "nl": "Voltagemeter 4 is veranderd"
+  },
+  "tokens": [
+    {
+      "name": "voltage",
+      "type": "number",
+      "title": {
+        "en": "Voltage",
+        "nl": "Voltage"
+      },
+      "example": 5
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_voltage.4"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

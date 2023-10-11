@@ -66,8 +66,11 @@ Bluetooth
 -------------
 Shelly BLU Button 1
 Shelly BLU DoorWindow
+Shelly BLU Motion
 
 Zwave
 -------------
 Shelly Wave 1
-Shelly Wave 1PM (momenteel zonder energie meting)
+Shelly Wave 1PM
+Shelly Wave 2PM
+Shelly Wave Shutter

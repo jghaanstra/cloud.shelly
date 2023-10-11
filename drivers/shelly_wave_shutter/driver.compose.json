@@ -19,11 +19,7 @@
     "productTypeId": [3],
     "productId": [130]
   },
-  "associationGroups": [
-    1,
-    2,
-    3
-  ],
+  "associationGroups": [ 1 ],
   "platforms": [ "local", "cloud" ],
   "connectivity": [ "zwave" ]
 }

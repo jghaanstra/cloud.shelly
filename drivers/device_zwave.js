@@ -27,8 +27,6 @@ class ShellyZwaveDevice extends ZwaveDevice {
   async onSettings({oldSettings, newSettings, changedKeys}) {
     try {
       this.log('newSettings:', JSON.stringify(newSettings));
-      
-      await super.onSettings(oldSettings, newSettings, changedKeys);
 
       changedKeys.forEach(async (key) => {
         
@@ -43,6 +41,8 @@ class ShellyZwaveDevice extends ZwaveDevice {
           }
 
       });
+
+      return await super.onSettings({oldSettings, newSettings, changedKeys});
 
     } catch (error) {
       this.log(error);
