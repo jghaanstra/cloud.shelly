@@ -1672,7 +1672,7 @@ class ShellyDevice extends Homey.Device {
         if (this.hasCapability('measure_temperature.1')) {
           if (this.getCapabilityValue('measure_temperature.1') !== result["temperature:100"].tC) {
             this.updateCapabilityValue('measure_temperature.1', result["temperature:100"].tC, channel);
-            this.homey.flow.getDeviceTriggerCard('triggerTemperature1').trigger(this, {'temperature': result["temperature:100"].tC}, {}).catch(error => { this.error(error) });
+            this.homey.flow.getDeviceTriggerCard('triggerTemperature1').trigger(this, {'temperature': result["temperature:100"].tC}, {}).catch(error => { this.error(error); this.error(result["temperature:100"].tC) });
           }
         } else {
           this.addCapability('measure_temperature.1');
@@ -1924,6 +1924,66 @@ class ShellyDevice extends Homey.Device {
           } else {
             this.addCapability('input_external_5');
           }
+        }
+      }
+
+      /* add-on voltage 1 */
+      if (result.hasOwnProperty("voltmeter:100") && channel === 0) {
+        if (this.hasCapability('measure_voltage.1')) {
+          if (this.getCapabilityValue('measure_voltage.1') !== result["voltmeter:100"].voltage) {
+            this.updateCapabilityValue('measure_voltage.1', result["voltmeter:100"].voltage, channel);
+            this.homey.flow.getDeviceTriggerCard('triggerVoltmeter1').trigger(this, {'voltage': result["voltmeter:100"].voltage}, {}).catch(error => { this.error(error) });
+          }
+        } else {
+          this.addCapability('measure_voltage.1');
+        }
+      }
+
+      /* add-on voltage 2 */
+      if (result.hasOwnProperty("voltmeter:101") && channel === 0) {
+        if (this.hasCapability('measure_voltage.2')) {
+          if (this.getCapabilityValue('measure_voltage.2') !== result["voltmeter:101"].voltage) {
+            this.updateCapabilityValue('measure_voltage.2', result["voltmeter:101"].voltage, channel);
+            this.homey.flow.getDeviceTriggerCard('triggerVoltmeter2').trigger(this, {'voltage': result["voltmeter:101"].voltage}, {}).catch(error => { this.error(error) });
+          }
+        } else {
+          this.addCapability('measure_voltage.2');
+        }
+      }
+
+      /* add-on voltage 3 */
+      if (result.hasOwnProperty("voltmeter:102") && channel === 0) {
+        if (this.hasCapability('measure_voltage.3')) {
+          if (this.getCapabilityValue('measure_voltage.3') !== result["voltmeter:102"].voltage) {
+            this.updateCapabilityValue('measure_voltage.3', result["voltmeter:102"].voltage, channel);
+            this.homey.flow.getDeviceTriggerCard('triggerVoltmeter3').trigger(this, {'voltage': result["voltmeter:102"].voltage}, {}).catch(error => { this.error(error) });
+          }
+        } else {
+          this.addCapability('measure_voltage.3');
+        }
+      }
+
+      /* add-on voltage 4 */
+      if (result.hasOwnProperty("voltmeter:103") && channel === 0) {
+        if (this.hasCapability('measure_voltage.4')) {
+          if (this.getCapabilityValue('measure_voltage.4') !== result["voltmeter:103"].voltage) {
+            this.updateCapabilityValue('measure_voltage.4', result["voltmeter:103"].voltage, channel);
+            this.homey.flow.getDeviceTriggerCard('triggerVoltmeter4').trigger(this, {'voltage': result["voltmeter:103"].voltage}, {}).catch(error => { this.error(error) });
+          }
+        } else {
+          this.addCapability('measure_voltage.4');
+        }
+      }
+
+      /* add-on voltage 5 */
+      if (result.hasOwnProperty("voltmeter:104") && channel === 0) {
+        if (this.hasCapability('measure_voltage.5')) {
+          if (this.getCapabilityValue('measure_voltage.5') !== result["voltmeter:104"].voltage) {
+            this.updateCapabilityValue('measure_voltage.5', result["voltmeter:104"].voltage, channel);
+            this.homey.flow.getDeviceTriggerCard('triggerVoltmeter5').trigger(this, {'voltage': result["voltmeter:104"].voltage}, {}).catch(error => { this.error(error) });
+          }
+        } else {
+          this.addCapability('measure_voltage.5');
         }
       }
 
@@ -2305,7 +2365,24 @@ class ShellyDevice extends Homey.Device {
         case 'voltage1':
         case 'voltage2':
         case 'V':
-          this.updateCapabilityValue('measure_voltage', value, channel);
+          if (channel < 100) {
+            this.updateCapabilityValue('measure_voltage', value, channel);
+          } else if (this.getStoreValue('channel') === 0 && channel === 100) {
+            if (this.getCapabilityValue('measure_voltage.1') !== value) {
+              this.updateCapabilityValue('measure_voltage.1', value, channel);
+              this.homey.flow.getDeviceTriggerCard('triggerVoltmeter1').trigger(this, {'voltage': value}, {}).catch(error => { this.error(error) });
+            }
+          } else if (this.getStoreValue('channel') === 0 && channel === 101) {
+            if (this.getCapabilityValue('measure_voltage.2') !== value) {
+              this.updateCapabilityValue('measure_voltage.2', value, channel);
+              this.homey.flow.getDeviceTriggerCard('triggerVoltmeter2').trigger(this, {'voltage': value}, {}).catch(error => { this.error(error) });
+            }
+          } else if (this.getStoreValue('channel') === 0 && channel === 102) {
+            if (this.getCapabilityValue('measure_voltage.3') !== value) {
+              this.updateCapabilityValue('measure_voltage.3', value, channel);
+              this.homey.flow.getDeviceTriggerCard('triggerVoltmeter3').trigger(this, {'voltage': value}, {}).catch(error => { this.error(error) });
+            }
+          }
           break;
         case 'a_voltage':
           this.updateCapabilityValue('measure_voltage', value, 0);
@@ -2334,6 +2411,21 @@ class ShellyDevice extends Homey.Device {
         case 'temp':
           if (channel < 100) {
             this.updateCapabilityValue('measure_temperature', value, channel);
+          } else if (this.getStoreValue('channel') === 0 && channel === 100) {
+            if (this.getCapabilityValue('measure_temperature.1') !== value) {
+              this.updateCapabilityValue('measure_temperature.1', value, channel);
+              this.homey.flow.getDeviceTriggerCard('triggerTemperature1').trigger(this, {'temperature': value}, {}).catch(error => { this.error(error) });
+            }
+          } else if (this.getStoreValue('channel') === 0 && channel === 101) {
+            if (this.getCapabilityValue('measure_temperature.2') !== value) {
+              this.updateCapabilityValue('measure_temperature.2', value, channel);
+              this.homey.flow.getDeviceTriggerCard('triggerTemperature2').trigger(this, {'temperature': value}, {}).catch(error => { this.error(error) });
+            }
+          } else if (this.getStoreValue('channel') === 0 && channel === 102) {
+            if (this.getCapabilityValue('measure_temperature.3') !== value) {
+              this.updateCapabilityValue('measure_temperature.3', value, channel);
+              this.homey.flow.getDeviceTriggerCard('triggerTemperature3').trigger(this, {'temperature': value}, {}).catch(error => { this.error(error) });
+            }
           }
           break;
         case 'targetTemperature':
@@ -2670,6 +2762,21 @@ class ShellyDevice extends Homey.Device {
         case 'rh':
           if (channel < 100) {
             this.updateCapabilityValue('measure_humidity', value, channel);
+          } else if (this.getStoreValue('channel') === 0 && channel === 100) {
+            if (this.getCapabilityValue('measure_humidity.1') !== value) {
+              this.updateCapabilityValue('measure_humidity.1', value, channel);
+              this.homey.flow.getDeviceTriggerCard('triggerHumidity1').trigger(this, {'humidity': value}, {}).catch(error => { this.error(error) });
+            }
+          } else if (this.getStoreValue('channel') === 0 && channel === 101) {
+            if (this.getCapabilityValue('measure_humidity.2') !== value) {
+              this.updateCapabilityValue('measure_humidity.2', value, channel);
+              this.homey.flow.getDeviceTriggerCard('triggerHumidity2').trigger(this, {'humidity': value}, {}).catch(error => { this.error(error) });
+            }
+          } else if (this.getStoreValue('channel') === 0 && channel === 102) {
+            if (this.getCapabilityValue('measure_humidity.3') !== value) {
+              this.updateCapabilityValue('measure_humidity.3', value, channel);
+              this.homey.flow.getDeviceTriggerCard('triggerHumidity3').trigger(this, {'humidity': value}, {}).catch(error => { this.error(error) });
+            }
           }
           break;
         case 'rollerStopReason':

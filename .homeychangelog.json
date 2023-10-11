@@ -688,5 +688,8 @@
   },
   "3.21.5": {
     "en": "This release adds support for the Shelly Wave Shutter. It also fixes power/energy readings on Shelly Wave PM devices (credits to Caseda) and  incorrect energy reading on Plus/Pro devices with multiple channels."
+  },
+  "3.21.6": {
+    "en": "This release adds support for external voltmeter using the Shelly Sensor Add-on. It also fixes zwave parameters not being saved for Shelly Wave devices, the pairing of Shelly Plus Plug US devices and a small issue with the Shelly Wave Shutter in venetian blinds operating mode."
   }
 }
