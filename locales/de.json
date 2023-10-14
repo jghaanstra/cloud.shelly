@@ -30,7 +30,7 @@
     "default_icon": "Standardicon verwenden",
     "save": "Speichern",
     "intro_vintage_icon": "Wählen Sie das Symbol aus, das Sie für Ihre Shelly Vintage verwenden möchten.",
-    "error": "Beim Versuch, das Gerät hinzuzufügen, ist ein Fehler aufgetreten. Dies geschieht normalerweise, wenn das Gerät nicht auf der neuesten Firmware ist, ein batteriebetriebenes Gerät während des Pairings nicht aktiv bleibt oder es Netzwerkprobleme gibt. Sehen Sie die Pairing-Anweisungen im Support-Thema im Community-Forum. Die Fehler ist: "
+    "error": "Beim Versuch, das Gerät hinzuzufügen, ist ein Fehler aufgetreten. Dies geschieht normalerweise, wenn das Gerät nicht auf der neuesten Firmware ist, ein batteriebetriebenes Gerät während des Pairings nicht aktiv bleibt oder es Netzwerkprobleme gibt. Sehen Sie die Pairing-Anweisungen im Support-Thema im Community-Forum."
   },
   "util": {
     "400": "Fehler 400: ungültige API-Anforderung, senden Sie bitte einen Diagnosebericht aus den Einstellungen der App an den Entwickler, um dieses Problem zu lösen.",
@@ -39,6 +39,7 @@
     "502": "Timeout-Fehler: Stellen Sie sicher, dass Sie die richtige IP-Adresse eingegeben haben und dass das Shelly-Gerät online ist.",
     "500": "Fehler 500: Interner Serverfehler",
     "unknownerror": "Unbekannter Fehler, sind Sie sicher, dass Sie die richtige IP-Adresse eingegeben haben und Homey im gleichen Netzwerk wie das Shelly-Gerät ist? Überprüfen Sie Ihre Einstellungen und versuchen Sie es erneut.",
+    "unreachableerror": "Das Gerät kann von Homey nicht erreicht werden. Stellen Sie sicher, dass das Gerät eine stabile Netzwerkverbindung hat und eine feste IP-Adresse zugewiesen bekommen hat. Ein Neustart von sowohl Homey als auch dem Shelly-Gerät könnte diesen Fehler beheben.",
     "any_device": "Mit jedem Gerät",
     "any_action": "Mit jeder Aktion"
   },

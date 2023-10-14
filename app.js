@@ -13,7 +13,7 @@ class ShellyApp extends OAuth2App {
   static OAUTH2_CLIENT = ShellyOAuth2Client;
   static OAUTH2_DEBUG = false;
   static OAUTH2_MULTI_SESSION = false;
-  static OAUTH2_DRIVERS = ['shelly_cloud', 'shelly-plug-s_cloud', 'shelly-plug_cloud', 'shelly1_cloud', 'shelly1l_cloud', 'shelly1pm_cloud', 'shelly2-rollershutter_cloud', 'shelly25-rollershutter_cloud', 'shelly25_cloud', 'shelly2_cloud', 'shelly3em_cloud', 'shellybulb_cloud', 'shellydimmer_cloud', 'shellyduo_cloud', 'shellyem_cloud', 'shellyi3_cloud', 'shellyrgbw2color_cloud', 'shellyrgbw2white_cloud', 'shellyuni_cloud', 'shellyvintage_cloud'];
+  static OAUTH2_DRIVERS = ['shelly_cloud'];
 
   async onOAuth2Init() {
     try {
@@ -126,51 +126,6 @@ class ShellyApp extends OAuth2App {
         }
       });
   
-      this.homey.flow.getConditionCard('conditionInput0')
-        .registerRunListener(async (args) => {
-          if (args.device) {
-            return args.device.getCapabilityValue("input_1");
-          } else {
-            return false;
-          }
-        })
-  
-      this.homey.flow.getConditionCard('conditionInput1')
-        .registerRunListener(async (args) => {
-          if (args.device) {
-            return args.device.getCapabilityValue("input_2");
-          } else {
-            return false;
-          }
-        })
-  
-      this.homey.flow.getConditionCard('conditionInput2')
-        .registerRunListener(async (args) => {
-          if (args.device) {
-            return args.device.getCapabilityValue("input_3");
-          } else {
-            return false;
-          }
-        })
-  
-      this.homey.flow.getConditionCard('conditionInput3')
-        .registerRunListener(async (args) => {
-          if (args.device) {
-            return args.device.getCapabilityValue("input_4");
-          } else {
-            return false;
-          }
-        })
-
-      this.homey.flow.getConditionCard('conditionBeacon')
-        .registerRunListener(async (args) => {
-          if (args.device) {
-            return args.device.getCapabilityValue("beacon");
-          } else {
-            return false;
-          }
-        })
-  
       this.homey.flow.getActionCard('actionReboot')
         .registerRunListener(async (args) => {
           try {
@@ -231,28 +186,7 @@ class ShellyApp extends OAuth2App {
             this.error(error)
           }
         })
-  
-      this.homey.flow.getActionCard('actionEcoMode')
-        .registerRunListener(async (args) => {
-          try {
-            switch(args.device.getStoreValue('communication')) {
-              case 'coap': {
-                return await this.util.sendCommand('/settings?eco_mode_enabled='+ args.eco_mode, args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-              }
-              case 'websocket': {
-                const eco_mode = args.eco_mode === 'false' ? false : true;
-                return await this.util.sendRPCCommand('/rpc', args.device.getSetting('address'), args.device.getSetting('password'), 'POST', {"id": args.device.getCommandId(), "method": "Sys.SetConfig", "params": {"config": {"device": {"eco_mode": eco_mode} } } });
-              }
-              case 'cloud': {
-                // cloud does not support these commands
-                break;
-              }
-            }
-          } catch (error) {
-            this.error(error)
-          }
-        })
-  
+
       this.homey.flow.getActionCard('actionUpdateFirmware')
         .registerRunListener(async (args) => {
           try {
@@ -280,6 +214,73 @@ class ShellyApp extends OAuth2App {
             }
           } catch (error) {
             this.error(error)
+          }
+        })
+  
+      this.homey.flow.getActionCard('actionEcoMode')
+        .registerRunListener(async (args) => {
+          try {
+            switch(args.device.getStoreValue('communication')) {
+              case 'coap': {
+                return await this.util.sendCommand('/settings?eco_mode_enabled='+ args.eco_mode, args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+              }
+              case 'websocket': {
+                const eco_mode = args.eco_mode === 'false' ? false : true;
+                return await this.util.sendRPCCommand('/rpc', args.device.getSetting('address'), args.device.getSetting('password'), 'POST', {"id": args.device.getCommandId(), "method": "Sys.SetConfig", "params": {"config": {"device": {"eco_mode": eco_mode} } } });
+              }
+              case 'cloud': {
+                // cloud does not support these commands
+                break;
+              }
+            }
+          } catch (error) {
+            this.error(error)
+          }
+        })
+
+      // DEVICE SPECIFIC FLOWCARDS
+      this.homey.flow.getConditionCard('conditionInput0')
+        .registerRunListener(async (args) => {
+          if (args.device) {
+            return args.device.getCapabilityValue("input_1");
+          } else {
+            return false;
+          }
+        })
+  
+      this.homey.flow.getConditionCard('conditionInput1')
+        .registerRunListener(async (args) => {
+          if (args.device) {
+            return args.device.getCapabilityValue("input_2");
+          } else {
+            return false;
+          }
+        })
+  
+      this.homey.flow.getConditionCard('conditionInput2')
+        .registerRunListener(async (args) => {
+          if (args.device) {
+            return args.device.getCapabilityValue("input_3");
+          } else {
+            return false;
+          }
+        })
+  
+      this.homey.flow.getConditionCard('conditionInput3')
+        .registerRunListener(async (args) => {
+          if (args.device) {
+            return args.device.getCapabilityValue("input_4");
+          } else {
+            return false;
+          }
+        })
+
+      this.homey.flow.getConditionCard('conditionBeacon')
+        .registerRunListener(async (args) => {
+          if (args.device) {
+            return args.device.getCapabilityValue("beacon");
+          } else {
+            return false;
           }
         })
   
@@ -327,16 +328,7 @@ class ShellyApp extends OAuth2App {
           }
         })
 
-      this.homey.flow.getActionCard('actionColorEffect') 
-      .registerRunListener(async (args) => {
-        try {
-          return await this.util.sendCommand('/color/0?turn=on&effect='+ args.effect +'&duration='+ args.duration, args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
-        } catch (error) {
-          this.error(error)
-        }
-      })
-  
-      // SHELLY RGBW2
+      /* lights */
       this.homey.flow.getActionCard('effectRGBW2Color') /* deprecated and replaced by more generic actionColorEffect */
         .registerRunListener(async (args) => {
           try {
@@ -346,6 +338,15 @@ class ShellyApp extends OAuth2App {
           }
         })
   
+      this.homey.flow.getActionCard('actionColorEffect') 
+        .registerRunListener(async (args) => {
+          try {
+            return await this.util.sendCommand('/color/0?turn=on&effect='+ args.effect +'&duration='+ args.duration, args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          } catch (error) {
+            this.error(error)
+          }
+        })
+        
       this.homey.flow.getActionCard('actionRGBW2EnableWhiteMode')
         .registerRunListener(async (args) => {
           try {
@@ -364,7 +365,7 @@ class ShellyApp extends OAuth2App {
           }
         })
   
-      // ROLLER SHUTTERS
+      /* roller shutters */
       this.homey.flow.getActionCard('moveRollerShutter')
         .registerRunListener(async (args) => {
           try {
@@ -442,7 +443,7 @@ class ShellyApp extends OAuth2App {
           }
         })
   
-      // SHELLY GAS
+      /* gas */
       this.homey.flow.getActionCard('actionGasSetVolume')
         .registerRunListener(async (args) => {
           try {
@@ -479,7 +480,7 @@ class ShellyApp extends OAuth2App {
           }
         })
 
-      // PLUS SMOKE
+      /* smoke */
       this.homey.flow.getActionCard('actionSmokeMute')
         .registerRunListener(async (args) => {
           try {
@@ -489,7 +490,7 @@ class ShellyApp extends OAuth2App {
           }
         })
   
-      // SHELLY TRV
+      /* TRV */
       this.homey.flow.getConditionCard('conditionValveMode')
         .registerRunListener(async (args) => {
           try {
@@ -550,7 +551,7 @@ class ShellyApp extends OAuth2App {
           }
         })
       
-      // EM & 3EM
+      /* EM & 3EM */
       this.homey.flow.getActionCard('actionSetCumulative')
       .registerRunListener(async (args) => {
         try {
@@ -569,6 +570,7 @@ class ShellyApp extends OAuth2App {
         }
       })
   
+
       // COAP GEN1: COAP LISTENER FOR PROCESSING INCOMING MESSAGES
       shellies.on('discover', device => {
         this.log('Discovered device with ID', device.id, 'and type', device.type, 'with IP address', device.host);
@@ -607,33 +609,9 @@ class ShellyApp extends OAuth2App {
         })
   
       });
+      
     } catch (error) {
       this.log(error);
-    }
-  }
-
-  // COAP GEN1 & WEBSOCKET GEN 2: UPDATE APP SETTINGS AND START/STOP POLLING
-  async updateSettings(settings) {
-    try {
-      if (settings.general_polling) {
-        this.log('Polling has been disabled from the app settings and the polling interval is now cleared');
-        this.shellyDevices.forEach((device) => {
-          this.homey.clearInterval(device.device.pollingInterval);
-        });
-        return Promise.resolve(true);
-      } else {
-        this.log('Polling has been enabled from the app settings and polling interval is now set');
-        this.shellyDevices.forEach((device) => {
-          device.device.pollingInterval = this.homey.setInterval(() => {
-            if (!device.device.getStoreValue('battery')) {
-              device.device.pollDevice();
-            }
-          }, (60000 + this.util.getRandomTimeout(20)));
-        });
-        return Promise.resolve(true);
-      }
-    } catch(error) {
-      this.error(error);
     }
   }
 

@@ -31,13 +31,14 @@ class ShellyDevice extends Homey.Device {
       this.registerCapabilityListener("button.enable_ble_script", this.onMaintenanceEnableBLEPRoxy.bind(this));
       this.registerCapabilityListener("button.disable_ble_script", this.onMaintenanceDisableBLEPRoxy.bind(this));
 
-      // BOOT SEQUENCE
-      this.bootSequence();
-
-      // REFRESHING DEVICE CONFIG AND REGISTERING DEVICE TRIGGER CARDS
+      // INIT SEQUENCE
       this.homey.setTimeout(async () => {
         try {
+
+          /* update device config */
           await this.updateDeviceConfig();
+
+          /* register device trigger cards */
           let triggers = [];
           if (this.getStoreValue('config').triggers !== undefined) {
             triggers = this.getStoreValue('config').triggers
@@ -49,6 +50,10 @@ class ShellyDevice extends Homey.Device {
           for (const trigger of triggers) {
             this.homey.flow.getDeviceTriggerCard(trigger);
           }
+
+          /* start polling & check communication config */
+          await this.bootSequence();
+
         } catch (error) {
           this.log(error);
         }
@@ -127,10 +132,25 @@ class ShellyDevice extends Homey.Device {
 
       // coap + websocket: start polling mains powered devices on regular interval
       if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket')) {
-        if (!this.homey.settings.get('general_polling')) { // polling is not disabled
-          this.pollingInterval = this.homey.setInterval(() => {
-            this.pollDevice();
-          }, (60000 + this.util.getRandomTimeout(20)));
+        this.pollingInterval = this.homey.setInterval(() => {
+          this.pollDevice();
+        }, (60000 + this.util.getRandomTimeout(20)));
+      }
+
+      // validate communication configuration
+      if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && this.getStoreValue('communication') === 'coap') {
+        const homey_ip = await this.homey.cloud.getLocalAddress();
+        if (this.getStoreValue('device_settings').hasOwnProperty('coiot')) {
+          if (this.getStoreValue('device_settings').coiot.enabled === false || !this.getStoreValue('device_settings').coiot.peer.includes(homey_ip.substring(0, homey_ip.length-3))) {
+            await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          }
+        }
+      } else if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && this.getStoreValue('communication') === 'websocket') {
+        const homey_ip = await this.homey.cloud.getLocalAddress();
+        if (this.getStoreValue('device_settings').hasOwnProperty('ws')) {
+          if (this.getStoreValue('device_settings').ws.enable === false || !this.getStoreValue('device_settings').ws.server.includes(homey_ip.substring(0, homey_ip.length-3))) {
+            await this.util.setWsServer(this.getSetting('address'), this.getSetting('password'));
+          }
         }
       }
 
@@ -1603,6 +1623,9 @@ class ShellyDevice extends Homey.Device {
           this.triggerDeviceTriggerCard('input_1', result["input:0"].state, this.getStoreValue('channel'), input1Triggercard, {}, {});
           this.triggerDeviceTriggerCard('input_1', result["input:0"].state, this.getStoreValue('channel'), 'triggerInput1Changed', {}, {});
           this.updateCapabilityValue('input_1', result["input:0"].state, channel);
+        } else if (result["input:0"].hasOwnProperty("state") && result["input:0"].state === null && this.hasCapability('input_1')) {
+          await this.removeCapability('input_1');
+          this.log('Removing capability input_1 as the input is configured as button');
         }
       }
 
@@ -1620,6 +1643,9 @@ class ShellyDevice extends Homey.Device {
             this.triggerDeviceTriggerCard('input_1', result["input:1"].state, 1, 'triggerInput1Changed', {}, {});
             this.updateCapabilityValue('input_1', result["input:1"].state, channel);
           }
+        } else if (result["input:1"].hasOwnProperty("state") && result["input:1"].state === null && this.hasCapability('input_2')) {
+          await this.removeCapability('input_2');
+          this.log('Removing capability input_2 as the input is configured as button');
         }
       }
 
@@ -1641,6 +1667,9 @@ class ShellyDevice extends Homey.Device {
             this.triggerDeviceTriggerCard('input_3', result["input:2"].state, 0, 'triggerInput3Changed', {}, {});
             this.updateCapabilityValue('input_3', result["input:2"].state, 1);
           }
+        } else if (result["input:2"].hasOwnProperty("state") && result["input:2"].state === null && this.hasCapability('input_3')) {
+          await this.removeCapability('input_3');
+          this.log('Removing capability input_3 as the input is configured as button');
         }
       }
 
@@ -1662,6 +1691,9 @@ class ShellyDevice extends Homey.Device {
             this.triggerDeviceTriggerCard('input_4', result["input:3"].state, 1, 'triggerInput4Changed', {}, {});
             this.updateCapabilityValue('input_4', result["input:3"].state, 1);
           }
+        } else if (result["input:3"].hasOwnProperty("state") && result["input:3"].state === null && this.hasCapability('input_4')) {
+          await this.removeCapability('input_4');
+          this.log('Removing capability input_4 as the input is configured as button');
         }
       }
 
@@ -2112,7 +2144,7 @@ class ShellyDevice extends Homey.Device {
                       this.parseCapabilityUpdate(capability, values, channel);
                     }
                   }
-                } else if (component.startsWith('input')) { /* parse input data */
+                } else if (component.startsWith('input') && value !== null) { /* parse input data */
                   let input = component.replace(":", "");
                   if (typeof value === 'number') { // external inputs of type analog
                     this.parseCapabilityUpdate(input+"_analog", value, 0);
@@ -2848,30 +2880,35 @@ class ShellyDevice extends Homey.Device {
     try {
 
       /* placeholder for update for specific devices */
-
-      /* update device config */
-      let result;
+     
 
       /* get device setting */
+      let result;
+      let config;
+
       if (this.getStoreValue('communication') === 'coap' && !this.getStoreValue('battery')) {
         result = await this.util.sendCommand('/settings', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
       } else if (this.getStoreValue('communication') === 'websocket' && !this.getStoreValue('battery')) {
         result = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
+        config = await this.util.sendRPCCommand('/rpc/Shelly.GetConfig', this.getSetting('address'), this.getSetting('password'));
       }
 
+      /* update device config */
       if (result && !this.getStoreValue('battery') && (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket')) {
 
-        /* update type and current firmware */
-        if (this.getStoreValue('communication') === 'coap' && !this.getStoreValue('battery')) {
+        /* update device storevalues */
+        if (this.getStoreValue('communication') === 'coap') {
           const regex = /(?<=\/v)(.*?)(?=\-)/gm;
           const version_data = regex.exec(result.fw);
           if (version_data !== null) {
             await this.setStoreValue('fw_version', version_data[0]);
           }
           await this.setStoreValue('type', result.device.type);
-        } else if (this.getStoreValue('communication') === 'websocket' && !this.getStoreValue('battery')) {
+          await this.setStoreValue('device_settings', result);
+        } else if (this.getStoreValue('communication') === 'websocket') {
           await this.setStoreValue('type', result.model);
           await this.setStoreValue('fw_version', result.ver);
+          await this.setStoreValue('device_settings', config);
         }
 
         /* update device config */
@@ -2905,10 +2942,11 @@ class ShellyDevice extends Homey.Device {
           }
     
           await this.setStoreValue('config', device_config);
+
           return Promise.resolve(true);
         } else {
           return Promise.reject(this.getData().id + ' has no valid device config to set');
-        } 
+        }
 
       } else {
         return Promise.resolve(true);

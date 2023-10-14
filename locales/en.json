@@ -30,15 +30,16 @@
     "default_icon": "Use default",
     "save": "Save",
     "intro_vintage_icon": "Select which icon you want to use for your Shelly Vintage.",
-    "error": "An error occured when trying to add the device. This usually happens when the device is not on the latest firmware, a battery powered device is not kept awake during pairing or there are networking issues. See the pairing instructions in the support topic on the community forum. The error is: "
+    "error": "An error occured when trying to add the device. This usually happens when the device is not on the latest firmware, a battery powered device is not kept awake during pairing or there are networking issues. See the pairing instructions in the support topic on the community forum."
   },
   "util": {
     "400": "Error 400: invalid API request, please send a diagnostic report from the app settings to the developer to help solve this issue.",
-    "401": "Error 401: user credentials are missing or this user is not authorized, make sure you have copied the correct user credentials as entered in the Shelly smartphone app or webinterface.",
+    "401": "Error 401: user credentials are missing or incorrect, make sure you have copied the correct user credentials as entered in the Shelly smartphone app or webinterface.",
     "404": "Error 404: device not found, check the network connection and configuration and make sure the Shelly is online and reachable for Homey.",
     "502": "Timeout error: make sure you have entered the correct IP address and that the Shelly device is online.",
     "500": "Error 500: internal server error",
     "unknownerror": "Unknown error, are you sure you have entered the correct IP address and Homey is on the same network as the Shelly device? Please check your settings and try again.",
+    "unreachableerror": "The device can not be reached by Homey, make sure the device has a stable network connection and is assigned a static IP address. Rebooting both Homey and the Shelly device might fix this error.",
     "any_device": "With Any Device",
     "any_action": "With Any Action"
   },

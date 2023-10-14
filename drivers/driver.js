@@ -54,8 +54,7 @@ class ShellyDriver extends Homey.Driver {
         const discoveryResult = discoveryResults[selectedDeviceId];
 
         if (discoveryResult === undefined || discoveryResult === null) {
-          this.error('selected device from discoveryResults is not defined, logging discoveryResults object and selectedDeviceId.');
-          this.error('selectedDeviceId:', selectedDeviceId);
+          this.error('selected device with selectedDeviceId', selectedDeviceId, 'from discoveryResults is not defined, logging discoveryResults object.');
           this.error(JSON.stringify(discoveryResults));
           throw new Error('Selected device from discoveryResults is undefined, please send a diagnostic report to the developer. Device ID is', selectedDeviceId);
         } else {
@@ -71,43 +70,51 @@ class ShellyDriver extends Homey.Driver {
 
           switch(device_config.gen) {
             case 'gen1':
-              var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
-              var auth = result.auth;
-              var type = result.type;
+              try {
+                var result = await this.util.sendCommand('/shelly', discoveryResult.address, '', '');
+                var auth = result.auth;
+                var type = result.type;
 
-              /* update device config if it's a roller shutter */
-              if (result.hasOwnProperty("num_rollers") && result.hasOwnProperty("mode")) {
-                if (result.mode === 'roller') {
-                  device_config = this.util.getDeviceConfig(hostname + 'roller-');
+                /* update device config if it's a roller shutter */
+                if (result.hasOwnProperty("num_rollers") && result.hasOwnProperty("mode")) {
+                  if (result.mode === 'roller') {
+                    device_config = this.util.getDeviceConfig(hostname + 'roller-');
+                  }
+                } else if (result.hasOwnProperty("num_rollers")) {
+                  // fallback for devices with fw < 1.12 but will not work with authentication
+                  let settings = await this.util.sendCommand('/settings', discoveryResult.address, '', '');
+                  if (settings.mode === 'roller') {
+                    device_config = this.util.getDeviceConfig(hostname + 'roller-');
+                  }
                 }
-              } else if (result.hasOwnProperty("num_rollers")) {
-                // fallback for devices with fw < 1.12 but will not work with authentication
-                let settings = await this.util.sendCommand('/settings', discoveryResult.address, '', '');
-                if (settings.mode === 'roller') {
-                  device_config = this.util.getDeviceConfig(hostname + 'roller-');
+
+                /* update device config if it's a RGBW2 in white mode */
+                if (device_config.name === 'Shelly RGBW2 Color') {
+                  if (result.num_outputs === 4) {
+                    device_config = this.util.getDeviceConfig(hostname + 'white-');
+                  }
                 }
+
+                break;
+              } catch (error) {
+                throw new Error(this.homey.__("pair.error"));
               }
-
-              /* update device config if it's a RGBW2 in white mode */
-              if (device_config.name === 'Shelly RGBW2 Color') {
-                if (result.num_outputs === 4) {
-                  device_config = this.util.getDeviceConfig(hostname + 'white-');
-                }
-              }
-
-              break;
             case 'gen2':
-              var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
-              var auth = result.auth_en;
-              var type = result.model;
+              try {
+                var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
+                var auth = result.auth_en;
+                var type = result.model;
 
-              /* update device config if it's a roller shutter */
-              if (result.hasOwnProperty("profile")) {
-                if (result.profile === "cover") {
-                  device_config = this.util.getDeviceConfig(hostname + 'roller-');
+                /* update device config if it's a roller shutter */
+                if (result.hasOwnProperty("profile")) {
+                  if (result.profile === "cover") {
+                    device_config = this.util.getDeviceConfig(hostname + 'roller-');
+                  }
                 }
+                break;
+              } catch (error) {
+                throw new Error(this.homey.__("pair.error"));
               }
-              break;
           }
 
           deviceArray = {
@@ -146,6 +153,7 @@ class ShellyDriver extends Homey.Driver {
         }
       } catch (error) {
         this.error(error);
+        return Promise.reject(error);
       }
     });
 
@@ -245,13 +253,13 @@ class ShellyDriver extends Homey.Driver {
         if (deviceArray.store.communication === 'coap') {
           const settings = await this.util.sendCommand('/settings', deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
           if (settings.name !== null && settings.name !== undefined) { deviceArray.name = settings.name; }
-          const unicast = await this.util.setUnicast(deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
+          await this.util.setUnicast(deviceArray.settings.address, deviceArray.settings.username, deviceArray.settings.password);
           deviceArray.store.unicast = true;
           return Promise.resolve(deviceArray);
         } else if (deviceArray.store.communication === 'websocket') {
           const settings = await this.util.sendRPCCommand('/rpc/Shelly.GetConfig', deviceArray.settings.address, deviceArray.settings.password);
           if (settings.sys.device.name !== null && settings.sys.device.name !== undefined) { deviceArray.name = settings.sys.device.name; }
-          const result = await this.util.setWsServer(deviceArray.settings.address, deviceArray.settings.password);
+          await this.util.setWsServer(deviceArray.settings.address, deviceArray.settings.password);
           deviceArray.store.wsserver = true;
           return Promise.resolve(deviceArray);
         } else {

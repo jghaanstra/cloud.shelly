@@ -48,11 +48,11 @@
           }
         }
       }).catch(error => {
-        Homey.alert(Homey.__("pair.error") + error.message);
-        Homey.done()
+        Homey.alert(Homey.__("pair.error") + ' The error is: ' + error.message);
+        Homey.done();
       })
   } catch (error) {
-    Homey.alert(Homey.__("pair.error") + error.message);
-    Homey.done()
+    Homey.alert(Homey.__("pair.error") + ' The error is: ' + error.message);
+    Homey.done();
   }
 </script>

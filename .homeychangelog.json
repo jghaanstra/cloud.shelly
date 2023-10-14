@@ -694,5 +694,8 @@
   },
   "3.21.7": {
     "en": "This release adds support for external voltmeter using the Shelly Sensor Add-on. It also fixes zwave parameters not being saved for Shelly Wave devices, the pairing of Shelly Plus Plug US devices and a small issue with the Shelly Wave Shutter in venetian blinds operating mode."
+  },
+  "3.22.0": {
+    "en": "This release contains a breaking change! All device specific drivers voor Homey Cloud have been removed. They have been deprecated for more than a year now and have now been completely removed. If you are still using the deprecated driver you are now required to re-pair your devices using the generic driver. The release also adds logic which checks the communication configuration of devices upon device initialization and fixes any issues, for instance when Homey’s IP address was changed after pairing the Shelly device. And it contains improved error reporting for users that do not read and follow the pairing instructions. The app now also removes input capabilities for Plus/Pro devices that have the input configured as button. Buttons don’t have a state and the input capability serves no function. And at last, it removes the ability to disable CoAP updates from the app settings. This setting serves no purpose anymore after a memory leak has been fixed some time back and it confuses less tech savvy users."
   }
 }

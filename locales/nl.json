@@ -30,15 +30,16 @@
     "default_icon": "Gebruik standaard",
     "save": "Opslaan",
     "intro_vintage_icon": "Selecteer welk icoon die je wilt gebruiken voor je Shelly Vintage.",
-    "error": "Er is een fout opgetreden tijdens het toevoegen. Dit gebeurt veelal als het apparaat niet de laatste firmware bevat, als een batterij gevoed apparaat niet wakker worden gehouden tijdens het pairen of als er netwerk problemen zijn. Bekijk de pairing instructies in het support topic op het community forum. De error is: "
+    "error": "Er is een fout opgetreden tijdens het toevoegen. Dit gebeurt veelal als het apparaat niet de laatste firmware bevat, als een batterij gevoed apparaat niet wakker worden gehouden tijdens het pairen of als er netwerk problemen zijn. Bekijk de pairing instructies in het support topic op het community forum."
   },
   "util": {
     "400": "Error 400: ongeldige API request, verstuur aub vanuit de app instellingen een diagnostisch report naar de ontwikkelaar om te helpen om dit issue op te lossen.",
-    "401": "Error 401: gebruikers credentials ontbreken of deze gebruiker is niet geautoriseerd, zorg ervoor dat je de gebruikers credentials goed hebt overgenomen zoals ingevoerd via de Shelly smartphone app of webinterface.",
+    "401": "Error 401: gebruikers credentials ontbreken of onjuist, zorg ervoor dat je de gebruikers credentials goed hebt overgenomen zoals ingevoerd via de Shelly smartphone app of webinterface.",
     "404": "Error 404: apparaat niet gevonden, controleer de netwerkverbinding en instellingen om er zeker van te zijn dat de Shelly online en voor Homey bereikbaar is.",
     "502": "Timeout foutmelding: zorg ervoor dat je het correcte IP adres hebt ingevoerd en dat het Shelly apparaat online is.",
     "500": "Error 500: interne server fout",
     "unknownerror": "Onbekende fout, weet je zeker dat je het juist IP adres hebt opgegeven en dat het Shelly apparaat op hetzelfde netwerk zit als Homey? Controleer a.u.b. je instellingen en probeer het nog eens.",
+    "unreachableerror": "Het apparaat kan niet worden bereikt door Homey. Zorg ervoor dat het apparaat een stabiele netwerkverbinding heeft en een vast IP-adres toegewezen heeft gekregen. Het opnieuw opstarten van zowel Homey als het Shelly-apparaat kan deze fout mogelijk verhelpen.",
     "any_device": "Voor elk apparaat",
     "any_action": "Bij elke actie"
   },

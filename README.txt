@@ -67,6 +67,7 @@ Bluetooth
 Shelly BLU Button 1
 Shelly BLU DoorWindow
 Shelly BLU Motion
+Shelly BLU Gateway (BLE to WiFi)
 
 Zwave
 -------------
