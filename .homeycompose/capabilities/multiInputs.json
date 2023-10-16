@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Multi Inputs",
+    "nl": "Multi Inputs"
+  },
+  "getable": false,
+  "setable": false,
+  "uiComponent": null,
+  "insights": false,
+  "icon": "/assets/icon.svg"
+}

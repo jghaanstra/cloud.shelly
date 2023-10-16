@@ -30,7 +30,7 @@
     "default_icon": "Use default",
     "save": "Save",
     "intro_vintage_icon": "Select which icon you want to use for your Shelly Vintage.",
-    "error": "An error occured when trying to add the device. This usually happens when the device is not on the latest firmware, a battery powered device is not kept awake during pairing or there are networking issues. See the pairing instructions in the support topic on the community forum."
+    "error": "An error occured when trying to add the device. This usually happens when the device is not on the latest firmware, a battery powered device is not kept awake during pairing or there are networking issues. See the instructions in the support topic on the community forum."
   },
   "util": {
     "400": "Error 400: invalid API request, please send a diagnostic report from the app settings to the developer to help solve this issue.",
@@ -39,7 +39,7 @@
     "502": "Timeout error: make sure you have entered the correct IP address and that the Shelly device is online.",
     "500": "Error 500: internal server error",
     "unknownerror": "Unknown error, are you sure you have entered the correct IP address and Homey is on the same network as the Shelly device? Please check your settings and try again.",
-    "unreachableerror": "The device can not be reached by Homey, make sure the device has a stable network connection and is assigned a static IP address. Rebooting both Homey and the Shelly device might fix this error.",
+    "unreachableerror": "Error: the request failed because the Shelly device did not respond to the request. The networking issues are sometimes solved by rebooting both Homey and the Shelly device.",
     "any_device": "With Any Device",
     "any_action": "With Any Action"
   },

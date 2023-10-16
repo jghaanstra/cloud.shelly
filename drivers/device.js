@@ -2181,7 +2181,7 @@ class ShellyDevice extends Homey.Device {
                 let channel = event.id || 0;
 
                 // get the right device
-                if (channel === 0 || this.hasCapability('input_2')) { // if channel is 0 or device has multiple inputs but is not a multichannel device in Homey we have the right device
+                if (channel === 0 || this.hasCapability('multiInputs')) { // if channel is 0 or device has multiple inputs but is not a multichannel device in Homey we have the right device
                   device = this;
                 } else { // get the right device based on the channel
                   const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
@@ -2192,7 +2192,7 @@ class ShellyDevice extends Homey.Device {
 
                 if (device) {
                   // get the right action
-                  if (device.getStoreValue('channel') === 0 && device.hasCapability('input_2')) { // if channel is 0 and device has multiple inputs but is not a multichannel device in Homey we need to add the channel to the action
+                  if (device.getStoreValue('channel') === 0 && this.hasCapability('multiInputs')) { // if channel is 0 and device has multiple inputs but is not a multichannel device in Homey we need to add the channel to the action
                     const event_channel = channel + 1;
                     action_event = this.util.getActionEventDescription(event.event, 'websocket', 'gen2') + '_' + event_channel;
                   } else {
@@ -2880,6 +2880,32 @@ class ShellyDevice extends Homey.Device {
     try {
 
       /* placeholder for update for specific devices */
+
+      // TODO: remove after next release
+      let modelId = this.getStoreValue('type');
+      switch (modelId) {
+        case 'SNSW-002P16EU':
+        case 'SNSW-102P16EU':
+        case 'SPSW-002XE16EU':
+        case 'SPSW-102XE16EU':
+        case 'SPSW-202XE16EU':
+        case 'SPSW-002PE16EU':
+        case 'SPSW-102PE16EU':
+        case 'SPSW-202PE16EU':
+        case 'SHSW-L':
+        case 'SHSW-21':
+        case 'SHSW-25':
+        case 'SHDM-1':
+        case 'SHDM-2':
+        case 'SHIX3-1':
+        case 'SNSN-0024X':
+        case 'SNSN-0D24X':
+        case 'SPSH-002PE16EU':
+          if (!this.hasCapability('multiInputs')) { this.addCapability('multiInputs'); }
+          break;
+        default:
+          break;
+      }
      
 
       /* get device setting */

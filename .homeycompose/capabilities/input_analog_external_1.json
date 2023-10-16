@@ -1,20 +1,18 @@
 {
-  "type": "boolean",
+  "type": "number",
   "title": {
-    "en": "State of External Analog Input 1",
-    "nl": "Status van externe analoge input 1"
+    "en": "External Analog Input 1",
+    "nl": "Externe analoge input 1"
   },
   "getable": true,
   "setable": false,
+  "units": { 
+    "en": "%",
+    "nl": "%"
+   },
+  "min": 0,
+  "max": 100,
   "uiComponent": "sensor",
   "insights": true,
-  "insightsTitleFalse": {
-    "en": "External analog input 1 turned off",
-    "nl": "Externe analoge input 1 uitgeschakeld"
-  },
-  "insightsTitleTrue": {
-    "en": "External analog input 1 turned on",
-    "nl": "Externe analoge input 1 ingeschakeld"
-  },
-  "icon": "/assets/input_switch.svg"
+  "icon": "/assets/input_analog.svg"
 }

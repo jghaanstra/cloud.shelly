@@ -97,7 +97,7 @@ class ShellyDriver extends Homey.Driver {
 
                 break;
               } catch (error) {
-                throw new Error(this.homey.__("pair.error"));
+                throw new Error(this.homey.__("pair.error") + ' Error message: '+ error.message);
               }
             case 'gen2':
               try {
@@ -113,7 +113,7 @@ class ShellyDriver extends Homey.Driver {
                 }
                 break;
               } catch (error) {
-                throw new Error(this.homey.__("pair.error"));
+                throw new Error(this.homey.__("pair.error") + ' Error message: '+ error.message);
               }
           }
 
@@ -266,7 +266,7 @@ class ShellyDriver extends Homey.Driver {
           return Promise.resolve(deviceArray);
         }
       } catch (error) {
-        this.error(error.message);
+        this.error(error);
         return Promise.reject(error);
       }
     });
