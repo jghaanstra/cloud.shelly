@@ -700,5 +700,8 @@
   },
   "3.22.1": {
     "en": "This release contains a fix for a bug for handling action events for the Shelly i4 which was introduced with the latest release. It also contains a fix for external analog inputs with the Shelly Sensor Add-on not working."
+  },
+  "3.22.2": {
+    "en": "This release adds support for the Shelly Plus 0-10V Dimmer. It also fixes a bug with action events of Plus/Pro devices that can also be configured as a roller shutter."
   }
 }

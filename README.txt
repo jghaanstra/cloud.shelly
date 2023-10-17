@@ -50,6 +50,10 @@ Shelly Plus Wall Dimmer US
 Shelly Plus Plug S
 Shelly Plus Smoke
 Shelly Wall Panel
+Shelly Plus Uni
+Shelly Plus PM Mini
+Shelly Plus 1 Mini
+Shelly Plus 1PM Mini
 
 Pro
 -------------
@@ -61,6 +65,7 @@ Shelly Pro 3
 Shelly Pro 3EM
 Shelly Pro 4PM
 Shelly Pro Dual Cover
+Shelly Pro EM-50
 
 Bluetooth
 -------------

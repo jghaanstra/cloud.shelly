@@ -2443,17 +2443,17 @@ class ShellyDevice extends Homey.Device {
         case 'temp':
           if (channel < 100) {
             this.updateCapabilityValue('measure_temperature', value, channel);
-          } else if (this.getStoreValue('channel') === 0 && channel === 100) {
+          } else if (this.getStoreValue('channel') === 0 && channel === 100 && typeof value !== 'object') {
             if (this.getCapabilityValue('measure_temperature.1') !== value) {
               this.updateCapabilityValue('measure_temperature.1', value, channel);
               this.homey.flow.getDeviceTriggerCard('triggerTemperature1').trigger(this, {'temperature': value}, {}).catch(error => { this.error(error) });
             }
-          } else if (this.getStoreValue('channel') === 0 && channel === 101) {
+          } else if (this.getStoreValue('channel') === 0 && channel === 101 && typeof value !== 'object') {
             if (this.getCapabilityValue('measure_temperature.2') !== value) {
               this.updateCapabilityValue('measure_temperature.2', value, channel);
               this.homey.flow.getDeviceTriggerCard('triggerTemperature2').trigger(this, {'temperature': value}, {}).catch(error => { this.error(error) });
             }
-          } else if (this.getStoreValue('channel') === 0 && channel === 102) {
+          } else if (this.getStoreValue('channel') === 0 && channel === 102 && typeof value !== 'object') {
             if (this.getCapabilityValue('measure_temperature.3') !== value) {
               this.updateCapabilityValue('measure_temperature.3', value, channel);
               this.homey.flow.getDeviceTriggerCard('triggerTemperature3').trigger(this, {'temperature': value}, {}).catch(error => { this.error(error) });
@@ -2892,6 +2892,9 @@ class ShellyDevice extends Homey.Device {
         case 'SPSW-002PE16EU':
         case 'SPSW-102PE16EU':
         case 'SPSW-202PE16EU':
+          if (this.hasCapability('multiInputs') && this.getClass() === 'socket') { this.removeCapability('multiInputs'); }
+          else if (!this.hasCapability('multiInputs') && this.getClass() === 'windowcoverings') { this.addCapability('multiInputs'); }
+          break;
         case 'SHSW-L':
         case 'SHSW-21':
         case 'SHSW-25':
@@ -2905,8 +2908,7 @@ class ShellyDevice extends Homey.Device {
           break;
         default:
           break;
-      }
-     
+      }     
 
       /* get device setting */
       let result;
