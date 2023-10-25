@@ -56,12 +56,7 @@
     "wrongdevice": "Het Shelly apparaat dat je probeert te koppelen komt niet overeen met het gekozen Shelly apparaat in het apparaten toevoegscherm."
   },
   "settings": {
-    "title": "Shelly instellingen",
-    "general": "Algemene instellingen",
-    "intro": "Enkele gebruikers ervaren netwerkgerelateerde problemen waarbij Homey aangesloten Shelly apparaten niet kan bereiken. Hiervoor bestaan meerdere oorzaken maar het pollen van deze apparaten helpt niet bij de stabiliteit van de app in deze scenario's. Dit is een geavanceerde instelling om polling voor alle apparaten uit te schakelen en alleen te vertrouwen op statusupdates van de apparaten zelf. Bepaalde functies die afhankelijk zijn van polling werken niet meer, dus het wordt niet aanbevolen om onderstaande checkbox aan te vinken. Gebruik het alleen als laatste redmiddel!",
-    "polling": "Uitschakelen polling",
-    "success": "Instellingen zijn succesvol opgeslagen.",
-    "save": "Opslaan"
+    "re_pair_required": "Apparaatinstellingen zijn opgeslagen, opnieuw koppelen (zonder te resetten) van het apparaat aan Homey is nodig om deze instelling te activeren. Wacht 30 seconden na het verwijderen voordat u het apparaat opnieuw koppelt."
   },
   "app": {
     "no_pairing_device_found": "Geen apparaat om te koppelen gevonden, zorg ervoor dat je bovenstaande stappen volgt."

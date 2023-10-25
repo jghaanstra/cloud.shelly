@@ -56,12 +56,7 @@
     "wrongdevice": "The Shelly device you are trying to pair does not match with the selected Shelly device in the pairing wizard."
   },
   "settings": {
-    "title": "Shelly Settings",
-    "general": "General Settings",
-    "intro": "Some users experience networking related issues where Homey cant reach connected Shelly devices. This can be caused by many things but polling these devices doesnt help with the stability of the app in these scenarios. This is an advanced setting to disable polling of all devices and solely rely on status updates from the devices itself. It breaks certain features that rely on polling so it's not recommended to check the box below. Only use it as a last resort!",
-    "polling": "Disable polling",
-    "success": "Settings have been saved succesfully.",
-    "save": "Save"
+    "re_pair_required": "Device settings have been saved, re-pairing (without resetting) the device to Homey is required to activate this setting. Wait 30 seconds after removing before re-pairing the device."
   },
   "app": {
     "no_pairing_device_found": "No device for pairing found, make sure you follow the steps above."

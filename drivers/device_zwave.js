@@ -13,6 +13,9 @@ class ShellyZwaveDevice extends ZwaveDevice {
       // Make sure the device is recognised as a zwave device in the rest of the app
       await this.setStoreValue('communication', 'zwave');
 
+      // Get number of multi channel nodes
+      this.numberOfMultiChannelNodes = Object.keys(this.node.MultiChannelNodes || {}).length;
+
       // Register the device capabilities from the device driver
       await this.registerCapabilities();
 
@@ -27,25 +30,15 @@ class ShellyZwaveDevice extends ZwaveDevice {
   async onSettings({oldSettings, newSettings, changedKeys}) {
     try {
       this.log('newSettings:', JSON.stringify(newSettings));
-
-      changedKeys.forEach(async (key) => {
-        
-          // Wave Shutter: add / remove windowcoverings_tilt_set based on venetian operating mode
-          if (key === 'zwaveShutterOperatingMode') {
-            if (newSettings.zwaveShutterOperatingMode !== 0 && !this.hasCapability('windowcoverings_tilt_set')) {
-              await this.addCapability('windowcoverings_tilt_set');
-              this.registerCapability('windowcoverings_tilt_set', 'SWITCH_MULTILEVEL');
-            } else if (newSettings.zwaveShutterOperatingMode === 0 && this.hasCapability('windowcoverings_tilt_set')) {
-              await this.removeCapability('windowcoverings_tilt_set');
-            }
-          }
-
-      });
-
       return await super.onSettings({oldSettings, newSettings, changedKeys});
-
     } catch (error) {
       this.log(error);
+    }
+  }
+
+  async customSaveMessage({oldSettings, newSettings, changedKeys}) {
+    if (changedKeys.includes('zwaveShutterOperatingMode')) {
+      return this.homey.__('settings.re_pair_required');
     }
   }
 

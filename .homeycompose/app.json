@@ -18,7 +18,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.22.2",
+  "version": "3.22.4",
   "compatibility": ">=8.0.0",
   "platforms": [ "local", "cloud" ],
   "author": {

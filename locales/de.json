@@ -56,12 +56,7 @@
     "wrongdevice": "Das Shelly-Gerät, mit dem Sie versuchen zu koppeln, entspricht nicht dem ausgewählten Shelly-Gerät im Kopplungs-Assistenten."
   },
   "settings": {
-    "title": "Shelly Einstellungen",
-    "General": "Allgemeine Einstellungen",
-    "intro": "Bei einigen Benutzern treten netzwerkbezogene Probleme auf, bei denen Homey verbundene Shelly-Geräte nicht erreichen kann. Dies kann viele Ursachen haben, aber das Abfragen dieser Geräte trägt in diesen Szenarien nicht zur Stabilität der App bei. Dies ist eine erweiterte Einstellung, um die Abfrage aller Geräte zu deaktivieren und sich ausschließlich auf Statusaktualisierungen von den Geräten selbst zu verlassen. Es unterbricht bestimmte Funktionen, die auf Abfragen angewiesen sind, daher wird nicht empfohlen, das Kontrollkästchen unten zu aktivieren. Verwenden Sie es nur als letzten Ausweg!",
-    "polling": "Polling deaktivieren",
-    "success": "Einstellungen wurden erfolgreich gespeichert.",
-    "save": "Speichern"
+    "re_pair_required": "Geräteeinstellungen wurden gespeichert, eine erneute Kopplung (ohne Zurücksetzen) des Geräts mit Homey ist erforderlich, um diese Einstellung zu aktivieren. Warten Sie 30 Sekunden nach dem Entfernen, bevor Sie das Gerät erneut koppeln."
   },
   "app": {
     "no_pairing_device_found": "Kein Gerät zum Koppeln gefunden, stellen Sie sicher, dass Sie die oben beschriebenen Schritte ausführen."

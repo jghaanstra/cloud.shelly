@@ -703,5 +703,11 @@
   },
   "3.22.2": {
     "en": "This release adds support for the Shelly Plus 0-10V Dimmer. It also fixes a bug with action events of Plus/Pro devices that can also be configured as a roller shutter."
+  },
+  "3.22.3": {
+    "en": "This release fixes an issue with inputs not being available on multichannel devices with mixed button / switch configuration."
+  },
+  "3.22.4": {
+    "en": "This release fixes an issue with inputs not being available on multichannel devices with mixed button / switch configuration. It also includes a possible fix for the Wave Shutter in venetian blinds mode where the tilt of the slats can not be set separately. It also changes the device class of the Shelly Plus 0-10V Dimmer to socket for more flexibility and fixes a translation issue with triple push for Shelly i4."
   }
 }

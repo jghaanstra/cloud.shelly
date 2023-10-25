@@ -1617,83 +1617,97 @@ class ShellyDevice extends Homey.Device {
       }
 
       // INPUTS
-      if (result.hasOwnProperty("input:0") && this.hasCapability('input_1')) {
+      if (result.hasOwnProperty("input:0") && this.hasCapability('input_1') && channel === 0) { // update input_1 for channel 0
         if (result["input:0"].hasOwnProperty("state") && result["input:0"].state !== null) {
           const input1Triggercard = result["input:0"].state ? 'triggerInput1On' : 'triggerInput1Off';
           this.triggerDeviceTriggerCard('input_1', result["input:0"].state, this.getStoreValue('channel'), input1Triggercard, {}, {});
           this.triggerDeviceTriggerCard('input_1', result["input:0"].state, this.getStoreValue('channel'), 'triggerInput1Changed', {}, {});
           this.updateCapabilityValue('input_1', result["input:0"].state, channel);
-        } else if (result["input:0"].hasOwnProperty("state") && result["input:0"].state === null && this.hasCapability('input_1')) {
+        } else if (result["input:0"].hasOwnProperty("state") && result["input:0"].state === null && this.hasCapability('input_1')) { // remove input_1 for channel 0
           await this.removeCapability('input_1');
-          this.log('Removing capability input_1 as the input is configured as button');
+          this.log('Removing capability input_1 of channel 0 as the input is configured as button');
         }
       }
 
       if (result.hasOwnProperty("input:1")) {
         if (result["input:1"].hasOwnProperty("state") && result["input:1"].state !== null) {
-          if (this.hasCapability('input_2') && channel === 0) {
+          if (this.hasCapability('input_2') && channel === 0) { // update input_2 for channel 0
             const input2Triggercard = result["input:1"].state ? 'triggerInput2On' : 'triggerInput2Off';
             this.triggerDeviceTriggerCard('input_2', result["input:1"].state, 0, input2Triggercard, {}, {});
             this.triggerDeviceTriggerCard('input_2', result["input:1"].state, 0, 'triggerInput2Changed', {}, {});
-            this.updateCapabilityValue('input_2', result["input:1"].state, channel);
-
-          } else if (this.hasCapability('input_1') && channel === 1) {
+            this.updateCapabilityValue('input_2', result["input:1"].state, 0);
+          } else if (this.hasCapability('input_1') && channel === 1) { // update input_1 for channel 1
             const input2_1Triggercard = result["input:1"].state ? 'triggerInput1On' : 'triggerInput1Off';
             this.triggerDeviceTriggerCard('input_1', result["input:1"].state, 1, input2_1Triggercard, {}, {});
             this.triggerDeviceTriggerCard('input_1', result["input:1"].state, 1, 'triggerInput1Changed', {}, {});
-            this.updateCapabilityValue('input_1', result["input:1"].state, channel);
+            this.updateCapabilityValue('input_1', result["input:1"].state, 1);
           }
-        } else if (result["input:1"].hasOwnProperty("state") && result["input:1"].state === null && this.hasCapability('input_2')) {
-          await this.removeCapability('input_2');
-          this.log('Removing capability input_2 as the input is configured as button');
+        } else if (result["input:1"].hasOwnProperty("state") && result["input:1"].state === null) {
+          if (this.hasCapability('input_2') && channel === 0) { // remove input_2 for channel 0
+            await this.removeCapability('input_2');
+            this.log('Removing capability input_2 of channel 0 as the input is configured as button');
+          } else if (this.hasCapability('input_1') && channel === 1) { // remove input_1 for channel 1
+            await this.removeCapability('input_1');
+            this.log('Removing capability input_1 of channel 1 as the input is configured as button');
+          }
         }
       }
 
       if (result.hasOwnProperty("input:2")) {
         if (result["input:2"].hasOwnProperty("state") && result["input:2"].state !== null) {
-          if (this.hasCapability('input_3') && channel === 0) {
+          if (this.hasCapability('input_3') && channel === 0) { // update input_3 for channel 0
             const input3Triggercard = result["input:2"].state ? 'triggerInput3On' : 'triggerInput3Off';
             this.triggerDeviceTriggerCard('input_3', result["input:2"].state, 0, input3Triggercard, {}, {});
             this.triggerDeviceTriggerCard('input_3', result["input:2"].state, 0, 'triggerInput3Changed', {}, {});
             this.updateCapabilityValue('input_3', result["input:2"].state, channel);
-          } else if (this.hasCapability('input_1') && channel === 2) {
+          } else if (this.hasCapability('input_1') && channel === 2) { // update input_1 for channel 2
             const input3_1Triggercard = result["input:2"].state ? 'triggerInput1On' : 'triggerInput1Off';
             this.triggerDeviceTriggerCard('input_1', result["input:2"].state, 2, input3_1Triggercard, {}, {});
             this.triggerDeviceTriggerCard('input_1', result["input:2"].state, 2, 'triggerInput1Changed', {}, {});
             this.updateCapabilityValue('input_1', result["input:2"].state, channel);
-          } else if (this.getStoreValue('type') === 'SPSH-002PE16EU') {
+          } else if (this.getStoreValue('type') === 'SPSH-002PE16EU') { // update input_3 for channel 1 for Dual Cover
             const input3_1Triggercard = result["input:2"].state ? 'triggerInput3On' : 'triggerInput3Off';
-            this.triggerDeviceTriggerCard('input_3', result["input:2"].state, 0, input3_1Triggercard, {}, {});
-            this.triggerDeviceTriggerCard('input_3', result["input:2"].state, 0, 'triggerInput3Changed', {}, {});
+            this.triggerDeviceTriggerCard('input_3', result["input:2"].state, 1, input3_1Triggercard, {}, {});
+            this.triggerDeviceTriggerCard('input_3', result["input:2"].state, 1, 'triggerInput3Changed', {}, {});
             this.updateCapabilityValue('input_3', result["input:2"].state, 1);
           }
-        } else if (result["input:2"].hasOwnProperty("state") && result["input:2"].state === null && this.hasCapability('input_3')) {
-          await this.removeCapability('input_3');
-          this.log('Removing capability input_3 as the input is configured as button');
+        } else if (result["input:2"].hasOwnProperty("state") && result["input:2"].state === null) {
+          if (this.hasCapability('input_3') && channel === 0) { // remove input_3 for channel 0
+            await this.removeCapability('input_3');
+            this.log('Removing capability input_3 of channel 0 as the input is configured as button');
+          } else if (this.hasCapability('input_1') && channel === 2) { // remove input_1 for channel 2
+            await this.removeCapability('input_1');
+            this.log('Removing capability input_1 of channel 2 as the input is configured as button');
+          }
         }
       }
 
       if (result.hasOwnProperty("input:3")) {
         if (result["input:3"].hasOwnProperty("state") && result["input:3"].state !== null) {
-          if (this.hasCapability('input_4') && channel === 0) {
+          if (this.hasCapability('input_4') && channel === 0) { // update input_4 for channel 0
             const input4Triggercard = result["input:3"].state ? 'triggerInput4On' : 'triggerInput4Off';
             this.triggerDeviceTriggerCard('input_4', result["input:3"].state, 0, input4Triggercard, {}, {});
             this.triggerDeviceTriggerCard('input_4', result["input:3"].state, 0, 'triggerInput4Changed', {}, {});
             this.updateCapabilityValue('input_4', result["input:3"].state, channel);
-          } else if (this.hasCapability('input_1') && channel === 3) {
+          } else if (this.hasCapability('input_1') && channel === 3) { // update input_1 for channel 3
             const input4_1Triggercard = result["input:3"].state ? 'triggerInput1On' : 'triggerInput1Off';
             this.triggerDeviceTriggerCard('input_1', result["input:3"].state, 3, input4_1Triggercard, {}, {});
             this.triggerDeviceTriggerCard('input_1', result["input:3"].state, 3, 'triggerInput1Changed', {}, {});
             this.updateCapabilityValue('input_1', result["input:3"].state, channel);
-          } else if (this.getStoreValue('type') === 'SPSH-002PE16EU') {
+          } else if (this.getStoreValue('type') === 'SPSH-002PE16EU') { // update input_4 for channel 1 for Dual Cover
             const input4_1Triggercard = result["input:3"].state ? 'triggerInput4On' : 'triggerInput4Off';
             this.triggerDeviceTriggerCard('input_4', result["input:3"].state, 1, input4_1Triggercard, {}, {});
             this.triggerDeviceTriggerCard('input_4', result["input:3"].state, 1, 'triggerInput4Changed', {}, {});
             this.updateCapabilityValue('input_4', result["input:3"].state, 1);
           }
-        } else if (result["input:3"].hasOwnProperty("state") && result["input:3"].state === null && this.hasCapability('input_4')) {
-          await this.removeCapability('input_4');
-          this.log('Removing capability input_4 as the input is configured as button');
+        } else if (result["input:3"].hasOwnProperty("state") && result["input:3"].state === null) {
+          if (this.hasCapability('input_4') && channel === 0) { // remove input_4 for channel 0
+            await this.removeCapability('input_4');
+            this.log('Removing capability input_4 of channel 0 as the input is configured as button');
+          } else if (this.hasCapability('input_1') && channel === 3) { // remove input_1 for channel 3
+            await this.removeCapability('input_1');
+            this.log('Removing capability input_1 of channel 3 as the input is configured as button');
+          }
         }
       }
 
