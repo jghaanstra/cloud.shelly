@@ -32,13 +32,17 @@ class ShellyZwaveDevice extends ZwaveDevice {
       this.log('newSettings:', JSON.stringify(newSettings));
       return await super.onSettings({oldSettings, newSettings, changedKeys});
     } catch (error) {
-      this.log(error);
+      this.error(error);
     }
   }
 
-  async customSaveMessage({oldSettings, newSettings, changedKeys}) {
-    if (changedKeys.includes('zwaveShutterOperatingMode')) {
-      return this.homey.__('settings.re_pair_required');
+  async customSaveMessage(oldSettings, newSettings, changedKeys = []) {
+    try {
+      if (changedKeys.includes('zwaveShutterOperatingMode')) {
+        return this.homey.__('settings.re_pair_required');
+      }
+    } catch (error) {
+      this.error(error)
     }
   }
 

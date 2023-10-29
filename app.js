@@ -32,7 +32,7 @@ class ShellyApp extends OAuth2App {
       this.cloudAccessToken = null;
       this.ws = null;
       this.wsConnected = false;
-      this.debouncer = 0;
+      this.cloudDebouncer = 0;
   
       // ALL: INITIALLY UPDATE THE SHELLY COLLECTION FOR MATCHING INCOMING STATUS UPDATES
       this.homey.setTimeout(async () => {
@@ -74,7 +74,6 @@ class ShellyApp extends OAuth2App {
       }
 
       // BLUETOOTH GEN2: LISTEN FOR BLE ADVERTISEMENTS
-      // TODO: This isnt working properly due to Homey's Bluetoooth implementation
       if (this.homey.platform !== "cloud") {
         this.homey.setTimeout(async () => {
           try {
@@ -93,6 +92,10 @@ class ShellyApp extends OAuth2App {
       // GENERIC FLOWCARDS
       this.homey.flow.getTriggerCard('triggerDeviceOffline');
       this.homey.flow.getTriggerCard('triggerFWUpdate');
+
+      if (this.homey.platform !== "cloud") {
+        this.homey.flow.getTriggerCard('triggerCloudError');
+      }      
   
       const listenerCallbacks = this.homey.flow.getTriggerCard('triggerCallbacks').registerRunListener(async (args, state) => {
         try {
@@ -722,14 +725,14 @@ class ShellyApp extends OAuth2App {
         const cloud_details = await jwt_decode(oauth_token.access_token);
         this.cloudServer = cloud_details.user_api_url.replace('https://', '');
 
-        this.debouncer++;
+        this.cloudDebouncer++;
 
         this.ws = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ this.cloudAccessToken, {perMessageDeflate: false});
 
         this.ws.on('open', () => {
           this.log('Cloud websocket for cloud devices opened ...');
           this.wsConnected = true;
-          this.debouncer = 0;
+          this.cloudDebouncer = 0;
 
           // start sending pings every 2 minutes to check the connection status
           clearTimeout(this.wsPingInterval);
@@ -768,6 +771,8 @@ class ShellyApp extends OAuth2App {
         });
 
         this.ws.on('pong', () => {
+
+          // restart or close connection if pong response is not received after three consecutive pings
           clearTimeout(this.wsPingTimeout);
           this.wsPingTimeout = this.homey.setTimeout(async () => {
             try {
@@ -775,12 +780,12 @@ class ShellyApp extends OAuth2App {
                 this.wsConnected = false;
                 this.websocketCloudListener();
               } else if (this.wsConnected) {
-                this.ws.close();
+                this.ws.terminate();
               }
             } catch (error) {
               this.error(error);
             }
-          }, 130 * 1000);
+          }, 370 * 1000);
         });
 
         this.ws.on('error', (error) => {
@@ -789,39 +794,46 @@ class ShellyApp extends OAuth2App {
         });
 
         this.ws.on('close', (code, reason) => {
-          this.error('Cloud websocket closed due to reasoncode:', code);
+          if (code !== undefined || code === null ) {
+            this.error('Cloud websocket terminated due missed ping-pongs.');
+            this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": "Cloud websocket terminated due missed ping-pongs."}).catch(error => { this.error(error) });
+          } else {
+            this.error('Cloud websocket closed due to reasoncode:', code);
+            this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": error.message}).catch(error => { this.error(error) });
+          }
+          
           clearTimeout(this.wsPingInterval);
           clearTimeout(this.wsReconnectTimeout);
           this.wsConnected = false;
 
-          if (code !== 1006) {
-            // retry connection after 30 seconds and if not retried 10 times already
-            if (this.debouncer < 10) {
-              this.wsReconnectTimeout = this.homey.setTimeout(async () => {
-                try {
-                  this.websocketCloudListener();
-                } catch (error) {
-                  this.error(error);
-                }
-              }, 30000);
-            } else {
-              this.wsReconnectTimeout = this.homey.setTimeout(async () => {
-                try {
-                  this.websocketCloudListener();
-                } catch (error) {
-                  this.error(error);
-                }
-              }, 600000);
-            }
-          }          
+          // retry connection after 30 seconds and if not retried 10 times already, else retry every 10 minutes
+          if (this.cloudDebouncer < 10) {
+            this.wsReconnectTimeout = this.homey.setTimeout(async () => {
+              try {
+                this.websocketCloudListener();
+              } catch (error) {
+                this.error(error);
+              }
+            }, 30000);
+          } else {
+            this.wsReconnectTimeout = this.homey.setTimeout(async () => {
+              try {
+                this.websocketCloudListener();
+              } catch (error) {
+                this.error(error);
+              }
+            }, 600000);
+          }      
         });
 
       }
     } catch (error) {
       this.log(error);
+      this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": error.message}).catch(error => { this.error(error) });
+
       clearTimeout(this.wsReconnectTimeout);
       if (error.message !== 'No OAuth2 Client Found') {
-        if (this.debouncer < 10) {
+        if (this.cloudDebouncer < 10) {
           this.wsReconnectTimeout = this.homey.setTimeout(async () => {
             try {
               if (!this.wsConnected) {

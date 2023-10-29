@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.22.4",
+  "version": "3.22.5",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -223,6 +223,27 @@
           "local",
           "cloud"
         ]
+      },
+      {
+        "title": {
+          "en": "Cloud connection error",
+          "nl": "Cloud verbinding foutmelding"
+        },
+        "tokens": [
+          {
+            "name": "error",
+            "type": "string",
+            "title": {
+              "en": "Error",
+              "nl": "Fout"
+            },
+            "example": "Error: connection lost."
+          }
+        ],
+        "platforms": [
+          "cloud"
+        ],
+        "id": "triggerCloudError"
       },
       {
         "id": "triggerDeviceOffline",

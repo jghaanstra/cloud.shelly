@@ -1,0 +1,18 @@
+{
+  "title": {
+    "en": "Cloud connection error",
+    "nl": "Cloud verbinding foutmelding"
+  },
+  "tokens": [
+    {
+      "name": "error",
+      "type": "string",
+      "title": {
+        "en": "Error",
+        "nl": "Fout"
+      },
+      "example": "Error: connection lost."
+    }
+  ],
+  "platforms": ["cloud"]
+}

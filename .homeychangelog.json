@@ -709,5 +709,8 @@
   },
   "3.22.4": {
     "en": "This release fixes an issue with inputs not being available on multichannel devices with mixed button / switch configuration. It also includes a possible fix for the Wave Shutter in venetian blinds mode where the tilt of the slats can not be set separately. It also changes the device class of the Shelly Plus 0-10V Dimmer to socket for more flexibility and fixes a translation issue with triple push for Shelly i4."
+  },
+  "3.22.5": {
+    "en": "This release changes the reconnect timings to Shelly Cloud allowing for longer registered disconnection before terminating and reestablishing the connection as this currently fails anyway due to an issue in Homey’s OAuth2 module. It also adds a trigger card for Homey Cloud that detects when there is a connection issue. It also fixes an issue with saving Zwave parameters of Shelly Wave devices."
   }
 }
