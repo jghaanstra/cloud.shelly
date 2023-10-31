@@ -715,5 +715,8 @@
   },
   "3.22.6": {
     "en": "This release changes the reconnect timings to Shelly Cloud allowing for longer registered disconnection before terminating and reestablishing the connection as this currently fails anyway due to an issue in Homey's OAuth2 module. It also adds a trigger card for Homey Cloud that detects when there is a connection issue. And it fixes an issue with saving Zwave parameters of Shelly Wave devices as well as incorrect parsing of energy values for the Pro 3EM when outbound websockets is not operational."
+  },
+  "3.22.7": {
+    "en": "This release changes the reconnect timings to Shelly Cloud allowing for longer registered disconnection before terminating and reestablishing the connection as this currently fails anyway due to an issue in Homey's OAuth2 module. It also adds a trigger card for Homey Cloud that detects when there is a connection issue. And it fixes an issue with saving Zwave parameters of Shelly Wave devices as well as incorrect parsing of energy values for the Pro 3EM when outbound websockets is not operational."
   }
 }

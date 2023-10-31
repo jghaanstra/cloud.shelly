@@ -598,7 +598,7 @@ class ShellyApp extends OAuth2App {
                   const filteredShellyCoap = filteredShelliesCoap.filter(shelly => shelly.id.includes(coap_device_id)); // filter the filtered shellies with the correct channel device id
                   coap_device = filteredShellyCoap[0].device;
                 }
-                coap_device.parseCapabilityUpdate(prop, newValue);
+                coap_device.parseCapabilityUpdate(prop, newValue, coap_device.getStoreValue('channel'));
                 if (coap_device.getSetting('address') !== device.host) {
                   coap_device.setSettings({address: device.host});
                 }
