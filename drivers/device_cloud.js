@@ -24,20 +24,32 @@ class ShellyCloudDevice extends OAuth2Device {
       this.registerCapabilityListener("valve_mode", this.onCapabilityValveMode.bind(this));
       this.registerCapabilityListener("target_temperature", this.onCapabilityTargetTemperature.bind(this));
 
-      // BOOT SEQUENCE
-      this.bootSequence();
-
       // REGISTERING DEVICE TRIGGER CARDS
-      this.homey.setTimeout(() => {
+      this.homey.setTimeout(async () => {
         try {
-          for (const trigger of this.getStoreValue('config').triggers) {
+
+          /* register device trigger cards */
+          let triggers = [];
+          if (this.getStoreValue('config').triggers !== undefined) {
+            triggers = this.getStoreValue('config').triggers
+          } else if (this.getStoreValue('channel') !== 0) {
+            triggers = this.getStoreValue('config').triggers_2
+          } else {
+            triggers = this.getStoreValue('config').triggers_1
+          }
+          for (const trigger of triggers) {
             this.homey.flow.getDeviceTriggerCard(trigger);
           }
+
+          /* start cloud connection and initial status update */
+          await this.bootSequence();
+
         } catch (error) {
-          this.error(error);
+          this.log(error);
         }
-        
       }, 2000);
+
+
     } catch (error) {
       this.error(error);
     }

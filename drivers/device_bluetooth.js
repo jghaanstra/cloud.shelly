@@ -97,9 +97,15 @@ class ShellyBluetoothDevice extends Device {
       // REGISTERING DEVICE TRIGGER CARDS AND INITIALLY SET BEACON AS OFFLINE
       this.homey.setTimeout(async () => {
         try {
+
+          /* update device config */
           await this.updateDeviceConfig();
+
+          /* register device trigger cards */
           let triggers = [];
-          if (this.getStoreValue('channel') !== 0) {
+          if (this.getStoreValue('config').triggers !== undefined) {
+            triggers = this.getStoreValue('config').triggers
+          } else if (this.getStoreValue('channel') !== 0) {
             triggers = this.getStoreValue('config').triggers_2
           } else {
             triggers = this.getStoreValue('config').triggers_1
@@ -107,7 +113,10 @@ class ShellyBluetoothDevice extends Device {
           for (const trigger of triggers) {
             this.homey.flow.getDeviceTriggerCard(trigger);
           }
+
+          /* set beacon offline */
           await this.getCapabilityValue('beacon', false);
+
         } catch (error) {
           this.log(error);
         }
