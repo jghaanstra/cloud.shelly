@@ -724,5 +724,8 @@
   },
   "3.23.0": {
     "en": "This release reverts some changes trying to work around a reconnect issue with Homey Cloud as it’s causing app crashes for some users. It also adds a maintenance action for resetting the energy meter on Shelly Wave devices with energy meter capabilities and a maintenance action for for calibrating a Shelly Wave Shutter."
+  },
+  "3.23.1": {
+    "en": "This release reverts some changes trying to work around a reconnect issue with Homey Cloud as it’s causing app crashes for some users. It also adds a maintenance action for resetting the energy meter on Shelly Wave devices with energy meter capabilities and a maintenance action for for calibrating a Shelly Wave Shutter."
   }
 }

@@ -14,5 +14,6 @@
       "example": "Error: connection lost."
     }
   ],
-  "platforms": ["cloud"]
+  "platforms": ["cloud"],
+  "deprecated": true
 }

@@ -91,10 +91,7 @@ class ShellyApp extends OAuth2App {
   
       // GENERIC FLOWCARDS
       this.homey.flow.getTriggerCard('triggerDeviceOffline');
-      this.homey.flow.getTriggerCard('triggerFWUpdate');
-      if (this.homey.platform === "cloud") {
-        this.homey.flow.getTriggerCard('triggerCloudError');
-      }  
+      this.homey.flow.getTriggerCard('triggerFWUpdate'); 
   
       const listenerCallbacks = this.homey.flow.getTriggerCard('triggerCallbacks').registerRunListener(async (args, state) => {
         try {
@@ -796,10 +793,8 @@ class ShellyApp extends OAuth2App {
 
             if (code !== undefined || code === null ) {
               this.error('Cloud websocket connection has not responded to the last 3 ping-pongs and is being closed.');
-              this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": "Cloud websocket connection has not responded to the last 3 pings and is being closed."}).catch(error => { this.error(error) });
             } else {
               this.error('Cloud websocket closed due to reasoncode:', code);
-              this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": error.message}).catch(error => { this.error(error) });
             }
 
             clearTimeout(this.wsPingInterval);
@@ -831,7 +826,6 @@ class ShellyApp extends OAuth2App {
         }
       } catch (error) {
         this.error(error);
-        this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": error.message}).catch(error => { this.error(error) });
 
         clearTimeout(this.wsReconnectTimeout);
         if (error.message !== 'No OAuth2 Client Found') {
