@@ -6,6 +6,17 @@ class ShellyWaveShutterDevice extends Device {
 
   async registerCapabilities() {
     try {
+
+      // TODO: remove on the next release
+      if (!this.hasCapability('button.reset_meter')) {
+        await this.addCapability('button.reset_meter').catch(err => this.error(`Error adding ${'button.reset_meter'} capability`, err));
+      }
+      if (!this.hasCapability('button.calibration')) {
+        await this.addCapability('button.calibration').catch(err => this.error(`Error adding ${'button.calibration'} capability`, err));
+      }
+      if (!this.hasCapability('windowcoverings_state')) {
+        await this.addCapability('windowcoverings_state').catch(err => this.error(`Error adding ${'windowcoverings_state'} capability`, err));
+      }
     
       this.registerCapability('measure_power', 'METER', {
         reportParserOverride: true,
@@ -40,6 +51,8 @@ class ShellyWaveShutterDevice extends Device {
           return null;
         },
       });
+
+      this.registerCapability('windowcoverings_state', 'SWITCH_BINARY');
 
       // configure capabilities based on operating mode (classic shutter vs venetian blinds)
       if (this.numberOfMultiChannelNodes > 0) { // operating mode = venetian blinds

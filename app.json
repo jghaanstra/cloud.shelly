@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.22.8",
+  "version": "3.23.0",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -4988,12 +4988,26 @@
         "xlarge": "./assets/drivers/shelly_wave_1pm/images/xlarge.jpg"
       },
       "class": "socket",
+      "icon": "/drivers/shelly_wave_1pm/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_power",
-        "meter_power"
+        "meter_power",
+        "button.reset_meter"
       ],
-      "icon": "/drivers/shelly_wave_1pm/assets/icon.svg",
+      "capabilitiesOptions": {
+        "button.reset_meter": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset power meter",
+            "nl": "Stel stroomverbuik opnieuw in"
+          },
+          "desc": {
+            "en": "Reset the accumulated power usage (kWh), note that this can not be reversed.",
+            "nl": "Stel geaccumuleerde stroomverbruik (kWh) opnieuw in, dit kan niet worden teruggedraaid."
+          }
+        }
+      },
       "zwave": {
         "manufacturerId": 1120,
         "productTypeId": [
@@ -5289,12 +5303,26 @@
         "large": "./assets/drivers/shelly_wave_2pm/images/large.jpg"
       },
       "class": "socket",
+      "icon": "/drivers/shelly_wave_2pm/assets/icon.svg",
       "capabilities": [
         "onoff",
         "measure_power",
-        "meter_power"
+        "meter_power",
+        "button.reset_meter"
       ],
-      "icon": "/drivers/shelly_wave_2pm/assets/icon.svg",
+      "capabilitiesOptions": {
+        "button.reset_meter": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset power meter",
+            "nl": "Stel stroomverbuik opnieuw in"
+          },
+          "desc": {
+            "en": "Reset the accumulated power usage (kWh), note that this can not be reversed.",
+            "nl": "Stel geaccumuleerde stroomverbruik (kWh) opnieuw in, dit kan niet worden teruggedraaid."
+          }
+        }
+      },
       "zwave": {
         "manufacturerId": 1120,
         "productTypeId": [
@@ -5309,12 +5337,26 @@
         "multiChannelNodes": {
           "1": {
             "class": "socket",
+            "icon": "/drivers/shelly_wave_2pm/assets/icon.svg",
             "capabilities": [
               "onoff",
               "measure_power",
-              "meter_power"
+              "meter_power",
+              "button.reset_meter"
             ],
-            "icon": "/drivers/shelly_wave_2pm/assets/icon.svg",
+            "capabilitiesOptions": {
+              "button.reset_meter": {
+                "maintenanceAction": true,
+                "title": {
+                  "en": "Reset power meter",
+                  "nl": "Stel stroomverbuik opnieuw in"
+                },
+                "desc": {
+                  "en": "Reset the accumulated power usage (kWh), note that this can not be reversed.",
+                  "nl": "Stel geaccumuleerde stroomverbruik (kWh) opnieuw in, dit kan niet worden teruggedraaid."
+                }
+              }
+            },
             "name": {
               "en": "Shelly Wave 2PM - Relay 1",
               "nl": "Shelly Wave 2PM - Relais 1"
@@ -5323,12 +5365,26 @@
           },
           "2": {
             "class": "socket",
+            "icon": "/drivers/shelly_wave_2pm/assets/icon.svg",
             "capabilities": [
               "onoff",
               "measure_power",
-              "meter_power"
+              "meter_power",
+              "button.reset_meter"
             ],
-            "icon": "/drivers/shelly_wave_2pm/assets/icon.svg",
+            "capabilitiesOptions": {
+              "button.reset_meter": {
+                "maintenanceAction": true,
+                "title": {
+                  "en": "Reset power meter",
+                  "nl": "Stel stroomverbuik opnieuw in"
+                },
+                "desc": {
+                  "en": "Reset the accumulated power usage (kWh), note that this can not be reversed.",
+                  "nl": "Stel geaccumuleerde stroomverbruik (kWh) opnieuw in, dit kan niet worden teruggedraaid."
+                }
+              }
+            },
             "name": {
               "en": "Shelly Wave 2PM - Relay 2",
               "nl": "Shelly Wave 2PM - Relais 2"
@@ -5909,8 +5965,34 @@
       "capabilities": [
         "windowcoverings_set",
         "measure_power",
-        "meter_power"
+        "meter_power",
+        "button.reset_meter",
+        "button.calibration"
       ],
+      "capabilitiesOptions": {
+        "button.reset_meter": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset power meter",
+            "nl": "Stel stroomverbuik opnieuw in"
+          },
+          "desc": {
+            "en": "Reset the accumulated power usage (kWh), note that this can not be reversed.",
+            "nl": "Stel geaccumuleerde stroomverbruik (kWh) opnieuw in, dit kan niet worden teruggedraaid."
+          }
+        },
+        "button.calibration": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Start calibration",
+            "nl": "Start kalibratie"
+          },
+          "desc": {
+            "en": "Force calibration of the Shelly Wave Shutter. Make sure the blinds are lowered completely before starting the calibration.",
+            "nl": "Start geforceerde kalibratie van de Shelly Wave Shutter. Zorg dat het rolluik of de jaloezieën volledig naar beneden zijn voor het starten van de kalibratie."
+          }
+        }
+      },
       "icon": "/drivers/shelly_wave_shutter/assets/icon.svg",
       "zwave": {
         "manufacturerId": 1120,

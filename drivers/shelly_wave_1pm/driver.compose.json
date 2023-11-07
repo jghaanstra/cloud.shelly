@@ -9,12 +9,26 @@
     "xlarge": "./assets/drivers/shelly_wave_1pm/images/xlarge.jpg"
   },
   "class": "socket",
+  "icon": "{{driverAssetsPath}}/icon.svg",
   "capabilities": [
     "onoff",
     "measure_power",
-    "meter_power"
+    "meter_power",
+    "button.reset_meter"
   ],
-  "icon": "{{driverAssetsPath}}/icon.svg",
+  "capabilitiesOptions": {
+    "button.reset_meter": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Reset power meter",
+        "nl": "Stel stroomverbuik opnieuw in"
+      },
+      "desc": {
+        "en": "Reset the accumulated power usage (kWh), note that this can not be reversed.",
+        "nl": "Stel geaccumuleerde stroomverbruik (kWh) opnieuw in, dit kan niet worden teruggedraaid."
+      }
+    }
+  },
   "zwave": {
     "manufacturerId": 1120,
     "productTypeId": [2],

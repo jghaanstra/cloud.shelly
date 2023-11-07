@@ -7,6 +7,11 @@ class ShellyWave1PMDevice extends Device {
   async registerCapabilities() {
     try {
 
+      // TODO: remove on the next release
+      if (!this.hasCapability('button.reset_meter')) {
+        await this.addCapability('button.reset_meter').catch(err => this.error(`Error adding ${'button.reset_meter'} capability`, err));
+      }
+
       this.registerCapability('onoff', 'SWITCH_BINARY');
       
       this.registerCapability('measure_power', 'METER', {
