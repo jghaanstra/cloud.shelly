@@ -297,7 +297,7 @@ class ShellyApp extends OAuth2App {
               }
               case 'cloud': {
                 const onoff = args.switch === "1" ? true : false;
-                return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'relay', command_param: 'turn', command_value: onoff, timer_param: 'timeout', timer: args.timer, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
+                return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'relay', command_param: 'turn', command_value: onoff, timer_param: 'timeout', timer: args.timer, deviceid: String(args.device.getSetting('cloud_device_id')), channel: args.device.getStoreValue('channel')})]);
               }
             }
           } catch (error) {
@@ -319,7 +319,7 @@ class ShellyApp extends OAuth2App {
               }
               case 'cloud': {
                 const onoff = args.switch === "1" ? true : false;
-                return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'light', command_param: 'turn', command_value: onoff, timer_param: 'transition', timer: args.transition, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
+                return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'light', command_param: 'turn', command_value: onoff, timer_param: 'transition', timer: args.transition, deviceid: String(args.device.getSetting('cloud_device_id')), channel: args.device.getStoreValue('channel')})]);
               }
             }
           } catch (error) {
@@ -387,7 +387,7 @@ class ShellyApp extends OAuth2App {
                 return await this.util.sendRPCCommand('/rpc/'+ gen2_method +'?id='+ args.device.getStoreValue('channel') +'&duration='+ args.move_duration, args.device.getSetting('address'), args.device.getSetting('password'));
               }
               case 'cloud': {
-                return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'roller', command_param: 'go', command_value: cloud_direction, timer_param: 'duration', timer: args.move_duration, deviceid: args.device.getSetting('cloud_device_id'), channel: args.device.getStoreValue('channel')})]);
+                return await this.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-timer', command: 'roller', command_param: 'go', command_value: cloud_direction, timer_param: 'duration', timer: args.move_duration, deviceid: String(args.device.getSetting('cloud_device_id')), channel: args.device.getStoreValue('channel')})]);
               }
             }
           } catch (error) {

@@ -181,7 +181,7 @@ class ShellyDevice extends Homey.Device {
         case 'cloud': {
           const component_cloud = this.getClass() === 'light' ? 'light' : 'relay';
           const onoff = value ? 'on' : 'off';
-          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: component_cloud, command_param: 'turn', command_value: onoff, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: component_cloud, command_param: 'turn', command_value: onoff, deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
         }
         default:
           break;
@@ -204,7 +204,7 @@ class ShellyDevice extends Homey.Device {
         }
         case 'cloud': {
           const onoff = value ? 'on' : 'off';
-          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'turn', command_value: onoff, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'turn', command_value: onoff, deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
         }
         default:
           break;
@@ -248,11 +248,11 @@ class ShellyDevice extends Homey.Device {
         case 'cloud': {
           switch (value) {
             case 'idle':
-              return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'roller', command_param: 'go', command_value: 'stop', deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+              return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'roller', command_param: 'go', command_value: 'stop', deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
             case 'up':
-              return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'roller', command_param: 'go', command_value: 'open', deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+              return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'roller', command_param: 'go', command_value: 'open', deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
             case 'down':
-              return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'roller', command_param: 'go', command_value: 'close', deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+              return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'roller', command_param: 'go', command_value: 'close', deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
             default:
               return Promise.reject('State not recognized ...');
           }
@@ -277,7 +277,7 @@ class ShellyDevice extends Homey.Device {
           return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(value*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         }
         case 'cloud':
-          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'roller_to_pos', command_param: 'pos', command_value: Math.round(value*100), deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'roller_to_pos', command_param: 'pos', command_value: Math.round(value*100), deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
         default:
           break;
       }
@@ -328,7 +328,7 @@ class ShellyDevice extends Homey.Device {
               this.updateCapabilityValue('onoff', false, this.getStoreValue("channel"));
             }
             const dim_cloud = value === 0 ? 1 : value * 100;
-            return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: dim_component, command_value: dim_cloud, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+            return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: dim_component, command_value: dim_cloud, deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
           }
           default:
             break;
@@ -373,7 +373,7 @@ class ShellyDevice extends Homey.Device {
         }
         case 'cloud': {
           const white = 100 - (value * 100);
-          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'white', command_value: white, deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'white', command_value: white, deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
         }
         default:
           break;
@@ -426,7 +426,7 @@ class ShellyDevice extends Homey.Device {
         }
         case 'cloud': {
           await this.updateCapabilityValue('light_mode', 'color', this.getStoreValue("channel"));
-          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-RGB', command: 'light', command_param: 'rbg', red: Number(rgbcolor.r), green: Number(rgbcolor.g), blue: Number(rgbcolor.b), deviceid: this.getSetting('cloud_device_id'), channel: this.getStoreValue('channel')})]);
+          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest-RGB', command: 'light', command_param: 'rbg', red: Number(rgbcolor.r), green: Number(rgbcolor.g), blue: Number(rgbcolor.b), deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
         }
         default:
           break;
