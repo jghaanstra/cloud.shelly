@@ -45,6 +45,7 @@
   },
   "device": {
     "unreachable": "Apparaat is onbereikbaar: ",
+    "unreachable_on_cloud": "Het apparaat is niet bereikbaar vanaf Shelly Cloud, controleer de verbinding en of de cloud is ingeschakeld op het apparaat.",
     "overpower": "Error: apparaat is overbelast.",
     "overvoltage": "Error: overvoltage.",
     "overtemp": "Error: apparaat temperatuur te hoog.",

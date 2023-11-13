@@ -41,7 +41,7 @@ class ShellyZwaveDevice extends ZwaveDevice {
   async _onMaintenanceResetMeter() {
     try {
       this.log('starting reset meter ...');
-      if (typeof this.resetMeter === 'function') return this.resetMeter();
+      if (typeof this.meterReset === 'function') return this.meterReset();
       this.error('Reset meter failed');
       throw new Error('Reset meter not supported');
     } catch (error) {
@@ -96,81 +96,6 @@ class ShellyZwaveDevice extends ZwaveDevice {
       }
     } catch (error) {
       this.error(error)
-    }
-  }
-
-  /**
-   * Method that checks the multi channel nodes of the device and will return the multi channel node id of the found
-   * endpoint that supports the basic device controls.
-   * @returns {*}
-   */
-  findRootDeviceEndpoint() {
-    try {
-      if (this.numberOfMultiChannelNodes === 0) return null;
-      const { rootDeviceClassGeneric } = this;
-      for (const i in this.node.MultiChannelNodes) {
-        if (this.node.MultiChannelNodes[i].deviceClassGeneric === 'GENERIC_TYPE_SWITCH_BINARY'
-          || this.node.MultiChannelNodes[i].deviceClassGeneric === 'GENERIC_TYPE_SWITCH_MULTILEVEL'
-          || (typeof rootDeviceClassGeneric === 'string'
-            && this.node.MultiChannelNodes[i].deviceClassGeneric === rootDeviceClassGeneric)) {
-          return Number(i);
-        }
-      }
-      return null;
-    } catch (error) {
-      this.error(error);
-    }
-  }
-
-  /**
-   * Method that resets the accumulated power meter value on the node. It tries to find the root node of the device
-   * and then looks for the COMMAND_CLASS_METER.
-   * @returns {*}
-   */
-  async resetMeter({ multiChannelNodeId } = {}) {
-    try {
-      const multiChannelRootNodeId = multiChannelNodeId || this.findRootDeviceEndpoint();
-      if (typeof multiChannelRootNodeId === 'number') {
-
-        let commandClassMeter = null;
-        commandClassMeter = this.getCommandClass('METER', { multiChannelRootNodeId });
-
-        if (commandClassMeter && commandClassMeter.hasOwnProperty('METER_RESET')) {
-          await commandClassMeter.METER_RESET({}).catch(this.error);
-          if (this.hasCapability('meter_power')) {
-            await this.setCapabilityValue('meter_power', 0);
-          }
-        }
-
-        // TODO: this requires a fix in node-homey-zwavedriver
-        // return this.meterReset({ multiChannelNodeId: multiChannelRootNodeId })
-        //   .then(async res => {
-        //     if (this.hasCapability('meter_power')) {
-        //       await this.setCapabilityValue('meter_power', 0);
-        //     }
-        //     return res;
-        //   });
-      }
-      let commandClassMeterMain = null;
-      commandClassMeterMain = this.getCommandClass('METER');
-
-      if (commandClassMeterMain && commandClassMeterMain.hasOwnProperty('METER_RESET')) {
-        await commandClassMeterMain.METER_RESET({}).catch(this.error);
-        if (this.hasCapability('meter_power')) {
-          await this.setCapabilityValue('meter_power', 0);
-        }
-      }
-
-      // TODO: this requires a fix in node-homey-zwavedriver
-      // return this.meterReset()
-      //   .then(async res => {
-      //     if (this.hasCapability('meter_power')) {
-      //       await this.setCapabilityValue('meter_power', 0);
-      //     }
-      //     return res;
-      //   });
-    } catch (error) {
-      this.error(error);
     }
   }
 

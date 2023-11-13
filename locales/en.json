@@ -45,6 +45,7 @@
   },
   "device": {
     "unreachable": "Device is unreachable: ",
+    "unreachable_on_cloud": "Device is unreachable from Shelly Cloud, check the connection nad if cloud is enabled on the device.",
     "overpower": "Error: device is overpowered.",
     "overvoltage": "Error: overvoltage.",
     "overtemp": "Error: device temperature to high.",

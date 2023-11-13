@@ -45,6 +45,7 @@
   },
   "device": {
     "unreachable": "Gerät ist nicht erreichbar: ",
+    "unreachable_on_cloud": "Das Gerät ist von Shelly Cloud aus nicht erreichbar, überprüfen Sie die Verbindung und ob die Cloud auf dem Gerät aktiviert ist.",
     "overpower": "Fehler: Gerät ist überlastet.",
     "overvoltage": "Fehler: Überspannung.",
     "overtemp": "Fehler: Gerätentemperatur zu hoch.",
