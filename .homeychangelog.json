@@ -733,5 +733,8 @@
   },
   "3.23.3": {
     "en": "This release restores the cloud reconnect improvements and cloud reconnection error trigger card as this was not the cause of recent cloud connectivity issues. And the generic device error trigger card now also works on Homey Cloud for devices that can not be reached by Shelly Cloud."
+  },
+  "3.23.4": {
+    "en": "Breaking change. This release contains a fix for Homey Firmware 10.1.0 breaking the energy monitoring of Shelly Wave devices. This fix is not backwards compatible however. You will need to update to firmware 10.1.0. It also includes improvements for Homey Cloud preventing the app from crashing in certain scenarios."
   }
 }

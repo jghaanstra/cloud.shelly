@@ -31,6 +31,7 @@ class ShellyApp extends OAuth2App {
       this.cloudServer = null;
       this.cloudAccessToken = null;
       this.ws = null;
+      this.wsUnInit = false;
       this.wsConnected = false;
       this.cloudDebouncer = 0;
   
@@ -715,7 +716,7 @@ class ShellyApp extends OAuth2App {
     // CLOUD: OPEN CLOUD WEBSOCKET FOR PROCESSING CLOUD DEVICES STATUS UPDATES
     async websocketCloudListener() {
       try {
-        if (this.ws == null || this.ws.readyState === WebSocket.CLOSED) {
+        if (this.wsUnInit === false && (this.ws == null || this.ws.readyState === WebSocket.CLOSED)) {
           const client = this.getFirstSavedOAuth2Client();
           const oauth_token = client.getToken();
           this.cloudAccessToken = oauth_token.access_token;
@@ -743,40 +744,41 @@ class ShellyApp extends OAuth2App {
   
           this.ws.on('message', async (data) => {
             try {
-              const result = JSON.parse(data);
-              if (result.event === 'Shelly:StatusOnChange' || result.event === 'Shelly:Online') {
-                if (result.device.gen !== 'GBLE') {
-                  var ws_device_id = Number(result.device.id).toString(16);
-                } else {
-                  var ws_device_id = result.device.id;
-                }
-
-                const filteredShelliesWs = this.shellyDevices.filter(shelly => shelly.id.includes(ws_device_id));
-                for (const filteredShellyWs of filteredShelliesWs) {
-
-                  // parse status updates of Shelly:StatusOnChange
-                  if (result.hasOwnProperty("status")) {
-                    if (result.device.gen === 'G1') {
-                      filteredShellyWs.device.parseFullStatusUpdateGen1(result.status);
-                    } else if (result.device.gen === 'G2' || result.device.gen === 'GBLE') {
-                      filteredShellyWs.device.parseFullStatusUpdateGen2(result.status);
-                    }
+              if (this.wsUnInit === false) {
+                const result = JSON.parse(data);
+                if (result.event === 'Shelly:StatusOnChange' || result.event === 'Shelly:Online') {
+                  if (result.device.gen !== 'GBLE') {
+                    var ws_device_id = Number(result.device.id).toString(16);
+                  } else {
+                    var ws_device_id = result.device.id;
                   }
 
-                  // parse online message from Shelly:Online
-                  if (result.event === 'Shelly:Online') {
-                    if (result.online === 0) {
-                      filteredShellyWs.device.setUnavailable(this.homey.__('device.unreachable_on_cloud')).catch(error => { this.error(error) });
-                      this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": filteredShellyWs.device.getName(), "device_error": this.homey.__('device.unreachable_on_cloud')}).catch(error => { this.error(error) });
-                    } else if (result.online === 1) {
-                      filteredShellyWs.device.setAvailable().catch(error => { this.error(error) });
-                    }
-                  }
+                  const filteredShelliesWs = this.shellyDevices.filter(shelly => shelly.id.includes(ws_device_id));
+                  for (const filteredShellyWs of filteredShelliesWs) {
 
-                  await this.util.sleep(250);
+                    // parse status updates of Shelly:StatusOnChange
+                    if (result.hasOwnProperty("status")) {
+                      if (result.device.gen === 'G1') {
+                        filteredShellyWs.device.parseFullStatusUpdateGen1(result.status);
+                      } else if (result.device.gen === 'G2' || result.device.gen === 'GBLE') {
+                        filteredShellyWs.device.parseFullStatusUpdateGen2(result.status);
+                      }
+                    }
+
+                    // parse online message from Shelly:Online
+                    if (result.event === 'Shelly:Online') {
+                      if (result.online === 0) {
+                        filteredShellyWs.device.setUnavailable(this.homey.__('device.unreachable_on_cloud')).catch(error => { this.error(error) });
+                        this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": filteredShellyWs.device.getName(), "device_error": this.homey.__('device.unreachable_on_cloud')}).catch(error => { this.error(error) });
+                      } else if (result.online === 1) {
+                        filteredShellyWs.device.setAvailable().catch(error => { this.error(error) });
+                      }
+                    }
+
+                    await this.util.sleep(250);
+                  }
                 }
               }
-  
             } catch (error) {
               this.error(error);
             }
@@ -788,7 +790,7 @@ class ShellyApp extends OAuth2App {
             clearTimeout(this.wsPingTimeout);
             this.wsPingTimeout = this.homey.setTimeout(async () => {
               try {
-                if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
+                if (this.wsUnInit === false && (this.ws === null || this.ws.readyState === WebSocket.CLOSED)) {
                   this.wsConnected = false;
                   this.websocketCloudListener();
                 } else if (this.wsConnected) {
@@ -801,47 +803,47 @@ class ShellyApp extends OAuth2App {
             }, 370 * 1000);
           });
   
-          this.ws.on('error', (error) => {
+          this.ws.on('error', async (error) => {
             this.error('Cloud websocket error:', error.message);
             this.error(error);
-            this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": error.message}).catch(error => { this.error(error) });
+            await this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": error.message}).catch(error => { this.error(error) });
           });
   
-          this.ws.on('close', (code, reason) => {
-
-            if (code !== undefined || code === null ) {
-              this.error('Cloud websocket terminated without error code.');
-              this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": 'Cloud websocket connection has not responded to the last 3 ping-pongs and is being closed.'}).catch(error => { this.error(error) });
-            } else {
-              this.error('Cloud websocket closed due to reasoncode:', code);
-              this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": 'Cloud websocket closed due to reasoncode:', code}).catch(error => { this.error(error) });
-            }
-
-            clearTimeout(this.wsPingInterval);
-            clearTimeout(this.wsReconnectTimeout);
-            this.wsConnected = false;
+          this.ws.on('close', async (code, reason) => {
+            if (this.wsUnInit === false) {
+              if (code !== undefined || code === null ) {
+                this.error('Cloud websocket terminated without error code.');
+                await this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": 'Cloud websocket connection has not responded to the last 3 ping-pongs and is being closed.'}).catch(error => { this.error(error) });
+              } else {
+                this.error('Cloud websocket closed due to reasoncode:', code);
+                await this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": 'Cloud websocket closed due to reasoncode:', code}).catch(error => { this.error(error) });
+              }
   
-            // retry connection after 30 seconds and if not retried 10 times already
-            if (this.cloudDebouncer < 10) {
-              this.wsReconnectTimeout = this.homey.setTimeout(async () => {
-                try {
-                  this.error('Now retrying to establish connection after 30 seconds delay because its within the debouncer limit.');
-                  this.websocketCloudListener();
-                } catch (error) {
-                  this.error(error);
-                }
-              }, 30000);
-            } else {
-              this.wsReconnectTimeout = this.homey.setTimeout(async () => {
-                try {
-                  this.error('Now retrying to establish connection after 10 minutes delay because its outside the debouncer limit.');
-                  this.websocketCloudListener();
-                } catch (error) {
-                  this.error(error);
-                }
-              }, 600000);
+              clearTimeout(this.wsPingInterval);
+              clearTimeout(this.wsReconnectTimeout);
+              this.wsConnected = false;
+    
+              // retry connection after 30 seconds and if not retried 10 times already
+              if (this.cloudDebouncer < 10) {
+                this.wsReconnectTimeout = this.homey.setTimeout(async () => {
+                  try {
+                    this.error('Now retrying to establish connection after 30 seconds delay because its within the debouncer limit.');
+                    this.websocketCloudListener();
+                  } catch (error) {
+                    this.error(error);
+                  }
+                }, 30000);
+              } else {
+                this.wsReconnectTimeout = this.homey.setTimeout(async () => {
+                  try {
+                    this.error('Now retrying to establish connection after 10 minutes delay because its outside the debouncer limit.');
+                    this.websocketCloudListener();
+                  } catch (error) {
+                    this.error(error);
+                  }
+                }, 600000);
+              }
             }
-
           });
   
         }
@@ -991,6 +993,8 @@ class ShellyApp extends OAuth2App {
 
   async onUninit() {
     try {
+      this.wsUnInit = true;
+
       this.homey.clearInterval(this.wsPingInterval);
       this.homey.clearInterval(this.bleInterval);
       this.homey.clearTimeout(this.wsPingTimeout);
