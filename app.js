@@ -28,10 +28,11 @@ class ShellyApp extends OAuth2App {
       this.wss = null;
   
       // VARIABLES CLOUD GEN1 & GEN2
+      this.cloudWsInit = false;
       this.cloudServer = null;
       this.cloudAccessToken = null;
-      this.ws = null;
-      this.wsUnInit = false;
+      this.cloudWs = null;
+      this.cloudWsUnInit = false;
       this.wsConnected = false;
       this.cloudDebouncer = 0;
   
@@ -716,18 +717,41 @@ class ShellyApp extends OAuth2App {
     // CLOUD: OPEN CLOUD WEBSOCKET FOR PROCESSING CLOUD DEVICES STATUS UPDATES
     async websocketCloudListener() {
       try {
-        if (this.wsUnInit === false && (this.ws == null || this.ws.readyState === WebSocket.CLOSED)) {
-          const client = this.getFirstSavedOAuth2Client();
-          const oauth_token = client.getToken();
-          this.cloudAccessToken = oauth_token.access_token;
-          const cloud_details = await jwt_decode(oauth_token.access_token);
-          this.cloudServer = cloud_details.user_api_url.replace('https://', '');
+        if (this.cloudWsUnInit === false && (this.cloudWs == null || this.cloudWs.readyState === WebSocket.CLOSED)) {
+
+          if (this.cloudWsInit === false) {
+            const client = this.getFirstSavedOAuth2Client();
+            const oauth_token = client.getToken();
+            this.cloudAccessToken = oauth_token.access_token;
+            const cloud_details = await jwt_decode(oauth_token.access_token);
+            this.cloudServer = cloud_details.user_api_url.replace('https://', '');
+
+            /* set initial status of cloud devices */
+            this.homey.setTimeout(async () => {
+              try {
+                const cloudDevices = await client.getCloudDevices(this.cloudServer);
+                Object.entries(cloudDevices.data.devices_status).forEach(async ([key, value]) => {
+                  const filteredCloudDevices = this.shellyDevices.filter(shelly => shelly.id.includes(key));
+                  for (const filteredCloudDevice of filteredCloudDevices) {
+                    if (value._dev_info.online === false) {
+                      filteredCloudDevice.device.setUnavailable(this.homey.__('device.unreachable_on_cloud'));
+                      this.error('Marking device', filteredCloudDevice.device.getName(), 'with id', filteredCloudDevice.device.getData().id, 'as unreachable as it is marked as offline in Shelly Cloud.');
+                    }
+                  }
+                });
+              } catch (error) {
+                this.error(error);
+              }
+            }, 18000);
+
+            this.cloudWsInit = true;
+          }
   
           this.cloudDebouncer++;
   
-          this.ws = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ this.cloudAccessToken, {perMessageDeflate: false});
+          this.cloudWs = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ this.cloudAccessToken, {perMessageDeflate: false});
   
-          this.ws.on('open', () => {
+          this.cloudWs.on('open', () => {
             this.error('Cloud websocket for cloud devices opened (again) ...');
 
             this.wsConnected = true;
@@ -736,15 +760,15 @@ class ShellyApp extends OAuth2App {
             // start sending pings every 2 minutes to check the connection status
             clearTimeout(this.wsPingInterval);
             this.wsPingInterval = this.homey.setInterval(() => {
-              if (this.wsConnected === true && this.ws.readyState === WebSocket.OPEN) {
-                this.ws.ping();
+              if (this.wsConnected === true && this.cloudWs.readyState === WebSocket.OPEN) {
+                this.cloudWs.ping();
               }
             }, 120 * 1000);
           });
   
-          this.ws.on('message', async (data) => {
+          this.cloudWs.on('message', async (data) => {
             try {
-              if (this.wsUnInit === false) {
+              if (this.cloudWsUnInit === false) {
                 const result = JSON.parse(data);
                 if (result.event === 'Shelly:StatusOnChange' || result.event === 'Shelly:Online') {
                   if (result.device.gen !== 'GBLE') {
@@ -784,18 +808,18 @@ class ShellyApp extends OAuth2App {
             }
           });
   
-          this.ws.on('pong', () => {
+          this.cloudWs.on('pong', () => {
 
             // restart closed connection or terminate connection if pong response is not received after three consecutive pings
             clearTimeout(this.wsPingTimeout);
             this.wsPingTimeout = this.homey.setTimeout(async () => {
               try {
-                if (this.wsUnInit === false && (this.ws === null || this.ws.readyState === WebSocket.CLOSED)) {
+                if (this.cloudWsUnInit === false && (this.cloudWs === null || this.cloudWs.readyState === WebSocket.CLOSED)) {
                   this.wsConnected = false;
                   this.websocketCloudListener();
                 } else if (this.wsConnected) {
                   this.error('Cloud websocket connection has not responded to the last 3 ping-pongs and is being terminated.');
-                  this.ws.terminate();
+                  this.cloudWs.terminate();
                 }
               } catch (error) {
                 this.error(error);
@@ -803,15 +827,17 @@ class ShellyApp extends OAuth2App {
             }, 370 * 1000);
           });
   
-          this.ws.on('error', async (error) => {
-            this.error('Cloud websocket error:', error.message);
-            this.error(error);
-            await this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": error.message}).catch(error => { this.error(error) });
+          this.cloudWs.on('error', async (error) => {
+            if (this.cloudWsUnInit === false) {
+              this.error('Cloud websocket error:', error.message);
+              this.error(error);
+              await this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": error.message}).catch(error => { this.error(error) });
+            }
           });
   
-          this.ws.on('close', async (code, reason) => {
-            if (this.wsUnInit === false) {
-              if (code !== undefined || code === null ) {
+          this.cloudWs.on('close', async (code, reason) => {
+            if (this.cloudWsUnInit === false) {
+              if (code === undefined || code === null ) {
                 this.error('Cloud websocket terminated without error code.');
                 await this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": 'Cloud websocket connection has not responded to the last 3 ping-pongs and is being closed.'}).catch(error => { this.error(error) });
               } else {
@@ -824,10 +850,11 @@ class ShellyApp extends OAuth2App {
               this.wsConnected = false;
     
               // retry connection after 30 seconds and if not retried 10 times already
+
               if (this.cloudDebouncer < 10) {
                 this.wsReconnectTimeout = this.homey.setTimeout(async () => {
                   try {
-                    this.error('Now retrying to establish connection after 30 seconds delay because its within the debouncer limit.');
+                    this.error('Now retrying to establish connection after 30 seconds delay because its within the debouncer limit which is at', this.cloudDebouncer);
                     this.websocketCloudListener();
                   } catch (error) {
                     this.error(error);
@@ -836,7 +863,7 @@ class ShellyApp extends OAuth2App {
               } else {
                 this.wsReconnectTimeout = this.homey.setTimeout(async () => {
                   try {
-                    this.error('Now retrying to establish connection after 10 minutes delay because its outside the debouncer limit.');
+                    this.error('Now retrying to establish connection after 10 minutes delay because its outside the debouncer limit which is at', this.cloudDebouncer);
                     this.websocketCloudListener();
                   } catch (error) {
                     this.error(error);
@@ -923,37 +950,36 @@ class ShellyApp extends OAuth2App {
     }
   }
 
-  // CLOUD GEN1 & GEN2: SEND COMMANDS OVER WEBSOCKET
+  // CLOUD GEN1 & GEN2: SEND COMMANDS OVER CLOUD WEBSOCKET
   async websocketSendCommand(commands) {
     try {
       for (let command of commands) {
-    		this.ws.send(command);
+    		this.cloudWs.send(command);
     		await this.util.sleep(500);
     	}
       return Promise.resolve(true);
     } catch (error) {
       this.error('Websocket error sending command');
       this.error(error);
-
-      if (this.ws === null || this.ws.readyState === WebSocket.CLOSED) {
-        this.wsConnected = false;
-        clearTimeout(this.wsReconnectTimeout);
-        clearTimeout(this.wsPingInterval);
-        this.websocketCloudListener();
-      } else if (this.wsConnected) {
-        this.ws.close();
-      }
+      // if (this.cloudWs === null || this.cloudWs.readyState === WebSocket.CLOSED) {
+      //   this.wsConnected = false;
+      //   clearTimeout(this.wsReconnectTimeout);
+      //   clearTimeout(this.wsPingInterval);
+      //   this.websocketCloudListener();
+      // } else if (this.wsConnected) {
+      //   this.cloudWs.close();
+      // }
     }
   }
 
-  // CLOUD GEN1 & GEN2: CLOSE WEBSOCKET IF NOT NEEDED
+  // CLOUD GEN1 & GEN2: CLOSE CLOUD WEBSOCKET IF NOT NEEDED
   async websocketClose() {
     try {
       const filteredShellies = this.shellyDevices.filter(shelly => shelly.communication.includes('cloud'));
       if (filteredShellies.length === 0) {
-        if (this.ws !== null && this.ws.readyState !== WebSocket.CLOSED) {
+        if (this.cloudWs !== null && this.cloudWs.readyState !== WebSocket.CLOSED) {
           this.error('Closing websocket because there are no more cloud devices paired');
-          this.ws.close();
+          this.cloudWs.close();
         }
       }
       return Promise.resolve(true);
@@ -993,7 +1019,7 @@ class ShellyApp extends OAuth2App {
 
   async onUninit() {
     try {
-      this.wsUnInit = true;
+      this.cloudWsUnInit = true;
 
       this.homey.clearInterval(this.wsPingInterval);
       this.homey.clearInterval(this.bleInterval);
@@ -1001,8 +1027,8 @@ class ShellyApp extends OAuth2App {
       this.homey.clearTimeout(this.wsReconnectTimeout);
       this.homey.clearTimeout(this.wssReconnectTimeout);
       shellies.stop();
-      if (this.ws.readyState !== WebSocket.CLOSED) {
-        this.ws.close();
+      if (this.cloudWs.readyState !== WebSocket.CLOSED) {
+        this.cloudWs.close();
       }
       if (this.wss.readyState !== WebSocket.CLOSED) {
         this.wss.close();

@@ -736,5 +736,8 @@
   },
   "3.23.4": {
     "en": "Breaking change. This release contains a fix for Homey Firmware 10.1.0 breaking the energy monitoring of Shelly Wave devices. This fix is not backwards compatible however. You will need to update to firmware 10.1.0. It also includes improvements for Homey Cloud preventing the app from crashing in certain scenarios."
+  },
+  "3.23.5": {
+    "en": "This release adds functionality to mark Shelly devices that are paired with Homey Cloud as offline upon app initialization if they are marked as offline by Shelly Cloud. It also adds more improvements to work around the known Homey Cloud reconnection issue cause by a bug in Homey code."
   }
 }
