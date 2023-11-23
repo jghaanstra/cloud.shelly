@@ -742,5 +742,8 @@
   },
   "3.23.6": {
     "en": "This release adds functionality to mark Shelly devices that are paired with Homey Cloud as offline upon app initialization if they are marked as offline by Shelly Cloud. It also adds more improvements related to the Homey Cloud reconnection issue where the connection is not restored after a disconnect."
+  },
+  "3.23.7": {
+    "en": "This release adds functionality to mark Shelly devices that are paired with Homey Cloud as offline upon app initialization if they are marked as offline by Shelly Cloud. It also adds more improvements related to the Homey Cloud reconnection issue where the connection is not restored after a disconnect."
   }
 }

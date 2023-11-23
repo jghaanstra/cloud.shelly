@@ -874,16 +874,18 @@ class ShellyApp extends OAuth2App {
   // CLOUD: CHECK DEVICE STATUS AND REFRESH TOKEN IN THE PROCESS IF NEEDED
   async cloudDeviceStatus() {
     try {
-      const cloudDevices = await this.client.getCloudDevices(this.cloudServer);
-      Object.entries(cloudDevices.data.devices_status).forEach(async ([key, value]) => {
-        const filteredCloudDevices = this.shellyDevices.filter(shelly => shelly.id.includes(key));
-        for (const filteredCloudDevice of filteredCloudDevices) {
-          if (value._dev_info.online === false) {
-            filteredCloudDevice.device.setUnavailable(this.homey.__('device.unreachable_on_cloud'));
-            this.error('Marking device', filteredCloudDevice.device.getName(), 'with id', filteredCloudDevice.device.getData().id, 'as unreachable as it is marked as offline in Shelly Cloud.');
+      if (this.client !== null) {
+        const cloudDevices = await this.client.getCloudDevices(this.cloudServer);
+        Object.entries(cloudDevices.data.devices_status).forEach(async ([key, value]) => {
+          const filteredCloudDevices = this.shellyDevices.filter(shelly => shelly.id.includes(key));
+          for (const filteredCloudDevice of filteredCloudDevices) {
+            if (value._dev_info.online === false) {
+              filteredCloudDevice.device.setUnavailable(this.homey.__('device.unreachable_on_cloud'));
+              this.error('Marking device', filteredCloudDevice.device.getName(), 'with id', filteredCloudDevice.device.getData().id, 'as unreachable as it is marked as offline in Shelly Cloud.');
+            }
           }
-        }
-      });
+        });
+      }
       return Promise.resolve(true);
     } catch(error) {
       this.error(error);
