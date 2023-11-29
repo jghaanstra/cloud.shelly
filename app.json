@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.23.7",
+  "version": "3.23.8",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -2399,6 +2399,45 @@
         ]
       },
       {
+        "title": {
+          "en": "Dim white",
+          "nl": "Dimmen wit"
+        },
+        "titleFormatted": {
+          "en": "Dim white channel to [[brightness]]",
+          "nl": "Dim wit kanaal naar [[brightness]]"
+        },
+        "args": [
+          {
+            "type": "range",
+            "name": "brightness",
+            "title": {
+              "en": "Brightness",
+              "nl": "Helderheid"
+            },
+            "min": 0,
+            "max": 1,
+            "step": 0.01,
+            "label": "%",
+            "labelMultiplier": 100,
+            "labelDecimals": 2
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly&capabilities=dim.white"
+          }
+        ],
+        "platforms": [
+          "local"
+        ],
+        "id": "actionRGBW2DimWhite"
+      },
+      {
         "id": "actionRGBW2DisableWhiteMode",
         "title": {
           "en": "Disable white mode",
@@ -4758,11 +4797,25 @@
         ],
         "productId": [
           131
-        ]
+        ],
+        "associationGroups": [
+          1
+        ],
+        "learnmode": {
+          "image": "./assets/zwave-learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking. Repeat this for step 2 in the pairing process and enter the device key (pincode).",
+            "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen. Herhaal dit voor stap 2 in het koppelingsproces en voer de apparaatsleutel (pincode) in."
+          }
+        },
+        "unlearnmode": {
+          "image": "./assets/zwave-learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking.",
+            "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen."
+          }
+        }
       },
-      "associationGroups": [
-        1
-      ],
       "platforms": [
         "local",
         "cloud"
@@ -4886,7 +4939,7 @@
               "type": "number",
               "label": {
                 "en": "Auto OFF O1 with timer",
-                "nl": "Automtisch UIT O1 met timer"
+                "nl": "Automatisch UIT O1 met timer"
               },
               "value": 0,
               "attr": {
@@ -4911,7 +4964,7 @@
               "type": "number",
               "label": {
                 "en": "Auto ON O1 with timer",
-                "nl": "Automtisch AAN O1 met timer"
+                "nl": "Automatisch AAN O1 met timer"
               },
               "value": 0,
               "attr": {
@@ -5015,11 +5068,25 @@
         ],
         "productId": [
           132
-        ]
+        ],
+        "associationGroups": [
+          1
+        ],
+        "learnmode": {
+          "image": "./assets/zwave-learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking. Repeat this for step 2 in the pairing process and enter the device key (pincode).",
+            "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen. Herhaal dit voor stap 2 in het koppelingsproces en voer de apparaatsleutel (pincode) in."
+          }
+        },
+        "unlearnmode": {
+          "image": "./assets/zwave-learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking.",
+            "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen."
+          }
+        }
       },
-      "associationGroups": [
-        1
-      ],
       "platforms": [
         "local",
         "cloud"
@@ -5143,7 +5210,7 @@
               "type": "number",
               "label": {
                 "en": "Auto OFF O1 with timer",
-                "nl": "Automtisch UIT O1 met timer"
+                "nl": "Automatisch UIT O1 met timer"
               },
               "value": 0,
               "attr": {
@@ -5168,7 +5235,7 @@
               "type": "number",
               "label": {
                 "en": "Auto ON O1 with timer",
-                "nl": "Automtisch AAN O1 met timer"
+                "nl": "Automatisch AAN O1 met timer"
               },
               "value": 0,
               "attr": {
@@ -5227,7 +5294,7 @@
               "type": "number",
               "label": {
                 "en": "Minimal time between reports for O1",
-                "nl": "Minimale tijd tussen reporrts voor O1"
+                "nl": "Minimale tijd tussen reports voor O1"
               },
               "value": 30,
               "attr": {
@@ -5235,8 +5302,8 @@
                 "max": 120
               },
               "units": {
-                "en": "%",
-                "nl": "%"
+                "en": "s",
+                "nl": "s"
               },
               "hint": {
                 "en": "This parameter (39) defines the minimum time between sending reports to Homey for output 1.",
@@ -5334,6 +5401,20 @@
         "associationGroupsMultiChannel": [
           1
         ],
+        "learnmode": {
+          "image": "./assets/zwave-learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking. Repeat this for step 2 in the pairing process and enter the device key (pincode).",
+            "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen. Herhaal dit voor stap 2 in het koppelingsproces en voer de apparaatsleutel (pincode) in."
+          }
+        },
+        "unlearnmode": {
+          "image": "./assets/zwave-learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking.",
+            "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen."
+          }
+        },
         "multiChannelNodes": {
           "1": {
             "class": "socket",
@@ -5516,7 +5597,7 @@
               "type": "number",
               "label": {
                 "en": "Auto OFF O1 with timer",
-                "nl": "Automtisch UIT O1 met timer"
+                "nl": "Automatisch UIT O1 met timer"
               },
               "value": 0,
               "attr": {
@@ -5541,7 +5622,7 @@
               "type": "number",
               "label": {
                 "en": "Auto ON O1 with timer",
-                "nl": "Automtisch AAN O1 met timer"
+                "nl": "Automatisch AAN O1 met timer"
               },
               "value": 0,
               "attr": {
@@ -5677,7 +5758,7 @@
               "type": "number",
               "label": {
                 "en": "Auto OFF O2 with timer",
-                "nl": "Automtisch UIT O2 met timer"
+                "nl": "Automatisch UIT O2 met timer"
               },
               "value": 0,
               "attr": {
@@ -5702,7 +5783,7 @@
               "type": "number",
               "label": {
                 "en": "Auto ON O2 with timer",
-                "nl": "Automtisch AAN O2 met timer"
+                "nl": "Automatisch AAN O2 met timer"
               },
               "value": 0,
               "attr": {
@@ -5761,7 +5842,7 @@
               "type": "number",
               "label": {
                 "en": "Minimal time between reports for O1",
-                "nl": "Minimale tijd tussen reporrts voor O1"
+                "nl": "Minimale tijd tussen reports voor O1"
               },
               "value": 30,
               "attr": {
@@ -5769,8 +5850,8 @@
                 "max": 120
               },
               "units": {
-                "en": "%",
-                "nl": "%"
+                "en": "s",
+                "nl": "s"
               },
               "hint": {
                 "en": "This parameter (39) defines the minimum time between sending reports to Homey for output 1.",
@@ -5820,7 +5901,7 @@
               "type": "number",
               "label": {
                 "en": "Minimal time between reports for O2",
-                "nl": "Minimale tijd tussen reporrts voor O2"
+                "nl": "Minimale tijd tussen reports voor O2"
               },
               "value": 30,
               "attr": {
@@ -5828,8 +5909,8 @@
                 "max": 120
               },
               "units": {
-                "en": "%",
-                "nl": "%"
+                "en": "s",
+                "nl": "s"
               },
               "hint": {
                 "en": "This parameter (40) defines the minimum time between sending reports to Homey for output 2.",
@@ -5964,6 +6045,7 @@
       "class": "windowcoverings",
       "capabilities": [
         "windowcoverings_set",
+        "windowcoverings_state",
         "measure_power",
         "meter_power",
         "button.reset_meter",
@@ -6001,11 +6083,25 @@
         ],
         "productId": [
           130
-        ]
+        ],
+        "associationGroups": [
+          1
+        ],
+        "learnmode": {
+          "image": "./assets/zwave-learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking. Repeat this for step 2 in the pairing process and enter the device key (pincode).",
+            "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen. Herhaal dit voor stap 2 in het koppelingsproces en voer de apparaatsleutel (pincode) in."
+          }
+        },
+        "unlearnmode": {
+          "image": "./assets/zwave-learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking.",
+            "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen."
+          }
+        }
       },
-      "associationGroups": [
-        1
-      ],
       "platforms": [
         "local",
         "cloud"

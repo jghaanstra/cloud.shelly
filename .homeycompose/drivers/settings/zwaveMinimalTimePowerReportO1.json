@@ -3,7 +3,7 @@
   "type": "number",
   "label": {
     "en": "Minimal time between reports for O1",
-    "nl": "Minimale tijd tussen reporrts voor O1"
+    "nl": "Minimale tijd tussen reports voor O1"
   },
   "value": 30,
   "attr": {
@@ -11,8 +11,8 @@
     "max": 120
   },
   "units": {
-    "en": "%",
-    "nl": "%"
+    "en": "s",
+    "nl": "s"
   },
   "hint": {
     "en": "This parameter (39) defines the minimum time between sending reports to Homey for output 1.",

@@ -989,7 +989,7 @@ class ShellyDevice extends Homey.Device {
             /* dim white mode */
             if (result.lights[channel].mode === 'white') {
               let dim_rgbwwhite = result.lights[channel].brightness > 100 ? 1 : result.lights[channel].brightness / 100;
-              this.updateCapabilityValue('dim', dim_rgbwwhite, channel);
+              this.updateCapabilityValue('dim.white', dim_rgbwwhite, channel);
             }
 
           }

@@ -745,5 +745,8 @@
   },
   "3.23.7": {
     "en": "This release adds functionality to mark Shelly devices that are paired with Homey Cloud as offline upon app initialization if they are marked as offline by Shelly Cloud. It also adds more improvements related to the Homey Cloud reconnection issue where the connection is not restored after a disconnect."
+  },
+  "3.23.8": {
+    "en": "This release update the node-homey-zwavedriver as Athom seems to have fixed the issue with resetting the energy meter on Wave devices. It also adds an action card for dimming the white channel on a RGBW2 and includes a possible fix for being able to control the Wave Shutter with up/down/stop buttons instead of a slider. And some minor changes like fixing a couple of type-o’s in dutch translation of Zwave parameters and adding learning mode instructions to Wave devices."
   }
 }

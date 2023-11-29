@@ -3,7 +3,7 @@
   "type": "number",
   "label": {
     "en": "Auto ON O1 with timer",
-    "nl": "Automtisch AAN O1 met timer"
+    "nl": "Automatisch AAN O1 met timer"
   },
   "value": 0,
   "attr": {

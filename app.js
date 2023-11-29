@@ -387,6 +387,15 @@ class ShellyApp extends OAuth2App {
             this.error(error)
           }
         })
+
+      this.homey.flow.getActionCard('actionRGBW2DimWhite')
+        .registerRunListener(async (args) => {
+          try {
+            return await args.device.triggerCapabilityListener("dim.white", args.brightness);
+          } catch (error) {
+            this.error(error)
+          }
+        })
   
       /* roller shutters */
       this.homey.flow.getActionCard('moveRollerShutter')
@@ -657,9 +666,11 @@ class ShellyApp extends OAuth2App {
                 const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src.toLowerCase())).filter(shelly => shelly.channel === 0);
                 for (const filteredShellyWss of filteredShelliesWss) {
                   filteredShellyWss.device.parseFullStatusUpdateGen2(result.params);
-                  if (result.params.wifi.sta_ip !== null) { // update IP address if it does not match the device
-                    if (filteredShellyWss.device.getSetting('address') !== String(result.params.wifi.sta_ip)) {
-                      filteredShellyWss.device.setSettings({address: String(result.params.wifi.sta_ip)});
+                  if (result.params.hasOwnProperty('wifi')) {
+                    if (result.params.wifi.sta_ip !== null) { // update IP address if it does not match the device
+                      if (filteredShellyWss.device.getSetting('address') !== String(result.params.wifi.sta_ip)) {
+                        filteredShellyWss.device.setSettings({address: String(result.params.wifi.sta_ip)});
+                      }
                     }
                   }
                 }
@@ -695,9 +706,11 @@ class ShellyApp extends OAuth2App {
               const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src.toLowerCase())).filter(shelly => shelly.channel === 0);
               for (const filteredShellyWss of filteredShelliesWss) {
                 filteredShellyWss.device.parseFullStatusUpdateGen2(result.result);
-                if (result.result.wifi.sta_ip !== null) { // update IP address if it does not match the device
-                  if (filteredShellyWss.device.getSetting('address') !== String(result.result.wifi.sta_ip)) {
-                    filteredShellyWss.device.setSettings({address: String(result.result.wifi.sta_ip)});
+                if (result.result.hasOwnProperty('wifi')) {
+                  if (result.result.wifi.sta_ip !== null) { // update IP address if it does not match the device
+                    if (filteredShellyWss.device.getSetting('address') !== String(result.result.wifi.sta_ip)) {
+                      filteredShellyWss.device.setSettings({address: String(result.result.wifi.sta_ip)});
+                    }
                   }
                 }
               }

@@ -1,0 +1,36 @@
+{
+  "title": {
+    "en": "Dim white",
+    "nl": "Dimmen wit"
+  },
+  "titleFormatted": {
+    "en": "Dim white channel to [[brightness]]",
+    "nl": "Dim wit kanaal naar [[brightness]]"
+  },
+  "args": [
+    {
+      "type": "range",
+      "name": "brightness",
+      "title": {
+        "en": "Brightness",
+        "nl": "Helderheid"
+      },
+      "min": 0,
+      "max": 1,
+      "step": 0.01,
+      "label": "%",
+      "labelMultiplier": 100,
+      "labelDecimals": 2
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly&capabilities=dim.white"
+    }
+  ],
+  "platforms": ["local"]
+}
