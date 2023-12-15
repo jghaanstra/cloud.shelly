@@ -1,0 +1,29 @@
+{
+  "title": {
+    "en": "External Switch 1 has changed",
+    "nl": "Externe schakelaar 1 is veranderd"
+  },
+  "tokens": [
+    {
+      "name": "onoff",
+      "type": "boolean",
+      "title": {
+        "en": "On/Off",
+        "nl": "Aan/Uit"
+      },
+      "example": "true"
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.1"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

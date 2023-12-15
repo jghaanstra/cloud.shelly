@@ -11,12 +11,7 @@ class ShellyWaveShutterDevice extends Device {
 
       this.registerCapability('meter_power', 'METER');
 
-      // TODO: remove after the next release
-      if (!this.hasCapability('windowcoverings_state')) {
-        await this.addCapability('windowcoverings_state');
-      }
-
-      this.registerCapability('windowcoverings_state', 'SWITCH_MULTILEVEL');
+      this.registerCapability('windowcoverings_state', 'SWITCH_BINARY');
 
       // configure capabilities based on operating mode (classic shutter vs venetian blinds)
       if (this.numberOfMultiChannelNodes > 0) { // operating mode = venetian blinds

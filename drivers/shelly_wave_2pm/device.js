@@ -9,9 +9,13 @@ class ShellyWave2PMDevice extends Device {
 
       this.registerCapability('onoff', 'SWITCH_BINARY');
       
-      this.registerCapability('measure_power', 'METER');
-
-      this.registerCapability('meter_power', 'METER');
+      if (this.hasCapability('measure_power')) {
+        this.registerCapability('measure_power', 'METER');
+      }
+      
+      if (this.hasCapability('meter_power')) {
+        this.registerCapability('meter_power', 'METER');
+      }
 
     } catch (error) {
       this.error(error);

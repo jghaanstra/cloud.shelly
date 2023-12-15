@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.23.8",
+  "version": "3.24.0",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -275,6 +275,171 @@
           "local",
           "cloud"
         ]
+      },
+      {
+        "title": {
+          "en": "External Switch 1 has changed",
+          "nl": "Externe schakelaar 1 is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "onoff",
+            "type": "boolean",
+            "title": {
+              "en": "On/Off",
+              "nl": "Aan/Uit"
+            },
+            "example": "true"
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.1"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "triggerExternalSwitch1"
+      },
+      {
+        "title": {
+          "en": "External Switch 2 has changed",
+          "nl": "Externe schakelaar 2 is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "onoff",
+            "type": "boolean",
+            "title": {
+              "en": "On/Off",
+              "nl": "Aan/Uit"
+            },
+            "example": "true"
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.2"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "triggerExternalSwitch2"
+      },
+      {
+        "title": {
+          "en": "External Switch 3 has changed",
+          "nl": "Externe schakelaar 3 is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "onoff",
+            "type": "boolean",
+            "title": {
+              "en": "On/Off",
+              "nl": "Aan/Uit"
+            },
+            "example": "true"
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.3"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "triggerExternalSwitch3"
+      },
+      {
+        "title": {
+          "en": "External Switch 4 has changed",
+          "nl": "Externe schakelaar 4 is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "onoff",
+            "type": "boolean",
+            "title": {
+              "en": "On/Off",
+              "nl": "Aan/Uit"
+            },
+            "example": "true"
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.4"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "triggerExternalSwitch4"
+      },
+      {
+        "title": {
+          "en": "External Switch 5 has changed",
+          "nl": "Externe schakelaar 5 is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "onoff",
+            "type": "boolean",
+            "title": {
+              "en": "On/Off",
+              "nl": "Aan/Uit"
+            },
+            "example": "true"
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.5"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "triggerExternalSwitch5"
       },
       {
         "id": "triggerFWUpdate",
@@ -5373,8 +5538,6 @@
       "icon": "/drivers/shelly_wave_2pm/assets/icon.svg",
       "capabilities": [
         "onoff",
-        "measure_power",
-        "meter_power",
         "button.reset_meter"
       ],
       "capabilitiesOptions": {
@@ -8512,6 +8675,18 @@
       "insights": false,
       "icon": "/assets/icon.svg"
     },
+    "deviceGen3": {
+      "type": "string",
+      "title": {
+        "en": "Device Generation 3",
+        "nl": "Device Generation 3"
+      },
+      "getable": false,
+      "setable": false,
+      "uiComponent": null,
+      "insights": false,
+      "icon": "/assets/icon.svg"
+    },
     "devicePlusSmoke": {
       "type": "string",
       "title": {
@@ -8893,6 +9068,18 @@
         "en": "Wmin",
         "nl": "Wmin"
       }
+    },
+    "multiDividedInputs": {
+      "type": "string",
+      "title": {
+        "en": "Multi Divided Inputs",
+        "nl": "Multi Divided Inputs"
+      },
+      "getable": false,
+      "setable": false,
+      "uiComponent": null,
+      "insights": false,
+      "icon": "/assets/icon.svg"
     },
     "multiInputs": {
       "type": "string",

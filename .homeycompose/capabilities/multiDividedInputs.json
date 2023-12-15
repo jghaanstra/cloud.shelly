@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Multi Divided Inputs",
+    "nl": "Multi Divided Inputs"
+  },
+  "getable": false,
+  "setable": false,
+  "uiComponent": null,
+  "insights": false,
+  "icon": "/assets/icon.svg"
+}

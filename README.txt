@@ -49,11 +49,12 @@ Shelly Plus i4DC
 Shelly Plus Wall Dimmer US
 Shelly Plus Plug S
 Shelly Plus Smoke
-Shelly Wall Panel
+Shelly Wall Panel (as thermostat only on Homey Pro)
 Shelly Plus Uni
 Shelly Plus PM Mini
 Shelly Plus 1 Mini
 Shelly Plus 1PM Mini
+Shelly Plus 0-10V Dimmer
 
 Pro
 -------------

@@ -706,10 +706,12 @@ class ShellyApp extends OAuth2App {
               const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src.toLowerCase())).filter(shelly => shelly.channel === 0);
               for (const filteredShellyWss of filteredShelliesWss) {
                 filteredShellyWss.device.parseFullStatusUpdateGen2(result.result);
-                if (result.result.hasOwnProperty('wifi')) {
-                  if (result.result.wifi.sta_ip !== null) { // update IP address if it does not match the device
-                    if (filteredShellyWss.device.getSetting('address') !== String(result.result.wifi.sta_ip)) {
-                      filteredShellyWss.device.setSettings({address: String(result.result.wifi.sta_ip)});
+                if (result.result !== undefined) {
+                  if (result.result.hasOwnProperty('wifi')) {
+                    if (result.result.wifi.sta_ip !== null) { // update IP address if it does not match the device
+                      if (filteredShellyWss.device.getSetting('address') !== String(result.result.wifi.sta_ip)) {
+                        filteredShellyWss.device.setSettings({address: String(result.result.wifi.sta_ip)});
+                      }
                     }
                   }
                 }

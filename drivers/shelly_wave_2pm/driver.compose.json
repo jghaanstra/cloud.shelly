@@ -11,8 +11,6 @@
   "icon": "{{driverAssetsPath}}/icon.svg",
   "capabilities": [
     "onoff",
-    "measure_power",
-    "meter_power",
     "button.reset_meter"
   ],
   "capabilitiesOptions": {

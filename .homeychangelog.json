@@ -748,5 +748,8 @@
   },
   "3.23.8": {
     "en": "This release update the node-homey-zwavedriver as Athom seems to have fixed the issue with resetting the energy meter on Wave devices. It also adds an action card for dimming the white channel on a RGBW2 and includes a possible fix for being able to control the Wave Shutter with up/down/stop buttons instead of a slider. And some minor changes like fixing a couple of type-o’s in dutch translation of Zwave parameters and adding learning mode instructions to Wave devices."
+  },
+  "3.24.0": {
+    "en": "This release removes the measure_power and meter_power capability of the main node for the Shelly Wave 2PM. This requires you to re-pair the device. It also adds button action events for Plus/Pro devices configured as windowcoverings and adds support for the Wall Display in thermostat mode and Shelly Pro 3EM Add On. It includes another attempt to get the windowcoverings_state capability working with the Wave Shutter. And it adds proper naming of the sensors added to the Shelly Plus 2PM through the sensor add-on (requires re-pairing)."
   }
 }

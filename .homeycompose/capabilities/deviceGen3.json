@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Device Generation 3",
+    "nl": "Device Generation 3"
+  },
+  "getable": false,
+  "setable": false,
+  "uiComponent": null,
+  "insights": false,
+  "icon": "/assets/icon.svg"
+}
