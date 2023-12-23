@@ -71,22 +71,6 @@ class ShellyCloudDevice extends OAuth2Device {
         });
       }
 
-      // update initial device status on init
-      this.homey.setTimeout(async () => {
-        try {
-          if (this.getSetting('cloud_server') === null) throw "No valid cloud server address found, skipping initial device update.";
-          const device_data = await this.oAuth2Client.getCloudDevices(this.getSetting('cloud_server'));
-          const device_id = this.getSetting('cloud_device_id').toString(16);
-          if (this.getStoreValue('gen') === 'gen1') {
-            this.parseFullStatusUpdateGen1(device_data.data.devices_status[device_id])
-          } else if (this.getStoreValue('gen') === 'gen2') {
-            this.parseFullStatusUpdateGen2(device_data.data.devices_status[device_id])
-          }
-          this.homey.app.websocketCloudListener();
-        } catch (error) {
-          this.error(error);
-        }
-      }, this.util.getRandomTimeout(10));
     } catch (error) {
       this.error(error);
     }
@@ -135,6 +119,11 @@ ShellyCloudDevice.prototype.parseFullStatusUpdateGen1 = Device.prototype.parseFu
 ShellyCloudDevice.prototype.parseFullStatusUpdateGen2 = Device.prototype.parseFullStatusUpdateGen2;
 ShellyCloudDevice.prototype.parseCapabilityUpdate = Device.prototype.parseCapabilityUpdate;
 ShellyCloudDevice.prototype.onCapabilityOnoff = Device.prototype.onCapabilityOnoff;
+ShellyCloudDevice.prototype.onCapabilityOnoff1 = Device.prototype.onCapabilityOnoff1;
+ShellyCloudDevice.prototype.onCapabilityOnoff2 = Device.prototype.onCapabilityOnoff2;
+ShellyCloudDevice.prototype.onCapabilityOnoff3 = Device.prototype.onCapabilityOnoff3;
+ShellyCloudDevice.prototype.onCapabilityOnoff4 = Device.prototype.onCapabilityOnoff4;
+ShellyCloudDevice.prototype.onCapabilityOnoff5 = Device.prototype.onCapabilityOnoff5;
 ShellyCloudDevice.prototype.onCapabilityOnoffLight = Device.prototype.onCapabilityOnoffLight;
 ShellyCloudDevice.prototype.onCapabilityWindowcoveringsState = Device.prototype.onCapabilityWindowcoveringsState;
 ShellyCloudDevice.prototype.onCapabilityWindowcoveringsSet = Device.prototype.onCapabilityWindowcoveringsSet;

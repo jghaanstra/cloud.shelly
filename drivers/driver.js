@@ -113,11 +113,12 @@ class ShellyDriver extends Homey.Driver {
                 }
 
                 /* update device config if it's a WallDisplay in thermostat mode */
-                if (result.hasOwnProperty("profile")) {
-                  if (result.profile === "cover") {
+                if (result.hasOwnProperty("relay_in_thermostat")) {
+                  if (result.relay_in_thermostat) {
                     device_config = this.util.getDeviceConfig(hostname + 'thermostat-');
                   }
                 }
+                
                 break;
               } catch (error) {
                 throw new Error(this.homey.__("pair.error") + ' Error message: '+ error.message);

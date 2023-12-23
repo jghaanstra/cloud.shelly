@@ -90,9 +90,13 @@ class ShellyApp extends OAuth2App {
         }, 27000);
       }
 
-      // CLOUD: INITIALLY UPDATE DEVICE STATUS AND REFRESH TOKEN IF NEEDED
+      // CLOUD: START CLOUD LISTENER AND INITIALLY UPDATE DEVICE STATUS AND REFRESH TOKEN IF NEEDED
       if (this.homey.platform === "cloud") {
         try {
+          /* open the cloud websocket */
+          this.homey.setTimeout(async () => {
+            this.websocketCloudListener();
+          }, 10000);
 
           /* initially update the device status based on Shelly Cloud status (also used to refresh expired tokens) */
           this.homey.setTimeout(async () => {
@@ -962,14 +966,6 @@ class ShellyApp extends OAuth2App {
     } catch (error) {
       this.error('Websocket error sending command');
       this.error(error);
-      // if (this.cloudWs === null || this.cloudWs.readyState === WebSocket.CLOSED) {
-      //   this.wsConnected = false;
-      //   this.homey.clearTimeout(this.wsReconnectTimeout);
-      //   this.homey.clearInterval(this.wsPingInterval);
-      //   this.websocketCloudListener();
-      // } else if (this.wsConnected) {
-      //   this.cloudWs.close();
-      // }
     }
   }
 

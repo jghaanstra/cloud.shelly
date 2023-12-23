@@ -16,6 +16,11 @@ class ShellyDevice extends Homey.Device {
     
       // ADDING CAPABILITY LISTENERS
       this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
+      this.registerCapabilityListener("onoff.1", this.onCapabilityOnoff1.bind(this));
+      this.registerCapabilityListener("onoff.2", this.onCapabilityOnoff2.bind(this));
+      this.registerCapabilityListener("onoff.3", this.onCapabilityOnoff3.bind(this));
+      this.registerCapabilityListener("onoff.4", this.onCapabilityOnoff4.bind(this));
+      this.registerCapabilityListener("onoff.5", this.onCapabilityOnoff5.bind(this));
       this.registerCapabilityListener("dim", this.onCapabilityDim.bind(this));
       this.registerCapabilityListener("light_temperature", this.onCapabilityLightTemperature.bind(this));
       this.registerMultipleCapabilityListener(['light_hue', 'light_saturation'], this.onMultipleCapabilityListenerSatHue.bind(this), 500);
@@ -191,6 +196,51 @@ class ShellyDevice extends Homey.Device {
     }
   }
 
+  /* onoff.1 add-on relay */
+  async onCapabilityOnoff1(value, opts) {
+    try {
+      return await this.util.sendRPCCommand('/rpc/Switch.Set?id=100&on='+ value, this.getSetting('address'), this.getSetting('password'));
+    } catch (error) {
+      this.error(error);
+    }
+  }
+
+  /* onoff.2 add-on relay */
+  async onCapabilityOnoff2(value, opts) {
+    try {
+      return await this.util.sendRPCCommand('/rpc/Switch.Set?id=101&on='+ value, this.getSetting('address'), this.getSetting('password'));
+    } catch (error) {
+      this.error(error);
+    }
+  }
+
+  /* onoff.3 add-on relay */
+  async onCapabilityOnoff3(value, opts) {
+    try {
+      return await this.util.sendRPCCommand('/rpc/Switch.Set?id=102&on='+ value, this.getSetting('address'), this.getSetting('password'));
+    } catch (error) {
+      this.error(error);
+    }
+  }
+
+  /* onoff.4 add-on relay */
+  async onCapabilityOnoff4(value, opts) {
+    try {
+      return await this.util.sendRPCCommand('/rpc/Switch.Set?id=103&on='+ value, this.getSetting('address'), this.getSetting('password'));
+    } catch (error) {
+      this.error(error);
+    }
+  }
+
+  /* onoff.5 add-on relay */
+  async onCapabilityOnoff5(value, opts) {
+    try {
+      return await this.util.sendRPCCommand('/rpc/Switch.Set?id=104&on='+ value, this.getSetting('address'), this.getSetting('password'));
+    } catch (error) {
+      this.error(error);
+    }
+  }
+
   /* onoff light */
   async onCapabilityOnoffLight(value, opts) {
     try {
@@ -358,7 +408,7 @@ class ShellyDevice extends Homey.Device {
             const duo_white = 100 - (value * 100);
             return await this.util.sendCommand('/light/0?white='+ duo_white +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
           } else if (this.getStoreValue('config').name === 'Shelly Bulb' || this.getStoreValue('config').name === 'Shelly Bulb RGBW') {
-            const light_temperature = Number(this.util.denormalize(value, 3000, 6500));
+            const light_temperature = Number(this.util.denormalize((1 - value), 3000, 6500)); // the 1 - value is a backwards compatible hack as the denormalize function has been initially wrong but people might have configured it like that in their flows
             return await this.util.sendCommand('/light/0?temp='+ light_temperature +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
           } else if (this.getStoreValue('config').name === 'Shelly RGBW2 Color') {
             const rgbw2_white = Number(this.util.denormalize(value, 0, 255));
@@ -2187,9 +2237,9 @@ class ShellyDevice extends Homey.Device {
       // ACTION EVENTS (for GEN2 cloud devices only)
       if (result.hasOwnProperty("v_eve:0")) {
         if (result["v_eve:0"].hasOwnProperty("ev")) {
-          if (result["v_eve:0"].ev !== '' ) {
+          if (result["v_eve:0"].ev !== '') {
             const action_event_1 = this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', 'gen2') + '_1';
-            if (channel === 0 && this.hasCapability('input_2')) {
+            if (channel === 0 && this.hasCapability('multiInputs')) {
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action_event_1}, {"id": this.getData().id, "device": this.getName(), "action": action_event_1}).catch(error => { this.error(error) });
             } else {
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', 'gen2')}, {"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', 'gen2')}).catch(error => { this.error(error) });
@@ -2200,9 +2250,9 @@ class ShellyDevice extends Homey.Device {
 
       if (result.hasOwnProperty("v_eve:1")) {
         if (result["v_eve:1"].hasOwnProperty("ev")) {
-          if (result["v_eve:1"].ev !== '' ) {
+          if (result["v_eve:1"].ev !== '') {
             const action_event_2 = this.util.getActionEventDescription(result["v_eve:1"].ev, 'cloud', 'gen2') + '_2';
-            if (this.hasCapability('input_2')) {
+            if (channel === 0 && this.hasCapability('multiInputs')) {
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action_event_2}, {"id": this.getData().id, "device": this.getName(), "action": action_event_2}).catch(error => { this.error(error) });
             } else {
               const device_id = this.getStoreValue('main_device') + '-channel-1';
@@ -2217,9 +2267,9 @@ class ShellyDevice extends Homey.Device {
 
       if (result.hasOwnProperty("v_eve:2")) {
         if (result["v_eve:2"].hasOwnProperty("ev")) {
-          if (result["v_eve:2"].ev !== '' ) {
+          if (result["v_eve:2"].ev !== '') {
             const action_event_3 = this.util.getActionEventDescription(result["v_eve:2"].ev, 'cloud', 'gen2') + '_3';
-            if (this.hasCapability('input_3')) {
+            if (channel === 0 && this.hasCapability('multiInputs')) {
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action_event_3}, {"id": this.getData().id, "device": this.getName(), "action": action_event_3}).catch(error => { this.error(error) });
             } else {
               const device_id = this.getStoreValue('main_device') + '-channel-2';
@@ -2234,9 +2284,9 @@ class ShellyDevice extends Homey.Device {
 
       if (result.hasOwnProperty("v_eve:3")) {
         if (result["v_eve:3"].hasOwnProperty("ev")) {
-          if (result["v_eve:3"].ev !== '' ) {
+          if (result["v_eve:3"].ev !== '') {
             const action_event_4 = this.util.getActionEventDescription(result["v_eve:3"].ev, 'cloud', 'gen2') + '_4';
-            if (this.hasCapability('input_4')) {
+            if (channel === 0 && this.hasCapability('multiInputs')) {
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action_event_4}, {"id": this.getData().id, "device": this.getName(), "action": action_event_4}).catch(error => { this.error(error) });
             } else {
               const device_id = this.getStoreValue('main_device') + '-channel-3';
@@ -3108,11 +3158,11 @@ class ShellyDevice extends Homey.Device {
   async updateDeviceConfig() {
     try {
 
-      /* placeholder for update for specific devices */  
+      /* placeholder for update for specific devices */
 
-      // TODO: remove on next release
-      if (this.getStoreValue('type') === 'SPSH-002PE16EU' && !this.hasCapability('multiDividedInputs')) {
-        this.addCapability('multiDividedInputs');
+      // TODO: remove with the next release
+      if ((this.getStoreValue('type') === '00100WW' || this.getStoreValue('type') === 'SNGW-0A11WW010') && this.getClass() === 'socket') {
+        this.setClass('light');
       }
 
       /* get device setting */

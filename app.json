@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.24.0",
+  "version": "3.24.1",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -997,8 +997,8 @@
             "name": "power",
             "type": "number",
             "title": {
-              "en": "Wh",
-              "nl": "Wh"
+              "en": "W",
+              "nl": "W"
             },
             "example": 5
           }

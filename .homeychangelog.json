@@ -751,5 +751,8 @@
   },
   "3.24.0": {
     "en": "This release removes the measure_power and meter_power capability of the main node for the Shelly Wave 2PM. This requires you to re-pair the device. It also adds button action events for Plus/Pro devices configured as windowcoverings and adds support for the Wall Display in thermostat mode and Shelly Pro 3EM Add On. It includes another attempt to get the windowcoverings_state capability working with the Wave Shutter. And it adds proper naming of the sensors added to the Shelly Plus 2PM through the sensor add-on (requires re-pairing)."
+  },
+  "3.24.1": {
+    "en": "This release fixes an issue with the onoff capability listener for Shelly Pro 3EM add on. It fixes an issue with button events not triggering on multi input devices on Homey Cloud. It changes the device class of the Dimmer 0-10V to light to fix the onoff capability. It fixes a type-o to show correct unit (W) on the token of the total power has changed trigger card. It fixes an issue with for Plus/Pro roller shutters not being able to pair and it has a fix for reversed behaviour of dimming the white channel on a Shelly RGBW2."
   }
 }

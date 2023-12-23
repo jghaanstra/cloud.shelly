@@ -9,8 +9,8 @@
       "name": "power",
       "type": "number",
       "title": {
-        "en": "Wh",
-        "nl": "Wh"
+        "en": "W",
+        "nl": "W"
       },
       "example": 5
     }
