@@ -411,7 +411,7 @@ class ShellyDevice extends Homey.Device {
             const light_temperature = Number(this.util.denormalize((1 - value), 3000, 6500)); // the 1 - value is a backwards compatible hack as the denormalize function has been initially wrong but people might have configured it like that in their flows
             return await this.util.sendCommand('/light/0?temp='+ light_temperature +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
           } else if (this.getStoreValue('config').name === 'Shelly RGBW2 Color') {
-            const rgbw2_white = Number(this.util.denormalize(value, 0, 255));
+            const rgbw2_white = Number(this.util.denormalize((1 - value) , 0, 255)); // 1 - value is because higher white is less warm, therefor it needs to be inverted
             if (rgbw2_white > 125 && !this.getCapabilityValue('onoff.whitemode')) {
               this.updateCapabilityValue('onoff.whitemode', true);
             } else if (rgbw2_white <= 125 && this.getCapabilityValue('onoff.whitemode')) {
@@ -1508,6 +1508,14 @@ class ShellyDevice extends Homey.Device {
           }
         }
 
+        /* meter_power.returned */
+        if (component.hasOwnProperty("ret_aenergy")) {
+          if (component.ret_aenergy.hasOwnProperty("total")) {
+            let meter_power_returned = component.ret_aenergy.total / 1000;
+            this.updateCapabilityValue('meter_power.returned', meter_power_returned, channel);
+          }
+        }
+
         /* measure_voltage */
         if (component.hasOwnProperty("voltage")) {
           this.updateCapabilityValue('measure_voltage', component.voltage, channel);
@@ -2561,7 +2569,7 @@ class ShellyDevice extends Homey.Device {
           break;
         case 'total_energy_returned':
           const meter_power_total_returned = value / 1000;
-          this.updateCapabilityValue('meter_power.total_returned', meter_power_total_returned, channel);
+          this.updateCapabilityValue('meter_power.returned', meter_power_total_returned, channel);
           break;
         case 'total_act':
           if (this.getStoreValue('channel') === 0) {
@@ -3161,8 +3169,8 @@ class ShellyDevice extends Homey.Device {
       /* placeholder for update for specific devices */
 
       // TODO: remove with the next release
-      if ((this.getStoreValue('type') === '00100WW' || this.getStoreValue('type') === 'SNGW-0A11WW010') && this.getClass() === 'socket') {
-        this.setClass('light');
+      if ((this.getStoreValue('type') === 'SPSW-004PE16EU' || this.getStoreValue('type') === 'SPSW-104PE16EU') && this.hasCapability('meter_power.total_returned')) {
+        this.removeCapability('meter_power.total_returned');
       }
 
       /* get device setting */

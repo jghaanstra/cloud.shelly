@@ -101,14 +101,14 @@ class ShellyApp extends OAuth2App {
           /* initially update the device status based on Shelly Cloud status (also used to refresh expired tokens) */
           this.homey.setTimeout(async () => {
             if (this.cloudServer !== null) {
-              this.cloudDeviceStatus();
+              await this.cloudDeviceStatus().catch(this.error);
             }
           }, 18000);
 
            /* update at 31 minute interval the device status based on Shelly Cloud status (also used to refresh expired tokens) */
           this.homey.clearInterval(this.cloudDeviceStatusInterval);
           this.cloudDeviceStatusInterval = this.homey.setInterval(async () => {
-            this.cloudDeviceStatus();
+            await this.cloudDeviceStatus().catch(this.error);
           }, 1860000);
 
         } catch (error) {
@@ -866,7 +866,7 @@ class ShellyApp extends OAuth2App {
               this.wsConnected = false;
   
               /* refresh device status as this also triggers a refresh of the token if expired, needed to reconnect the websocket */
-              this.cloudDeviceStatus();
+              await this.cloudDeviceStatus().catch(this.error);
     
               // retry connection after 30 seconds
               this.wsReconnectTimeout = this.homey.setTimeout(async () => {

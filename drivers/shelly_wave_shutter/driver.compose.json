@@ -10,7 +10,6 @@
   "class": "windowcoverings",
   "capabilities": [
     "windowcoverings_set",
-    "windowcoverings_state",
     "measure_power",
     "meter_power",
     "button.reset_meter",

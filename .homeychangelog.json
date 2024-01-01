@@ -754,5 +754,11 @@
   },
   "3.24.1": {
     "en": "This release fixes an issue with the onoff capability listener for Shelly Pro 3EM add on. It fixes an issue with button events not triggering on multi input devices on Homey Cloud. It changes the device class of the Dimmer 0-10V to light to fix the onoff capability. It fixes a type-o to show correct unit (W) on the token of the total power has changed trigger card. It fixes an issue with for Plus/Pro roller shutters not being able to pair and it has a fix for reversed behaviour of dimming the white channel on a Shelly RGBW2."
+  },
+  "3.24.2": {
+    "en": "This release removes capability windowcoverings_state (up/down/stop) of Wave Shutter as it’s not allowed to implement it next to the windowcoverings_set capability. It also fixes an issue with inverted light temperature on RGBW2, an issue with crashing app on Homey Cloud when Shelly credentials are incorrect and an issue with with incorrect label of returned energy on multichannel Plus/Pro devices."
+  },
+  "3.24.3": {
+    "en": "This release removes capability windowcoverings_state (up/down/stop) of Wave Shutter as it’s not allowed to implement it next to the windowcoverings_set capability. It also fixes an issue with inverted light temperature on RGBW2, an issue with crashing app on Homey Cloud when Shelly credentials are incorrect and an issue with with incorrect label of returned energy on multichannel Plus/Pro devices."
   }
 }
