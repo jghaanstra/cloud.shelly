@@ -210,6 +210,10 @@ class ShellyBluetoothDevice extends Device {
         if (result.hasOwnProperty("button")) {
           if (result.button !== 0) {
             const action_event = this.util.getActionEventDescription(result.button.toString(), 'bluetooth', 'gen2');
+
+            this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": action_event}, {"action": action_event}).catch(error => { this.error(error) });
+
+            // TODO: remove this eventually
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action_event}, {"id": this.getData().id, "device": this.getName(), "action": action_event}).catch(error => { this.error(error) });
           }
         }
@@ -276,5 +280,6 @@ class ShellyBluetoothDevice extends Device {
 
 ShellyBluetoothDevice.prototype.updateCapabilityValue = Device.prototype.updateCapabilityValue;
 ShellyBluetoothDevice.prototype.triggerDeviceTriggerCard = Device.prototype.triggerDeviceTriggerCard;
+ShellyBluetoothDevice.prototype.updateDeviceConfig = Device.prototype.updateDeviceConfig;
 
 module.exports = ShellyBluetoothDevice;

@@ -1,0 +1,46 @@
+{
+  "title": {
+    "en": "Update Enum Virtual Component",
+    "nl": "Update Enum Virtual Component"
+  },
+  "titleFormatted": {
+    "en": "Update enum virtual component [[virtual_component]] to [[enum]]",
+    "nl": "Update enum virtual component[[virtual_component]] naar [[enum]]"
+  },
+  "args": [
+    {
+      "name": "virtual_component",
+      "type": "autocomplete",
+      "title": {
+        "en": "Select virtual component ...",
+        "nl": "Selecteer virtual component ..."
+      },
+      "placeholder": {
+        "en": "Select virtual component ...",
+        "nl": "Selecteer virtual component ..."
+      }
+    },
+    {
+      "name": "enum",
+      "type": "autocomplete",
+      "title": {
+        "en": "Select enum value ...",
+        "nl": "Selecteer enum waarde ..."
+      },
+      "placeholder": {
+        "en": "Select enum value ...",
+        "nl": "Selecteer enum waarde ..."
+      }
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly&capabilities=deviceGen3"
+    }
+  ],
+  "platforms": ["local"]
+}

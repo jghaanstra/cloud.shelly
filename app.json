@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.24.3",
+  "version": "3.25.0",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -77,6 +77,55 @@
   },
   "flow": {
     "triggers": [
+      {
+        "title": {
+          "en": "Action event",
+          "nl": "Actie gebeurtenis"
+        },
+        "titleFormatted": {
+          "en": "Action event [[action]]",
+          "nl": "Action event [[action]]"
+        },
+        "tokens": [
+          {
+            "name": "action",
+            "type": "string",
+            "title": {
+              "en": "Action",
+              "nl": "Actie"
+            },
+            "example": "longpush"
+          }
+        ],
+        "args": [
+          {
+            "name": "action",
+            "type": "autocomplete",
+            "title": {
+              "en": "Select Action ...",
+              "nl": "Selecteer actie ..."
+            },
+            "placeholder": {
+              "en": "Select Action ...",
+              "nl": "Selecteer actie ..."
+            }
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud|shelly_bluetooth&capabilities=actionEvents"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "triggerActionEvent"
+      },
       {
         "title": {
           "en": "Beacon Changed",
@@ -161,8 +210,8 @@
           "nl": "Actie gebeurtenis"
         },
         "titleFormatted": {
-          "en": "Action event [[action]] for [[shelly]]",
-          "nl": "Actie [[action]] voor [[shelly]]"
+          "en": "For [[shelly]] with action event [[action]]",
+          "nl": "Voor [[shelly]] met action event [[action]]"
         },
         "tokens": [
           {
@@ -222,7 +271,8 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "deprecated": true
       },
       {
         "title": {
@@ -1877,6 +1927,99 @@
         ]
       },
       {
+        "title": {
+          "en": "Virtual Component changed",
+          "nl": "Virtual Component gewijzigd"
+        },
+        "titleFormatted": {
+          "en": "Virtual component [[virtual_component]] has changed",
+          "nl": "Virtual component [[virtual_component]] is gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "vc_type",
+            "type": "string",
+            "title": {
+              "en": "Virtual Comnponent Type",
+              "nl": "Virtual component type"
+            },
+            "example": "boolean"
+          },
+          {
+            "name": "vc_id",
+            "type": "string",
+            "title": {
+              "en": "Virtual Component ID",
+              "nl": "Virtual component ID"
+            },
+            "example": "boolean:200"
+          },
+          {
+            "name": "boolean",
+            "type": "boolean",
+            "title": {
+              "en": "Boolean Value",
+              "nl": "Boolean waarde"
+            },
+            "example": true
+          },
+          {
+            "name": "number",
+            "type": "number",
+            "title": {
+              "en": "Number Value",
+              "nl": "Numerieke waarde"
+            },
+            "example": 10
+          },
+          {
+            "name": "text",
+            "type": "string",
+            "title": {
+              "en": "Text Value",
+              "nl": "Tekst waarde"
+            },
+            "example": "Lorem ipsum"
+          },
+          {
+            "name": "enum",
+            "type": "string",
+            "title": {
+              "en": "Enum Value",
+              "nl": "Enum waarde"
+            },
+            "example": "Yes"
+          }
+        ],
+        "args": [
+          {
+            "name": "virtual_component",
+            "type": "autocomplete",
+            "title": {
+              "en": "Select virtual component ...",
+              "nl": "Selecteer virtual component ..."
+            },
+            "placeholder": {
+              "en": "Select virtual component ...",
+              "nl": "Selecteer virtual component ..."
+            }
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly&capabilities=deviceGen3"
+          }
+        ],
+        "platforms": [
+          "local"
+        ],
+        "id": "triggerVirtualComponents"
+      },
+      {
         "id": "triggerVoltmeter1",
         "title": {
           "en": "Voltagemeter 1 has changed",
@@ -2522,6 +2665,71 @@
         ]
       },
       {
+        "title": {
+          "en": "Update LED ring",
+          "nl": "Update LED ring"
+        },
+        "titleFormatted": {
+          "en": "Change ON brightness to [[on_brightness]] with color [[on_color]] and OFF brightness to [[off_brightness]] with color [[off_color]]",
+          "nl": "Verander AAN helderheid naar [[on_brightness]] met kleur [[on_color]] en UIT helderheid naar [[off_brightness]] met kleur [[off_color]]"
+        },
+        "args": [
+          {
+            "type": "range",
+            "name": "on_brightness",
+            "title": {
+              "en": "Brightness",
+              "nl": "Helderheid"
+            },
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "%"
+          },
+          {
+            "type": "color",
+            "name": "on_color",
+            "title": {
+              "en": "ON color",
+              "nl": "AAN kleur"
+            }
+          },
+          {
+            "type": "range",
+            "name": "off_brightness",
+            "title": {
+              "en": "Brightness",
+              "nl": "Helderheid"
+            },
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "label": "%"
+          },
+          {
+            "type": "color",
+            "name": "off_color",
+            "title": {
+              "en": "OFF color",
+              "nl": "UIT kleur"
+            }
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly&capabilities=devicePlusPlugS"
+          }
+        ],
+        "platforms": [
+          "local"
+        ],
+        "id": "actionPlusPlugSLEDRing"
+      },
+      {
         "id": "actionReboot",
         "title": {
           "en": "Reboot device",
@@ -2744,6 +2952,193 @@
         "platforms": [
           "local"
         ]
+      },
+      {
+        "title": {
+          "en": "Update Boolean Virtual Component",
+          "nl": "Update Boolean Virtual Component"
+        },
+        "titleFormatted": {
+          "en": "Update boolean virtual component [[virtual_component]] to [[boolean]]",
+          "nl": "Update boolean virtual component[[virtual_component]] naar [[boolean]]"
+        },
+        "args": [
+          {
+            "name": "virtual_component",
+            "type": "autocomplete",
+            "title": {
+              "en": "Select virtual component ...",
+              "nl": "Selecteer virtual component ..."
+            },
+            "placeholder": {
+              "en": "Select virtual component ...",
+              "nl": "Selecteer virtual component ..."
+            }
+          },
+          {
+            "name": "boolean",
+            "type": "checkbox",
+            "title": {
+              "en": "Boolean Value",
+              "nl": "Boolean waarde"
+            },
+            "example": true
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly&capabilities=deviceGen3"
+          }
+        ],
+        "platforms": [
+          "local"
+        ],
+        "id": "actionUpdateVirtualComponentBoolean"
+      },
+      {
+        "title": {
+          "en": "Update Enum Virtual Component",
+          "nl": "Update Enum Virtual Component"
+        },
+        "titleFormatted": {
+          "en": "Update enum virtual component [[virtual_component]] to [[enum]]",
+          "nl": "Update enum virtual component[[virtual_component]] naar [[enum]]"
+        },
+        "args": [
+          {
+            "name": "virtual_component",
+            "type": "autocomplete",
+            "title": {
+              "en": "Select virtual component ...",
+              "nl": "Selecteer virtual component ..."
+            },
+            "placeholder": {
+              "en": "Select virtual component ...",
+              "nl": "Selecteer virtual component ..."
+            }
+          },
+          {
+            "name": "enum",
+            "type": "autocomplete",
+            "title": {
+              "en": "Select enum value ...",
+              "nl": "Selecteer enum waarde ..."
+            },
+            "placeholder": {
+              "en": "Select enum value ...",
+              "nl": "Selecteer enum waarde ..."
+            }
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly&capabilities=deviceGen3"
+          }
+        ],
+        "platforms": [
+          "local"
+        ],
+        "id": "actionUpdateVirtualComponentEnum"
+      },
+      {
+        "title": {
+          "en": "Update Number Virtual Component",
+          "nl": "Update Number Virtual Component"
+        },
+        "titleFormatted": {
+          "en": "Update number virtual component [[virtual_component]] to [[number]]",
+          "nl": "Update nummer virtual component[[virtual_component]] naar [[number]]"
+        },
+        "args": [
+          {
+            "name": "virtual_component",
+            "type": "autocomplete",
+            "title": {
+              "en": "Select virtual component ...",
+              "nl": "Selecteer virtual component ..."
+            },
+            "placeholder": {
+              "en": "Select virtual component ...",
+              "nl": "Selecteer virtual component ..."
+            }
+          },
+          {
+            "name": "number",
+            "type": "number",
+            "title": {
+              "en": "Number Value",
+              "nl": "Numerieke waarde"
+            },
+            "example": true
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly&capabilities=deviceGen3"
+          }
+        ],
+        "platforms": [
+          "local"
+        ],
+        "id": "actionUpdateVirtualComponentNumber"
+      },
+      {
+        "title": {
+          "en": "Update Text Virtual Component",
+          "nl": "Update Text Virtual Component"
+        },
+        "titleFormatted": {
+          "en": "Update text virtual component [[virtual_component]] to [[text]]",
+          "nl": "Update tekst virtual component[[virtual_component]] naar [[text]]"
+        },
+        "args": [
+          {
+            "name": "virtual_component",
+            "type": "autocomplete",
+            "title": {
+              "en": "Select virtual component ...",
+              "nl": "Selecteer virtual component ..."
+            },
+            "placeholder": {
+              "en": "Select virtual component ...",
+              "nl": "Selecteer virtual component ..."
+            }
+          },
+          {
+            "name": "text",
+            "type": "text",
+            "title": {
+              "en": "Text Value",
+              "nl": "Tekst waarde"
+            },
+            "example": true
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly&capabilities=deviceGen3"
+          }
+        ],
+        "platforms": [
+          "local"
+        ],
+        "id": "actionUpdateVirtualComponentText"
       },
       {
         "id": "actionValveMode",
@@ -8618,6 +9013,18 @@
     }
   ],
   "capabilities": {
+    "actionEvents": {
+      "type": "string",
+      "title": {
+        "en": "Action Events",
+        "nl": "Action Events"
+      },
+      "getable": false,
+      "setable": false,
+      "uiComponent": null,
+      "insights": false,
+      "icon": "/assets/icon.svg"
+    },
     "beacon": {
       "type": "boolean",
       "title": {
@@ -8679,6 +9086,18 @@
       "title": {
         "en": "Device Generation 3",
         "nl": "Device Generation 3"
+      },
+      "getable": false,
+      "setable": false,
+      "uiComponent": null,
+      "insights": false,
+      "icon": "/assets/icon.svg"
+    },
+    "devicePlusPlugS": {
+      "type": "string",
+      "title": {
+        "en": "Plus Plug S",
+        "nl": "Plus Plug S"
       },
       "getable": false,
       "setable": false,

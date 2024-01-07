@@ -1,0 +1,90 @@
+{
+  "title": {
+    "en": "Virtual Component changed",
+    "nl": "Virtual Component gewijzigd"
+  },
+  "titleFormatted": {
+    "en": "Virtual component [[virtual_component]] has changed",
+    "nl": "Virtual component [[virtual_component]] is gewijzigd"
+  },
+  "tokens": [
+    {
+      "name": "vc_type",
+      "type": "string",
+      "title": {
+        "en": "Virtual Comnponent Type",
+        "nl": "Virtual component type"
+      },
+      "example": "boolean"
+    },
+    {
+      "name": "vc_id",
+      "type": "string",
+      "title": {
+        "en": "Virtual Component ID",
+        "nl": "Virtual component ID"
+      },
+      "example": "boolean:200"
+    },
+    {
+      "name": "boolean",
+      "type": "boolean",
+      "title": {
+        "en": "Boolean Value",
+        "nl": "Boolean waarde"
+      },
+      "example": true
+    },
+    {
+      "name": "number",
+      "type": "number",
+      "title": {
+        "en": "Number Value",
+        "nl": "Numerieke waarde"
+      },
+      "example": 10
+    },
+    {
+      "name": "text",
+      "type": "string",
+      "title": {
+        "en": "Text Value",
+        "nl": "Tekst waarde"
+      },
+      "example": "Lorem ipsum"
+    },
+    {
+      "name": "enum",
+      "type": "string",
+      "title": {
+        "en": "Enum Value",
+        "nl": "Enum waarde"
+      },
+      "example": "Yes"
+    }
+  ],
+  "args": [
+    {
+      "name": "virtual_component",
+      "type": "autocomplete",
+      "title": {
+        "en": "Select virtual component ...",
+        "nl": "Selecteer virtual component ..."
+      },
+      "placeholder": {
+        "en": "Select virtual component ...",
+        "nl": "Selecteer virtual component ..."
+      }
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly&capabilities=deviceGen3"
+    }
+  ],
+  "platforms": ["local"]
+}

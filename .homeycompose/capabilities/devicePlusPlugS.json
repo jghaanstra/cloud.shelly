@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Plus Plug S",
+    "nl": "Plus Plug S"
+  },
+  "getable": false,
+  "setable": false,
+  "uiComponent": null,
+  "insights": false,
+  "icon": "/assets/icon.svg"
+}

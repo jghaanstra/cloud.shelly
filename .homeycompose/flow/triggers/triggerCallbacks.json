@@ -5,8 +5,8 @@
     "nl": "Actie gebeurtenis"
   },
   "titleFormatted": {
-    "en": "Action event [[action]] for [[shelly]]",
-    "nl": "Actie [[action]] voor [[shelly]]"
+    "en": "For [[shelly]] with action event [[action]]",
+    "nl": "Voor [[shelly]] met action event [[action]]"
   },
   "tokens": [
     {
@@ -63,5 +63,6 @@
       }
     }
   ],
-  "platforms": ["local", "cloud"]
+  "platforms": ["local", "cloud"],
+  "deprecated": true
 }

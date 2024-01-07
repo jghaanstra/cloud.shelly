@@ -1,0 +1,12 @@
+{
+  "type": "string",
+  "title": {
+    "en": "Action Events",
+    "nl": "Action Events"
+  },
+  "getable": false,
+  "setable": false,
+  "uiComponent": null,
+  "insights": false,
+  "icon": "/assets/icon.svg"
+}

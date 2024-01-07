@@ -20,7 +20,7 @@
     "success": "Shelly apparaat succesvol toegevoegd",
     "no_device_config": "Geen geschikte apparaat config gevonden. Dit apparaat wordt mogelijk nog niet ondersteund. Rapporteer dit aub aan de ontwikkelaar.",
     "startpairingshelly": "Gebruik deze pairing wizard om elk Shelly WiFi apparaat te koppelen. Koppel het apparaat eerst met de Shelly smartphone app zodat het apparaat met WiFi is verbonden. Indien je een apparaat op batterijen wilt koppelen haal deze dan eerst uit de slaapstand via de wake-up button of door deze via USB van stroom te voorzien. Indien je problemen ervaart bij het koppelen doordat het apparaat niet wordt gevonden controleer dan je netwerk instellingen en probeer het apparaat te herstarten voordat je deze koppelt.",
-    "startpairingshellybluetooth": "Gebruik deze pairing wizard om elk Shelly Bluetooth (BLU) apparaat te koppelen. Let op, om Shelly BLU apparaten goed te laten werken met Homey is het noodzakelijk om op minimaal één Shelly Plus/Pro een Bluetooth Proxy te activeren. Dit kan in Homey via de apparaat instellingen van een gekoppelde Shelly Plus/Pro. Tijdens de volgende stap zal de pairing wizard proberen Shelly BLU apparaten te ontdekken. Stuur tijdens discovery een Bluetooth-signaal van het apparaat door op een knop te drukken. Zorg ook voor een korte afstand tussen het Shelly Blu apparaat en Homey.",
+    "startpairingshellybluetooth": "Gebruik deze pairing wizard om elk Shelly Bluetooth (BLU) apparaat te koppelen. Let op, om Shelly BLU apparaten goed te laten werken met Homey is het noodzakelijk om op minimaal één Shelly Plus/Pro een Bluetooth Proxy te activeren. Dit kan in Homey via de apparaat instellingen van een gekoppelde Shelly Plus/Pro. Je kan dit instellen na het koppelen van jouw Shelly BLU apparaat. Tijdens de volgende stap zal de pairing wizard proberen Shelly BLU apparaten te ontdekken. Stuur tijdens discovery een Bluetooth-signaal van het apparaat door op een knop te drukken. Zorg ook voor een korte afstand tussen het Shelly Blu apparaat en Homey.",
     "titleselection": "Wat wil je doen?",
     "nodevices": "Geen apparaten gevonden. Je kan het nog een keer proberen of je Shelly handmatig toevoegen als je het IP adres weet.",
     "again": "Probeer opnieuw",
@@ -40,8 +40,8 @@
     "500": "Error 500: interne server fout",
     "unknownerror": "Onbekende fout, weet je zeker dat je het juist IP adres hebt opgegeven en dat het Shelly apparaat op hetzelfde netwerk zit als Homey? Controleer a.u.b. je instellingen en probeer het nog eens.",
     "unreachableerror": "Error: het verzoek is mislukt omdat het Shelly apparaat niet op het verzoek heeft gereageerd. Netwerkproblemen worden soms opgelost door zowel Homey als het Shelly apparaat opnieuw op te starten",
-    "any_device": "Voor elk apparaat",
-    "any_action": "Bij elke actie"
+    "any_device": "elk apparaat",
+    "any_action": "Elke actie"
   },
   "device": {
     "unreachable": "Apparaat is onbereikbaar: ",

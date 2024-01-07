@@ -20,7 +20,7 @@
     "success": "Shelly Gerät erfolgreich hinzugefügt",
     "no_device_config": "Keine geeignete Gerätekonfiguration gefunden. Dieses Gerät wird möglicherweise noch nicht unterstützt, bitte melden Sie dies dem Entwickler.",
     "startpairingshelly": "Verwenden Sie diesen Pairing-Assistenten, um jedes Shelly WiFi Gerät zu pairn. Stellen Sie sicher, dass Ihre Shelly-Geräte mit Ihrem Wi-Fi verbunden sind, bevor Sie fortfahren. Sie können dies über die Shelly Smartphone-App tun. Wenn Sie ein batteriebetriebenes Gerät pairn möchten, wecken Sie es durch Drücken des Wake-Up-Knopfs auf oder verbinden Sie es mit USB-Strom. Wenn Sie beim Pairing von Geräten mit Homey Probleme haben, überprüfen Sie Ihre Netzwerkeinstellungen, starten Sie das Gerät neu und versuchen Sie es erneut.",
-    "startpairingshellybluetooth": "Verwenden Sie diesen Pairing-Assistenten, um jedes Shelly Bluetooth (BLU) Gerät zu koppeln. Bitte beachten Sie, dass für ein Shelly BLU-Gerät, um mit Homey zu funktionieren, auch ein Bluetooth-Proxy auf mindestens einem Plus/Pro-Gerät in Ihrem Netzwerk aktiviert werden muss. Die Schaltfläche zur Aktivierung finden Sie in Homey unter den Geräteeinstellungen eines verbundenen Plus/Pro-Geräts. Im nächsten Schritt wird der Pairing-Assistent versuchen, Shelly BLU Geräte zu finden. Während der Suche senden Sie ein Bluetooth-Signal vom Gerät aus, indem Sie eine Taste drücken. Stellen Sie außerdem sicher, dass Sie sich in unmittelbarer Nähe von Homey befinden.",
+    "startpairingshellybluetooth": "Verwenden Sie diesen Pairing-Assistenten, um jedes Shelly Bluetooth (BLU) Gerät zu koppeln. Bitte beachten Sie, dass für ein Shelly BLU-Gerät, um mit Homey zu funktionieren, auch ein Bluetooth-Proxy auf mindestens einem Plus/Pro-Gerät in Ihrem Netzwerk aktiviert werden muss. Die Schaltfläche zur Aktivierung finden Sie in Homey unter den Geräteeinstellungen eines verbundenen Plus/Pro-Geräts. Sie können dies nach dem Koppeln Ihres Shelly BLU-Geräts tun. Im nächsten Schritt wird der Pairing-Assistent versuchen, Shelly BLU Geräte zu finden. Während der Suche senden Sie ein Bluetooth-Signal vom Gerät aus, indem Sie eine Taste drücken. Stellen Sie außerdem sicher, dass Sie sich in unmittelbarer Nähe von Homey befinden.",
     "titleselection": "Was möchtest du tun?",
     "nodevices": "Es wurden keine Geräte gefunden. Sie können es erneut versuchen oder eine manuelle Pairing-Methode verwenden, wenn Sie die IP-Adresse Ihres Shelly-Geräts kennen.",
     "again": "Erneut versuchen",
@@ -40,8 +40,8 @@
     "500": "Fehler 500: Interner Serverfehler",
     "unknownerror": "Unbekannter Fehler, sind Sie sicher, dass Sie die richtige IP-Adresse eingegeben haben und Homey im gleichen Netzwerk wie das Shelly-Gerät ist? Überprüfen Sie Ihre Einstellungen und versuchen Sie es erneut.",
     "unreachableerror": "Fehler: Die Anfrage ist fehlgeschlagen, weil das Shelly-Gerät nicht auf die Anfrage reagiert hat. Netzwerkprobleme werden manchmal durch einen Neustart von sowohl Homey als auch dem Shelly-Gerät gelöst.",
-    "any_device": "Mit jedem Gerät",
-    "any_action": "Mit jeder Aktion"
+    "any_device": "jedem gerät",
+    "any_action": "Jeder aktion"
   },
   "device": {
     "unreachable": "Gerät ist nicht erreichbar: ",

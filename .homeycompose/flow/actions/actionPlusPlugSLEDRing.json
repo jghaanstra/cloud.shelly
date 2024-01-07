@@ -1,0 +1,62 @@
+{
+  "title": {
+    "en": "Update LED ring",
+    "nl": "Update LED ring"
+  },
+  "titleFormatted": {
+    "en": "Change ON brightness to [[on_brightness]] with color [[on_color]] and OFF brightness to [[off_brightness]] with color [[off_color]]",
+    "nl": "Verander AAN helderheid naar [[on_brightness]] met kleur [[on_color]] en UIT helderheid naar [[off_brightness]] met kleur [[off_color]]"
+  },
+  "args": [
+    {
+      "type": "range",
+      "name": "on_brightness",
+      "title": {
+        "en": "Brightness",
+        "nl": "Helderheid"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "%"
+    },
+    {
+      "type": "color",
+      "name": "on_color",
+      "title": {
+        "en": "ON color",
+        "nl": "AAN kleur"
+      }
+    },
+    {
+      "type": "range",
+      "name": "off_brightness",
+      "title": {
+        "en": "Brightness",
+        "nl": "Helderheid"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "%"
+    },
+    {
+      "type": "color",
+      "name": "off_color",
+      "title": {
+        "en": "OFF color",
+        "nl": "UIT kleur"
+      }
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly&capabilities=devicePlusPlugS"
+    }
+  ],
+  "platforms": ["local"]
+}

@@ -1,0 +1,43 @@
+{
+  "title": {
+    "en": "Update Text Virtual Component",
+    "nl": "Update Text Virtual Component"
+  },
+  "titleFormatted": {
+    "en": "Update text virtual component [[virtual_component]] to [[text]]",
+    "nl": "Update tekst virtual component[[virtual_component]] naar [[text]]"
+  },
+  "args": [
+    {
+      "name": "virtual_component",
+      "type": "autocomplete",
+      "title": {
+        "en": "Select virtual component ...",
+        "nl": "Selecteer virtual component ..."
+      },
+      "placeholder": {
+        "en": "Select virtual component ...",
+        "nl": "Selecteer virtual component ..."
+      }
+    },
+    {
+      "name": "text",
+      "type": "text",
+      "title": {
+        "en": "Text Value",
+        "nl": "Tekst waarde"
+      },
+      "example": true
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly&capabilities=deviceGen3"
+    }
+  ],
+  "platforms": ["local"]
+}

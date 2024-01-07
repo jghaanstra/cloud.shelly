@@ -1,0 +1,43 @@
+{
+  "title": {
+    "en": "Update Number Virtual Component",
+    "nl": "Update Number Virtual Component"
+  },
+  "titleFormatted": {
+    "en": "Update number virtual component [[virtual_component]] to [[number]]",
+    "nl": "Update nummer virtual component[[virtual_component]] naar [[number]]"
+  },
+  "args": [
+    {
+      "name": "virtual_component",
+      "type": "autocomplete",
+      "title": {
+        "en": "Select virtual component ...",
+        "nl": "Selecteer virtual component ..."
+      },
+      "placeholder": {
+        "en": "Select virtual component ...",
+        "nl": "Selecteer virtual component ..."
+      }
+    },
+    {
+      "name": "number",
+      "type": "number",
+      "title": {
+        "en": "Number Value",
+        "nl": "Numerieke waarde"
+      },
+      "example": true
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly&capabilities=deviceGen3"
+    }
+  ],
+  "platforms": ["local"]
+}

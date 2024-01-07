@@ -1,0 +1,43 @@
+{
+  "title": {
+    "en": "Update Boolean Virtual Component",
+    "nl": "Update Boolean Virtual Component"
+  },
+  "titleFormatted": {
+    "en": "Update boolean virtual component [[virtual_component]] to [[boolean]]",
+    "nl": "Update boolean virtual component[[virtual_component]] naar [[boolean]]"
+  },
+  "args": [
+    {
+      "name": "virtual_component",
+      "type": "autocomplete",
+      "title": {
+        "en": "Select virtual component ...",
+        "nl": "Selecteer virtual component ..."
+      },
+      "placeholder": {
+        "en": "Select virtual component ...",
+        "nl": "Selecteer virtual component ..."
+      }
+    },
+    {
+      "name": "boolean",
+      "type": "checkbox",
+      "title": {
+        "en": "Boolean Value",
+        "nl": "Boolean waarde"
+      },
+      "example": true
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly&capabilities=deviceGen3"
+    }
+  ],
+  "platforms": ["local"]
+}

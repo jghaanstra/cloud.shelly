@@ -1,0 +1,45 @@
+{
+  "title": {
+    "en": "Action event",
+    "nl": "Actie gebeurtenis"
+  },
+  "titleFormatted": {
+    "en": "Action event [[action]]",
+    "nl": "Action event [[action]]"
+  },
+  "tokens": [
+    {
+      "name": "action",
+      "type": "string",
+      "title": {
+        "en": "Action",
+        "nl": "Actie"
+      },
+      "example": "longpush"
+    }
+  ],
+  "args": [
+    {
+      "name": "action",
+      "type": "autocomplete",
+      "title": {
+        "en": "Select Action ...",
+        "nl": "Selecteer actie ..."
+      },
+      "placeholder": {
+        "en": "Select Action ...",
+        "nl": "Selecteer actie ..."
+      }
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shelly_cloud|shelly_bluetooth&capabilities=actionEvents"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

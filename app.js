@@ -6,6 +6,7 @@ const ShellyOAuth2Client = require('./lib/ShellyOAuth2Client');
 const Util = require('./lib/util.js');
 const shellies = require('shellies');
 const WebSocket = require('ws');
+const tinycolor = require("tinycolor2");
 const jwt_decode = require('jwt-decode');
 
 class ShellyApp extends OAuth2App {
@@ -66,10 +67,11 @@ class ShellyApp extends OAuth2App {
       if (this.homey.platform !== "cloud") {
         this.homey.setTimeout(async () => {
           let gen2 = await this.util.getDeviceType('gen2');
-          if (gen2) {
+          let gen3 = await this.util.getDeviceType('gen3');
+          if (gen2 || gen3) {
             this.websocketLocalListener();
           } else {
-            this.log('Websocket server for gen2 devices with outbound websockets not started as no gen2 devices where found during app init ...');
+            this.log('Websocket server for gen2 / gen3 devices with outbound websockets not started as no gen2 / gen3 devices where found during app init ...');
           }
         }, 25000);
       }
@@ -116,7 +118,7 @@ class ShellyApp extends OAuth2App {
         }
       }
   
-      // GENERIC FLOWCARDS
+      // GENERIC TRIGGER FLOWCARDS
       this.homey.flow.getTriggerCard('triggerDeviceOffline');
       this.homey.flow.getTriggerCard('triggerFWUpdate');
       this.homey.flow.getTriggerCard('triggerCloudError');
@@ -143,7 +145,11 @@ class ShellyApp extends OAuth2App {
         }
       });
       listenerCallbacks.getArgument('shelly').registerAutocompleteListener(async (query, args) => {
-        return await this.util.getShellies('flowcard');
+        try {
+          return await this.util.getShellies('flowcard_actions');
+        } catch (error) {
+          this.error(error)
+        }
       });
       listenerCallbacks.getArgument('action').registerAutocompleteListener(async (query, args) => {
         try {
@@ -152,7 +158,8 @@ class ShellyApp extends OAuth2App {
           this.error(error)
         }
       });
-  
+
+      // GENERIC ACTION FLOWCARDS
       this.homey.flow.getActionCard('actionReboot')
         .registerRunListener(async (args) => {
           try {
@@ -169,7 +176,8 @@ class ShellyApp extends OAuth2App {
               }
             }
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
 
@@ -189,7 +197,8 @@ class ShellyApp extends OAuth2App {
               }
             }
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
   
@@ -210,7 +219,8 @@ class ShellyApp extends OAuth2App {
               }
             }
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
 
@@ -240,7 +250,8 @@ class ShellyApp extends OAuth2App {
               return Promise.resolve(true);
             }
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
   
@@ -261,11 +272,56 @@ class ShellyApp extends OAuth2App {
               }
             }
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
 
-      // DEVICE SPECIFIC FLOWCARDS
+      // DEVICE SPECIFIC TRIGGER CARDS
+
+      /* action events */
+      const listenerActionEvents = this.homey.flow.getDeviceTriggerCard('triggerActionEvent').registerRunListener(async (args, state) => {
+        try {
+          var action = args.action.action ?? args.action.name;
+          if ((state.action == action) || (args.action.id === 999)) {
+            return Promise.resolve(true);
+          } else {
+            return Promise.resolve(false);
+          }
+        } catch (error) {
+          this.error(error)
+        }
+      });
+      listenerActionEvents.getArgument('action').registerAutocompleteListener(async (query, args) => {
+        try {
+          return await this.util.getActions(args.device.getStoreValue('config').callbacks);
+        } catch (error) {
+          this.error(error)
+        }
+      });
+
+
+      /* virtual components */
+      const listenerTriggerVirtualComponents = this.homey.flow.getDeviceTriggerCard('triggerVirtualComponents').registerRunListener(async (args, state) => {
+        try {
+          if (args.virtual_component.id === state.vc_id) {
+            return Promise.resolve(true);
+          } else {
+            return Promise.resolve(false);
+          }
+        } catch (error) {
+          this.error(error)
+        }
+      });
+      listenerTriggerVirtualComponents.getArgument('virtual_component').registerAutocompleteListener(async (query, args) => {
+        try {
+          return await this.util.getVirtualComponents(args.device.getSetting('address'), args.device.getSetting('password'), 'all');
+        } catch (error) {
+          this.error(error)
+        }
+      });
+
+      // DEVICE SPECIFIC CONDITION FLOWCARDS
       this.homey.flow.getConditionCard('conditionInput0')
         .registerRunListener(async (args) => {
           if (args.device) {
@@ -310,7 +366,86 @@ class ShellyApp extends OAuth2App {
             return false;
           }
         })
-  
+        
+      // DEVICE SPECFIC ACTION CARDS
+
+      /* virtual components */
+      const listenerActionVirtualComponentsBoolean = this.homey.flow.getActionCard('actionUpdateVirtualComponentBoolean').registerRunListener(async (args, state) => {
+        try {
+          return await this.util.sendRPCCommand('/rpc/Boolean.Set?id='+args.virtual_component.vc_id+'&value='+args.boolean, args.device.getSetting('address'), args.device.getSetting('password'));
+        } catch (error) {
+          this.error(error)
+        }
+      });
+      listenerActionVirtualComponentsBoolean.getArgument('virtual_component').registerAutocompleteListener(async (query, args) => {
+        try {
+          return await this.util.getVirtualComponents(args.device.getSetting('address'), args.device.getSetting('password'), 'boolean');
+        } catch (error) {
+          this.error(error)
+        }
+      });
+
+      const listenerActionVirtualComponentsNumber = this.homey.flow.getActionCard('actionUpdateVirtualComponentNumber').registerRunListener(async (args, state) => {
+        try {
+          return await this.util.sendRPCCommand('/rpc/Number.Set?id='+args.virtual_component.vc_id+'&value='+args.number, args.device.getSetting('address'), args.device.getSetting('password'));
+        } catch (error) {
+          this.error(error)
+        }
+      });
+      listenerActionVirtualComponentsNumber.getArgument('virtual_component').registerAutocompleteListener(async (query, args) => {
+        try {
+          return await this.util.getVirtualComponents(args.device.getSetting('address'), args.device.getSetting('password'), 'number');
+        } catch (error) {
+          this.error(error)
+        }
+      });
+
+      const listenerActionVirtualComponentsText = this.homey.flow.getActionCard('actionUpdateVirtualComponentText').registerRunListener(async (args, state) => {
+        try {
+          return await this.util.sendRPCCommand('/rpc/Text.Set?id='+args.virtual_component.vc_id+'&value="'+args.text+'"', args.device.getSetting('address'), args.device.getSetting('password'));
+        } catch (error) {
+          this.error(error)
+        }
+      });
+      listenerActionVirtualComponentsText.getArgument('virtual_component').registerAutocompleteListener(async (query, args) => {
+        try {
+          return await this.util.getVirtualComponents(args.device.getSetting('address'), args.device.getSetting('password'), 'text');
+        } catch (error) {
+          this.error(error)
+        }
+      });
+
+      const listenerActionVirtualComponentsEnum = this.homey.flow.getActionCard('actionUpdateVirtualComponentEnum').registerRunListener(async (args, state) => {
+        try {
+          return await this.util.sendRPCCommand('/rpc/Enum.Set?id='+args.virtual_component.vc_id+'&value="'+args.enum.id+'"', args.device.getSetting('address'), args.device.getSetting('password'));
+        } catch (error) {
+          this.error(error)
+        }
+      });
+      listenerActionVirtualComponentsEnum.getArgument('virtual_component').registerAutocompleteListener(async (query, args) => {
+        try {
+          return await this.util.getVirtualComponents(args.device.getSetting('address'), args.device.getSetting('password'), 'enum');
+        } catch (error) {
+          this.error(error)
+        }
+      });
+      listenerActionVirtualComponentsEnum.getArgument('enum').registerAutocompleteListener(async (query, args) => {
+        try {
+          let enum_options = [];
+          args.virtual_component.enum_options.forEach((option) => {
+            enum_options.push({
+              id: option,
+              name: option,
+              icon: '/assets/enum.svg'
+            });
+          });
+          return enum_options;
+        } catch (error) {
+          this.error(error)
+        }
+      });
+
+      /* relays */
       this.homey.flow.getActionCard('flipbackSwitch')
         .registerRunListener(async (args) => {
           try {
@@ -329,10 +464,35 @@ class ShellyApp extends OAuth2App {
               }
             }
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
-  
+      
+      /* Plus Plug S */
+      this.homey.flow.getActionCard('actionPlusPlugSLEDRing')
+        .registerRunListener(async (args) => {
+          try {
+            const config = await this.util.sendRPCCommand('/rpc/PLUGS_UI.GetConfig', args.device.getSetting('address'), args.device.getSetting('password'));
+            const onColor = tinycolor(args.on_color);
+            const onColorRGB = onColor.toPercentageRgb();
+            const offColor = tinycolor(args.off_color);
+            const offColorRGB = offColor.toPercentageRgb();
+            
+            config.leds.mode = "switch";
+            config.leds.colors['switch:0'].on.rgb = [parseInt(onColorRGB.r, 10), parseInt(onColorRGB.g, 10), parseInt(onColorRGB.b, 10)];
+            config.leds.colors['switch:0'].on.brightness = args.on_brightness;
+            config.leds.colors['switch:0'].off.rgb = [parseInt(offColorRGB.r, 10), parseInt(offColorRGB.g, 10), parseInt(offColorRGB.b, 10)];
+            config.leds.colors['switch:0'].off.brightness = args.off_brightness;
+
+            return await this.util.sendRPCCommand('/rpc', args.device.getSetting('address'), args.device.getSetting('password'), 'POST', {"id": 1, "method": "PLUGS_UI.SetConfig", "params": {"config": config } });
+          } catch (error) {
+            this.error(error);
+            return Promise.reject(error);
+          }
+        })
+
+      /* lights */
       this.homey.flow.getActionCard('onOffTransition')
         .registerRunListener(async (args) => {
           try {
@@ -351,17 +511,18 @@ class ShellyApp extends OAuth2App {
               }
             }
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
 
-      /* lights */
       this.homey.flow.getActionCard('effectRGBW2Color') /* deprecated and replaced by more generic actionColorEffect */
         .registerRunListener(async (args) => {
           try {
             return await this.util.sendCommand('/color/0?turn=on&effect='+ Number(args.effect) +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
   
@@ -370,7 +531,8 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendCommand('/color/0?turn=on&effect='+ args.effect +'&duration='+ args.duration, args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
         
@@ -379,7 +541,8 @@ class ShellyApp extends OAuth2App {
           try {
             return await args.device.triggerCapabilityListener("onoff.whitemode", true);
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
   
@@ -388,7 +551,8 @@ class ShellyApp extends OAuth2App {
           try {
             return await args.device.triggerCapabilityListener("onoff.whitemode", false);
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
 
@@ -397,7 +561,8 @@ class ShellyApp extends OAuth2App {
           try {
             return await args.device.triggerCapabilityListener("dim.white", args.brightness);
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
   
@@ -428,7 +593,8 @@ class ShellyApp extends OAuth2App {
               }
             }
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
   
@@ -444,7 +610,8 @@ class ShellyApp extends OAuth2App {
             }
             return await this.util.sendCommand('/roller/0?go='+ args.direction +'&offset='+ args.offset +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
   
@@ -461,7 +628,8 @@ class ShellyApp extends OAuth2App {
               return Promise.reject('Invalid state');
             }
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
   
@@ -475,7 +643,8 @@ class ShellyApp extends OAuth2App {
               return await args.device.triggerCapabilityListener('windowcoverings_set', position);
             }
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
   
@@ -485,7 +654,8 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendCommand('/settings/?set_volume='+ args.volume +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
   
@@ -494,7 +664,8 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendCommand('/mute', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
   
@@ -503,7 +674,8 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendCommand('/unmute', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
   
@@ -512,7 +684,8 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendCommand('/self_test', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
 
@@ -522,7 +695,8 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendRPCCommand('/rpc/Smoke.Mute?id='+ args.device.getStoreValue('channel'), args.device.getSetting('address'), args.device.getSetting('password'));
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
   
@@ -536,7 +710,8 @@ class ShellyApp extends OAuth2App {
               return false;
             }
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
         .getArgument('profile')
@@ -553,7 +728,8 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendCommand('/thermostat/0?pos='+ args.position +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
   
@@ -566,7 +742,8 @@ class ShellyApp extends OAuth2App {
               return await this.util.sendCommand('/thermostat/0?schedule=true&schedule_profile='+ args.profile.id +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
             }
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
         .getArgument('profile')
@@ -583,7 +760,8 @@ class ShellyApp extends OAuth2App {
           try {
             return await this.util.sendCommand('/ext_t?temp='+ args.temperature +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
           } catch (error) {
-            this.error(error)
+            this.error(error);
+            return Promise.reject(error);
           }
         })
       
@@ -593,7 +771,8 @@ class ShellyApp extends OAuth2App {
         try {
           return await args.device.setEnergy({ cumulative: args.cumulative });
         } catch (error) {
-          this.error(error)
+          this.error(error);
+          return Promise.reject(error);
         }
       })
 
@@ -602,7 +781,8 @@ class ShellyApp extends OAuth2App {
         try {
           return await this.util.sendCommand('/emeter/'+ args.device.getStoreValue('channel') +'?reset_totals=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
         } catch (error) {
-          this.error(error)
+          this.error(error);
+          return Promise.reject(error);
         }
       })
   
@@ -633,7 +813,7 @@ class ShellyApp extends OAuth2App {
                 }
                 coap_device.parseCapabilityUpdate(prop, newValue, coap_device.getStoreValue('channel'));
                 if (coap_device.getSetting('address') !== device.host) {
-                  coap_device.setSettings({address: device.host});
+                  coap_device.setSettings({address: device.host}).catch(this.error);
                 }
                 return;
               }
@@ -656,7 +836,7 @@ class ShellyApp extends OAuth2App {
     try {
       if (this.wss === null) {
         this.wss = new WebSocket.Server({ port: 6113 });
-        this.log('Websocket server for gen2 devices with outbound websockets started ...');
+        this.log('Websocket server for gen2 / gen3 devices with outbound websockets started ...');
         this.wss.on("connection", async (wsserver, req) => {
 
           wsserver.send('{"jsonrpc":"2.0", "id":1, "src":"wsserver-getdeviceinfo_onconnect", "method":"Shelly.GetDeviceInfo"}');
@@ -673,7 +853,7 @@ class ShellyApp extends OAuth2App {
                   if (result.params.hasOwnProperty('wifi')) {
                     if (result.params.wifi.sta_ip !== null) { // update IP address if it does not match the device
                       if (filteredShellyWss.device.getSetting('address') !== String(result.params.wifi.sta_ip)) {
-                        filteredShellyWss.device.setSettings({address: String(result.params.wifi.sta_ip)});
+                        await filteredShellyWss.device.setSettings({address: String(result.params.wifi.sta_ip)}).catch(this.error);
                       }
                     }
                   }
@@ -714,7 +894,7 @@ class ShellyApp extends OAuth2App {
                   if (result.result.hasOwnProperty('wifi')) {
                     if (result.result.wifi.sta_ip !== null) { // update IP address if it does not match the device
                       if (filteredShellyWss.device.getSetting('address') !== String(result.result.wifi.sta_ip)) {
-                        filteredShellyWss.device.setSettings({address: String(result.result.wifi.sta_ip)});
+                        await filteredShellyWss.device.setSettings({address: String(result.result.wifi.sta_ip)}).catch(this.error);
                       }
                     }
                   }

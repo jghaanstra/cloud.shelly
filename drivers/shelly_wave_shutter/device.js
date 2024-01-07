@@ -6,11 +6,6 @@ class ShellyWaveShutterDevice extends Device {
 
   async registerCapabilities() {
     try {
-
-      // TODO: remove after next release
-      if (this.hasCapability('windowcoverings_state')) {
-        await this.removeCapability('windowcoverings_state');
-      }
       
       this.registerCapability('measure_power', 'METER');
 
