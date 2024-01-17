@@ -43,7 +43,7 @@ Plus
 Shelly Plus 1
 Shelly Plus 1PM
 Shelly Plus 2PM
-Shelly Plus Humidity/Temperature
+Shelly Plus Humidity/Temperature (Gen2/Gen3)
 Shelly Plus i4
 Shelly Plus i4DC
 Shelly Plus Wall Dimmer US
@@ -51,9 +51,9 @@ Shelly Plus Plug S
 Shelly Plus Smoke
 Shelly Wall Panel (als thermostaat alleen op Homey Pro)
 Shelly Plus Uni
-Shelly Plus PM Mini
-Shelly Plus 1 Mini
-Shelly Plus 1PM Mini
+Shelly Plus PM Mini (Gen2/Gen3)
+Shelly Plus 1 Mini (Gen2/Gen3)
+Shelly Plus 1PM Mini (Gen2/Gen3)
 Shelly Plus 0-10V Dimmer
 
 Pro
@@ -67,6 +67,8 @@ Shelly Pro 3EM
 Shelly Pro 4PM
 Shelly Pro Dual Cover
 Shelly Pro EM-50
+Shelly Pro Dimmer 1PM
+Shelly Pro Dimmer 2PM
 
 Bluetooth
 -------------

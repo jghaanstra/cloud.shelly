@@ -763,5 +763,8 @@
   },
   "3.25.0": {
     "en": "Important change: the generic “action event” trigger card has been replaced by device specific “action event” trigger cards. Currently the generic action card is deprecated but still works. But after some months it will be completely removed and will break your flows. So update your flows to prevent this from happening. For more information on this, see the topic on the support forum. This release also adds support for setting values of, and triggering flows based on changed values of virtual components from Shelly Gen3 devices. And it adds an action card for Shelly Plus Plug S for setting color and brightness of device LED ring. Under the hood it adds some logic to add missing capabilities upon device initialization."
+  },
+  "3.25.1": {
+    "en": "This release fixes the device specific action event card not being available on battery operated devices and cloud devices even though they support action events. It also includes an improvement for not updating the CoIoT peer setting for gen1 devices that have been manually configured as mcast devices after pairing them with Homey."
   }
 }

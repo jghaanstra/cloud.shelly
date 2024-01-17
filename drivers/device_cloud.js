@@ -28,6 +28,9 @@ class ShellyCloudDevice extends OAuth2Device {
       this.homey.setTimeout(async () => {
         try {
 
+          /* update device config */
+          await this.updateDeviceConfig();
+
           /* register device trigger cards */
           let triggers = [];
           if (this.getStoreValue('config').triggers !== undefined) {
@@ -138,5 +141,6 @@ ShellyCloudDevice.prototype.onCapabilityTargetTemperature = Device.prototype.onC
 ShellyCloudDevice.prototype.updateDeviceRgb = Device.prototype.updateDeviceRgb;
 ShellyCloudDevice.prototype.rollerState = Device.prototype.rollerState;
 ShellyCloudDevice.prototype.triggerDeviceTriggerCard = Device.prototype.triggerDeviceTriggerCard;
+ShellyCloudDevice.prototype.updateDeviceConfig = Device.prototype.updateDeviceConfig;
 
 module.exports = ShellyCloudDevice;

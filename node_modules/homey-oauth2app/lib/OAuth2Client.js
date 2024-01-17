@@ -474,7 +474,12 @@ class OAuth2Client extends EventEmitter {
       opts.body = body;
     }
 
-    const url = `${this._apiUrl}${path}${urlAppend}`;
+    let url;
+    if (path.startsWith('http://') || path.startsWith('https://')) {
+      url = `${path}${urlAppend}`; // Allow the use of absolute URLs to ignore this._apiUrl
+    } else {
+      url = `${this._apiUrl}${path}${urlAppend}`;
+    }
 
     return {
       url,

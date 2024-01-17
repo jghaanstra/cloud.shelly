@@ -146,7 +146,7 @@ class ShellyDevice extends Homey.Device {
       if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && this.getStoreValue('communication') === 'coap') {
         const homey_ip = await this.homey.cloud.getLocalAddress();
         if (this.getStoreValue('device_settings').hasOwnProperty('coiot')) {
-          if (this.getStoreValue('device_settings').coiot.enabled === false || !this.getStoreValue('device_settings').coiot.peer.includes(homey_ip.substring(0, homey_ip.length-3))) {
+          if (this.getStoreValue('device_settings').coiot.enabled === false || (this.getStoreValue('device_settings').coiot.enabled === true && !this.getStoreValue('device_settings').coiot.peer.includes(homey_ip.substring(0, homey_ip.length-3)) && this.getStoreValue('device_settings').coiot.peer !== "")) {
             await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
           }
         }
@@ -3250,76 +3250,53 @@ class ShellyDevice extends Homey.Device {
   async updateDeviceConfig() {
     try {
 
-      /* placeholder for update for specific devices */
+      /* placeholder for update for specific devices */ 
 
+      /* COAP AND WEBSOCKET */
+      if (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket') {
 
-      /* get device setting */
-      let result;
-      let config;
+        /* get the current device config */
+        let device_config = this.util.getDeviceConfig(this.getStoreValue('config').hostname[0]);
 
-      if (this.getStoreValue('communication') === 'coap' && !this.getStoreValue('battery')) {
-        result = await this.util.sendCommand('/settings', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-      } else if (this.getStoreValue('communication') === 'websocket' && !this.getStoreValue('battery')) {
-        result = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
-        config = await this.util.sendRPCCommand('/rpc/Shelly.GetConfig', this.getSetting('address'), this.getSetting('password'));
-      }
+        /* for non-battery operated devices retrieve the actual status */
+        if (!this.getStoreValue('battery')) {
 
-      /* update device config */
-      if (result && !this.getStoreValue('battery') && (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket')) {
+          /* retrieve the status */
+          let result;
+          let config;
 
-        /* update device storevalues */
-        if (this.getStoreValue('communication') === 'coap') {
-          const regex = /(?<=\/v)(.*?)(?=\-)/gm;
-          const version_data = regex.exec(result.fw);
-          if (version_data !== null) {
-            await this.setStoreValue('fw_version', version_data[0]);
+          if (this.getStoreValue('communication') === 'coap') {
+            result = await this.util.sendCommand('/settings', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          } else if (this.getStoreValue('communication') === 'websocket') {
+            result = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
+            config = await this.util.sendRPCCommand('/rpc/Shelly.GetConfig', this.getSetting('address'), this.getSetting('password'));
           }
-          await this.setStoreValue('type', result.device.type);
-          await this.setStoreValue('device_settings', result);
-        } else if (this.getStoreValue('communication') === 'websocket') {
-          await this.setStoreValue('type', result.model);
-          await this.setStoreValue('fw_version', result.ver);
-          await this.setStoreValue('device_settings', config);
+
+          /* we have a device config and a status result ... */
+          if (typeof device_config !== 'undefined' && result) {
+
+            /* update device store values */
+            if (this.getStoreValue('communication') === 'coap') {
+              const regex = /(?<=\/v)(.*?)(?=\-)/gm;
+              const version_data = regex.exec(result.fw);
+              if (version_data !== null) {
+                await this.setStoreValue('fw_version', version_data[0]);
+              }
+              await this.setStoreValue('type', result.device.type);
+              await this.setStoreValue('device_settings', result);
+            } else if (this.getStoreValue('communication') === 'websocket') {
+              await this.setStoreValue('type', result.model);
+              await this.setStoreValue('fw_version', result.ver);
+              await this.setStoreValue('device_settings', config);
+            }
+
+          } else {
+            return Promise.reject(this.getData().id + ' has no valid device config and/or was not able to return its status upon init ...');
+          }
+
         }
 
-        /* update device config */
-        const hostname = this.getStoreValue('main_device').substr(0, this.getStoreValue('main_device').lastIndexOf("-") + 1);
-        let device_config = this.util.getDeviceConfig(hostname);
         if (typeof device_config !== 'undefined') {
-    
-          /* update gen1 device config if it's a roller shutter */
-          if (device_config.name === 'Shelly 2' || device_config.name === 'Shelly 2.5') {
-            if (result.hasOwnProperty("mode")) {
-              if (result.mode === "roller") {
-                device_config = this.util.getDeviceConfig(hostname + 'roller-');
-              }
-            }
-          }
-
-          /* update gen 1 device config if it's a RGBW2 in white mode */
-          if (device_config.name === 'Shelly RGBW2 Color') {
-            if (result.mode === 'white') {
-              device_config = this.util.getDeviceConfig(hostname + 'white-');
-            }
-          }
-    
-          /* update gen2 device config if it's a roller shutter */
-          if (device_config.name === 'Shelly Plus 2PM' || device_config.name === 'Shelly Pro 2' || device_config.name === 'Shelly Pro 2PM') {
-            if (result.hasOwnProperty("profile")) {
-              if (result.profile === "cover") {
-                device_config = this.util.getDeviceConfig(hostname + 'roller-');
-              }
-            }
-          }
-
-          /* update gen2 device config if it's a WallPanel in thermostat mode */
-          if (device_config.name === 'Shelly Wall Display Thermostat') {
-            if (result.hasOwnProperty("relay_in_thermostat")) {
-              if (result.relay_in_thermostat) {
-                device_config = this.util.getDeviceConfig(hostname + 'thermostat-');
-              }
-            }
-          }
 
           /* updating device config store value */
           await this.setStoreValue('config', device_config);
@@ -3341,11 +3318,13 @@ class ShellyDevice extends Homey.Device {
             });
           }
 
-          return Promise.resolve(true);
         } else {
-          return Promise.reject(this.getData().id + ' has no valid device config to set');
+          return Promise.reject(this.getData().id + ' has no valid device config ...');
         }
 
+        return Promise.resolve(true);
+
+      /* BLUETOOTH DEVICES */
       } else if (this.getStoreValue('communication') === 'bluetooth') {
 
         let device_config = this.util.getDeviceConfig('type', this.getStoreValue('type'));
@@ -3366,7 +3345,41 @@ class ShellyDevice extends Homey.Device {
         } else {
           return Promise.reject(this.getData().id + ' has no valid device config to set');
         }
-      
+
+      /* CLOUD DEVICES */
+      } else if (this.getStoreValue('communication') === 'cloud') {
+        
+        let device_config = this.util.getDeviceConfig(this.getStoreValue('config').hostname[0]);
+
+        if (typeof device_config !== 'undefined') {
+
+          /* update the communication config to cloud */
+          device_config.communication = 'cloud';
+
+          /* updating device config store value */
+          await this.setStoreValue('config', device_config);
+
+          /* add any missing capabilities to the device based on device config */
+          if (this.getStoreValue('channel') === 0) {
+            device_config.capabilities_1.forEach(async (capability) => {
+              if(!this.hasCapability(capability)) {
+                this.log('Adding capability', capability, 'to', this.getData().id, 'upon device init as the device does not have it already but its added in the device config.');
+                await this.addCapability(capability).catch(this.error);
+              }
+            });
+          } else {
+            device_config.capabilities_2.forEach(async (capability) => {
+              if(!this.hasCapability(capability)) {
+                this.log('Adding capability', capability, 'to', this.getData().id, 'upon device init as the device does not have it already but its added in the device config.');
+                await this.addCapability(capability).catch(this.error);
+              }
+            });
+          }
+
+        } else {
+          return Promise.reject(this.getData().id + ' has no valid device config to set');
+        }
+
       } else {
         return Promise.resolve(true);
       }
