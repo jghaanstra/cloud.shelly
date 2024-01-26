@@ -1,0 +1,33 @@
+{
+  "id": "zwaveResetToDefaultAndLeave",
+  "type": "dropdown",
+  "label": {
+    "en": "Reset parameters to default and leave network",
+    "nl": "Reset parameters naar fabrieksinstellingen en verlaat netwerk"
+  },
+  "value": "0",
+  "values": [
+    {
+      "id": "0",
+      "label": {
+        "en": "Do Not Reset",
+        "nl": "Niet resetten"
+      }
+    },
+    {
+      "id": "1",
+      "label": {
+        "en": "Reset parameters and leave network",
+        "nl": "Reset parameters en netwerk verlaten"
+      }
+    }
+  ],
+  "hint": {
+    "en": "This parameter (120) will reset all configuration parameters to factory default settings and device will leave the network.",
+    "nl": "Deze parameter (120) reset alle configuratie parameters naar de fabrieksinstellingen en apparaat verlaat het netwerk."
+  },
+  "zwave": {
+    "index": 120,
+    "size": 1
+  }
+}

@@ -7,10 +7,6 @@
     },
     "children": [
       {
-        "id": "zwaveSwitchTypeSW1",
-        "$extends": "zwaveSwitchTypeSW1"
-      },
-      {
         "id": "zwaveRestoreStateO1",
         "$extends": "zwaveRestoreStateO1"
       },

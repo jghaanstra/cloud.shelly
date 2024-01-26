@@ -11,10 +11,6 @@
         "$extends": "zwaveSwitchTypeSW1"
       },
       {
-        "id": "zwaveContactTypeO1",
-        "$extends": "zwaveContactTypeO1"
-      },
-      {
         "id": "zwaveRestoreStateO1",
         "$extends": "zwaveRestoreStateO1"
       },
@@ -25,6 +21,10 @@
       {
         "id": "zwaveAutoOnO1",
         "$extends": "zwaveAutoOnO1"
+      },
+      {
+        "id": "zwaveContactTypeO1",
+        "$extends": "zwaveContactTypeO1"
       }
     ]
   },
@@ -36,8 +36,8 @@
     },
     "children": [
       {
-        "id": "zwaveResetToDefault",
-        "$extends": "zwaveResetToDefault"
+        "id": "zwaveResetToDefaultAndLeave",
+        "$extends": "zwaveResetToDefaultAndLeave"
       }
     ]
   }

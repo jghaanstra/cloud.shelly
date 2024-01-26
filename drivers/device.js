@@ -434,6 +434,7 @@ class ShellyDevice extends Homey.Device {
   }
 
   /* dim.white */
+  // TODO: remove this capability listener, it's not in use anymore
   async onCapabilityDimWhite(value, opts) {
     try {
       const dim_white = Number(this.util.denormalize(value, 0, 255));
@@ -1039,7 +1040,7 @@ class ShellyDevice extends Homey.Device {
             /* dim white mode */
             if (result.lights[channel].mode === 'white') {
               let dim_rgbwwhite = result.lights[channel].brightness > 100 ? 1 : result.lights[channel].brightness / 100;
-              this.updateCapabilityValue('dim.white', dim_rgbwwhite, channel);
+              this.updateCapabilityValue('dim', dim_rgbwwhite, channel);
             }
 
           }
@@ -2525,7 +2526,7 @@ class ShellyDevice extends Homey.Device {
                   } else {
                     action_event = this.util.getActionEventDescription(event.event, 'websocket', 'gen2');
                   }
-                  this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": action_event}, {"action": action_event}).catch(error => { this.error(error) });
+                  this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(device, {"action": action_event}, {"action": action_event}).catch(error => { this.error(error) });
 
                   // TODO: remove this eventually
                   this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": action_event }, {"id": device.getData().id, "device": device.getName(), "action": action_event }).catch(error => { this.error(error) });
@@ -3250,7 +3251,12 @@ class ShellyDevice extends Homey.Device {
   async updateDeviceConfig() {
     try {
 
-      /* placeholder for update for specific devices */ 
+      /* placeholder for update for specific devices */
+
+      // TODO: remove after next release
+      if (this.hasCapability('dim.white')) {
+        this.removeCapability('dim.white');
+      }
 
       /* COAP AND WEBSOCKET */
       if (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket') {

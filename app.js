@@ -122,7 +122,8 @@ class ShellyApp extends OAuth2App {
       this.homey.flow.getTriggerCard('triggerDeviceOffline');
       this.homey.flow.getTriggerCard('triggerFWUpdate');
       this.homey.flow.getTriggerCard('triggerCloudError');
-  
+      
+      // TODO: eventuele remove this triggercard
       const listenerCallbacks = this.homey.flow.getTriggerCard('triggerCallbacks').registerRunListener(async (args, state) => {
         try {
           if (args.action.action === undefined) {
@@ -283,7 +284,7 @@ class ShellyApp extends OAuth2App {
       const listenerActionEvents = this.homey.flow.getDeviceTriggerCard('triggerActionEvent').registerRunListener(async (args, state) => {
         try {
           var action = args.action.action ?? args.action.name;
-          if ((state.action == action) || (args.action.id === 999)) {
+          if ((state.action === action) || (args.action.id === 999)) {
             return Promise.resolve(true);
           } else {
             return Promise.resolve(false);

@@ -38,30 +38,14 @@
       {
         "id": "zwaveSwitchTypeSW2",
         "$extends": "zwaveSwitchTypeSW2"
-      },
-      {
-        "id": "zwaveRestoreStateO2",
-        "$extends": "zwaveRestoreStateO2"
-      },
-      {
-        "id": "zwaveAutoOffO2",
-        "$extends": "zwaveAutoOffO2"
-      },
-      {
-        "id": "zwaveAutoOnO2",
-        "$extends": "zwaveAutoOnO2"
-      },
-      {
-        "id": "zwaveContactTypeO2",
-        "$extends": "zwaveContactTypeO2"
       }
     ]
   },
   {
     "type": "group",
     "label": {
-      "en": "Switch 1 - Power Settings",
-      "nl": "Switch 1 - Energie instellingen"
+      "en": "Power Settings",
+      "nl": "Energie instellingen"
     },
     "children": [
       {
@@ -77,35 +61,10 @@
   {
     "type": "group",
     "label": {
-      "en": "Switch 2 - Power Settings",
-      "nl": "Switch 2 - Energie instellingen"
-    },
-    "children": [
-      {
-        "id": "zwavePowerReportOnChangeO2",
-        "$extends": "zwavePowerReportOnChangeO2"
-      },
-      {
-        "id": "zwaveMinimalTimePowerReportO2",
-        "$extends": "zwaveMinimalTimePowerReportO2"
-      }
-    ]
-  },
-  {
-    "type": "group",
-    "label": {
       "en": "Device Settings",
       "nl": "Apparaat instellingen"
     },
     "children": [
-      {
-        "id": "zwaveReverseInputsO1O2",
-        "$extends": "zwaveReverseInputsO1O2"
-      },
-      {
-        "id": "zwaveReverseOutputsO1O2",
-        "$extends": "zwaveReverseOutputsO1O2"
-      },
       {
         "id": "zwaveResetToDefaultAndLeave",
         "$extends": "zwaveResetToDefaultAndLeave"

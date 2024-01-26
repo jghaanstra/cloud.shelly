@@ -77,9 +77,14 @@ Shelly BLU DoorWindow
 Shelly BLU Motion
 Shelly BLU Gateway (BLE to WiFi)
 
-Zwave
+Z-Wave
 -------------
 Shelly Wave 1
 Shelly Wave 1PM
 Shelly Wave 2PM
 Shelly Wave Shutter
+Shelly Wave Plug UK/US
+Shelly Wave Pro 1
+Shelly Wave Pro 1PM
+Shelly Wave Pro 2
+Shelly Wave Pro 2PM

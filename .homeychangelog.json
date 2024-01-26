@@ -766,5 +766,8 @@
   },
   "3.25.1": {
     "en": "This release fixes the device specific action event card not being available on battery operated devices and cloud devices even though they support action events. It also includes an improvement for not updating the CoIoT peer setting for gen1 devices that have been manually configured as mcast devices after pairing them with Homey."
+  },
+  "3.26.0": {
+    "en": "This release adds support for the Shelly Wave Plug, Wave Pro 1, Wave Pro1PM, Wave Pro 2 and Wave Pro 2PM. It also includes a fix for the new device specific action event card triggering the wrong channel on multichannel devices on Homey Pro. It also adds proper naming for returned energy capability on Shelly Plus PM Mini. This requires re-pairing. And it removes duplicate capability for setting the white channel on RGBW2. It also removes the deprecated drives of Shelly Vintage, Smoke, Gas, Flood and Air to reduce the app footprint. Re-pair these devices with the generic driver if you where still using these deprecated drivers."
   }
 }

@@ -2,8 +2,8 @@
   {
     "type": "group",
     "label": {
-      "en": "Switch-Output Settings",
-      "nl": "Switch-Output instellingen"
+      "en": "Switch 1 - Output Settings",
+      "nl": "Switch 1 - Output instellingen"
     },
     "children": [
       {
@@ -31,17 +31,13 @@
   {
     "type": "group",
     "label": {
-      "en": "Power Settings",
-      "nl": "Energie instellingen"
+      "en": "Switch 2 - Output Settings",
+      "nl": "Switch 2 - Output instellingen"
     },
     "children": [
       {
-        "id": "zwavePowerReportOnChangeO1",
-        "$extends": "zwavePowerReportOnChangeO1"
-      },
-      {
-        "id": "zwaveMinimalTimePowerReportO1",
-        "$extends": "zwaveMinimalTimePowerReportO1"
+        "id": "zwaveSwitchTypeSW2",
+        "$extends": "zwaveSwitchTypeSW2"
       }
     ]
   },
