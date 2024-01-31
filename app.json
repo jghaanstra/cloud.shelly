@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.26.0",
+  "version": "3.26.1",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -991,6 +991,72 @@
           "local",
           "cloud"
         ]
+      },
+      {
+        "title": {
+          "en": "Pulsecounter last minute has changed",
+          "nl": "Pulsteller laatste minuut is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "pulse",
+            "type": "number",
+            "title": {
+              "en": "Pulse Unit",
+              "nl": "Puls unit"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=input_pulse_counts_minute"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "triggerInputCountsMinute"
+      },
+      {
+        "title": {
+          "en": "Pulsecounter Total has changed",
+          "nl": "Pulsteller totaal is veranderd"
+        },
+        "tokens": [
+          {
+            "name": "pulse",
+            "type": "number",
+            "title": {
+              "en": "Pulse Unit",
+              "nl": "Puls unit"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=input_pulse_counts_total"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "triggerInputCountsTotal"
       },
       {
         "id": "triggerInputExternal1Off",
@@ -11131,6 +11197,40 @@
         "nl": "Externe input 5 ingeschakeld"
       },
       "icon": "/assets/input_switch.svg"
+    },
+    "input_pulse_counts_minute": {
+      "type": "number",
+      "title": {
+        "en": "Pulsecounter Last Minute",
+        "nl": "Pulseteller laatste minuut"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "unit",
+        "nl": "unit"
+      },
+      "min": 0,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/pulsecounter.svg"
+    },
+    "input_pulse_counts_total": {
+      "type": "number",
+      "title": {
+        "en": "Pulsecounter Total",
+        "nl": "Pulseteller totaal"
+      },
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "unit",
+        "nl": "unit"
+      },
+      "min": 0,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/pulsecounter.svg"
     },
     "measure_power_apparent": {
       "type": "number",

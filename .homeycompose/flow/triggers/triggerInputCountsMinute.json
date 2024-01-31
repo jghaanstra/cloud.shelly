@@ -1,0 +1,29 @@
+{
+  "title": {
+    "en": "Pulsecounter last minute has changed",
+    "nl": "Pulsteller laatste minuut is veranderd"
+  },
+  "tokens": [
+    {
+      "name": "pulse",
+      "type": "number",
+      "title": {
+        "en": "Pulse Unit",
+        "nl": "Puls unit"
+      },
+      "example": 5
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shelly_cloud&capabilities=input_pulse_counts_minute"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

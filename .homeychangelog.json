@@ -769,5 +769,8 @@
   },
   "3.26.0": {
     "en": "This release adds support for the Shelly Wave Plug, Wave Pro 1, Wave Pro1PM, Wave Pro 2 and Wave Pro 2PM. It also includes a fix for the new device specific action event card triggering the wrong channel on multichannel devices on Homey Pro. It also adds proper naming for returned energy capability on Shelly Plus PM Mini. This requires re-pairing. And it removes duplicate capability for setting the white channel on RGBW2. It also removes the deprecated drives of Shelly Vintage, Smoke, Gas, Flood and Air to reduce the app footprint. Re-pair these devices with the generic driver if you where still using these deprecated drivers."
+  },
+  "3.26.1": {
+    "en": "This release contains a fix for incorrectly added meter_power capability to devices with the pm:1 component like the new PM Mini devices. It also contains a fix for external temp sensors on Shelly Uni being added to both channels and not updating correctly. And it adds total and last minute counts capabilities for pulsecounter on Shelly Plus Uni. The release also reduces the need for repairing by adding more logic to the device init process allowing to dynamically update capability options like renaming of capabilities."
   }
 }
