@@ -88,3 +88,4 @@ Shelly Wave Pro 1
 Shelly Wave Pro 1PM
 Shelly Wave Pro 2
 Shelly Wave Pro 2PM
+Shelly Wave i4

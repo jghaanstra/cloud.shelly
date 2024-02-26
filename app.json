@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.26.1",
+  "version": "3.27.1",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -117,7 +117,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shelly_bluetooth&capabilities=actionEvents"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_bluetooth|shelly_wave_i4&capabilities=actionEvents"
           }
         ],
         "platforms": [
@@ -271,8 +271,7 @@
         "platforms": [
           "local",
           "cloud"
-        ],
-        "deprecated": true
+        ]
       },
       {
         "title": {
@@ -742,7 +741,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly4pro|shellyair|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_1"
           }
         ],
         "platforms": [
@@ -764,7 +763,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly4pro|shellyair|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_1"
           }
         ],
         "platforms": [
@@ -786,7 +785,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1L|shelly1_cloud|shelly1l_cloud|shelly1pm|shelly1pm_cloud|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly25_cloud|shelly2_cloud|shelly4pro|shelly4pro_cloud|shellyair|shellyair_cloud|shellydimmer|shellydimmer_cloud|shellyi3|shellyi3_cloud|shellyrgbw2color|shellyrgbw2color_cloud|shellyrgbw2white|shellyrgbw2white_cloud|shellyuni|shellyuni_cloud&capabilities=input_1"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_1"
           }
         ],
         "platforms": [
@@ -808,7 +807,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_2"
           }
         ],
         "platforms": [
@@ -830,7 +829,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_2"
           }
         ],
         "platforms": [
@@ -852,7 +851,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_2"
           }
         ],
         "platforms": [
@@ -874,7 +873,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shellyi3&capabilities=input_3"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_3"
           }
         ],
         "platforms": [
@@ -896,7 +895,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shellyi3&capabilities=input_3"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_3"
           }
         ],
         "platforms": [
@@ -918,7 +917,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shellyi3&capabilities=input_3"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_3"
           }
         ],
         "platforms": [
@@ -940,7 +939,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud&capabilities=input_4"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_4"
           }
         ],
         "platforms": [
@@ -962,7 +961,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud&capabilities=input_4"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_4"
           }
         ],
         "platforms": [
@@ -984,7 +983,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud&capabilities=input_4"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_4"
           }
         ],
         "platforms": [
@@ -5413,7 +5412,8 @@
       },
       "class": "socket",
       "capabilities": [
-        "onoff"
+        "onoff",
+        "deviceWave"
       ],
       "icon": "/drivers/shelly_wave_1/assets/icon.svg",
       "zwave": {
@@ -5470,8 +5470,8 @@
                 {
                   "id": "0",
                   "label": {
-                    "en": "Momentary switch",
-                    "nl": "Pulsdrukschakelaar"
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
                   }
                 },
                 {
@@ -5672,7 +5672,8 @@
         "onoff",
         "measure_power",
         "meter_power",
-        "button.reset_meter"
+        "button.reset_meter",
+        "deviceWave"
       ],
       "capabilitiesOptions": {
         "button.reset_meter": {
@@ -5741,8 +5742,8 @@
                 {
                   "id": "0",
                   "label": {
-                    "en": "Momentary switch",
-                    "nl": "Pulsdrukschakelaar"
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
                   }
                 },
                 {
@@ -5999,7 +6000,8 @@
       "icon": "/drivers/shelly_wave_2pm/assets/icon.svg",
       "capabilities": [
         "onoff",
-        "button.reset_meter"
+        "button.reset_meter",
+        "deviceWave"
       ],
       "capabilitiesOptions": {
         "button.reset_meter": {
@@ -6047,7 +6049,8 @@
               "onoff",
               "measure_power",
               "meter_power",
-              "button.reset_meter"
+              "button.reset_meter",
+              "deviceWave"
             ],
             "capabilitiesOptions": {
               "button.reset_meter": {
@@ -6075,7 +6078,8 @@
               "onoff",
               "measure_power",
               "meter_power",
-              "button.reset_meter"
+              "button.reset_meter",
+              "deviceWave"
             ],
             "capabilitiesOptions": {
               "button.reset_meter": {
@@ -6126,8 +6130,8 @@
                 {
                   "id": "0",
                   "label": {
-                    "en": "Momentary switch",
-                    "nl": "Pulsdrukschakelaar"
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
                   }
                 },
                 {
@@ -6287,8 +6291,8 @@
                 {
                   "id": "0",
                   "label": {
-                    "en": "Momentary switch",
-                    "nl": "Pulsdrukschakelaar"
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
                   }
                 },
                 {
@@ -6659,6 +6663,274 @@
     },
     {
       "name": {
+        "en": "Shelly Wave i4",
+        "nl": "Shelly Wave i4"
+      },
+      "images": {
+        "small": "./assets/drivers/shelly_wave_i4/images/small.jpg",
+        "large": "./assets/drivers/shelly_wave_i4/images/large.jpg"
+      },
+      "class": "other",
+      "capabilities": [
+        "input_1",
+        "input_2",
+        "input_3",
+        "input_4",
+        "actionEvents",
+        "deviceWave"
+      ],
+      "icon": "/drivers/shelly_wave_i4/assets/icon.svg",
+      "zwave": {
+        "manufacturerId": 1120,
+        "productTypeId": [
+          9
+        ],
+        "productId": [
+          129,
+          130
+        ],
+        "associationGroups": [
+          1
+        ],
+        "learnmode": {
+          "image": "./assets/zwave-learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking. Repeat this for step 2 in the pairing process and enter the device key (pincode).",
+            "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen. Herhaal dit voor stap 2 in het koppelingsproces en voer de apparaatsleutel (pincode) in."
+          }
+        },
+        "unlearnmode": {
+          "image": "./assets/zwave-learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking.",
+            "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen."
+          }
+        }
+      },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "zwave"
+      ],
+      "id": "shelly_wave_i4",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Switch-Output Settings",
+            "nl": "Switch-Output instellingen"
+          },
+          "children": [
+            {
+              "id": "zwaveSwitchTypeSW1",
+              "type": "dropdown",
+              "label": {
+                "en": "Switch Type SW1",
+                "nl": "Schakelaar type SW1"
+              },
+              "value": "2",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Toggle switch (contact closed - ON / contact opened - OFF)",
+                    "nl": "Tuimelschakelaar (contact closed - ON / contact opened - OFF)"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Toggle switch (device changes status when switch changes status)",
+                    "nl": "Tuimelschakelaar (apparaat wijzigt status wanneer schakelaar status wijzigt)"
+                  }
+                }
+              ],
+              "hint": {
+                "en": "This parameter (1) determines the type of switch connected to input 1.",
+                "nl": "Deze parameter (1) specificeert het type schakelaar dat is aangesloten op input 1."
+              },
+              "zwave": {
+                "index": 1,
+                "size": 1
+              }
+            },
+            {
+              "id": "zwaveSwitchTypeSW2",
+              "type": "dropdown",
+              "label": {
+                "en": "Switch Type SW2",
+                "nl": "Schakelaar type SW2"
+              },
+              "value": "2",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Toggle switch (contact closed - ON / contact opened - OFF)",
+                    "nl": "Tuimelschakelaar (contact closed - ON / contact opened - OFF)"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Toggle switch (device changes status when switch changes status)",
+                    "nl": "Tuimelschakelaar (apparaat wijzigt status wanneer schakelaar status wijzigt)"
+                  }
+                }
+              ],
+              "hint": {
+                "en": "This parameter (2) determines the type of switch connected to input 2.",
+                "nl": "Deze parameter (2) specificeert het type schakelaar dat is aangesloten op input 2."
+              },
+              "zwave": {
+                "index": 2,
+                "size": 1
+              }
+            },
+            {
+              "id": "zwaveSwitchTypeSW3",
+              "type": "dropdown",
+              "label": {
+                "en": "Switch Type SW3",
+                "nl": "Schakelaar type SW3"
+              },
+              "value": "2",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Toggle switch (contact closed - ON / contact opened - OFF)",
+                    "nl": "Tuimelschakelaar (contact closed - ON / contact opened - OFF)"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Toggle switch (device changes status when switch changes status)",
+                    "nl": "Tuimelschakelaar (apparaat wijzigt status wanneer schakelaar status wijzigt)"
+                  }
+                }
+              ],
+              "hint": {
+                "en": "This parameter (2) determines the type of switch connected to input 2.",
+                "nl": "Deze parameter (2) specificeert het type schakelaar dat is aangesloten op input 2."
+              },
+              "zwave": {
+                "index": 3,
+                "size": 1
+              }
+            },
+            {
+              "id": "zwaveSwitchTypeSW4",
+              "type": "dropdown",
+              "label": {
+                "en": "Switch Type SW4",
+                "nl": "Schakelaar type SW4"
+              },
+              "value": "2",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Toggle switch (contact closed - ON / contact opened - OFF)",
+                    "nl": "Tuimelschakelaar (contact closed - ON / contact opened - OFF)"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Toggle switch (device changes status when switch changes status)",
+                    "nl": "Tuimelschakelaar (apparaat wijzigt status wanneer schakelaar status wijzigt)"
+                  }
+                }
+              ],
+              "hint": {
+                "en": "This parameter (2) determines the type of switch connected to input 2.",
+                "nl": "Deze parameter (2) specificeert het type schakelaar dat is aangesloten op input 2."
+              },
+              "zwave": {
+                "index": 4,
+                "size": 1
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "zwaveResetToDefaultAndLeave",
+              "type": "dropdown",
+              "label": {
+                "en": "Reset parameters to default and leave network",
+                "nl": "Reset parameters naar fabrieksinstellingen en verlaat netwerk"
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Do Not Reset",
+                    "nl": "Niet resetten"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Reset parameters and leave network",
+                    "nl": "Reset parameters en netwerk verlaten"
+                  }
+                }
+              ],
+              "hint": {
+                "en": "This parameter (120) will reset all configuration parameters to factory default settings and device will leave the network.",
+                "nl": "Deze parameter (120) reset alle configuratie parameters naar de fabrieksinstellingen en apparaat verlaat het netwerk."
+              },
+              "zwave": {
+                "index": 120,
+                "size": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
         "en": "Shelly Wave Plug",
         "nl": "Shelly Wave Plug"
       },
@@ -6672,7 +6944,8 @@
         "onoff",
         "measure_power",
         "meter_power",
-        "button.reset_meter"
+        "button.reset_meter",
+        "deviceWave"
       ],
       "capabilitiesOptions": {
         "button.reset_meter": {
@@ -6958,7 +7231,8 @@
       },
       "class": "socket",
       "capabilities": [
-        "onoff"
+        "onoff",
+        "deviceWave"
       ],
       "icon": "/drivers/shelly_wave_pro_1/assets/icon.svg",
       "zwave": {
@@ -7015,8 +7289,8 @@
                 {
                   "id": "0",
                   "label": {
-                    "en": "Momentary switch",
-                    "nl": "Pulsdrukschakelaar"
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
                   }
                 },
                 {
@@ -7176,8 +7450,8 @@
                 {
                   "id": "0",
                   "label": {
-                    "en": "Momentary switch",
-                    "nl": "Pulsdrukschakelaar"
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
                   }
                 },
                 {
@@ -7264,7 +7538,8 @@
         "onoff",
         "measure_power",
         "meter_power",
-        "button.reset_meter"
+        "button.reset_meter",
+        "deviceWave"
       ],
       "icon": "/drivers/shelly_wave_pro_1pm/assets/icon.svg",
       "zwave": {
@@ -7321,8 +7596,8 @@
                 {
                   "id": "0",
                   "label": {
-                    "en": "Momentary switch",
-                    "nl": "Pulsdrukschakelaar"
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
                   }
                 },
                 {
@@ -7482,8 +7757,8 @@
                 {
                   "id": "0",
                   "label": {
-                    "en": "Momentary switch",
-                    "nl": "Pulsdrukschakelaar"
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
                   }
                 },
                 {
@@ -7627,7 +7902,8 @@
       "class": "socket",
       "icon": "/drivers/shelly_wave_pro_2/assets/icon.svg",
       "capabilities": [
-        "onoff"
+        "onoff",
+        "deviceWave"
       ],
       "zwave": {
         "manufacturerId": 1120,
@@ -7709,8 +7985,8 @@
                 {
                   "id": "0",
                   "label": {
-                    "en": "Momentary switch",
-                    "nl": "Pulsdrukschakelaar"
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
                   }
                 },
                 {
@@ -7870,8 +8146,8 @@
                 {
                   "id": "0",
                   "label": {
-                    "en": "Momentary switch",
-                    "nl": "Pulsdrukschakelaar"
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
                   }
                 },
                 {
@@ -8253,7 +8529,8 @@
       "icon": "/drivers/shelly_wave_pro_2pm/assets/icon.svg",
       "capabilities": [
         "onoff",
-        "button.reset_meter"
+        "button.reset_meter",
+        "deviceWave"
       ],
       "capabilitiesOptions": {
         "button.reset_meter": {
@@ -8380,8 +8657,8 @@
                 {
                   "id": "0",
                   "label": {
-                    "en": "Momentary switch",
-                    "nl": "Pulsdrukschakelaar"
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
                   }
                 },
                 {
@@ -8541,8 +8818,8 @@
                 {
                   "id": "0",
                   "label": {
-                    "en": "Momentary switch",
-                    "nl": "Pulsdrukschakelaar"
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
                   }
                 },
                 {
@@ -8926,7 +9203,8 @@
         "measure_power",
         "meter_power",
         "button.reset_meter",
-        "button.calibration"
+        "button.calibration",
+        "deviceWave"
       ],
       "capabilitiesOptions": {
         "button.reset_meter": {
@@ -8967,8 +9245,8 @@
         "learnmode": {
           "image": "./assets/zwave-learnmode.svg",
           "instruction": {
-            "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking. Repeat this for step 2 in the pairing process and enter the device key (pincode).",
-            "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen. Herhaal dit voor stap 2 in het koppelingsproces en voer de apparaatsleutel (pincode) in."
+            "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking. Repeat this for step 2 in the pairing process and enter the device key (pincode). After pairing peform a shutter calibration from the device maintenance settings.",
+            "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen. Herhaal dit voor stap 2 in het koppelingsproces en voer de apparaatsleutel (pincode) in. Voer na het koppelen een shutter calibratie uit via de apparaat onderhoudsinstellingen."
           }
         },
         "unlearnmode": {
@@ -9007,8 +9285,8 @@
                 {
                   "id": "0",
                   "label": {
-                    "en": "Momentary switch",
-                    "nl": "Pulsdrukschakelaar"
+                    "en": "Momentary switch (push button)",
+                    "nl": "Pulsdrukschakelaar (push button)"
                   }
                 },
                 {
@@ -10885,6 +11163,18 @@
       "title": {
         "en": "Plus Smoke",
         "nl": "Plus Smoke"
+      },
+      "getable": false,
+      "setable": false,
+      "uiComponent": null,
+      "insights": false,
+      "icon": "/assets/icon.svg"
+    },
+    "deviceWave": {
+      "type": "string",
+      "title": {
+        "en": "Wave Device",
+        "nl": "Wave Device"
       },
       "getable": false,
       "setable": false,

@@ -1080,7 +1080,7 @@ class ShellyApp extends OAuth2App {
           const filteredCloudDevices = this.shellyDevices.filter(shelly => shelly.id.includes(key));
           for (const filteredCloudDevice of filteredCloudDevices) {
             if (value._dev_info.online === false) {
-              filteredCloudDevice.device.setUnavailable(this.homey.__('device.unreachable_on_cloud'));
+              filteredCloudDevice.device.setUnavailable(this.homey.__('device.unreachable_on_cloud')).catch(error => { this.error(error) });
               this.error('Marking device', filteredCloudDevice.device.getName(), 'with id', filteredCloudDevice.device.getData().id, 'as unreachable as it is marked as offline in Shelly Cloud.');
             }
           }

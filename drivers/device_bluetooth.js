@@ -23,7 +23,8 @@ class ShellyBluetoothDevice extends Device {
       this.BTH[0x01] = { n: 'measure_battery', t: this.uint8, u: '%' };
       this.BTH[0x05] = { n: 'measure_luminance', t: this.uint24, f: 0.01 };
       this.BTH[0x1a] = { n: 'alarm_contact_door', t: this.uint8 };
-      this.BTH[0x20] = { n: 'measure_humidity', t: this.uint8 };
+      this.BTH[0x03] = { n: 'measure_humidity', t: this.uint16, f: 0.01, u: "%" };
+      this.BTH[0x02] = { n: 'measure_temperature', t: this.int16, f: 0.01, u: "tC" };
       this.BTH[0x2d] = { n: 'alarm_contact_window', t: this.uint8 };
       this.BTH[0x3a] = { n: 'button', t: this.uint8 };
       this.BTH[0x3f] = { n: 'tilt', t: this.int16, f: 0.1 };
@@ -191,6 +192,11 @@ class ShellyBluetoothDevice extends Device {
         }
         if (result.hasOwnProperty("alarm_contact_window")) {
           this.updateCapabilityValue('alarm_contact', result.alarm_contact_window === 1 ? true : false, channel);
+        }
+
+        /* measure_temperature */
+        if (result.hasOwnProperty("measure_temperature")) {
+          this.updateCapabilityValue('measure_temperature', result.measure_temperature, channel);
         }
 
         /* measure_humidity */

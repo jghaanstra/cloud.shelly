@@ -1,20 +1,36 @@
 'use strict';
-;
+
 const {ZwaveDevice} = require('homey-zwavedriver');
+const Util = require('../lib/util.js');
 
 class ShellyZwaveDevice extends ZwaveDevice {
 
   async onNodeInit({ node }) {
     try {
 
+      if (!this.util) this.util = new Util({homey: this.homey});
+
       // Mark device as unavailable while configuring
       await this.setUnavailable('Device is being configured ...');
 
-      // Make sure the device is recognised as a zwave device in the rest of the app
-      await this.setStoreValue('communication', 'zwave');
-
       // Get number of multi channel nodes
       this.numberOfMultiChannelNodes = Object.keys(this.node.MultiChannelNodes || {}).length;
+
+      /* update device config */
+      await this.updateDeviceConfig();
+
+      /* register device trigger cards */
+      let triggers = [];
+      if (this.getStoreValue('config').triggers !== undefined) {
+        triggers = this.getStoreValue('config').triggers
+      } else if (this.getStoreValue('channel') !== 0) {
+        triggers = this.getStoreValue('config').triggers_2
+      } else {
+        triggers = this.getStoreValue('config').triggers_1
+      }
+      for (const trigger of triggers) {
+        this.homey.flow.getDeviceTriggerCard(trigger);
+      }
 
       // Register the device capabilities from the device driver
       await this.registerCapabilities();
@@ -116,6 +132,63 @@ class ShellyZwaveDevice extends ZwaveDevice {
       index: 78,
       size: 1,
     }, 0);
+  }
+
+  async updateDeviceConfig() {
+    try {
+
+      // Make sure the device is recognised as Zwave device
+      await this.setStoreValue('communication', 'zwave');
+      await this.setStoreValue('gen', 'zwave');
+
+      // Set the right channel for the device
+      const device_channel = this.node.isMultiChannelNode ? this.node.multiChannelNodeId : 0;
+      await this.setStoreValue('channel', device_channel);
+
+      // Update the device config
+      const device_config = this.util.getDeviceConfig(this.driver.manifest.name.en, 'zwave');
+
+      if (typeof device_config !== 'undefined') {
+
+        /* updating device config store value */
+        await this.setStoreValue('config', device_config);
+
+        /* set some device values */
+        await this.setStoreValue('battery', device_config.battery);
+        await this.setStoreValue('type', this.node.productId.value.toString());
+        await this.setStoreValue('main_device', this.getData().token);
+
+        /* set device class if changed */
+        if (this.getClass() !== device_config.class) {
+          this.log('Updating device class from', this.getClass(), 'to', device_config.class);
+          this.setClass(device_config.class)
+        }
+
+        /* add any missing capabilities to the device based on device config */
+        if (this.getStoreValue('channel') === 0) {
+          device_config.capabilities_1.forEach(async (capability) => {
+            if(!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4'].includes(capability)) {
+              this.log('Adding capability', capability, 'to', this.getName(), 'upon device init as the device does not have it already but its added in the device config.');
+              await this.addCapability(capability).catch(this.error);
+            }
+          });
+        } else {
+          device_config.capabilities_2.forEach(async (capability) => {
+            if(!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4'].includes(capability)) {
+              this.log('Adding capability', capability, 'to', this.getName(), 'upon device init as the device does not have it already but its added in the device config.');
+              await this.addCapability(capability).catch(this.error);
+            }
+          });
+        }
+
+      }
+
+      return Promise.resolve(true);
+
+    } catch (error) {
+      return Promise.reject(error);
+    }
+
   }
 
 }

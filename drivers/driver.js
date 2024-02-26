@@ -105,10 +105,12 @@ class ShellyDriver extends Homey.Driver {
                 var auth = result.auth_en;
                 var type = result.model;
 
-                /* update device config if it's a roller shutter */
+                /* update device config if it has a specific profile */
                 if (result.hasOwnProperty("profile")) {
                   if (result.profile === "cover") {
                     device_config = this.util.getDeviceConfig(hostname + 'roller-');
+                  } else {
+                    device_config = this.util.getDeviceConfig(hostname + result.profile +'-');
                   }
                 }
 
@@ -200,6 +202,8 @@ class ShellyDriver extends Homey.Driver {
         if (data.gen === 'gen2' && result.hasOwnProperty("profile")) {
           if (result.profile === "cover") {
             device_config = this.util.getDeviceConfig(hostname + 'roller-');
+          } else {
+            device_config = this.util.getDeviceConfig(hostname + result.profile +'-');
           }
         }
 

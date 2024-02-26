@@ -13,7 +13,13 @@ class ShellyCloudDevice extends OAuth2Device {
 
       // ADDING CAPABILITY LISTENERS
       this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
+      this.registerCapabilityListener("onoff.1", this.onCapabilityOnoff1.bind(this));
+      this.registerCapabilityListener("onoff.2", this.onCapabilityOnoff2.bind(this));
+      this.registerCapabilityListener("onoff.3", this.onCapabilityOnoff3.bind(this));
+      this.registerCapabilityListener("onoff.4", this.onCapabilityOnoff4.bind(this));
+      this.registerCapabilityListener("onoff.5", this.onCapabilityOnoff5.bind(this));
       this.registerCapabilityListener("dim", this.onCapabilityDim.bind(this));
+      this.registerCapabilityListener("dim.white", this.onCapabilityDimWhite.bind(this));
       this.registerCapabilityListener("light_temperature", this.onCapabilityLightTemperature.bind(this));
       this.registerMultipleCapabilityListener(['light_hue', 'light_saturation'], this.onMultipleCapabilityListenerSatHue.bind(this), 500);
       this.registerCapabilityListener("light_mode", this.onCapabilityLightMode.bind(this));
@@ -131,6 +137,7 @@ ShellyCloudDevice.prototype.onCapabilityOnoffLight = Device.prototype.onCapabili
 ShellyCloudDevice.prototype.onCapabilityWindowcoveringsState = Device.prototype.onCapabilityWindowcoveringsState;
 ShellyCloudDevice.prototype.onCapabilityWindowcoveringsSet = Device.prototype.onCapabilityWindowcoveringsSet;
 ShellyCloudDevice.prototype.onCapabilityDim = Device.prototype.onCapabilityDim;
+ShellyCloudDevice.prototype.onCapabilityDimWhite = Device.prototype.onCapabilityDimWhite;
 ShellyCloudDevice.prototype.onCapabilityLightTemperature = Device.prototype.onCapabilityLightTemperature;
 ShellyCloudDevice.prototype.onMultipleCapabilityListenerSatHue = Device.prototype.onMultipleCapabilityListenerSatHue;
 ShellyCloudDevice.prototype.onCapabilityLightMode = Device.prototype.onCapabilityLightMode;

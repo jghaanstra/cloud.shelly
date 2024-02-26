@@ -1,0 +1,40 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Switch-Output Settings",
+      "nl": "Switch-Output instellingen"
+    },
+    "children": [
+      {
+        "id": "zwaveSwitchTypeSW1",
+        "$extends": "zwaveSwitchTypeSW1"
+      },
+      {
+        "id": "zwaveSwitchTypeSW2",
+        "$extends": "zwaveSwitchTypeSW2"
+      },
+      {
+        "id": "zwaveSwitchTypeSW3",
+        "$extends": "zwaveSwitchTypeSW3"
+      },
+      {
+        "id": "zwaveSwitchTypeSW4",
+        "$extends": "zwaveSwitchTypeSW4"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Device Settings",
+      "nl": "Apparaat instellingen"
+    },
+    "children": [
+      {
+        "id": "zwaveResetToDefaultAndLeave",
+        "$extends": "zwaveResetToDefaultAndLeave"
+      }
+    ]
+  }
+]

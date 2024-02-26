@@ -1,38 +1,26 @@
 {
   "name": {
-    "en": "Shelly Wave Plug",
-    "nl": "Shelly Wave Plug"
+    "en": "Shelly Wave i4",
+    "nl": "Shelly Wave i4"
   },
   "images": {
-    "small": "./assets/drivers/shelly_wave_plug/images/small.jpg",
-    "large": "./assets/drivers/shelly_wave_plug/images/large.jpg"
+    "small": "./assets/drivers/shelly_wave_i4/images/small.jpg",
+    "large": "./assets/drivers/shelly_wave_i4/images/large.jpg"
   },
-  "class": "socket",
-  "icon": "{{driverAssetsPath}}/icon.svg",
+  "class": "other",
   "capabilities": [
-    "onoff",
-    "measure_power",
-    "meter_power",
-    "button.reset_meter",
+    "input_1",
+    "input_2",
+    "input_3",
+    "input_4",
+    "actionEvents",
     "deviceWave"
   ],
-  "capabilitiesOptions": {
-    "button.reset_meter": {
-      "maintenanceAction": true,
-      "title": {
-        "en": "Reset power meter",
-        "nl": "Stel stroomverbuik opnieuw in"
-      },
-      "desc": {
-        "en": "Reset the accumulated power usage (kWh), note that this can not be reversed.",
-        "nl": "Stel geaccumuleerde stroomverbruik (kWh) opnieuw in, dit kan niet worden teruggedraaid."
-      }
-    }
-  },
+  "icon": "{{driverAssetsPath}}/icon.svg",
   "zwave": {
     "manufacturerId": 1120,
-    "productTypeId": [2],
-    "productId": [136, 137],
+    "productTypeId": [9],
+    "productId": [129, 130],
     "associationGroups": [ 1 ],
     "learnmode": {
       "image": "./assets/zwave-learnmode.svg",

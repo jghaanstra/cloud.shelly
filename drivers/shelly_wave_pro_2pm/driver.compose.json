@@ -11,7 +11,8 @@
   "icon": "{{driverAssetsPath}}/icon.svg",
   "capabilities": [
     "onoff",
-    "button.reset_meter"
+    "button.reset_meter",
+    "deviceWave"
   ],
   "capabilitiesOptions": {
     "button.reset_meter": {

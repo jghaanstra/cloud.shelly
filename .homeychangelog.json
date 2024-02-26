@@ -772,5 +772,11 @@
   },
   "3.26.1": {
     "en": "This release contains a fix for incorrectly added meter_power capability to devices with the pm:1 component like the new PM Mini devices. It also contains a fix for external temp sensors on Shelly Uni being added to both channels and not updating correctly. And it adds total and last minute counts capabilities for pulsecounter on Shelly Plus Uni. The release also reduces the need for repairing by adding more logic to the device init process allowing to dynamically update capability options like renaming of capabilities."
+  },
+  "3.27.0": {
+    "en": "This release contains a breaking change for various deprecated device drivers with inputs. Trigger cards for the inputs for these drivers have been removed. If you still havent switched to the generic device driver and depend on these trigger card now is the time re-pair your device. It also contains a breaking change for RGBW2 Color, the light_temperature capability for setting the dim level of the white channel is replaced by a dim capability as the implementation is quite quirky and this makes more sense. You will need to fix your flows. It also adds the device specific action event card to the Shelly RGBW2 in color mode as it was missing and fixes onoff.white mode for RGBW2 on Homey Cloud. There is a fix in here for the firmware available card triggering every minute when a new firmware becomes available for Shelly Plus/Pro devices."
+  },
+  "3.27.1": {
+    "en": "This release contains a breaking change for various deprecated device drivers with inputs. Trigger cards for the inputs for these drivers have been removed. If you still havent switched to the generic device driver and depend on these trigger card now is the time re-pair your device. It also contains a breaking change for RGBW2 Color, the light_temperature capability for setting the dim level of the white channel is replaced by a dim capability as the implementation is quite quirky and this makes more sense. You will need to fix your flows. It also adds the device specific action event card to the Shelly RGBW2 in color mode as it was missing and fixes onoff.white mode for RGBW2 on Homey Cloud. There is a fix in here for the firmware available card triggering every minute when a new firmware becomes available for Shelly Plus/Pro devices."
   }
 }

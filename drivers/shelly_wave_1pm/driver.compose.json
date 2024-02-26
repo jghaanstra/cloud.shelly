@@ -14,7 +14,8 @@
     "onoff",
     "measure_power",
     "meter_power",
-    "button.reset_meter"
+    "button.reset_meter",
+    "deviceWave"
   ],
   "capabilitiesOptions": {
     "button.reset_meter": {

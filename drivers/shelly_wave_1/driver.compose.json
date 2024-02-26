@@ -10,7 +10,8 @@
   },
   "class": "socket",
   "capabilities": [
-    "onoff"
+    "onoff",
+    "deviceWave"
   ],
   "icon": "{{driverAssetsPath}}/icon.svg",
   "zwave": {
