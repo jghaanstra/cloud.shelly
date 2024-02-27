@@ -63,5 +63,6 @@
       }
     }
   ],
-  "platforms": ["local", "cloud"]
+  "platforms": ["local", "cloud"],
+  "deprecated": true
 }

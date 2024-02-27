@@ -177,7 +177,7 @@ class ShellyDevice extends Homey.Device {
         }
         case 'coap': {
           const command = value ? '/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue("channel") +'?turn=on' : '/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue("channel") +'?turn=off';
-          return await this.util.sendCommand(onoff_coap, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          return await this.util.sendCommand(command, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         }
         case 'cloud': {
           const component_cloud = this.getClass() === 'light' ? 'light' : 'relay';

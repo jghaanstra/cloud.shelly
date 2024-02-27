@@ -30,8 +30,8 @@
     }
   ],
   "hint": {
-    "en": "This parameter (2) determines the type of switch connected to input 2.",
-    "nl": "Deze parameter (2) specificeert het type schakelaar dat is aangesloten op input 2."
+    "en": "This parameter (4) determines the type of switch connected to input 4.",
+    "nl": "Deze parameter (4) specificeert het type schakelaar dat is aangesloten op input 4."
   },
   "zwave": {
     "index": 4,
