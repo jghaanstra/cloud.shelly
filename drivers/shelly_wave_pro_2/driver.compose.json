@@ -37,7 +37,8 @@
         "class": "socket",
         "icon": "{{driverAssetsPath}}/icon.svg",
         "capabilities": [
-          "onoff"
+          "onoff",
+          "deviceWave"
         ],
         "name": {
           "en": "{{driverNameEn}} - Relay 1",
@@ -49,7 +50,8 @@
         "class": "socket",
         "icon": "{{driverAssetsPath}}/icon.svg",
         "capabilities": [
-          "onoff"
+          "onoff",
+          "deviceWave"
         ],
         "name": {
           "en": "{{driverNameEn}} - Relay 2",

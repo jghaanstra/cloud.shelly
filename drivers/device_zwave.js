@@ -155,7 +155,7 @@ class ShellyZwaveDevice extends ZwaveDevice {
 
         /* set some device values */
         await this.setStoreValue('battery', device_config.battery);
-        await this.setStoreValue('type', this.node.productId.value.toString());
+        await this.setStoreValue('type', this.driver.manifest.zwave.productId[0]);
         await this.setStoreValue('main_device', this.getData().token);
 
         /* set device class if changed */

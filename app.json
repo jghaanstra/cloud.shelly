@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.27.2",
+  "version": "3.27.3",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -7936,7 +7936,8 @@
             "class": "socket",
             "icon": "/drivers/shelly_wave_pro_2/assets/icon.svg",
             "capabilities": [
-              "onoff"
+              "onoff",
+              "deviceWave"
             ],
             "name": {
               "en": "Shelly Wave Pro 2 - Relay 1",
@@ -7948,7 +7949,8 @@
             "class": "socket",
             "icon": "/drivers/shelly_wave_pro_2/assets/icon.svg",
             "capabilities": [
-              "onoff"
+              "onoff",
+              "deviceWave"
             ],
             "name": {
               "en": "Shelly Wave Pro 2 - Relay 2",
@@ -8579,7 +8581,8 @@
               "onoff",
               "measure_power",
               "meter_power",
-              "button.reset_meter"
+              "button.reset_meter",
+              "deviceWave"
             ],
             "capabilitiesOptions": {
               "button.reset_meter": {
@@ -8607,7 +8610,8 @@
               "onoff",
               "measure_power",
               "meter_power",
-              "button.reset_meter"
+              "button.reset_meter",
+              "deviceWave"
             ],
             "capabilitiesOptions": {
               "button.reset_meter": {

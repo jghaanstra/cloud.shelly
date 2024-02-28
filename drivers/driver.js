@@ -127,6 +127,11 @@ class ShellyDriver extends Homey.Driver {
               }
           }
 
+          if (typeof device_config === 'undefined') {
+            this.error('No device config found for device with hostname', hostname);
+            throw new Error(this.homey.__('pair.no_device_config') + ' Device has hostname:' + hostname);
+          }
+
           deviceArray = {
             name: device_config.name + ' ['+ discoveryResult.address +']',
             class: device_config.class,
