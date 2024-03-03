@@ -123,7 +123,7 @@ class ShellyApp extends OAuth2App {
       this.homey.flow.getTriggerCard('triggerFWUpdate');
       this.homey.flow.getTriggerCard('triggerCloudError');
       
-      // TODO: eventuele remove this triggercard
+      // TODO: eventually remove this triggercard
       const listenerCallbacks = this.homey.flow.getTriggerCard('triggerCallbacks').registerRunListener(async (args, state) => {
         try {
           if (args.action.action === undefined) {

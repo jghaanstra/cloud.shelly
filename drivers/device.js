@@ -12,7 +12,7 @@ class ShellyDevice extends Homey.Device {
       if (!this.util) this.util = new Util({homey: this.homey});
 
       // VARIABLES GENERIC
-      this.bluetoothScriptVersion = 2;
+      this.bluetoothScriptVersion = 3;
       this.pollingFailures = 0;
     
       // ADDING CAPABILITY LISTENERS
@@ -613,7 +613,7 @@ class ShellyDevice extends Homey.Device {
   /* enableBLEProxy */
   async onMaintenanceEnableBLEPRoxy() {
     try {
-      const scriptID = await this.util.enableBLEProxy(this.getStoreValue('ble_script_id'), this.getSetting('address'), this.getSetting('password'));
+      const scriptID = await this.util.enableBLEProxy(this.getSetting('address'), this.getSetting('password'));
       await this.setStoreValue('ble_script_version', this.bluetoothScriptVersion);
       return await this.setStoreValue('ble_script_id', scriptID);
     } catch (error) {
@@ -3327,20 +3327,6 @@ class ShellyDevice extends Homey.Device {
 
       /* placeholder for update for specific devices */
 
-      // TODO: remove after next release
-      if ((this.getStoreValue('type') === 'SPEM-003CEBEU' || this.getStoreValue('type') === 'SPEM-003CEBEU120' || this.getStoreValue('type') === 'SPEM-003CEBEU400') && this.getStoreValue('channel') !== 0 && this.hasCapability('measure_temperature')) {
-        this.removeCapability('measure_temperature');
-      }
-
-      // TODO: remove after next release
-      if (this.getStoreValue('type') === 'SHRGBW2' && this.getStoreValue('config').name === 'Shelly RGBW2 Color' && this.hasCapability('light_temperature')) {
-        this.removeCapability('light_temperature');
-      }
-      // TODO: remove after next release
-      if (this.getStoreValue('type') === 'SHRGBW2' && this.getStoreValue('config').name === 'Shelly RGBW2 Color' && this.hasCapability('light_mode')) {
-        this.removeCapability('light_mode');
-      }
-
       /* COAP AND WEBSOCKET */
       if (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket') {
 
@@ -3439,12 +3425,12 @@ class ShellyDevice extends Homey.Device {
         }
 
         /* update Homey BLE Proxy script, only uncomment on release when the script needs to be updated */
-        if (this.hasCapability('button.enable_ble_script') && (this.getStoreValue('ble_script_version') === null || this.getStoreValue('ble_script_version') === undefined || this.getStoreValue('ble_script_version') < this.bluetoothScriptVersion)) {
+        if (this.hasCapability('button.enable_ble_script') && ((this.getStoreValue('ble_script_version') === null || this.getStoreValue('ble_script_version') === undefined) || this.getStoreValue('ble_script_version') < this.bluetoothScriptVersion)) {
           for (const key in config) {
             if (config.hasOwnProperty(key) && key.startsWith('script:')) {
               const script = config[key];
-              if (script.name === 'Homey BLE Proxy' && script.enable) {
-                const scriptID = await this.util.enableBLEProxy(script.id, this.getSetting('address'), this.getSetting('password'));
+              if (script.name === 'Homey BLE Proxy') {
+                const scriptID = await this.util.enableBLEProxy(this.getSetting('address'), this.getSetting('password'));
                 await this.setStoreValue('ble_script_version', this.bluetoothScriptVersion);
                 await this.setStoreValue('ble_script_id', scriptID);
                 this.log('Updating Homey BLE Script to version', this.bluetoothScriptVersion ,'for', this.getData().id, 'with name', this.getName());
