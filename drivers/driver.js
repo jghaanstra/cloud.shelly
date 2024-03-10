@@ -22,6 +22,7 @@ class ShellyDriver extends Homey.Driver {
         const shellyDevices = await this.util.getShellies('collection');
         for (const shellyDevice of shellyDevices){
           delete discoveryResults[shellyDevice.main_device];
+          delete discoveryResults[shellyDevice.main_device + '.local'];
         }
 
         /* fill devices object with discovered devices */
@@ -112,6 +113,12 @@ class ShellyDriver extends Homey.Driver {
                   } else {
                     device_config = this.util.getDeviceConfig(hostname + result.profile +'-');
                   }
+
+                  if (typeof device_config === 'undefined') {
+                    this.error('No device config found for device with hostname', hostname + result.profile +'-');
+                    throw new Error(this.homey.__('pair.no_device_config') + ' Device has hostname:' + hostname + result.profile +'-');
+                  }
+
                 }
 
                 /* update device config if it's a WallDisplay in thermostat mode */
@@ -125,11 +132,6 @@ class ShellyDriver extends Homey.Driver {
               } catch (error) {
                 throw new Error(this.homey.__("pair.error") + ' Error message: '+ error.message);
               }
-          }
-
-          if (typeof device_config === 'undefined') {
-            this.error('No device config found for device with hostname', hostname);
-            throw new Error(this.homey.__('pair.no_device_config') + ' Device has hostname:' + hostname);
           }
 
           deviceArray = {

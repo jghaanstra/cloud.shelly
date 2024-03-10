@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.27.4",
+  "version": "3.27.5",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -5403,8 +5403,8 @@
     },
     {
       "name": {
-        "en": "Shelly Wave 1",
-        "nl": "Shelly Wave 1"
+        "en": "Shelly Wave 1 (Mini)",
+        "nl": "Shelly Wave 1 (Mini)"
       },
       "images": {
         "small": "./assets/drivers/shelly_wave_1/images/small.jpg",
@@ -5423,7 +5423,8 @@
           2
         ],
         "productId": [
-          131
+          131,
+          142
         ],
         "associationGroups": [
           1
@@ -5659,8 +5660,8 @@
     },
     {
       "name": {
-        "en": "Shelly Wave 1PM",
-        "nl": "Shelly Wave 1PM"
+        "en": "Shelly Wave 1PM (Mini)",
+        "nl": "Shelly Wave 1PM (Mini)"
       },
       "images": {
         "small": "./assets/drivers/shelly_wave_1pm/images/small.jpg",
@@ -7118,6 +7119,174 @@
             }
           ]
         },
+        {
+          "type": "group",
+          "label": {
+            "en": "Power Settings",
+            "nl": "Energie instellingen"
+          },
+          "children": [
+            {
+              "id": "zwavePowerReportOnChangeO1",
+              "type": "number",
+              "label": {
+                "en": "Power report on change for O1",
+                "nl": "Power report bij wijziging voor O1"
+              },
+              "value": 50,
+              "attr": {
+                "min": 0,
+                "max": 100
+              },
+              "units": {
+                "en": "%",
+                "nl": "%"
+              },
+              "hint": {
+                "en": "This parameter (36) defines the minimum change in consumed power for output 1 that will result in sending new report to Homey.",
+                "nl": "Deze parameter (36) bepaalt de minimum wijziging in stroomverbruik voor output 1 dat nodig is om een status update naar Homey te versturen."
+              },
+              "zwave": {
+                "index": 36,
+                "size": 1
+              }
+            },
+            {
+              "id": "zwaveMinimalTimePowerReportO1",
+              "type": "number",
+              "label": {
+                "en": "Minimal time between reports for O1",
+                "nl": "Minimale tijd tussen reports voor O1"
+              },
+              "value": 30,
+              "attr": {
+                "min": 10,
+                "max": 120
+              },
+              "units": {
+                "en": "s",
+                "nl": "s"
+              },
+              "hint": {
+                "en": "This parameter (39) defines the minimum time between sending reports to Homey for output 1.",
+                "nl": "Deze parameter (39) bepaalt de minimum tijd tussen status updates naar Homey voor output 1."
+              },
+              "zwave": {
+                "index": 39,
+                "size": 1
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Device Settings",
+            "nl": "Apparaat instellingen"
+          },
+          "children": [
+            {
+              "id": "zwaveResetToDefaultAndLeave",
+              "type": "dropdown",
+              "label": {
+                "en": "Reset parameters to default and leave network",
+                "nl": "Reset parameters naar fabrieksinstellingen en verlaat netwerk"
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Do Not Reset",
+                    "nl": "Niet resetten"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Reset parameters and leave network",
+                    "nl": "Reset parameters en netwerk verlaten"
+                  }
+                }
+              ],
+              "hint": {
+                "en": "This parameter (120) will reset all configuration parameters to factory default settings and device will leave the network.",
+                "nl": "Deze parameter (120) reset alle configuratie parameters naar de fabrieksinstellingen en apparaat verlaat het netwerk."
+              },
+              "zwave": {
+                "index": 120,
+                "size": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Shelly Wave PM Mini",
+        "nl": "Shelly Wave PM Mini"
+      },
+      "images": {
+        "small": "./assets/drivers/shelly_wave_pm_mini/images/small.jpg",
+        "large": "./assets/drivers/shelly_wave_pm_mini/images/large.jpg"
+      },
+      "class": "socket",
+      "icon": "/drivers/shelly_wave_pm_mini/assets/icon.svg",
+      "capabilities": [
+        "measure_power",
+        "meter_power",
+        "button.reset_meter",
+        "deviceWave"
+      ],
+      "capabilitiesOptions": {
+        "button.reset_meter": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset power meter",
+            "nl": "Stel stroomverbuik opnieuw in"
+          },
+          "desc": {
+            "en": "Reset the accumulated power usage (kWh), note that this can not be reversed.",
+            "nl": "Stel geaccumuleerde stroomverbruik (kWh) opnieuw in, dit kan niet worden teruggedraaid."
+          }
+        }
+      },
+      "zwave": {
+        "manufacturerId": 1120,
+        "productTypeId": [
+          2
+        ],
+        "productId": [
+          129
+        ],
+        "associationGroups": [
+          1
+        ],
+        "learnmode": {
+          "image": "./assets/zwave-learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking. Repeat this for step 2 in the pairing process and enter the device key (pincode).",
+            "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen. Herhaal dit voor stap 2 in het koppelingsproces en voer de apparaatsleutel (pincode) in."
+          }
+        },
+        "unlearnmode": {
+          "image": "./assets/zwave-learnmode.svg",
+          "instruction": {
+            "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking.",
+            "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen."
+          }
+        }
+      },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "zwave"
+      ],
+      "id": "shelly_wave_pm_mini",
+      "settings": [
         {
           "type": "group",
           "label": {

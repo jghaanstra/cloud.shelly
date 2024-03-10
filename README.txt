@@ -43,7 +43,7 @@ Plus
 Shelly Plus 1
 Shelly Plus 1PM
 Shelly Plus 2PM
-Shelly Plus Humidity/Temperature (Gen2/Gen3)
+Shelly Plus Humidity/Temperature
 Shelly Plus i4
 Shelly Plus i4DC
 Shelly Plus Wall Dimmer US
@@ -51,10 +51,11 @@ Shelly Plus Plug S
 Shelly Plus Smoke
 Shelly Wall Panel (as thermostat only on Homey Pro)
 Shelly Plus Uni
-Shelly Plus PM Mini (Gen2/Gen3)
-Shelly Plus 1 Mini (Gen2/Gen3)
-Shelly Plus 1PM Mini (Gen2/Gen3)
+Shelly Plus PM Mini
+Shelly Plus 1 Mini
+Shelly Plus 1PM Mini
 Shelly Plus 0-10V Dimmer
+Shelly Plus RGBW PM
 
 Pro
 -------------
@@ -70,17 +71,27 @@ Shelly Pro EM-50
 Shelly Pro Dimmer 1PM
 Shelly Pro Dimmer 2PM
 
+Gen 3
+-------------
+Shelly Plus Humidity/Temperature Gen3
+Shelly Plus PM Mini Gen3
+Shelly Plus 1 Mini Gen3
+Shelly Plus 1PM Mini Gen3
+Shelly Dimmer 0/1-10V PM
+
 Bluetooth
 -------------
 Shelly BLU Button 1
 Shelly BLU DoorWindow
 Shelly BLU Motion
 Shelly BLU Gateway (BLE to WiFi)
+Shelly BLU HT
 
 Z-Wave
 -------------
-Shelly Wave 1
-Shelly Wave 1PM
+Shelly Wave PM Mini
+Shelly Wave 1 (Mini)
+Shelly Wave 1PM (Mini)
 Shelly Wave 2PM
 Shelly Wave Shutter
 Shelly Wave Plug UK/US

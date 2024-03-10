@@ -787,5 +787,8 @@
   },
   "3.27.4": {
     "en": "Fix for the BLE Proxy script not being set to auto start after adding it from a Plus/Pro device."
+  },
+  "3.27.5": {
+    "en": "This release changed the behaviour of the windowcoverings_state for Plus/Pro devices where opened or closed is now set as idle. This better matches the way it works for gen1 devices. It also fixes an issue with external humidity sensors on Plus/Pro devices for Homey Cloud, an issue for not being able to add a Shelly Pro 3EM and an issue where devices that have been paired long ago show up in the discovery wizard even though already paired due to changes in Shelly firmware with mDNS discovery."
   }
 }

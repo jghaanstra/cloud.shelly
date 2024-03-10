@@ -1,0 +1,32 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Power Settings",
+      "nl": "Energie instellingen"
+    },
+    "children": [
+      {
+        "id": "zwavePowerReportOnChangeO1",
+        "$extends": "zwavePowerReportOnChangeO1"
+      },
+      {
+        "id": "zwaveMinimalTimePowerReportO1",
+        "$extends": "zwaveMinimalTimePowerReportO1"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Device Settings",
+      "nl": "Apparaat instellingen"
+    },
+    "children": [
+      {
+        "id": "zwaveResetToDefaultAndLeave",
+        "$extends": "zwaveResetToDefaultAndLeave"
+      }
+    ]
+  }
+]

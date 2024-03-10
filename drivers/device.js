@@ -503,6 +503,8 @@ class ShellyDevice extends Homey.Device {
           if (this.getStoreValue('config').name === 'Shelly Bulb' || this.getStoreValue('config').name === 'Shelly Bulb RGBW') {
             const light_mode = value === 'temperature' ? 'white' : 'color';
             return await this.util.sendCommand('/settings/?mode='+ light_mode +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+          } else {
+            return;
           }
         }
         case 'cloud': {
@@ -1616,7 +1618,7 @@ class ShellyDevice extends Homey.Device {
 
       }
 
-      // PRO EM instantaneous power readings
+      // EM:0 MEASURE POWER (single channel instantaneous power readings like Pro 3EM in triphase mode)
       if (result.hasOwnProperty("em:0")) {
 
         if (this.getStoreValue('channel') === 0) {
@@ -1642,6 +1644,9 @@ class ShellyDevice extends Homey.Device {
           /* measure_voltage */
           this.updateCapabilityValue('measure_voltage', result["em:0"].a_voltage, 0);
 
+          /* measure_power_apparent */
+          this.parseCapabilityUpdate('measure_power_apparent', result["em:0"].a_aprt_power, 0);
+
         } else if (this.getStoreValue('channel') === 1) {
 
           /* measure_power */
@@ -1655,6 +1660,9 @@ class ShellyDevice extends Homey.Device {
 
           /* measure_voltage */
           this.updateCapabilityValue('measure_voltage', result["em:0"].b_voltage, 1);
+
+          /* measure_power_apparent */
+          this.parseCapabilityUpdate('measure_power_apparent', result["em:0"].b_aprt_power, 1);
 
         } else if (this.getStoreValue('channel') === 2) {
 
@@ -1670,11 +1678,14 @@ class ShellyDevice extends Homey.Device {
           /* measure_voltage */
           this.updateCapabilityValue('measure_voltage', result["em:0"].c_voltage, 2);
 
+          /* measure_power_apparent */
+          this.parseCapabilityUpdate('measure_power_apparent', result["em:0"].c_aprt_power, 2);
+
         }
 
       }
 
-      // PRO EMDATA total energy readings
+      // EMDATA:0 METER POWER (single channel energy readings like Pro 3EM in triphase mode)
       if (result.hasOwnProperty("emdata:0")) {
 
         if (this.getStoreValue('channel') === 0) {
@@ -1731,7 +1742,7 @@ class ShellyDevice extends Homey.Device {
 
       }
 
-      // PRO instantaneous power readings EM1
+      // EM1:x MEASURE POWER (multi channel instantaneous power readings like Pro 3EM in monophase mode)
       if (result.hasOwnProperty("em1:"+ channel)) {
 
         /* measure_power */
@@ -1751,7 +1762,7 @@ class ShellyDevice extends Homey.Device {
 
       }
 
-      // PRO total energy readings EMDATA1
+      // EMDATA1:x METER POWER (multi channel instantaneous power readings like Pro 3EM in monophase mode)
       if (result.hasOwnProperty("emdata1:"+ channel)) {
 
         /* meter_power */
@@ -1986,9 +1997,9 @@ class ShellyDevice extends Homey.Device {
       /* add-on humidity 1 */
       if (result.hasOwnProperty("humidity:100") && channel === 0) {
         if (this.hasCapability('measure_humidity.1')) {
-          if (this.getCapabilityValue('measure_humidity.1') !== result["temperature:100"].tC) {
+          if (this.getCapabilityValue('measure_humidity.1') !== result["humidity:100"].tC) {
             this.updateCapabilityValue('measure_humidity.1', result["humidity:100"].rh, channel);
-            this.homey.flow.getDeviceTriggerCard('triggerHumidity1').trigger(this, {'humidity': result["temperature:100"].rh}, {}).catch(error => { this.error(error) });
+            this.homey.flow.getDeviceTriggerCard('triggerHumidity1').trigger(this, {'humidity': result["humidity:100"].rh}, {}).catch(error => { this.error(error) });
           }
         } else {
           this.addCapability('measure_humidity.1');
@@ -1998,9 +2009,9 @@ class ShellyDevice extends Homey.Device {
       /* add-on humidity 2 */
       if (result.hasOwnProperty("humidity:101") && channel === 0) {
         if (this.hasCapability('measure_humidity.2')) {
-          if (this.getCapabilityValue('measure_humidity.2') !== result["temperature:101"].tC) {
+          if (this.getCapabilityValue('measure_humidity.2') !== result["humidity:101"].tC) {
             this.updateCapabilityValue('measure_humidity.2', result["humidity:101"].rh, channel);
-            this.homey.flow.getDeviceTriggerCard('triggerHumidity2').trigger(this, {'humidity': result["temperature:101"].rh}, {}).catch(error => { this.error(error) });
+            this.homey.flow.getDeviceTriggerCard('triggerHumidity2').trigger(this, {'humidity': result["humidity:101"].rh}, {}).catch(error => { this.error(error) });
           }
         } else {
           this.addCapability('measure_humidity.2');
@@ -2010,9 +2021,9 @@ class ShellyDevice extends Homey.Device {
       /* add-on humidity 3 */
       if (result.hasOwnProperty("humidity:102") && channel === 0) {
         if (this.hasCapability('measure_humidity.3')) {
-          if (this.getCapabilityValue('measure_humidity.3') !== result["temperature:102"].tC) {
+          if (this.getCapabilityValue('measure_humidity.3') !== result["humidity:102"].tC) {
             this.updateCapabilityValue('measure_humidity.3', result["humidity:102"].rh, channel);
-            this.homey.flow.getDeviceTriggerCard('triggerHumidity3').trigger(this, {'humidity': result["temperature:102"].rh}, {}).catch(error => { this.error(error) });
+            this.homey.flow.getDeviceTriggerCard('triggerHumidity3').trigger(this, {'humidity': result["humidity:102"].rh}, {}).catch(error => { this.error(error) });
           }
         } else {
           this.addCapability('measure_humidity.3');
@@ -2022,9 +2033,9 @@ class ShellyDevice extends Homey.Device {
       /* add-on humidity 4 */
       if (result.hasOwnProperty("humidity:103") && channel === 0) {
         if (this.hasCapability('measure_humidity.4')) {
-          if (this.getCapabilityValue('measure_humidity.4') !== result["temperature:103"].tC) {
+          if (this.getCapabilityValue('measure_humidity.4') !== result["humidity:103"].tC) {
             this.updateCapabilityValue('measure_humidity.4', result["humidity:103"].rh, channel);
-            this.homey.flow.getDeviceTriggerCard('triggerHumidity4').trigger(this, {'humidity': result["temperature:103"].rh}, {}).catch(error => { this.error(error) });
+            this.homey.flow.getDeviceTriggerCard('triggerHumidity4').trigger(this, {'humidity': result["humidity:103"].rh}, {}).catch(error => { this.error(error) });
           }
         } else {
           this.addCapability('measure_humidity.4');
@@ -2034,9 +2045,9 @@ class ShellyDevice extends Homey.Device {
       /* add-on humidity 5 */
       if (result.hasOwnProperty("humidity:104") && channel === 0) {
         if (this.hasCapability('measure_humidity.5')) {
-          if (this.getCapabilityValue('measure_humidity.5') !== result["temperature:104"].tC) {
+          if (this.getCapabilityValue('measure_humidity.5') !== result["humidity:104"].tC) {
             this.updateCapabilityValue('measure_humidity.5', result["humidity:104"].rh, channel);
-            this.homey.flow.getDeviceTriggerCard('triggerHumidity4').trigger(this, {'humidity': result["temperature:104"].rh}, {}).catch(error => { this.error(error) });
+            this.homey.flow.getDeviceTriggerCard('triggerHumidity4').trigger(this, {'humidity': result["humidity:104"].rh}, {}).catch(error => { this.error(error) });
           }
         } else {
           this.addCapability('measure_humidity.5');
@@ -3291,6 +3302,39 @@ class ShellyDevice extends Homey.Device {
   async rollerState(value) {
     try {
       var windowcoverings_state = this.getCapabilityValue('windowcoverings_state');
+
+      if (this.getStoreValue('gen') === 'gen1') {
+        switch(value) {
+          case 'stop':
+            windowcoverings_state = 'idle'
+            break;
+          case 'open':
+            windowcoverings_state = 'up';
+            break;
+          case 'close':
+            windowcoverings_state = 'down';
+            break;
+          default:
+            break;
+        }
+      } else if (this.getStoreValue('gen') === 'gen2' || this.getStoreValue('gen') === 'gen3') {
+        switch(value) {
+          case 'open':
+          case 'closed':
+          case 'stopped':
+            windowcoverings_state = 'idle'
+            break;
+          case 'opening':
+            windowcoverings_state = 'up';
+            break;          
+          case 'closing':
+            windowcoverings_state = 'down';
+            break;
+          default:
+            break;
+        }
+      }
+
       switch(value) {
         case 'stop':
         case 'stopped':

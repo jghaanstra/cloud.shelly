@@ -1,7 +1,7 @@
 {
   "name": {
-    "en": "Shelly Wave 1PM",
-    "nl": "Shelly Wave 1PM"
+    "en": "Shelly Wave 1PM (Mini)",
+    "nl": "Shelly Wave 1PM (Mini)"
   },
   "images": {
     "small": "./assets/drivers/shelly_wave_1pm/images/small.jpg",

@@ -1,23 +1,37 @@
 {
   "name": {
-    "en": "Shelly Wave 1 (Mini)",
-    "nl": "Shelly Wave 1 (Mini)"
+    "en": "Shelly Wave PM Mini",
+    "nl": "Shelly Wave PM Mini"
   },
   "images": {
-    "small": "./assets/drivers/shelly_wave_1/images/small.jpg",
-    "large": "./assets/drivers/shelly_wave_1/images/large.jpg",
-    "xlarge": "./assets/drivers/shelly_wave_1/images/xlarge.jpg"
+    "small": "./assets/drivers/shelly_wave_pm_mini/images/small.jpg",
+    "large": "./assets/drivers/shelly_wave_pm_mini/images/large.jpg"
   },
   "class": "socket",
+  "icon": "{{driverAssetsPath}}/icon.svg",
   "capabilities": [
-    "onoff",
+    "measure_power",
+    "meter_power",
+    "button.reset_meter",
     "deviceWave"
   ],
-  "icon": "{{driverAssetsPath}}/icon.svg",
+  "capabilitiesOptions": {
+    "button.reset_meter": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Reset power meter",
+        "nl": "Stel stroomverbuik opnieuw in"
+      },
+      "desc": {
+        "en": "Reset the accumulated power usage (kWh), note that this can not be reversed.",
+        "nl": "Stel geaccumuleerde stroomverbruik (kWh) opnieuw in, dit kan niet worden teruggedraaid."
+      }
+    }
+  },
   "zwave": {
     "manufacturerId": 1120,
     "productTypeId": [2],
-    "productId": [131, 142],
+    "productId": [129],
     "associationGroups": [ 1 ],
     "learnmode": {
       "image": "./assets/zwave-learnmode.svg",
