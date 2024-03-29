@@ -33,7 +33,7 @@
   "zwave": {
     "manufacturerId": 1120,
     "productTypeId": [2],
-    "productId": [132],
+    "productId": [132, 143],
     "associationGroups": [ 1 ],
     "learnmode": {
       "image": "./assets/zwave-learnmode.svg",

@@ -1,6 +1,6 @@
 {
   "pair": {
-    "title": "Shelly Gerät hinzufügen",
+    "title": "Shelly hinzufügen",
     "nosettings": "Bitte füllen Sie alle erforderlichen Felder aus.",
     "intro": "Geben Sie die IP-Adresse und, falls konfiguriert, Ihren Benutzernamen und Ihr Passwort für Ihr Shelly Gerät ein.",
     "intro-relay": "Binden Sie Ihr Shelly2(.5) Gerät als Gerät mit zwei Relaisschaltern an (dies kann in der Shelly Smartphone-App konfiguriert werden). Geben Sie die IP-Adresse und, falls konfiguriert, Ihren Benutzernamen und Ihr Passwort für Ihr Shelly 2 Gerät ein.",
@@ -28,7 +28,7 @@
     "title_icon_select": "Wähle ein Icon",
     "intro_upload": "Wenn Sie ein benutzerdefiniertes Icon für Ihr Gerät verwenden möchten, können Sie es hier hochladen. Das Icon muss im .svg-Format vorliegen.",
     "default_icon": "Standardicon verwenden",
-    "save": "Speichern",
+    "save": "Speichern icon",
     "intro_vintage_icon": "Wählen Sie das Symbol aus, das Sie für Ihre Shelly Vintage verwenden möchten.",
     "error": "Beim Versuch, das Gerät hinzuzufügen, ist ein Fehler aufgetreten. Dies geschieht normalerweise, wenn das Gerät nicht auf der neuesten Firmware ist, ein batteriebetriebenes Gerät während des Pairings nicht aktiv bleibt oder es Netzwerkprobleme gibt. Sehen Sie die Anweisungen im Support-Thema im Community-Forum."
   },
@@ -51,7 +51,8 @@
     "overtemp": "Fehler: Gerätentemperatur zu hoch.",
     "overcurrent": "Fehler: Überstrom.",
     "maximum_dim_duration": "Shelly-Geräte haben eine maximale Dimm-Dauer von 5 Sekunden",
-    "oauth2_repairing": "Aufgrund von Änderungen bei den Kommunikations-Cloud muss das Gerät neu authentifiziert werden, verwenden Sie hierfür das Neu-Kopplungs-Feature aus den Wartungseinstellungen in Homey."
+    "oauth2_repairing": "Aufgrund von Änderungen bei den Kommunikations-Cloud muss das Gerät neu authentifiziert werden, verwenden Sie hierfür das Neu-Kopplungs-Feature aus den Wartungseinstellungen in Homey.",
+    "deprecated": "**Warnung:** __name__ verwendet einen Treiber, der seit fast 2 Jahren veraltet ist. Dieser Treiber wird mit dem nächsten App-Update entfernt. Koppeln Sie Ihr Gerät erneut, um Probleme zu vermeiden."
   },
   "driver": {
     "wrongdevice": "Das Shelly-Gerät, mit dem Sie versuchen zu koppeln, entspricht nicht dem ausgewählten Shelly-Gerät im Kopplungs-Assistenten."

@@ -1,6 +1,6 @@
 {
   "pair": {
-    "title": "Shelly apparaat toevoegen",
+    "title": "Shelly toevoegen",
     "nosettings": "Vul a.u.b. alle verplichte velden in.",
     "intro": "Voer het IP adres en eventuele gebruikersnaam en wachtwoord van je Shelly apparaat in.",
     "intro-relay": "Koppel je Shelly 2(.5) device als een device met twee relay knoppen (dit kan worden ingesteld in de Shelly smartphone app). Voer het IP adres en eventuele gebruikersnaam en wachtwoord van je Shelly2 apparaat in.",
@@ -28,7 +28,7 @@
     "title_icon_select": "Selecteer icoon",
     "intro_upload": "Als je een eigen icoon voor je apparaat wilt gebruiken kan je deze hier uploaden. Het icoon moet in .svg format zijn.",
     "default_icon": "Gebruik standaard",
-    "save": "Opslaan",
+    "save": "Opslaan icon",
     "intro_vintage_icon": "Selecteer welk icoon die je wilt gebruiken voor je Shelly Vintage.",
     "error": "Er is een fout opgetreden tijdens het toevoegen. Dit gebeurt veelal als het apparaat niet de laatste firmware bevat, als een batterij gevoed apparaat niet wakker worden gehouden tijdens het pairen of als er netwerk problemen zijn. Bekijk de instructies in het support topic op het community forum."
   },
@@ -51,7 +51,8 @@
     "overtemp": "Error: apparaat temperatuur te hoog.",
     "overcurrent": "Error: overcurrent.",
     "maximum_dim_duration": "Shelly apparaten hebben een maximum van 5 seconden dim tijd",
-    "oauth2_repairing": "Apparaat moet opnieuw geauthenticeerd worden vanwege wijzigingen in de cloud communicatie, gebruik de re-pair optie onder de apparaat onderhoud instellingen in Homey."
+    "oauth2_repairing": "Apparaat moet opnieuw geauthenticeerd worden vanwege wijzigingen in de cloud communicatie, gebruik de re-pair optie onder de apparaat onderhoud instellingen in Homey.",
+    "deprecated": "**Waarschuwing:** __name__ maakt gebruik van een driver die al bijna 2 jaar verouderd is. Deze driver wordt verwijderd bij de volgende app-update. Koppel uw apparaat opnieuw om problemen te voorkomen."
   },
   "driver": {
     "wrongdevice": "Het Shelly apparaat dat je probeert te koppelen komt niet overeen met het gekozen Shelly apparaat in het apparaten toevoegscherm."

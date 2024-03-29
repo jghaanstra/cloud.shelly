@@ -1,6 +1,6 @@
 {
   "pair": {
-    "title": "Add Shelly device",
+    "title": "Add Shelly",
     "nosettings": "Please fill in all the required fields.",
     "intro": "Enter the IP address and, if configured, your username and password for your Shelly device.",
     "intro-relay": "Pair your Shelly2(.5) device as a device with two relay buttons (this can be configured in the Shelly smartphone app). Enter the IP address and, if configured, your username and password for your Shelly 2 device.",
@@ -28,7 +28,7 @@
     "title_icon_select": "Select icon",
     "intro_upload": "If you wish to use a custom icon for your device you can upload it here. The icon needs to be in .svg format.",
     "default_icon": "Use default",
-    "save": "Save",
+    "save": "Save icon",
     "intro_vintage_icon": "Select which icon you want to use for your Shelly Vintage.",
     "error": "An error occured when trying to add the device. This usually happens when the device is not on the latest firmware, a battery powered device is not kept awake during pairing or there are networking issues. See the instructions in the support topic on the community forum."
   },
@@ -51,7 +51,8 @@
     "overtemp": "Error: device temperature to high.",
     "overcurrent": "Error: overcurrent.",
     "maximum_dim_duration": "Shelly devices have a maximum of 5 seconds dim duration",
-    "oauth2_repairing": "Device needs to be re-authenticated due to cloud communication changes, use the re-pair from the device maintenance settings in Homey to re-authenticate."
+    "oauth2_repairing": "Device needs to be re-authenticated due to cloud communication changes, use the re-pair from the device maintenance settings in Homey to re-authenticate.",
+    "deprecated": "**Alert:** __name__ is using a driver that is deprecated for almost 2 years. This driver will be removed with the next app update. Re-pair your device to avoid issues."
   },
   "driver": {
     "wrongdevice": "The Shelly device you are trying to pair does not match with the selected Shelly device in the pairing wizard."

@@ -6,7 +6,7 @@ const { URLSearchParams } = require('url');
 const { EventEmitter } = require('events');
 const querystring = require('querystring');
 
-const fetch = require('node-fetch');
+const fetch = require('./OAuth2Fetch');
 
 const OAuth2Error = require('./OAuth2Error');
 const OAuth2Token = require('./OAuth2Token');

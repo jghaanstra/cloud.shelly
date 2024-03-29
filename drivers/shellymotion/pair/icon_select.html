@@ -13,7 +13,8 @@
   		preview.src = imgBase64;
   		if (imgBase64.length > 1048000) return Homey.alert('Image size is too large', 'error');
       $("#preview-outerframe").show();
-      $('#save-icon').prop('disabled', false);
+      $('#default-icon').addClass('is-disabled');
+      $('#save-icon').removeClass('is-disabled');
   		return;
   	};
   }
@@ -34,22 +35,27 @@
   });
 
 </script>
+
 <style type="text/css">
-  .form-group {
-    width: 100%;
-    display: block;
-    margin-bottom: 12px;
+  .logo {
+    display: block; 
+    width: 50vw;
+    height: 50vw;
+    margin: 1em auto;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
   }
   #preview-outerframe {
     display: none;
     width: 100%;
     margin-top: 20px;
     text-align: center;
-    margin: 0 auto;
+    margin: 1em auto 0;
   }
   #preview-innerframe {
-    width: 200px;
-    height: 200px;
+    width: 140px;
+    height: 140px;
     border: 2px solid #333;
     border-radius: 20px;
     text-align: center;
@@ -57,36 +63,39 @@
   }
   #preview-innerframe img {
     width: 100%;
-    max-width: 160px;
+    max-width: 100px;
     height: auto;
     padding: 20px;
   }
-  .buttons {
+  #buttons {
     position: absolute;
-    width: 90%;
+    width: calc(100% - var(--homey-su-2));
     bottom: 0;
-    right: 10px;
-    text-align: right;
+    margin-top: 1em;
+    padding: 20px 0;
   }
-  .button:disabled {
-    color: #ccc;
-  }
-  .button:enabled {
-    background-color: #00c139 !important;
-    color: #fff;
+  #buttons button {
+    width: calc(50% - 4px);
   }
 </style>
 
-<p data-i18n="pair.intro_upload">If you wish to use a custom icon for your device you can upload it here. The icon needs to be in .svg format.</p>
-<div class="form-group">
-	<input id="icon" type="file" accept=".svg" name="image" onchange="loadIcon(event)">
-</div>
-<div id="preview-outerframe">
-  <div id="preview-innerframe">
-    <img id="preview" />
-  </div>
-</div>
-<div class="form-group buttons">
-  <button id="default-icon" class="button" data-i18n="pair.default_icon">Use default icon</button>
-  <button id="save-icon" class="button" data-i18n="pair.save" disabled>Save</button>
-</div>
+<main class="homey-main">
+  <div class="logo" style="background-image: url('../../../assets/shelly-logo.png');"></div>
+  <div class="description" data-i18n="pair.intro_upload"></div>
+  <form class="homey-form">
+    <div class="homey-form-group">
+      <input id="icon" class="homey-form-input" type="file" accept=".svg" name="image" onchange="loadIcon(event)">
+    </div>
+    <div id="preview-group" class="homey-form-group">
+      <div id="preview-outerframe">
+        <div id="preview-innerframe">
+          <img id="preview" />
+        </div>
+      </div>
+    </div>
+    <div id="buttons" class="homey-form-group">
+      <button id="default-icon" class="homey-button-primary" data-i18n="pair.default_icon"></button>
+      <button id="save-icon" class="homey-button-primary is-disabled" data-i18n="pair.save"></button>
+    </div>
+  </form>
+</main>
