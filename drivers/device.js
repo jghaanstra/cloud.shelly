@@ -141,26 +141,40 @@ class ShellyDevice extends Homey.Device {
       if (this.driver.manifest.id !== 'shelly') {
         const notification = this.homey.__("device.deprecated", {name: this.getName()});
         this.homey.notifications.createNotification({"excerpt": notification}).catch(error => { this.error(error) });
+
+        try {
+          if (!this.getStoreValue('battery') && (this.getStoreValue('gen') === 'gen1' ||this.getStoreValue('gen') === null || this.getStoreValue('gen') === undefined)) {
+            const settings = await this.util.sendCommand('/settings', address, username, password);
+            if (settings.hasOwnProperty("coiot")) {
+              if (settings.coiot.enable) {
+                const result = await this.util.sendCommand('/settings?coiot_enable=false', address, username, password);
+              }
+            }
+          }
+        } catch (error) {
+          this.error(error);
+        }
+        
       }
 
       // coap + websocket: start polling mains powered devices on regular interval
-      if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket')) {
+      if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket') && this.driver.manifest.id === 'shelly') { // TODO: remove driver check on the next major release
         this.pollingInterval = this.homey.setInterval(() => {
           this.pollDevice();
         }, (60000 + this.util.getRandomTimeout(20)));
       }
 
       // validate communication configuration
-      if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && this.getStoreValue('communication') === 'coap') {
+      if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && this.getStoreValue('communication') === 'coap' && this.driver.manifest.id === 'shelly') { // TODO: remove driver check on the next major release
         const homey_ip = await this.homey.cloud.getLocalAddress();
-        if (this.getStoreValue('device_settings').hasOwnProperty('coiot')) {
+        if (this.getStoreValue('device_settings').hasOwnProperty("coiot")) {
           if (this.getStoreValue('device_settings').coiot.enabled === false || (this.getStoreValue('device_settings').coiot.enabled === true && !this.getStoreValue('device_settings').coiot.peer.includes(homey_ip.substring(0, homey_ip.length-3)) && this.getStoreValue('device_settings').coiot.peer !== "")) {
             await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
           }
         }
       } else if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && this.getStoreValue('communication') === 'websocket') {
         const homey_ip = await this.homey.cloud.getLocalAddress();
-        if (this.getStoreValue('device_settings').hasOwnProperty('ws')) {
+        if (this.getStoreValue('device_settings').hasOwnProperty("ws")) {
           if (this.getStoreValue('device_settings').ws.enable === false || !this.getStoreValue('device_settings').ws.server.includes(homey_ip.substring(0, homey_ip.length-3))) {
             await this.util.setWsServer(this.getSetting('address'), this.getSetting('password'));
           }
@@ -179,10 +193,10 @@ class ShellyDevice extends Homey.Device {
     try {
       switch(this.getStoreValue('communication')) {
         case 'websocket': {
-          return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Set?id='+ this.getStoreValue("channel") +'&on='+ value, this.getSetting('address'), this.getSetting('password'));
+          return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Set?id='+ this.getStoreValue('channel') +'&on='+ value, this.getSetting('address'), this.getSetting('password'));
         }
         case 'coap': {
-          const command = value ? '/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue("channel") +'?turn=on' : '/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue("channel") +'?turn=off';
+          const command = value ? '/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue('channel') +'?turn=on' : '/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue('channel') +'?turn=off';
           return await this.util.sendCommand(command, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         }
         case 'cloud': {
@@ -248,10 +262,10 @@ class ShellyDevice extends Homey.Device {
     try {
       switch(this.getStoreValue('communication')) {
         case 'websocket': {
-          return await this.util.sendRPCCommand('/rpc/Light.Set?id='+ this.getStoreValue("channel") +'&on='+ value, this.getSetting('address'), this.getSetting('password'));
+          return await this.util.sendRPCCommand('/rpc/Light.Set?id='+ this.getStoreValue('channel') +'&on='+ value, this.getSetting('address'), this.getSetting('password'));
         }
         case 'coap': {
-          const path = value ? '/light/'+ this.getStoreValue("channel") +'?turn=on' : '/light/'+ this.getStoreValue("channel") +'?turn=off';
+          const path = value ? '/light/'+ this.getStoreValue('channel') +'?turn=on' : '/light/'+ this.getStoreValue('channel') +'?turn=off';
           return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         }
         case 'cloud': {
@@ -276,11 +290,11 @@ class ShellyDevice extends Homey.Device {
         case 'websocket': {
           switch (value) {
             case 'idle':
-              return await this.util.sendRPCCommand('/rpc/Cover.Stop?id='+ this.getStoreValue("channel"), this.getSetting('address'), this.getSetting('password'));
+              return await this.util.sendRPCCommand('/rpc/Cover.Stop?id='+ this.getStoreValue('channel'), this.getSetting('address'), this.getSetting('password'));
             case 'up':
-              return await this.util.sendRPCCommand('/rpc/Cover.Open?id='+ this.getStoreValue("channel"), this.getSetting('address'), this.getSetting('password'));
+              return await this.util.sendRPCCommand('/rpc/Cover.Open?id='+ this.getStoreValue('channel'), this.getSetting('address'), this.getSetting('password'));
             case 'down':
-              return await this.util.sendRPCCommand('/rpc/Cover.Close?id='+ this.getStoreValue("channel"), this.getSetting('address'), this.getSetting('password'));
+              return await this.util.sendRPCCommand('/rpc/Cover.Close?id='+ this.getStoreValue('channel'), this.getSetting('address'), this.getSetting('password'));
             default:
               return Promise.reject('State not recognized ...');
           }
@@ -323,7 +337,7 @@ class ShellyDevice extends Homey.Device {
       await this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
       switch(this.getStoreValue('communication')) {
         case 'websocket': {
-          return await this.util.sendRPCCommand('/rpc/Cover.GoToPosition?id='+ this.getStoreValue("channel") +'&pos='+ Math.round(value*100), this.getSetting('address'), this.getSetting('password'));
+          return await this.util.sendRPCCommand('/rpc/Cover.GoToPosition?id='+ this.getStoreValue('channel') +'&pos='+ Math.round(value*100), this.getSetting('address'), this.getSetting('password'));
         }
         case 'coap': {
           return await this.util.sendCommand('/roller/0?go=to_pos&roller_pos='+ Math.round(value*100), this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
@@ -360,7 +374,7 @@ class ShellyDevice extends Homey.Device {
           case 'websocket': {
             const onoff_websocket = value === 0 ? false : true;
             const dim_websocket = value === 0 ? 1 : value * 100;
-            return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Set?id='+ this.getStoreValue("channel") +'&on='+ onoff_websocket +'&'+ this.getStoreValue('config').extra.dim +'='+ dim_websocket +'&transition_duration='+ opts.duration / 1000, this.getSetting('address'), this.getSetting('password'));
+            return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Set?id='+ this.getStoreValue('channel') +'&on='+ onoff_websocket +'&'+ this.getStoreValue('config').extra.dim +'='+ dim_websocket +'&transition_duration='+ opts.duration / 1000, this.getSetting('address'), this.getSetting('password'));
           }
           case 'coap': {
             const dim_coap = value === 0 ? 1 : value * 100;
@@ -373,9 +387,9 @@ class ShellyDevice extends Homey.Device {
           }
           case 'cloud': {
             if (!this.getCapabilityValue('onoff') && value !== 0) {
-              this.updateCapabilityValue('onoff', true, this.getStoreValue("channel"));
+              this.updateCapabilityValue('onoff', true, this.getStoreValue('channel'));
             } else if (this.getCapabilityValue('onoff') && value === 0) {
-              this.updateCapabilityValue('onoff', false, this.getStoreValue("channel"));
+              this.updateCapabilityValue('onoff', false, this.getStoreValue('channel'));
             }
             const dim_cloud = value === 0 ? 1 : value * 100;
             return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: dim_component, command_value: dim_cloud, deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
@@ -409,7 +423,7 @@ class ShellyDevice extends Homey.Device {
 
         switch(this.getStoreValue('communication')) {
           case 'websocket': {
-            return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Set?id='+ this.getStoreValue("channel") +'&white='+ white +'&transition_duration='+ opts.duration / 1000, this.getSetting('address'), this.getSetting('password'));
+            return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Set?id='+ this.getStoreValue('channel') +'&white='+ white +'&transition_duration='+ opts.duration / 1000, this.getSetting('address'), this.getSetting('password'));
           }
           case 'coap': {
             return await this.util.sendCommand('/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue('channel') +'?white='+ white, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
@@ -470,7 +484,7 @@ class ShellyDevice extends Homey.Device {
       switch(this.getStoreValue('communication')) {
         case 'websocket': {
           const rgb_values = color.toRgb();
-          return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Set?id='+ this.getStoreValue("channel") +'&rgb=['+ Number(rgb_values.r) +','+ Number(rgb_values.g) +','+ Number(rgb_values.b) +']', this.getSetting('address'), this.getSetting('password'));
+          return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Set?id='+ this.getStoreValue('channel') +'&rgb=['+ Number(rgb_values.r) +','+ Number(rgb_values.g) +','+ Number(rgb_values.b) +']', this.getSetting('address'), this.getSetting('password'));
         }
         case 'coap': {
           if (this.hasCapability('light_mode')) {
@@ -484,7 +498,7 @@ class ShellyDevice extends Homey.Device {
         case 'cloud': {
           if (this.hasCapability('light_mode')) {
             if (this.getCapabilityValue('light_mode') !== 'color') {
-              await this.updateCapabilityValue('light_mode', 'color', this.getStoreValue("channel"));
+              await this.updateCapabilityValue('light_mode', 'color', this.getStoreValue('channel'));
             }
           }
           const rgb_values = color.toRgb();
@@ -530,7 +544,7 @@ class ShellyDevice extends Homey.Device {
       switch(this.getStoreValue('communication')) {
         case 'websocket': {
           const white = value ? 255 : 0;
-          return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Set?id='+ this.getStoreValue("channel") +'&white='+ white, this.getSetting('address'), this.getSetting('password'));
+          return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Set?id='+ this.getStoreValue('channel') +'&white='+ white, this.getSetting('address'), this.getSetting('password'));
         }
         case 'coap': {
           const white = value ? 255 : 0;
@@ -600,7 +614,7 @@ class ShellyDevice extends Homey.Device {
     try {
       switch(this.getStoreValue('communication')) {
         case 'websocket':{
-          return await this.util.sendRPCCommand('/rpc/Thermostat.Set?id='+ this.getStoreValue("channel") +'&target_C='+ value, this.getSetting('address'), this.getSetting('password'));
+          return await this.util.sendRPCCommand('/rpc/Thermostat.Set?id='+ this.getStoreValue('channel') +'&target_C='+ value, this.getSetting('address'), this.getSetting('password'));
         }
         case 'coap': {
           return await this.util.sendCommand('/thermostat/0?target_t_enabled=true&target_t='+ value, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
@@ -3477,12 +3491,6 @@ class ShellyDevice extends Homey.Device {
     try {
 
       /* placeholder for update for specific devices */
-
-      // TODO: remove after the next release
-      if (this.getStoreValue('config').hostname[0] === 'shellyrgbw2-white-') {
-        this.removeCapability('light_hue');
-        this.removeCapability('light_saturation');
-      }
 
       if (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket') { /* COAP AND WEBSOCKET */
 

@@ -52,7 +52,7 @@
     "overcurrent": "Error: overcurrent.",
     "maximum_dim_duration": "Shelly devices have a maximum of 5 seconds dim duration",
     "oauth2_repairing": "Device needs to be re-authenticated due to cloud communication changes, use the re-pair from the device maintenance settings in Homey to re-authenticate.",
-    "deprecated": "**Alert:** __name__ is using a driver that is deprecated for almost 2 years. This driver will be removed with the next app update. Re-pair your device to avoid issues."
+    "deprecated": "**Alert:** __name__ is using a driver that is deprecated for almost 2 years. This driver will be removed with the next app update. Re-pair your device to avoid issues. Status updates have been disabled for the device now."
   },
   "driver": {
     "wrongdevice": "The Shelly device you are trying to pair does not match with the selected Shelly device in the pairing wizard."

@@ -799,5 +799,8 @@
   },
   "3.28.2": {
     "en": "Upcoming breaking change: the next major release will remove all drivers that have been deprecated for almost two years. Devices still using these drivers (these show a notification under the device) need to be re-paired. Your timeline will now also show the Shelly devices still using a deprecated driver. This release fixes the inputs on the Shelly Wave i4 (requires firmware 11.x)."
+  },
+  "3.29.0": {
+    "en": "Breaking change: this release disables status updates for devices that are still using drivers that have been deprecated for almost two years. Disabling status updates is the first step in completely removing these drivers from the app. If you have ignored all previous warnings your timeline will show the Shelly devices which are affected and need to be re-paired asap."
   }
 }

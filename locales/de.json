@@ -52,7 +52,7 @@
     "overcurrent": "Fehler: Überstrom.",
     "maximum_dim_duration": "Shelly-Geräte haben eine maximale Dimm-Dauer von 5 Sekunden",
     "oauth2_repairing": "Aufgrund von Änderungen bei den Kommunikations-Cloud muss das Gerät neu authentifiziert werden, verwenden Sie hierfür das Neu-Kopplungs-Feature aus den Wartungseinstellungen in Homey.",
-    "deprecated": "**Warnung:** __name__ verwendet einen Treiber, der seit fast 2 Jahren veraltet ist. Dieser Treiber wird mit dem nächsten App-Update entfernt. Koppeln Sie Ihr Gerät erneut, um Probleme zu vermeiden."
+    "deprecated": "**Warnung:** __name__ verwendet einen Treiber, der seit fast 2 Jahren veraltet ist. Dieser Treiber wird mit dem nächsten App-Update entfernt. Koppeln Sie Ihr Gerät erneut, um Probleme zu vermeiden. Statusaktualisierungen für das Gerät wurden nun deaktiviert."
   },
   "driver": {
     "wrongdevice": "Das Shelly-Gerät, mit dem Sie versuchen zu koppeln, entspricht nicht dem ausgewählten Shelly-Gerät im Kopplungs-Assistenten."
