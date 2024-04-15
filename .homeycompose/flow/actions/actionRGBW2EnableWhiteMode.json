@@ -12,7 +12,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly|shelly_cloud|shellyrgbw2color&capabilities=onoff.whitemode"
+      "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.whitemode"
     }
   ],
   "platforms": ["local", "cloud"]

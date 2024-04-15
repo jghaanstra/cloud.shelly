@@ -105,16 +105,6 @@ class ShellyZwaveDevice extends ZwaveDevice {
     }
   }
 
-  async customSaveMessage(oldSettings, newSettings, changedKeys = []) {
-    try {
-      if (changedKeys.includes('zwaveShutterOperatingMode')) {
-        return this.homey.__('settings.re_pair_required');
-      }
-    } catch (error) {
-      this.error(error)
-    }
-  }
-
   // HELPER FUNCTIONS
 
   /**

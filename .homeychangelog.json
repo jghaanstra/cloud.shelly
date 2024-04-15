@@ -802,5 +802,11 @@
   },
   "3.29.0": {
     "en": "Breaking change: this release disables status updates for devices that are still using drivers that have been deprecated for almost two years. Disabling status updates is the first step in completely removing these drivers from the app. If you have ignored all previous warnings your timeline will show the Shelly devices which are affected and need to be re-paired asap."
+  },
+  "3.29.1": {
+    "en": "Breaking change: this release removes the deprecated drivers of all gen1 lights and battery powered sensors. If you have ignored all previous warnings devices paired with these drivers will stop working and need to be removed and paired again. This release also changes the behaviour of the Shelly Wave i4. Using it in venetian blinds mode doesnt require re-pairing anymore. The tilt capability for the slats should become available based on your configuration."
+  },
+  "3.29.2": {
+    "en": "Breaking change: this release removes the deprecated drivers of all gen1 lights and battery powered sensors. If you have ignored all previous warnings devices paired with these drivers will stop working and need to be removed and paired again. This release also changes the behaviour of the Shelly Wave Shutter. Using it in venetian blinds mode doesnt require re-pairing anymore. The tilt capability for the slats should become available based on your configuration."
   }
 }

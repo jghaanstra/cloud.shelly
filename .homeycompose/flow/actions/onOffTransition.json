@@ -59,7 +59,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly|shellydimmer|shellyduo|shellyrgbw2color|shellyrgbw2white|shellyvintage&capabilities=dim"
+      "filter": "driver_id=shelly&capabilities=dim"
     }
   ],
   "platforms": ["local"]

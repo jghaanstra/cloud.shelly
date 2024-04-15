@@ -27,7 +27,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly|shellygas&capabilities=gas_concentration"
+      "filter": "driver_id=shelly&capabilities=gas_concentration"
     }
   ],
   "platforms": ["local"]

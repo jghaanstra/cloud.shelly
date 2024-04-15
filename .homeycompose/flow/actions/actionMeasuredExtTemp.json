@@ -32,7 +32,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
+      "filter": "driver_id=shelly&capabilities=target_temperature"
     }
   ],
   "platforms": ["local"]

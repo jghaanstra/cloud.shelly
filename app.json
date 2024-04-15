@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.29.0",
+  "version": "3.29.2",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -556,7 +556,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shellygas&capabilities=gas_concentration"
+            "filter": "driver_id=shelly&capabilities=gas_concentration"
           }
         ],
         "platforms": [
@@ -1787,7 +1787,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1L|shelly1pm|shellair|shellyuni&capabilities=measure_temperature.1"
+            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1L|shelly1pm|shellyuni&capabilities=measure_temperature.1"
           }
         ],
         "platforms": [
@@ -1820,7 +1820,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1L|shelly1pm|shellyair|shellyuni&capabilities=measure_temperature.2"
+            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1L|shelly1pm|shellyuni&capabilities=measure_temperature.2"
           }
         ],
         "platforms": [
@@ -1853,7 +1853,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1L|shelly1pm|shellyair|shellyuni&capabilities=measure_temperature.3"
+            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1L|shelly1pm|shellyuni&capabilities=measure_temperature.3"
           }
         ],
         "platforms": [
@@ -1952,7 +1952,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shelly_bluetooth|shellydw&capabilities=tilt"
+            "filter": "driver_id=shelly|shelly_cloud|shelly_bluetooth&capabilities=tilt"
           }
         ],
         "platforms": [
@@ -1985,7 +1985,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly-trv&capabilities=target_temperature"
+            "filter": "driver_id=shelly&capabilities=target_temperature"
           }
         ],
         "platforms": [
@@ -2288,7 +2288,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly4pro|shellyair|shellydimmer|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni&capabilities=input_1"
+            "filter": "driver_id=shelly|shelly_cloud|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly4pro|shellyi3|shellyuni&capabilities=input_1"
           }
         ],
         "platforms": [
@@ -2310,7 +2310,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
+            "filter": "driver_id=shelly|shelly_cloud|shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellyi3&capabilities=input_2"
           }
         ],
         "platforms": [
@@ -2392,7 +2392,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
+            "filter": "driver_id=shelly&capabilities=target_temperature"
           }
         ],
         "platforms": [
@@ -2562,7 +2562,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly-plug|shelly-plug-s|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly3em|shelly4pro|shellyair|shellybulb|shellydimmer|shellyduo|shellyem|shellygas|shellyi3|shellyrgbw2color|shellyrgbw2white|shellyuni|shellyvintage"
+            "filter": "driver_id=shelly|shelly-plug|shelly-plug-s|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly3em|shelly4pro|shellyem|shellygas|shellyi3|shellyuni"
           }
         ],
         "platforms": [
@@ -2583,7 +2583,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shellygas&capabilities=gas_concentration"
+            "filter": "driver_id=shelly&capabilities=gas_concentration"
           }
         ],
         "platforms": [
@@ -2619,7 +2619,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shellygas&capabilities=gas_concentration"
+            "filter": "driver_id=shelly&capabilities=gas_concentration"
           }
         ],
         "platforms": [
@@ -2640,7 +2640,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shellygas&capabilities=gas_concentration"
+            "filter": "driver_id=shelly&capabilities=gas_concentration"
           }
         ],
         "platforms": [
@@ -2661,7 +2661,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shellygas&capabilities=gas_concentration"
+            "filter": "driver_id=shelly&capabilities=gas_concentration"
           }
         ],
         "platforms": [
@@ -2702,7 +2702,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
+            "filter": "driver_id=shelly&capabilities=target_temperature"
           }
         ],
         "platforms": [
@@ -2723,7 +2723,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly-plug|shelly-plug-s|shelly-trv|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly3em|shelly4pro|shellyair|shellybulb|shellydimmer|shellyduo|shellyem|shellygas|shellyi3|shellymotion|shellyrgbw2color|shellyrgbw2white|shellysmoke|shellyuni|shellyvintage"
+            "filter": "driver_id=shelly|shelly-plug|shelly-plug-s|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly3em|shelly4pro|shellyem|shellyi3|shellyuni|shellyvintage"
           }
         ],
         "platforms": [
@@ -2809,7 +2809,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly-plug|shelly-plug-s|shelly-trv|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly3em|shelly4pro|shellyair|shellybulb|shellydimmer|shellyduo|shellyem|shellygas|shellyi3|shellymotion|shellyrgbw2color|shellyrgbw2white|shellysmoke|shellyuni|shellyvintage"
+            "filter": "driver_id=shelly|shelly-plug|shelly-plug-s|shelly1|shelly1L|shelly1pm|shelly2|shelly2-rollershutter|shelly25|shelly25-rollershutter|shelly3em|shelly4pro|shellyem|shellyi3|shellyuni"
           }
         ],
         "platforms": [
@@ -2890,7 +2890,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shellyrgbw2color&capabilities=onoff.whitemode"
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.whitemode"
           }
         ],
         "platforms": [
@@ -2912,7 +2912,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud|shellyrgbw2color&capabilities=onoff.whitemode"
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.whitemode"
           }
         ],
         "platforms": [
@@ -3236,7 +3236,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
+            "filter": "driver_id=shelly&capabilities=target_temperature"
           }
         ],
         "platforms": [
@@ -3273,7 +3273,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shellytrv&capabilities=target_temperature"
+            "filter": "driver_id=shelly&capabilities=target_temperature"
           }
         ],
         "platforms": [
@@ -3361,7 +3361,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shellyrgbw2color&capabilities=onoff.whitemode"
+            "filter": "driver_id=shelly&capabilities=onoff.whitemode"
           }
         ],
         "platforms": [
@@ -3673,7 +3673,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shellydimmer|shellyduo|shellyrgbw2color|shellyrgbw2white|shellyvintage&capabilities=dim"
+            "filter": "driver_id=shelly&capabilities=dim"
           }
         ],
         "platforms": [
@@ -4013,124 +4013,6 @@
       },
       "deprecated": true,
       "id": "shelly-plug-s",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "icon": "/drivers/shelly-trv/assets/icon.svg",
-      "pair": [
-        {
-          "id": "start",
-          "navigation": {
-            "next": "list_devices"
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "icon_select"
-          }
-        },
-        {
-          "id": "icon_select"
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "lan"
-      ],
-      "name": {
-        "en": "Shelly TRV",
-        "nl": "Shelly TRV"
-      },
-      "images": {
-        "xlarge": "./assets/drivers/shelly-trv/images/xlarge.jpg",
-        "large": "./assets/drivers/shelly-trv/images/large.jpg",
-        "small": "./assets/drivers/shelly-trv/images/small.jpg"
-      },
-      "class": "heater",
-      "capabilities": [
-        "target_temperature",
-        "measure_temperature",
-        "measure_battery",
-        "valve_position",
-        "valve_mode",
-        "rssi"
-      ],
-      "capabilitiesOptions": {
-        "target_temperature": {
-          "min": 5,
-          "max": 30
-        }
-      },
-      "energy": {
-        "batteries": [
-          "INTERNAL"
-        ]
-      },
-      "deprecated": true,
-      "id": "shelly-trv",
       "settings": [
         {
           "type": "group",
@@ -9815,573 +9697,6 @@
       ]
     },
     {
-      "icon": "/drivers/shellybulb/assets/icon.svg",
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "get_device"
-          }
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png",
-            "usernameLabel": {
-              "en": "Username (admin for gen2 devices)",
-              "nl": "Gebruikersnaam (admin voor gen2 devices)"
-            },
-            "usernamePlaceholder": {
-              "en": "Username",
-              "nl": "Gebruikersnaam"
-            },
-            "PasswordLabel": {
-              "en": "Password",
-              "nl": "Wachtwoord"
-            }
-          }
-        },
-        {
-          "id": "icon_select"
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "lan"
-      ],
-      "name": {
-        "en": "Shelly Bulb (RGBW)",
-        "nl": "Shelly Bulb (RGBW)"
-      },
-      "images": {
-        "large": "./assets/drivers/shellybulb/images/large.jpg",
-        "small": "./assets/drivers/shellybulb/images/small.jpg"
-      },
-      "class": "light",
-      "capabilities": [
-        "onoff",
-        "dim",
-        "light_temperature",
-        "light_hue",
-        "light_saturation",
-        "light_mode",
-        "rssi"
-      ],
-      "deprecated": true,
-      "id": "shellybulb",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "icon": "/drivers/shellybutton1/assets/icon.svg",
-      "pair": [
-        {
-          "id": "start",
-          "navigation": {
-            "next": "list_devices"
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "icon_select"
-          }
-        },
-        {
-          "id": "icon_select"
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "lan"
-      ],
-      "name": {
-        "en": "Shelly Button 1",
-        "nl": "Shelly Button 1"
-      },
-      "images": {
-        "large": "./assets/drivers/shellybutton1/images/large.jpg",
-        "small": "./assets/drivers/shellybutton1/images/small.jpg"
-      },
-      "class": "button",
-      "capabilities": [
-        "measure_battery",
-        "rssi"
-      ],
-      "energy": {
-        "batteries": [
-          "INTERNAL"
-        ]
-      },
-      "deprecated": true,
-      "id": "shellybutton1",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "icon": "/drivers/shellydimmer/assets/icon.svg",
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "get_device"
-          }
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png",
-            "usernameLabel": {
-              "en": "Username (admin for gen2 devices)",
-              "nl": "Gebruikersnaam (admin voor gen2 devices)"
-            },
-            "usernamePlaceholder": {
-              "en": "Username",
-              "nl": "Gebruikersnaam"
-            },
-            "PasswordLabel": {
-              "en": "Password",
-              "nl": "Wachtwoord"
-            }
-          }
-        },
-        {
-          "id": "icon_select"
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "lan"
-      ],
-      "name": {
-        "en": "Shelly Dimmer (2)",
-        "nl": "Shelly Dimmer (2)"
-      },
-      "images": {
-        "large": "./assets/drivers/shellydimmer/images/large.jpg",
-        "small": "./assets/drivers/shellydimmer/images/small.jpg"
-      },
-      "class": "light",
-      "capabilities": [
-        "onoff",
-        "dim",
-        "measure_power",
-        "meter_power",
-        "measure_temperature",
-        "input_1",
-        "input_2",
-        "rssi"
-      ],
-      "capabilitiesOptions": {
-        "dim": {
-          "opts": {
-            "duration": true
-          }
-        }
-      },
-      "deprecated": true,
-      "id": "shellydimmer",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "icon": "/drivers/shellyduo/assets/icon.svg",
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "get_device"
-          }
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png",
-            "usernameLabel": {
-              "en": "Username (admin for gen2 devices)",
-              "nl": "Gebruikersnaam (admin voor gen2 devices)"
-            },
-            "usernamePlaceholder": {
-              "en": "Username",
-              "nl": "Gebruikersnaam"
-            },
-            "PasswordLabel": {
-              "en": "Password",
-              "nl": "Wachtwoord"
-            }
-          }
-        },
-        {
-          "id": "icon_select"
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "lan"
-      ],
-      "name": {
-        "en": "Shelly Duo",
-        "nl": "Shelly Duo"
-      },
-      "images": {
-        "large": "./assets/drivers/shellyduo/images/large.jpg",
-        "small": "./assets/drivers/shellyduo/images/small.jpg"
-      },
-      "class": "light",
-      "capabilities": [
-        "onoff",
-        "dim",
-        "light_temperature",
-        "measure_power",
-        "meter_power",
-        "rssi"
-      ],
-      "capabilitiesOptions": {
-        "dim": {
-          "opts": {
-            "duration": true
-          }
-        }
-      },
-      "deprecated": true,
-      "id": "shellyduo",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "icon": "/drivers/shellydw/assets/icon.svg",
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "icon_select"
-          }
-        },
-        {
-          "id": "icon_select"
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "lan"
-      ],
-      "name": {
-        "en": "Shelly Door/Window Sensor (2)",
-        "nl": "Shelly Deur/Raam Sensor (2)"
-      },
-      "images": {
-        "large": "./assets/drivers/shellydw/images/large.jpg",
-        "small": "./assets/drivers/shellydw/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "alarm_contact",
-        "measure_luminance",
-        "measure_battery",
-        "measure_temperature",
-        "alarm_tamper",
-        "tilt",
-        "rssi"
-      ],
-      "energy": {
-        "batteries": [
-          "CR123A",
-          "CR123A"
-        ]
-      },
-      "deprecated": true,
-      "id": "shellydw",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
       "icon": "/drivers/shellyem/assets/icon.svg",
       "pair": [
         {
@@ -10515,109 +9830,6 @@
       ]
     },
     {
-      "icon": "/drivers/shellyht/assets/icon.svg",
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "icon_select"
-          }
-        },
-        {
-          "id": "icon_select"
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "lan"
-      ],
-      "name": {
-        "en": "Shelly Humidity & Temperature",
-        "nl": "Shelly Humidity & Temperature"
-      },
-      "images": {
-        "large": "./assets/drivers/shellyht/images/large.jpg",
-        "small": "./assets/drivers/shellyht/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "measure_humidity",
-        "measure_temperature",
-        "measure_battery",
-        "rssi"
-      ],
-      "energy": {
-        "batteries": [
-          "CR123A"
-        ]
-      },
-      "deprecated": true,
-      "id": "shellyht",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
       "icon": "/drivers/shellyi3/assets/icon.svg",
       "pair": [
         {
@@ -10688,378 +9900,6 @@
       ],
       "deprecated": true,
       "id": "shellyi3",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "icon": "/drivers/shellymotion/assets/icon.svg",
-      "pair": [
-        {
-          "id": "start",
-          "navigation": {
-            "next": "list_devices"
-          }
-        },
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "icon_select"
-          }
-        },
-        {
-          "id": "icon_select"
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png"
-          }
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "lan"
-      ],
-      "name": {
-        "en": "Shelly Motion Sensor",
-        "nl": "Shelly Bewegingssensor"
-      },
-      "images": {
-        "large": "./assets/drivers/shellymotion/images/large.jpg",
-        "small": "./assets/drivers/shellymotion/images/small.jpg"
-      },
-      "class": "sensor",
-      "capabilities": [
-        "alarm_motion",
-        "measure_luminance",
-        "measure_battery",
-        "alarm_tamper",
-        "rssi"
-      ],
-      "energy": {
-        "batteries": [
-          "INTERNAL"
-        ]
-      },
-      "deprecated": true,
-      "id": "shellymotion",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "icon": "/drivers/shellyrgbw2color/assets/icon.svg",
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "get_device"
-          }
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png",
-            "usernameLabel": {
-              "en": "Username (admin for gen2 devices)",
-              "nl": "Gebruikersnaam (admin voor gen2 devices)"
-            },
-            "usernamePlaceholder": {
-              "en": "Username",
-              "nl": "Gebruikersnaam"
-            },
-            "PasswordLabel": {
-              "en": "Password",
-              "nl": "Wachtwoord"
-            }
-          }
-        },
-        {
-          "id": "icon_select"
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "lan"
-      ],
-      "name": {
-        "en": "Shelly RGBW2 Color Mode",
-        "nl": "Shelly RGBW2 Color Mode"
-      },
-      "images": {
-        "large": "./assets/drivers/shellyrgbw2/images/large.jpg",
-        "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
-      },
-      "class": "light",
-      "capabilities": [
-        "onoff",
-        "dim",
-        "light_temperature",
-        "light_hue",
-        "light_saturation",
-        "measure_power",
-        "meter_power",
-        "light_mode",
-        "onoff.whitemode",
-        "input_1",
-        "rssi"
-      ],
-      "capabilitiesOptions": {
-        "dim": {
-          "opts": {
-            "duration": true
-          }
-        },
-        "light_temperature": {
-          "title": {
-            "en": "Dimlevel white",
-            "nl": "Dim niveau wit"
-          }
-        },
-        "onoff.whitemode": {
-          "title": {
-            "en": "Toggle white mode",
-            "nl": "Wit modus schakelen"
-          }
-        }
-      },
-      "deprecated": true,
-      "id": "shellyrgbw2color",
-      "settings": [
-        {
-          "type": "group",
-          "label": {
-            "en": "Device Settings",
-            "nl": "Apparaat instellingen"
-          },
-          "children": [
-            {
-              "id": "address",
-              "type": "text",
-              "value": "0.0.0.0",
-              "label": {
-                "en": "IP Address",
-                "nl": "IP adres"
-              }
-            },
-            {
-              "id": "username",
-              "type": "text",
-              "value": "",
-              "label": {
-                "en": "Username",
-                "nl": "Gebruikersnaam"
-              }
-            },
-            {
-              "id": "password",
-              "type": "password",
-              "value": "",
-              "label": {
-                "en": "Password",
-                "nl": "Wachtwoord"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "icon": "/drivers/shellyrgbw2white/assets/icon.svg",
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "options": {
-            "singular": true
-          },
-          "navigation": {
-            "next": "get_device"
-          }
-        },
-        {
-          "id": "get_device"
-        },
-        {
-          "id": "login_credentials",
-          "template": "login_credentials",
-          "options": {
-            "logo": "../../../assets/shelly-logo.png",
-            "usernameLabel": {
-              "en": "Username (admin for gen2 devices)",
-              "nl": "Gebruikersnaam (admin voor gen2 devices)"
-            },
-            "usernamePlaceholder": {
-              "en": "Username",
-              "nl": "Gebruikersnaam"
-            },
-            "PasswordLabel": {
-              "en": "Password",
-              "nl": "Wachtwoord"
-            }
-          }
-        },
-        {
-          "id": "icon_select"
-        },
-        {
-          "id": "add_device"
-        },
-        {
-          "id": "select_pairing"
-        },
-        {
-          "id": "manual_pairing"
-        }
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [
-        "lan"
-      ],
-      "name": {
-        "en": "Shelly RGBW2 4x White Mode",
-        "nl": "Shelly RGBW2 4x White Mode"
-      },
-      "images": {
-        "large": "./assets/drivers/shellyrgbw2/images/large.jpg",
-        "small": "./assets/drivers/shellyrgbw2/images/small.jpg"
-      },
-      "class": "light",
-      "capabilities": [
-        "onoff",
-        "dim",
-        "measure_power",
-        "measure_power.total",
-        "meter_power",
-        "input_1",
-        "rssi"
-      ],
-      "capabilitiesOptions": {
-        "dim": {
-          "opts": {
-            "duration": true
-          }
-        },
-        "measure_power.total": {
-          "title": {
-            "en": "Total Power",
-            "nl": "Totaal vermogen"
-          }
-        }
-      },
-      "deprecated": true,
-      "id": "shellyrgbw2white",
       "settings": [
         {
           "type": "group",

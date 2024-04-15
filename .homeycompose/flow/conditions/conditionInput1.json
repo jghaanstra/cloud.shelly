@@ -12,7 +12,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly|shelly_cloud|shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellydimmer|shellyi3&capabilities=input_2"
+      "filter": "driver_id=shelly|shelly_cloud|shelly1L|shelly2-rollershutter|shelly25-rollershutter|shellyi3&capabilities=input_2"
     }
   ],
   "platforms": ["local", "cloud"]
