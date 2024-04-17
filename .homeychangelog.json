@@ -808,5 +808,8 @@
   },
   "3.29.2": {
     "en": "Breaking change: this release removes the deprecated drivers of all gen1 lights and battery powered sensors. If you have ignored all previous warnings devices paired with these drivers will stop working and need to be removed and paired again. This release also changes the behaviour of the Shelly Wave Shutter. Using it in venetian blinds mode doesnt require re-pairing anymore. The tilt capability for the slats should become available based on your configuration."
+  },
+  "3.29.3": {
+    "en": "Breaking change: this release removes the deprecated drivers of all gen1 lights and battery powered sensors. If you have ignored all previous warnings devices paired with these drivers will stop working and need to be removed and paired again. This release also changes the behaviour of the Shelly Wave Shutter. Using it in venetian blinds mode doesnt require re-pairing anymore. The tilt capability for the slats should become available based on your configuration."
   }
 }

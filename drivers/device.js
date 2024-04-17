@@ -1222,9 +1222,9 @@ class ShellyDevice extends Homey.Device {
         if (result.inputs.hasOwnProperty([1]) && this.hasCapability('input_2')) {
           let input_2 = result.inputs[1].input == 1 ? true : false;
           const input2Triggercard = input_2 ? 'triggerInput2On' : 'triggerInput2Off';
+          this.updateCapabilityValue('input_2', input_2, channel);
           this.triggerDeviceTriggerCard('input_2', input_2, 0, input2Triggercard, {}, {});
           this.triggerDeviceTriggerCard('input_2', input_2, 0, 'triggerInput2Changed', {}, {});
-          this.updateCapabilityValue('input_2', input_2, channel);
 
           // action events for gen1 cloud devices
           if (this.getStoreValue('communication') === 'cloud' && this.getStoreValue('event_cnt') !== null && result.inputs[1].event_cnt > 0 && result.inputs[1].event_cnt > this.getStoreValue('event_cnt') && result.inputs[1].event) {
@@ -1240,9 +1240,9 @@ class ShellyDevice extends Homey.Device {
         } else if (result.inputs.hasOwnProperty([1]) && this.hasCapability('input_1') && this.getStoreValue('channel') === 1) {
             let input_2_1 = result.inputs[1].input == 1 ? true : false;
             const input2_1Triggercard = input_2_1 ? 'triggerInput1On' : 'triggerInput1Off';
+            this.updateCapabilityValue('input_1', input_2_1, channel);
             this.triggerDeviceTriggerCard('input_1', input_2_1, 1, input2_1Triggercard, {}, {});
             this.triggerDeviceTriggerCard('input_1', input_2_1, 1, 'triggerInput1Changed', {}, {});
-            this.updateCapabilityValue('input_1', input_2_1, channel);
 
           // action events for gen1 cloud devices
           if (this.getStoreValue('communication') === 'cloud' && this.getStoreValue('event_cnt') !== null && result.inputs[1].event_cnt > 0 && result.inputs[1].event_cnt > this.getStoreValue('event_cnt') && result.inputs[1].event) {
@@ -1261,9 +1261,9 @@ class ShellyDevice extends Homey.Device {
         if (result.inputs.hasOwnProperty([2]) && this.hasCapability('input_3')) {
           let input_3 = result.inputs[2].input == 1 ? true : false;
           const input3Triggercard = input_3 ? 'triggerInput3On' : 'triggerInput3Off';
+          this.updateCapabilityValue('input_3', input_3, channel);
           this.triggerDeviceTriggerCard('input_3', input_3, 2, input3Triggercard, {}, {});
           this.triggerDeviceTriggerCard('input_3', input_3, 2, 'triggerInput3Changed', {}, {});
-          this.updateCapabilityValue('input_3', input_3, channel);
 
           // input/action events for cloud devices
           if (this.getStoreValue('communication') === 'cloud' && this.getStoreValue('event_cnt') !== null && result.inputs[2].event_cnt > 0 && result.inputs[2].event_cnt > this.getStoreValue('event_cnt') && result.inputs[2].event) {
@@ -1282,9 +1282,9 @@ class ShellyDevice extends Homey.Device {
         if (result.inputs.hasOwnProperty([3]) && this.hasCapability('input_4')) {
           let input_4 = result.inputs[3].input == 1 ? true : false;
           const input4Triggercard = input_4 ? 'triggerInput4On' : 'triggerInput4Off';
+          this.updateCapabilityValue('input_4', input_4, channel);
           this.triggerDeviceTriggerCard('input_4', input_4, 3, input4Triggercard, {}, {});
           this.triggerDeviceTriggerCard('input_4', input_4, 3, 'triggerInput4Changed', {}, {});
-          this.updateCapabilityValue('input_4', input_4, channel);
 
           // input/action events for cloud devices
           if (this.getStoreValue('communication') === 'cloud' && this.getStoreValue('event_cnt') !== null && result.inputs[3].event_cnt > 0 && result.inputs[3].event_cnt > this.getStoreValue('event_cnt') && result.inputs[3].event) {
@@ -3156,9 +3156,9 @@ class ShellyDevice extends Homey.Device {
             value = value === 0 ? false : true;
           }
           const input1Triggercard = value ? 'triggerInput1On' : 'triggerInput1Off';
+          this.updateCapabilityValue('input_1', value, channel);
           this.triggerDeviceTriggerCard('input_1', value, channel, input1Triggercard, {}, {});
           this.triggerDeviceTriggerCard('input_1', value, channel, 'triggerInput1Changed', {}, {});
-          this.updateCapabilityValue('input_1', value, channel);
           break;
         case 'input1':
           if (typeof value == 'number') {
@@ -3166,14 +3166,14 @@ class ShellyDevice extends Homey.Device {
           }
           if (!this.hasCapability('input_2')) {
             const input2_1Triggercard = value ? 'triggerInput1On' : 'triggerInput1Off';
+            this.updateCapabilityValue('input_1', value, channel);
             this.triggerDeviceTriggerCard('input_1', value, channel, input2_1Triggercard, {}, {});
             this.triggerDeviceTriggerCard('input_1', value, channel, 'triggerInput1Changed', {}, {});
-            this.updateCapabilityValue('input_1', value, channel);
           } else {
             const input2Triggercard = value ? 'triggerInput2On' : 'triggerInput2Off';
+            this.updateCapabilityValue('input_2', value, channel);
             this.triggerDeviceTriggerCard('input_2', value, channel, input2Triggercard, {}, {});
             this.triggerDeviceTriggerCard('input_2', value, channel, 'triggerInput2Changed', {}, {});
-            this.updateCapabilityValue('input_2', value, channel);
           }
           break;
         case 'input2':
@@ -3181,18 +3181,18 @@ class ShellyDevice extends Homey.Device {
             value = value === 0 ? false : true;
           }
           const input3Triggercard = value ? 'triggerInput3On' : 'triggerInput3Off';
+          this.updateCapabilityValue('input_3', value, channel);
           this.triggerDeviceTriggerCard('input_3', value, channel, input3Triggercard, {}, {});
           this.triggerDeviceTriggerCard('input_3', value, channel, 'triggerInput3Changed', {}, {});
-          this.updateCapabilityValue('input_3', value, channel);
           break;
         case 'input3':
           if (typeof value == 'number') {
             value = value === 0 ? false : true;
           }
           const input4Triggercard = value ? 'triggerInput4On' : 'triggerInput4Off';
+          this.updateCapabilityValue('input_4', value, channel);
           this.triggerDeviceTriggerCard('input_4', value, channel, input4Triggercard, {}, {});
           this.triggerDeviceTriggerCard('input_4', value, channel, 'triggerInput4Changed', {}, {});
-          this.updateCapabilityValue('input_4', value, channel);
           break;
         case 'inputEvent0':
           if (this.hasCapability('input_1') && this.hasCapability('input_2')) {
