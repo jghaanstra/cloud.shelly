@@ -32,7 +32,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly|shelly-plug"
+      "filter": "driver_id=shelly"
     }
   ],
   "platforms": ["local"]

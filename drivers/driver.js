@@ -101,6 +101,7 @@ class ShellyDriver extends Homey.Driver {
                 throw new Error(this.homey.__("pair.error") + ' Error message: '+ error.message);
               }
             case 'gen2':
+            case 'gen3':
               try {
                 var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', discoveryResult.address, '', '');
                 var auth = result.auth_en;
@@ -183,6 +184,7 @@ class ShellyDriver extends Homey.Driver {
             var type = result.device.type;
             break;
           case 'gen2':
+          case 'gen3':
             var result = await this.util.sendCommand('/rpc/Shelly.GetDeviceInfo', data.address, '', '');
             var id = result.id;
             var type = result.model;
@@ -198,27 +200,58 @@ class ShellyDriver extends Homey.Driver {
           throw new Error(this.homey.__('pair.no_device_config'));
         }
 
-        /* update gen1 device config if it's a roller shutter */
-        if (data.gen === 'gen1' && result.hasOwnProperty("mode")) {
-          if (result.mode === "roller") {
-            device_config = this.util.getDeviceConfig(hostname + 'roller-');
-          }
-        }
+        switch(device_config.gen) {
+          case 'gen1':
+            try {
 
-        /* update gen2 device config if it's a roller shutter */
-        if (data.gen === 'gen2' && result.hasOwnProperty("profile")) {
-          if (result.profile === "cover") {
-            device_config = this.util.getDeviceConfig(hostname + 'roller-');
-          } else {
-            device_config = this.util.getDeviceConfig(hostname + result.profile +'-');
-          }
-        }
+              /* update device config if it's a roller shutter */
+              if (result.hasOwnProperty("num_rollers") && result.hasOwnProperty("mode")) {
+                if (result.mode === 'roller') {
+                  device_config = this.util.getDeviceConfig(hostname + 'roller-');
+                }
+              }
 
-        /* update device config if it's a RGBW2 in white mode */
-        if (device_config.name === 'Shelly RGBW2 Color') {
-          if (result.mode === 'white') {
-            device_config = this.util.getDeviceConfig(hostname + 'white-');
-          }
+              /* update device config if it's a RGBW2 in white mode */
+              if (device_config.name === 'Shelly RGBW2 Color') {
+                if (result.num_outputs === 4) {
+                  device_config = this.util.getDeviceConfig(hostname + 'white-');
+                }
+              }
+
+              break;
+            } catch (error) {
+              throw new Error(this.homey.__("pair.error") + ' Error message: '+ error.message);
+            }
+          case 'gen2':
+          case 'gen3':
+            try {
+
+              /* update device config if it has a specific profile */
+              if (result.hasOwnProperty("profile")) {
+                if (result.profile === "cover") {
+                  device_config = this.util.getDeviceConfig(hostname + 'roller-');
+                } else {
+                  device_config = this.util.getDeviceConfig(hostname + result.profile +'-');
+                }
+
+                if (typeof device_config === 'undefined') {
+                  this.error('No device config found for device with hostname', hostname + result.profile +'-');
+                  throw new Error(this.homey.__('pair.no_device_config') + ' Device has hostname:' + hostname + result.profile +'-');
+                }
+
+              }
+
+              /* update device config if it's a WallDisplay in thermostat mode */
+              if (result.hasOwnProperty("relay_in_thermostat")) {
+                if (result.relay_in_thermostat) {
+                  device_config = this.util.getDeviceConfig(hostname + 'thermostat-');
+                }
+              }
+              
+              break;
+            } catch (error) {
+              throw new Error(this.homey.__("pair.error") + ' Error message: '+ error.message);
+            }
         }
 
         deviceArray = {

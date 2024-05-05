@@ -811,5 +811,8 @@
   },
   "3.29.3": {
     "en": "Breaking change: this release removes the deprecated drivers of all gen1 lights and battery powered sensors. If you have ignored all previous warnings devices paired with these drivers will stop working and need to be removed and paired again. This release also changes the behaviour of the Shelly Wave Shutter. Using it in venetian blinds mode doesnt require re-pairing anymore. The tilt capability for the slats should become available based on your configuration."
+  },
+  "3.29.4": {
+    "en": "Breaking change: this release removes all previously deprecated drivers. If you have ignored all previous warnings the devices paired with these drivers will stop working and need to be removed and paired again. This release also fixes an issue with pairing the Shelly Wave PM Mini, an issue with temperature and humidity readings of the Shelly BLU HT, an issue with external temperature sensors from the plus addon not updating near real time and an issue with not being able to pair gen3 devices which have authentication enabled."
   }
 }

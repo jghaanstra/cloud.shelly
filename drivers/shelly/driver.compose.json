@@ -42,8 +42,8 @@
       "options": {
         "logo": "../../../assets/shelly-logo.png",
         "usernameLabel": {
-          "en": "Username (admin for gen2 devices)",
-          "nl": "Gebruikersnaam (admin voor gen2 devices)"
+          "en": "Username (admin for gen2/3 devices)",
+          "nl": "Gebruikersnaam (admin voor gen2/3 devices)"
         },
         "usernamePlaceholder": {
           "en": "Username",

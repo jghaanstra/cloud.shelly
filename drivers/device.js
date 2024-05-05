@@ -12,7 +12,7 @@ class ShellyDevice extends Homey.Device {
       if (!this.util) this.util = new Util({homey: this.homey});
 
       // VARIABLES GENERIC
-      this.bluetoothScriptVersion = 3;
+      this.bluetoothScriptVersion = 4;
       this.pollingFailures = 0;
     
       // ADDING CAPABILITY LISTENERS
@@ -670,7 +670,7 @@ class ShellyDevice extends Homey.Device {
           }
         } else {
           this.log('adding capability '+ capability +' to '+ this.getData().id +' as the device seems to have values for this capability ...');
-          this.addCapability(capability);
+          this.addCapability(capability).catch((error) => { this.error(error) });
         }
       } else { // the channel of the parsing device does not matches the channel of the updated capability value, we need to find the right device
         const device_id = this.getStoreValue('main_device') + '-channel-' + channel;
@@ -684,7 +684,7 @@ class ShellyDevice extends Homey.Device {
             }
           } else {
             this.log('adding capability '+ capability +' to '+ device.getData().id +' as the device seems to have values for this capability ...');
-            device.addCapability(capability);
+            device.addCapability(capability).catch((error) => { this.error(error) });
           }
         }
       }
@@ -2010,7 +2010,7 @@ class ShellyDevice extends Homey.Device {
       /* add-on temperature 1 */
       if (result.hasOwnProperty("temperature:100") && channel === 0) {
         if (this.hasCapability('measure_temperature.1')) {
-          if (this.getCapabilityValue('measure_temperature.1') !== result["temperature:100"].tC) {
+          if (this.getCapabilityValue('measure_temperature.1') !== result["temperature:100"].tC && result["temperature:100"].tC !== null) {
             this.updateCapabilityValue('measure_temperature.1', result["temperature:100"].tC, channel);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature1').trigger(this, {'temperature': result["temperature:100"].tC}, {}).catch(error => { this.error(error); this.error(result["temperature:100"].tC) });
           }
@@ -2022,7 +2022,7 @@ class ShellyDevice extends Homey.Device {
       /* add-on temperature 2 */
       if (result.hasOwnProperty("temperature:101") && channel === 0) {
         if (this.hasCapability('measure_temperature.2')) {
-          if (this.getCapabilityValue('measure_temperature.2') !== result["temperature:101"].tC) {
+          if (this.getCapabilityValue('measure_temperature.2') !== result["temperature:101"].tC && result["temperature:101"].tC !== null) {
             this.updateCapabilityValue('measure_temperature.2', result["temperature:101"].tC, channel);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature2').trigger(this, {'temperature': result["temperature:101"].tC}, {}).catch(error => { this.error(error) });
           }
@@ -2034,7 +2034,7 @@ class ShellyDevice extends Homey.Device {
       /* add-on temperature 3 */
       if (result.hasOwnProperty("temperature:102") && channel === 0) {
         if (this.hasCapability('measure_temperature.3')) {
-          if (this.getCapabilityValue('measure_temperature.3') !== result["temperature:102"].tC) {
+          if (this.getCapabilityValue('measure_temperature.3') !== result["temperature:102"].tC && result["temperature:102"].tC !== null) {
             this.updateCapabilityValue('measure_temperature.3', result["temperature:102"].tC, channel);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature3').trigger(this, {'temperature': result["temperature:102"].tC}, {}).catch(error => { this.error(error) });
           }
@@ -2046,7 +2046,7 @@ class ShellyDevice extends Homey.Device {
       /* add-on temperature 4 */
       if (result.hasOwnProperty("temperature:103") && channel === 0) {
         if (this.hasCapability('measure_temperature.4')) {
-          if (this.getCapabilityValue('measure_temperature.4') !== result["temperature:103"].tC) {
+          if (this.getCapabilityValue('measure_temperature.4') !== result["temperature:103"].tC && result["temperature:103"].tC !== null) {
             this.updateCapabilityValue('measure_temperature.4', result["temperature:103"].tC, channel);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature4').trigger(this, {'temperature': result["temperature:103"].tC}, {}).catch(error => { this.error(error) });
           }
@@ -2058,7 +2058,7 @@ class ShellyDevice extends Homey.Device {
       /* add-on temperature 5 */
       if (result.hasOwnProperty("temperature:104") && channel === 0) {
         if (this.hasCapability('measure_temperature.5')) {
-          if (this.getCapabilityValue('measure_temperature.5') !== result["temperature:104"].tC) {
+          if (this.getCapabilityValue('measure_temperature.5') !== result["temperature:104"].tC && result["temperature:104"].tC !== null) {
             this.updateCapabilityValue('measure_temperature.5', result["temperature:104"].tC, channel);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature5').trigger(this, {'temperature': result["temperature:104"].tC}, {}).catch(error => { this.error(error) });
           }
@@ -3001,17 +3001,17 @@ class ShellyDevice extends Homey.Device {
             this.updateCapabilityValue('measure_temperature', value, channel);
           } else if (this.getStoreValue('channel') === 0 && channel === 100 && typeof value !== 'object' && this.hasCapability('measure_temperature.1')) {
             if (this.getCapabilityValue('measure_temperature.1') !== value) {
-              this.updateCapabilityValue('measure_temperature.1', value, channel);
+              this.updateCapabilityValue('measure_temperature.1', value, 0);
               this.homey.flow.getDeviceTriggerCard('triggerTemperature1').trigger(this, {'temperature': value}, {}).catch(error => { this.error(error) });
             }
           } else if (this.getStoreValue('channel') === 0 && channel === 101 && typeof value !== 'object' && this.hasCapability('measure_temperature.2')) {
             if (this.getCapabilityValue('measure_temperature.2') !== value) {
-              this.updateCapabilityValue('measure_temperature.2', value, channel);
+              this.updateCapabilityValue('measure_temperature.2', value, 0);
               this.homey.flow.getDeviceTriggerCard('triggerTemperature2').trigger(this, {'temperature': value}, {}).catch(error => { this.error(error) });
             }
           } else if (this.getStoreValue('channel') === 0 && channel === 102 && typeof value !== 'object' && this.hasCapability('measure_temperature.3')) {
             if (this.getCapabilityValue('measure_temperature.3') !== value) {
-              this.updateCapabilityValue('measure_temperature.3', value, channel);
+              this.updateCapabilityValue('measure_temperature.3', value, 0);
               this.homey.flow.getDeviceTriggerCard('triggerTemperature3').trigger(this, {'temperature': value}, {}).catch(error => { this.error(error) });
             }
           }
