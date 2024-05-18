@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.29.4",
+  "version": "3.29.5",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -3279,6 +3279,46 @@
         "platforms": [
           "local"
         ]
+      },
+      {
+        "title": {
+          "en": "Set tilt position",
+          "nl": "Instellen tilt positie"
+        },
+        "titleFormatted": {
+          "en": "Set tilt position to [[tilt]]",
+          "nl": "Instellen tilt positie naar [[tilt]]"
+        },
+        "args": [
+          {
+            "type": "range",
+            "name": "tilt",
+            "title": {
+              "en": "Tilt",
+              "nl": "Tilt"
+            },
+            "min": 0,
+            "max": 1,
+            "step": 0.01,
+            "label": "%",
+            "labelMultiplier": 100,
+            "labelDecimals": 0
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly_wave_shutter&capabilities=windowcoverings_tilt_set"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "actionWaveShutterTiltSet"
       },
       {
         "id": "effectRGBW2Color",
@@ -7965,7 +8005,7 @@
         "productId": [
           130
         ],
-        "associationGroups": [
+        "associationGroupsMultiChannel": [
           1
         ],
         "learnmode": {

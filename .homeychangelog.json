@@ -814,5 +814,8 @@
   },
   "3.29.4": {
     "en": "Breaking change: this release removes all previously deprecated drivers. If you have ignored all previous warnings the devices paired with these drivers will stop working and need to be removed and paired again. This release also fixes an issue with pairing the Shelly Wave PM Mini, an issue with temperature and humidity readings of the Shelly BLU HT, an issue with external temperature sensors from the plus addon not updating near real time and an issue with not being able to pair gen3 devices which have authentication enabled."
+  },
+  "3.29.5": {
+    "en": "This release fixes an issue with values not updating for the Wave Shutter. Due to a bug in Homey you will need to remove and re-add association group 1 to value 1.1. It also add a flow card for setting the tilt position of the Wave Shutter in venetian blinds mode. The release also fixes an issue with pairing discontinued devices that have older firmware and do not support unicast CoAP like to old Shelly 4 Pro."
   }
 }

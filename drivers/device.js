@@ -137,35 +137,15 @@ class ShellyDevice extends Homey.Device {
         await this.setAvailable().catch(this.error);
       }, 1000);
 
-      // TODO: remove this on the next major release
-      if (this.driver.manifest.id !== 'shelly') {
-        const notification = this.homey.__("device.deprecated", {name: this.getName()});
-        this.homey.notifications.createNotification({"excerpt": notification}).catch(error => { this.error(error) });
-
-        try {
-          if (!this.getStoreValue('battery') && (this.getStoreValue('gen') === 'gen1' ||this.getStoreValue('gen') === null || this.getStoreValue('gen') === undefined)) {
-            const settings = await this.util.sendCommand('/settings', address, username, password);
-            if (settings.hasOwnProperty("coiot")) {
-              if (settings.coiot.enable) {
-                const result = await this.util.sendCommand('/settings?coiot_enable=false', address, username, password);
-              }
-            }
-          }
-        } catch (error) {
-          this.error(error);
-        }
-        
-      }
-
       // coap + websocket: start polling mains powered devices on regular interval
-      if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket') && this.driver.manifest.id === 'shelly') { // TODO: remove driver check on the next major release
+      if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket')) {
         this.pollingInterval = this.homey.setInterval(() => {
           this.pollDevice();
         }, (60000 + this.util.getRandomTimeout(20)));
       }
 
       // validate communication configuration
-      if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && this.getStoreValue('communication') === 'coap' && this.driver.manifest.id === 'shelly') { // TODO: remove driver check on the next major release
+      if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && this.getStoreValue('communication') === 'coap') {
         const homey_ip = await this.homey.cloud.getLocalAddress();
         if (this.getStoreValue('device_settings').hasOwnProperty("coiot")) {
           if (this.getStoreValue('device_settings').coiot.enabled === false || (this.getStoreValue('device_settings').coiot.enabled === true && !this.getStoreValue('device_settings').coiot.peer.includes(homey_ip.substring(0, homey_ip.length-3)) && this.getStoreValue('device_settings').coiot.peer !== "")) {
