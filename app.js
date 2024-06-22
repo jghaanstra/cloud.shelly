@@ -786,6 +786,22 @@ class ShellyApp extends OAuth2App {
           return Promise.reject(error);
         }
       })
+
+      /* WAVE (PRO) SHUTTER */
+
+      /* CUSTOM ACTION CARD FOR windowcoverings_tilt_set AS ATHOM DID NOT IMPLEMENT IT */
+      this.homey.flow.getActionCard('actionWaveShutterTiltSet')
+      .registerRunListener(async (args) => {
+        try {
+          if (args.device.hasCapability('windowcoverings_tilt_set')) {
+            args.device.setCapabilityValue('windowcoverings_tilt_set', args.tilt).catch(this.error);
+            return args.device._setCapabilityValue('windowcoverings_tilt_set', 'SWITCH_MULTILEVEL', args.tilt);
+          }
+        } catch (error) {
+          this.error(error);
+          return Promise.reject(error.message);
+        }
+      })
   
 
       // COAP GEN1: COAP LISTENER FOR PROCESSING INCOMING MESSAGES

@@ -45,19 +45,6 @@ class ShellyWaveProShutterDevice extends Device {
     }
   }
 
-  /* CUSTOM ACTION CARD FOR windowcoverings_tilt_set AS ATHOM DID NOT IMPLEMENT IT */
-  async actionTiltRunListener(args, state) {
-    try {
-      if (this.hasCapability('windowcoverings_tilt_set')) {
-        this.setCapabilityValue('windowcoverings_tilt_set', args.tilt).catch(this.error);
-        return this._setCapabilityValue('windowcoverings_tilt_set', 'SWITCH_MULTILEVEL', args.tilt);
-      }
-    } catch (error) {
-      this.error(error);
-      return Promise.reject(error.message);
-    }
-  }
-
 }
 
 module.exports = ShellyWaveProShutterDevice;
