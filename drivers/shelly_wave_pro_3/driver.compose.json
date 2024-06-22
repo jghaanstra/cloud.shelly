@@ -1,0 +1,79 @@
+{
+  "name": {
+    "en": "Shelly Wave Pro 3",
+    "nl": "Shelly Wave Pro 3"
+  },
+  "images": {
+    "small": "./assets/drivers/shelly_wave_pro_3/images/small.jpg",
+    "large": "./assets/drivers/shelly_wave_pro_3/images/large.jpg"
+  },
+  "class": "socket",
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "capabilities": [
+    "onoff",
+    "deviceWave"
+  ],
+  "zwave": {
+    "manufacturerId": 1120,
+    "productTypeId": [2],
+    "productId": [145],
+    "associationGroupsMultiChannel": [ 1 ],
+    "learnmode": {
+      "image": "./assets/zwave-learnmode.svg",
+      "instruction": {
+        "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking. Repeat this for step 2 in the pairing process and enter the device key (pincode).",
+        "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen. Herhaal dit voor stap 2 in het koppelingsproces en voer de apparaatsleutel (pincode) in."
+      }
+    },
+    "unlearnmode": {
+      "image": "./assets/zwave-learnmode.svg",
+      "instruction": {
+        "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking.",
+        "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen."
+      }
+    },
+    "multiChannelNodes": {
+      "1": {
+        "class": "socket",
+        "icon": "{{driverAssetsPath}}/icon.svg",
+        "capabilities": [
+          "onoff",
+          "deviceWave"
+        ],
+        "name": {
+          "en": "{{driverNameEn}} - Relay 1",
+          "nl": "{{driverNameNl}} - Relais 1"
+        },
+        "settings": []
+      },
+      "2": {
+        "class": "socket",
+        "icon": "{{driverAssetsPath}}/icon.svg",
+        "capabilities": [
+          "onoff",
+          "deviceWave"
+        ],
+        "name": {
+          "en": "{{driverNameEn}} - Relay 2",
+          "nl": "{{driverNameNl}} - Relais 2"
+        },
+        "settings": []
+      },
+      "3": {
+        "class": "socket",
+        "icon": "{{driverAssetsPath}}/icon.svg",
+        "capabilities": [
+          "onoff",
+          "deviceWave"
+        ],
+        "name": {
+          "en": "{{driverNameEn}} - Relay 3",
+          "nl": "{{driverNameNl}} - Relais 3"
+        },
+        "settings": []
+      }
+    }
+  },
+  "platforms": [ "local", "cloud" ],
+  "connectivity": [ "zwave" ]
+}

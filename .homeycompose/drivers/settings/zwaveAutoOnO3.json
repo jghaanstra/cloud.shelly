@@ -1,0 +1,25 @@
+{
+  "id": "zwaveAutoOnO3",
+  "type": "number",
+  "label": {
+    "en": "Auto ON O3 with timer",
+    "nl": "Automatisch AAN O3 met timer"
+  },
+  "value": 0,
+  "attr": {
+    "min": 0,
+    "max": 32535
+  },
+  "units": {
+    "en": "seconds",
+    "nl": "seconden"
+  },
+  "hint": {
+    "en": "This parameter (30) defines the time after which output 3 is turned on automatically after been turned on. Note: setting this parameter to zero will disable automatically turning on.",
+    "nl": "Deze parameter (30) bepaalt de tijd waarna output 3 zichzelf automatisch aanzet na te zijn uitgeschakeld. Let op: het instellen van deze parameter op nul schakelt het automatisch aan gaan uit."
+  },
+  "zwave": {
+    "index": 30,
+    "size": 2
+  }
+}

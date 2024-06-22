@@ -213,7 +213,7 @@ class ShellyDriver extends Homey.Driver {
 
               /* update device config if it's a RGBW2 in white mode */
               if (device_config.name === 'Shelly RGBW2 Color') {
-                if (result.num_outputs === 4) {
+                if (result.mode === 'white') {
                   device_config = this.util.getDeviceConfig(hostname + 'white-');
                 }
               }

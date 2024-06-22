@@ -1,0 +1,337 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Shutter-Output Settings",
+      "nl": "Shutter-Output instellingen"
+    },
+    "children": [
+      {
+        "id": "zwaveSwitchTypeSW1",
+        "$extends": "zwaveSwitchTypeSW1"
+      },
+      {
+        "id": "zwaveReverseInputsO1O2",
+        "type": "dropdown",
+        "label": {
+          "en": "Swap Inputs SW1 & SW2",
+          "nl": "Wissel Inputs SW1 & SW2"
+        },
+        "value": "0",
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Default (SW1 - O1, I2 - O2)",
+              "nl": "Standaard (SW1 - O1, I2 - O2)"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Swapped (SW1 - O2, I2 - O1)",
+              "nl": "Omgewisseld (SW1 - O2, I2 - O1)"
+            }
+          }
+        ],
+        "hint": {
+          "en": "This parameter (3) allows to swap the operation of switches connected to inputs SW1 and SW2 without changing the wiring.",
+          "nl": "Deze parameter (3) maakt het mogelijk om inputs SW1 en SW2 om te wisselen zonder de bedrading aan te passen."
+        },
+          "zwave": {
+          "index": 3,
+          "size": 1
+        }
+      },
+      {
+        "id": "zwaveReverseOutputsO1O2",
+        "type": "dropdown",
+        "label": {
+          "en": "Swap Outputs O1 & O2",
+          "nl": "Wissel Outputs O1 & O2"
+        },
+        "value": "0",
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Default (O1 - UP, O2 - DOWN)",
+              "nl": "Standaard (O1 - Omhoog, O2 - Omlaag)"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Reversed (O1 - DOWN, O2 - UP)",
+              "nl": "Omgewisseld (O1 - Omlaag, O2 - Omhoog)"
+            }
+          }
+        ],
+        "hint": {
+          "en": "This parameter (5) allows to swap the operation of outputs O1 and O2 without changing the wiring.",
+          "nl": "Deze parameter (5) maakt het mogelijk om outputs O1 en O2 om te wisselen zonder de bedrading aan te passen."
+        },
+          "zwave": {
+          "index": 5,
+          "size": 1
+        }
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Power Settings",
+      "nl": "Energie instellingen"
+    },
+    "children": [
+      {
+        "id": "zwavePowerReportOnChangeO1",
+        "type": "number",
+        "label": {
+          "en": "Power report on change for O1",
+          "nl": "Power report bij wijziging voor O1"
+        },
+        "value": 50,
+        "attr": {
+          "min": 0,
+          "max": 100
+        },
+        "units": {
+          "en": "%",
+          "nl": "%"
+        },
+        "hint": {
+          "en": "This parameter (40) defines the minimum change in consumed power for output 1 that will result in sending new report to Homey.",
+          "nl": "Deze parameter (40) bepaalt de minimum wijziging in stroomverbruik voor output 1 dat nodig is om een status update naar Homey te versturen."
+        },
+        "zwave": {
+          "index": 40,
+          "size": 1
+        }
+      },
+      {
+        "id": "zwaveMinimalTimePowerReportO1",
+        "type": "number",
+        "label": {
+          "en": "Minimal time between reports for O1",
+          "nl": "Minimale tijd tussen reporrts voor O1"
+        },
+        "value": 30,
+        "attr": {
+          "min": 3,
+          "max": 50
+        },
+        "units": {
+          "en": "%",
+          "nl": "%"
+        },
+        "hint": {
+          "en": "This parameter (85) defines the minimum time between sending reports to Homey for output 1.",
+          "nl": "Deze parameter (85) bepaalt de minimum tijd tussen status updates naar Homey voor output 1."
+        },
+        "zwave": {
+          "index": 85,
+          "size": 1
+        }
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Device Settings",
+      "nl": "Apparaat instellingen"
+    },
+    "children": [
+      {
+        "id": "zwaveShutterOperatingMode",
+        "type": "dropdown",
+        "label": {
+          "en": "Operating Mode",
+          "nl": "Operatie modus"
+        },
+        "value": "0",
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Shutter mode",
+              "nl": "Shutter modus"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Venetian mode",
+              "nl": "Venetian modus"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "en": "Manual time set",
+              "nl": "Handmatige ingestelde tijd"
+            }
+          }
+        ],
+        "hint": {
+          "en": "This parameter (71) switched between the two operating modes. In shutter mode, you can select up/down/stop. In venetian mode an additional capability is added which you can use to control the tilt position of the slats. Note: after changing this setting the device needs to be removed from Homey and re-added after waiting for 30 seconds (do not reset the device when removing).",
+          "nl": "Deze parameter (71) schakelt tussen de twee operatie modi. In shutter modus kan je omhoog/omlaag/stop selecteren. In venetian modus komt er een extra capability beschikbaar waarmee je de tilt positie van de lamellen kan instellen. Let op: na het wijzigen van deze parameter moet het apparaat worden verwijderd van Homey en na 30 seconden te hebben gewacht, opnieuw worden toegevoegd aan Homey."
+        },
+        "zwave": {
+          "index": 71,
+          "size": 1
+        }
+      },
+      {
+        "id": "zwaveShutterVenetianSlatsTurningTime",
+        "type": "number",
+        "label": {
+          "en": "Venetian Blinds Turning Time",
+          "nl": "Lammelen draai tijd"
+        },
+        "value": 150,
+        "attr": {
+          "min": 0,
+          "max": 32767
+        },
+        "units": {
+          "en": "ds",
+          "nl": "ds"
+        },
+        "hint": {
+          "en": "This parameter (72) should be set to the time required for the slats to make a full turn (180 degrees) when parameter 71 is set to 1 or 2.",
+          "nl": "Deze parameter (72) moet worden ingesteld op de tijd die nodig is voor de lamellen om een volledige draai (180 graden) te maken wanneer parameter 71 is ingesteld op 1 of 2."
+        },
+        "zwave": {
+          "index": 72,
+          "size": 2
+        }
+      },
+      {
+        "id": "zwaveShutterVenetianSlatsPositionAfterMoving",
+        "type": "dropdown",
+        "label": {
+          "en": "Slats position after moving",
+          "nl": "Lamellen positie na beweging"
+        },
+        "value": "1",
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Disabled",
+              "nl": "Uitgeschakeld"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Enabled",
+              "nl": "Ingeschakeld"
+            }
+          }
+        ],
+        "hint": {
+          "en": "This parameter (73) is used to enable/disable the slats to return to the previously set position, after being activated via Homey, push-button operation or when the lower limit switch is reached.",
+          "nl": "Deze parameter (73) wordt gebruikt om de lamellen in/uit te schakelen om terug te keren naar de eerder ingestelde positie, nadat ze zijn geactiveerd via Homey, knopbediening of wanneer de onderste eindschakelaar is bereikt."
+        },
+        "zwave": {
+          "index": 73,
+          "size": 1
+        }
+      },
+      {
+        "id": "zwaveShutterConsumptionThresholdEndPosition",
+        "type": "dropdown",
+        "label": {
+          "en": "Motor operation detection by consumption",
+          "nl": "Motor operation detection obv verbruik"
+        },
+        "value": "1",
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Disabled: reaching a limit switch will not be detected",
+              "nl": "Uitgeschakeld: het bereiken van een eindschakelaar wordt niet gedetecteerd."
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Auto power calibration",
+              "nl": "Automatische vermogenskalibratie"
+            }
+          },
+          {
+            "id": "2",
+            "label": {
+              "en": "1-255 (1-255W) - report interval",
+              "nl": "1-255 (1-255W) - report interval"
+            }
+          }
+        ],
+        "hint": {
+          "en": "This parameter (76) defines the power consumption threshold at the end positions. Based on this value, the Device will know that the shutters reached the limit switches.",
+          "nl": "Deze parameter (76) definieert de drempelwaarde van het stroomverbruik bij de eindposities. Op basis van deze waarde zal het apparaat weten dat de rolluiken de eindschakelaars hebben bereikt."
+        },
+        "zwave": {
+          "index": 76,
+          "size": 1
+        }
+      },
+      {
+        "id": "zwaveShutterMotorStopDelay",
+        "type": "number",
+        "label": {
+          "en": "Motor stop delay after limit switch detection",
+          "nl": "Motorstopvertraging na detectie van eindschakelaar."
+        },
+        "value": 10,
+        "attr": {
+          "min": 0,
+          "max": 127
+        },
+        "units": {
+          "en": "ds",
+          "nl": "ds"
+        },
+        "hint": {
+          "en": "This parameter (80) defines the delay time for the motor to turn off, after reaching the limit switch.",
+          "nl": "Deze parameter (80) definieert de vertragingstijd voor de motor om uit te schakelen nadat de eindschakelaar is bereikt."
+        },
+        "zwave": {
+          "index": 80,
+          "size": 1
+        }
+      },
+      {
+        "id": "zwaveShutterMaxMotorTime",
+        "type": "number",
+        "label": {
+          "en": "Maximum Motor Moving Time",
+          "nl": "Maximale bewegingstijd van de motor."
+        },
+        "value": 120,
+        "attr": {
+          "min": 1,
+          "max": 32000
+        },
+        "units": {
+          "en": "s",
+          "nl": "s"
+        },
+        "hint": {
+          "en": "When the shutter is not calibrated (or the motor is not equipped with a limit switch), this parameter (91) defines the movement time of the motor.",
+          "nl": "Wanneer het rolluik niet is gekalibreerd (of de motor niet is uitgerust met een eindschakelaar), definieert deze parameter (91) de bewegingstijd van de motor."
+        },
+        "zwave": {
+          "index": 91,
+          "size": 2
+        }
+      }
+    ]
+  }
+]

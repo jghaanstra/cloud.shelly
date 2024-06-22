@@ -12,7 +12,7 @@ class ShellyDevice extends Homey.Device {
       if (!this.util) this.util = new Util({homey: this.homey});
 
       // VARIABLES GENERIC
-      this.bluetoothScriptVersion = 4;
+      this.bluetoothScriptVersion = 5;
       this.pollingFailures = 0;
     
       // ADDING CAPABILITY LISTENERS
@@ -3471,6 +3471,10 @@ class ShellyDevice extends Homey.Device {
     try {
 
       /* placeholder for update for specific devices */
+      // TODO: remove after this release
+      if (this.getStoreValue('config').id === 'shellyuni' && this.getStoreValue('channel') !== 0 && this.hasCapability('measure_voltage')) {
+        this.removeCapability('measure_voltage');
+      }
 
       if (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket') { /* COAP AND WEBSOCKET */
 
@@ -3587,7 +3591,7 @@ class ShellyDevice extends Homey.Device {
 
       } else if (this.getStoreValue('communication') === 'bluetooth') { /* BLUETOOTH DEVICES */
 
-        let device_config = this.util.getDeviceConfig('type', this.getStoreValue('type'));
+        let device_config = this.util.getDeviceConfig(this.getStoreValue('type'), 'bluetooth');
 
         if (typeof device_config !== 'undefined') {
 

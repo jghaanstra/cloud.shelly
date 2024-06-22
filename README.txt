@@ -73,11 +73,14 @@ Shelly Pro Dimmer 2PM
 
 Gen 3
 -------------
-Shelly Plus Humidity/Temperature Gen3
-Shelly Plus PM Mini Gen3
-Shelly Plus 1 Mini Gen3
-Shelly Plus 1PM Mini Gen3
-Shelly Dimmer 0/1-10V PM
+Shelly Humidity/Temperature Gen3
+Shelly PM Mini Gen3
+Shelly 1 Gen3
+Shelly 1 Mini Gen3
+Shelly 1PM Gen3
+Shelly 1PM Mini Gen3
+Shelly Dimmer 0/1-10V PM Gen3
+Shelly i4 Gen3
 
 Bluetooth
 -------------
@@ -86,6 +89,7 @@ Shelly BLU DoorWindow
 Shelly BLU Motion
 Shelly BLU Gateway (BLE to WiFi)
 Shelly BLU HT
+Shelly BLU Wall Switch 4 EU/US
 
 Z-Wave
 -------------
@@ -100,3 +104,5 @@ Shelly Wave Pro 1PM
 Shelly Wave Pro 2
 Shelly Wave Pro 2PM
 Shelly Wave i4
+Shelly Wave Pro 3
+Shelly Wave Pro Shutter

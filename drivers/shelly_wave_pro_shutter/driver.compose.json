@@ -1,0 +1,66 @@
+{
+  "name": {
+    "en": "Shelly Wave Pro Shutter",
+    "nl": "Shelly Wave Pro Shutter"
+  },
+  "images": {
+    "small": "./assets/drivers/shelly_wave_pro_shutter/images/small.jpg",
+    "large": "./assets/drivers/shelly_wave_pro_shutter/images/large.jpg"
+  },
+  "class": "windowcoverings",
+  "capabilities": [
+    "windowcoverings_set",
+    "measure_power",
+    "meter_power",
+    "button.reset_meter",
+    "button.calibration",
+    "deviceWave"
+  ],
+  "capabilitiesOptions": {
+    "button.reset_meter": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Reset power meter",
+        "nl": "Stel stroomverbuik opnieuw in"
+      },
+      "desc": {
+        "en": "Reset the accumulated power usage (kWh), note that this can not be reversed.",
+        "nl": "Stel geaccumuleerde stroomverbruik (kWh) opnieuw in, dit kan niet worden teruggedraaid."
+      }
+    },
+    "button.calibration": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Start calibration",
+        "nl": "Start kalibratie"
+      },
+      "desc": {
+        "en": "Force calibration of the {{driverNameEn}}. Make sure the blinds are lowered completely before starting the calibration.",
+        "nl": "Start geforceerde kalibratie van de {{driverNameNl}}. Zorg dat het rolluik of de jaloezieën volledig naar beneden zijn voor het starten van de kalibratie."
+      }
+    }
+  },
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "zwave": {
+    "manufacturerId": 1120,
+    "productTypeId": [3],
+    "productId": [133],
+    "associationGroupsMultiChannel": [1],
+    "learnmode": {
+      "image": "./assets/zwave-learnmode.svg",
+      "instruction": {
+        "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking. Repeat this for step 2 in the pairing process and enter the device key (pincode). After pairing peform a shutter calibration from the device maintenance settings.",
+        "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen. Herhaal dit voor stap 2 in het koppelingsproces en voer de apparaatsleutel (pincode) in. Voer na het koppelen een shutter calibratie uit via de apparaat onderhoudsinstellingen."
+      }
+    },
+    "unlearnmode": {
+      "image": "./assets/zwave-learnmode.svg",
+      "instruction": {
+        "en": "Press and hold the S button on the device until the LED turns solid blue. Release the button and press and hold it again (> 2s) until the blue LED starts blinking.",
+        "nl": "Houd de S-knop op het apparaat ingedrukt totdat de LED continu blauw wordt. Laat de knop los en druk er opnieuw op en houd deze ingedrukt (> 2s) totdat de blauwe LED begint te knipperen."
+      }
+    }
+  },
+  "platforms": [ "local", "cloud" ],
+  "connectivity": [ "zwave" ]
+}

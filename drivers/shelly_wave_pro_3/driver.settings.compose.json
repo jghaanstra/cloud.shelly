@@ -60,6 +60,35 @@
   {
     "type": "group",
     "label": {
+      "en": "Switch 3 - Output Settings",
+      "nl": "Switch 3 - Output instellingen"
+    },
+    "children": [
+      {
+        "id": "zwaveSwitchTypeSW3",
+        "$extends": "zwaveSwitchTypeSW3"
+      },
+      {
+        "id": "zwaveRestoreStateO3",
+        "$extends": "zwaveRestoreStateO3"
+      },
+      {
+        "id": "zwaveAutoOffO3",
+        "$extends": "zwaveAutoOffO3"
+      },
+      {
+        "id": "zwaveAutoOnO3",
+        "$extends": "zwaveAutoOnO3"
+      },
+      {
+        "id": "zwaveContactTypeO3",
+        "$extends": "zwaveContactTypeO3"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
       "en": "Device Settings",
       "nl": "Apparaat instellingen"
     },

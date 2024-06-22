@@ -1,0 +1,29 @@
+{
+  "id": "zwaveRestoreStateO3",
+  "type": "dropdown",
+  "label": {
+    "en": "Restore state of O3 after power failure",
+    "nl": "Herstel status van O3 na stroom uitval"
+  },
+  "value": "0",
+  "values": [
+    {
+      "id": "0",
+      "label": {
+        "en": "Output 3 saves last on/off status and restores it after a power failure",
+        "nl": "Output 3 hersteld on/off status na stroom uitval"
+      }
+    },
+    {
+      "id": "1",
+      "label": {
+        "en": "Output 3 does not save on/off status and does not restore it after a power failure, it remains off",
+        "nl": "Output 3 is standaard uit na stroom uitval"
+      }
+    }
+  ],
+  "zwave": {
+    "index": 27,
+    "size": 1
+  }
+}

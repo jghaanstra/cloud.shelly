@@ -80,15 +80,30 @@ class ShellyBluetoothDevice extends Device {
           let _value;
           while (buffer.length > 0) {
             _bth = this.BTH[buffer.at(0)];
-            if (typeof _bth === 'undefined') {
-              this.error('BTH: unknown type');
+            if (typeof _bth === "undefined") {
+              this.error("BTH: Unknown type");
               break;
             }
             buffer = buffer.slice(1);
             _value = this.BTHomeDecoder.getBufValue(_bth.t, buffer);
             if (_value === null) break;
-            if (typeof _bth.f !== 'undefined') _value = _value * _bth.f;
-            result[_bth.n] = _value;
+            if (typeof _bth.f !== "undefined") _value = _value * _bth.f;
+      
+            if (typeof result[_bth.n] === "undefined") {
+              result[_bth.n] = _value;
+            }
+            else {
+              if (Array.isArray(result[_bth.n])) {
+                result[_bth.n].push(_value);
+              } 
+              else {
+                result[_bth.n] = [
+                  result[_bth.n],
+                  _value
+                ];
+              }
+            }
+      
             buffer = buffer.slice(this.getByteSize(_bth.t));
           }
           return result;
@@ -214,7 +229,16 @@ class ShellyBluetoothDevice extends Device {
 
         /* button */
         if (result.hasOwnProperty("button")) {
-          if (result.button !== 0) {
+          if (result.button.constructor === Array) {
+            result.button.forEach((element, index) => {
+              if (element !== 0 ) {
+                const action_event = this.util.getActionEventDescription(element.toString(), 'bluetooth', 'gen2');
+                const channel = index + 1;
+
+                this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": action_event + '_' + channel}, {"action": action_event + '_' + channel}).catch(error => { this.error(error) });
+              }
+            });
+          } else if (result.button !== 0 ) {
             const action_event = this.util.getActionEventDescription(result.button.toString(), 'bluetooth', 'gen2');
 
             this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": action_event}, {"action": action_event}).catch(error => { this.error(error) });

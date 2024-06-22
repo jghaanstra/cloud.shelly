@@ -817,5 +817,8 @@
   },
   "3.29.5": {
     "en": "This release fixes an issue with values not updating for the Wave Shutter. Due to a bug in Homey you will need to remove and re-add association group 1 to value 1.1. It also add a flow card for setting the tilt position of the Wave Shutter in venetian blinds mode. The release also fixes an issue with pairing discontinued devices that have older firmware and do not support unicast CoAP like to old Shelly 4 Pro."
+  },
+  "3.30.0": {
+    "en": "This release adds support for Shelly 1 Gen3, 1PM Gen3, i4 Gen3, Wave Pro Shutter, Wave Pro 3 and BLU Wall Switch 4 and it fixes an issue with manual pairing a Shelly RGBW2 in white mode."
   }
 }

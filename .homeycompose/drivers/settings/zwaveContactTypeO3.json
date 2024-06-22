@@ -1,0 +1,33 @@
+{
+  "id": "zwaveContactTypeO3",
+  "type": "dropdown",
+  "label": {
+    "en": "Contact Type O3 - NO/NC",
+    "nl": "Contact type O3 - NO/NC"
+  },
+  "value": "0",
+  "values": [
+    {
+      "id": "0",
+      "label": {
+        "en": "Normally Open (NO)",
+        "nl": "Normaal Open (NO)"
+      }
+    },
+    {
+      "id": "1",
+      "label": {
+        "en": "Normally Closed (NC)",
+        "nl": "Normaal gesloten (NC)"
+      }
+    }
+  ],
+  "hint": {
+    "en": "This parameter (103) defines the type of Relay contact type for Output 2.",
+    "nl": "Deze parameter (103) bepaalt het type van relay contact voor Output 2."
+  },
+    "zwave": {
+    "index": 103,
+    "size": 1
+  }
+}
