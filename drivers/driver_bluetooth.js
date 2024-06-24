@@ -16,7 +16,7 @@ class ShellyBluetoothDriver extends Homey.Driver {
 
       if (discovery_result !== undefined) {
         discovery_result.forEach(advertisement => {
-          if (advertisement.hasOwnProperty(localName)) {
+          if (advertisement.hasOwnProperty('localName')) {
             if (!advertisements[advertisement.address] && this.util.filterBLEDevices(advertisement.localName)) {
               let device_config = this.util.getDeviceConfig(advertisement.localName, 'bluetooth');
               advertisements[advertisement.address] = {};
