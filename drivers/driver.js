@@ -61,8 +61,13 @@ class ShellyDriver extends Homey.Driver {
         } else {
 
           /* get device config based on hostname of the discovered device */
-          const hostname = discoveryResult.host.substr(0, discoveryResult.host.lastIndexOf("-") + 1);
-          let device_config = this.util.getDeviceConfig(hostname);
+          let device_config;
+          if (discoveryResult.txt.app === 'XMOD1') {
+            device_config = this.util.getDeviceConfig('XMOD1', 'shelly_x');
+          } else {
+            const hostname = discoveryResult.host.substr(0, discoveryResult.host.lastIndexOf("-") + 1);
+            device_config = this.util.getDeviceConfig(hostname);
+          }
 
           if (typeof device_config === 'undefined') {
             this.error('No device config found for device with hostname', hostname);
