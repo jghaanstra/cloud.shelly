@@ -63,10 +63,10 @@ class ShellyDriver extends Homey.Driver {
           /* get device config based on hostname of the discovered device */
           let device_config;
           if (discoveryResult.txt.app === 'XMOD1') {
-            device_config = this.util.getDeviceConfig('XMOD1', 'shelly_x');
+            device_config = this.util.getDeviceConfig('XMOD1', 'type');
           } else {
             const hostname = discoveryResult.host.substr(0, discoveryResult.host.lastIndexOf("-") + 1);
-            device_config = this.util.getDeviceConfig(hostname);
+            device_config = this.util.getDeviceConfig(hostname, 'hostname');
           }
 
           if (typeof device_config === 'undefined') {
@@ -84,20 +84,20 @@ class ShellyDriver extends Homey.Driver {
                 /* update device config if it's a roller shutter */
                 if (result.hasOwnProperty("num_rollers") && result.hasOwnProperty("mode")) {
                   if (result.mode === 'roller') {
-                    device_config = this.util.getDeviceConfig(hostname + 'roller-');
+                    device_config = this.util.getDeviceConfig(hostname + 'roller-', 'hostname');
                   }
                 } else if (result.hasOwnProperty("num_rollers")) {
                   // fallback for devices with fw < 1.12 but will not work with authentication
                   let settings = await this.util.sendCommand('/settings', discoveryResult.address, '', '');
                   if (settings.mode === 'roller') {
-                    device_config = this.util.getDeviceConfig(hostname + 'roller-');
+                    device_config = this.util.getDeviceConfig(hostname + 'roller-', 'hostname');
                   }
                 }
 
                 /* update device config if it's a RGBW2 in white mode */
                 if (device_config.name === 'Shelly RGBW2 Color') {
                   if (result.num_outputs === 4) {
-                    device_config = this.util.getDeviceConfig(hostname + 'white-');
+                    device_config = this.util.getDeviceConfig(hostname + 'white-', 'hostname');
                   }
                 }
 
@@ -115,9 +115,9 @@ class ShellyDriver extends Homey.Driver {
                 /* update device config if it has a specific profile */
                 if (result.hasOwnProperty("profile")) {
                   if (result.profile === "cover") {
-                    device_config = this.util.getDeviceConfig(hostname + 'roller-');
+                    device_config = this.util.getDeviceConfig(hostname + 'roller-', 'hostname');
                   } else {
-                    device_config = this.util.getDeviceConfig(hostname + result.profile +'-');
+                    device_config = this.util.getDeviceConfig(hostname + result.profile +'-', 'hostname');
                   }
 
                   if (typeof device_config === 'undefined') {
@@ -130,7 +130,7 @@ class ShellyDriver extends Homey.Driver {
                 /* update device config if it's a WallDisplay in thermostat mode */
                 if (result.hasOwnProperty("relay_in_thermostat")) {
                   if (result.relay_in_thermostat) {
-                    device_config = this.util.getDeviceConfig(hostname + 'thermostat-');
+                    device_config = this.util.getDeviceConfig(hostname + 'thermostat-', 'hostname');
                   }
                 }
                 
@@ -198,7 +198,7 @@ class ShellyDriver extends Homey.Driver {
 
         /* get device config based on hostname / id */
         const hostname = id.substr(0, id.lastIndexOf("-") + 1);
-        let device_config = this.util.getDeviceConfig(hostname);
+        let device_config = this.util.getDeviceConfig(hostname, 'hostname');
 
         if (typeof device_config === 'undefined') {
           this.log('No device config found for device with hostname', hostname);
@@ -212,14 +212,14 @@ class ShellyDriver extends Homey.Driver {
               /* update device config if it's a roller shutter */
               if (result.hasOwnProperty("num_rollers") && result.hasOwnProperty("mode")) {
                 if (result.mode === 'roller') {
-                  device_config = this.util.getDeviceConfig(hostname + 'roller-');
+                  device_config = this.util.getDeviceConfig(hostname + 'roller-', 'hostname');
                 }
               }
 
               /* update device config if it's a RGBW2 in white mode */
               if (device_config.name === 'Shelly RGBW2 Color') {
                 if (result.mode === 'white') {
-                  device_config = this.util.getDeviceConfig(hostname + 'white-');
+                  device_config = this.util.getDeviceConfig(hostname + 'white-', 'hostname');
                 }
               }
 
@@ -234,9 +234,9 @@ class ShellyDriver extends Homey.Driver {
               /* update device config if it has a specific profile */
               if (result.hasOwnProperty("profile")) {
                 if (result.profile === "cover") {
-                  device_config = this.util.getDeviceConfig(hostname + 'roller-');
+                  device_config = this.util.getDeviceConfig(hostname + 'roller-', 'hostname');
                 } else {
-                  device_config = this.util.getDeviceConfig(hostname + result.profile +'-');
+                  device_config = this.util.getDeviceConfig(hostname + result.profile +'-', 'hostname');
                 }
 
                 if (typeof device_config === 'undefined') {
@@ -249,7 +249,7 @@ class ShellyDriver extends Homey.Driver {
               /* update device config if it's a WallDisplay in thermostat mode */
               if (result.hasOwnProperty("relay_in_thermostat")) {
                 if (result.relay_in_thermostat) {
-                  device_config = this.util.getDeviceConfig(hostname + 'thermostat-');
+                  device_config = this.util.getDeviceConfig(hostname + 'thermostat-', 'hostname');
                 }
               }
               

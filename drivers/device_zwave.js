@@ -136,7 +136,7 @@ class ShellyZwaveDevice extends ZwaveDevice {
       await this.setStoreValue('channel', device_channel);
 
       // Update the device config
-      const device_config = this.util.getDeviceConfig(this.driver.manifest.name.en, 'zwave');
+      const device_config = this.util.getDeviceConfig(this.driver.manifest.name.en, 'name');
 
       if (typeof device_config !== 'undefined') {
 

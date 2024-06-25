@@ -50,7 +50,7 @@ class ShellyCloudDriver extends OAuth2Driver {
             }
 
             /* get device config based on device type of the discovered devices */
-            let device_config = this.util.getDeviceConfig('type', device_code);
+            let device_config = this.util.getDeviceConfig(device_code, 'type');
 
             if (typeof device_config === 'undefined') {
               this.error('No device config found for device with device code', device_code);
@@ -60,20 +60,20 @@ class ShellyCloudDriver extends OAuth2Driver {
             /* update device config if it's a gen1 roller shutter */
             if (value._dev_info.gen === "G1" && (device_code === 'SHSW-21' || device_code === 'SHSW-25')) {
               if (value.hasOwnProperty("rollers")) {
-                device_config = this.util.getDeviceConfig(device_config.hostname[0] + 'roller-');
+                device_config = this.util.getDeviceConfig(device_config.hostname[0] + 'roller-', 'hostname');
               }
             }
 
             /* update device config if it's a gen1 RGBW2 in white mode */
             if (value._dev_info.gen === "G1" && device_code === 'SHRGBW2') {
               if (value.mode === 'white') {
-                device_config = this.util.getDeviceConfig(device_config.hostname[0] + 'white-');
+                device_config = this.util.getDeviceConfig(device_config.hostname[0] + 'white-', 'hostname');
               }
             }
 
             /* update device config if it's a gen2 roller shutter */
             if (value._dev_info.gen === "G2" && value.hasOwnProperty("cover:0")) {
-              device_config = this.util.getDeviceConfig(device_config.hostname[0] + 'roller-');
+              device_config = this.util.getDeviceConfig(device_config.hostname[0] + 'roller-', 'hostname');
             }
 
             device_config.communication = 'cloud';

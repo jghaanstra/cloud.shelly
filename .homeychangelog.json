@@ -832,5 +832,8 @@
   },
   "3.30.4": {
     "en": "This release adds support for Shelly 1 Gen3, 1PM Gen3, i4 Gen3, Wave Pro Shutter, Wave Pro 3 and BLU Wall Switch 4 and it fixes an issue with manual pairing a Shelly RGBW2 in white mode."
+  },
+  "3.30.5": {
+    "en": "This release adds support for Shelly 1 Gen3, 1PM Gen3, i4 Gen3, Wave Pro Shutter, Wave Pro 3 and BLU Wall Switch 4 and it fixes an issue with manual pairing a Shelly RGBW2 in white mode."
   }
 }

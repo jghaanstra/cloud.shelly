@@ -3471,15 +3471,12 @@ class ShellyDevice extends Homey.Device {
     try {
 
       /* placeholder for update for specific devices */
-      // TODO: remove after this release
-      if (this.getStoreValue('config').id === 'shellyuni' && this.getStoreValue('channel') !== 0 && this.hasCapability('measure_voltage')) {
-        this.removeCapability('measure_voltage');
-      }
+
 
       if (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket') { /* COAP AND WEBSOCKET */
 
         /* get the current device config */
-        let device_config = this.util.getDeviceConfig(this.getStoreValue('config').hostname[0]);
+        let device_config = this.util.getDeviceConfig(this.getStoreValue('config').hostname[0], 'hostname');
         let result;
         let config;
 
@@ -3618,7 +3615,7 @@ class ShellyDevice extends Homey.Device {
 
       } else if (this.getStoreValue('communication') === 'cloud') { /* CLOUD DEVICES */
         
-        let device_config = this.util.getDeviceConfig(this.getStoreValue('config').hostname[0]);
+        let device_config = this.util.getDeviceConfig(this.getStoreValue('config').hostname[0], 'hostname');
 
         if (typeof device_config !== 'undefined') {
 
