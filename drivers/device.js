@@ -3515,7 +3515,7 @@ class ShellyDevice extends Homey.Device {
 
         }
 
-        if (typeof device_config !== 'undefined') {
+        if (typeof device_config !== 'undefined' && device_config.hostname !== 'xmod1') {
 
           /* updating device config store value */
           await this.setStoreValue('config', device_config);

@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.30.6",
+  "version": "3.30.7",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -9973,6 +9973,25 @@
             "match": {
               "type": "regex",
               "value": "^shelly"
+            }
+          }
+        ]
+      ]
+    },
+    "shellyx": {
+      "type": "mdns-sd",
+      "mdns-sd": {
+        "name": "shelly",
+        "protocol": "tcp"
+      },
+      "id": "{{host}}",
+      "conditions": [
+        [
+          {
+            "field": "txt.app",
+            "match": {
+              "type": "regex",
+              "value": "^XMOD"
             }
           }
         ]

@@ -15,18 +15,23 @@ class ShellyDriver extends Homey.Driver {
     let selectedDeviceId;
     let deviceArray = {};
 
+    const discoveryStrategyX = this.homey.discovery.getStrategy("shellyx");
+    const discoveryResultsX = discoveryStrategyX.getDiscoveryResults();
+
+    const discoveryResultsMerged = {...discoveryResults, ...discoveryResultsX};
+
     session.setHandler('list_devices', async (data) => {
       try {
 
         /* get already paired Shelly devices and remove them from discoveryResults */
         const shellyDevices = await this.util.getShellies('collection');
         for (const shellyDevice of shellyDevices){
-          delete discoveryResults[shellyDevice.main_device];
-          delete discoveryResults[shellyDevice.main_device + '.local'];
+          delete discoveryResultsMerged[shellyDevice.main_device];
+          delete discoveryResultsMerged[shellyDevice.main_device + '.local'];
         }
 
         /* fill devices object with discovered devices */
-        const devices = Object.values(discoveryResults).map(discoveryResult => {
+        const devices = Object.values(discoveryResultsMerged).map(discoveryResult => {
           return {
             name: discoveryResult.host + ' ['+ discoveryResult.address +']',
             data: {
@@ -52,20 +57,21 @@ class ShellyDriver extends Homey.Driver {
 
     session.setHandler('get_device', async (data) => {
       try {
-        const discoveryResult = discoveryResults[selectedDeviceId];
+        const discoveryResult = discoveryResultsMerged[selectedDeviceId];
 
         if (discoveryResult === undefined || discoveryResult === null) {
           this.error('selected device with selectedDeviceId', selectedDeviceId, 'from discoveryResults is not defined, logging discoveryResults object.');
-          this.error(JSON.stringify(discoveryResults));
+          this.error(JSON.stringify(discoveryResultsMerged));
           throw new Error('Selected device from discoveryResults is undefined, please send a diagnostic report to the developer. Device ID is', selectedDeviceId);
         } else {
 
           /* get device config based on hostname of the discovered device */
           let device_config;
+          let hostname;
           if (discoveryResult.txt.app === 'XMOD1') {
             device_config = this.util.getDeviceConfig('XMOD1', 'type');
           } else {
-            const hostname = discoveryResult.host.substr(0, discoveryResult.host.lastIndexOf("-") + 1);
+            hostname = discoveryResult.host.substr(0, discoveryResult.host.lastIndexOf("-") + 1);
             device_config = this.util.getDeviceConfig(hostname, 'hostname');
           }
 
@@ -318,6 +324,16 @@ class ShellyDriver extends Homey.Driver {
           if (settings.sys.device.name !== null && settings.sys.device.name !== undefined) { deviceArray.name = settings.sys.device.name; }
           await this.util.setWsServer(deviceArray.settings.address, deviceArray.settings.password);
           deviceArray.store.wsserver = true;
+
+          /* update variable capabilities for Shelly X MOD 1 */
+          if (deviceArray.store.config.id === 'xmod1') {
+            const extendedCapabilities = await this.util.extendCapabilities(settings, deviceArray.store.config.capabilities_1, deviceArray.store.config.capabilities_2);
+            deviceArray.store.config.channels = extendedCapabilities.channels;
+            deviceArray.capabilities = extendedCapabilities.capabilities_1;
+            deviceArray.store.config.capabilities_1 = extendedCapabilities.capabilities_1;
+            deviceArray.store.config.capabilities_2 = extendedCapabilities.capabilities_2;
+          }
+          
           return Promise.resolve(deviceArray);
         } else {
           return Promise.resolve(deviceArray);

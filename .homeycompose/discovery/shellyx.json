@@ -1,0 +1,19 @@
+{
+  "type": "mdns-sd",
+  "mdns-sd": {
+    "name": "shelly",
+    "protocol": "tcp"
+  },
+  "id": "{{host}}",
+  "conditions": [
+    [
+      {
+        "field": "txt.app",
+        "match": {
+          "type": "regex",
+          "value": "^XMOD"
+        }
+      }
+    ]
+  ]
+}
