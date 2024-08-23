@@ -2567,12 +2567,13 @@ class ShellyDevice extends Homey.Device {
                   }
                 } else if (component.startsWith('smoke') && capability === 'alarm')  {
                   this.parseCapabilityUpdate('alarm_smoke', value, channel);
-                } else if (component.startsWith('boolean') || component.startsWith('number') || component.startsWith('text') || component.startsWith('enum'))  {
+                } else if (component.startsWith('boolean') || component.startsWith('number') || component.startsWith('text') || component.startsWith('enum'))  { // parse virtual component status updates
                   let type = component.substring(0, component.length - 4);
                   let boolean = false;
                   let number = 0;
                   let text = 'empty';
                   let enumeration = 'none';
+                  let button = 'empty';
     
                   switch (type) {
                     case 'boolean':
@@ -2592,7 +2593,7 @@ class ShellyDevice extends Homey.Device {
                   }
                   this.homey.flow.getDeviceTriggerCard('triggerVirtualComponents').trigger(
                     this,
-                    {"vc_type": type, "vc_id": component, "boolean": boolean, "number": number, "text": text, "enum": enumeration}, 
+                    {"vc_type": type, "vc_id": component, "boolean": boolean, "number": number, "text": text, "enum": enumeration, "button": button}, 
                     {"vc_id": component}
                   ).catch(error => { this.error(error) });
                 } else {
@@ -2651,6 +2652,12 @@ class ShellyDevice extends Homey.Device {
                   this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": action_event }, {"id": device.getData().id, "device": device.getName(), "action": action_event }).catch(error => { this.error(error) });
                 }
                 
+              } else if (event.component.startsWith('button')) { // parse virtual component buttons
+                this.homey.flow.getDeviceTriggerCard('triggerVirtualComponents').trigger(
+                  this,
+                  {"vc_type": "button", "vc_id": event.component, "boolean": false, "number": 0, "text": "empty", "enum": "none", "button": event.event}, 
+                  {"vc_id": event.component}
+                ).catch(error => { this.error(error) });
               }
             } catch (error) {
               this.error(error);
@@ -3471,7 +3478,10 @@ class ShellyDevice extends Homey.Device {
     try {
 
       /* placeholder for update for specific devices */
-
+      // TODO: remove next release
+      if (this.getStoreValue('config').id === 'shellyplusuni' && this.hasCapability('input_3')) {
+        this.removeCapability('input_3');
+      }
 
       if (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket') { /* COAP AND WEBSOCKET */
 

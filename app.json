@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.30.7",
+  "version": "3.31.0",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -2055,6 +2055,15 @@
               "nl": "Enum waarde"
             },
             "example": "Yes"
+          },
+          {
+            "name": "button",
+            "type": "string",
+            "title": {
+              "en": "Button Event",
+              "nl": "Knop event"
+            },
+            "example": "single_press"
           }
         ],
         "args": [
@@ -8437,7 +8446,7 @@
           3
         ],
         "productId": [
-          133
+          132
         ],
         "associationGroupsMultiChannel": [
           1

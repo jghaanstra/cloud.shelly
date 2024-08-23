@@ -61,6 +61,15 @@
         "nl": "Enum waarde"
       },
       "example": "Yes"
+    },
+    {
+      "name": "button",
+      "type": "string",
+      "title": {
+        "en": "Button Event",
+        "nl": "Knop event"
+      },
+      "example": "single_press"
     }
   ],
   "args": [

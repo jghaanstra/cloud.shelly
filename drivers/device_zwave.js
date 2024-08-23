@@ -111,17 +111,21 @@ class ShellyZwaveDevice extends ZwaveDevice {
    * Reset calibration configuration parameter and abort running timeout.
    */
   async _resetCalibrationProcess() {
-    this.log('reset calibration process ...');
+    try {
+      this.log('reset calibration process ...');
 
-    // Clear timeout and reset calibration setting
-    this.homey.clearTimeout(this._calibrationResetTimeout);
-    this._calibrationResetTimeout = null;
-
-    // Reset calibration setting
-    await this.configurationSet({
-      index: 78,
-      size: 1,
-    }, 0);
+      // Clear timeout and reset calibration setting
+      this.homey.clearTimeout(this._calibrationResetTimeout);
+      this._calibrationResetTimeout = null;
+  
+      // Reset calibration setting
+      await this.configurationSet({
+        index: 78,
+        size: 1,
+      }, 0);
+    } catch(error) {
+      this.error(error);
+    }
   }
 
   async updateDeviceConfig() {

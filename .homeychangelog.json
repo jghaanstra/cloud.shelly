@@ -841,5 +841,8 @@
   },
   "3.30.7": {
     "en": "This release adds support for Shelly 1 Gen3, 1PM Gen3, i4 Gen3, Wave Pro Shutter, Wave Pro 3 and BLU Wall Switch 4 and it fixes an issue with manual pairing a Shelly RGBW2 in white mode."
+  },
+  "3.31.0": {
+    "en": "This release fixes the following issues. Fix for the Shelly Pro Dimmer 1PM being added as two devices (requires re-pairing). Fix for the wrong product type id for Shelly Wave Pro Shutter resulting in unknown device. It removes input3 from Shelly Plus Uni as this input is only a digital counter input which has it's own trigger flowcard. It also adds support for the button virtual component for gen3 devices and includes framework updates."
   }
 }
