@@ -714,11 +714,9 @@ class ShellyDevice extends Homey.Device {
       let result = {};
       if (this.getStoreValue('communication') === 'websocket') {
         result = await this.util.sendRPCCommand('/rpc/Shelly.GetStatus', this.getSetting('address'), this.getSetting('password'));
-        if (!this.getAvailable()) { await this.setAvailable().catch(this.error); };
         this.parseFullStatusUpdateGen2(result);
       } else {
         result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        if (!this.getAvailable()) { await this.setAvailable().catch(this.error); };
         this.parseFullStatusUpdateGen1(result);
       }
 
@@ -736,10 +734,8 @@ class ShellyDevice extends Homey.Device {
               const device = shelly[0].device;
               if (device) {
                 if (device.getStoreValue('communication') === 'websocket') {
-                  if (!device.getAvailable()) { await device.setAvailable().catch(this.error); };
                   device.parseFullStatusUpdateGen2(result);
                 } else {
-                  if (!device.getAvailable()) { await device.setAvailable().catch(this.error); };
                   device.parseFullStatusUpdateGen1(result);
                 }
                 device.pollingFailures = 0;
@@ -813,6 +809,8 @@ class ShellyDevice extends Homey.Device {
   /* generic full status parser for polling over HTTP and cloud status updates for gen1 */
   async parseFullStatusUpdateGen1(result = {}) {
     try {
+      if (!this.getAvailable()) { await this.setAvailable().catch(this.error); };
+
       let channel = this.getStoreValue('channel') || 0;
 
       // RELAYS (onoff)
@@ -1390,6 +1388,8 @@ class ShellyDevice extends Homey.Device {
   /* generic full status updates parser for polling over HTTP, inbound websocket full status updates and cloud full status updates for gen2 */
   async parseFullStatusUpdateGen2(result = {}) {
     try {
+      if (!this.getAvailable()) { await this.setAvailable().catch(this.error); };
+
       let channel = this.getStoreValue('channel') || 0;
 
       // SWITCH COMPONENT
@@ -3705,7 +3705,6 @@ class ShellyDevice extends Homey.Device {
           }
 
           /* set energy object if changed */
-          // TODO: remove after the next release, for some reason this always updates even though values are the same
           let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
           let energyObjectEqual = true;
           if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
@@ -3796,7 +3795,6 @@ class ShellyDevice extends Homey.Device {
           }
 
           /* set energy object if changed */
-          // TODO: remove after the next release, for some reason this always updates even though values are the same
           let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
           let energyObjectEqual = true;
           if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
@@ -3860,7 +3858,6 @@ class ShellyDevice extends Homey.Device {
           }
 
           /* set energy object if changed */
-          // TODO: remove after the next release, for some reason this always updates even though values are the same
           let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
           let energyObjectEqual = true;
           if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {

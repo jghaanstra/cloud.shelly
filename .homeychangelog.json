@@ -847,5 +847,8 @@
   },
   "3.32.0": {
     "en": "This release adds support for the Shelly Plug S Gen 3 and Shelly Pro Dimmer 0/1-10V PM. It also changes the energy settings for devices that are registered as smart meter to comply with future Homey updates and it changes the behaviour of how devices are marked online again after being offline to make sure multichannel devices are all marked online again. The release also contains code refactoring to accommodate future devices and it adds a totalx capability for Shelly Plus Uni."
+  },
+  "3.32.1": {
+    "en": "This release adds support for the Shelly Plug S Gen 3 and Shelly Pro Dimmer 0/1-10V PM. It also changes the energy settings for devices that are registered as smart meter to comply with future Homey updates and it changes the behaviour of how devices are marked online again after being offline to make sure multichannel devices are all marked online again. The release also contains code refactoring to accommodate future devices and it adds a totalx capability for Shelly Plus Uni."
   }
 }
