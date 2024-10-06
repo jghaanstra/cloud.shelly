@@ -12,13 +12,13 @@ class ShellyCloudDevice extends OAuth2Device {
       if (!this.util) this.util = new Util({homey: this.homey});
 
       // ADDING CAPABILITY LISTENERS
-      this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
+      this.registerMultipleCapabilityListener(["onoff", "onoff.light"], this.onMultipleCapabilityOnoff.bind(this));
       this.registerCapabilityListener("onoff.1", this.onCapabilityOnoff1.bind(this));
       this.registerCapabilityListener("onoff.2", this.onCapabilityOnoff2.bind(this));
       this.registerCapabilityListener("onoff.3", this.onCapabilityOnoff3.bind(this));
       this.registerCapabilityListener("onoff.4", this.onCapabilityOnoff4.bind(this));
       this.registerCapabilityListener("onoff.5", this.onCapabilityOnoff5.bind(this));
-      this.registerCapabilityListener("dim", this.onCapabilityDim.bind(this));
+      this.registerMultipleCapabilityListener(["dim", "dim.light"], this.onMultipleCapabilityDim.bind(this));
       this.registerCapabilityListener("dim.white", this.onCapabilityDimWhite.bind(this));
       this.registerCapabilityListener("light_temperature", this.onCapabilityLightTemperature.bind(this));
       this.registerMultipleCapabilityListener(['light_hue', 'light_saturation'], this.onMultipleCapabilityListenerSatHue.bind(this), 500);
@@ -127,7 +127,7 @@ ShellyCloudDevice.prototype.updateCapabilityValue = Device.prototype.updateCapab
 ShellyCloudDevice.prototype.parseFullStatusUpdateGen1 = Device.prototype.parseFullStatusUpdateGen1;
 ShellyCloudDevice.prototype.parseFullStatusUpdateGen2 = Device.prototype.parseFullStatusUpdateGen2;
 ShellyCloudDevice.prototype.parseCapabilityUpdate = Device.prototype.parseCapabilityUpdate;
-ShellyCloudDevice.prototype.onCapabilityOnoff = Device.prototype.onCapabilityOnoff;
+ShellyCloudDevice.prototype.onMultipleCapabilityOnoff = Device.prototype.onMultipleCapabilityOnoff;
 ShellyCloudDevice.prototype.onCapabilityOnoff1 = Device.prototype.onCapabilityOnoff1;
 ShellyCloudDevice.prototype.onCapabilityOnoff2 = Device.prototype.onCapabilityOnoff2;
 ShellyCloudDevice.prototype.onCapabilityOnoff3 = Device.prototype.onCapabilityOnoff3;
@@ -136,7 +136,7 @@ ShellyCloudDevice.prototype.onCapabilityOnoff5 = Device.prototype.onCapabilityOn
 ShellyCloudDevice.prototype.onCapabilityOnoffLight = Device.prototype.onCapabilityOnoffLight;
 ShellyCloudDevice.prototype.onCapabilityWindowcoveringsState = Device.prototype.onCapabilityWindowcoveringsState;
 ShellyCloudDevice.prototype.onCapabilityWindowcoveringsSet = Device.prototype.onCapabilityWindowcoveringsSet;
-ShellyCloudDevice.prototype.onCapabilityDim = Device.prototype.onCapabilityDim;
+ShellyCloudDevice.prototype.onMultipleCapabilityDim = Device.prototype.onMultipleCapabilityDim;
 ShellyCloudDevice.prototype.onCapabilityDimWhite = Device.prototype.onCapabilityDimWhite;
 ShellyCloudDevice.prototype.onCapabilityLightTemperature = Device.prototype.onCapabilityLightTemperature;
 ShellyCloudDevice.prototype.onMultipleCapabilityListenerSatHue = Device.prototype.onMultipleCapabilityListenerSatHue;

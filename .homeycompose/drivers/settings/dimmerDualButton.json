@@ -1,0 +1,33 @@
+{
+  "id": "dimmerDualButton",
+  "type": "dropdown",
+  "label": {
+    "en": "SW1 & SW2 Dual Button Mode",
+    "nl": "SW1 & SW2 dubbele knop modus"
+  },
+  "value": "0",
+  "values": [
+    {
+      "id": "0",
+      "label": {
+        "en": "Inactive",
+        "nl": "Inactief"
+      }
+    },
+    {
+      "id": "1",
+      "label": {
+        "en": "Active",
+        "nl": "Actief"
+      }
+    }
+  ],
+  "hint": {
+    "en": "This parameter (131) defines the SW1 & SW2 Dual button mode (only push button).",
+    "nl": "Deze parameter (131) bepaalt de SW1 & SW2 dubbele knop modus (alleen druk knop)."
+  },
+  "zwave": {
+    "index": 131,
+    "size": 1
+  }
+}

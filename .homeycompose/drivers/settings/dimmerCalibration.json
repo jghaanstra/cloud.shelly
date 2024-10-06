@@ -1,0 +1,54 @@
+{
+  "id": "dimmerCalibration",
+  "type": "dropdown",
+  "label": {
+    "en": "Forced Dimmer Calibration",
+    "nl": "Geforceerde dimmer kalibratie"
+  },
+  "value": "0",
+  "values": [
+    {
+      "id": "0",
+      "label": {
+        "en": "Default",
+        "nl": "Standaard"
+      }
+    },
+    {
+      "id": "1",
+      "label": {
+        "en": "Calibrated (status - read only)",
+        "nl": "Gekalibreerd (status - read only)"
+      }
+    },
+    {
+      "id": "2",
+      "label": {
+        "en": "Not Calibrated (status - read only)",
+        "nl": "Niet gekalibreerd (status - read only)"
+      }
+    },
+    {
+      "id": "3",
+      "label": {
+        "en": "Start calibration",
+        "nl": "Start calibratie"
+      }
+    },
+    {
+      "id": "4",
+      "label": {
+        "en": "Calibration Error (status - read only)",
+        "nl": "Kalibratie fout (status - read only)"
+      }
+    }
+  ],
+  "hint": {
+    "en": "By setting this parameter (78) to value 1 the Device will start executing force calibration procedure.",
+    "nl": "Door deze parameter (78) in te stellen op waarde 1, zal het apparaat beginnen met het uitvoeren van de geforceerde kalibratieprocedure."
+  },
+  "zwave": {
+    "index": 78,
+    "size": 1
+  }
+}

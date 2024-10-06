@@ -16,13 +16,13 @@ class ShellyDevice extends Homey.Device {
       this.pollingFailures = 0;
     
       // ADDING CAPABILITY LISTENERS
-      this.registerCapabilityListener("onoff", this.onCapabilityOnoff.bind(this));
+      this.registerMultipleCapabilityListener(["onoff", "onoff.light"], this.onMultipleCapabilityOnoff.bind(this));
       this.registerCapabilityListener("onoff.1", this.onCapabilityOnoff1.bind(this));
       this.registerCapabilityListener("onoff.2", this.onCapabilityOnoff2.bind(this));
       this.registerCapabilityListener("onoff.3", this.onCapabilityOnoff3.bind(this));
       this.registerCapabilityListener("onoff.4", this.onCapabilityOnoff4.bind(this));
       this.registerCapabilityListener("onoff.5", this.onCapabilityOnoff5.bind(this));
-      this.registerCapabilityListener("dim", this.onCapabilityDim.bind(this));
+      this.registerMultipleCapabilityListener(["dim", "dim.light"], this.onMultipleCapabilityDim.bind(this));
       this.registerCapabilityListener("dim.white", this.onCapabilityDimWhite.bind(this));
       this.registerCapabilityListener("light_temperature", this.onCapabilityLightTemperature.bind(this));
       this.registerMultipleCapabilityListener(['light_hue', 'light_saturation'], this.onMultipleCapabilityListenerSatHue.bind(this), 500);
@@ -168,20 +168,32 @@ class ShellyDevice extends Homey.Device {
 
   // CAPABILITY LISTENERS
 
-  /* onoff relay */
-  async onCapabilityOnoff(value, opts) {
+  /* onoff & onoff.light */
+  async onMultipleCapabilityOnoff(valueObj, optsObj) {
     try {
       switch(this.getStoreValue('communication')) {
         case 'websocket': {
-          return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Set?id='+ this.getStoreValue('channel') +'&on='+ value, this.getSetting('address'), this.getSetting('password'));
+          let value;
+          let component = this.getStoreValue('config').extra.component;
+          if (typeof valueObj.onoff !== 'undefined') {
+            value = valueObj.onoff;
+          } else if (typeof valueObj["onoff.light"] !== 'undefined') {
+            value = valueObj["onoff.light"];
+            if (this.getStoreValue('config').id === 'shellyprorgbwwpm-rgbcct') {
+              component = 'CCT'
+            } else if (this.getStoreValue('config').id === 'shellyprorgbwwpm-rgbx2light') {
+              component = 'Light'
+            }
+          }
+          return await this.util.sendRPCCommand('/rpc/'+ component +'.Set?id='+ this.getStoreValue('channel') +'&on='+ value, this.getSetting('address'), this.getSetting('password'));
         }
         case 'coap': {
-          const command = value ? '/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue('channel') +'?turn=on' : '/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue('channel') +'?turn=off';
+          const command = valueObj.onoff ? '/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue('channel') +'?turn=on' : '/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue('channel') +'?turn=off';
           return await this.util.sendCommand(command, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         }
         case 'cloud': {
           const component_cloud = this.getClass() === 'light' ? 'light' : 'relay';
-          const onoff = value ? 'on' : 'off';
+          const onoff = valueObj.onoff ? 'on' : 'off';
           return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: component_cloud, command_param: 'turn', command_value: onoff, deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
         }
         default:
@@ -232,29 +244,6 @@ class ShellyDevice extends Homey.Device {
   async onCapabilityOnoff5(value, opts) {
     try {
       return await this.util.sendRPCCommand('/rpc/Switch.Set?id=104&on='+ value, this.getSetting('address'), this.getSetting('password'));
-    } catch (error) {
-      this.error(error);
-    }
-  }
-
-  /* onoff light */
-  async onCapabilityOnoffLight(value, opts) {
-    try {
-      switch(this.getStoreValue('communication')) {
-        case 'websocket': {
-          return await this.util.sendRPCCommand('/rpc/Light.Set?id='+ this.getStoreValue('channel') +'&on='+ value, this.getSetting('address'), this.getSetting('password'));
-        }
-        case 'coap': {
-          const path = value ? '/light/'+ this.getStoreValue('channel') +'?turn=on' : '/light/'+ this.getStoreValue('channel') +'?turn=off';
-          return await this.util.sendCommand(path, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-        }
-        case 'cloud': {
-          const onoff = value ? 'on' : 'off';
-          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: 'turn', command_value: onoff, deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
-        }
-        default:
-          break;
-      }
     } catch (error) {
       this.error(error);
     }
@@ -332,19 +321,27 @@ class ShellyDevice extends Homey.Device {
     }
   }
 
-  /* dim */
-  async onCapabilityDim(value, opts) {
+  /* dim & dim.light */
+  async onMultipleCapabilityDim(valueObj, optsObj) {
     try {
-      if (opts.duration === undefined || typeof opts.duration == 'undefined') {
-        opts.duration = 500;
+      let dim_duration = 500;
+      if (optsObj.hasOwnProperty("dim")) {
+        if (optsObj.dim.duration !== undefined || typeof optsObj.dim.duration !== 'undefined') {
+          dim_duration = optsObj.dim.duration;
+        }
+      } else if (optsObj.hasOwnProperty("dim.light")) {
+        if (optsObj["dim.light"].duration !== undefined || typeof optsObj["dim.light"].duration !== 'undefined') {
+          dim_duration = optsObj["dim.light"].duration;
+        }
       }
-      if (opts.duration > 5000 ) {
+      
+      if (dim_duration > 5000 ) {
         return Promise.reject(this.homey.__('device.maximum_dim_duration'));
       } else {
         let dim_component = this.getStoreValue('config').extra.dim;
 
         /* dim gain or brightness depending on light_mode for Shelly Bulb (RGBW) */
-        if (this.getStoreValue('config').name === 'Shelly Bulb' || this.getStoreValue('config').name === 'Shelly Bulb RGBW') {
+        if (this.getStoreValue('config').id === 'shellybulb' || this.getStoreValue('config').id === 'shellycolorbulb') {
           if (this.getCapabilityValue('light_mode') === 'color') {
             dim_component = 'gain';
           }
@@ -352,32 +349,38 @@ class ShellyDevice extends Homey.Device {
 
         switch(this.getStoreValue('communication')) {
           case 'websocket': {
-            const onoff_websocket = value === 0 ? false : true;
-            const dim_websocket = value === 0 ? 1 : value * 100;
-            return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Set?id='+ this.getStoreValue('channel') +'&on='+ onoff_websocket +'&'+ this.getStoreValue('config').extra.dim +'='+ dim_websocket +'&transition_duration='+ opts.duration / 1000, this.getSetting('address'), this.getSetting('password'));
+            if (typeof valueObj.dim !== 'undefined' ) {
+              const onoff_websocket = valueObj.dim === 0 ? false : true;
+              const dim_websocket = valueObj.dim === 0 ? 1 : valueObj.dim * 100;
+              return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Set?id='+ this.getStoreValue('channel') +'&on='+ onoff_websocket +'&'+ this.getStoreValue('config').extra.dim +'='+ dim_websocket +'&transition_duration='+ dim_duration / 1000, this.getSetting('address'), this.getSetting('password'));
+            } else if (typeof valueObj["dim.light"] !== 'undefined' ) {
+              const onoff_websocket = valueObj["dim.light"] === 0 ? false : true;
+              const dim_websocket = valueObj["dim.light"] === 0 ? 1 : valueObj["dim.light"] * 100;
+              const component = this.getStoreValue('config').id === 'shellyprorgbwwpm-rgbcct' ? 'CCT' : 'Light';
+              return await this.util.sendRPCCommand('/rpc/'+ component +'.Set?id='+ this.getStoreValue('channel') +'&on='+ onoff_websocket +'&'+ this.getStoreValue('config').extra.dim +'='+ dim_websocket +'&transition_duration='+ dim_duration / 1000, this.getSetting('address'), this.getSetting('password'));
+            }
           }
           case 'coap': {
-            const dim_coap = value === 0 ? 1 : value * 100;
-            const onoff_coap = value === 0 ? 'off' : 'on';
+            const dim_coap = valueObj.dim === 0 ? 1 : valueObj.dim * 100;
+            const onoff_coap = valueObj.dim === 0 ? 'off' : 'on';
             if (!this.getCapabilityValue('onoff')) {
-              return await this.util.sendCommand('/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue('channel') +'?turn='+ onoff_coap +'&'+ dim_component +'='+ dim_coap +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+              return await this.util.sendCommand('/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue('channel') +'?turn='+ onoff_coap +'&'+ dim_component +'='+ dim_coap +'&transition='+ dim_duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
             } else {
-              return await this.util.sendCommand('/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue('channel') +'?'+ dim_component +'='+ dim_coap +'&transition='+ opts.duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+              return await this.util.sendCommand('/'+ this.getStoreValue('config').extra.component +'/'+ this.getStoreValue('channel') +'?'+ dim_component +'='+ dim_coap +'&transition='+ dim_duration +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
             }
           }
           case 'cloud': {
-            if (!this.getCapabilityValue('onoff') && value !== 0) {
+            if (!this.getCapabilityValue('onoff') && valueObj.dim !== 0) {
               this.updateCapabilityValue('onoff', true, this.getStoreValue('channel'));
-            } else if (this.getCapabilityValue('onoff') && value === 0) {
+            } else if (this.getCapabilityValue('onoff') && valueObj.dim === 0) {
               this.updateCapabilityValue('onoff', false, this.getStoreValue('channel'));
             }
-            const dim_cloud = value === 0 ? 1 : value * 100;
+            const dim_cloud = valueObj.dim === 0 ? 1 : valueObj.dim * 100;
             return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'light', command_param: dim_component, command_value: dim_cloud, deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
           }
           default:
             break;
         }
-
       }
     } catch (error) {
       this.error(error);
@@ -426,7 +429,12 @@ class ShellyDevice extends Homey.Device {
     try {
       switch(this.getStoreValue('communication')) {
         case 'websocket': {
-          break;
+          if (this.getStoreValue('config').id === 'shellyprorgbwwpm-rgbcct' || this.getStoreValue('config').id === 'shellyprorgbwwpm-cctx2') {
+            const light_temperature = Number(this.util.denormalize((1 - value), 2700, 6500));
+            return await this.util.sendRPCCommand('/rpc/CCT.Set?id='+ this.getStoreValue('channel') +'&ct='+ light_temperature, this.getSetting('address'), this.getSetting('password'));
+          } else {
+            break;
+          }
         }
         case 'coap': {
           /* update light_mode if available */
@@ -435,10 +443,10 @@ class ShellyDevice extends Homey.Device {
           }
 
           /* set light_temperature depending of device model */
-          if (this.getStoreValue('config').name === 'Shelly Duo') {
+          if (this.getStoreValue('config').id === 'shellybulbduo') {
             const duo_white = 100 - (value * 100);
             return await this.util.sendCommand('/light/0?white='+ duo_white +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
-          } else if (this.getStoreValue('config').name === 'Shelly Bulb' || this.getStoreValue('config').name === 'Shelly Bulb RGBW') {
+          } else if (this.getStoreValue('config').id === 'shellybulb' || this.getStoreValue('config').id === 'shellycolorbulb') {
             const light_temperature = Number(this.util.denormalize((1 - value), 3000, 6500)); // the 1 - value is a backwards compatible hack as the denormalize function has been initially wrong but people might have configured it like that in their flows
             return await this.util.sendCommand('/light/0?temp='+ light_temperature +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
           }
@@ -500,7 +508,7 @@ class ShellyDevice extends Homey.Device {
           return;
         }
         case 'coap': {
-          if (this.getStoreValue('config').name === 'Shelly Bulb' || this.getStoreValue('config').name === 'Shelly Bulb RGBW') {
+          if (this.getStoreValue('config').id === 'shellybulb' || this.getStoreValue('config').id === 'shellycolorbulb') {
             const light_mode = value === 'temperature' ? 'white' : 'color';
             return await this.util.sendCommand('/settings/?mode='+ light_mode +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
           } else {
@@ -706,9 +714,11 @@ class ShellyDevice extends Homey.Device {
       let result = {};
       if (this.getStoreValue('communication') === 'websocket') {
         result = await this.util.sendRPCCommand('/rpc/Shelly.GetStatus', this.getSetting('address'), this.getSetting('password'));
+        if (!this.getAvailable()) { await this.setAvailable().catch(this.error); };
         this.parseFullStatusUpdateGen2(result);
       } else {
         result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+        if (!this.getAvailable()) { await this.setAvailable().catch(this.error); };
         this.parseFullStatusUpdateGen1(result);
       }
 
@@ -726,8 +736,10 @@ class ShellyDevice extends Homey.Device {
               const device = shelly[0].device;
               if (device) {
                 if (device.getStoreValue('communication') === 'websocket') {
+                  if (!device.getAvailable()) { await device.setAvailable().catch(this.error); };
                   device.parseFullStatusUpdateGen2(result);
                 } else {
+                  if (!device.getAvailable()) { await device.setAvailable().catch(this.error); };
                   device.parseFullStatusUpdateGen1(result);
                 }
                 device.pollingFailures = 0;
@@ -801,7 +813,6 @@ class ShellyDevice extends Homey.Device {
   /* generic full status parser for polling over HTTP and cloud status updates for gen1 */
   async parseFullStatusUpdateGen1(result = {}) {
     try {
-      if (!this.getAvailable()) { await this.setAvailable().catch(this.error); };
       let channel = this.getStoreValue('channel') || 0;
 
       // RELAYS (onoff)
@@ -1281,7 +1292,7 @@ class ShellyDevice extends Homey.Device {
 
       }
 
-      // EXT_TEMPERATURE (measure_temperature.1, measure_temperature.2, measure_temperature.3)
+      // EXT_TEMPERATURE (measure_temperature.1, measure_temperature.2, measure_temperature.3, measure_temperature.4)
       if (result.hasOwnProperty("ext_temperature") && this.getStoreValue('channel') === 0) {
 
         /* measure_temperature.1 */
@@ -1314,6 +1325,17 @@ class ShellyDevice extends Homey.Device {
           if (typeof temp3 == 'number' && temp3 != this.getCapabilityValue('measure_temperature.3')) {
             this.updateCapabilityValue('measure_temperature.3', temp3, 0);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature3').trigger(this, {'temperature': temp3}, {}).catch(error => { this.error(error) });
+          }
+        }
+
+        /* measure_temperature.4 */
+        if (result.ext_temperature.hasOwnProperty([3]) && !this.hasCapability('measure_temperature.4')) {
+          this.addCapability('measure_temperature.4');
+        } else if (result.ext_temperature.hasOwnProperty([3]) && this.hasCapability('measure_temperature.4')) {
+          let temp4 = result.ext_temperature[3].tC;
+          if (typeof temp4 == 'number' && temp4 != this.getCapabilityValue('measure_temperature.4')) {
+            this.updateCapabilityValue('measure_temperature.4', temp4, 0);
+            this.homey.flow.getDeviceTriggerCard('triggerTemperature4').trigger(this, {'temperature': temp4}, {}).catch(error => { this.error(error) });
           }
         }
 
@@ -1368,7 +1390,6 @@ class ShellyDevice extends Homey.Device {
   /* generic full status updates parser for polling over HTTP, inbound websocket full status updates and cloud full status updates for gen2 */
   async parseFullStatusUpdateGen2(result = {}) {
     try {
-      if (!this.getAvailable()) { await this.setAvailable().catch(this.error); }
       let channel = this.getStoreValue('channel') || 0;
 
       // SWITCH COMPONENT
@@ -1411,8 +1432,8 @@ class ShellyDevice extends Homey.Device {
 
       }
 
-      // LIGHT / RGB / RGBW COMPONENT
-      if (result.hasOwnProperty("light:"+ channel) || result.hasOwnProperty("rgb:"+ channel) || result.hasOwnProperty("rgbw:"+ channel)) {
+      // LIGHT / RGB / RGBW / CCT COMPONENT
+      if (result.hasOwnProperty("light:"+ channel) || result.hasOwnProperty("rgb:"+ channel) || result.hasOwnProperty("rgbw:"+ channel) || result.hasOwnProperty("cct:"+ channel)) {
 
         let component = {};
 
@@ -1422,45 +1443,81 @@ class ShellyDevice extends Homey.Device {
           component = result["rgb:"+ channel];
         } else if (result.hasOwnProperty("rgbw:"+ channel)) {
           component = result["rgbw:"+ channel];
+        } else if (result.hasOwnProperty("cct:"+ channel)) {
+          component = result["cct:"+ channel];
         }
 
         /* onoff */
         if (component.hasOwnProperty("output")) {
-          this.updateCapabilityValue('onoff', component.output, channel);
+          if ((component === result["light:"+ channel] || component === result["cct:"+ channel]) && this.hasCapability('onoff.light')) {
+            this.updateCapabilityValue('onoff.light', component.output, channel);
+          } else {
+            this.updateCapabilityValue('onoff', component.output, channel);
+          }
         }
 
         /* dim */
         if (component.hasOwnProperty("brightness")) {
           let brightness = component.brightness / 100;
-          this.updateCapabilityValue('dim', brightness, channel);
+          if ((component === result["light:"+ channel] || component === result["cct:"+ channel]) && this.hasCapability('dim.light')) {
+            this.updateCapabilityValue('dim.light', brightness, channel);
+          } else {
+            this.updateCapabilityValue('dim', brightness, channel);
+          }
+        }
+
+        /* light_temperature */
+        if (component.hasOwnProperty("ct")) {
+          const light_temperature = 1 - Number(this.util.normalize(component.ct, 2700, 6500));
+          this.updateCapabilityValue('light_temperature', light_temperature, channel);
         }
 
         /* measure_power */
         if (component.hasOwnProperty("apower")) {
-          this.updateCapabilityValue('measure_power', component.apower, channel);
+          if ((component === result["light:"+ channel] || component === result["cct:"+ channel]) && this.hasCapability('measure_power.light')) {
+            this.updateCapabilityValue('measure_power.light', component.apower, channel);
+          } else {
+            this.updateCapabilityValue('measure_power', component.apower, channel);
+          }
         }
 
         /* meter_power */
         if (component.hasOwnProperty("aenergy")) {
           if (component.aenergy.hasOwnProperty("total")) {
             let meter_power = component.aenergy.total / 1000;
-            this.updateCapabilityValue('meter_power', meter_power, channel);
+            if ((component === result["light:"+ channel] || component === result["cct:"+ channel]) && this.hasCapability('meter_power.light')) {
+              this.updateCapabilityValue('meter_power.light', meter_power, channel);
+            } else {
+              this.updateCapabilityValue('meter_power', meter_power, channel);
+            }
           }
         }
 
         /* measure_voltage */
         if (component.hasOwnProperty("voltage")) {
-          this.updateCapabilityValue('measure_voltage', component.voltage, channel);
+          if ((component === result["light:"+ channel] || component === result["cct:"+ channel]) && this.hasCapability('measure_voltage.light')) {
+            this.updateCapabilityValue('measure_voltage.light', component.voltage, channel);
+          } else {
+            this.updateCapabilityValue('measure_voltage', component.voltage, channel);
+          }
         }
 
         /* measure_current */
         if (component.hasOwnProperty("current")) {
-          this.updateCapabilityValue('measure_current', component.current, channel);
+          if ((component === result["light:"+ channel] || component === result["cct:"+ channel]) && this.hasCapability('measure_current.light')) {
+            this.updateCapabilityValue('measure_current.light', component.current, channel);
+          } else {
+            this.updateCapabilityValue('measure_current', component.current, channel);
+          }
         }
 
         /* measure_temperature (device temperature) */
         if (component.hasOwnProperty("temperature")) {
-          this.updateCapabilityValue('measure_temperature', component.temperature.tC, 0);
+          if ((component === result["light:"+ channel] || component === result["cct:"+ channel]) && this.hasCapability('measure_temperature.light')) {
+            this.updateCapabilityValue('measure_temperature.light', component.temperature.tC, channel);
+          } else {
+            this.updateCapabilityValue('measure_temperature', component.temperature.tC, channel);
+          }
         }
 
         /* dim.white */
@@ -1539,7 +1596,7 @@ class ShellyDevice extends Homey.Device {
 
       }
 
-      // MEASURE POWER, METER POWER AND TEMPERATURE FOR SWITCH, COVER AND LIGHT COMPONENT
+      // MEASURE POWER, METER POWER AND TEMPERATURE FOR SWITCH AND COVER
       if (result.hasOwnProperty("switch:"+ channel) || result.hasOwnProperty("cover:"+ channel) ) {
 
         let component = result.hasOwnProperty("switch:"+ channel) ? result["switch:"+ channel] : result["cover:"+ channel];
@@ -1943,6 +2000,12 @@ class ShellyDevice extends Homey.Device {
               this.homey.flow.getDeviceTriggerCard('triggerInputCountsTotal').trigger(this, {'pulse': result["input:2"].counts.total}, {}).catch(error => { this.error(error) });
             }
           }
+          if (result["input:2"].counts.hasOwnProperty("totalx")) {
+            await this.updateCapabilityValue('input_pulse_counts_total_x', result["input:2"].counts.totalx, 0);
+            if (this.getCapabilityValue('input_pulse_counts_total_x') !== result["input:2"].counts.totalx) {
+              this.homey.flow.getDeviceTriggerCard('triggerInputCountsTotalX').trigger(this, {'pulse': result["input:2"].counts.totalx}, {}).catch(error => { this.error(error) });
+            }
+          }
           if (result["input:2"].counts.hasOwnProperty("by_minute")) {
             await this.updateCapabilityValue('input_pulse_counts_minute', result["input:2"].counts.by_minute[0], 0);
             if (this.getCapabilityValue('input_pulse_counts_minute') !== result["input:2"].counts.by_minute[0]) {
@@ -1981,6 +2044,38 @@ class ShellyDevice extends Homey.Device {
           } else if (this.hasCapability('multiDividedInputs') && this.hasCapability('input_4')) {
             await this.removeCapability('input_4');
             this.log('Removing capability input_4 of channel 1 as the input is configured as button');
+          }
+        }
+      }
+
+      if (result.hasOwnProperty("input:4")) {
+        if (result["input:4"].hasOwnProperty("state") && result["input:4"].state !== null) {
+          if (this.hasCapability('input_5') && channel === 0) { // update input_5 for channel 0
+            const input5Triggercard = result["input:4"].state ? 'triggerInput5On' : 'triggerInput5Off';
+            this.triggerDeviceTriggerCard('input_5', result["input:4"].state, 0, input5Triggercard, {}, {});
+            this.triggerDeviceTriggerCard('input_5', result["input:4"].state, 0, 'triggerInput5Changed', {}, {});
+            this.updateCapabilityValue('input_5', result["input:4"].state, channel);
+          } else if (this.hasCapability('input_1') && channel === 4) { // update input_1 for channel 3
+            const input5_1Triggercard = result["input:4"].state ? 'triggerInput1On' : 'triggerInput1Off';
+            this.triggerDeviceTriggerCard('input_1', result["input:4"].state, 4, input5_1Triggercard, {}, {});
+            this.triggerDeviceTriggerCard('input_1', result["input:4"].state, 4, 'triggerInput1Changed', {}, {});
+            this.updateCapabilityValue('input_1', result["input:4"].state, channel);
+          } else if (this.hasCapability('multiDividedInputs')) { // update input_5 for channel 1 for multichannel device with multiple inputs per channel
+            const input5_1Triggercard = result["input:4"].state ? 'triggerInput5On' : 'triggerInput5Off';
+            this.triggerDeviceTriggerCard('input_5', result["input:4"].state, 1, input5_1Triggercard, {}, {});
+            this.triggerDeviceTriggerCard('input_5', result["input:4"].state, 1, 'triggerInput5Changed', {}, {});
+            this.updateCapabilityValue('input_5', result["input:4"].state, 1);
+          }
+        } else if (result["input:4"].hasOwnProperty("state") && result["input:4"].state === null) {
+          if (this.hasCapability('input_5') && channel === 0) { // remove input_4 for channel 0
+            await this.removeCapability('input_5');
+            this.log('Removing capability input_5 of channel 0 as the input is configured as button');
+          } else if (this.hasCapability('input_1') && channel === 4) { // remove input_1 for channel 3
+            await this.removeCapability('input_1');
+            this.log('Removing capability input_1 of channel 4 as the input is configured as button');
+          } else if (this.hasCapability('multiDividedInputs') && this.hasCapability('input_5')) {
+            await this.removeCapability('input_5');
+            this.log('Removing capability input_5 of channel 1 as the input is configured as button');
           }
         }
       }
@@ -2514,7 +2609,11 @@ class ShellyDevice extends Homey.Device {
                   if (capability === 'aenergy') {
                     for (const [capability, values] of Object.entries(value)) {
                       if (capability === 'total') {
-                        this.parseCapabilityUpdate('meter_power', values, channel);
+                        if ((component.startsWith('cct') || component.startsWith('light')) && this.hasCapability('onoff.light')) { /* parse secondary light data */
+                          this.parseCapabilityUpdate('meter_power.light', values, channel);
+                        } else {
+                          this.parseCapabilityUpdate('meter_power', values, channel);
+                        }
                       }
                     }
                   } else if (capability === 'ret_aenergy') {
@@ -2527,6 +2626,8 @@ class ShellyDevice extends Homey.Device {
                     for (const [capability, values] of Object.entries(value)) {
                       if (capability === 'total') {
                         this.parseCapabilityUpdate('input_pulse_counts_total', values, 0);
+                      } else if (capability === 'totalx') {
+                        this.parseCapabilityUpdate('input_pulse_counts_total_x', values, 0);
                       } else if (capability === 'by_minute') {
                         this.parseCapabilityUpdate('input_pulse_counts_minute', values[0], 0);
                       }
@@ -2536,10 +2637,16 @@ class ShellyDevice extends Homey.Device {
                   } else {
                     for (const [capability, values] of Object.entries(value)) {
                       if (capability !== 'by_minute' && capability !== 'minute_ts' && capability !== 'tF') {
-                        this.parseCapabilityUpdate(capability, values, channel);
+                        if ((component.startsWith('cct') || component.startsWith('light')) && this.hasCapability('onoff.light')) { /* parse secondary light data */
+                          this.parseCapabilityUpdate(capability+'.light', values, channel);
+                        } else {
+                          this.parseCapabilityUpdate(capability, values, channel);
+                        }
                       }
                     }
                   }
+                } else if ((component.startsWith('cct') || component.startsWith('light')) && this.hasCapability('onoff.light')) { /* parse first and secondary light data */
+                  this.parseCapabilityUpdate(capability+'.light', value, channel);
                 } else if (component.startsWith('input') && value !== null) { /* parse inputs data */
                   let input = component.replace(":", "");
                   if (typeof value === 'number') { // external inputs of type analog
@@ -2550,7 +2657,7 @@ class ShellyDevice extends Homey.Device {
                     } else if (this.hasCapability('multiDividedInputs')) { // inputs for multichannel devices with multi inputs per channel
                       if (input === 'input0' || input === 'input1') {
                         this.parseCapabilityUpdate(input, value, 0);
-                      } else if (input === 'input2' || input === 'input3') {
+                      } else if (input === 'input2' || input === 'input3' || input === 'input4') {
                         this.parseCapabilityUpdate(input, value, 1);
                       }
                     } else if (channel === 0 || this.hasCapability('input_2')) { // if channel is 0 or device is not a multichannel device in Homey we need to hard set channel to 0 to update the capability of this device
@@ -2619,7 +2726,8 @@ class ShellyDevice extends Homey.Device {
                   (this.hasCapability('multiDividedInputs') && channel === 0 && this.hasCapability('input_1')) ||
                   (this.hasCapability('multiDividedInputs') && channel === 1 && this.hasCapability('input_2')) ||
                   (this.hasCapability('multiDividedInputs') && channel === 2 && this.hasCapability('input_3')) ||
-                  (this.hasCapability('multiDividedInputs') && channel === 3 && this.hasCapability('input_4'))
+                  (this.hasCapability('multiDividedInputs') && channel === 3 && this.hasCapability('input_4')) ||
+                  (this.hasCapability('multiDividedInputs') && channel === 4 && this.hasCapability('input_5'))
                 ) { // if channel is 0 or device has multiple inputs but is not a multichannel device in Homey we have the right device
                   device = this;
                 } else { // get the right device based on the channel
@@ -2627,7 +2735,7 @@ class ShellyDevice extends Homey.Device {
                   /* get the device id with exceptions for for multichannel devices with multi inputs per channel */
                   if (this.hasCapability('multiDividedInputs') && (channel === 0 || channel === 1)) {
                     device_id = this.getStoreValue('main_device') + '-channel-0';
-                  } else if (this.hasCapability('multiDividedInputs') && (channel === 2 || channel === 3)) {
+                  } else if (this.hasCapability('multiDividedInputs') && (channel === 2 || channel === 3 || channel === 4)) {
                     device_id = this.getStoreValue('main_device') + '-channel-1';
                   } else {
                     device_id = this.getStoreValue('main_device') + '-channel-' + channel;
@@ -2705,12 +2813,18 @@ class ShellyDevice extends Homey.Device {
             }
           }
           break;
+        case 'output.light':
+          this.updateCapabilityValue('onoff.light', value, channel);
+          break;
         case 'apower':
         case 'power0':
         case 'power1':
         case 'power2':
         case 'power3':
           this.updateCapabilityValue('measure_power', value, channel);
+          break;
+        case 'apower.light':
+          this.updateCapabilityValue('measure_power.light', value, channel);
           break;
         case 'act_power':
           this.updateCapabilityValue('measure_power', value, channel);
@@ -2786,8 +2900,12 @@ class ShellyDevice extends Homey.Device {
           }
           break;
         case 'meter_power':
-          const meter_power_pm = value / 1000;
+          let meter_power_pm = value / 1000;
           this.updateCapabilityValue('meter_power', meter_power_pm, channel);
+          break;
+        case 'meter_power.light':
+          let meter_power_pm_light = value / 1000;
+          this.updateCapabilityValue('meter_power.light', meter_power_pm_light, channel);
           break;
         case 'meter_power_returned':
           const meter_power_returned_pm = value / 1000;
@@ -2895,6 +3013,9 @@ class ShellyDevice extends Homey.Device {
         case 'current2':
           this.updateCapabilityValue('measure_current', value, channel);
           break;
+        case 'current.light':
+          this.updateCapabilityValue('measure_current.light', value, channel);
+          break;
         case 'a_current':
           if (this.getStoreValue('config').id === 'shellypro3em-triphase') {
             this.updateCapabilityValue('measure_current.a', value, 0);
@@ -2946,6 +3067,9 @@ class ShellyDevice extends Homey.Device {
               this.homey.flow.getDeviceTriggerCard('triggerVoltmeter3').trigger(this, {'voltage': value}, {}).catch(error => { this.error(error) });
             }
           }
+          break;
+        case 'voltage.light':
+          this.updateCapabilityValue('measure_voltage.light', value, channel);
           break;
         case 'a_voltage':
           if (this.getStoreValue('config').id === 'shellypro3em-triphase') {
@@ -3003,6 +3127,9 @@ class ShellyDevice extends Homey.Device {
             }
           }
           break;
+        case 'tC.light':
+          this.updateCapabilityValue('measure_temperature.light', value, channel);
+          break;
         case 'current_C':
           this.updateCapabilityValue('measure_temperature.thermostat', value, channel);
           break;
@@ -3038,6 +3165,10 @@ class ShellyDevice extends Homey.Device {
           let dim = value >= 100 ? 1 : value / 100;
           this.updateCapabilityValue('dim', dim, channel);
           break;
+        case 'brightness.light':
+          let dim_light = value >= 100 ? 1 : value / 100;
+          this.updateCapabilityValue('dim.light', dim_light, channel);
+          break;
         case 'mode':
           if (this.getClass() === 'light') {
             let light_mode = value === 'white' ? 'temperature' : 'color';
@@ -3047,7 +3178,10 @@ class ShellyDevice extends Homey.Device {
           }
           break;
         case 'colorTemperature':
-          if (this.getStoreValue('type') === 'SHBDUO-1') {
+        case 'ct':
+          if (this.getStoreValue('config').id === 'shellyprorgbwwpm-rgbcct' || this.getStoreValue('config').id === 'shellyprorgbwwpm-cctx2' || this.getStoreValue('config').id === 'shellyprorgbwwpm-rgbx2light') {
+            var light_temperature = 1 - Number(this.util.normalize(value, 2700, 6500)); // Shelly Pro RGBWW PM in CCT
+          } else if (this.getStoreValue('config').id === 'shellybulbduo') {
             value = value === 0 ? 2700 : value;
             var light_temperature = 1 - Number(this.util.normalize(value, 2700, 6500)); // Shelly Duo
           } else {
@@ -3181,6 +3315,15 @@ class ShellyDevice extends Homey.Device {
           this.triggerDeviceTriggerCard('input_4', value, channel, input4Triggercard, {}, {});
           this.triggerDeviceTriggerCard('input_4', value, channel, 'triggerInput4Changed', {}, {});
           break;
+        case 'input4':
+          if (typeof value == 'number') {
+            value = value === 0 ? false : true;
+          }
+          const input5Triggercard = value ? 'triggerInput5On' : 'triggerInput5Off';
+          this.updateCapabilityValue('input_5', value, channel);
+          this.triggerDeviceTriggerCard('input_5', value, channel, input5Triggercard, {}, {});
+          this.triggerDeviceTriggerCard('input_5', value, channel, 'triggerInput5Changed', {}, {});
+          break;
         case 'inputEvent0':
           if (this.hasCapability('input_1') && this.hasCapability('input_2')) {
             let actionEvent1 = this.util.getActionEventDescription(value, this.getStoreValue('communication'), this.getStoreValue('gen')) + '_1';
@@ -3261,6 +3404,12 @@ class ShellyDevice extends Homey.Device {
           if (value != this.getCapabilityValue('measure_temperature.3')) {
             this.updateCapabilityValue('measure_temperature.3', value, 0);
             this.homey.flow.getDeviceTriggerCard('triggerTemperature3').trigger(this, {'temperature': value}, {}).catch(error => { this.error(error) });
+          }
+          break;
+        case 'externalTemperature3':
+          if (value != this.getCapabilityValue('measure_temperature.4')) {
+            this.updateCapabilityValue('measure_temperature.4', value, 0);
+            this.homey.flow.getDeviceTriggerCard('triggerTemperature4').trigger(this, {'temperature': value}, {}).catch(error => { this.error(error) });
           }
           break;
         case 'externalInput0':
@@ -3363,6 +3512,12 @@ class ShellyDevice extends Homey.Device {
           if (value != this.getCapabilityValue('input_pulse_counts_total')) {
             this.updateCapabilityValue('input_pulse_counts_total', value, 0);
             this.homey.flow.getDeviceTriggerCard('triggerInputCountsTotal').trigger(this, {'pulse': value}, {}).catch(error => { this.error(error) });
+          }
+          break;
+        case 'input_pulse_counts_total_x':
+          if (value != this.getCapabilityValue('input_pulse_counts_total_x')) {
+            this.updateCapabilityValue('input_pulse_counts_total_x', value, 0);
+            this.homey.flow.getDeviceTriggerCard('triggerInputCountsTotalX').trigger(this, {'pulse': value}, {}).catch(error => { this.error(error) });
           }
           break;
         case 'input_pulse_counts_minute':
@@ -3478,10 +3633,6 @@ class ShellyDevice extends Homey.Device {
     try {
 
       /* placeholder for update for specific devices */
-      // TODO: remove next release
-      if (this.getStoreValue('config').id === 'shellyplusuni' && this.hasCapability('input_3')) {
-        this.removeCapability('input_3');
-      }
 
       if (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket') { /* COAP AND WEBSOCKET */
 
@@ -3533,14 +3684,14 @@ class ShellyDevice extends Homey.Device {
           /* add any missing capabilities to the device based on device config */
           if (this.getStoreValue('channel') === 0) {
             device_config.capabilities_1.forEach(async (capability) => {
-              if(!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4'].includes(capability)) {
+              if(!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4', 'input_5'].includes(capability)) {
                 this.log('Adding capability', capability, 'to', this.getData().id, 'with name', this.getName(), 'upon device init as the device does not have it already but its added in the device config.');
                 await this.addCapability(capability).catch(this.error);
               }
             });
           } else {
             device_config.capabilities_2.forEach(async (capability) => {
-              if(!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4'].includes(capability)) {
+              if(!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4', 'input_5'].includes(capability)) {
                 this.log('Adding capability', capability, 'to', this.getData().id, 'with name', this.getName(), 'upon device init as the device does not have it already but its added in the device config.');
                 await this.addCapability(capability).catch(this.error);
               }
@@ -3549,8 +3700,33 @@ class ShellyDevice extends Homey.Device {
 
           /* set device class if changed */
           if (this.getClass() !== device_config.class) {
-            this.log('Updating device class from', this.getClass(), 'to', device_config.class);
+            this.log('Updating device class from', this.getClass(), 'to', device_config.class, 'for', this.getName());
             this.setClass(device_config.class)
+          }
+
+          /* set energy object if changed */
+          // TODO: remove after the next release, for some reason this always updates even though values are the same
+          let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
+          let energyObjectEqual = true;
+          if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
+            energyObject.batteries = device_config.energy.batteries;
+            energyObjectEqual = false;
+          }
+          if (this.getEnergy().cumulative !== device_config.energy.cumulative) {
+            energyObject.cumulative = device_config.energy.cumulative;
+            energyObjectEqual = false;
+          }
+          if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
+            energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
+            energyObjectEqual = false;
+          }
+          if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
+            energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
+            energyObjectEqual = false;
+          }
+          if (!energyObjectEqual) {
+            this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
+            await this.setEnergy(energyObject).catch(this.error);
           }
 
           /* update device capability options */
@@ -3615,8 +3791,33 @@ class ShellyDevice extends Homey.Device {
 
           /* set device class if changed */
           if (this.getClass() !== device_config.class) {
-            this.log('Updating device class from', this.getClass(), 'to', device_config.class);
+            this.log('Updating device class from', this.getClass(), 'to', device_config.class, 'for', this.getName());
             this.setClass(device_config.class)
+          }
+
+          /* set energy object if changed */
+          // TODO: remove after the next release, for some reason this always updates even though values are the same
+          let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
+          let energyObjectEqual = true;
+          if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
+            energyObject.batteries = device_config.energy.batteries;
+            energyObjectEqual = false;
+          }
+          if (this.getEnergy().cumulative !== device_config.energy.cumulative) {
+            energyObject.cumulative = device_config.energy.cumulative;
+            energyObjectEqual = false;
+          }
+          if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
+            energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
+            energyObjectEqual = false;
+          }
+          if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
+            energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
+            energyObjectEqual = false;
+          }
+          if (!energyObjectEqual) {
+            this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
+            await this.setEnergy(energyObject).catch(this.error);
           }
 
         } else {
@@ -3654,8 +3855,33 @@ class ShellyDevice extends Homey.Device {
 
           /* set device class if changed */
           if (this.getClass() !== device_config.class) {
-            this.log('Updating device class from', this.getClass(), 'to', device_config.class);
+            this.log('Updating device class from', this.getClass(), 'to', device_config.class, 'for', this.getName());
             this.setClass(device_config.class)
+          }
+
+          /* set energy object if changed */
+          // TODO: remove after the next release, for some reason this always updates even though values are the same
+          let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
+          let energyObjectEqual = true;
+          if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
+            energyObject.batteries = device_config.energy.batteries;
+            energyObjectEqual = false;
+          }
+          if (this.getEnergy().cumulative !== device_config.energy.cumulative) {
+            energyObject.cumulative = device_config.energy.cumulative;
+            energyObjectEqual = false;
+          }
+          if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
+            energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
+            energyObjectEqual = false;
+          }
+          if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
+            energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
+            energyObjectEqual = false;
+          }
+          if (!energyObjectEqual) {
+            this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
+            await this.setEnergy(energyObject).catch(this.error);
           }
 
           /* update device capability options */

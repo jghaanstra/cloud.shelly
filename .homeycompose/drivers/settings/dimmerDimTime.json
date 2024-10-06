@@ -1,0 +1,25 @@
+{
+  "id": "dimmerDimTime",
+  "type": "number",
+  "label": {
+    "en": "Dimming time for O1",
+    "nl": "Dim tijd voor O1"
+  },
+  "value": 3,
+  "attr": {
+    "min": 1,
+    "max": 10
+  },
+  "units": {
+    "en": "s",
+    "nl": "s"
+  },
+  "hint": {
+    "en": "This parameter (125) defines the time during which the device will move between the min. and max. dimming values by a short press of the momentary switch connected to input terminal.",
+    "nl": "Deze parameter (125) bepaalt de tijd waarin het apparaat zich zal verplaatsen tussen de minimale en maximale dimwaarden door een korte druk op de impulsdrukker die is verbonden met de ingangsterminal."
+  },
+  "zwave": {
+    "index": 125,
+    "size": 1
+  }
+}

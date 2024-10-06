@@ -1,0 +1,29 @@
+{
+  "title": {
+    "en": "Pulsecounter Total X has changed",
+    "nl": "Pulsteller totaal X is veranderd"
+  },
+  "tokens": [
+    {
+      "name": "pulse",
+      "type": "number",
+      "title": {
+        "en": "Pulse Unit",
+        "nl": "Puls unit"
+      },
+      "example": 5
+    }
+  ],
+  "args": [
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shelly_cloud&capabilities=input_pulse_counts_total_x"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

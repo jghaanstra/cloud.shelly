@@ -1,0 +1,25 @@
+{
+  "id": "dimmerMinBrightness",
+  "type": "number",
+  "label": {
+    "en": "Min brightness for O1",
+    "nl": "Min helderheid voor O1"
+  },
+  "value": 15,
+  "attr": {
+    "min": 1,
+    "max": 99
+  },
+  "units": {
+    "en": "%",
+    "nl": "%"
+  },
+  "hint": {
+    "en": "This parameter (129) defines the minimum brightness on toggle. It is applied on toggle on (Off → On state change) when the light brightness is lower than the set value of this parameter.",
+    "nl": "Deze parameter (129) bepaalt de minimale helderheid bij het inschakelen. Het wordt toegepast bij het inschakelen (van Uit → Aan) wanneer de helderheid van het licht lager is dan de ingestelde waarde van deze parameter."
+  },
+  "zwave": {
+    "index": 129,
+    "size": 1
+  }
+}

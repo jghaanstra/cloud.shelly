@@ -40,5 +40,5 @@
     }
   ],
   "platforms": [ "local" ],
-  "connectivity": [ "lan" ]
+  "connectivity": [ "lan", "ble" ]
 }

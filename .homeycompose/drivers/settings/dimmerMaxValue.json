@@ -1,0 +1,25 @@
+{
+  "id": "dimmerMaxValue",
+  "type": "number",
+  "label": {
+    "en": "Max dimming value for O1",
+    "nl": "Max dim waarde voor O1"
+  },
+  "value": 99,
+  "attr": {
+    "min": 0,
+    "max": 99
+  },
+  "units": {
+    "en": "%",
+    "nl": "%"
+  },
+  "hint": {
+    "en": "This parameter (121) defines the maximum dimming value (the highest value which can be set on the device, when, for example, dimming lights with wall switch or slider in Homey.",
+    "nl": "Deze parameter (121) bepaalt de maximale dimwaarde (de hoogste waarde die op het apparaat kan worden ingesteld, bijvoorbeeld bij het dimmen van lichten met een wandschakelaar of schuifregelaar in Homey)."
+  },
+  "zwave": {
+    "index": 121,
+    "size": 1
+  }
+}

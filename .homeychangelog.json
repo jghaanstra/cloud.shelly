@@ -844,5 +844,8 @@
   },
   "3.31.0": {
     "en": "This release fixes the following issues. Fix for the Shelly Pro Dimmer 1PM being added as two devices (requires re-pairing). Fix for the wrong product type id for Shelly Wave Pro Shutter resulting in unknown device. It removes input3 from Shelly Plus Uni as this input is only a digital counter input which has it's own trigger flowcard. It also adds support for the button virtual component for gen3 devices and includes framework updates."
+  },
+  "3.32.0": {
+    "en": "This release adds support for the Shelly Plug S Gen 3 and Shelly Pro Dimmer 0/1-10V PM. It also changes the energy settings for devices that are registered as smart meter to comply with future Homey updates and it changes the behaviour of how devices are marked online again after being offline to make sure multichannel devices are all marked online again. The release also contains code refactoring to accommodate future devices and it adds a totalx capability for Shelly Plus Uni."
   }
 }

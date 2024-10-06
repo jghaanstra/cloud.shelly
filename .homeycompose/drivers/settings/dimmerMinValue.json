@@ -1,0 +1,25 @@
+{
+  "id": "dimmerMinValue",
+  "type": "number",
+  "label": {
+    "en": "Min dimming value for O1",
+    "nl": "Min dim waarde voor O1"
+  },
+  "value": 15,
+  "attr": {
+    "min": 0,
+    "max": 98
+  },
+  "units": {
+    "en": "%",
+    "nl": "%"
+  },
+  "hint": {
+    "en": "This parameter (123) defines the minimim dimming value (the lowest value which can be set on the device, when, for example, dimming lights with wall switch or slider in Homey.",
+    "nl": "Deze parameter (123) bepaalt de minimale dimwaarde (de laagste waarde die op het apparaat kan worden ingesteld, bijvoorbeeld bij het dimmen van lichten met een wandschakelaar of schuifregelaar in Homey)."
+  },
+  "zwave": {
+    "index": 123,
+    "size": 1
+  }
+}

@@ -1,8 +1,8 @@
 {
-  "id": "triggerInput2Changed",
+  "id": "triggerInput5Changed",
   "title": {
-    "en": "Input 2 changed",
-    "nl": "Input 2 gewijzigd"
+    "en": "Input 5 changed",
+    "nl": "Input 5 gewijzigd"
   },
   "args": [
     {
@@ -12,7 +12,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4|shelly_wave_pro_dimmer_1pm&capabilities=input_2"
+      "filter": "driver_id=shelly|shelly_cloud&capabilities=input_5"
     }
   ],
   "platforms": ["local", "cloud"]

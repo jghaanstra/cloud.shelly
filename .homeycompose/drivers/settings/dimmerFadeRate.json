@@ -1,0 +1,54 @@
+{
+  "id": "dimmerFadeRate",
+  "type": "dropdown",
+  "label": {
+    "en": "Fade rate for O1",
+    "nl": "Fade waarde voor O1"
+  },
+  "value": "3",
+  "values": [
+    {
+      "id": "0",
+      "label": {
+        "en": "5% per sec",
+        "nl": "5% per sec"
+      }
+    },
+    {
+      "id": "1",
+      "label": {
+        "en": "7% per sec",
+        "nl": "7% per sec"
+      }
+    },
+    {
+      "id": "3",
+      "label": {
+        "en": "10% per sec (default)",
+        "nl": "10% per sec (standaard)"
+      }
+    },
+    {
+      "id": "4",
+      "label": {
+        "en": "15% per sec",
+        "nl": "15% per sec"
+      }
+    },
+    {
+      "id": "5",
+      "label": {
+        "en": "20% per sec",
+        "nl": "20% per sec"
+      }
+    }
+  ],
+  "hint": {
+    "en": "This parameter (127) defines the time during which the Dimmer will move between the min. and max. dimming values during a continuous press of the momentary switch connected to terminal, by an associated device or through Homey.",
+    "nl": "Deze parameter (127) bepaalt de tijd waarin de dimmer zich zal verplaatsen tussen de minimale en maximale dimwaarden tijdens een continue druk op de impulsdrukker die is aangesloten op de terminal, door een gekoppeld apparaat of via Homey."
+  },
+  "zwave": {
+    "index": 127,
+    "size": 1
+  }
+}

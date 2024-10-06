@@ -20,8 +20,6 @@ class ShellyWaveShutterDevice extends Device {
       if (Number(zwaveShutterOperatingMode) === 1) { // operating mode = venetian blinds
         if (!this.hasCapability('windowcoverings_tilt_set')) { await this.addCapability('windowcoverings_tilt_set'); }
         this.registerCapability('windowcoverings_tilt_set', 'SWITCH_MULTILEVEL', { multiChannelNodeId: 2 });
-      } else {
-        if (this.hasCapability('windowcoverings_tilt_set')) { await this.removeCapability('windowcoverings_tilt_set'); }
       }
 
     } catch (error) {

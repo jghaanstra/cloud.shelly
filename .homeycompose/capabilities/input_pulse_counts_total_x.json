@@ -1,0 +1,17 @@
+{
+  "type": "number",
+  "title": {
+    "en": "Pulsecounter Total X",
+    "nl": "Pulseteller totaal X"
+  },
+  "getable": true,
+  "setable": false,
+  "units": { 
+    "en": "unit",
+    "nl": "unit"
+   },
+  "min": 0,
+  "uiComponent": "sensor",
+  "insights": true,
+  "icon": "/assets/pulsecounter.svg"
+}

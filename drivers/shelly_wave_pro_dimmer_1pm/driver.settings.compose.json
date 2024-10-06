@@ -1,0 +1,106 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Switch 1 - Output Settings",
+      "nl": "Switch 1 - Output instellingen"
+    },
+    "children": [
+      {
+        "id": "zwaveSwitchTypeSW1",
+        "$extends": "zwaveSwitchTypeSW1"
+      },
+      {
+        "id": "zwaveOutputDetached1",
+        "$extends": "zwaveOutputDetached1"
+      },
+      {
+        "id": "zwaveRestoreStateO1",
+        "$extends": "zwaveRestoreStateO1"
+      },
+      {
+        "id": "zwaveAutoOffO1",
+        "$extends": "zwaveAutoOffO1"
+      },
+      {
+        "id": "zwaveAutoOnO1",
+        "$extends": "zwaveAutoOnO1"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Switch 2 - Output Settings",
+      "nl": "Switch 2 - Output instellingen"
+    },
+    "children": [
+      {
+        "id": "zwaveSwitchTypeSW2",
+        "$extends": "zwaveSwitchTypeSW2"
+      },
+      {
+        "id": "zwaveOutputDetached2",
+        "$extends": "zwaveOutputDetached2"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Power Settings",
+      "nl": "Energie instellingen"
+    },
+    "children": [
+      {
+        "id": "zwavePowerReportOnChangeO1",
+        "$extends": "zwavePowerReportOnChangeO1"
+      },
+      {
+        "id": "zwaveMinimalTimePowerReportO1",
+        "$extends": "zwaveMinimalTimePowerReportO1"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Device Settings",
+      "nl": "Apparaat instellingen"
+    },
+    "children": [
+      {
+        "id": "dimmerCalibration",
+        "$extends": "dimmerCalibration"
+      },
+      {
+        "id": "dimmerMinValue",
+        "$extends": "dimmerMinValue"
+      },
+      {
+        "id": "dimmerDimTime",
+        "$extends": "dimmerDimTime"
+      },
+      {
+        "id": "dimmerFadeRate",
+        "$extends": "dimmerFadeRate"
+      },
+      {
+        "id": "dimmerMinBrightness",
+        "$extends": "dimmerMinBrightness"
+      },
+      {
+        "id": "dimmerDualButton",
+        "$extends": "dimmerDualButton"
+      },
+      {
+        "id": "dimmerMaxValue",
+        "$extends": "dimmerMaxValue"
+      },
+      {
+        "id": "zwaveResetToDefaultAndLeave",
+        "$extends": "zwaveResetToDefaultAndLeave"
+      }
+    ]
+  }
+]

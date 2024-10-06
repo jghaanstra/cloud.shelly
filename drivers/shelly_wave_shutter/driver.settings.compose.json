@@ -176,8 +176,8 @@
           }
         ],
         "hint": {
-          "en": "This parameter (71) switched between the two operating modes. In shutter mode, you can select up/down/stop. In venetian mode an additional capability is added which you can use to control the tilt position of the slats. Note: after changing this setting the device needs to be removed from Homey and re-added after waiting for 30 seconds (do not reset the device when removing).",
-          "nl": "Deze parameter (71) schakelt tussen de twee operatie modi. In shutter modus kan je omhoog/omlaag/stop selecteren. In venetian modus komt er een extra capability beschikbaar waarmee je de tilt positie van de lamellen kan instellen. Let op: na het wijzigen van deze parameter moet het apparaat worden verwijderd van Homey en na 30 seconden te hebben gewacht, opnieuw worden toegevoegd aan Homey."
+          "en": "This parameter (71) switches between the two operating modes. In shutter mode, you can select up/down/stop. In venetian mode an additional capability is added which you can use to control the tilt position of the slats.",
+          "nl": "Deze parameter (71) schakelt tussen de twee operatie modi. In shutter modus kan je omhoog/omlaag/stop selecteren. In venetian modus komt er een extra capability beschikbaar waarmee je de tilt positie van de lamellen kan instellen."
         },
         "zwave": {
           "index": 71,

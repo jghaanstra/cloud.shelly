@@ -70,6 +70,8 @@ Shelly Pro Dual Cover
 Shelly Pro EM-50
 Shelly Pro Dimmer 1PM
 Shelly Pro Dimmer 2PM
+Shelly Pro Dimmer 0/1-10V PM
+Shelly Pro RGBWW PM
 
 Gen 3
 -------------
@@ -81,6 +83,7 @@ Shelly 1PM Gen3
 Shelly 1PM Mini Gen3
 Shelly Dimmer 0/1-10V PM Gen3
 Shelly i4 Gen3
+Shelly 2PM Gen3
 
 Bluetooth
 -------------
@@ -106,3 +109,4 @@ Shelly Wave Pro 2PM
 Shelly Wave i4
 Shelly Wave Pro 3
 Shelly Wave Pro Shutter
+Shelly Wave Pro Dimmer 1PM
