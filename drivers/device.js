@@ -710,7 +710,6 @@ class ShellyDevice extends Homey.Device {
   /* polling local COAP or WEBSOCKET devices over HTTP REST API, ONLY CALLED FOR COAP AND WEBSOCKET COMMUNICATION */
   async pollDevice() {
     try {
-
       let result = {};
       if (this.getStoreValue('communication') === 'websocket') {
         result = await this.util.sendRPCCommand('/rpc/Shelly.GetStatus', this.getSetting('address'), this.getSetting('password'));
@@ -748,32 +747,7 @@ class ShellyDevice extends Homey.Device {
     } catch (error) {
       this.error(error.message);
 
-      /* mark as unavailable and trigger the device offline trigger card */
-      if (this.getAvailable()) {
-        this.setUnavailable(this.homey.__('device.unreachable') + error.message).catch(error => { this.error(error) });
-        this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": error.message.toString()}).catch(error => { this.error(error) });
-      }
-
-      /* handle multi-channel devices */
-      if (this.getStoreValue('config') !== undefined && this.getStoreValue('config') !== null ) {
-        if (this.getStoreValue('config').channels > 1) {
-          for (let i = 1; i < this.getStoreValue('config').channels; i++) {
-            await this.util.sleep(500);
-            const device_id = this.getStoreValue('main_device') + '-channel-' + i;
-            const shellies = this.homey.app.getShellyCollection();
-            const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
-            if (shelly.length > 0) {
-              const device = shelly[0].device;
-              if (device) {
-                if (device.getAvailable()) {
-                  device.setUnavailable(device.homey.__('device.unreachable') + error.message).catch(error => { this.error(error) });
-                  device.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": error.message.toString()}).catch(error => { this.error(error) });
-                }
-              }
-            }
-          }
-        }
-      }
+      this.setAvailability(false, error);
       
       /* stop polling on devices that are unreachable over REST after 10 failures */
       this.pollingFailures++;
@@ -782,25 +756,7 @@ class ShellyDevice extends Homey.Device {
         this.homey.clearInterval(this.pollingInterval);
 
         /* make the device available again to avoid users from complaining about the app (read Homey) not being able to access their Shelly */
-        if (!this.getAvailable()) { await this.setAvailable().catch(this.error); };
-
-        /* handle multi-channel devices */
-        if (this.getStoreValue('config') !== undefined && this.getStoreValue('config') !== null ) {
-          if (this.getStoreValue('config').channels > 1) {
-            for (let i = 1; i < this.getStoreValue('config').channels; i++) {
-              await this.util.sleep(500);
-              const device_id = this.getStoreValue('main_device') + '-channel-' + i;
-              const shellies = this.homey.app.getShellyCollection();
-              const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
-              if (shelly.length > 0) {
-                const device = shelly[0].device;
-                if (device) {
-                  if (!device.getAvailable()) { await device.setAvailable().catch(this.error); };
-                }
-              }
-            }
-          }
-        }
+        this.setAvailability(true);
       }
       
     }
@@ -809,7 +765,7 @@ class ShellyDevice extends Homey.Device {
   /* generic full status parser for polling over HTTP and cloud status updates for gen1 */
   async parseFullStatusUpdateGen1(result = {}) {
     try {
-      if (!this.getAvailable()) { await this.setAvailable().catch(this.error); };
+      this.setAvailability(true);
 
       let channel = this.getStoreValue('channel') || 0;
 
@@ -1388,7 +1344,7 @@ class ShellyDevice extends Homey.Device {
   /* generic full status updates parser for polling over HTTP, inbound websocket full status updates and cloud full status updates for gen2 */
   async parseFullStatusUpdateGen2(result = {}) {
     try {
-      if (!this.getAvailable()) { await this.setAvailable().catch(this.error); };
+      this.setAvailability(true);
 
       let channel = this.getStoreValue('channel') || 0;
 
@@ -2589,6 +2545,8 @@ class ShellyDevice extends Homey.Device {
   /* generic component status update parser for local WEBSOCKET messages */
   async parseSingleStatusUpdateGen2(result = {}) {
     try {
+      this.setAvailability(true);
+
       if (result.hasOwnProperty("method")) {
         if (result.method === 'NotifyStatus') { /* parse capability status updates */
           const components_list = Object.entries(result.params);
@@ -2781,7 +2739,7 @@ class ShellyDevice extends Homey.Device {
   /* process capability updates from CoAP and gen2 websocket devices */
   async parseCapabilityUpdate(capability, value, channel = 0) {
     try {
-      if (!this.getAvailable()) { await this.setAvailable().catch(this.error); }
+      this.setAvailability(true);
 
       switch(capability) {
         case 'output':
@@ -3628,6 +3586,62 @@ class ShellyDevice extends Homey.Device {
     return this.commandId++
   }
 
+  /* set availability for all channels in sync */
+  async setAvailability(availability, error = null) {
+    try {
+      if (availability) {
+        if (!this.getAvailable()) { await this.setAvailable().catch(this.error); };
+
+        /* handle multi-channel devices */
+        if (this.getStoreValue('config') !== undefined && this.getStoreValue('config') !== null ) {
+          if (this.getStoreValue('config').channels > 1) {
+            for (let i = 1; i < this.getStoreValue('config').channels; i++) {
+              await this.util.sleep(500);
+              const device_id = this.getStoreValue('main_device') + '-channel-' + i;
+              const shellies = this.homey.app.getShellyCollection();
+              const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
+              if (shelly.length > 0) {
+                const device = shelly[0].device;
+                if (device) {
+                  if (!device.getAvailable()) { await device.setAvailable().catch(this.error); };
+                }
+              }
+            }
+          }
+        }
+
+      } else {
+        const message = error === null ? this.homey.__('device.unreachable') : this.homey.__('device.unreachable') + error.message;
+
+        if (this.getAvailable()) { await this.setUnavailable(message).catch(error => { this.error(error) });};
+        this.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": this.getName(), "device_error": message.toString()}).catch(error => { this.error(error) });
+
+        /* handle multi-channel devices */
+        if (this.getStoreValue('config') !== undefined && this.getStoreValue('config') !== null ) {
+          if (this.getStoreValue('config').channels > 1) {
+            for (let i = 1; i < this.getStoreValue('config').channels; i++) {
+              await this.util.sleep(500);
+              const device_id = this.getStoreValue('main_device') + '-channel-' + i;
+              const shellies = this.homey.app.getShellyCollection();
+              const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
+              if (shelly.length > 0) {
+                const device = shelly[0].device;
+                if (device) {
+                  if (device.getAvailable()) {
+                    device.setUnavailable(message).catch(error => { this.error(error) });
+                    device.homey.flow.getTriggerCard('triggerDeviceOffline').trigger({"device": device.getName(), "device_error": message.toString()}).catch(error => { this.error(error) });
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    } catch (error) {
+      this.error(error);
+    }
+  }
+
   /* update device config on device init */
   async updateDeviceConfig() {
     try {
@@ -3707,21 +3721,29 @@ class ShellyDevice extends Homey.Device {
           /* set energy object if changed */
           let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
           let energyObjectEqual = true;
-          if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
-            energyObject.batteries = device_config.energy.batteries;
-            energyObjectEqual = false;
+          if (device_config.energy.hasOwnProperty('batteries')) {
+            if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
+              energyObject.batteries = device_config.energy.batteries;
+              energyObjectEqual = false;
+            }
           }
-          if (this.getEnergy().cumulative !== device_config.energy.cumulative) {
-            energyObject.cumulative = device_config.energy.cumulative;
-            energyObjectEqual = false;
+          if (device_config.energy.hasOwnProperty('cumulative')) {
+            if (this.getEnergy().cumulative !== device_config.energy.cumulative) {
+              energyObject.cumulative = device_config.energy.cumulative;
+              energyObjectEqual = false;
+            }
           }
-          if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
-            energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
-            energyObjectEqual = false;
+          if (device_config.energy.hasOwnProperty('cumulativeImportedCapability')) {
+            if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
+              energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
+              energyObjectEqual = false;
+            }
           }
-          if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
-            energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
-            energyObjectEqual = false;
+          if (device_config.energy.hasOwnProperty('cumulativeExportedCapability')) {
+            if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
+              energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
+              energyObjectEqual = false;
+            }
           }
           if (!energyObjectEqual) {
             this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
@@ -3797,21 +3819,29 @@ class ShellyDevice extends Homey.Device {
           /* set energy object if changed */
           let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
           let energyObjectEqual = true;
-          if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
-            energyObject.batteries = device_config.energy.batteries;
-            energyObjectEqual = false;
+          if (device_config.energy.hasOwnProperty('batteries')) {
+            if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
+              energyObject.batteries = device_config.energy.batteries;
+              energyObjectEqual = false;
+            }
           }
-          if (this.getEnergy().cumulative !== device_config.energy.cumulative) {
-            energyObject.cumulative = device_config.energy.cumulative;
-            energyObjectEqual = false;
+          if (device_config.energy.hasOwnProperty('cumulative')) {
+            if (this.getEnergy().cumulative !== device_config.energy.cumulative) {
+              energyObject.cumulative = device_config.energy.cumulative;
+              energyObjectEqual = false;
+            }
           }
-          if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
-            energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
-            energyObjectEqual = false;
+          if (device_config.energy.hasOwnProperty('cumulativeImportedCapability')) {
+            if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
+              energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
+              energyObjectEqual = false;
+            }
           }
-          if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
-            energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
-            energyObjectEqual = false;
+          if (device_config.energy.hasOwnProperty('cumulativeExportedCapability')) {
+            if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
+              energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
+              energyObjectEqual = false;
+            }
           }
           if (!energyObjectEqual) {
             this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
@@ -3860,21 +3890,29 @@ class ShellyDevice extends Homey.Device {
           /* set energy object if changed */
           let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
           let energyObjectEqual = true;
-          if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
-            energyObject.batteries = device_config.energy.batteries;
-            energyObjectEqual = false;
+          if (device_config.energy.hasOwnProperty('batteries')) {
+            if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
+              energyObject.batteries = device_config.energy.batteries;
+              energyObjectEqual = false;
+            }
           }
-          if (this.getEnergy().cumulative !== device_config.energy.cumulative) {
-            energyObject.cumulative = device_config.energy.cumulative;
-            energyObjectEqual = false;
+          if (device_config.energy.hasOwnProperty('cumulative')) {
+            if (this.getEnergy().cumulative !== device_config.energy.cumulative) {
+              energyObject.cumulative = device_config.energy.cumulative;
+              energyObjectEqual = false;
+            }
           }
-          if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
-            energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
-            energyObjectEqual = false;
+          if (device_config.energy.hasOwnProperty('cumulativeImportedCapability')) {
+            if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
+              energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
+              energyObjectEqual = false;
+            }
           }
-          if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
-            energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
-            energyObjectEqual = false;
+          if (device_config.energy.hasOwnProperty('cumulativeExportedCapability')) {
+            if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
+              energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
+              energyObjectEqual = false;
+            }
           }
           if (!energyObjectEqual) {
             this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
