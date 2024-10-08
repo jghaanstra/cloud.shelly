@@ -65,5 +65,6 @@
     }
   },
   "platforms": [ "local", "cloud" ],
-  "connectivity": [ "zwave" ]
+  "connectivity": [ "zwave" ],
+  "deprecated": true
 }

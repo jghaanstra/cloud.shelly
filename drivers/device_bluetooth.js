@@ -180,7 +180,9 @@ class ShellyBluetoothDevice extends Device {
     try {
 
       if (this.getStoreValue('ble_pid') === null || this.getStoreValue('ble_pid') < result.pid || (result.pid < 10 && this.getStoreValue('ble_pid') > 240) || (this.getStoreValue('ble_pid') - result.pid >= 10)) {
-        if (!this.getAvailable()) { await this.setAvailable(); }
+
+        this.setAvailability(true);
+
         let channel = this.getStoreValue('channel') || 0;
 
         // update the PID to avoid processing double advertisements
@@ -307,6 +309,7 @@ class ShellyBluetoothDevice extends Device {
 
 ShellyBluetoothDevice.prototype.updateCapabilityValue = Device.prototype.updateCapabilityValue;
 ShellyBluetoothDevice.prototype.triggerDeviceTriggerCard = Device.prototype.triggerDeviceTriggerCard;
+ShellyBluetoothDevice.prototype.setAvailability = Device.prototype.setAvailability;
 ShellyBluetoothDevice.prototype.updateDeviceConfig = Device.prototype.updateDeviceConfig;
 
 module.exports = ShellyBluetoothDevice;

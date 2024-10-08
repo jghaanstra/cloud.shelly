@@ -69,7 +69,7 @@ class ShellyCloudDevice extends OAuth2Device {
 
       // initially set the device as available
       this.homey.setTimeout(async () => {
-        this.setAvailable();
+        await this.setAvailable().catch(this.error);
       }, 1000);
 
       // make sure there is a valid oauth2client (also for opening a websocket based on getFirstSavedOAuth2Client() )
@@ -148,6 +148,7 @@ ShellyCloudDevice.prototype.onCapabilityTargetTemperature = Device.prototype.onC
 ShellyCloudDevice.prototype.updateDeviceRgb = Device.prototype.updateDeviceRgb;
 ShellyCloudDevice.prototype.rollerState = Device.prototype.rollerState;
 ShellyCloudDevice.prototype.triggerDeviceTriggerCard = Device.prototype.triggerDeviceTriggerCard;
+ShellyCloudDevice.prototype.setAvailability = Device.prototype.setAvailability;
 ShellyCloudDevice.prototype.updateDeviceConfig = Device.prototype.updateDeviceConfig;
 
 module.exports = ShellyCloudDevice;
