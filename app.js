@@ -759,7 +759,17 @@ class ShellyApp extends OAuth2App {
       this.homey.flow.getActionCard('actionMeasuredExtTemp')
         .registerRunListener(async (args) => {
           try {
-            return await this.util.sendCommand('/ext_t?temp='+ args.temperature +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+            switch(args.device.getStoreValue('communication')) {
+              case 'coap': {
+                return await this.util.sendCommand('/ext_t?temp='+ args.temperature +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+              }
+              case 'websocket': {
+                break;
+              }
+              case 'gateway': {
+                return await this.util.sendRPCCommand('/rpc/'+ args.device.getStoreValue('config').extra.component +'.Call?id='+ args.device.getStoreValue('componentid') +'&method=TRV.SetExternalTemperature&params={"id":0,"t_C":'+ args.temperature +'}', args.device.getSetting('address'), args.device.getSetting('password'));
+              }
+            }
           } catch (error) {
             this.error(error);
             return Promise.reject(error);
@@ -876,7 +886,21 @@ class ShellyApp extends OAuth2App {
                   }
                 }
               } else if (result.method === 'NotifyStatus') { // parse single component updates
-                const filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src.toLowerCase())).filter(shelly => shelly.channel === 0);
+                let filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src.toLowerCase())).filter(shelly => shelly.channel === 0);
+
+                if (result.src.includes('shellyblugwg3-')) { // get the right device from status reports of the BLU Gateway Gen3
+                  let componenttype = '';
+                  let componentid = '';
+                  const paramsKeys = Object.keys(result.params);
+                  paramsKeys.forEach(key => {
+                    if (key.includes(':')) {
+                      componenttype = key.split(':')[0];
+                      componentid = key.split(':')[1];
+                    }
+                  });
+                  filteredShelliesWss = filteredShelliesWss.filter(shelly => shelly.id.toLowerCase().includes(componenttype)).filter(shelly => shelly.id.toLowerCase().includes(componentid.toString()));
+                }
+                
                 for (const filteredShellyWss of filteredShelliesWss) {
                   filteredShellyWss.device.parseSingleStatusUpdateGen2(result);
                 }
@@ -965,7 +989,7 @@ class ShellyApp extends OAuth2App {
         this.cloudWs = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ this.cloudAccessToken, {perMessageDeflate: false});
 
         this.cloudWs.on('open', () => {
-          this.error('Cloud websocket for cloud devices opened (again) ...');
+          this.log('Cloud websocket for cloud devices opened (again) ...');
 
           this.wsConnected = true;
 

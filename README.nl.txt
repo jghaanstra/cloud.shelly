@@ -65,6 +65,7 @@ Shelly Pro 2
 Shelly Pro 2PM
 Shelly Pro 3
 Shelly Pro 3EM
+Shelly Pro 3EM-3CT63
 Shelly Pro 4PM
 Shelly Pro Dual Cover
 Shelly Pro EM-50
@@ -82,6 +83,7 @@ Shelly 1 Mini Gen3
 Shelly 1PM Gen3
 Shelly 1PM Mini Gen3
 Shelly Dimmer 0/1-10V PM Gen3
+Shelly Dali Dimmer Gen3
 Shelly i4 Gen3
 Shelly 2PM Gen3
 

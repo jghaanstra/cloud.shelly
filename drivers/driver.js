@@ -23,6 +23,28 @@ class ShellyDriver extends Homey.Driver {
     session.setHandler('list_devices', async (data) => {
       try {
 
+        /* list subdevices from BLU Gateways Gen 3 as well */
+        for (const [key, value] of Object.entries(discoveryResultsMerged)) {
+          if (key.toLowerCase().startsWith('shellyblugwg3-')) {
+            const data = await this.util.sendCommand('/rpc/Shelly.GetComponents', value.address, '', '');
+            if (data.components && Array.isArray(data.components)) {
+              data.components.forEach(component => {
+                if (component.key && component.key.toLowerCase().startsWith("blutrv")) {
+                  component.key = "shelly"+component.key;
+                  const newDeviceData = {
+                    "id": component.key.split(':')[0] +"-"+ component.status.id +"-"+ value.name,
+                    "address": value.address,
+                    "host": component.key.split(':')[0] +"-"+ component.status.id +"-"+ value.name,
+                    "name": component.key.split(':')[0] +"-"+ component.status.id +"-"+ value.name,
+                    "txt": {"gen": "3"}
+                  }
+                  discoveryResultsMerged[newDeviceData.host] = newDeviceData;
+                }
+              });
+            }
+          }
+        }
+
         /* get already paired Shelly devices and remove them from discoveryResults */
         const shellyDevices = await this.util.getShellies('collection');
         for (const shellyDevice of shellyDevices){
@@ -71,7 +93,7 @@ class ShellyDriver extends Homey.Driver {
           if (discoveryResult.txt.app === 'XMOD1') {
             device_config = this.util.getDeviceConfig('XMOD1', 'type');
           } else {
-            hostname = discoveryResult.host.substr(0, discoveryResult.host.lastIndexOf("-") + 1);
+            hostname = discoveryResult.host.substr(0, discoveryResult.host.indexOf("-") + 1);
             device_config = this.util.getDeviceConfig(hostname, 'hostname');
           }
 
@@ -174,6 +196,12 @@ class ShellyDriver extends Homey.Driver {
             },
             icon: device_config.icon
           }
+
+          /* add certain device specific data */
+          if (deviceArray.data.id.startsWith('shellyblutrv')) {
+            deviceArray.store.componentid = deviceArray.data.id.split("-")[1];
+          }
+
           if (auth) {
             session.showView('login_credentials');
           } else {
@@ -203,7 +231,7 @@ class ShellyDriver extends Homey.Driver {
         }
 
         /* get device config based on hostname / id */
-        const hostname = id.substr(0, id.lastIndexOf("-") + 1);
+        const hostname = id.substr(0, id.indexOf("-") + 1);
         let device_config = this.util.getDeviceConfig(hostname, 'hostname');
 
         if (typeof device_config === 'undefined') {
@@ -293,6 +321,12 @@ class ShellyDriver extends Homey.Driver {
           },
           icon: device_config.icon
         }
+
+        /* add certain device specific data */
+        if (deviceArray.data.id.startsWith('shellyblutrv')) {
+          deviceArray.store.componentid = deviceArray.data.id.split("-")[1];
+        }
+
         return Promise.resolve(deviceArray);
 
       } catch (error) {
@@ -334,6 +368,17 @@ class ShellyDriver extends Homey.Driver {
             deviceArray.store.config.capabilities_2 = extendedCapabilities.capabilities_2;
           }
           
+          return Promise.resolve(deviceArray);
+        } else if (deviceArray.store.communication === 'gateway') {
+
+          /* retrieve the name of the component */
+          const settings = await this.util.sendRPCCommand('/rpc/'+ deviceArray.store.config.extra.component +'.GetConfig?id='+ deviceArray.store.componentid, deviceArray.settings.address, deviceArray.settings.password);
+          if (settings.name !== null && settings.name !== undefined) { deviceArray.name = settings.name; }
+
+          /* set the outbound webserver on the gateway */
+          await this.util.setWsServer(deviceArray.settings.address, deviceArray.settings.password);
+          deviceArray.store.wsserver = true;
+
           return Promise.resolve(deviceArray);
         } else {
           return Promise.resolve(deviceArray);

@@ -87,7 +87,7 @@ class ShellyDevice extends Homey.Device {
       }
 
       // coap + websocket: initially poll the device status
-      if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket')) {
+      if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket') || this.getStoreValue('communication') === 'gateway') {
         this.homey.setTimeout(() => {
           try {
             this.pollDevice();
@@ -109,7 +109,7 @@ class ShellyDevice extends Homey.Device {
       }
 
       // websocket: start websocket server if device has the WS server configured during pairing
-      if (this.getStoreValue('communication') === 'websocket' && this.getStoreValue('wsserver')) {
+      if ((this.getStoreValue('communication') === 'websocket' || this.getStoreValue('communication') === 'gateway') && this.getStoreValue('wsserver')) {
         this.homey.setTimeout(() => {
           try {
             this.homey.app.websocketLocalListener();
@@ -138,7 +138,7 @@ class ShellyDevice extends Homey.Device {
       }, 1000);
 
       // coap + websocket: start polling mains powered devices on regular interval
-      if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket')) {
+      if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket') || this.getStoreValue('communication') === 'gateway') {
         this.pollingInterval = this.homey.setInterval(() => {
           this.pollDevice();
         }, (60000 + this.util.getRandomTimeout(20)));
@@ -152,7 +152,7 @@ class ShellyDevice extends Homey.Device {
             await this.util.setUnicast(this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
           }
         }
-      } else if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && this.getStoreValue('communication') === 'websocket') {
+      } else if (!this.getStoreValue('battery') && this.getStoreValue('channel') === 0 && (this.getStoreValue('communication') === 'websocket' || this.getStoreValue('communication') === 'gateway')) {
         const homey_ip = await this.homey.cloud.getLocalAddress();
         if (this.getStoreValue('device_settings').hasOwnProperty("ws")) {
           if (this.getStoreValue('device_settings').ws.enable === false || !this.getStoreValue('device_settings').ws.server.includes(homey_ip.substring(0, homey_ip.length-3))) {
@@ -558,6 +558,9 @@ class ShellyDevice extends Homey.Device {
         case 'websocket':{
           break;
         }
+        case 'gateway':{
+          return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Call?id='+ this.getStoreValue('componentid') +'&method=TRV.SetPosition&params={"id":0,"pos":'+ value +'}', this.getSetting('address'), this.getSetting('password'));
+        }
         case 'coap': {
           return await this.util.sendCommand('/thermostat/0?pos='+ value, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         }
@@ -603,6 +606,9 @@ class ShellyDevice extends Homey.Device {
       switch(this.getStoreValue('communication')) {
         case 'websocket':{
           return await this.util.sendRPCCommand('/rpc/Thermostat.Set?id='+ this.getStoreValue('channel') +'&target_C='+ value, this.getSetting('address'), this.getSetting('password'));
+        }
+        case 'gateway':{
+          return await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.Call?id='+ this.getStoreValue('componentid') +'&method=TRV.SetTarget&params={"id":0,"target_C":'+ value +'}', this.getSetting('address'), this.getSetting('password'));
         }
         case 'coap': {
           return await this.util.sendCommand('/thermostat/0?target_t_enabled=true&target_t='+ value, this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
@@ -714,6 +720,9 @@ class ShellyDevice extends Homey.Device {
       if (this.getStoreValue('communication') === 'websocket') {
         result = await this.util.sendRPCCommand('/rpc/Shelly.GetStatus', this.getSetting('address'), this.getSetting('password'));
         this.parseFullStatusUpdateGen2(result);
+      } else if (this.getStoreValue('communication') === 'gateway') {
+        result = await this.util.sendRPCCommand('/rpc/'+ this.getStoreValue('config').extra.component +'.GetRemoteStatus?id='+ this.getStoreValue('componentid'), this.getSetting('address'), this.getSetting('password'));
+        this.parseFullStatusUpdateGen2(result.status);
       } else {
         result = await this.util.sendCommand('/status', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
         this.parseFullStatusUpdateGen1(result);
@@ -1548,6 +1557,26 @@ class ShellyDevice extends Homey.Device {
         /* measure_temperature */
         if (result["thermostat:"+channel].hasOwnProperty("current_C")) {
           this.updateCapabilityValue('measure_temperature.thermostat', result["thermostat:"+channel].current_C, channel);
+        }
+
+      }
+
+      // TRV COMPONENT (Shelly BLU TRV over BLU Gateway Gen3)
+      if (result.hasOwnProperty("trv:"+ channel)) {
+
+        /* target_temperature */
+        if (result["trv:"+channel].hasOwnProperty("target_C")) {
+          this.updateCapabilityValue('target_temperature', result["trv:"+channel].target_C, channel);
+        }
+
+        /* measure_temperature */
+        if (result["trv:"+channel].hasOwnProperty("current_C")) {
+          this.updateCapabilityValue('measure_temperature.thermostat', result["trv:"+channel].current_C, channel);
+        }
+
+        /* valve_position */
+        if (result["trv:"+channel].hasOwnProperty("pos")) {
+          this.updateCapabilityValue('valve_position', result["trv:"+channel].pos, channel);
         }
 
       }
@@ -2419,20 +2448,15 @@ class ShellyDevice extends Homey.Device {
       }
 
       // ACTION EVENTS (for GEN2 cloud devices only)
+      var device_type = this.getStoreValue('config').id.includes("blu") ? 'bluetooth' : 'gen2'; // hack for getting the right button event for Bluetooth devices connected to a cloud connected Plus/Pro device
+
       if (result.hasOwnProperty("v_eve:0")) {
         if (result["v_eve:0"].hasOwnProperty("ev")) {
           if (result["v_eve:0"].ev !== '') {
-            const action_event_1 = this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', 'gen2') + '_1';
             if (channel === 0 && this.hasCapability('multiInputs')) {
-              this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": action_event_1}, {"action": action_event_1}).catch(error => { this.error(error) });
-
-              // TODO: remove this eventually
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action_event_1}, {"id": this.getData().id, "device": this.getName(), "action": action_event_1}).catch(error => { this.error(error) });
+              this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', device_type) + '_1'}, {"action": this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', device_type) + '_1'}).catch(error => { this.error(error) });
             } else {
-              this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', 'gen2')}, {"action": this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', 'gen2')}).catch(error => { this.error(error) });
-
-              // TODO: remove this eventually
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', 'gen2')}, {"id": this.getData().id, "device": this.getName(), "action": this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', 'gen2')}).catch(error => { this.error(error) });
+              this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', device_type)}, {"action": this.util.getActionEventDescription(result["v_eve:0"].ev, 'cloud', device_type)}).catch(error => { this.error(error) });
             }
           }
         }
@@ -2441,21 +2465,14 @@ class ShellyDevice extends Homey.Device {
       if (result.hasOwnProperty("v_eve:1")) {
         if (result["v_eve:1"].hasOwnProperty("ev")) {
           if (result["v_eve:1"].ev !== '') {
-            const action_event_2 = this.util.getActionEventDescription(result["v_eve:1"].ev, 'cloud', 'gen2') + '_2';
             if (channel === 0 && this.hasCapability('multiInputs')) {
-              this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": action_event_2}, {"action": action_event_2}).catch(error => { this.error(error) });
-
-              // TODO: remove this eventually
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action_event_2}, {"id": this.getData().id, "device": this.getName(), "action": action_event_2}).catch(error => { this.error(error) });
+              this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.util.getActionEventDescription(result["v_eve:1"].ev, 'cloud', device_type) + '_2'}, {"action": this.util.getActionEventDescription(result["v_eve:1"].ev, 'cloud', device_type) + '_2'}).catch(error => { this.error(error) });
             } else {
               const device_id = this.getStoreValue('main_device') + '-channel-1';
               const shellies = this.homey.app.getShellyCollection();
               const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
               const device = shelly[0].device;
-              this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.util.getActionEventDescription(result["v_eve:1"].ev, 'cloud', 'gen2')}, {"action": this.util.getActionEventDescription(result["v_eve:1"].ev, 'cloud', 'gen2')}).catch(error => { this.error(error) });
-
-              // TODO: remove this eventually
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:1"].ev, 'cloud', 'gen2')}, {"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:1"].ev, 'cloud', 'gen2')}).catch(error => { this.error(error) });
+              this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.util.getActionEventDescription(result["v_eve:1"].ev, 'cloud', device_type)}, {"action": this.util.getActionEventDescription(result["v_eve:1"].ev, 'cloud', device_type)}).catch(error => { this.error(error) });
             }
           }
         }
@@ -2464,21 +2481,14 @@ class ShellyDevice extends Homey.Device {
       if (result.hasOwnProperty("v_eve:2")) {
         if (result["v_eve:2"].hasOwnProperty("ev")) {
           if (result["v_eve:2"].ev !== '') {
-            const action_event_3 = this.util.getActionEventDescription(result["v_eve:2"].ev, 'cloud', 'gen2') + '_3';
             if (channel === 0 && this.hasCapability('multiInputs')) {
-              this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": action_event_3}, {"action": action_event_3}).catch(error => { this.error(error) });
-
-              // TODO: remove this eventually
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action_event_3}, {"id": this.getData().id, "device": this.getName(), "action": action_event_3}).catch(error => { this.error(error) });
+              this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.util.getActionEventDescription(result["v_eve:2"].ev, 'cloud', device_type) + '_3'}, {"action": this.util.getActionEventDescription(result["v_eve:2"].ev, 'cloud', device_type) + '_3'}).catch(error => { this.error(error) });
             } else {
               const device_id = this.getStoreValue('main_device') + '-channel-2';
               const shellies = this.homey.app.getShellyCollection();
               const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
               const device = shelly[0].device;
-              this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.util.getActionEventDescription(result["v_eve:2"].ev, 'cloud', 'gen2')}, {"action": this.util.getActionEventDescription(result["v_eve:2"].ev, 'cloud', 'gen2')}).catch(error => { this.error(error) });
-
-              // TODO: remove this eventually
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:2"].ev, 'cloud', 'gen2')}, {"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:2"].ev, 'cloud', 'gen2')}).catch(error => { this.error(error) });
+              this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.util.getActionEventDescription(result["v_eve:2"].ev, 'cloud', device_type)}, {"action": this.util.getActionEventDescription(result["v_eve:2"].ev, 'cloud', device_type)}).catch(error => { this.error(error) });
             }
           }
         }
@@ -2487,21 +2497,14 @@ class ShellyDevice extends Homey.Device {
       if (result.hasOwnProperty("v_eve:3")) {
         if (result["v_eve:3"].hasOwnProperty("ev")) {
           if (result["v_eve:3"].ev !== '') {
-            const action_event_4 = this.util.getActionEventDescription(result["v_eve:3"].ev, 'cloud', 'gen2') + '_4';
             if (channel === 0 && this.hasCapability('multiInputs')) {
-              this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": action_event_4}, {"action": action_event_4}).catch(error => { this.error(error) });
-
-              // TODO: remove this eventually
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action_event_4}, {"id": this.getData().id, "device": this.getName(), "action": action_event_4}).catch(error => { this.error(error) });
+              this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.util.getActionEventDescription(result["v_eve:3"].ev, 'cloud', 'gen2') + '_4'}, {"action": this.util.getActionEventDescription(result["v_eve:3"].ev, 'cloud', 'gen2') + '_4'}).catch(error => { this.error(error) });
             } else {
               const device_id = this.getStoreValue('main_device') + '-channel-3';
               const shellies = this.homey.app.getShellyCollection();
               const shelly = shellies.filter(shelly => shelly.id.includes(device_id));
               const device = shelly[0].device;
               this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.util.getActionEventDescription(result["v_eve:3"].ev, 'cloud', 'gen2')}, {"action": this.util.getActionEventDescription(result["v_eve:3"].ev, 'cloud', 'gen2')}).catch(error => { this.error(error) });
-
-              // TODO: remove this eventually
-              this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:3"].ev, 'cloud', 'gen2')}, {"id": device.getData().id, "device": device.getName(), "action": this.util.getActionEventDescription(result["v_eve:3"].ev, 'cloud', 'gen2')}).catch(error => { this.error(error) });
             }
           }
         }
@@ -3060,6 +3063,7 @@ class ShellyDevice extends Homey.Device {
         case 'battery':
         case 'percent':
           let measure_battery = this.util.clamp(value, 0, 100);
+          channel = channel > 100 ? 0 : channel; // update battery for Shelly BLU TRV
           this.updateCapabilityValue('measure_battery', measure_battery, channel);
           break;
         case 'tC':
@@ -3506,8 +3510,8 @@ class ShellyDevice extends Homey.Device {
             }
           }
           break;
-        case 'rollerStopReason':
-        case 'wakeUpEvent':
+        case 'rssi':
+          this.updateCapabilityValue('rssi', value, 0);
           break;
         default:
           //this.log('Device does not support reported capability '+ capability +' with value '+ value);

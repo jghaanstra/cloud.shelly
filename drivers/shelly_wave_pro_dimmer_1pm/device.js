@@ -20,10 +20,10 @@ class ShellyWaveProDimmer1PMDevice extends Device {
       });
 
       const zwaveDetachedModeO1Raw = await this.configurationGet({index: 7});
-      const zwaveDetachedModeO2Raw = await this.configurationGet({index: 8});
       const zwaveDetachedModeO1Array = Array.from(zwaveDetachedModeO1Raw['Configuration Value']);
-      const zwaveDetachedModeO2Array = Array.from(zwaveDetachedModeO2Raw['Configuration Value']);
       const zwaveDetachedModeO1 = zwaveDetachedModeO1Array[0];
+      const zwaveDetachedModeO2Raw = await this.configurationGet({index: 8});
+      const zwaveDetachedModeO2Array = Array.from(zwaveDetachedModeO2Raw['Configuration Value']);
       const zwaveDetachedModeO2 = zwaveDetachedModeO2Array[0];
 
       if (Number(zwaveDetachedModeO1) === 1) { // detached mode for O1
@@ -32,7 +32,7 @@ class ShellyWaveProDimmer1PMDevice extends Device {
         this.dimmerSwitchDetachedMode(0, 'normal');
       }
 
-      if (Number(zwaveDetachedModeO2) === 1) { // detached mode for O1
+      if (Number(zwaveDetachedModeO2) === 1) { // detached mode for O2
         this.dimmerSwitchDetachedMode(1, 'detached');
       } else {
         this.dimmerSwitchDetachedMode(1, 'normal');
@@ -67,26 +67,23 @@ class ShellyWaveProDimmer1PMDevice extends Device {
 
   async dimmerSwitchDetachedMode(output, mode) {
     try {
-      let input_capability = 1;
       let node_channel = 2;
-      let onoff = 'onoff.1';
+      let capability = 'input_1';
       let triggerInputChanged = 'triggerInput1Changed';
       let triggerInputOn = 'triggerInput1On';
       let triggerInputOff = 'triggerInput1Off';
 
       switch(output) {
         case 0:
-          input_capability = 1;
           node_channel = 2;
-          onoff = 'onoff.1';
+          capability = 'input_1';
           triggerInputChanged = 'triggerInput1Changed';
           triggerInputOn = 'triggerInput1On';
           triggerInputOff = 'triggerInput1Off';
           break;
         case 1:
-          input_capability = 2;
           node_channel = 3;
-          onoff = 'onoff.2';
+          capability = 'input_2';
           triggerInputChanged = 'triggerInput2Changed';
           triggerInputOn = 'triggerInput2On';
           triggerInputOff = 'triggerInput2Off';
@@ -94,17 +91,22 @@ class ShellyWaveProDimmer1PMDevice extends Device {
       }
 
       if (mode === 'normal') {
-        if (!this.hasCapability(input_capability)) { await this.addCapability(input_capability); }
+        if (this.hasCapability(capability)) { await this.removeCapability(capability); }
+      } else if (mode ==='detached') {
+        if (!this.hasCapability('actionEvents')) { await this.addCapability('actionEvents'); }
 
-        this.registerCapability(onoff, 'SWITCH_BINARY', { multiChannelNodeId: node_channel });
+        if (!this.hasCapability(capability)) { await this.addCapability(capability); }
 
-        this.registerCapability(input_capability, 'SWITCH_BINARY', {
+        this.registerCapability(capability, 'SWITCH_BINARY', {
           multiChannelNodeId: node_channel,
           get: 'SWITCH_BINARY_GET',
           set: 'SWITCH_BINARY_SET',
           getOpts: {
             getOnStart: true,
           },
+          setParserV1: value => ({
+            'Switch Value': value ? 'on/enable' : 'off/disable',
+          }),
           setParserV2(value, options) {
             const duration = options.hasOwnProperty('duration')
               ? util.calculateZwaveDimDuration(options.duration)
@@ -115,6 +117,13 @@ class ShellyWaveProDimmer1PMDevice extends Device {
             };
           },
           report: 'SWITCH_BINARY_REPORT',
+          reportParserV1: report => {
+            if (report && report.hasOwnProperty('Value')) {
+              if (report.Value === 'on/enable') return true;
+              if (report.Value === 'off/disable') return false;
+            }
+            return null;
+          },
           reportParserV2: report => {
             if (report && report.hasOwnProperty('Current Value')) {
               if (report['Current Value'] === 'on/enable') return true;
@@ -124,7 +133,6 @@ class ShellyWaveProDimmer1PMDevice extends Device {
           },
         });
 
-        // input_1
         this.registerMultiChannelReportListener(node_channel, 'SWITCH_BINARY', 'SWITCH_BINARY_REPORT', async report => {
           this.homey.flow.getDeviceTriggerCard(triggerInputChanged).trigger(this, {}, {}).catch(error => { this.error(error) });
           if (report['Target Value'] === 'on/enable') {
@@ -133,10 +141,7 @@ class ShellyWaveProDimmer1PMDevice extends Device {
             this.homey.flow.getDeviceTriggerCard(triggerInputOff).trigger(this, {}, {}).catch(error => { this.error(error) });
           }
         });
-      } else if (mode ==='detached') {
-        if (!this.hasCapability('actionEvents')) { await this.addCapability('actionEvents'); }
-        if (this.hasCapability(input_capability)) { await this.removeCapability(input_capability); }
-  
+
       } else {
         this.error('Operating mode not recognized')
       }

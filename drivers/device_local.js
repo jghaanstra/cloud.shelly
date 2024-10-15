@@ -31,6 +31,8 @@ class ShellyDevice extends Device {
         
         await this.util.sendRPCCommand('/rpc/Shelly.Reboot', this.getSetting('address'), this.getSetting('password'));
       }
+
+      // TODO: onDelete functionality for gateway subdevice when removing latest gateway device it will remove listener on gateway
       
       if (this.getStoreValue('channel') === 0) {
         const iconpath = "/userdata/" + this.getData().id +".svg";

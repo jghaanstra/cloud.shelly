@@ -9,13 +9,10 @@
   },
   "class": "light",
   "capabilities": [
-    "onoff.1",
-    "onoff.2",
     "dim",
     "measure_power",
     "meter_power",
     "button.reset_meter",
-    "actionEvents",
     "deviceWave"
   ],
   "capabilitiesOptions": {
@@ -65,6 +62,5 @@
     }
   },
   "platforms": [ "local", "cloud" ],
-  "connectivity": [ "zwave" ],
-  "deprecated": true
+  "connectivity": [ "zwave" ]
 }

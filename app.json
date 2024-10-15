@@ -19,7 +19,7 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.32.3",
+  "version": "3.32.4",
   "compatibility": ">=8.0.0",
   "platforms": [
     "local",
@@ -8508,13 +8508,10 @@
       },
       "class": "light",
       "capabilities": [
-        "onoff.1",
-        "onoff.2",
         "dim",
         "measure_power",
         "meter_power",
         "button.reset_meter",
-        "actionEvents",
         "deviceWave"
       ],
       "capabilitiesOptions": {
@@ -8576,7 +8573,6 @@
       "connectivity": [
         "zwave"
       ],
-      "deprecated": true,
       "id": "shelly_wave_pro_dimmer_1pm",
       "settings": [
         {
