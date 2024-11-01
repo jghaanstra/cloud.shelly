@@ -86,6 +86,7 @@ Shelly Dimmer 0/1-10V PM Gen3
 Shelly Dali Dimmer Gen3
 Shelly i4 Gen3
 Shelly 2PM Gen3
+Shelly EM Gen3
 
 Bluetooth
 -------------

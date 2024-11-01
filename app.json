@@ -19,8 +19,8 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.32.4",
-  "compatibility": ">=8.0.0",
+  "version": "3.33.0",
+  "compatibility": ">=12.1.0",
   "platforms": [
     "local",
     "cloud"
@@ -124,6 +124,7 @@
           "local",
           "cloud"
         ],
+        "highlight": true,
         "id": "triggerActionEvent"
       },
       {
@@ -523,7 +524,16 @@
               "en": "Firmware version",
               "nl": "Firmware versie"
             },
-            "example": "20210720-184522/v1.11.0-g6abd92e"
+            "example": "v1.11.0"
+          },
+          {
+            "name": "stage",
+            "type": "string",
+            "title": {
+              "en": "Firmware stage",
+              "nl": "Firmware stage"
+            },
+            "example": "beta"
           }
         ],
         "platforms": [
@@ -2590,8 +2600,8 @@
       {
         "id": "actionCustomCommand",
         "title": {
-          "en": "Send Command",
-          "nl": "Verstuur commando"
+          "en": "Send Command [for advanced users]",
+          "nl": "Verstuur commando [voor geadvanceerde gebruikers]"
         },
         "titleFormatted": {
           "en": "Send command [[command]]",
@@ -2927,8 +2937,8 @@
       {
         "id": "actionResetTotals",
         "title": {
-          "en": "Reset energy totals",
-          "nl": "Resetten energie totalen"
+          "en": "Reset all energy totals",
+          "nl": "Reset alle energie totalen"
         },
         "args": [
           {
@@ -2938,7 +2948,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_returned"
+            "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_returned|meter_power.total_returned"
           }
         ],
         "platforms": [
@@ -3067,6 +3077,48 @@
         ]
       },
       {
+        "title": {
+          "en": "Update device class [for advanced users]",
+          "nl": "Update device class [voor geadvanceerde gebruikers]"
+        },
+        "titleFormatted": {
+          "en": "Update device class to [[class]]",
+          "nl": "Wijzig device class naar [[class]]"
+        },
+        "hint": {
+          "en": "Only use this card if you know what you are doing as updating the device class can have unwanted side effects.",
+          "nl": "Gebruik deze actie alleen als je weet wat je doen aangezien het bijwerken van de device class een ongewenst bijeffect kan hebben."
+        },
+        "args": [
+          {
+            "name": "class",
+            "type": "autocomplete",
+            "title": {
+              "en": "Select Device Class ...",
+              "nl": "Selecteer device class ..."
+            },
+            "placeholder": {
+              "en": "Select Device Class ...",
+              "nl": "Selecteer device class ..."
+            }
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly|shelly_cloud"
+          }
+        ],
+        "platforms": [
+          "local",
+          "cloud"
+        ],
+        "id": "actionSetDeviceClass"
+      },
+      {
         "id": "actionSmokeMute",
         "title": {
           "en": "Mute alarm",
@@ -3088,6 +3140,110 @@
         ]
       },
       {
+        "id": "actionTrvBoost",
+        "title": {
+          "en": "Boost",
+          "nl": "Boost"
+        },
+        "titleFormatted": {
+          "en": "Boost for [[duration]]",
+          "nl": "Boost voor [[duration]]"
+        },
+        "args": [
+          {
+            "name": "duration",
+            "title": {
+              "en": "Duration in seconds",
+              "nl": "Duur in seconden"
+            },
+            "type": "number",
+            "min": 0,
+            "max": 86400,
+            "step": 1
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly&capabilities=target_temperature"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "actionTrvClearBoost",
+        "title": {
+          "en": "Clear Boost",
+          "nl": "Annuleren Boost"
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly&capabilities=target_temperature|deviceGen3"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
+        "id": "actionTrvOverride",
+        "title": {
+          "en": "Set temporary target temperature",
+          "nl": "Tijdelijk instellen doel temperatuur"
+        },
+        "titleFormatted": {
+          "en": "Set [[target_c]] for [[duration]]",
+          "nl": "Instellen [[target_c]] voor [[duration]]"
+        },
+        "args": [
+          {
+            "name": "target_c",
+            "title": {
+              "en": "Target temperature",
+              "nl": "Doeltemperatuur"
+            },
+            "type": "number",
+            "min": 4,
+            "max": 30,
+            "step": 1
+          },
+          {
+            "name": "duration",
+            "title": {
+              "en": "Duration in seconds",
+              "nl": "Duur in seconden"
+            },
+            "type": "number",
+            "min": 0,
+            "max": 86400,
+            "step": 1
+          },
+          {
+            "name": "device",
+            "type": "device",
+            "placeholder": {
+              "en": "Select Shelly",
+              "nl": "Selecteer Shelly"
+            },
+            "filter": "driver_id=shelly&capabilities=target_temperature|deviceGen3"
+          }
+        ],
+        "platforms": [
+          "local"
+        ]
+      },
+      {
         "id": "actionUpdateFirmware",
         "title": {
           "en": "Update firmware all devices",
@@ -3095,7 +3251,7 @@
         },
         "titleFormatted": {
           "en": "Update firmware all devices to latest [[stage]]",
-          "nl": "Update firmware naar laatste versie [[stage]]"
+          "nl": "Update firmware alle apparaten naar laatste versie [[stage]]"
         },
         "args": [
           {
@@ -3344,7 +3500,7 @@
               "en": "Select Shelly",
               "nl": "Selecteer Shelly"
             },
-            "filter": "driver_id=shelly&capabilities=target_temperature"
+            "filter": "driver_id=shelly&capabilities=target_temperature|deviceGen1"
           }
         ],
         "platforms": [
@@ -10065,6 +10221,59 @@
       ]
     }
   ],
+  "widgets": {
+    "firmware-updates": {
+      "name": {
+        "en": "Shelly WiFi Firmware Updates",
+        "nl": "Shelly WiFi firmware updates"
+      },
+      "settings": [
+        {
+          "id": "stage",
+          "type": "dropdown",
+          "value": "stable",
+          "label": {
+            "en": "Show",
+            "nl": "Show"
+          },
+          "values": [
+            {
+              "id": "stable",
+              "label": {
+                "en": "Stable",
+                "nl": "Stabiel"
+              }
+            },
+            {
+              "id": "beta",
+              "label": {
+                "en": "Beta",
+                "nl": "Beta"
+              }
+            },
+            {
+              "id": "both",
+              "label": {
+                "en": "Both",
+                "nl": "Both"
+              }
+            }
+          ]
+        }
+      ],
+      "api": {
+        "getFirmwareUpdates": {
+          "method": "GET",
+          "path": "/getfirmwareupdates"
+        },
+        "updateFirmware": {
+          "method": "GET",
+          "path": "/updatefirmware"
+        }
+      },
+      "id": "firmware-updates"
+    }
+  },
   "capabilities": {
     "actionEvents": {
       "type": "string",

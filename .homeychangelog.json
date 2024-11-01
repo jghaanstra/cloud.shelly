@@ -859,5 +859,8 @@
   },
   "3.32.4": {
     "en": "This release adds support for the Shelly Wave Pro Dimmer 1PM, Dali Dimmer Gen3 and 3EM-3CT63. It also fixes an issue with button events for Shelly BLU Button 1 on Homey Cloud."
+  },
+  "3.33.0": {
+    "en": "This release adds support for the Shelly EM Gen3 and it adds the action flowcard to reset energy counters for gen 2/3 device with smart meter capabilities, it adds a flow action card allowing to change device class (use at own risk) and it adds a dashboard widget for showing and starting firmware updates for Shelly WiFi devices."
   }
 }

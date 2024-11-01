@@ -28,7 +28,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly&capabilities=target_temperature"
+      "filter": "driver_id=shelly&capabilities=target_temperature|deviceGen1"
     }
   ],
   "platforms": ["local"]

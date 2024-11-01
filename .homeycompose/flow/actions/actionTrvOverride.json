@@ -1,0 +1,45 @@
+{
+  "id": "actionTrvOverride",
+  "title": {
+    "en": "Set temporary target temperature",
+    "nl": "Tijdelijk instellen doel temperatuur"
+  },
+  "titleFormatted": {
+    "en": "Set [[target_c]] for [[duration]]",
+    "nl": "Instellen [[target_c]] voor [[duration]]"
+  },
+  "args": [
+    {
+      "name": "target_c",
+      "title": {
+        "en": "Target temperature",
+        "nl": "Doeltemperatuur"
+      },
+      "type": "number",
+      "min": 4,
+      "max": 30,
+      "step": 1
+    },
+    {
+      "name": "duration",
+      "title": {
+        "en": "Duration in seconds",
+        "nl": "Duur in seconden"
+      },
+      "type": "number",
+      "min": 0,
+      "max": 86400,
+      "step": 1
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly&capabilities=target_temperature|deviceGen3"
+    }
+  ],
+  "platforms": ["local"]
+}

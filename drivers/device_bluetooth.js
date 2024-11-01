@@ -223,7 +223,7 @@ class ShellyBluetoothDevice extends Device {
 
         /* tilt */
         if (result.hasOwnProperty("tilt")) {
-          if (this.getCapabilityValue('tilt') !== result.tilt) {
+          if (result.tilt !== undefined && this.getCapabilityValue('tilt') !== result.tilt) {
             await this.homey.flow.getDeviceTriggerCard('triggerTilt').trigger(this, {'tilt': result.tilt}, {}).catch(error => { this.error(error) });
             this.updateCapabilityValue('tilt', result.tilt, channel);
           }

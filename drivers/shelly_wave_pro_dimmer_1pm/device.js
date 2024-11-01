@@ -133,7 +133,7 @@ class ShellyWaveProDimmer1PMDevice extends Device {
           },
         });
 
-        this.registerMultiChannelReportListener(node_channel, 'SWITCH_BINARY', 'SWITCH_BINARY_REPORT', async report => {
+        this.registerMultiChannelReportListener(node_channel, 'SWITCH_BINARY', 'SWITCH_BINARY_REPORT', report => {
           this.homey.flow.getDeviceTriggerCard(triggerInputChanged).trigger(this, {}, {}).catch(error => { this.error(error) });
           if (report['Target Value'] === 'on/enable') {
             this.homey.flow.getDeviceTriggerCard(triggerInputOn).trigger(this, {}, {}).catch(error => { this.error(error) });

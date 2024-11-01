@@ -1,8 +1,8 @@
 {
   "id": "actionCustomCommand",
   "title": {
-    "en": "Send Command",
-    "nl": "Verstuur commando"
+    "en": "Send Command [for advanced users]",
+    "nl": "Verstuur commando [voor geadvanceerde gebruikers]"
   },
   "titleFormatted": {
     "en": "Send command [[command]]",

@@ -62,5 +62,10 @@
   },
   "app": {
     "no_pairing_device_found": "No device for pairing found, make sure you follow the steps above."
+  },
+  "widgets": {
+    "currentversion": "Current",
+    "newversion": "New",
+    "noupdates": "There are no updates available."
   }
 }

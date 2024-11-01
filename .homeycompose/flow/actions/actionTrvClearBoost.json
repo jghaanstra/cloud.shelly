@@ -1,8 +1,8 @@
 {
-  "id": "actionResetTotals",
+  "id": "actionTrvClearBoost",
   "title": {
-    "en": "Reset all energy totals",
-    "nl": "Reset alle energie totalen"
+    "en": "Clear Boost",
+    "nl": "Annuleren Boost"
   },
   "args": [
     {
@@ -12,7 +12,7 @@
         "en": "Select Shelly",
         "nl": "Selecteer Shelly"
       },
-      "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_returned|meter_power.total_returned"
+      "filter": "driver_id=shelly&capabilities=target_temperature|deviceGen3"
     }
   ],
   "platforms": ["local"]

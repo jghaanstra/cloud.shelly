@@ -510,7 +510,7 @@ class ShellyDevice extends Homey.Device {
         case 'coap': {
           if (this.getStoreValue('config').id === 'shellybulb' || this.getStoreValue('config').id === 'shellycolorbulb') {
             const light_mode = value === 'temperature' ? 'white' : 'color';
-            return await this.util.sendCommand('/settings/?mode='+ light_mode +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
+            return await this.util.sendCommand('/light/0?mode='+ light_mode +'', this.getSetting('address'), this.getSetting('username'), this.getSetting('password'));
           } else {
             return;
           }
@@ -1339,9 +1339,33 @@ class ShellyDevice extends Homey.Device {
 
       // firmware update available?
       if (result.hasOwnProperty("update")) {
-        if (result.update.has_update === true && (this.getStoreValue('latest_firmware') !== result.update.new_version)) {
-          this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": result.update.new_version}).catch(error => { this.error(error) });
-          await this.setStoreValue("latest_firmware", result.update.new_version);
+        const oldVersionDate = new Date(update.old_version.split('/')[0].slice(0, 8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
+        const newVersionDate = new Date(update.new_version.split('/')[0].slice(0, 8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
+        const betaVersionDate = new Date(update.beta_version.split('/')[0].slice(0, 8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
+    
+        const isNewAvailable = newVersionDate > oldVersionDate;
+        const isBetaAvailable = betaVersionDate > oldVersionDate;
+    
+        const currentVersion = update.old_version.split('/')[1].split('-')[0];
+        const newVersion = update.new_version.split('/')[1].split('-')[0];
+        const betaVersion = update.beta_version.split('/')[1].split('-')[0];
+
+        const firmware = {
+          new: isNewAvailable,
+          beta: isBetaAvailable,
+          currentVersion: currentVersion,
+          newVersion: newVersion,
+          betaVersion: betaVersion
+      }
+
+        if (isNewAvailable && newVersion !== this.getStoreValue('firmware').newVersion ) {
+          this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": newVersion, "stage": "stable"}).catch(error => { this.error(error) });
+          await this.setStoreValue("firmware", firmware);
+        }
+
+        if (isBetaAvailable && betaVersion !== this.getStoreValue('firmware').betaVersion ) {
+          this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": betaVersion, "stage": "beta"}).catch(error => { this.error(error) });
+          await this.setStoreValue("firmware", firmware);
         }
       }
 
@@ -2532,10 +2556,47 @@ class ShellyDevice extends Homey.Device {
       // FIRMWARE UPDATE AVAILABLE
       if (result.hasOwnProperty("sys")) {
         if (result.sys.hasOwnProperty("available_updates")) {
+
+          /* initially gather firmware data */
+          if (this.getStoreValue('firmware') === undefined || this.getStoreValue('firmware') === null) {
+            const config = await this.util.sendRPCCommand('/rpc/Shelly.GetDeviceInfo', this.getSetting('address'), this.getSetting('password'));
+            const firmware = {
+              new: false,
+              beta: false,
+              currentVersion: config.ver,
+              newVersion: config.ver,
+              betaVersion: config.ver
+            }
+            await this.setStoreValue("firmware", firmware);
+          }
+
           if (result.sys.available_updates.hasOwnProperty("stable")) {
-            if (result.sys.available_updates.stable.hasOwnProperty("version") && this.getStoreValue('latest_firmware') !== result.sys.available_updates.stable.version) {
-              this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": result.sys.available_updates.stable.version }).catch(error => { this.error(error) });
-              await this.setStoreValue("latest_firmware", result.sys.available_updates.stable.version);
+            if (result.sys.available_updates.stable.version !== this.getStoreValue('firmware').newVersion) {
+              const firmware_current = await this.getStoreValue("firmware");
+              const firmware_new = {
+                new: true,
+                beta: firmware_current.beta,
+                currentVersion: firmware_current.currentVersion,
+                newVersion: result.sys.available_updates.stable.version,
+                betaVersion: firmware_current.betaVersion
+              }
+              this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": result.sys.available_updates.stable.version, "stage": "stable"}).catch(error => { this.error(error) });
+              await this.setStoreValue("firmware", firmware_new);
+            }            
+          }
+
+          if (result.sys.available_updates.hasOwnProperty("beta")) {
+            if (result.sys.available_updates.beta.version !== this.getStoreValue('firmware').betaVersion) {
+              const firmware_current = await this.getStoreValue("firmware");
+              const firmware_new = {
+                new: firmware_current.new,
+                beta: true,
+                currentVersion: firmware_current.currentVersion,
+                newVersion: firmware_current.newVersion,
+                betaVersion: result.sys.available_updates.beta.version
+              }
+              this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": result.sys.available_updates.beta.version, "stage": "beta"}).catch(error => { this.error(error) });
+              await this.setStoreValue("firmware", firmware_new);
             }
           }
         }
@@ -3717,7 +3778,7 @@ class ShellyDevice extends Homey.Device {
           }
 
           /* set device class if changed */
-          if (this.getClass() !== device_config.class) {
+          if (this.getClass() !== device_config.class && this.getStoreValue('customclass') !== true) {
             this.log('Updating device class from', this.getClass(), 'to', device_config.class, 'for', this.getName());
             this.setClass(device_config.class)
           }
@@ -3725,15 +3786,9 @@ class ShellyDevice extends Homey.Device {
           /* set energy object if changed */
           let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
           let energyObjectEqual = true;
-          if (device_config.energy.hasOwnProperty('batteries')) {
+          if (device_config.energy.hasOwnProperty('batteries') && energyObject.hasOwnProperty('batteries')) {
             if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
               energyObject.batteries = device_config.energy.batteries;
-              energyObjectEqual = false;
-            }
-          }
-          if (device_config.energy.hasOwnProperty('cumulative')) {
-            if (this.getEnergy().cumulative !== device_config.energy.cumulative) {
-              energyObject.cumulative = device_config.energy.cumulative;
               energyObjectEqual = false;
             }
           }
@@ -3815,7 +3870,7 @@ class ShellyDevice extends Homey.Device {
           });
 
           /* set device class if changed */
-          if (this.getClass() !== device_config.class) {
+          if (this.getClass() !== device_config.class && this.getStoreValue('customclass') !== true) {
             this.log('Updating device class from', this.getClass(), 'to', device_config.class, 'for', this.getName());
             this.setClass(device_config.class)
           }
@@ -3823,15 +3878,9 @@ class ShellyDevice extends Homey.Device {
           /* set energy object if changed */
           let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
           let energyObjectEqual = true;
-          if (device_config.energy.hasOwnProperty('batteries')) {
+          if (device_config.energy.hasOwnProperty('batteries') && energyObject.hasOwnProperty('batteries')) {
             if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
               energyObject.batteries = device_config.energy.batteries;
-              energyObjectEqual = false;
-            }
-          }
-          if (device_config.energy.hasOwnProperty('cumulative')) {
-            if (this.getEnergy().cumulative !== device_config.energy.cumulative) {
-              energyObject.cumulative = device_config.energy.cumulative;
               energyObjectEqual = false;
             }
           }
@@ -3886,7 +3935,7 @@ class ShellyDevice extends Homey.Device {
           }
 
           /* set device class if changed */
-          if (this.getClass() !== device_config.class) {
+          if (this.getClass() !== device_config.class && this.getStoreValue('customclass') !== true) {
             this.log('Updating device class from', this.getClass(), 'to', device_config.class, 'for', this.getName());
             this.setClass(device_config.class)
           }
@@ -3894,15 +3943,9 @@ class ShellyDevice extends Homey.Device {
           /* set energy object if changed */
           let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
           let energyObjectEqual = true;
-          if (device_config.energy.hasOwnProperty('batteries')) {
+          if (device_config.energy.hasOwnProperty('batteries') && energyObject.hasOwnProperty('batteries')) {
             if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
               energyObject.batteries = device_config.energy.batteries;
-              energyObjectEqual = false;
-            }
-          }
-          if (device_config.energy.hasOwnProperty('cumulative')) {
-            if (this.getEnergy().cumulative !== device_config.energy.cumulative) {
-              energyObject.cumulative = device_config.energy.cumulative;
               energyObjectEqual = false;
             }
           }

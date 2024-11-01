@@ -62,5 +62,10 @@
   },
   "app": {
     "no_pairing_device_found": "Geen apparaat om te koppelen gevonden, zorg ervoor dat je bovenstaande stappen volgt."
+  },
+  "widgets": {
+    "currentversion": "Huidig",
+    "newversion": "Nieuw",
+    "noupdates": "Er zijn geen updates beschikbaar."
   }
 }

@@ -1,0 +1,38 @@
+{
+  "title": {
+    "en": "Update device class [for advanced users]",
+    "nl": "Update device class [voor geadvanceerde gebruikers]"
+  },
+  "titleFormatted": {
+    "en": "Update device class to [[class]]",
+    "nl": "Wijzig device class naar [[class]]"
+  },
+  "hint": {
+    "en": "Only use this card if you know what you are doing as updating the device class can have unwanted side effects.",
+    "nl": "Gebruik deze actie alleen als je weet wat je doen aangezien het bijwerken van de device class een ongewenst bijeffect kan hebben."
+  },
+  "args": [
+    {
+      "name": "class",
+      "type": "autocomplete",
+      "title": {
+        "en": "Select Device Class ...",
+        "nl": "Selecteer device class ..."
+      },
+      "placeholder": {
+        "en": "Select Device Class ...",
+        "nl": "Selecteer device class ..."
+      }
+    },
+    {
+      "name": "device",
+      "type": "device",
+      "placeholder": {
+        "en": "Select Shelly",
+        "nl": "Selecteer Shelly"
+      },
+      "filter": "driver_id=shelly|shelly_cloud"
+    }
+  ],
+  "platforms": ["local", "cloud"]
+}

@@ -30,7 +30,16 @@
         "en": "Firmware version",
         "nl": "Firmware versie"
       },
-      "example": "20210720-184522/v1.11.0-g6abd92e"
+      "example": "v1.11.0"
+    },
+    {
+      "name": "stage",
+      "type": "string",
+      "title": {
+        "en": "Firmware stage",
+        "nl": "Firmware stage"
+      },
+      "example": "beta"
     }
   ],
   "platforms": ["local", "cloud"]

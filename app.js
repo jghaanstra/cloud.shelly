@@ -160,7 +160,7 @@ class ShellyApp extends OAuth2App {
         }
       });
 
-      // GENERIC ACTION FLOWCARDS
+      // GENERIC SHELLY ACTION FLOWCARDS
       this.homey.flow.getActionCard('actionReboot')
         .registerRunListener(async (args) => {
           try {
@@ -211,7 +211,6 @@ class ShellyApp extends OAuth2App {
                 return await this.util.sendCommand('/ota?update=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
               }
               case 'websocket': {
-                await this.util.sendRPCCommand('/rpc/Shelly.CheckForUpdate', device.getSetting('address'), device.getSetting('password'));
                 return await this.util.sendRPCCommand('/rpc/Shelly.Update', args.device.getSetting('address'), args.device.getSetting('password'));
               }
               case 'cloud': {
@@ -278,7 +277,7 @@ class ShellyApp extends OAuth2App {
           }
         })
 
-      // DEVICE SPECIFIC TRIGGER CARDS
+      // GENERIC DEVICE TRIGGER CARDS
 
       /* action events */
       const listenerActionEvents = this.homey.flow.getDeviceTriggerCard('triggerActionEvent').registerRunListener(async (args, state) => {
@@ -322,7 +321,7 @@ class ShellyApp extends OAuth2App {
         }
       });
 
-      // DEVICE SPECIFIC CONDITION FLOWCARDS
+      // GENERIC DEVICE CONDITION FLOWCARDS
       this.homey.flow.getConditionCard('conditionInput0')
         .registerRunListener(async (args) => {
           if (args.device) {
@@ -368,7 +367,7 @@ class ShellyApp extends OAuth2App {
           }
         })
         
-      // DEVICE SPECFIC ACTION CARDS
+      // GENERIC DEVICE ACTION CARDS
 
       /* virtual components */
       const listenerActionVirtualComponentsBoolean = this.homey.flow.getActionCard('actionUpdateVirtualComponentBoolean').registerRunListener(async (args, state) => {
@@ -727,7 +726,17 @@ class ShellyApp extends OAuth2App {
       this.homey.flow.getActionCard('actionValvePosition')
         .registerRunListener(async (args) => {
           try {
-            return await this.util.sendCommand('/thermostat/0?pos='+ args.position +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+            switch(args.device.getStoreValue('communication')) {
+              case 'coap': {
+                return await this.util.sendCommand('/thermostat/0?pos='+ args.position +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+              }
+              case 'websocket': {
+                break;
+              }
+              case 'gateway': {
+                return await this.util.sendRPCCommand('/rpc/'+ args.device.getStoreValue('config').extra.component +'.Call?id='+ args.device.getStoreValue('componentid') +'&method=TRV.SetPosition&params={"id":0,"pos":'+ args.position +'}', args.device.getSetting('address'), args.device.getSetting('password'));
+              }
+            }
           } catch (error) {
             this.error(error);
             return Promise.reject(error);
@@ -775,8 +784,48 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
+
+      this.homey.flow.getActionCard('actionTrvOverride')
+        .registerRunListener(async (args) => {
+          try {
+            return await this.util.sendRPCCommand('/rpc/'+ args.device.getStoreValue('config').extra.component +'.Call?id='+ args.device.getStoreValue('componentid') +'&method=TRV.SetOverride&params={"id":0,"target_C":'+ args.target_c +', "duration":'+ args.duration +'}', args.device.getSetting('address'), args.device.getSetting('password'));
+          } catch (error) {
+            this.error(error);
+            return Promise.reject(error);
+          }
+        })
+
+      this.homey.flow.getActionCard('actionTrvBoost')
+        .registerRunListener(async (args) => {
+          try {
+            switch(args.device.getStoreValue('communication')) {
+              case 'coap': {
+                return await this.util.sendCommand('/thermostat/0?boost_minutes='+ args.duration +'', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+              }
+              case 'websocket': {
+                break;
+              }
+              case 'gateway': {
+                return await this.util.sendRPCCommand('/rpc/'+ args.device.getStoreValue('config').extra.component +'.Call?id='+ args.device.getStoreValue('componentid') +'&method=TRV.SetBoost&params={"id":0,"duration":'+ args.duration +'}', args.device.getSetting('address'), args.device.getSetting('password'));
+              }
+            }
+          } catch (error) {
+            this.error(error);
+            return Promise.reject(error);
+          }
+        })
       
-      /* EM & 3EM */
+      this.homey.flow.getActionCard('actionTrvClearBoost')
+        .registerRunListener(async (args) => {
+          try {
+            return await this.util.sendRPCCommand('/rpc/'+ args.device.getStoreValue('config').extra.component +'.Call?id='+ args.device.getStoreValue('componentid') +'&method=TRV.ClearBoost&params={"id":0}', args.device.getSetting('address'), args.device.getSetting('password'));
+          } catch (error) {
+            this.error(error);
+            return Promise.reject(error);
+          }
+        })
+      
+      /* EM DEVICES */
       this.homey.flow.getActionCard('actionSetCumulative')
       .registerRunListener(async (args) => {
         try {
@@ -790,12 +839,51 @@ class ShellyApp extends OAuth2App {
       this.homey.flow.getActionCard('actionResetTotals')
       .registerRunListener(async (args) => {
         try {
-          return await this.util.sendCommand('/emeter/'+ args.device.getStoreValue('channel') +'?reset_totals=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+          switch(args.device.getStoreValue('communication')) {
+            case 'coap': {
+              return await this.util.sendCommand('/emeter/'+ args.device.getStoreValue('channel') +'?reset_totals=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+            }
+            case 'websocket': {
+              const result = await this.util.sendRPCCommand('/rpc/Shelly.GetStatus', args.device.getSetting('address'), args.device.getSetting('password'));
+              if (result.hasOwnProperty("em:0")) {
+                await this.util.sendRPCCommand('/rpc/EMData.ResetCounters?id='+ args.device.getStoreValue('channel'), args.device.getSetting('address'), args.device.getSetting('password'));
+              }
+              if (result.hasOwnProperty("em1:0")) {
+                await this.util.sendRPCCommand('/rpc/EM1Data.ResetCounters?id='+ args.device.getStoreValue('channel'), args.device.getSetting('address'), args.device.getSetting('password'));
+              }
+              if (result.hasOwnProperty("pm1:0")) {
+                await this.util.sendRPCCommand('/rpc/PM1.ResetCounters?id='+ args.device.getStoreValue('channel'), args.device.getSetting('address'), args.device.getSetting('password'));
+              }
+              return;
+            }
+          }
         } catch (error) {
           this.error(error);
           return Promise.reject(error);
         }
       })
+
+      this.homey.flow.getActionCard('actionSetDeviceClass')
+        .registerRunListener(async (args) => {
+          try {
+            args.device.setStoreValue('customclass', true);
+            return await args.device.setClass(args.class.name);
+          } catch (error) {
+            this.error(error);
+            return Promise.reject(error);
+          }
+        })
+        .getArgument('class')
+          .registerAutocompleteListener(async (query, args) => {
+            try {
+              const results =  await this.util.getDeviceClasses();
+              return results.filter((result) => {
+                return result.name.toLowerCase().includes(query.toLowerCase());
+              });
+            } catch (error) {
+              this.error(error)
+            }
+          })
 
       /* WAVE (PRO) SHUTTER */
 
@@ -1254,6 +1342,54 @@ class ShellyApp extends OAuth2App {
       }
     } catch (error) {
       this.error(error);
+    }
+  }
+
+  // WIDGET HELPERS
+
+  /* get available firmware updates */
+  async getFirmwareUpdates(stage) {
+    try {
+      let result = [];
+      const drivers = Object.values(this.homey.drivers.getDrivers());
+      for (const driver of drivers) {
+        const devices = driver.getDevices();
+        for (const device of devices) {
+          if (device.getStoreValue('channel') === 0 && device.getStoreValue('battery') === false && (device.getStoreValue('communication') === 'coap' || device.getStoreValue('communication') === 'websocket')) {
+            const firmware = device.getStoreValue('firmware');
+            if (stage === 'both' || (stage === 'stable' && firmware.new) || (stage === 'stable' && firmware.beta)) {
+              result.push({
+                id: device.getData().id,
+                name: device.getName(),
+                stage: firmware.beta ? 'beta' : 'stable',
+                currentversion: firmware.currentVersion,
+                newversion: firmware.beta ? firmware.betaVersion : firmware.newVersion,
+              });
+            }
+          }
+        }
+      }
+      return Promise.resolve(result);
+    } catch (error) {
+      this.error(error);
+      return Promise.reject(error);
+    }
+  }
+
+  async updateFirmware(id) {
+    try {
+      const device = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(id.toLowerCase())).filter(shelly => shelly.channel === 0);
+      switch(device[0].device.getStoreValue('communication')) {
+        case 'coap': {
+          return await this.util.sendCommand('/ota?update=true', device[0].device.getSetting('address'), device[0].device.getSetting('username'), device[0].device.getSetting('password'));
+        }
+        case 'websocket': {
+          return await this.util.sendRPCCommand('/rpc/Shelly.Update', device[0].device.getSetting('address'), device[0].device.getSetting('password'));
+        }
+      }
+    } catch (error) {
+      this.error(error);
+      return Promise.reject(error);
     }
   }
 

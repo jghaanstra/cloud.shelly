@@ -1,0 +1,124 @@
+<html>
+  <head>
+    <style>
+      .homey-widget {
+        padding: var(--homey-su);
+      }
+      .homey-table-striped th {
+        text-align: left;
+      }
+      .updateButton {
+        padding: 2px 4px;
+        background-color: green;
+        color: white;
+        border: 0;
+        border-radius: 4px;
+      }
+      .fade-out {
+        transition: opacity 0.4s ease-out;
+        opacity: 0;
+      }
+    </style>
+  </head>
+
+  <body class="homey-widget">
+    <table class="homey-table-striped text-align-left">
+      <thead>
+        <tr>
+          <th>Shelly</th>
+          <th data-i18n="widgets.currentversion"></th>
+          <th data-i18n="widgets.newversion"></th>
+          <th>Stage</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <script type="text/javascript">
+      function onHomeyReady(Homey) {
+        
+        // Fetch something from your app.
+        Homey.api('GET', '/getfirmwareupdates?stage='+Homey.getSettings().stage)
+          .then((result) => {
+            const tbody = document.querySelector('.homey-table-striped tbody');
+
+            if (result.length === 0) {
+              const row = document.createElement('tr');
+              const emptyCell = document.createElement('td');
+              emptyCell.setAttribute('colspan', '5');
+              emptyCell.textContent = Homey.__("widgets.noupdates");
+              emptyCell.style.textAlign = 'center';
+              emptyRow.appendChild(emptyCell);
+              tbody.appendChild(emptyRow);
+              Homey.setHeight(78);
+            } else {
+              result.forEach(item => {
+                const row = document.createElement('tr');
+                row.classList.add('firmware-row');
+                row.dataset.id = item.id;
+
+                const nameCell = document.createElement('td');
+                nameCell.textContent = item.name;
+                const currentVersionCell = document.createElement('td');
+                currentVersionCell.style.textAlign = 'left';
+                currentVersionCell.textContent = item.currentversion;
+                const newVersionCell = document.createElement('td');
+                newVersionCell.style.textAlign = 'left';
+                newVersionCell.textContent = item.newversion;
+                const stageCell = document.createElement('td');
+                stageCell.textContent = item.stage;
+                const buttonCell = document.createElement('td');
+                buttonCell.style.textAlign = 'center';
+                buttonCell.innerHTML = "<button type='button' class='updateButton' data-id='"+ item.id +"'>Update</button>";
+
+                row.appendChild(nameCell);
+                row.appendChild(currentVersionCell);
+                row.appendChild(newVersionCell);
+                row.appendChild(stageCell);
+                row.appendChild(buttonCell);
+                tbody.appendChild(row);
+              });
+
+              const height = 44 + (result.length * 34);
+              Homey.setHeight(height);
+
+              const updateButtons = document.querySelectorAll('.updateButton');
+              updateButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                  const deviceId = button.getAttribute('data-id');
+                  Homey.api('GET', `/updatefirmware?id=${deviceId}`)
+                    .then(() => {
+                      const row = document.querySelector(`tr[data-id="${deviceId}"]`);
+                      row.classList.add('fade-out');
+                      row.addEventListener('transitionend', () => {
+                        row.remove();
+                        if (document.querySelectorAll('.firmware-row').length === 0) {
+                          addNoUpdatesRow(tbody, Homey);
+                        }
+                      });
+                    })
+                    .catch(console.error);
+                });
+              });
+            }           
+          })
+          .catch(console.error);
+        
+        Homey.ready();
+      }
+
+      function addNoUpdatesRow(tbody, Homey) {
+        const emptyRow = document.createElement('tr');
+        const emptyCell = document.createElement('td');
+        emptyCell.setAttribute('colspan', '5');
+        emptyCell.textContent = Homey.__("widgets.noupdates");
+        emptyCell.style.textAlign = 'center';
+        emptyRow.appendChild(emptyCell);
+        tbody.appendChild(emptyRow);
+        Homey.setHeight(78);
+      }
+    </script>
+  </body>
+</html>

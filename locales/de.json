@@ -62,5 +62,10 @@
   },
   "app": {
     "no_pairing_device_found": "Kein Gerät zum Koppeln gefunden, stellen Sie sicher, dass Sie die oben beschriebenen Schritte ausführen."
+  },
+  "widgets": {
+    "currentversion": "Aktuell",
+    "newversion": "Neue",
+    "noupdates": "Es sind keine Updates verfügbar."
   }
 }
