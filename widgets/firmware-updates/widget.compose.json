@@ -8,7 +8,7 @@
       "id": "stage",
       "type": "dropdown",
       "value": "stable",
-      "label": {
+      "title": {
         "en": "Show",
         "nl": "Show"
       },

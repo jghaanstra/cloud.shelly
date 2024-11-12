@@ -841,7 +841,11 @@ class ShellyApp extends OAuth2App {
         try {
           switch(args.device.getStoreValue('communication')) {
             case 'coap': {
-              return await this.util.sendCommand('/emeter/'+ args.device.getStoreValue('channel') +'?reset_totals=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+              if (args.device.hasCapability('meter_power_returned')) {
+                return await this.util.sendCommand('/emeter/'+ args.device.getStoreValue('channel') +'?reset_totals=true', args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
+              } else {
+                return Promise.reject('This device does not support resetting the energy meter counter.');
+              }
             }
             case 'websocket': {
               const result = await this.util.sendRPCCommand('/rpc/Shelly.GetStatus', args.device.getSetting('address'), args.device.getSetting('password'));
@@ -853,6 +857,9 @@ class ShellyApp extends OAuth2App {
               }
               if (result.hasOwnProperty("pm1:0")) {
                 await this.util.sendRPCCommand('/rpc/PM1.ResetCounters?id='+ args.device.getStoreValue('channel'), args.device.getSetting('address'), args.device.getSetting('password'));
+              }
+              if (result.hasOwnProperty("switch:"+ args.device.getStoreValue('channel'))) {
+                await this.util.sendRPCCommand('/rpc/Switch.ResetCounters?id='+ args.device.getStoreValue('channel'), args.device.getSetting('address'), args.device.getSetting('password'));
               }
               return;
             }

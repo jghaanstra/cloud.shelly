@@ -12,7 +12,7 @@ class ShellyDevice extends Homey.Device {
       if (!this.util) this.util = new Util({homey: this.homey});
 
       // VARIABLES GENERIC
-      this.bluetoothScriptVersion = 5;
+      this.bluetoothScriptVersion = 6;
       this.pollingFailures = 0;
     
       // ADDING CAPABILITY LISTENERS
@@ -1339,16 +1339,16 @@ class ShellyDevice extends Homey.Device {
 
       // firmware update available?
       if (result.hasOwnProperty("update")) {
-        const oldVersionDate = new Date(update.old_version.split('/')[0].slice(0, 8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
-        const newVersionDate = new Date(update.new_version.split('/')[0].slice(0, 8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
-        const betaVersionDate = new Date(update.beta_version.split('/')[0].slice(0, 8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
+        const oldVersionDate = new Date(result.update.old_version.split('/')[0].slice(0, 8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
+        const newVersionDate = new Date(result.update.new_version.split('/')[0].slice(0, 8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
+        const betaVersionDate = new Date(result.update.beta_version.split('/')[0].slice(0, 8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
     
         const isNewAvailable = newVersionDate > oldVersionDate;
         const isBetaAvailable = betaVersionDate > oldVersionDate;
     
-        const currentVersion = update.old_version.split('/')[1].split('-')[0];
-        const newVersion = update.new_version.split('/')[1].split('-')[0];
-        const betaVersion = update.beta_version.split('/')[1].split('-')[0];
+        const currentVersion = result.update.old_version.split('/')[1].split('-')[0];
+        const newVersion = result.update.new_version.split('/')[1].split('-')[0];
+        const betaVersion = result.update.beta_version.split('/')[1].split('-')[0];
 
         const firmware = {
           new: isNewAvailable,

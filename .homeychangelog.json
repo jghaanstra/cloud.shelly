@@ -862,5 +862,8 @@
   },
   "3.33.0": {
     "en": "This release adds support for the Shelly EM Gen3 and it adds the action flowcard to reset energy counters for gen 2/3 device with smart meter capabilities, it adds a flow action card allowing to change device class (use at own risk) and it adds a dashboard widget for showing and starting firmware updates for Shelly WiFi devices."
+  },
+  "3.33.1": {
+    "en": "This release adds the reset energy counters action flowcard to gen 2/3 device with energy meter capability. It includes a fix for the Homey Bluetooth Proxy script to support change in BLU firmware 1.0.20. And it has a possible fix for issues with the new dashboard widget for showing firmware updates."
   }
 }
