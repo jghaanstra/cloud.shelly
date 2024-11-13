@@ -13,16 +13,19 @@ class ShellyBluetoothDriver extends Homey.Driver {
     try {
       let advertisements = {};
       const discovery_result = await this.homey.ble.discover().catch(this.error);
-
       if (discovery_result !== undefined) {
         discovery_result.forEach(advertisement => {
           if (advertisement.hasOwnProperty('localName')) {
             if (!advertisements[advertisement.address] && this.util.filterBLEDevices(advertisement.localName)) {
               let device_config = this.util.getDeviceConfig(advertisement.localName, 'bluetooth');
-              advertisements[advertisement.address] = {};
-              advertisements[advertisement.address].name = device_config.name + ' ['+ advertisement.address + ']';
-              advertisements[advertisement.address].device_config = device_config;
-              advertisements[advertisement.address].type = advertisement.localName;
+              if (device_config) {
+                advertisements[advertisement.address] = {};
+                advertisements[advertisement.address].name = device_config.name + ' ['+ advertisement.address + ']';
+                advertisements[advertisement.address].device_config = device_config;
+                advertisements[advertisement.address].type = advertisement.localName;
+              } else {
+                console.error('No suitable config for', advertisement.localName);
+              }
             }
           }
         });
