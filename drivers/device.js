@@ -30,6 +30,7 @@ class ShellyDevice extends Homey.Device {
       this.registerCapabilityListener("onoff.whitemode", this.onCapabilityOnoffWhiteMode.bind(this));
       this.registerCapabilityListener("windowcoverings_state", this.onCapabilityWindowcoveringsState.bind(this));
       this.registerCapabilityListener("windowcoverings_set", this.onCapabilityWindowcoveringsSet.bind(this));
+      this.registerCapabilityListener("windowcoverings_tilt_set", this.onCapabilityWindowcoveringsTiltSet.bind(this));
       this.registerCapabilityListener("valve_position", this.onCapabilityValvePosition.bind(this));
       this.registerCapabilityListener("valve_mode", this.onCapabilityValveMode.bind(this));
       this.registerCapabilityListener("target_temperature", this.onCapabilityTargetTemperature.bind(this));
@@ -313,6 +314,24 @@ class ShellyDevice extends Homey.Device {
         }
         case 'cloud':
           return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'roller_to_pos', command_param: 'pos', command_value: Math.round(value*100), deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
+        default:
+          break;
+      }
+    } catch (error) {
+      this.error(error);
+    }
+  }
+
+  /* windowcoverings_state */
+  async onCapabilityWindowcoveringsTiltSet(value, opts) {
+    try {
+      switch(this.getStoreValue('communication')) {
+        case 'websocket': {
+          return await this.util.sendRPCCommand('/rpc/Cover.GoToPosition?id='+ this.getStoreValue('channel') +'&slat_pos='+ Math.round(value*100), this.getSetting('address'), this.getSetting('password'));
+        }
+        case 'cloud': {
+          return await this.homey.app.websocketSendCommand([this.util.websocketMessage({event: 'Shelly:CommandRequest', command: 'roller_to_pos', command_param: 'slat_pos', command_value: Math.round(value*100), deviceid: String(this.getSetting('cloud_device_id')), channel: this.getStoreValue('channel')})]);
+        }
         default:
           break;
       }
@@ -1165,7 +1184,7 @@ class ShellyDevice extends Homey.Device {
             await this.setStoreValue('event_cnt', result.inputs[0].event_cnt);
             this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": action0}, {"action": action0}).catch(error => { this.error(error) });
 
-            // TODO: remove this eventually
+            // TODO: remove this eventually as this card is deprecated but probably still in use
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action0 }, {"id": this.getData().id, "device": this.getName(), "action": action0 }).catch(error => { this.error(error) });
           } else if (this.getStoreValue('event_cnt') === null) {
             await this.setStoreValue('event_cnt', result.inputs[0].event_cnt);
@@ -1186,7 +1205,7 @@ class ShellyDevice extends Homey.Device {
             await this.setStoreValue('event_cnt', result.inputs[1].event_cnt);
             this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": action1}, {"action": action1}).catch(error => { this.error(error) });
 
-            // TODO: remove this eventually
+            // TODO: remove this eventually as this card is deprecated but probably still in use
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action1 }, {"id": this.getData().id, "device": this.getName(), "action": action1 }).catch(error => { this.error(error) });
           } else if (this.getStoreValue('event_cnt') === null) {
             this.setStoreValue('event_cnt', result.inputs[1].event_cnt);
@@ -1204,7 +1223,7 @@ class ShellyDevice extends Homey.Device {
             await this.setStoreValue('event_cnt', result.inputs[1].event_cnt);
             this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": action1}, {"action": action1}).catch(error => { this.error(error) });
 
-            // TODO: remove this eventually
+            // TODO: remove this eventually as this card is deprecated but probably still in use
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action1 }, {"id": this.getData().id, "device": this.getName(), "action": action1 }).catch(error => { this.error(error) });
           } else if (this.getStoreValue('event_cnt') === null) {
             await this.setStoreValue('event_cnt', result.inputs[0].event_cnt);
@@ -1225,7 +1244,7 @@ class ShellyDevice extends Homey.Device {
             this.setStoreValue('event_cnt', result.inputs[2].event_cnt);
             this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": action2}, {"action": action2}).catch(error => { this.error(error) });
 
-            // TODO: remove this eventually
+            // TODO: remove this eventually as this card is deprecated but probably still in use
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action2 }, {"id": this.getData().id, "device": this.getName(), "action": action2 }).catch(error => { this.error(error) });
           } else if (this.getStoreValue('event_cnt') === null) {
             this.setStoreValue('event_cnt', result.inputs[2].event_cnt);
@@ -1246,7 +1265,7 @@ class ShellyDevice extends Homey.Device {
             await this.setStoreValue('event_cnt', result.inputs[3].event_cnt);
             this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": action3}, {"action": action3}).catch(error => { this.error(error) });
 
-            // TODO: remove this eventually
+            // TODO: remove this eventually as this card is deprecated but probably still in use
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": action3 }, {"id": this.getData().id, "device": this.getName(), "action": action3 }).catch(error => { this.error(error) });
           } else if (this.getStoreValue('event_cnt') === null) {
             await this.setStoreValue('event_cnt', result.inputs[3].event_cnt);
@@ -1346,9 +1365,9 @@ class ShellyDevice extends Homey.Device {
         const isNewAvailable = newVersionDate > oldVersionDate;
         const isBetaAvailable = betaVersionDate > oldVersionDate;
     
-        const currentVersion = result.update.old_version.split('/')[1].split('-')[0];
-        const newVersion = result.update.new_version.split('/')[1].split('-')[0];
-        const betaVersion = result.update.beta_version.split('/')[1].split('-')[0];
+        const currentVersion = result.update.old_version.split('/')[1].split('-')[0].replace(/^v/, '');;
+        const newVersion = result.update.new_version.split('/')[1].split('-')[0].replace(/^v/, '');;
+        const betaVersion = result.update.beta_version.split('/')[1].split('-')[0].replace(/^v/, '');;
 
         const firmware = {
           new: isNewAvailable,
@@ -1356,7 +1375,12 @@ class ShellyDevice extends Homey.Device {
           currentVersion: currentVersion,
           newVersion: newVersion,
           betaVersion: betaVersion
-      }
+        }
+
+        /* initially set firmware data */
+        if (this.getStoreValue('firmware') === undefined || this.getStoreValue('firmware') === null) {
+          await this.setStoreValue("firmware", firmware);
+        }
 
         if (isNewAvailable && newVersion !== this.getStoreValue('firmware').newVersion ) {
           this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": newVersion, "stage": "stable"}).catch(error => { this.error(error) });
@@ -1410,6 +1434,11 @@ class ShellyDevice extends Homey.Device {
         if (result["cover:"+channel].hasOwnProperty("current_pos") && this.hasCapability('windowcoverings_set')) {
           const windowcoverings_set = this.util.clamp(result["cover:"+channel].current_pos, 0, 100) / 100;
           this.updateCapabilityValue('windowcoverings_set', windowcoverings_set, channel);
+        }
+
+        /* windowcoverings_tilt_set */
+        if (result["cover:"+channel].hasOwnProperty("slat_pos")) {
+          this.updateCapabilityValue('windowcoverings_tilt_set', result["cover:"+channel].slat_pos, channel);
         }
 
         /* temperature (component) */
@@ -1602,6 +1631,8 @@ class ShellyDevice extends Homey.Device {
         if (result["trv:"+channel].hasOwnProperty("pos")) {
           this.updateCapabilityValue('valve_position', result["trv:"+channel].pos, channel);
         }
+
+        // TODO: currently this status of the TRV does not report battery, Allterco Robotics needs to fix this in the TRV firmware so  it can be added here.
 
       }
 
@@ -2583,6 +2614,16 @@ class ShellyDevice extends Homey.Device {
               this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": result.sys.available_updates.stable.version, "stage": "stable"}).catch(error => { this.error(error) });
               await this.setStoreValue("firmware", firmware_new);
             }            
+          } else if (!result.sys.available_updates.hasOwnProperty("stable") && this.getStoreValue('firmware').new) {
+            const firmware_current = await this.getStoreValue("firmware");
+            const firmware_new = {
+              new: false,
+              beta: firmware_current.beta,
+              currentVersion: firmware_current.currentVersion,
+              newVersion: firmware_current.newVersion,
+              betaVersion: firmware_current.betaVersion
+            }
+            await this.setStoreValue("firmware", firmware_new);
           }
 
           if (result.sys.available_updates.hasOwnProperty("beta")) {
@@ -2598,6 +2639,16 @@ class ShellyDevice extends Homey.Device {
               this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": result.sys.available_updates.beta.version, "stage": "beta"}).catch(error => { this.error(error) });
               await this.setStoreValue("firmware", firmware_new);
             }
+          } else if (!result.sys.available_updates.hasOwnProperty("beta") && this.getStoreValue('firmware').beta) {
+            const firmware_current = await this.getStoreValue("firmware");
+            const firmware_new = {
+              new: firmware_current.new,
+              beta: false,
+              currentVersion: firmware_current.currentVersion,
+              newVersion: firmware_current.newVersion,
+              betaVersion: firmware_current.betaVersion
+            }
+            await this.setStoreValue("firmware", firmware_new);
           }
         }
       }
@@ -2778,7 +2829,7 @@ class ShellyDevice extends Homey.Device {
                   }
                   this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(device, {"action": action_event}, {"action": action_event}).catch(error => { this.error(error) });
 
-                  // TODO: remove this eventually
+                  // TODO: remove this eventually as this card is deprecated but probably still in use
                   this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": action_event }, {"id": device.getData().id, "device": device.getName(), "action": action_event }).catch(error => { this.error(error) });
                 }
                 
@@ -3179,6 +3230,9 @@ class ShellyDevice extends Homey.Device {
           await this.setStoreValue('previous_position', this.getCapabilityValue('windowcoverings_set'));
           this.updateCapabilityValue('windowcoverings_set', windowcoverings_set, channel);
           break;
+        case 'slat_pos':
+          this.updateCapabilityValue('windowcoverings_tilt_set', value / 100, channel);
+          break;
         case 'gain':
         case 'brightness':
         case 'brightness0':
@@ -3374,14 +3428,14 @@ class ShellyDevice extends Homey.Device {
             if (value > 0 && (typeof this.getStoreValue('actionEvent1') === 'string' || this.getStoreValue('actionEvent1') instanceof String)) {
               this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.getStoreValue('actionEvent1')}, {"action": this.getStoreValue('actionEvent1')}).catch(error => { this.error(error) });
 
-              // TODO: remove this eventually
+              // TODO: remove this eventually as this card is deprecated but probably still in use
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent1')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent1')}).catch(error => { this.error(error) });
             }
           } else {
             if (value > 0 && (typeof this.getStoreValue('actionEvent') === 'string' || this.getStoreValue('actionEvent') instanceof String)) {
               this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.getStoreValue('actionEvent')}, {"action": this.getStoreValue('actionEvent')}).catch(error => { this.error(error) });
 
-              // TODO: remove this eventually
+              // TODO: remove this eventually as this card is deprecated but probably still in use
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}).catch(error => { this.error(error) });
             }
           }
@@ -3391,14 +3445,14 @@ class ShellyDevice extends Homey.Device {
             if (value > 0 && (typeof this.getStoreValue('actionEvent2') === 'string' || this.getStoreValue('actionEvent2') instanceof String)) {
               this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.getStoreValue('actionEvent2')}, {"action": this.getStoreValue('actionEvent2')}).catch(error => { this.error(error) });
 
-              // TODO: remove this eventually
+              // TODO: remove this eventually as this card is deprecated but probably still in use
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent2')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent2')}).catch(error => { this.error(error) });
             }
           } else {
             if (value > 0 && (typeof this.getStoreValue('actionEvent') === 'string' || this.getStoreValue('actionEvent') instanceof String)) {
               this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.getStoreValue('actionEvent')}, {"action": this.getStoreValue('actionEvent')}).catch(error => { this.error(error) });
 
-              // TODO: remove this eventually
+              // TODO: remove this eventually as this card is deprecated but probably still in use
               this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent')}).catch(error => { this.error(error) });
             }
           }
@@ -3407,7 +3461,7 @@ class ShellyDevice extends Homey.Device {
           if (value > 0 && (typeof this.getStoreValue('actionEvent3') === 'string' || this.getStoreValue('actionEvent3') instanceof String)) {
             this.homey.flow.getDeviceTriggerCard('triggerActionEvent').trigger(this, {"action": this.getStoreValue('actionEvent3')}, {"action": this.getStoreValue('actionEvent3')}).catch(error => { this.error(error) });
 
-              // TODO: remove this eventually
+              // TODO: remove this eventually as this card is deprecated but probably still in use
             this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent3')}, {"id": this.getData().id, "device": this.getName(), "action": this.getStoreValue('actionEvent3')}).catch(error => { this.error(error) });
           }
           break;
@@ -3786,28 +3840,31 @@ class ShellyDevice extends Homey.Device {
           /* set energy object if changed */
           let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
           let energyObjectEqual = true;
-          if (device_config.energy.hasOwnProperty('batteries') && energyObject.hasOwnProperty('batteries')) {
-            if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
-              energyObject.batteries = device_config.energy.batteries;
-              energyObjectEqual = false;
+          if (energyObject !== null) {
+            if (device_config.energy.hasOwnProperty('batteries') && energyObject.hasOwnProperty('batteries')) {
+              if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
+                energyObject.batteries = device_config.energy.batteries;
+                energyObjectEqual = false;
+              }
+            }
+            if (device_config.energy.hasOwnProperty('cumulativeImportedCapability')) {
+              if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
+                energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
+                energyObjectEqual = false;
+              }
+            }
+            if (device_config.energy.hasOwnProperty('cumulativeExportedCapability')) {
+              if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
+                energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
+                energyObjectEqual = false;
+              }
+            }
+            if (!energyObjectEqual) {
+              this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
+              await this.setEnergy(energyObject).catch(this.error);
             }
           }
-          if (device_config.energy.hasOwnProperty('cumulativeImportedCapability')) {
-            if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
-              energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
-              energyObjectEqual = false;
-            }
-          }
-          if (device_config.energy.hasOwnProperty('cumulativeExportedCapability')) {
-            if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
-              energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
-              energyObjectEqual = false;
-            }
-          }
-          if (!energyObjectEqual) {
-            this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
-            await this.setEnergy(energyObject).catch(this.error);
-          }
+
 
           /* update device capability options */
           if (Object.keys(device_config.capability_options).length > 0) {
@@ -3878,27 +3935,29 @@ class ShellyDevice extends Homey.Device {
           /* set energy object if changed */
           let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
           let energyObjectEqual = true;
-          if (device_config.energy.hasOwnProperty('batteries') && energyObject.hasOwnProperty('batteries')) {
-            if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
-              energyObject.batteries = device_config.energy.batteries;
-              energyObjectEqual = false;
+          if (energyObject !== null) {
+            if (device_config.energy.hasOwnProperty('batteries') && energyObject.hasOwnProperty('batteries')) {
+              if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
+                energyObject.batteries = device_config.energy.batteries;
+                energyObjectEqual = false;
+              }
             }
-          }
-          if (device_config.energy.hasOwnProperty('cumulativeImportedCapability')) {
-            if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
-              energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
-              energyObjectEqual = false;
+            if (device_config.energy.hasOwnProperty('cumulativeImportedCapability')) {
+              if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
+                energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
+                energyObjectEqual = false;
+              }
             }
-          }
-          if (device_config.energy.hasOwnProperty('cumulativeExportedCapability')) {
-            if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
-              energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
-              energyObjectEqual = false;
+            if (device_config.energy.hasOwnProperty('cumulativeExportedCapability')) {
+              if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
+                energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
+                energyObjectEqual = false;
+              }
             }
-          }
-          if (!energyObjectEqual) {
-            this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
-            await this.setEnergy(energyObject).catch(this.error);
+            if (!energyObjectEqual) {
+              this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
+              await this.setEnergy(energyObject).catch(this.error);
+            }
           }
 
         } else {
@@ -3943,27 +4002,29 @@ class ShellyDevice extends Homey.Device {
           /* set energy object if changed */
           let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
           let energyObjectEqual = true;
-          if (device_config.energy.hasOwnProperty('batteries') && energyObject.hasOwnProperty('batteries')) {
-            if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
-              energyObject.batteries = device_config.energy.batteries;
-              energyObjectEqual = false;
+          if (energyObject !== null) {
+            if (device_config.energy.hasOwnProperty('batteries') && energyObject.hasOwnProperty('batteries')) {
+              if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
+                energyObject.batteries = device_config.energy.batteries;
+                energyObjectEqual = false;
+              }
             }
-          }
-          if (device_config.energy.hasOwnProperty('cumulativeImportedCapability')) {
-            if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
-              energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
-              energyObjectEqual = false;
+            if (device_config.energy.hasOwnProperty('cumulativeImportedCapability')) {
+              if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
+                energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
+                energyObjectEqual = false;
+              }
             }
-          }
-          if (device_config.energy.hasOwnProperty('cumulativeExportedCapability')) {
-            if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
-              energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
-              energyObjectEqual = false;
+            if (device_config.energy.hasOwnProperty('cumulativeExportedCapability')) {
+              if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
+                energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
+                energyObjectEqual = false;
+              }
             }
-          }
-          if (!energyObjectEqual) {
-            this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
-            await this.setEnergy(energyObject).catch(this.error);
+            if (!energyObjectEqual) {
+              this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
+              await this.setEnergy(energyObject).catch(this.error);
+            }
           }
 
           /* update device capability options */

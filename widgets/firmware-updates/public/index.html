@@ -45,7 +45,7 @@
             const tbody = document.querySelector('.homey-table-striped tbody');
 
             if (result.length === 0) {
-              const row = document.createElement('tr');
+              const emptyRow = document.createElement('tr');
               const emptyCell = document.createElement('td');
               emptyCell.setAttribute('colspan', '5');
               emptyCell.textContent = Homey.__("widgets.noupdates");

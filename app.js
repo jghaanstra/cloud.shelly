@@ -123,7 +123,7 @@ class ShellyApp extends OAuth2App {
       this.homey.flow.getTriggerCard('triggerFWUpdate');
       this.homey.flow.getTriggerCard('triggerCloudError');
       
-      // TODO: eventually remove this triggercard
+      // TODO: remove this eventually as this card is deprecated but probably still in use
       const listenerCallbacks = this.homey.flow.getTriggerCard('triggerCallbacks').registerRunListener(async (args, state) => {
         try {
           if (args.action.action === undefined) {
@@ -984,6 +984,7 @@ class ShellyApp extends OAuth2App {
                 let filteredShelliesWss = this.shellyDevices.filter(shelly => shelly.id.toLowerCase().includes(result.src.toLowerCase())).filter(shelly => shelly.channel === 0);
 
                 if (result.src.includes('shellyblugwg3-')) { // get the right device from status reports of the BLU Gateway Gen3
+                  // TODO: current BLU TRV firmware only reports battery and rssi under the TRV component. Sensors are reported under different components and there is no (easy) way to match them. Allterco Robotics needs to fix this in their firmware.
                   let componenttype = '';
                   let componentid = '';
                   const paramsKeys = Object.keys(result.params);
@@ -1362,9 +1363,9 @@ class ShellyApp extends OAuth2App {
       for (const driver of drivers) {
         const devices = driver.getDevices();
         for (const device of devices) {
-          if (device.getStoreValue('channel') === 0 && device.getStoreValue('battery') === false && (device.getStoreValue('communication') === 'coap' || device.getStoreValue('communication') === 'websocket')) {
+          if (device.getStoreValue('channel') === 0 && device.getStoreValue('battery') === false && (device.getStoreValue('communication') === 'coap' || device.getStoreValue('communication') === 'websocket') && (device.getStoreValue('firmware') !== undefined || device.getStoreValue('firmware') !== null)) {
             const firmware = device.getStoreValue('firmware');
-            if (stage === 'both' || (stage === 'stable' && firmware.new) || (stage === 'stable' && firmware.beta)) {
+            if ((stage === 'both' && (firmware.new || firmware.beta)) || (stage === 'stable' && firmware.new) || (stage === 'beta' && firmware.beta)) {
               result.push({
                 id: device.getData().id,
                 name: device.getName(),

@@ -26,6 +26,7 @@ class ShellyCloudDevice extends OAuth2Device {
       this.registerCapabilityListener("onoff.whitemode", this.onCapabilityOnoffWhiteMode.bind(this));
       this.registerCapabilityListener("windowcoverings_state", this.onCapabilityWindowcoveringsState.bind(this));
       this.registerCapabilityListener("windowcoverings_set", this.onCapabilityWindowcoveringsSet.bind(this));
+      this.registerCapabilityListener("windowcoverings_tilt_set", this.onCapabilityWindowcoveringsTiltSet.bind(this));
       this.registerCapabilityListener("valve_position", this.onCapabilityValvePosition.bind(this));
       this.registerCapabilityListener("valve_mode", this.onCapabilityValveMode.bind(this));
       this.registerCapabilityListener("target_temperature", this.onCapabilityTargetTemperature.bind(this));
@@ -136,6 +137,7 @@ ShellyCloudDevice.prototype.onCapabilityOnoff5 = Device.prototype.onCapabilityOn
 ShellyCloudDevice.prototype.onCapabilityOnoffLight = Device.prototype.onCapabilityOnoffLight;
 ShellyCloudDevice.prototype.onCapabilityWindowcoveringsState = Device.prototype.onCapabilityWindowcoveringsState;
 ShellyCloudDevice.prototype.onCapabilityWindowcoveringsSet = Device.prototype.onCapabilityWindowcoveringsSet;
+ShellyCloudDevice.prototype.onCapabilityWindowcoveringsTiltSet = Device.prototype.onCapabilityWindowcoveringsTiltSet;
 ShellyCloudDevice.prototype.onMultipleCapabilityDim = Device.prototype.onMultipleCapabilityDim;
 ShellyCloudDevice.prototype.onCapabilityDimWhite = Device.prototype.onCapabilityDimWhite;
 ShellyCloudDevice.prototype.onCapabilityLightTemperature = Device.prototype.onCapabilityLightTemperature;

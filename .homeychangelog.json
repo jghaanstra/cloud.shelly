@@ -868,5 +868,8 @@
   },
   "3.33.2": {
     "en": "This release adds the reset energy counters action flowcard to gen 2/3 device with energy meter capability. It includes a fix for the Homey Bluetooth Proxy script to support change in BLU firmware 1.0.20. And it has a possible fix for issues with the new dashboard widget for showing firmware updates."
+  },
+  "3.33.3": {
+    "en": "This release contains another fix for the new dashboard widget for showing firmware updates and it adds the windowcoverings_tilt_set capability on Gen 2/3 devices that are are configured as venetian blinds / slats."
   }
 }
