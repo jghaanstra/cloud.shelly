@@ -1123,16 +1123,16 @@ class ShellyDevice extends Homey.Device {
         this.updateCapabilityValue('alarm_water', result.flood, channel);
       }
 
-      // GAS (alarm_smoke, gas_concentration)
-      if (result.hasOwnProperty("gas_sensor") && this.hasCapability('alarm_smoke') && this.hasCapability('gas_concentration')) {
+      // GAS (alarm_gas, gas_concentration)
+      if (result.hasOwnProperty("gas_sensor") && this.hasCapability('alarm_gas')) {
 
-        /* alarm_smoke */
+        /* alarm_gas */
         if (result.gas_sensor.alarm_state == 'mild' || result.gas_sensor.alarm_state == 'heavy') {
           var alarm_gas = true;
         } else {
           var alarm_gas = false;
         }
-        this.updateCapabilityValue('alarm_smoke', alarm_gas, channel);
+        this.updateCapabilityValue('alarm_gas', alarm_gas, channel);
 
         /* concentration */
         this.updateCapabilityValue('gas_concentration', Number(result.concentration.ppm), channel);
@@ -1438,7 +1438,7 @@ class ShellyDevice extends Homey.Device {
 
         /* windowcoverings_tilt_set */
         if (result["cover:"+channel].hasOwnProperty("slat_pos")) {
-          this.updateCapabilityValue('windowcoverings_tilt_set', result["cover:"+channel].slat_pos, channel);
+          this.updateCapabilityValue('windowcoverings_tilt_set', result["cover:"+channel].slat_pos / 100, channel);
         }
 
         /* temperature (component) */
@@ -3336,7 +3336,7 @@ class ShellyDevice extends Homey.Device {
           } else {
             var alarm = false;
           }
-          this.updateCapabilityValue('alarm_smoke', alarm, channel);
+          this.updateCapabilityValue('alarm_gas', alarm, channel);
           break;
         case 'concentration':
           if (value != this.getCapabilityValue('gas_concentration')) {
@@ -3766,6 +3766,12 @@ class ShellyDevice extends Homey.Device {
     try {
 
       /* placeholder for update for specific devices */
+
+      // TODO: remove on next release
+      if (this.getStoreValue('config').id === 'shellygas' && (this.hasCapability('alarm_smoke') || !this.hasCapability('alarm_gas'))) {
+        await this.removeCapability('alarm_smoke');
+        await this.addCapability('alarm_gas');
+      }
 
       if (this.getStoreValue('communication') === 'coap' || this.getStoreValue('communication') === 'websocket') { /* COAP AND WEBSOCKET */
 

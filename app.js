@@ -647,6 +647,19 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
+
+      /* CUSTOM ACTION CARD FOR windowcoverings_tilt_set AS ATHOM DID NOT IMPLEMENT IT */
+      this.homey.flow.getActionCard('actionShutterTiltSet')
+      .registerRunListener(async (args) => {
+        try {
+          if (args.device.hasCapability('windowcoverings_tilt_set')) {
+            return await args.device.triggerCapabilityListener('windowcoverings_tilt_set', tilt).catch(this.error);
+          }
+        } catch (error) {
+          this.error(error);
+          return Promise.reject(error.message);
+        }
+      })
   
       /* gas */
       this.homey.flow.getActionCard('actionGasSetVolume')

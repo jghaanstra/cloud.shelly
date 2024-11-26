@@ -18,8 +18,8 @@
       "Shelly Bluetooth"
     ]
   },
-  "version": "3.33.3",
-  "compatibility": ">=12.1.0",
+  "version": "3.33.4",
+  "compatibility": ">=12.2.0",
   "platforms": [ "local", "cloud" ],
   "author": {
     "name": "Allterco Robotics",

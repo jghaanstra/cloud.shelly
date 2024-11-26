@@ -871,5 +871,8 @@
   },
   "3.33.3": {
     "en": "This release contains another fix for the new dashboard widget for showing firmware updates and it adds the windowcoverings_tilt_set capability on Gen 2/3 devices that are are configured as venetian blinds / slats."
+  },
+  "3.33.4": {
+    "en": "This release contains breaking change for the Shelly Gas: the alarm_smoke capability has been replaced by the alarm_gas capability now that is has been added to Homey SDK. You will need to update your flows. It also adds a custom windowcoverings_tilt_set flow card as Athom forgot the implement this in the Homey SDK. And it should fix an issue with the windowcoverings_tilt_set capability keep being set to 100% on devices that are are configured as windowcovering slats."
   }
 }
