@@ -1,6 +1,7 @@
 'use strict';
 
 const Homey = require('homey');
+const {Log} = require('@drenso/homey-log');
 const { OAuth2App } = require('homey-oauth2app');
 const ShellyOAuth2Client = require('./lib/ShellyOAuth2Client');
 const Util = require('./lib/util.js');
@@ -10,9 +11,10 @@ const tinycolor = require("tinycolor2");
 const jwt_decode = require('jwt-decode');
 
 class ShellyApp extends OAuth2App {
+  homeyLog = new Log({homey: this.homey});
 
   static OAUTH2_CLIENT = ShellyOAuth2Client;
-  static OAUTH2_DEBUG = false;
+  static OAUTH2_DEBUG = Homey.env.DEBUG === '1';
   static OAUTH2_MULTI_SESSION = false;
   static OAUTH2_DRIVERS = ['shelly_cloud'];
 
@@ -21,13 +23,13 @@ class ShellyApp extends OAuth2App {
       this.log('Initializing Shelly App ...');
 
       if (!this.util) this.util = new Util({homey: this.homey});
-  
+
       // VARIABLES GENERIC
       this.shellyDevices = [];
-  
+
       // VARIABLES WEBSOCKET GEN2
       this.wss = null;
-  
+
       // VARIABLES CLOUD GEN1 & GEN2
       this.client = null;
       this.cloudServer = null;
@@ -35,7 +37,7 @@ class ShellyApp extends OAuth2App {
       this.cloudWs = null;
       this.cloudWsUnInit = false;
       this.wsConnected = false;
-  
+
       // ALL: INITIALLY UPDATE THE SHELLY COLLECTION FOR MATCHING INCOMING STATUS UPDATES
       this.homey.setTimeout(async () => {
         try {
@@ -45,7 +47,7 @@ class ShellyApp extends OAuth2App {
           this.error(error);
         }
       }, 15000);
-  
+
       // COAP GEN1: START COAP LISTENER FOR RECEIVING STATUS UPDATES
       if (this.homey.platform !== "cloud") {
         this.homey.setTimeout(async () => {
@@ -62,7 +64,7 @@ class ShellyApp extends OAuth2App {
           }
         }, 20000);
       }
-      
+
       // WEBSOCKET GEN2: INITIALLY START WEBSOCKET SERVER AND LISTEN FOR GEN2 UPDATES
       if (this.homey.platform !== "cloud") {
         this.homey.setTimeout(async () => {
@@ -117,12 +119,12 @@ class ShellyApp extends OAuth2App {
           this.error(error);
         }
       }
-  
+
       // GENERIC TRIGGER FLOWCARDS
       this.homey.flow.getTriggerCard('triggerDeviceOffline');
       this.homey.flow.getTriggerCard('triggerFWUpdate');
       this.homey.flow.getTriggerCard('triggerCloudError');
-      
+
       // TODO: remove this eventually as this card is deprecated but probably still in use
       const listenerCallbacks = this.homey.flow.getTriggerCard('triggerCallbacks').registerRunListener(async (args, state) => {
         try {
@@ -202,7 +204,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-  
+
       this.homey.flow.getActionCard('actionOTAUpdate')
         .registerRunListener(async (args) => {
           try {
@@ -254,7 +256,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-  
+
       this.homey.flow.getActionCard('actionEcoMode')
         .registerRunListener(async (args) => {
           try {
@@ -330,7 +332,7 @@ class ShellyApp extends OAuth2App {
             return false;
           }
         })
-  
+
       this.homey.flow.getConditionCard('conditionInput1')
         .registerRunListener(async (args) => {
           if (args.device) {
@@ -339,7 +341,7 @@ class ShellyApp extends OAuth2App {
             return false;
           }
         })
-  
+
       this.homey.flow.getConditionCard('conditionInput2')
         .registerRunListener(async (args) => {
           if (args.device) {
@@ -348,7 +350,7 @@ class ShellyApp extends OAuth2App {
             return false;
           }
         })
-  
+
       this.homey.flow.getConditionCard('conditionInput3')
         .registerRunListener(async (args) => {
           if (args.device) {
@@ -366,7 +368,7 @@ class ShellyApp extends OAuth2App {
             return false;
           }
         })
-        
+
       // GENERIC DEVICE ACTION CARDS
 
       /* virtual components */
@@ -468,7 +470,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-      
+
       /* Plus Plug S */
       this.homey.flow.getActionCard('actionPlusPlugSLEDRing')
         .registerRunListener(async (args) => {
@@ -478,7 +480,7 @@ class ShellyApp extends OAuth2App {
             const onColorRGB = onColor.toPercentageRgb();
             const offColor = tinycolor(args.off_color);
             const offColorRGB = offColor.toPercentageRgb();
-            
+
             config.leds.mode = "switch";
             config.leds.colors['switch:0'].on.rgb = [parseInt(onColorRGB.r, 10), parseInt(onColorRGB.g, 10), parseInt(onColorRGB.b, 10)];
             config.leds.colors['switch:0'].on.brightness = args.on_brightness;
@@ -525,8 +527,8 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-  
-      this.homey.flow.getActionCard('actionColorEffect') 
+
+      this.homey.flow.getActionCard('actionColorEffect')
         .registerRunListener(async (args) => {
           try {
             return await this.util.sendCommand('/color/0?turn=on&effect='+ args.effect +'&duration='+ args.duration, args.device.getSetting('address'), args.device.getSetting('username'), args.device.getSetting('password'));
@@ -535,7 +537,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-        
+
       this.homey.flow.getActionCard('actionRGBW2EnableWhiteMode')
         .registerRunListener(async (args) => {
           try {
@@ -545,7 +547,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-  
+
       this.homey.flow.getActionCard('actionRGBW2DisableWhiteMode')
         .registerRunListener(async (args) => {
           try {
@@ -565,7 +567,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-  
+
       /* roller shutters */
       this.homey.flow.getActionCard('moveRollerShutter')
         .registerRunListener(async (args) => {
@@ -597,7 +599,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-  
+
       this.homey.flow.getActionCard('moveRollerShutterOffset')
         .registerRunListener(async (args) => {
           try {
@@ -614,7 +616,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-  
+
       this.homey.flow.getActionCard('rollerShutterIntelligentAction')
         .registerRunListener(async (args) => {
           try {
@@ -632,7 +634,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-  
+
       this.homey.flow.getActionCard('moveRollerShutterPreviousPosition')
         .registerRunListener(async (args) => {
           try {
@@ -660,7 +662,7 @@ class ShellyApp extends OAuth2App {
           return Promise.reject(error.message);
         }
       })
-  
+
       /* gas */
       this.homey.flow.getActionCard('actionGasSetVolume')
         .registerRunListener(async (args) => {
@@ -671,7 +673,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-  
+
       this.homey.flow.getActionCard('actionGasMute')
         .registerRunListener(async (args) => {
           try {
@@ -681,7 +683,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-  
+
       this.homey.flow.getActionCard('actionGasUnmute')
         .registerRunListener(async (args) => {
           try {
@@ -691,7 +693,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-  
+
       this.homey.flow.getActionCard('actionGasTest')
         .registerRunListener(async (args) => {
           try {
@@ -712,7 +714,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-  
+
       /* TRV */
       this.homey.flow.getConditionCard('conditionValveMode')
         .registerRunListener(async (args) => {
@@ -735,7 +737,7 @@ class ShellyApp extends OAuth2App {
               this.error(error)
             }
           })
-  
+
       this.homey.flow.getActionCard('actionValvePosition')
         .registerRunListener(async (args) => {
           try {
@@ -755,7 +757,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-  
+
       this.homey.flow.getActionCard('actionValveMode')
         .registerRunListener(async (args) => {
           try {
@@ -777,7 +779,7 @@ class ShellyApp extends OAuth2App {
               this.error(error)
             }
           })
-  
+
       this.homey.flow.getActionCard('actionMeasuredExtTemp')
         .registerRunListener(async (args) => {
           try {
@@ -827,7 +829,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-      
+
       this.homey.flow.getActionCard('actionTrvClearBoost')
         .registerRunListener(async (args) => {
           try {
@@ -837,7 +839,7 @@ class ShellyApp extends OAuth2App {
             return Promise.reject(error);
           }
         })
-      
+
       /* EM DEVICES */
       this.homey.flow.getActionCard('actionSetCumulative')
       .registerRunListener(async (args) => {
@@ -920,12 +922,12 @@ class ShellyApp extends OAuth2App {
           return Promise.reject(error.message);
         }
       })
-  
+
 
       // COAP GEN1: COAP LISTENER FOR PROCESSING INCOMING MESSAGES
       shellies.on('discover', device => {
         this.log('Discovered device with ID', device.id, 'and type', device.type, 'with IP address', device.host);
-  
+
         device.on('change', (prop, newValue, oldValue) => {
           try {
             //console.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'with IP address', device.host);
@@ -958,9 +960,9 @@ class ShellyApp extends OAuth2App {
             this.error(error);
           }
         })
-  
+
       });
-      
+
     } catch (error) {
       this.log(error);
     }
@@ -1009,7 +1011,7 @@ class ShellyApp extends OAuth2App {
                   });
                   filteredShelliesWss = filteredShelliesWss.filter(shelly => shelly.id.toLowerCase().includes(componenttype)).filter(shelly => shelly.id.toLowerCase().includes(componentid.toString()));
                 }
-                
+
                 for (const filteredShellyWss of filteredShelliesWss) {
                   filteredShellyWss.device.parseSingleStatusUpdateGen2(result);
                 }
@@ -1190,14 +1192,14 @@ class ShellyApp extends OAuth2App {
                 this.error('Cloud websocket closed due to reasoncode:', code);
                 await this.homey.flow.getTriggerCard('triggerCloudError').trigger({"error": 'Cloud websocket closed due to reasoncode: '+ code +''}).catch(error => { this.error(error) });
               }
-  
+
               this.homey.clearInterval(this.wsPingInterval);
               this.homey.clearTimeout(this.wsReconnectTimeout);
               this.wsConnected = false;
-  
+
               /* refresh device status as this also triggers a refresh of the token if expired, needed to reconnect the websocket */
               await this.cloudDeviceStatus().catch(this.error);
-    
+
               // retry connection after 30 seconds
               this.wsReconnectTimeout = this.homey.setTimeout(async () => {
                 try {
@@ -1210,7 +1212,7 @@ class ShellyApp extends OAuth2App {
             }
           } catch (error) {
             this.error(error);
-          }          
+          }
         });
 
       }

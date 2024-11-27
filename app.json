@@ -28,7 +28,7 @@
   "author": {
     "name": "Allterco Robotics",
     "email": "homey@shelly.cloud",
-    "website": "https://github.com/jghaanstra/cloud.shelly/"
+    "website": "https://github.com/Drenso/cloud.shelly/"
   },
   "contributors": {
     "developers": [
@@ -38,20 +38,10 @@
       }
     ]
   },
-  "contributing": {
-    "donate": {
-      "paypal": {
-        "username": "jghaanstra"
-      }
-    }
-  },
-  "bugs": {
-    "url": "https://github.com/jghaanstra/cloud.shelly/issues/"
-  },
   "homeyCommunityTopicId": 765,
-  "source": "https://github.com/jghaanstra/cloud.shelly",
+  "source": "https://github.com/Drenso/cloud.shelly",
   "homepage": "https://shelly.cloud/",
-  "support": "https://community.athom.com/t/app-shelly/765",
+  "support": "mailto:homey-drenso@drenso.nl",
   "images": {
     "small": "./assets/images/small.jpg",
     "large": "./assets/images/large.jpg",
