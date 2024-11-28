@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@drenso/homey-log": "8.40.0",
-    "axios": "1.7.4",
+    "axios": "1.7.7",
     "crypto": "1.0.1",
     "homey-lib": "2.32.8",
     "homey-oauth2app": "3.6.0",
