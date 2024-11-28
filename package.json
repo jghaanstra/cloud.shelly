@@ -10,7 +10,11 @@
   "keywords": [
     "shelly"
   ],
-  "author": "Jelger Haanstra",
+  "contributors": [
+    {
+      "name": "Jelger Haanstra"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Drenso/cloud.shelly/issues"
