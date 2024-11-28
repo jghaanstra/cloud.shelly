@@ -28,7 +28,7 @@
     "axios": "1.7.4",
     "crypto": "1.0.1",
     "homey-lib": "2.32.8",
-    "homey-oauth2app": "3.5.7",
+    "homey-oauth2app": "3.6.0",
     "homey-zwavedriver": "2.2.1",
     "http-auth-client": "0.4.1",
     "jwt-decode": "3.1.2",
