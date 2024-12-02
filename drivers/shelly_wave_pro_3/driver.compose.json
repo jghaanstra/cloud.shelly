@@ -17,6 +17,7 @@
     "manufacturerId": 1120,
     "productTypeId": [2],
     "productId": [145],
+    "associationGroups": [],
     "associationGroupsMultiChannel": [ 1 ],
     "learnmode": {
       "image": "./assets/zwave-learnmode.svg",
