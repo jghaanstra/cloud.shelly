@@ -8693,6 +8693,7 @@
       },
       "class": "light",
       "capabilities": [
+        "onoff",
         "dim",
         "measure_power",
         "meter_power",
@@ -8700,18 +8701,6 @@
         "deviceWave"
       ],
       "capabilitiesOptions": {
-        "onoff.1": {
-          "title": {
-            "en": "SW1 Switch",
-            "nl": "SW1 Switch"
-          }
-        },
-        "onoff.2": {
-          "title": {
-            "en": "SW2 Switch",
-            "nl": "SW2 Switch"
-          }
-        },
         "button.reset_meter": {
           "maintenanceAction": true,
           "title": {
@@ -8733,6 +8722,7 @@
         "productId": [
           129
         ],
+        "associationGroups": [],
         "associationGroupsMultiChannel": [
           1
         ],

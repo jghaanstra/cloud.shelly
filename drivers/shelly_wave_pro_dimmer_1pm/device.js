@@ -1,17 +1,22 @@
 'use strict';
 
+const Homey = require('homey');
 const Device = require('../device_zwave.js');
 
 class ShellyWaveProDimmer1PMDevice extends Device {
 
   async registerCapabilities() {
     try {
+      if (!this.hasCapability('onoff')) {
+        await this.addCapability('onoff').catch(this.error);
+      }
+      this.registerCapability('onoff', 'SWITCH_MULTILEVEL', {multiChannelNodeId: 1});
 
-      this.registerCapability('dim', 'SWITCH_MULTILEVEL');
-      
-      this.registerCapability('measure_power', 'METER');
+      this.registerCapability('dim', 'SWITCH_MULTILEVEL', {multiChannelNodeId: 1});
 
-      this.registerCapability('meter_power', 'METER');
+      this.registerCapability('measure_power', 'METER', {multiChannelNodeId: 1});
+
+      this.registerCapability('meter_power', 'METER', {multiChannelNodeId: 1});
 
       // for detached mode
       this.registerReportListener('CENTRAL_SCENE', 'CENTRAL_SCENE_NOTIFICATION', report => {
@@ -40,7 +45,7 @@ class ShellyWaveProDimmer1PMDevice extends Device {
 
     } catch (error) {
       this.error(error);
-    }    
+    }
   }
 
   async onSettings({oldSettings, newSettings, changedKeys}) {
