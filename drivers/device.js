@@ -2586,7 +2586,7 @@ class ShellyDevice extends Homey.Device {
 
       // FIRMWARE UPDATE AVAILABLE
       if (result.hasOwnProperty("sys")) {
-        if (result.sys.hasOwnProperty("available_updates")) {
+        if (result.sys.hasOwnProperty("available_updates") && this.getSetting('address')) {
 
           /* initially gather firmware data */
           if (this.getStoreValue('firmware') === undefined || this.getStoreValue('firmware') === null) {
