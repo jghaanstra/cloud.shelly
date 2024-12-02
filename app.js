@@ -8,7 +8,7 @@ const Util = require('./lib/util.js');
 const shellies = require('shellies');
 const WebSocket = require('ws');
 const tinycolor = require("tinycolor2");
-const jwt_decode = require('jwt-decode');
+const { jwtDecode } = require('jwt-decode');
 
 class ShellyApp extends OAuth2App {
   homeyLog = new Log({homey: this.homey});
@@ -1094,7 +1094,7 @@ class ShellyApp extends OAuth2App {
         this.client = this.getFirstSavedOAuth2Client();
         const oauth_token = this.client.getToken();
         this.cloudAccessToken = oauth_token.access_token;
-        const cloud_details = await jwt_decode(oauth_token.access_token);
+        const cloud_details = await jwtDecode(oauth_token.access_token);
         this.cloudServer = cloud_details.user_api_url.replace('https://', '');
 
         this.cloudWs = new WebSocket('wss://'+ this.cloudServer +':6113/shelly/wss/hk_sock?t='+ this.cloudAccessToken, {perMessageDeflate: false});

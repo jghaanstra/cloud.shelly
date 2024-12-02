@@ -2,7 +2,7 @@
 
 const Homey = require('homey');
 const { OAuth2Driver } = require('homey-oauth2app');
-const jwt_decode = require('jwt-decode');
+const { jwtDecode } = require('jwt-decode');
 const Util = require('../lib/util.js');
 let selectedDevice = {};
 
@@ -29,7 +29,7 @@ class ShellyCloudDriver extends OAuth2Driver {
   async onPairListDevices({ oAuth2Client }) {
     try {
       const oauth_token = await oAuth2Client.getToken();
-      const cloud_details = await jwt_decode(oauth_token.access_token);
+      const cloud_details = await jwtDecode(oauth_token.access_token);
       const cloud_server = cloud_details.user_api_url.replace('https://', '');
       if (cloud_server === null) throw "No valid cloud server address found, please try again.";
       const devices_data = await oAuth2Client.getCloudDevices(cloud_server);
