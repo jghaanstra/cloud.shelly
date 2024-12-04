@@ -24,7 +24,7 @@
     "validate": "homey app validate --level=verified"
   },
   "dependencies": {
-    "@drenso/homey-log": "8.41.0",
+    "@drenso/homey-log": "8.42.0",
     "axios": "1.7.8",
     "crypto": "1.0.1",
     "homey-lib": "2.32.11",
