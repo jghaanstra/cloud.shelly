@@ -14,7 +14,7 @@ class ShellyDevice extends Homey.Device {
       // VARIABLES GENERIC
       this.bluetoothScriptVersion = 6;
       this.pollingFailures = 0;
-    
+
       // ADDING CAPABILITY LISTENERS
       this.registerMultipleCapabilityListener(["onoff", "onoff.light"], this.onMultipleCapabilityOnoff.bind(this));
       this.registerCapabilityListener("onoff.1", this.onCapabilityOnoff1.bind(this));
@@ -353,7 +353,7 @@ class ShellyDevice extends Homey.Device {
           dim_duration = optsObj["dim.light"].duration;
         }
       }
-      
+
       if (dim_duration > 5000 ) {
         return Promise.reject(this.homey.__('device.maximum_dim_duration'));
       } else {
@@ -516,7 +516,7 @@ class ShellyDevice extends Homey.Device {
       }
     } catch (error) {
       this.error(error);
-    }    
+    }
   }
 
   /* light_mode */
@@ -567,7 +567,7 @@ class ShellyDevice extends Homey.Device {
     } catch (error) {
       this.error(error);
     }
-    
+
   };
 
   /* valve_position */
@@ -776,7 +776,7 @@ class ShellyDevice extends Homey.Device {
       this.error(error.message);
 
       this.setAvailability(false, error);
-      
+
       /* stop polling on devices that are unreachable over REST after 10 failures */
       this.pollingFailures++;
       if (this.pollingFailures >= 10) {
@@ -786,7 +786,7 @@ class ShellyDevice extends Homey.Device {
         /* make the device available again to avoid users from complaining about the app (read Homey) not being able to access their Shelly */
         this.setAvailability(true);
       }
-      
+
     }
   }
 
@@ -1361,10 +1361,10 @@ class ShellyDevice extends Homey.Device {
         const oldVersionDate = new Date(result.update.old_version.split('/')[0].slice(0, 8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
         const newVersionDate = new Date(result.update.new_version.split('/')[0].slice(0, 8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
         const betaVersionDate = new Date(result.update.beta_version.split('/')[0].slice(0, 8).replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'));
-    
+
         const isNewAvailable = newVersionDate > oldVersionDate;
         const isBetaAvailable = betaVersionDate > oldVersionDate;
-    
+
         const currentVersion = result.update.old_version.split('/')[1].split('-')[0].replace(/^v/, '');;
         const newVersion = result.update.new_version.split('/')[1].split('-')[0].replace(/^v/, '');;
         const betaVersion = result.update.beta_version.split('/')[1].split('-')[0].replace(/^v/, '');;
@@ -1724,62 +1724,62 @@ class ShellyDevice extends Homey.Device {
 
             /* measure_power */
             this.updateCapabilityValue('measure_power', result["em:0"].a_act_power, 0);
-  
+
             /* measure_power.total */
             if (this.getCapabilityValue('measure_power.total') !== result["em:0"].total_act_power) {
               this.updateCapabilityValue('measure_power.total', result["em:0"].total_act_power, 0);
               this.homey.flow.getDeviceTriggerCard('triggerMeasurePowerTotal').trigger(this, {'power': result["em:0"].total_act_power}, {}).catch(error => { this.error(error) });
             }
-  
+
             /* meter_power_factor */
             this.parseCapabilityUpdate('meter_power_factor', result["em:0"].a_pf, 0);
-  
+
             /* measure_current */
             this.updateCapabilityValue('measure_current', result["em:0"].a_current, 0);
-  
+
             /* measure_current.total */
             this.updateCapabilityValue('measure_current.total', result["em:0"].total_current, 0);
-  
+
             /* measure_voltage */
             this.updateCapabilityValue('measure_voltage', result["em:0"].a_voltage, 0);
-  
+
             /* measure_power_apparent */
             this.parseCapabilityUpdate('measure_power_apparent', result["em:0"].a_aprt_power, 0);
-  
+
           } else if (this.getStoreValue('channel') === 1) {
-  
+
             /* measure_power */
             this.updateCapabilityValue('measure_power', result["em:0"].b_act_power, 1);
-  
+
             /* meter_power_factor */
             this.parseCapabilityUpdate('meter_power_factor', result["em:0"].b_pf, 1);
-  
+
             /* measure_current */
             this.updateCapabilityValue('measure_current', result["em:0"].b_current, 1);
-  
+
             /* measure_voltage */
             this.updateCapabilityValue('measure_voltage', result["em:0"].b_voltage, 1);
-  
+
             /* measure_power_apparent */
             this.parseCapabilityUpdate('measure_power_apparent', result["em:0"].b_aprt_power, 1);
-  
+
           } else if (this.getStoreValue('channel') === 2) {
-  
+
             /* measure_power */
             this.updateCapabilityValue('measure_power', result["em:0"].c_act_power, 2);
-  
+
             /* meter_power_factor */
             this.parseCapabilityUpdate('meter_power_factor', result["em:0"].c_pf, 2);
-  
+
             /* measure_current */
             this.updateCapabilityValue('measure_current', result["em:0"].c_current, 2);
-  
+
             /* measure_voltage */
             this.updateCapabilityValue('measure_voltage', result["em:0"].c_voltage, 2);
-  
+
             /* measure_power_apparent */
             this.parseCapabilityUpdate('measure_power_apparent', result["em:0"].c_aprt_power, 2);
-  
+
           }
 
         } else if (this.getStoreValue('config').id === 'shellypro3em-triphase') {
@@ -1816,55 +1816,55 @@ class ShellyDevice extends Homey.Device {
 
         if (this.getStoreValue('config').id !== 'shellypro3em-triphase') {
           if (this.getStoreValue('channel') === 0) {
-          
+
             /* meter_power */
             this.updateCapabilityValue('meter_power', result["emdata:0"].a_total_act_energy / 1000, 0);
-  
+
             /* meter_power.returned */
             const a_total_act_ret_energy = result["emdata:0"].a_total_act_ret_energy / 1000;
             if (this.getCapabilityValue('meter_power.returned') !== a_total_act_ret_energy) {
               this.updateCapabilityValue('meter_power.returned', a_total_act_ret_energy, 0);
               this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned').trigger(this, {'energy': a_total_act_ret_energy}, {}).catch(error => { this.error(error) });
             }
-  
+
             /* meter_power.total */
             const meter_power_total = result["emdata:0"].total_act / 1000;
             if (this.getCapabilityValue('meter_power.total') !== meter_power_total) {
               this.updateCapabilityValue('meter_power.total', meter_power_total, 0);
               this.homey.flow.getDeviceTriggerCard('triggerMeterPowerTotal').trigger(this, {'energy': meter_power_total}, {}).catch(error => { this.error(error) });
             }
-  
+
             /* meter_power.total_returned */
             const meter_power_total_returned = result["emdata:0"].total_act_ret / 1000;
             if (this.getCapabilityValue('meter_power.total_returned') !== meter_power_total_returned) {
               this.updateCapabilityValue('meter_power.total_returned', meter_power_total_returned, 0);
               this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturnedTotal').trigger(this, {'energy': meter_power_total_returned}, {}).catch(error => { this.error(error) });
             }
-  
+
           } else if (this.getStoreValue('channel') === 1) {
-  
+
             /* meter_power */
             this.updateCapabilityValue('meter_power', result["emdata:0"].b_total_act_energy / 1000, 1);
-  
+
             /* meter_power.returned */
             const b_total_act_ret_energy = result["emdata:0"].b_total_act_ret_energy / 1000;
             if (this.getCapabilityValue('meter_power.returned') !== b_total_act_ret_energy) {
               this.updateCapabilityValue('meter_power.returned', b_total_act_ret_energy, 1);
               this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned').trigger(this, {'energy': b_total_act_ret_energy}, {}).catch(error => { this.error(error) });
             }
-  
+
           } else if (this.getStoreValue('channel') === 2) {
-  
+
             /* meter_power */
             this.updateCapabilityValue('meter_power', result["emdata:0"].c_total_act_energy / 1000, 2);
-  
+
             /* meter_power.returned */
             const c_total_act_ret_energy = result["emdata:0"].c_total_act_ret_energy / 1000;
             if (this.getCapabilityValue('meter_power.returned') !== c_total_act_ret_energy) {
               this.updateCapabilityValue('meter_power.returned', c_total_act_ret_energy, 2);
               this.homey.flow.getDeviceTriggerCard('triggerMeterPowerReturned').trigger(this, {'energy': c_total_act_ret_energy}, {}).catch(error => { this.error(error) });
             }
-  
+
           }
         } else if (this.getStoreValue('config').id === 'shellypro3em-triphase') {
 
@@ -2267,7 +2267,7 @@ class ShellyDevice extends Homey.Device {
           } else {
             this.addCapability('input_external_1');
           }
-        }        
+        }
       }
 
       /* add-on input 2 */
@@ -2613,7 +2613,7 @@ class ShellyDevice extends Homey.Device {
               }
               this.homey.flow.getTriggerCard('triggerFWUpdate').trigger({"id": this.getData().id, "device": this.getName(), "firmware": result.sys.available_updates.stable.version, "stage": "stable"}).catch(error => { this.error(error) });
               await this.setStoreValue("firmware", firmware_new);
-            }            
+            }
           } else if (!result.sys.available_updates.hasOwnProperty("stable") && this.getStoreValue('firmware').new) {
             const firmware_current = await this.getStoreValue("firmware");
             const firmware_new = {
@@ -2754,7 +2754,7 @@ class ShellyDevice extends Homey.Device {
                   let text = 'empty';
                   let enumeration = 'none';
                   let button = 'empty';
-    
+
                   switch (type) {
                     case 'boolean':
                       boolean = value;
@@ -2773,7 +2773,7 @@ class ShellyDevice extends Homey.Device {
                   }
                   this.homey.flow.getDeviceTriggerCard('triggerVirtualComponents').trigger(
                     this,
-                    {"vc_type": type, "vc_id": component, "boolean": boolean, "number": number, "text": text, "enum": enumeration, "button": button}, 
+                    {"vc_type": type, "vc_id": component, "boolean": boolean, "number": number, "text": text, "enum": enumeration, "button": button},
                     {"vc_id": component}
                   ).catch(error => { this.error(error) });
                 } else {
@@ -2832,11 +2832,11 @@ class ShellyDevice extends Homey.Device {
                   // TODO: remove this eventually as this card is deprecated but probably still in use
                   this.homey.flow.getTriggerCard('triggerCallbacks').trigger({"id": device.getData().id, "device": device.getName(), "action": action_event }, {"id": device.getData().id, "device": device.getName(), "action": action_event }).catch(error => { this.error(error) });
                 }
-                
+
               } else if (event.component.startsWith('button')) { // parse virtual component buttons
                 this.homey.flow.getDeviceTriggerCard('triggerVirtualComponents').trigger(
                   this,
-                  {"vc_type": "button", "vc_id": event.component, "boolean": false, "number": 0, "text": "empty", "enum": "none", "button": event.event}, 
+                  {"vc_type": "button", "vc_id": event.component, "boolean": false, "number": 0, "text": "empty", "enum": "none", "button": event.event},
                   {"vc_id": event.component}
                 ).catch(error => { this.error(error) });
               }
@@ -2927,7 +2927,7 @@ class ShellyDevice extends Homey.Device {
           if (this.getStoreValue('config').id === 'shellypro3em-triphase') {
             this.updateCapabilityValue('measure_power', value, 0);
           } else if (this.getStoreValue('config').id !== 'shellypro3em-triphase' && this.getStoreValue('channel') === 0) {
-            if (this.getCapabilityValue('measure_power.total') !== value) { 
+            if (this.getCapabilityValue('measure_power.total') !== value) {
               this.updateCapabilityValue('measure_power.total', value, 0);
               this.homey.flow.getDeviceTriggerCard('triggerMeasurePowerTotal').trigger(this, {'power': value}, {}).catch(error => { this.error(error) });
             }
@@ -3322,8 +3322,9 @@ class ShellyDevice extends Homey.Device {
           break;
         case 'tilt':
           if (value !== undefined && !isNaN(value) && typeof value == 'number' && value != this.getCapabilityValue('tilt')) {
-            this.updateCapabilityValue('tilt', value, channel);
-            this.homey.flow.getDeviceTriggerCard('triggerTilt').trigger(this, {'tilt': value}, {}).catch(error => { this.error(error) });
+            this.updateCapabilityValue('tilt', value, channel)
+                .then(() => this.homey.flow.getDeviceTriggerCard('triggerTilt')
+                    .trigger(this, {'degrees': value}, {}).catch(this.error));
           }
           break;
         case 'illuminance':
@@ -3684,7 +3685,7 @@ class ShellyDevice extends Homey.Device {
             break;
           case 'opening':
             windowcoverings_state = 'up';
-            break;          
+            break;
           case 'closing':
             windowcoverings_state = 'down';
             break;
@@ -3912,7 +3913,7 @@ class ShellyDevice extends Homey.Device {
             }
           }
         }
-        
+
         return Promise.resolve(true);
 
       } else if (this.getStoreValue('communication') === 'bluetooth') { /* BLUETOOTH DEVICES */
@@ -3971,7 +3972,7 @@ class ShellyDevice extends Homey.Device {
         }
 
       } else if (this.getStoreValue('communication') === 'cloud') { /* CLOUD DEVICES */
-        
+
         let device_config = this.util.getDeviceConfig(this.getStoreValue('config').hostname[0], 'hostname');
 
         if (typeof device_config !== 'undefined') {
@@ -4062,7 +4063,7 @@ class ShellyDevice extends Homey.Device {
       } else {
         return Promise.resolve(true);
       }
-       
+
     } catch (error) {
       return Promise.reject(error);
     }

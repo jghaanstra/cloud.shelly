@@ -75,7 +75,7 @@ class ShellyBluetoothDevice extends Device {
           if (result['bthome_version'] !== 2) return null;
           if (result['encryption']) return result;
           buffer = buffer.slice(1);
-      
+
           let _bth;
           let _value;
           while (buffer.length > 0) {
@@ -88,14 +88,14 @@ class ShellyBluetoothDevice extends Device {
             _value = this.BTHomeDecoder.getBufValue(_bth.t, buffer);
             if (_value === null) break;
             if (typeof _bth.f !== "undefined") _value = _value * _bth.f;
-      
+
             if (typeof result[_bth.n] === "undefined") {
               result[_bth.n] = _value;
             }
             else {
               if (Array.isArray(result[_bth.n])) {
                 result[_bth.n].push(_value);
-              } 
+              }
               else {
                 result[_bth.n] = [
                   result[_bth.n],
@@ -103,7 +103,7 @@ class ShellyBluetoothDevice extends Device {
                 ];
               }
             }
-      
+
             buffer = buffer.slice(this.getByteSize(_bth.t));
           }
           return result;
@@ -224,8 +224,9 @@ class ShellyBluetoothDevice extends Device {
         /* tilt */
         if (result.hasOwnProperty("tilt")) {
           if (result.tilt !== undefined && this.getCapabilityValue('tilt') !== result.tilt) {
-            await this.homey.flow.getDeviceTriggerCard('triggerTilt').trigger(this, {'tilt': result.tilt}, {}).catch(error => { this.error(error) });
-            this.updateCapabilityValue('tilt', result.tilt, channel);
+            this.updateCapabilityValue('tilt', result.tilt, channel)
+                .then(() => this.homey.flow.getDeviceTriggerCard('triggerTilt')
+                    .trigger(this, {'degrees': result.tilt}, {}).catch(this.error));
           }
         }
 
@@ -275,7 +276,7 @@ class ShellyBluetoothDevice extends Device {
             await this.updateCapabilityValue('beacon', true, channel);
           }
         }
-        
+
 
       }
     } catch (error) {
@@ -295,7 +296,7 @@ class ShellyBluetoothDevice extends Device {
     } catch (error) {
       this.error(error);
     }
-    
+
   }
 
   getByteSize(type) {
