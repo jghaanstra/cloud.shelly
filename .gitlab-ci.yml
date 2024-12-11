@@ -3,6 +3,7 @@ stages:
   - audit
   - lint
   - build
+  - publish
 
 workflow:
   rules:
@@ -21,6 +22,9 @@ include:
   - project: 'intern/runner-templates'
     ref: "15.2"
     file: '/homey/build.yml'
+  - project: 'intern/runner-templates'
+    ref: "15.2"
+    file: '/homey/publish.yml'
 
 validate:
   script:
