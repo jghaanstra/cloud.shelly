@@ -16,9 +16,6 @@
     }
   ],
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Drenso/cloud.shelly/issues"
-  },
   "homepage": "https://homey.app/a/cloud.shelly",
   "scripts": {
     "validate": "homey app validate --level=verified"

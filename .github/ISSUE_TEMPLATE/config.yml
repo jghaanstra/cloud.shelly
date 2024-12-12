@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: ❔ Are you in need of support?
+    url: https://homey.app/a/cloud.shelly
+    about: You can find our support contact e-mail address on the Homey Store page!
+  - name: 💬 Want to discuss with others?
+    url: https://community.homey.app/t/765
+    about: You can use the Homey Community forum for this purpose!
