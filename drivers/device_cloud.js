@@ -152,5 +152,6 @@ ShellyCloudDevice.prototype.rollerState = Device.prototype.rollerState;
 ShellyCloudDevice.prototype.triggerDeviceTriggerCard = Device.prototype.triggerDeviceTriggerCard;
 ShellyCloudDevice.prototype.setAvailability = Device.prototype.setAvailability;
 ShellyCloudDevice.prototype.updateDeviceConfig = Device.prototype.updateDeviceConfig;
+ShellyCloudDevice.prototype.updateTemperatureSensor = Device.prototype.updateTemperatureSensor;
 
 module.exports = ShellyCloudDevice;

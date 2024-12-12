@@ -1,19 +1,8 @@
 {
   "title": {
-    "en": "Temperature Sensor 2 has changed",
-    "nl": "Temperatuursensor 2 is veranderd"
+    "en": "Temperature Sensor 2 lost connection",
+    "nl": "Temperatuursensor 2 verbinding verloren"
   },
-  "tokens": [
-    {
-      "name": "temperature",
-      "type": "number",
-      "title": {
-        "en": "Temperature",
-        "nl": "Temperatuur"
-      },
-      "example": 5
-    }
-  ],
   "args": [
     {
       "name": "device",
