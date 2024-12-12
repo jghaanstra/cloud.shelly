@@ -877,5 +877,8 @@
   },
   "3.34.0": {
     "en": "Updates default Z-Wave association groups, fixes tilt flow card trigger, no longer try to call invalid network addresses."
+  },
+  "3.34.1": {
+    "en": "Fix contact e-mail address"
   }
 }
