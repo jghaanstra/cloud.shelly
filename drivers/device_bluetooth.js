@@ -312,5 +312,6 @@ ShellyBluetoothDevice.prototype.updateCapabilityValue = Device.prototype.updateC
 ShellyBluetoothDevice.prototype.triggerDeviceTriggerCard = Device.prototype.triggerDeviceTriggerCard;
 ShellyBluetoothDevice.prototype.setAvailability = Device.prototype.setAvailability;
 ShellyBluetoothDevice.prototype.updateDeviceConfig = Device.prototype.updateDeviceConfig;
+ShellyBluetoothDevice.prototype.updateEnergyConfiguration = Device.prototype.updateEnergyConfiguration;
 
 module.exports = ShellyBluetoothDevice;

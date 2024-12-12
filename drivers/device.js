@@ -3753,33 +3753,7 @@ class ShellyDevice extends Homey.Device {
           }
 
           /* set energy object if changed */
-          let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
-          let energyObjectEqual = true;
-          if (energyObject !== null) {
-            if (device_config.energy.hasOwnProperty('batteries') && energyObject.hasOwnProperty('batteries')) {
-              if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
-                energyObject.batteries = device_config.energy.batteries;
-                energyObjectEqual = false;
-              }
-            }
-            if (device_config.energy.hasOwnProperty('cumulativeImportedCapability')) {
-              if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
-                energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
-                energyObjectEqual = false;
-              }
-            }
-            if (device_config.energy.hasOwnProperty('cumulativeExportedCapability')) {
-              if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
-                energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
-                energyObjectEqual = false;
-              }
-            }
-            if (!energyObjectEqual) {
-              this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
-              await this.setEnergy(energyObject).catch(this.error);
-            }
-          }
-
+          await this.updateEnergyConfiguration(device_config);
 
           /* update device capability options */
           if (Object.keys(device_config.capability_options).length > 0) {
@@ -3848,32 +3822,7 @@ class ShellyDevice extends Homey.Device {
           }
 
           /* set energy object if changed */
-          let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
-          let energyObjectEqual = true;
-          if (energyObject !== null) {
-            if (device_config.energy.hasOwnProperty('batteries') && energyObject.hasOwnProperty('batteries')) {
-              if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
-                energyObject.batteries = device_config.energy.batteries;
-                energyObjectEqual = false;
-              }
-            }
-            if (device_config.energy.hasOwnProperty('cumulativeImportedCapability')) {
-              if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
-                energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
-                energyObjectEqual = false;
-              }
-            }
-            if (device_config.energy.hasOwnProperty('cumulativeExportedCapability')) {
-              if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
-                energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
-                energyObjectEqual = false;
-              }
-            }
-            if (!energyObjectEqual) {
-              this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
-              await this.setEnergy(energyObject).catch(this.error);
-            }
-          }
+          await this.updateEnergyConfiguration(device_config);
 
         } else {
           return Promise.reject(this.getData().id + ' has no valid device config to set');
@@ -3915,32 +3864,7 @@ class ShellyDevice extends Homey.Device {
           }
 
           /* set energy object if changed */
-          let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
-          let energyObjectEqual = true;
-          if (energyObject !== null) {
-            if (device_config.energy.hasOwnProperty('batteries') && energyObject.hasOwnProperty('batteries')) {
-              if (!this.util.arraysEqual(this.getEnergy().batteries, device_config.energy.batteries)) {
-                energyObject.batteries = device_config.energy.batteries;
-                energyObjectEqual = false;
-              }
-            }
-            if (device_config.energy.hasOwnProperty('cumulativeImportedCapability')) {
-              if (this.getEnergy().cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
-                energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
-                energyObjectEqual = false;
-              }
-            }
-            if (device_config.energy.hasOwnProperty('cumulativeExportedCapability')) {
-              if (this.getEnergy().cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
-                energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
-                energyObjectEqual = false;
-              }
-            }
-            if (!energyObjectEqual) {
-              this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
-              await this.setEnergy(energyObject).catch(this.error);
-            }
-          }
+          await this.updateEnergyConfiguration(device_config);
 
           /* update device capability options */
           if (Object.keys(device_config.capability_options).length > 0) {
@@ -4002,6 +3926,51 @@ class ShellyDevice extends Homey.Device {
         });
   }
 
+  /* set energy object if changed */
+  async updateEnergyConfiguration(device_config) {
+
+    let energyObject = JSON.parse(JSON.stringify(await this.getEnergy()));
+    let energyObjectEqual = true;
+    if (energyObject === null) {
+      return;
+    }
+
+    if (device_config.energy.hasOwnProperty('batteries') && energyObject.hasOwnProperty('batteries')) {
+      if (!this.util.arraysEqual(energyObject.batteries, device_config.energy.batteries)) {
+        energyObject.batteries = device_config.energy.batteries;
+        energyObjectEqual = false;
+      }
+    }
+
+    if (device_config.energy.hasOwnProperty('cumulative')) {
+      if (energyObject.cumulative !== device_config.energy.cumulative) {
+        energyObject.cumulative = device_config.energy.cumulative;
+        energyObjectEqual = false;
+      }
+    }
+
+    if (device_config.energy.hasOwnProperty('cumulativeImportedCapability')) {
+      if (energyObject.cumulativeImportedCapability !== device_config.energy.cumulativeImportedCapability) {
+        energyObject.cumulativeImportedCapability = device_config.energy.cumulativeImportedCapability;
+        energyObjectEqual = false;
+      }
+    }
+
+    if (device_config.energy.hasOwnProperty('cumulativeExportedCapability')) {
+      if (energyObject.cumulativeExportedCapability !== device_config.energy.cumulativeExportedCapability) {
+        energyObject.cumulativeExportedCapability = device_config.energy.cumulativeExportedCapability;
+        energyObjectEqual = false;
+      }
+    }
+
+    if (energyObjectEqual) {
+      return;
+    }
+
+    this.log('Updating energy object from', JSON.stringify(this.getEnergy()), 'to', JSON.stringify(energyObject), 'for', this.getName());
+    await this.setEnergy(energyObject).catch(this.error);
+  }
+
   debug(...args) {
     if (Homey.env.DEBUG !== '1') {
       return;
@@ -4009,6 +3978,7 @@ class ShellyDevice extends Homey.Device {
 
     this.log('[dbg]', ...args);
   }
+
 }
 
 module.exports = ShellyDevice;

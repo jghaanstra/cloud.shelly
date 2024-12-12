@@ -153,5 +153,6 @@ ShellyCloudDevice.prototype.triggerDeviceTriggerCard = Device.prototype.triggerD
 ShellyCloudDevice.prototype.setAvailability = Device.prototype.setAvailability;
 ShellyCloudDevice.prototype.updateDeviceConfig = Device.prototype.updateDeviceConfig;
 ShellyCloudDevice.prototype.updateTemperatureSensor = Device.prototype.updateTemperatureSensor;
+ShellyCloudDevice.prototype.updateEnergyConfiguration = Device.prototype.updateEnergyConfiguration;
 
 module.exports = ShellyCloudDevice;

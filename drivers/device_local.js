@@ -23,17 +23,17 @@ class ShellyDevice extends Device {
           const payload = '{"id":0, "method":"ws.setconfig", "params":{"config":{"ssl_ca":"*", "server":"", "enable":false}}}';
           await this.util.sendRPCCommand('/rpc', this.getSetting('address'), this.getSetting('password'), 'POST', payload);
         }
-        
+
         /* remove BLE Proxy Script */
         if (this.getStoreValue('ble_script_id') !== null && this.getStoreValue('ble_script_id') !== 0) {
           await this.util.disableBLEProxy(this.getStoreValue('ble_script_id'), this.getSetting('address'), this.getSetting('password'));
         }
-        
+
         await this.util.sendRPCCommand('/rpc/Shelly.Reboot', this.getSetting('address'), this.getSetting('password'));
       }
 
       // TODO: onDelete functionality for gateway subdevice when removing latest gateway device it will remove listener on gateway
-      
+
       if (this.getStoreValue('channel') === 0) {
         const iconpath = "/userdata/" + this.getData().id +".svg";
         await this.util.removeIcon(iconpath);
