@@ -46,7 +46,7 @@ class ShellyApp extends OAuth2App {
         } catch (error) {
           this.error(error);
         }
-      }, 15000);
+      }, Number(Homey.env.TIMEOUT_COLLECTION));
 
       // COAP GEN1: START COAP LISTENER FOR RECEIVING STATUS UPDATES
       if (this.homey.platform !== "cloud") {
@@ -62,7 +62,7 @@ class ShellyApp extends OAuth2App {
           } catch (error) {
             this.error(error);
           }
-        }, 20000);
+        }, Number(Homey.env.TIMEOUT_COAP));
       }
 
       // WEBSOCKET GEN2: INITIALLY START WEBSOCKET SERVER AND LISTEN FOR GEN2 UPDATES
@@ -75,7 +75,7 @@ class ShellyApp extends OAuth2App {
           } else {
             this.log('Websocket server for gen2 / gen3 devices with outbound websockets not started as no gen2 / gen3 devices where found during app init ...');
           }
-        }, 25000);
+        }, Number(Homey.env.TIMEOUT_WEBSOCKET));
       }
 
       // BLUETOOTH GEN2: LISTEN FOR BLE ADVERTISEMENTS
@@ -91,7 +91,7 @@ class ShellyApp extends OAuth2App {
           } catch (error) {
             this.error(error);
           }
-        }, 27000);
+        }, Number(Homey.env.TIMEOUT_BLUETOOTH));
       }
 
       // CLOUD: START CLOUD LISTENER AND INITIALLY UPDATE DEVICE STATUS AND REFRESH TOKEN IF NEEDED
