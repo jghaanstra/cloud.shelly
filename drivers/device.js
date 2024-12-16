@@ -3630,7 +3630,7 @@ class ShellyDevice extends Homey.Device {
           this.updateCapabilityValue('rssi', value, 0);
           break;
         default:
-          //this.log('Device does not support reported capability '+ capability +' with value '+ value);
+          this.debug('Device does not support reported capability ' + capability + ' with value ' + value);
           break;
       }
       return Promise.resolve(true);
@@ -3824,14 +3824,14 @@ class ShellyDevice extends Homey.Device {
           /* add any missing capabilities to the device based on device config */
           if (this.getStoreValue('channel') === 0) {
             device_config.capabilities_1.forEach(async (capability) => {
-              if(!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4', 'input_5'].includes(capability)) {
+              if (!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4', 'input_5'].includes(capability)) {
                 this.log('Adding capability', capability, 'to', this.getData().id, 'with name', this.getName(), 'upon device init as the device does not have it already but its added in the device config.');
                 await this.addCapability(capability).catch(this.error);
               }
             });
           } else {
             device_config.capabilities_2.forEach(async (capability) => {
-              if(!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4', 'input_5'].includes(capability)) {
+              if (!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4', 'input_5'].includes(capability)) {
                 this.log('Adding capability', capability, 'to', this.getData().id, 'with name', this.getName(), 'upon device init as the device does not have it already but its added in the device config.');
                 await this.addCapability(capability).catch(this.error);
               }
@@ -3908,7 +3908,7 @@ class ShellyDevice extends Homey.Device {
                 const scriptID = await this.util.enableBLEProxy(this.getSetting('address'), this.getSetting('password'));
                 await this.setStoreValue('ble_script_version', this.bluetoothScriptVersion);
                 await this.setStoreValue('ble_script_id', scriptID);
-                this.log('Updating Homey BLE Script to version', this.bluetoothScriptVersion ,'for', this.getData().id, 'with name', this.getName());
+                this.log('Updating Homey BLE Script to version', this.bluetoothScriptVersion, 'for', this.getData().id, 'with name', this.getName());
               }
             }
           }
@@ -3927,7 +3927,7 @@ class ShellyDevice extends Homey.Device {
 
           /* add any missing capabilities to the device based on device config */
           device_config.capabilities_1.forEach(async (capability) => {
-            if(!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4'].includes(capability)) {
+            if (!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4'].includes(capability)) {
               this.log('Adding capability', capability, 'to', this.getData().id, 'with name', this.getName(), 'upon device init as the device does not have it already but its added in the device config.');
               await this.addCapability(capability).catch(this.error);
             }
@@ -3986,14 +3986,14 @@ class ShellyDevice extends Homey.Device {
           /* add any missing capabilities to the device based on device config */
           if (this.getStoreValue('channel') === 0) {
             device_config.capabilities_1.forEach(async (capability) => {
-              if(!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4'].includes(capability)) {
+              if (!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4'].includes(capability)) {
                 this.log('Adding capability', capability, 'to', this.getData().id, 'with name', this.getName(), 'upon device init as the device does not have it already but its added in the device config.');
                 await this.addCapability(capability).catch(this.error);
               }
             });
           } else {
             device_config.capabilities_2.forEach(async (capability) => {
-              if(!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4'].includes(capability)) {
+              if (!this.hasCapability(capability) && !['input_1', 'input_2', 'input_3', 'input_4'].includes(capability)) {
                 this.log('Adding capability', capability, 'to', this.getData().id, 'with name', this.getName(), 'upon device init as the device does not have it already but its added in the device config.');
                 await this.addCapability(capability).catch(this.error);
               }
@@ -4069,6 +4069,13 @@ class ShellyDevice extends Homey.Device {
     }
   }
 
+  debug(...args) {
+    if (Homey.env.DEBUG !== '1') {
+      return;
+    }
+
+    this.log('[dbg]', ...args);
+  }
 }
 
 module.exports = ShellyDevice;

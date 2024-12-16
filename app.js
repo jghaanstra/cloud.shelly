@@ -925,42 +925,46 @@ class ShellyApp extends OAuth2App {
 
 
       // COAP GEN1: COAP LISTENER FOR PROCESSING INCOMING MESSAGES
+      const coapChangeHandler = (device, prop, newValue, oldValue) => {
+        try {
+          this.debug(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'with IP address', device.host);
+          if (this.shellyDevices.length > 0) {
+            const filteredShelliesCoap = this.shellyDevices.filter(shelly => shelly.id.includes(device.id)); // filter total device collection based on incoming device id
+            let coap_device_id;
+            let coap_device;
+            if (filteredShelliesCoap.length > 0) {
+              if (filteredShelliesCoap.length === 1) {
+                coap_device = filteredShelliesCoap[0].device; // when there is 1 filtered device it's not multi channel
+              } else {
+                const channel = prop.slice(prop.length - 1);
+                if(isNaN(channel)) {
+                  coap_device_id = filteredShelliesCoap[0].main_device+'-channel-0'; // when the capability does not have a ending channel number it's targeted at channel 0
+                } else {
+                  coap_device_id = filteredShelliesCoap[0].main_device+'-channel-'+channel; // when the capability does have a ending channel number set it to the correct channel
+                }
+                const filteredShellyCoap = filteredShelliesCoap.filter(shelly => shelly.id.includes(coap_device_id)); // filter the filtered shellies with the correct channel device id
+                coap_device = filteredShellyCoap[0].device;
+              }
+              coap_device.parseCapabilityUpdate(prop, newValue, coap_device.getStoreValue('channel'));
+              if (coap_device.getSetting('address') !== device.host) {
+                coap_device.setSettings({address: device.host}).catch(this.error);
+              }
+              return;
+            }
+          }
+        } catch (error) {
+          this.error('Error processing CoAP message for device', device.id, 'of type', device.type, 'with IP address', device.host, 'on capability', prop, 'with old value', oldValue, 'to new value', newValue);
+          this.error(error);
+        }
+      };
       shellies.on('discover', device => {
         this.log('Discovered device with ID', device.id, 'and type', device.type, 'with IP address', device.host);
 
-        device.on('change', (prop, newValue, oldValue) => {
-          try {
-            //console.log(prop, 'changed from', oldValue, 'to', newValue, 'for device', device.id, 'with IP address', device.host);
-            if (this.shellyDevices.length > 0) {
-              const filteredShelliesCoap = this.shellyDevices.filter(shelly => shelly.id.includes(device.id)); // filter total device collection based on incoming device id
-              let coap_device_id;
-              let coap_device;
-              if (filteredShelliesCoap.length > 0) {
-                if (filteredShelliesCoap.length === 1) {
-                  coap_device = filteredShelliesCoap[0].device; // when there is 1 filtered device it's not multi channel
-                } else {
-                  const channel = prop.slice(prop.length - 1);
-                  if(isNaN(channel)) {
-                    coap_device_id = filteredShelliesCoap[0].main_device+'-channel-0'; // when the capability does not have a ending channel number it's targeted at channel 0
-                  } else {
-                    coap_device_id = filteredShelliesCoap[0].main_device+'-channel-'+channel; // when the capability does have a ending channel number set it to the correct channel
-                  }
-                  const filteredShellyCoap = filteredShelliesCoap.filter(shelly => shelly.id.includes(coap_device_id)); // filter the filtered shellies with the correct channel device id
-                  coap_device = filteredShellyCoap[0].device;
-                }
-                coap_device.parseCapabilityUpdate(prop, newValue, coap_device.getStoreValue('channel'));
-                if (coap_device.getSetting('address') !== device.host) {
-                  coap_device.setSettings({address: device.host}).catch(this.error);
-                }
-                return;
-              }
-            }
-          } catch (error) {
-            this.error('Error processing CoAP message for device', device.id, 'of type', device.type, 'with IP address', device.host, 'on capability', prop, 'with old value', oldValue, 'to new value', newValue);
-            this.error(error);
-          }
-        })
+        // Retrieve initial values from discovery message
+        [...device].forEach(item => coapChangeHandler(device, item[0], item[1], null));
 
+        // Register change handler
+        device.on('change', (prop, newValue, oldValue) => coapChangeHandler(device, prop, newValue, oldValue));
       });
 
     } catch (error) {
@@ -1416,6 +1420,13 @@ class ShellyApp extends OAuth2App {
     }
   }
 
+  debug(...args) {
+    if (Homey.env.DEBUG !== '1') {
+      return;
+    }
+
+    this.log('[dbg]', ...args);
+  }
 }
 
 module.exports = ShellyApp;
