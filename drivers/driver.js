@@ -161,7 +161,7 @@ class ShellyDriver extends Homey.Driver {
                     device_config = this.util.getDeviceConfig(hostname + 'thermostat-', 'hostname');
                   }
                 }
-                
+
                 break;
               } catch (error) {
                 throw new Error(this.homey.__("pair.error") + ' Error message: '+ error.message);
@@ -286,7 +286,7 @@ class ShellyDriver extends Homey.Driver {
                   device_config = this.util.getDeviceConfig(hostname + 'thermostat-', 'hostname');
                 }
               }
-              
+
               break;
             } catch (error) {
               throw new Error(this.homey.__("pair.error") + ' Error message: '+ error.message);
@@ -367,7 +367,7 @@ class ShellyDriver extends Homey.Driver {
             deviceArray.store.config.capabilities_1 = extendedCapabilities.capabilities_1;
             deviceArray.store.config.capabilities_2 = extendedCapabilities.capabilities_2;
           }
-          
+
           return Promise.resolve(deviceArray);
         } else if (deviceArray.store.communication === 'gateway') {
 

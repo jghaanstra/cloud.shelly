@@ -29,7 +29,7 @@
     "homey-zwavedriver": "2.2.1",
     "http-auth-client": "0.4.1",
     "jwt-decode": "4.0.0",
-    "shellies": "1.7.0",
+    "shellies": "alexryd/node-shellies#296731709c789eb01ea07b4c837d70c8f7f23539",
     "tinycolor2": "1.6.0",
     "ws": "7.5.10"
   }
