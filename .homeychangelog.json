@@ -880,5 +880,8 @@
   },
   "3.34.1": {
     "en": "Fix contact e-mail address"
+  },
+  "3.34.2": {
+    "en": "Fix Motion 2 sensor and directly update gen1 device properties when discovered"
   }
 }
