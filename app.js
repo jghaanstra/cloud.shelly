@@ -1382,8 +1382,12 @@ class ShellyApp extends OAuth2App {
       for (const driver of drivers) {
         const devices = driver.getDevices();
         for (const device of devices) {
-          if (device.getStoreValue('channel') === 0 && device.getStoreValue('battery') === false && (device.getStoreValue('communication') === 'coap' || device.getStoreValue('communication') === 'websocket') && (device.getStoreValue('firmware') !== undefined || device.getStoreValue('firmware') !== null)) {
+          if (device.getStoreValue('channel') === 0 && device.getStoreValue('battery') === false && (device.getStoreValue('communication') === 'coap' || device.getStoreValue('communication') === 'websocket')) {
             const firmware = device.getStoreValue('firmware');
+            if (!firmware) {
+              continue;
+            }
+
             if ((stage === 'both' && (firmware.new || firmware.beta)) || (stage === 'stable' && firmware.new) || (stage === 'beta' && firmware.beta)) {
               result.push({
                 id: device.getData().id,
