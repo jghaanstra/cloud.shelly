@@ -3097,16 +3097,16 @@ class ShellyDevice extends Homey.Device {
           break;
         case 'battery':
         case 'percent':
-          let measure_battery = this.util.clamp(value, 0, 100);
+          let measure_battery = value === null ? null : this.util.clamp(value, 0, 100);
           channel = channel > 100 ? 0 : channel; // update battery for Shelly BLU TRV
-          this.updateCapabilityValue('measure_battery', measure_battery, channel);
+          this.updateCapabilityValue('measure_battery', measure_battery, channel, true);
           break;
         case 'tC':
         case 'deviceTemperature':
         case 'temperature':
         case 'temp':
           if (channel < 100) {
-            this.updateCapabilityValue('measure_temperature', value, channel);
+            this.updateCapabilityValue('measure_temperature', value, channel, true);
           } else if (this.getStoreValue('channel') === 0) {
             switch (channel) {
               case 100:
@@ -3241,10 +3241,15 @@ class ShellyDevice extends Homey.Device {
           this.updateCapabilityValue('alarm_water', value, channel);
           break;
         case 'tilt':
-          if (value !== undefined && !isNaN(value) && typeof value == 'number' && value != this.getCapabilityValue('tilt')) {
-            this.updateCapabilityValue('tilt', value, channel)
-                .then(() => this.homey.flow.getDeviceTriggerCard('triggerTilt')
-                    .trigger(this, {'degrees': value}, {}).catch(this.error));
+          if (value !== undefined && !isNaN(value) && (value === null || typeof value == 'number') && value !== this.getCapabilityValue('tilt')) {
+            this.updateCapabilityValue('tilt', value, channel, true)
+                .then(() => {
+                  if (value === null) {
+                    return;
+                  }
+
+                  this.homey.flow.getDeviceTriggerCard('triggerTilt').trigger(this, {'degrees': value}, {}).catch(this.error)
+                });
           }
           break;
         case 'illuminance':
