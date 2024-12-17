@@ -103,10 +103,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud|shelly_bluetooth|shelly_wave_i4|shelly_wave_pro_dimmer_1pm&capabilities=actionEvents"
           }
         ],
@@ -137,10 +133,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly_bluetooth&capabilities=beacon"
           }
         ],
@@ -159,10 +151,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly_bluetooth&capabilities=beacon"
           }
         ],
@@ -181,10 +169,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly_bluetooth&capabilities=beacon"
           }
         ],
@@ -337,10 +321,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.1"
           }
         ],
@@ -370,10 +350,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.2"
           }
         ],
@@ -403,10 +379,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.3"
           }
         ],
@@ -436,10 +408,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.4"
           }
         ],
@@ -469,10 +437,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.5"
           }
         ],
@@ -551,10 +515,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=gas_concentration"
           }
         ],
@@ -583,10 +543,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_humidity.1"
           }
         ],
@@ -616,10 +572,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_humidity.2"
           }
         ],
@@ -649,10 +601,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_humidity.3"
           }
         ],
@@ -682,10 +630,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_humidity.4"
           }
         ],
@@ -715,10 +659,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_humidity.5"
           }
         ],
@@ -737,10 +677,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4|shelly_wave_pro_dimmer_1pm&capabilities=input_1"
           }
         ],
@@ -759,10 +695,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4|shelly_wave_pro_dimmer_1pm&capabilities=input_1"
           }
         ],
@@ -781,10 +713,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4|shelly_wave_pro_dimmer_1pm&capabilities=input_1"
           }
         ],
@@ -803,10 +731,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4|shelly_wave_pro_dimmer_1pm&capabilities=input_2"
           }
         ],
@@ -825,10 +749,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4|shelly_wave_pro_dimmer_1pm&capabilities=input_2"
           }
         ],
@@ -847,10 +767,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4|shelly_wave_pro_dimmer_1pm&capabilities=input_2"
           }
         ],
@@ -869,10 +785,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_3"
           }
         ],
@@ -891,10 +803,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_3"
           }
         ],
@@ -913,10 +821,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_3"
           }
         ],
@@ -935,10 +839,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_4"
           }
         ],
@@ -957,10 +857,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_4"
           }
         ],
@@ -979,10 +875,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud|shelly_wave_i4&capabilities=input_4"
           }
         ],
@@ -1001,10 +893,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_5"
           }
         ],
@@ -1023,10 +911,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_5"
           }
         ],
@@ -1045,10 +929,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_5"
           }
         ],
@@ -1078,10 +958,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_pulse_counts_minute"
           }
         ],
@@ -1111,10 +987,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_pulse_counts_total"
           }
         ],
@@ -1144,10 +1016,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_pulse_counts_total_x"
           }
         ],
@@ -1166,10 +1034,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external"
           }
         ],
@@ -1188,10 +1052,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external"
           }
         ],
@@ -1221,10 +1081,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_power.total"
           }
         ],
@@ -1254,10 +1110,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_factor"
           }
         ],
@@ -1287,10 +1139,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_returned|meter_power.returned"
           }
         ],
@@ -1320,10 +1168,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power.total_returned"
           }
         ],
@@ -1353,10 +1197,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power.total"
           }
         ],
@@ -1386,10 +1226,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_analog_external_1"
           }
         ],
@@ -1419,10 +1255,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_analog_external_2"
           }
         ],
@@ -1452,10 +1284,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_analog_external_3"
           }
         ],
@@ -1485,10 +1313,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_analog_external_4"
           }
         ],
@@ -1518,10 +1342,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_analog_external_5"
           }
         ],
@@ -1540,10 +1360,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_1"
           }
         ],
@@ -1562,10 +1378,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_1"
           }
         ],
@@ -1584,10 +1396,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_1"
           }
         ],
@@ -1606,10 +1414,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_2"
           }
         ],
@@ -1628,10 +1432,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_2"
           }
         ],
@@ -1650,10 +1450,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_2"
           }
         ],
@@ -1672,10 +1468,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_3"
           }
         ],
@@ -1694,10 +1486,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_3"
           }
         ],
@@ -1716,10 +1504,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_3"
           }
         ],
@@ -1738,10 +1522,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_4"
           }
         ],
@@ -1760,10 +1540,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_4"
           }
         ],
@@ -1782,10 +1558,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_4"
           }
         ],
@@ -1804,10 +1576,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_5"
           }
         ],
@@ -1826,10 +1594,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_5"
           }
         ],
@@ -1848,10 +1612,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_external_5"
           }
         ],
@@ -1881,10 +1641,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_temperature.1"
           }
         ],
@@ -1899,10 +1655,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_temperature.1"
           }
         ],
@@ -1928,10 +1680,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_temperature.2"
           }
         ],
@@ -1946,10 +1694,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_temperature.2"
           }
         ],
@@ -1975,10 +1719,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_temperature.3"
           }
         ],
@@ -1993,10 +1733,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_temperature.3"
           }
         ],
@@ -2022,10 +1758,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_temperature.4"
           }
         ],
@@ -2040,10 +1772,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_temperature.4"
           }
         ],
@@ -2069,10 +1797,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_temperature.5"
           }
         ],
@@ -2087,10 +1811,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_temperature.5"
           }
         ],
@@ -2116,10 +1836,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud|shelly_bluetooth&capabilities=tilt"
           }
         ],
@@ -2149,10 +1865,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=target_temperature"
           }
         ],
@@ -2251,10 +1963,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=deviceGen3"
           }
         ],
@@ -2283,10 +1991,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_voltage.1"
           }
         ],
@@ -2316,10 +2020,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_voltage.2"
           }
         ],
@@ -2349,10 +2049,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_voltage.3"
           }
         ],
@@ -2382,10 +2078,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_voltage.4"
           }
         ],
@@ -2415,10 +2107,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=measure_voltage.5"
           }
         ],
@@ -2439,10 +2127,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly_bluetooth&capabilities=beacon"
           }
         ],
@@ -2461,10 +2145,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_1"
           }
         ],
@@ -2483,10 +2163,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_2"
           }
         ],
@@ -2505,10 +2181,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_3"
           }
         ],
@@ -2527,10 +2199,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=input_4"
           }
         ],
@@ -2565,10 +2233,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=target_temperature"
           }
         ],
@@ -2645,10 +2309,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=light_hue,deviceGen1"
           }
         ],
@@ -2686,10 +2346,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly"
           }
         ],
@@ -2735,10 +2391,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly"
           }
         ],
@@ -2756,10 +2408,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=gas_concentration"
           }
         ],
@@ -2792,10 +2440,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=gas_concentration"
           }
         ],
@@ -2813,10 +2457,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=gas_concentration"
           }
         ],
@@ -2834,10 +2474,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=gas_concentration"
           }
         ],
@@ -2875,10 +2511,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=target_temperature"
           }
         ],
@@ -2896,10 +2528,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly"
           }
         ],
@@ -2961,10 +2589,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=devicePlusPlugS"
           }
         ],
@@ -2982,10 +2606,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly"
           }
         ],
@@ -3003,10 +2623,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_returned|meter_power.total_returned|meter_power"
           }
         ],
@@ -3042,10 +2658,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=dim.white"
           }
         ],
@@ -3063,10 +2675,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.whitemode"
           }
         ],
@@ -3085,10 +2693,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff.whitemode"
           }
         ],
@@ -3123,10 +2727,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_returned|meter_power.returned|meter_power"
           }
         ],
@@ -3165,10 +2765,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud"
           }
         ],
@@ -3205,10 +2801,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=windowcoverings_tilt_set"
           }
         ],
@@ -3226,10 +2818,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=devicePlusSmoke"
           }
         ],
@@ -3262,10 +2850,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=target_temperature"
           }
         ],
@@ -3283,10 +2867,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=target_temperature|deviceGen3"
           }
         ],
@@ -3330,10 +2910,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=target_temperature|deviceGen3"
           }
         ],
@@ -3416,10 +2992,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=deviceGen3"
           }
         ],
@@ -3465,10 +3037,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=deviceGen3"
           }
         ],
@@ -3511,10 +3079,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=deviceGen3"
           }
         ],
@@ -3557,10 +3121,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=deviceGen3"
           }
         ],
@@ -3594,10 +3154,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=target_temperature|deviceGen1"
           }
         ],
@@ -3631,10 +3187,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=target_temperature"
           }
         ],
@@ -3670,10 +3222,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly_wave_shutter|shelly_wave_pro_shutter&capabilities=windowcoverings_tilt_set"
           }
         ],
@@ -3759,10 +3307,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=onoff.whitemode"
           }
         ],
@@ -3831,10 +3375,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=onoff|input_1"
           }
         ],
@@ -3904,10 +3444,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=windowcoverings_set"
           }
         ],
@@ -3977,10 +3513,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly 2",
-              "nl": "Selecteer Shelly 2"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=windowcoverings_set"
           }
         ],
@@ -4002,10 +3534,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly 2",
-              "nl": "Selecteer Shelly 2"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=windowcoverings_set"
           }
         ],
@@ -4071,10 +3599,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly",
-              "nl": "Selecteer Shelly"
-            },
             "filter": "driver_id=shelly&capabilities=dim"
           }
         ],
@@ -4096,10 +3620,6 @@
           {
             "name": "device",
             "type": "device",
-            "placeholder": {
-              "en": "Select Shelly 2",
-              "nl": "Selecteer Shelly 2"
-            },
             "filter": "driver_id=shelly|shelly_cloud&capabilities=windowcoverings_set"
           }
         ],

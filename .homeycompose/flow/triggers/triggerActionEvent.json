@@ -34,10 +34,6 @@
     {
       "name": "device",
       "type": "device",
-      "placeholder": {
-        "en": "Select Shelly",
-        "nl": "Selecteer Shelly"
-      },
       "filter": "driver_id=shelly|shelly_cloud|shelly_bluetooth|shelly_wave_i4|shelly_wave_pro_dimmer_1pm&capabilities=actionEvents"
     }
   ],

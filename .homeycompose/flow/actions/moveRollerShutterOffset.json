@@ -58,10 +58,6 @@
     {
       "name": "device",
       "type": "device",
-      "placeholder": {
-        "en": "Select Shelly 2",
-        "nl": "Selecteer Shelly 2"
-      },
       "filter": "driver_id=shelly|shelly_cloud&capabilities=windowcoverings_set"
     }
   ],

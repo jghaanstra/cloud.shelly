@@ -23,10 +23,6 @@
     {
       "name": "device",
       "type": "device",
-      "placeholder": {
-        "en": "Select Shelly",
-        "nl": "Selecteer Shelly"
-      },
       "filter": "driver_id=shelly&capabilities=target_temperature|deviceGen1"
     }
   ],
