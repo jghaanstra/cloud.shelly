@@ -26,5 +26,6 @@
       "filter": "driver_id=shelly|shelly_cloud&capabilities=meter_power_returned|meter_power.returned|meter_power"
     }
   ],
-  "platforms": ["local", "cloud"]
+  "platforms": ["local", "cloud"],
+  "deprecated": true
 }
