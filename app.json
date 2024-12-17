@@ -195,7 +195,6 @@
         "id": "triggerBeaconOutRange"
       },
       {
-        "id": "triggerCallbacks",
         "title": {
           "en": "Action event",
           "nl": "Actie gebeurtenis"
@@ -263,7 +262,8 @@
           "local",
           "cloud"
         ],
-        "deprecated": true
+        "deprecated": true,
+        "id": "triggerCallbacks"
       },
       {
         "title": {
@@ -287,7 +287,6 @@
         "id": "triggerCloudError"
       },
       {
-        "id": "triggerDeviceOffline",
         "title": {
           "en": "Device error",
           "nl": "Apparaat foutmelding"
@@ -315,7 +314,8 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerDeviceOffline"
       },
       {
         "title": {
@@ -483,7 +483,6 @@
         "id": "triggerExternalSwitch5"
       },
       {
-        "id": "triggerFWUpdate",
         "title": {
           "en": "Firmware update available",
           "nl": "Firmware update beschikbaar"
@@ -529,10 +528,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerFWUpdate"
       },
       {
-        "id": "triggerGasConcentration",
         "title": {
           "en": "Gas concentration changed",
           "nl": "Gas concentratie gewijzigd"
@@ -561,10 +560,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "triggerGasConcentration"
       },
       {
-        "id": "triggerHumidity1",
         "title": {
           "en": "Humidity Sensor 1 has changed",
           "nl": "Vochtsensor 1 is veranderd"
@@ -594,10 +593,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerHumidity1"
       },
       {
-        "id": "triggerHumidity2",
         "title": {
           "en": "Humidity Sensor 2 has changed",
           "nl": "Vochtsensor 2 is veranderd"
@@ -627,10 +626,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerHumidity2"
       },
       {
-        "id": "triggerHumidity3",
         "title": {
           "en": "Humidity Sensor 3 has changed",
           "nl": "Vochtsensor 3 is veranderd"
@@ -660,10 +659,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerHumidity3"
       },
       {
-        "id": "triggerHumidity4",
         "title": {
           "en": "Humidity Sensor 4 has changed",
           "nl": "Vochtsensor 4 is veranderd"
@@ -693,10 +692,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerHumidity4"
       },
       {
-        "id": "triggerHumidity5",
         "title": {
           "en": "Humidity Sensor 5 has changed",
           "nl": "Vochtsensor 5 is veranderd"
@@ -726,10 +725,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerHumidity5"
       },
       {
-        "id": "triggerInput1Changed",
         "title": {
           "en": "Input 1 changed",
           "nl": "Input 1 gewijzigd"
@@ -748,10 +747,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput1Changed"
       },
       {
-        "id": "triggerInput1Off",
         "title": {
           "en": "Input 1 turned off",
           "nl": "Input 1 uitgezet"
@@ -770,10 +769,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput1Off"
       },
       {
-        "id": "triggerInput1On",
         "title": {
           "en": "Input 1 turned on",
           "nl": "Input 1 aangezet"
@@ -792,10 +791,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput1On"
       },
       {
-        "id": "triggerInput2Changed",
         "title": {
           "en": "Input 2 changed",
           "nl": "Input 2 gewijzigd"
@@ -814,10 +813,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput2Changed"
       },
       {
-        "id": "triggerInput2Off",
         "title": {
           "en": "Input 2 turned off",
           "nl": "Input 2 uitgezet"
@@ -836,10 +835,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput2Off"
       },
       {
-        "id": "triggerInput2On",
         "title": {
           "en": "Input 2 turned on",
           "nl": "Input 2 aangezet"
@@ -858,10 +857,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput2On"
       },
       {
-        "id": "triggerInput3Changed",
         "title": {
           "en": "Input 3 changed",
           "nl": "Input 3 gewijzigd"
@@ -880,10 +879,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput3Changed"
       },
       {
-        "id": "triggerInput3Off",
         "title": {
           "en": "Input 3 turned off",
           "nl": "Input 3 uitgezet"
@@ -902,10 +901,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput3Off"
       },
       {
-        "id": "triggerInput3On",
         "title": {
           "en": "Input 3 turned on",
           "nl": "Input 3 aangezet"
@@ -924,10 +923,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput3On"
       },
       {
-        "id": "triggerInput4Changed",
         "title": {
           "en": "Input 4 changed",
           "nl": "Input 4 gewijzigd"
@@ -946,10 +945,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput4Changed"
       },
       {
-        "id": "triggerInput4Off",
         "title": {
           "en": "Input 4 turned off",
           "nl": "Input 4 uitgezet"
@@ -968,10 +967,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput4Off"
       },
       {
-        "id": "triggerInput4On",
         "title": {
           "en": "Input 4 turned on",
           "nl": "Input 4 aangezet"
@@ -990,10 +989,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput4On"
       },
       {
-        "id": "triggerInput5Changed",
         "title": {
           "en": "Input 5 changed",
           "nl": "Input 5 gewijzigd"
@@ -1012,10 +1011,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput5Changed"
       },
       {
-        "id": "triggerInput5Off",
         "title": {
           "en": "Input 5 turned off",
           "nl": "Input 5 uitgezet"
@@ -1034,10 +1033,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput5Off"
       },
       {
-        "id": "triggerInput5On",
         "title": {
           "en": "Input 5 turned on",
           "nl": "Input 5 aangezet"
@@ -1056,7 +1055,8 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInput5On"
       },
       {
         "title": {
@@ -1158,7 +1158,6 @@
         "id": "triggerInputCountsTotalX"
       },
       {
-        "id": "triggerInputExternal1Off",
         "title": {
           "en": "External input turned off",
           "nl": "Externe input uitgezet"
@@ -1177,10 +1176,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInputExternal1Off"
       },
       {
-        "id": "triggerInputExternal1On",
         "title": {
           "en": "External input turned on",
           "nl": "Externe input aangezet"
@@ -1199,10 +1198,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerInputExternal1On"
       },
       {
-        "id": "triggerMeasurePowerTotal",
         "title": {
           "en": "Total Power changed",
           "nl": "Totale power gewijzigd"
@@ -1232,10 +1231,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerMeasurePowerTotal"
       },
       {
-        "id": "triggerMeterPowerFactor",
         "title": {
           "en": "Reactive power changed",
           "nl": "Reactive power gewijzigd"
@@ -1265,10 +1264,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerMeterPowerFactor"
       },
       {
-        "id": "triggerMeterPowerReturned",
         "title": {
           "en": "Returned Energy changed",
           "nl": "Geretourneerde energie gewijzigd"
@@ -1298,7 +1297,8 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerMeterPowerReturned"
       },
       {
         "title": {
@@ -1334,7 +1334,6 @@
         "id": "triggerMeterPowerReturnedTotal"
       },
       {
-        "id": "triggerMeterPowerTotal",
         "title": {
           "en": "Total Energy changed",
           "nl": "Totale energie gewijzigd"
@@ -1364,10 +1363,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerMeterPowerTotal"
       },
       {
-        "id": "triggerPlusInputAnalogExternal1Changed",
         "title": {
           "en": "External analog input 1 changed",
           "nl": "Externe analoge input 1 gewijzigd"
@@ -1397,10 +1396,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputAnalogExternal1Changed"
       },
       {
-        "id": "triggerPlusInputAnalogExternal2Changed",
         "title": {
           "en": "External analog input 2 changed",
           "nl": "Externe analoge input 2 gewijzigd"
@@ -1430,10 +1429,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputAnalogExternal2Changed"
       },
       {
-        "id": "triggerPlusInputAnalogExternal3Changed",
         "title": {
           "en": "External analog input 3 changed",
           "nl": "Externe analoge input 3 gewijzigd"
@@ -1463,10 +1462,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputAnalogExternal3Changed"
       },
       {
-        "id": "triggerPlusInputAnalogExternal4Changed",
         "title": {
           "en": "External analog input 4 changed",
           "nl": "Externe analoge input 4 gewijzigd"
@@ -1496,10 +1495,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputAnalogExternal4Changed"
       },
       {
-        "id": "triggerPlusInputAnalogExternal5Changed",
         "title": {
           "en": "External analog input 5 changed",
           "nl": "Externe analoge input 5 gewijzigd"
@@ -1529,10 +1528,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputAnalogExternal5Changed"
       },
       {
-        "id": "triggerPlusInputExternal1Changed",
         "title": {
           "en": "External input 1 changed",
           "nl": "Externe input 1 gewijzigd"
@@ -1551,10 +1550,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal1Changed"
       },
       {
-        "id": "triggerPlusInputExternal1Off",
         "title": {
           "en": "External input 1 turned off",
           "nl": "Externe input 1 uitgezet"
@@ -1573,10 +1572,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal1Off"
       },
       {
-        "id": "triggerPlusInputExternal1On",
         "title": {
           "en": "External input 1 turned on",
           "nl": "Externe input 1 aangezet"
@@ -1595,10 +1594,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal1On"
       },
       {
-        "id": "triggerPlusInputExternal2Changed",
         "title": {
           "en": "External input 2 changed",
           "nl": "Externe input 2 gewijzigd"
@@ -1617,10 +1616,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal2Changed"
       },
       {
-        "id": "triggerPlusInputExternal2Off",
         "title": {
           "en": "External input 2 turned off",
           "nl": "Externe input 2 uitgezet"
@@ -1639,10 +1638,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal2Off"
       },
       {
-        "id": "triggerPlusInputExternal2On",
         "title": {
           "en": "External input 2 turned on",
           "nl": "Externe input 2 aangezet"
@@ -1661,10 +1660,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal2On"
       },
       {
-        "id": "triggerPlusInputExternal3Changed",
         "title": {
           "en": "External input 3 changed",
           "nl": "Externe input 3 gewijzigd"
@@ -1683,10 +1682,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal3Changed"
       },
       {
-        "id": "triggerPlusInputExternal3Off",
         "title": {
           "en": "External input 3 turned off",
           "nl": "Externe input 3 uitgezet"
@@ -1705,10 +1704,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal3Off"
       },
       {
-        "id": "triggerPlusInputExternal3On",
         "title": {
           "en": "External input 3 turned on",
           "nl": "Externe input 3 aangezet"
@@ -1727,10 +1726,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal3On"
       },
       {
-        "id": "triggerPlusInputExternal4Changed",
         "title": {
           "en": "External input 4 changed",
           "nl": "Externe input 4 gewijzigd"
@@ -1749,10 +1748,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal4Changed"
       },
       {
-        "id": "triggerPlusInputExternal4Off",
         "title": {
           "en": "External input 4 turned off",
           "nl": "Externe input 4 uitgezet"
@@ -1771,10 +1770,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal4Off"
       },
       {
-        "id": "triggerPlusInputExternal4On",
         "title": {
           "en": "External input 4 turned on",
           "nl": "Externe input 4 aangezet"
@@ -1793,10 +1792,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal4On"
       },
       {
-        "id": "triggerPlusInputExternal5Changed",
         "title": {
           "en": "External input 5 changed",
           "nl": "Externe input 5 gewijzigd"
@@ -1815,10 +1814,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal5Changed"
       },
       {
-        "id": "triggerPlusInputExternal5Off",
         "title": {
           "en": "External input 5 turned off",
           "nl": "Externe input 5 uitgezet"
@@ -1837,10 +1836,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal5Off"
       },
       {
-        "id": "triggerPlusInputExternal5On",
         "title": {
           "en": "External input 5 turned on",
           "nl": "Externe input 5 aangezet"
@@ -1859,7 +1858,8 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerPlusInputExternal5On"
       },
       {
         "title": {
@@ -2097,7 +2097,6 @@
         "id": "triggerTemperature5Failed"
       },
       {
-        "id": "triggerTilt",
         "title": {
           "en": "Tilt changed",
           "nl": "Tilt gewijzigd"
@@ -2127,10 +2126,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerTilt"
       },
       {
-        "id": "triggerValvePosition",
         "title": {
           "en": "Valve position changed",
           "nl": "Afsluitklep positie gewijzigd"
@@ -2159,7 +2158,8 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "triggerValvePosition"
       },
       {
         "title": {
@@ -2264,7 +2264,6 @@
         "id": "triggerVirtualComponents"
       },
       {
-        "id": "triggerVoltmeter1",
         "title": {
           "en": "Voltagemeter 1 has changed",
           "nl": "Voltagemeter 1 is veranderd"
@@ -2294,10 +2293,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerVoltmeter1"
       },
       {
-        "id": "triggerVoltmeter2",
         "title": {
           "en": "Voltagemeter 2 has changed",
           "nl": "Voltagemeter 2 is veranderd"
@@ -2327,10 +2326,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerVoltmeter2"
       },
       {
-        "id": "triggerVoltmeter3",
         "title": {
           "en": "Voltagemeter 3 has changed",
           "nl": "Voltagemeter 3 is veranderd"
@@ -2360,10 +2359,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerVoltmeter3"
       },
       {
-        "id": "triggerVoltmeter4",
         "title": {
           "en": "Voltagemeter 4 has changed",
           "nl": "Voltagemeter 4 is veranderd"
@@ -2393,10 +2392,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerVoltmeter4"
       },
       {
-        "id": "triggerVoltmeter5",
         "title": {
           "en": "Voltagemeter 5 has changed",
           "nl": "Voltagemeter 5 is veranderd"
@@ -2426,7 +2425,8 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "triggerVoltmeter5"
       }
     ],
     "conditions": [
@@ -2453,7 +2453,6 @@
         "id": "conditionBeacon"
       },
       {
-        "id": "conditionInput0",
         "title": {
           "en": "Input 1 !{{is|isn't}} on",
           "nl": "Input 1 !{{is|is niet}} aan"
@@ -2472,10 +2471,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "conditionInput0"
       },
       {
-        "id": "conditionInput1",
         "title": {
           "en": "Input 2 !{{is|isn't}} on",
           "nl": "Input 2 !{{is|is niet}} aan"
@@ -2494,10 +2493,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "conditionInput1"
       },
       {
-        "id": "conditionInput2",
         "title": {
           "en": "Input 3 !{{is|isn't}} on",
           "nl": "Input 3 !{{is|is niet}} aan"
@@ -2516,10 +2515,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "conditionInput2"
       },
       {
-        "id": "conditionInput3",
         "title": {
           "en": "Input 4 !{{is|isn't}} on",
           "nl": "Input 4 !{{is|is niet}} aan"
@@ -2538,10 +2537,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "conditionInput3"
       },
       {
-        "id": "conditionValveMode",
         "title": {
           "en": "Valve profile !{{is|is not}}",
           "nl": "Radiator profiel !{{is|is niet}}"
@@ -2575,12 +2574,12 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "conditionValveMode"
       }
     ],
     "actions": [
       {
-        "id": "actionColorEffect",
         "title": {
           "en": "Switch Effect",
           "nl": "Effect schakelen"
@@ -2655,10 +2654,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionColorEffect"
       },
       {
-        "id": "actionCustomCommand",
         "title": {
           "en": "Send Command [for advanced users]",
           "nl": "Verstuur commando [voor geadvanceerde gebruikers]"
@@ -2696,10 +2695,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionCustomCommand"
       },
       {
-        "id": "actionEcoMode",
         "title": {
           "en": "Switch Eco Mode",
           "nl": "Schakel Eco modus"
@@ -2745,10 +2744,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionEcoMode"
       },
       {
-        "id": "actionGasMute",
         "title": {
           "en": "Mute alarm",
           "nl": "Dempen alarm"
@@ -2766,10 +2765,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionGasMute"
       },
       {
-        "id": "actionGasSetVolume",
         "title": {
           "en": "Set alarm volume",
           "nl": "Instellen alarm volume"
@@ -2802,10 +2801,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionGasSetVolume"
       },
       {
-        "id": "actionGasTest",
         "title": {
           "en": "Test alarm",
           "nl": "Alarm testen"
@@ -2823,10 +2822,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionGasTest"
       },
       {
-        "id": "actionGasUnmute",
         "title": {
           "en": "Unmute alarm",
           "nl": "Dempen alarm uitschakelen"
@@ -2844,10 +2843,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionGasUnmute"
       },
       {
-        "id": "actionMeasuredExtTemp",
         "title": {
           "en": "Manually set measured temperature",
           "nl": "Handmatig instellen gemeten temperatuur"
@@ -2885,10 +2884,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionMeasuredExtTemp"
       },
       {
-        "id": "actionOTAUpdate",
         "title": {
           "en": "Update firmware",
           "nl": "Update firmware"
@@ -2906,7 +2905,8 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionOTAUpdate"
       },
       {
         "title": {
@@ -2974,7 +2974,6 @@
         "id": "actionPlusPlugSLEDRing"
       },
       {
-        "id": "actionReboot",
         "title": {
           "en": "Reboot device",
           "nl": "Herstart apparaat"
@@ -2992,10 +2991,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionReboot"
       },
       {
-        "id": "actionResetTotals",
         "title": {
           "en": "Reset energy totals",
           "nl": "Reset energie totalen"
@@ -3013,7 +3012,8 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionResetTotals"
       },
       {
         "title": {
@@ -3055,7 +3055,6 @@
         "id": "actionRGBW2DimWhite"
       },
       {
-        "id": "actionRGBW2DisableWhiteMode",
         "title": {
           "en": "Disable white mode",
           "nl": "Uitschakelen wit modus"
@@ -3074,10 +3073,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "actionRGBW2DisableWhiteMode"
       },
       {
-        "id": "actionRGBW2EnableWhiteMode",
         "title": {
           "en": "Enable white mode",
           "nl": "Inschakelen wit modus"
@@ -3096,10 +3095,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "actionRGBW2EnableWhiteMode"
       },
       {
-        "id": "actionSetCumulative",
         "title": {
           "en": "Set device energy cumulative property",
           "nl": "Instellen apparaat cumulatieve energie eigenschap"
@@ -3134,7 +3133,8 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "actionSetCumulative"
       },
       {
         "title": {
@@ -3218,7 +3218,6 @@
         "id": "actionShutterTiltSet"
       },
       {
-        "id": "actionSmokeMute",
         "title": {
           "en": "Mute alarm",
           "nl": "Dempen alarm"
@@ -3236,10 +3235,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionSmokeMute"
       },
       {
-        "id": "actionTrvBoost",
         "title": {
           "en": "Boost",
           "nl": "Boost"
@@ -3272,10 +3271,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionTrvBoost"
       },
       {
-        "id": "actionTrvClearBoost",
         "title": {
           "en": "Clear Boost",
           "nl": "Annuleren Boost"
@@ -3293,10 +3292,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionTrvClearBoost"
       },
       {
-        "id": "actionTrvOverride",
         "title": {
           "en": "Set temporary target temperature",
           "nl": "Tijdelijk instellen doel temperatuur"
@@ -3340,10 +3339,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionTrvOverride"
       },
       {
-        "id": "actionUpdateFirmware",
         "title": {
           "en": "Update firmware all devices",
           "nl": "Firmware alle apparaten updaten"
@@ -3380,7 +3379,8 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionUpdateFirmware"
       },
       {
         "title": {
@@ -3570,7 +3570,6 @@
         "id": "actionUpdateVirtualComponentText"
       },
       {
-        "id": "actionValveMode",
         "title": {
           "en": "Set valve profile",
           "nl": "Instellen radiator profiel"
@@ -3604,10 +3603,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionValveMode"
       },
       {
-        "id": "actionValvePosition",
         "title": {
           "en": "Manually set valve",
           "nl": "Handmatig afsluitklep instellen"
@@ -3641,7 +3640,8 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "actionValvePosition"
       },
       {
         "title": {
@@ -3684,7 +3684,6 @@
         "id": "actionWaveShutterTiltSet"
       },
       {
-        "id": "effectRGBW2Color",
         "title": {
           "en": "Switch Effect",
           "nl": "Effect schakelen"
@@ -3770,10 +3769,10 @@
         "platforms": [
           "local"
         ],
-        "deprecated": true
+        "deprecated": true,
+        "id": "effectRGBW2Color"
       },
       {
-        "id": "flipbackSwitch",
         "title": {
           "en": "Switch state temporary",
           "nl": "Schakel status tijdelijk"
@@ -3842,10 +3841,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "flipbackSwitch"
       },
       {
-        "id": "moveRollerShutter",
         "title": {
           "en": "Change roller shutter",
           "nl": "Wijzig roller shutter"
@@ -3915,10 +3914,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "moveRollerShutter"
       },
       {
-        "id": "moveRollerShutterOffset",
         "title": {
           "en": "Change roller shutter with offset",
           "nl": "Wijzig roller shutter met offset"
@@ -3987,10 +3986,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "moveRollerShutterOffset"
       },
       {
-        "id": "moveRollerShutterPreviousPosition",
         "title": {
           "en": "Move to previous position",
           "nl": "Ga naar de vorige positie"
@@ -4013,10 +4012,10 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "moveRollerShutterPreviousPosition"
       },
       {
-        "id": "onOffTransition",
         "title": {
           "en": "Switch light gradually",
           "nl": "Schakel lamp geleidelijk"
@@ -4081,10 +4080,10 @@
         ],
         "platforms": [
           "local"
-        ]
+        ],
+        "id": "onOffTransition"
       },
       {
-        "id": "rollerShutterIntelligentAction",
         "title": {
           "en": "Intelligent action",
           "nl": "Slimme actie"
@@ -4107,7 +4106,8 @@
         "platforms": [
           "local",
           "cloud"
-        ]
+        ],
+        "id": "rollerShutterIntelligentAction"
       }
     ]
   },
