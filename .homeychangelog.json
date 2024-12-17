@@ -883,5 +883,8 @@
   },
   "3.34.2": {
     "en": "Fix Motion 2 sensor and directly update gen1 device properties when discovered"
+  },
+  "3.35.0": {
+    "en": "Detect failed temperature sensors, add missing energy options to Pro 4PM, deprecate set cumulative option flow card (this is forced from the app configuration, and can be disabled using the Homey interface), improve invalid value handle from gen1 devices."
   }
 }
