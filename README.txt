@@ -87,6 +87,7 @@ Shelly Dali Dimmer Gen3
 Shelly i4 Gen3
 Shelly 2PM Gen3
 Shelly EM Gen3
+Shelly Plug S Gen3
 
 Bluetooth
 -------------
